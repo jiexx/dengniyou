@@ -9,10 +9,15 @@ var fs = require("fs");
 var request = require('request');
 var db = require("./db");
 var FdfsClient = require('fdfs');
+var IMG_HOST = "http://123.59.144.47/";
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true })); // for parsing application/x-www-form-urlencoded
 app.use('/lib', express.static(__dirname + '/lib'));
+app.use('/dist', express.static(__dirname + '/dist'));
+app.use('/css', express.static(__dirname + '/css'));
+app.use('/assets', express.static(__dirname + '/assets'));
+app.use('/img', express.static(__dirname + '/img'));
 app.use('/', express.static(__dirname + '/html'));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
@@ -69,7 +74,7 @@ app.post('/login', upload.array(), function(req, res) {
 			res.send(JSON.stringify(results));
 		}
 	});
-})
+});
 
 app.get('/roles', upload.array(), function(req, res) {
 	db.getRoles(req.body, function(error, results){
@@ -78,8 +83,34 @@ app.get('/roles', upload.array(), function(req, res) {
 			res.send(JSON.stringify(results));
 		}
 	});
-})
+});
 
+app.post('/home', upload.array(), function(req, res) {
+	var item = req.body;
+	db.getPlansByContinent({continent:3}, function(error, results1){
+		if(!error) {
+			db.getPlansByContinent({continent:3}, function(error, results2){
+				if(!error) {
+					db.getPlansByContinent({continent:3}, function(error, results3){
+						if(!error) {
+							db.getAdvs(item, function(error, results4){
+								if(!error) {
+									res.send(JSON.stringify(
+										{ IMGHOST:IMG_HOST, 
+										advs:results4,
+										continent1:results1, 
+										continent2:results2, 
+										continent3:results3}
+									));
+								}
+							});
+						}
+					});
+				}
+			});
+		}
+	});
+});
 
 app.post('/photo/insert', upload.array(), function(req, res) {
 	var data = req.body;

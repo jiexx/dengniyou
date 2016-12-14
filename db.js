@@ -2,11 +2,11 @@ var mysql = require('mysql');
 var crypto = require('crypto');
 
 var pool  = mysql.createPool({
-	host : '10.101.1.163',
-	//host : '123.59.144.47',
+	//host : '10.101.1.163',
+	host : '123.59.144.47',
 	user : 'root',
-	password : '123456',
-	//password: 'zl_2wsx!QAZ',
+	//password : '123456',
+	password: 'zl_2wsx!QAZ',
 	connectionLimit: 500,
 //	acquireTimeout: 30000
 });
@@ -165,6 +165,30 @@ exports.getRoles = function(item, callback) {
 			return;
 		}
 		var sql = "SELECT UserName, UserID FROM traveldb.tab_userinfo WHERE IfRobot='Y'; ";
+		exec(connection, sql, [], callback);
+		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+	});
+};
+exports.getPlansByContinent = function(item, callback) {
+	pool.getConnection(function(err, connection) {
+		if(err) { 
+			console.log(err); 
+			callback(true); 
+			return;
+		}
+		var sql = "SELECT a.*, b.ParentID, c.Continent, c.RegionCnName, c.RegionEnName, c.ShortCnName FROM traveluserdb.tab_planinfo a left join traveldb.tab_travelregion b on  a.StartCityID = b.RegionID and b.IfLeaf = 1 left join traveldb.tab_travelregion c on b.ParentID = c.RegionID where  c.Continent = ? limit 0, 10;";
+		exec(connection, sql, [item.continent], callback);
+		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+	});
+};
+exports.getAdvs = function(item, callback) {
+	pool.getConnection(function(err, connection) {
+		if(err) { 
+			console.log(err); 
+			callback(true); 
+			return;
+		}
+		var sql = "SELECT * FROM traveldb.tab_advertise;";
 		exec(connection, sql, [], callback);
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
 	});
