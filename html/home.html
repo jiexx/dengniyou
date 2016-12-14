@@ -5,7 +5,7 @@ $.ajax({
 	type: 'post',
 	dataType: 'json',
 	success: function (data) {
-		$("#tmplPeople").tmpl( data.msg ).appendTo(".peopleTable");
+		$("#tmplPeople").tmpl( data.msg ).appendTo(".carousel-inner");
 	},
 	data: null
 });
@@ -48,11 +48,12 @@ $.ajax({
       <li data-target="#myCarousel" data-slide-to="1"></li>
       <li data-target="#myCarousel" data-slide-to="2"></li>
     </ol>
+	<script id="tmplPeople" type="text/x-jquery-tmpl" src="../tmpl/carousel.html"/>
 
     <!-- Wrapper for slides -->
     <div class="carousel-inner" role="listbox">
 
-      <div class="item active">
+      <!--div class="item active">
         <img src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiASzfUAAIp_fS67IA783.jpg" alt="Chania" width="460" height="345">
         <div class="carousel-caption">
           <h3>Chania</h3>
@@ -74,7 +75,7 @@ $.ajax({
           <h3>Flowers</h3>
           <p>Beatiful flowers in Kolymbari, Crete.</p>
         </div>
-      </div>
+      </div-->
     </div>
 
     <!-- Left and right controls -->
