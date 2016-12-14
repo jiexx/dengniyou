@@ -1,20 +1,222 @@
-<!--div ui-content-for="title">
-</div>
-<div ui-content-for="navbarAction">
-  <a ui-turn-on="taskadd"><i class="fa fa-plus-circle"></i>添加任务</a>
-</div>
-<div ui-content-for="modals">
-  <div ng-include="'taskadd.html'"></div>
-</div-->
+<script src="../dist/js/roger.js"></script>
+<script type="text/javascript">
+$.ajax({
+	url: '/home',
+	type: 'post',
+	dataType: 'json',
+	success: function (data) {
+		$("#tmplPeople").tmpl( data.msg ).appendTo(".peopleTable");
+	},
+	data: null
+});
+/*var people = [
+	{
+		firstName: "John",
+		lastName: "Resig",
+		url: "http://ejohn.org/",
+		cities: [
+			{ name: "Boston", state: "MA" },
+			{ name: "San Francisco", state: "CA" }
+		]
+	},
+	{
+		firstName: "Dave",
+		lastName: "Reed",
+		url: "http://dave.org/",
+		cities: [
+			{ name: "Seattle", state: "WA" },
+			{ name: "Los Angeles", state: "CA" },
+			{ name: "New York", state: "NY" }
+		]
+	},
+	{
+		firstName: "Boris",
+		lastName: "Moore",
+		url: "http://boris.org/",
+		cities: [
+			{ name: "Redmond", state: "WA" }
+		]
+	}
+];*/
 
-<div class="scrollable">  
-  <div class="scrollable-content section">
-	<div ng-include="'title.html'"></div>
-    <div class=" text-center">
-		<br><br><br><br><br><br>
+</script>
+<div>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1"></li>
+      <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
 
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
 
+      <div class="item active">
+        <img src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiASzfUAAIp_fS67IA783.jpg" alt="Chania" width="460" height="345">
+        <div class="carousel-caption">
+          <h3>Chania</h3>
+          <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+        </div>
+      </div>
+
+      <div class="item">
+        <img src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAF8XqAAJK60DBFSI006.jpg" alt="Chania" width="460" height="345">
+        <div class="carousel-caption">
+          <h3>Chania</h3>
+          <p>The atmosphere in Chania has a touch of Florence and Venice.</p>
+        </div>
+      </div>
+    
+      <div class="item">
+        <img src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988.jpg" alt="Flower" width="460" height="345">
+        <div class="carousel-caption">
+          <h3>Flowers</h3>
+          <p>Beatiful flowers in Kolymbari, Crete.</p>
+        </div>
+      </div>
     </div>
 
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+    </a>
   </div>
 </div>
+<br>
+<div class="banner">
+  <img src="../img/home-banner1.jpg"></img>
+</div>
+<br>
+<div>
+  <button type="button" class="btn btn-xs btn-default" >
+    主题 <span class="caret"></span>
+  </button>
+  <button type="button" class="btn btn-xs btn-warning">
+    国家 <span class="caret"></span>
+  </button>
+</div>
+<br>
+<div class="container">
+  <div class="row">
+    <div class="pull-left media-left"><span class="label label-warning media-left">澳大利亚</span></div>
+	<div class="pull-left media-left"><span class="label label-default media-left">新西兰</span></div>
+	<div class="pull-left media-left"><span class="label label-default media-left">文莱</span></div>
+  </div>
+</div>
+<br>
+<div>
+  <div class="row">
+    <div class="col-md-2">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well mid">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_250x250.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted" href="./plandetail.html">方案标题</a></h2>
+                <span class="info" href="#">link here</span>
+              </div>
+            </div>
+		  </div>
+        </div>
+      </div>
+    </div>
+	<div class="col-md-6">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_500x100.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted">方案标题</a></h2>
+              </div>
+            </div>
+		  </div>
+        </div>
+        <div class="col-md-4">
+          <div class="well">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_250x100.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted">方案标题</a></h2>
+              </div>
+            </div>
+		  </div>
+        </div>
+        <div class="col-md-4">
+          <div class="well">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_250x100.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted">方案标题</a></h2>
+              </div>
+            </div>
+		  </div>
+        </div>
+		<div class="col-md-4">
+          <div class="well">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_250x100.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted">方案标题</a></h2>
+              </div>
+            </div>
+		  </div>
+        </div>
+      </div>
+    </div>
+	<div class="col-md-2">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_250x100.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted">方案标题</a></h2>
+              </div>
+            </div>
+		  </div>
+		  <div class="well">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_250x100.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted">方案标题</a></h2>
+              </div>
+            </div>
+		  </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-2">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="well">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_250x100.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted">方案标题</a></h2>
+              </div>
+            </div>
+		  </div>
+		  <div class="well">
+		    <div class="hovereffect">
+              <img class="img-responsive" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_250x250.jpg" alt="">
+              <div class="overlay">
+                <h2 class="head"><a class="text-muted">方案标题</a></h2>
+              </div>
+            </div>
+		  </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<br>
+<div class="banner">
+  <img src="../img/home-banner2.jpg"></img>
+</div>
+<br>
