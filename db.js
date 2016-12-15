@@ -52,17 +52,10 @@ exports.login = function(item, callback) {
 			callback(true); 
 			return;
 		}
-		var sql, pwd;
-		console.log(JSON.stringify(item));
-		if(item.userid && item.userid != '') {
-			sql = "SELECT * FROM traveldb.usr_privileges WHERE id = ?; ";
-			exec(connection, sql, [item.userid], callback);
-		}else {
-			sql = "SELECT * FROM traveldb.usr_privileges WHERE name = ? and pwd = ?; ";
-			//pwd = ''+crypto.createHash('md5').update(item.pwd).digest('hex');
-			exec(connection, sql, [item.name, item.pwd], callback);
-		}
-		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+		var pwd = crypto.createHash('md5').update(item.loginPass).digest('hex').toUpperCase();
+		var sql = "SELECT * FROM traveldb.tab_userinfo WHERE UserMobile = ?  AND Password = ?; ";
+		exec(connection, sql, [item.loginName, pwd], callback);
+		console.log(sql);
 	});
 };
 exports.getGuides = function(item, callback) {
@@ -179,6 +172,18 @@ exports.getPlansByContinent = function(item, callback) {
 		var sql = "SELECT a.*, b.ParentID, c.Continent, c.RegionCnName, c.RegionEnName, c.ShortCnName FROM traveluserdb.tab_planinfo a left join traveldb.tab_travelregion b on  a.StartCityID = b.RegionID and b.IfLeaf = 1 left join traveldb.tab_travelregion c on b.ParentID = c.RegionID where  c.Continent = ? limit 0, 10;";
 		exec(connection, sql, [item.continent], callback);
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+	});
+};
+exports.getPlanDetail = function(item, callback) {
+	pool.getConnection(function(err, connection) {
+		if(err) { 
+			console.log(err); 
+			callback(true); 
+			return;
+		}
+		var sql = "select PlanID,PlanName,PlanPriceBase,PicURL,ScheduleID,ScheduleType,AirportNameCN,AirportCode,SpotName,SpotPicUrl,PicURL, SequenceID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID  from traveluserdb.vw_plandetail where PlanID = ?;";
+		exec(connection, sql, [item.PlanID], callback);
+		console.log(sql + ' ' + item.PlanID);
 	});
 };
 exports.getAdvs = function(item, callback) {

@@ -1,27 +1,41 @@
+<script type="text/javascript">
+$.ajax({
+	url: '/plan/detail',
+	type: 'post',
+	dataType: 'json',
+	async: false,
+	success: function (data) {
+		console.log(JSON.stringify(data));
+		//console.log($("#gerHome").tmpl( data ));
+		//$("#roPlanDetail").empty();
+		$("#gerPlanDetail").tmpl( data ).appendTo("#roPlanDetail");
+		console.log($("#gerPlanDetail").tmpl( data ));
+		$('#calendar').fullCalendar({
+  	  		defaultDate: '2016-12-12',
+  	  		editable: true,
+  	  		eventLimit: true, // allow "more" link when too many events
+  	  		events: [
+  	  			{
+  	  				title: 'Long Event',
+  	  				start: '2016-12-07',
+  	  				end: '2016-12-10'
+  	  			},
+  	  		]
+  	  	});
+		initLinks();
+	},
+	data: {PlanID:getUrlParameter('id')}
+});
+
+
+</script>
+<script id="gerPlanDetail" type="text/x-jquery-tmpl">
 <div>
   <div class="row">
     <div class="col-md-7" id="calendar">
     </div>
-    <script type="text/javascript">
-      $(document).ready(function() {
-  
-  		$('#calendar').fullCalendar({
-  			defaultDate: '2016-12-12',
-  			editable: true,
-  			eventLimit: true, // allow "more" link when too many events
-  			events: [
-  				{
-  					title: 'Long Event',
-  					start: '2016-12-07',
-  					end: '2016-12-10'
-  				},
-  			]
-  		});
-  		
-  	});  
-    </script>
 	<div class="col-md-5">
-	  <img class="detail-img" src="http://123.59.144.47/group1/M00/00/30/CgkB6VgliEiAfPCfAAHJzR-S95w988_400x400.jpg" alt="">
+	  <img class="detail-img" src="${ $data.IMGHOST }${ $data.info[0].PicURL}" alt="">
 	</div>
   </div>
 </div>
@@ -29,9 +43,12 @@
 <br>
 <div>
   <div class="container row">
-    <div class="col-md-4"><span class="col-md-4 text-warning">方案名称</span></div>
-	<div class="col-md-4"><span class="btn btn-warning">价格405</span></div>
+    <div class="col-md-4"><span class="col-md-4 text-warning">${ $data.info[0].PlanName}</span></div>
+	<div class="col-md-4"><span class="btn btn-warning">${ $data.info[0].PlanPriceBase}</span></div>
 	<div class="col-md-4"><span class="small pull-right">20人玩过|18人点评</span></div>
   </div>
 </div>
+</script>
 <br>
+<div id="roPlanDetail">
+</div>

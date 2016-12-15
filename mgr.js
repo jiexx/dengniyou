@@ -75,7 +75,15 @@ app.post('/login', upload.array(), function(req, res) {
 		}
 	});
 });
-
+app.post('/plan/detail', upload.array(), function(req, res) {
+	db.getPlanDetail(req.body, function(error, results){
+		if(!error) {
+			console.log(JSON.stringify(results));
+			res.send(JSON.stringify({ IMGHOST:IMG_HOST, 
+										info:results}));
+		}
+	});
+});
 app.get('/roles', upload.array(), function(req, res) {
 	db.getRoles(req.body, function(error, results){
 		if(!error) {
