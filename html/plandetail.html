@@ -8,6 +8,9 @@ $.ajax({
 		console.log(JSON.stringify(data));
 		//console.log($("#gerHome").tmpl( data ));
 		//$("#roPlanDetail").empty();
+		var picurl = data.info[0].PicURL;
+		var i = picurl.lastIndexOf(".")
+		data.info[0].PicURL = 
 		$("#gerPlanDetail").tmpl( data ).appendTo("#roPlanDetail");
 		console.log($("#gerPlanDetail").tmpl( data ));
 		$('#calendar').fullCalendar({

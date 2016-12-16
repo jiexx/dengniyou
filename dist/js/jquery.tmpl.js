@@ -302,7 +302,7 @@
 				frag = frag.concat(unencode( after ));
 			}
 		});
-		return frag ? frag : unencode( ret );
+		return frag && frag.length != 0 ? frag : unencode( ret );
 	}
 
 	function unencode( text ) {

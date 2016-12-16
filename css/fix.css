@@ -2,12 +2,23 @@
     width: 100%; 
     margin: auto;
 }*/
-.search {
-	width:500px !important;
+
+.regular-grid  div{
+	padding: 0;
+	margin: 0;
+}
+/*banner*/
+.container img {
+	width:100%;
+}
+
+.carousel-container {
+	padding-left: 10%;
+	padding-right: 10%;
 }
 
 .carousel-inner > .item {
-  height: 400px;
+  height: 500px;
 }
 
 .carousel-inner > .item > img {
@@ -18,7 +29,7 @@
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
   max-height: 800px;
-  width: auto;
+  width: 100%;
 }
 
 .carousel-control.left,
@@ -26,28 +37,19 @@
   /*background-image: none;*/
 }
 
-.banner {
-	height: 150px;
-}
-
-.banner > img {
-    width: 100%;
-	height: 150px;
-}
 
 .well {
-    height:90px;
+    height:200px;
+	padding: 2px !important;
 }
 
 
 
 .mid {
-    height:200px;
+    height:400px;
+	padding: 2px !important;
 }
 
-.tall {
-    height:310px;
-}
 
 .hovereffect {
 width:100%;
@@ -59,12 +61,22 @@ text-align:center;
 cursor:default;
 }
 
+.hovereffect a {
+	font-size: 14px;
+	color: #fff;
+	text-decoration: none;
+}
+
+.text-warning {
+	color: #eea236;
+}
+
 .hovereffect .overlay {
 width:100%;
 height:100%;
 position:absolute;
 overflow:hidden;
-top:0;
+bottom:0;
 left:0;
 opacity:0;
 background-color:rgba(0,0,0,0.5);
@@ -74,23 +86,20 @@ transition:all .4s ease-in-out
 
 .hovereffect img {
 display:block;
-position:relative;
 -webkit-transition:all .4s linear;
 transition:all .4s linear;
-height: 100%;
-min-width: 100%;
-left: 50%;
-position: relative;
--webkit-transform: translate(-50%);
--ms-transform: translate(-50%);
-transform: translate(-50%);
+position: absolute;
 }
 
 .hovereffect .head {
 text-transform:uppercase;
 color:#fff;
 text-align:center;
-position:relative;
+position:absolute;
+bottom:0;
+left:0;
+width: 100%;
+opacity:0;
 font-size:17px;
 background:rgba(0,0,0,0.6);
 -webkit-transform:translatey(-100px);
@@ -121,13 +130,9 @@ box-shadow:0 0 5px #fff;
 }
 
 .hovereffect:hover img {
--ms-transform:scale(1.2) translate(-50%);
--webkit-transform:scale(1.2) translate(-50%);
-transform:scale(1.2) translate(-50%);
-height: 100%;
-min-width: 100%;
-left: 50%;
-position: relative;
+-ms-transform:scale(1.2) ;
+-webkit-transform:scale(1.2);
+transform:scale(1.2);
 }
 
 .hovereffect:hover .overlay {
@@ -155,3 +160,77 @@ transition-delay:.2s;
 .detail-img {
 	height: 100%;
 }
+
+@charset "utf-8";
+/* CSS reset */
+body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input{margin:0;padding:0;}
+body{font-size:12px; font-family: 'Microsoft Yahei','Î¢ÈíÑÅºÚ';}
+img{border:none;}
+li{list-style:none;}
+input,select,textarea{outline:none;border:none; background:none;}
+textarea{resize:none;}
+a{text-decoration:none; color:#656565;}
+/*Çå¸¡¶¯*/
+.clearfix:after{content:"";display:block;clear:both;}
+.clearfix{zoom:1;}
+.fl{float:left;}
+.fr{float:right;}
+
+.topWidth{width:90%; max-width: 1200px; margin:0 auto;}
+.top{height:45px; line-height: 45px;}
+.topLeft .fa{font-size: 14px; display: inline-block; margin-right: 10px;}
+.topLeft span{color:#999; }
+.topLeft a{text-decoration: underline; color:#fa703e; font-weight: bold;}
+.topRight button{width:64px; height: 25px; line-height: 25px; background-color: #f3f3f3; border:none; vertical-align: middle; color:#999;}
+.topRight button.active{background-color: #fa703e; color:#FFF; }
+.topRight button:first-child{margin-right:-4px;}
+.topRight #version{display: inline-block; width: 40px; height: 45px; line-height: 45px; font-size: 13px; margin-left: 15px; text-align: center; position: relative; top:1px;}
+.topRight #user{padding: 0;width: 80px;border-radius: 0;background-color: #FFF; font-size: 13px; color:#333;}
+
+.logo img{height: 80px;}
+.sidebar{top: 96px !important;}
+
+nav{width:100%; height: 96px; background-color: #00b8ee;}
+.navBar{margin-bottom: 10px;}
+.navBar li{list-style: none; display: inline-block; width:92px; height: 34px; line-height: 24px; padding-top: 10px; color:#FFF; font-size:17px;  text-align:center; }
+.navBar li a{color: #FFF;}
+.navBar li a:visited,.navBar li a:hover, .navBar li a:active{ text-decoration: underline; }
+.navBar li.active{background-color: #006583;}
+
+
+
+.fixedBar{position: fixed; width:36px; top:0; bottom:0; right: 0; background-color:#00b8ee; z-index: 9999; color: #FFF; }
+.fixedBar ul{margin-top: 280px; text-align: center; }
+@media screen and (max-height: 800px){
+	.fixedBar ul{margin-top: 180px;}
+}
+.fixedBar ul li i{width:36px; height: 36px; line-height: 36px; font-size: 20px;}
+.fixedBar ul li p{ margin-bottom: 6px;}
+.fixedBar ul li .kefu{background-image: url(../img/kefu.png); display: inline-block; width:24px; height: 24px;}
+/*×ó²àÐü¸¡¹¤¾ßÌõ*/
+.fixedPos{position: fixed; top:220px;z-index: 9999; left:2.5%; }
+.fixedPos ul li {width:64px; height: 64px; background-color: #999; color: #FFF; margin-bottom: 1px; line-height: 64px; font-size: 20px; text-align: center;}
+.fixedPos ul li a{color:#FFF;}
+.fixedPos ul li#backTop{background:#999 url(../img/toTop.png) no-repeat center center;}
+.fixedPos ul li.kefu{background:#999 url(../img/kefu.png) no-repeat center center ;}
+
+.banner{width:95%; max-width: 1440px; margin:0 auto;}
+#owlBanner .item img{ display: block;width: 100%;height: 500px;}
+.owl-theme .owl-controls {text-align: center;position: relative; top: -60px; margin-top:0;}
+.owl-theme .owl-controls .owl-page span {width:140px; height: 40px; background-color: #FFF; border-radius: 0; background: url(../img/banner/banner1.jpg); background-size: cover;}
+
+.content{background-color: #eaeaea;}
+
+
+footer{height: 366px; background-color: #4d4d4d; color: #FFF; padding-top: 20px}
+footer .hr{height: 0; border-top:1px dashed #FFF;margin:10px 0;}
+footer .info {width: 90%; max-width: 1200px; margin:0 auto;}
+footer .info .h3{height: 50px; line-height: 40px;}
+footer .info li{font-size: 16px; line-height: 38px; height: 30px;}
+footer .info .fa,footer .info .tel{line-height: 50px;}
+footer .info .fa{font-size: 38px; text-indent: 2px;}
+footer .info .tel{font-size: 16px;}
+footer .picList{width:520px;margin: 10px auto;}
+footer .picList li{display: inline-block; width: 106px; height: 39px; margin-right: 20px;}
+footer hr{width:90%; margin:20px auto 0;}
+footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: center;margin:20px 0 30px;}

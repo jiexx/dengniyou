@@ -7,7 +7,7 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../img/favicon.jpg">
+    <link rel="icon" href="../img/logo.png">
 
     <title>等你旅游</title>
 
@@ -32,65 +32,122 @@
       <script src="../assets/js/respond.min.js"></script>
     <![endif]-->
 	<script src="../dist/js/moment.min.js" type="text/javascript" ></script>
-	<script src="../dist/js/jquery.js" type="text/javascript"></script>
-	<!--[if lt IE 8]>
-      <script src="../dist/js/jquery-1.12.4.js"></script>
-    <![endif]-->
+	<!--script src="../dist/js/jquery.js" type="text/javascript"></script-->
+	
+    <script src="../dist/js/jquery-1.12.4.js"></script>
+
+
 	<script src="../dist/js/bootstrap.js" type="text/javascript"></script>
 	<script src="../dist/js/roger.js" type="text/javascript"></script>
 	<script src="../dist/js/fullcalendar.js" type="text/javascript" ></script>
-	<script src="../dist/js/jquery.cookie.js" type="text/javascript"></script>
-    
+	<script src="../dist/js/jquery.cookie.js" type="text/javascript"></script>  
+	<script src="../dist/js/jquery.tmpl.js" type="text/javascript"></script>
   </head>
 
   <body>
+	<header>
+  		<div class="topWidth">
+  			<div class="top">
+	  			<div class="topLeft fl">
+	  				<span class="fa fa-home"></span>
+	  				<span>您好，欢迎您使用等你游旅行网站！</span>
+	  				<span class="btn btn-link btn-xs"  data-toggle="modal" data-target="#homeLogin">登录</span> <a class="register">免费注册</a>
+	  			</div>
+	  			<div class="topRight fr">
+	  				<button class="active">游客端</button>
+	  				<button class="">司导端</button>
+	  				<span id="version">国际版</span>
+	  				<div class="btn-group">
+					  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" id="user">
+					    用户中心 <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" role="menu">
+					    <li><a href="javascript:void(0);">1</a></li>
+					    <li><a href="javascript:void(0);">2</a></li>
+					    <li><a href="javascript:void(0);">3</a></li>
+					  </ul>
+					</div>
+	  			</div>
+	  		</div>
+	  		<div class="logo">
+	  			<img src="img/logo.png" />
+	  		</div>
+  		</div>
+  		<nav>
+  			<div class="topWidth">
+  				<ul class="navBar" id="navBar">
+	  				<li  class="active"><a  id="home"  href="./home.html" >方案</a></li>
+	  				<li><a href="personalTailor.html">私人订制</a></li>
+	  				<li><a href="#" >活动</a></li>
+	  				<li><a href="#" >景点</a></li>
+	  				<li><a href="#" >美食</a></li>
+	  				<li><a href="#" >住宿</a></li>
+	  				<li><a href="#" >用车</a></li>
+	  				<li><a href="#" >用人</a></li>
+	  				<li><a href="#" >保险</a></li>
+	  				<li><a href="#" >签证</a></li>
+	  				<li><a href="#" >机票</a></li>
+	  			</ul>
+				<div class="form-group" style="display:inline;">
+					<div class="input-group">
+						<span class="input-group-btn btn-block" >
+						
+							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-search"></span>
+								<span class="nav-label">查找:</span><span class="text-warning">目的地</span>
+								<span class="fa fa-caret-down"></span>
+							</button>
 
-    <div class="container">
+							<ul id="search-option" class="dropdown-menu pull-left" role="menu">
+								<li>
+									<a href="#" data-searchtype="search-user" data-placeholder="Enter First or Last Name">
+										<span class="nav-label">国家:</span>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-searchtype="search-org" data-placeholder="Enter Organization Name">
+									<span class="nav-label">行程天数:</span>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-searchtype="search-kb" data-placeholder="Enter Knowledgebase Search Terms">
+									<span class="nav-label">出行人数:</span>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-searchtype="search-venue" data-placeholder="Enter Venue Search Terms">
+									<span class="nav-label">主题:</span>
+									</a>
+								</li>
+								<li>
+									<a href="#" data-searchtype="search-pl" data-placeholder="Enter Private Label">
+									<span class="nav-label">住宿:</span>
+									</a>
+								</li>
+							</ul>
+						</span>				
+						<div class="input-group col-lg-12 center-block">
+							<input class="form-control" id="search-input" class="search-input" type="text" placeholder="酒店/景点/玩乐活动">
+						</div>
+						<div class="input-group-btn navbar-btn">
+							<button class="btn btn-default btn-nav">
+							搜
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
 
-      <!-- The justified navigation menu is meant for single line per list item.
-           Multiple lines will require custom code not provided by Bootstrap. -->
-      <div class="masthead">
-	    
-        <h6  >你好，欢迎使用等你旅游旅行网站! <span class="btn-link"  data-toggle="modal" data-target="#homeModal">登录</span>免费<a href="#">注册</a></h6>
-		<img src="../img/logo.jpg"></img>
-        <nav class="navbar navbar-default">
-          <div class="container-fluid">
-            <!-- Brand and toggle get grouped for better mobile display -->
-            <div class="navbar-header">
-              <a class="navbar-brand" href="./home.html">首页</a>
-            </div>
-            <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse">
-              <ul class="nav navbar-nav">
-                <li class="active"><a href="./plans.html">方案</a></li>
-                <li><a href="#"></a></li>
-              </ul>
-              <form class="navbar-form navbar-left">
-                <div class="input-group">
-				  <input type="text" class="form-control search" placeholder="方案/酒店/景点"/>
-                  <div class="input-group-btn">
-                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">目的地 <span class="caret"></span></button>
-					<ul class="dropdown-menu dropdown-menu-right"> 
-					  <li><a href="#">Action</a></li> <li><a href="#">Another action</a></li> 
-					  <li><a href="#">Something else here</a></li> 
-					  <li role="separator" class="divider"></li> 
-					  <li><a href="#">Separated link</a></li> 
-					</ul>
-                  </div>
-                </div>
-				<button type="submit" class="btn btn-default">搜索</button>
-              </form>
-            </div><!-- /.navbar-collapse -->
-          </div><!-- /.container-fluid -->
-        </nav>
-      </div>
-	  <div id="app">
-	  </div>
-	  
-      <!-- Modal -->
-	  <div id="modal">
-	  </div>
-	  <div>
+  			</div>
+  		</nav>	
+  	</header>
+	<!-- /container -->
+	<div id="app">
+	</div>
+	<!-- Modal -->
+	<div id="modal">
+	</div>
+	<!--div>
 		<div class="modal fade" id="homeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
 		  <div class="modal-dialog" role="document">
 			<div class="modal-content">
@@ -99,28 +156,49 @@
 				<h4 class="modal-title" id="myModalLabel">登录</h4>
 			  </div>
 			  <div class="modal-body">
-				<input id="loginname" type="text" class="form-control" placeholder="手机号"/>
-				<input id="loginpwd" type="text" class="form-control" placeholder="密码"/>
+				<div class="form-group"><input id="loginname" type="text" class="form-control" placeholder="手机号"/></div>
+				<div class="form-group"><input id="loginpwd" type="text" class="form-control" placeholder="密码"/></div>
 			  </div>
 			  <div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-				<button type="button" class="btn btn-primary" onclick="login()">确认</button>
+				<button type="button" class="btn btn-warning" onclick="login()">确认</button>
 			  </div>
 			</div>
 		  </div>
 		</div>
-	  </div>
+	</div-->
+	<!-- fix banner -->
+	<div class="fixedBar">
+  		<ul>
+  			<li><i class="kefu"></i><p>小游游</p></li>
+  			<li><i class="fa fa-shopping-cart"></i><p>购物车</p></li>
+  			<li><i class="fa fa-share-square-o"></i><p>分享</p></li>
+  			<li><i class="glyphicon glyphicon-edit"></i><p>游记</p></li>
+  			<li><i class="fa fa-floppy-o"></i><p>攻略</p></li>
+  			<li><i class="glyphicon glyphicon-phone-alt"></i><p>热线</p></li>
+  			<li><i class="fa fa-qrcode"></i><p>扫码</p></li>
+  		</ul>
+  	</div>
 
-      <!-- Site footer -->
-      <footer class="footer">
-        <p>&copy; 2016 Company, Inc.</p>
-      </footer>
-
-    </div> <!-- /container -->
+  	<div class="fixedPos">
+  		<ul>
+  			<li id="backTop" ></li>
+  			<li style="background-color: #667980"><a href="#qceania">大洋洲</a></li>
+  			<li style="background-color: #99b0b9"><a href="#Africa">非洲</a></li>
+  			<li ><a href="#SouthAmerica">南美</a></li>
+  			<li style="background-color: #667980"><a href="#NorthAmerica">北美</a></li>
+  			<li style="background-color: #99b0b9"><a href="#Asia">亚洲</a></li>
+  			<li ><a href="#Europe">欧洲</a></li>
+  			<li ><a href="#NSpoles">南北极</a></li>
+  			<li class="kefu"> </li>
+  		</ul>
+  	</div>
+	<!-- Site footer -->
+	<div id="footer">
+	</div>
 	<script>
 	  $(document).ready(function() {
-		$(".navbar-brand").trigger("click");
-		initModal('./home-modal.html');
+		$("#home").trigger("click");
+		initModal('./home-login.html');
 	  });
 	</script>
 

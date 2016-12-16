@@ -1,0 +1,85 @@
+<script type="text/javascript">
+    $.ajax({
+        url: '/dashboard/products',
+        type: 'post',
+        dataType: 'json',
+        async: false,
+        success: function(data) {
+            //console.log($("#gerHome"));
+            //console.log($("#gerHome").tmpl( data ));
+            $("#roHome").empty();
+            var n = $("#gerHome").tmpl(data);
+			n.appendTo("#roHome");
+            $('#carousel-generic').carousel();
+            initLinks();
+			fitImages();
+			debug(data, n, $("#gerHome"));
+        },
+        data: null
+    });
+</script>
+<div>
+<div class="container">
+  <div class="jumbotron">
+    <h5 class="list-group">产品信息</h5>      
+    <div class="list-group">
+		<span class="text-warning">产品类型</span>
+		<label class="radio-inline"><input type="radio" name="optradio">特色方案</label>
+		<label class="radio-inline"><input type="radio" name="optradio">经典方案</label>
+		<label class="radio-inline"><input type="radio" name="optradio">服务</label>
+		<label class="radio-inline"><input type="radio" name="optradio">活动</label>
+		<label class="radio-inline"><input type="radio" name="optradio">租车</label>
+		<label class="radio-inline"><input type="radio" name="optradio">景点</label>
+		<label class="radio-inline"><input type="radio" name="optradio">美食</label>
+		<label class="radio-inline"><input type="radio" name="optradio">住宿</label>
+		<label class="radio-inline"><input type="radio" name="optradio">装备</label>
+	</div>
+	<div class="list-group">
+		<span class="text-warning">产品状态</span>
+		<label class="radio-inline"><input type="radio" name="optradio">全部</label>
+		<label class="radio-inline"><input type="radio" name="optradio">已发布</label>
+		<label class="radio-inline"><input type="radio" name="optradio">已加入</label>
+		<label class="radio-inline"><input type="radio" name="optradio">定制中</label>
+	</div>
+  </div>     
+</div>
+
+<div class="container">
+    <div class="list-group">
+	  <div class="list-group-item clearfix disabled"><div class="col-md-1"><input type="radio" name="optradio"></div><div class="col-md-5">方案</div><div class="col-md-2">价格</div><div class="col-md-2">行程天数</div>
+	    <div class="col-md-1 ">发布状态</div><div class="col-md-1 ">编辑</div>
+	  </div>
+	  <div class="list-group-item clearfix btn-group"><div class="col-md-1"><input type="radio" name="optradio"></div>
+	  <div class="col-md-5 ">
+	    <div class="media">
+		  <div class="media-left media-top">
+			<img src="http://123.59.144.47/group1/M00/00/03/CgkB6VfrseqAe2ipAAElqEc8ZEg265.jpg" class="media-object" style="width:160px"></img>
+		  </div>
+		  <div class="media-body">
+			<div class="media-heading">方案名称</div>
+			<div>行程地点</div>
+		  </div>
+		</div>
+	  </div>
+	  <div class="col-md-2 ">23</div><div class="col-md-2 ">3</div><div class="col-md-1 ">草稿中</div><div class="col-md-1 "><div class="btn  glyphicon glyphicon-edit"></div></div></div>
+	</div>
+</div>
+<div class="container">
+  <div class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </div>
+</div>
