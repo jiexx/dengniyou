@@ -1,0 +1,164 @@
+/*  rogerSmartSql
+	SQL result:
+	row1 : china, 86, ....
+	row2 : Ameriaca, 01, ....
+	row3 : England, 02, ....
+	auto convert to json:
+	[{Country:'china',Code:86, ...},{ Country:'Ameriaca',Code:01, ...},{Country:'England',Code:02, ...}]
+	instead need generate object:
+	{
+		China: {Code:86, ...},
+		Ameriaca: {Code:01, ...},
+		England: {Code:02, ...}
+	}
+	so, add keyword 'key' to indicate which sql result colum name is key.
+*/ 
+
+
+ //--------------for group json parser-------------------------------------------
+  
+  SELECT c.Continent, 
+  group_concat(concat_ws(',',  concat('{"PlanID":"', convert( ifnull(a.PlanID,'null') , char),'"'), 
+  concat('"PlanName":		"', ifnull(a.PlanName,'null'),						'"'),  
+  concat('"PlanPriceBase":	"', convert( ifnull(a.PlanPriceBase,'null'), char), '"'),
+  concat('"PicURL":			"', ifnull(a.PicURL,'null'),                        '"'),
+  concat('"PlanDays":		"', convert( ifnull(a.PlanDays,'null'), char),      '"'),
+  concat('"CreateUserID":	"', convert( ifnull(a.CreateUserID,'null') ,char),  '"'),
+  concat('"ParentID":		"', convert( ifnull(b.ParentID ,'null') ,char),     '"'),
+  concat('"RegionCnName":	"', ifnull(c.RegionCnName,'null') ,                 '"'),
+  concat('"RegionEnName":	"', ifnull(c.RegionEnName,'null') ,                 '"'),
+  concat('"ShortCnName":	"', ifnull(c.ShortCnName ,'null') , 				'"}') ) separator ',')as Plans 
+  
+  FROM traveluserdb.tab_planinfo a left join traveldb.tab_travelregion b on a.StartCityID = b.RegionID and b.IfLeaf = 1 left join traveldb.tab_travelregion c on b.ParentID = c.RegionID group by continent;
+  
+  select group_concat(distinct concat('"',c.RegionCnName,'"') separator ',') , c.Continent
+  FROM traveluserdb.tab_planinfo a left join traveldb.tab_travelregion b on a.StartCityID = b.RegionID and b.IfLeaf = 1 left join traveldb.tab_travelregion c on b.ParentID = c.RegionID group by c.Continent
+  
+    SELECT c.Continent, 
+  group_concat(concat_ws(',',  
+  concat('"RegionCnName":	"', ifnull(c.RegionCnName,'null') ,                 '"'),
+  concat('"RegionEnName":	"', ifnull(c.RegionEnName,'null') ,                 '"'),
+  concat('"ShortCnName":	"', ifnull(c.ShortCnName ,'null') , 				'"}') ) separator ',')as  
+  
+  FROM traveluserdb.tab_planinfo a left join traveldb.tab_travelregion b on a.StartCityID = b.RegionID and b.IfLeaf = 1 left join traveldb.tab_travelregion c on b.ParentID = c.RegionID group by continent;
+  
+select d.PlanLabels, c.Continent
+  FROM traveluserdb.tab_planinfo a left join traveldb.tab_travelregion b on a.StartCityID = b.RegionID and b.IfLeaf = 1 left join traveldb.tab_travelregion c on b.ParentID = c.RegionID left join traveluserdb.tab_plansummary d on a.PlanID = d.PlanID where c.Continent is not null
+  
+   SELECT 
+substring_index ( substring_index ( PlanLabels,',',1 ), ',', -1)  Label, Continent
+ FROM traveluserdb.vw_labelsbycontinent UNION DISTINCT
+  SELECT 
+substring_index ( substring_index ( PlanLabels,',',2 ), ',', -1) Label, Continent
+ FROM traveluserdb.vw_labelsbycontinent UNION DISTINCT
+ SELECT 
+substring_index ( substring_index ( PlanLabels,',',3 ), ',', -1) Label, Continent
+ FROM traveluserdb.vw_labelsbycontinent UNION DISTINCT
+ SELECT 
+substring_index ( substring_index ( PlanLabels,',',4 ), ',', -1) Label, Continent
+ FROM traveluserdb.vw_labelsbycontinent
+  
+  
+  
+  SELECT c.Continent, 
+  a.PlanID, 
+  a.PlanName, 
+  a.PlanPriceBase, 
+  a.PicURL, 
+  a.PlanDays, 
+  a.CreateUserID, 
+  b.ParentID , 
+  c.RegionCnName, 
+  c.RegionEnName, 
+  c.ShortCnName  
+  
+  FROM traveluserdb.tab_planinfo a left join traveldb.tab_travelregion b on a.StartCityID = b.RegionID and b.IfLeaf = 1 left join traveldb.tab_travelregion c on b.ParentID = c.RegionID group by RegionCnName;
+
+  
+  
+  
+  SELECT c.RegionCnName, 
+  group_concat(concat_ws(',',  concat('{"PlanID":"', convert( ifnull(a.PlanID,'null') , char),'"'), 
+  concat('"PlanName":		"', ifnull(a.PlanName,'null'),						'"'),  
+  concat('"PlanPriceBase":	"', convert( ifnull(a.PlanPriceBase,'null'), char), '"'),
+  concat('"PicURL":			"', ifnull(a.PicURL,'null'),                        '"'),
+  concat('"PlanDays":		"', convert( ifnull(a.PlanDays,'null'), char),      '"'),
+  concat('"CreateUserID":	"', convert( ifnull(a.CreateUserID,'null') ,char),  '"'),
+  concat('"ParentID":		"', convert( ifnull(b.ParentID ,'null') ,char),     '"'),
+  concat('"RegionCnName":	"', ifnull(c.RegionCnName,'null') ,                 '"'),
+  concat('"RegionEnName":	"', ifnull(c.RegionEnName,'null') ,                 '"'),
+  concat('"ShortCnName":	"', ifnull(c.ShortCnName ,'null') , 				'"}') ) separator ',')as Plans 
+  
+  FROM traveluserdb.tab_planinfo a left join traveldb.tab_travelregion b on a.StartCityID = b.RegionID and b.IfLeaf = 1 left join traveldb.tab_travelregion c on b.ParentID = c.RegionID group by RegionCnName;
+
+select * from traveluserdb.tab_plansummary b 
+  left join  (
+select distinct a.Label from (
+  SELECT 
+substring_index ( substring_index ( PlanLabels,',',1 ), ',', -1)  Label
+ FROM traveluserdb.tab_plansummary UNION
+  SELECT 
+substring_index ( substring_index ( PlanLabels,',',2 ), ',', -1) Label
+ FROM traveluserdb.tab_plansummary UNION
+ SELECT 
+substring_index ( substring_index ( PlanLabels,',',3 ), ',', -1) Label
+ FROM traveluserdb.tab_plansummary UNION
+ SELECT 
+substring_index ( substring_index ( PlanLabels,',',4 ), ',', -1) Label
+ FROM traveluserdb.tab_plansummary  ) a   )c on b.PlanLabels like concat('%', c.Label, '%') WHERE c.Label is not null and trim(c.Label) <>'';
+ 
+ 
+ //--------------for label parser-------------------------------------------
+ 
+ SELECT 
+substring_index ( substring_index ( PlanLabels,',',1 ), ',', -1)  Label
+ FROM traveluserdb.tab_plansummary UNION DISTINCT
+  SELECT 
+substring_index ( substring_index ( PlanLabels,',',2 ), ',', -1) Label
+ FROM traveluserdb.tab_plansummary UNION  DISTINCT
+ SELECT 
+substring_index ( substring_index ( PlanLabels,',',3 ), ',', -1) Label
+ FROM traveluserdb.tab_plansummary UNION  DISTINCT
+ SELECT 
+substring_index ( substring_index ( PlanLabels,',',4 ), ',', -1) Label
+ FROM traveluserdb.tab_plansummary 
+ 
+ select b.PlanID from traveluserdb.tab_plansummary b 
+  left join  traveluserdb.vw_planlabels a  on b.PlanLabels like concat('%', a.Label, '%') WHERE a.Label is not null and trim(a.Label) <>''  ;
+  
+  
+   select 
+  group_concat(concat_ws(',',  concat('{"PlanID":"', convert( ifnull(a.PlanID,'null') , char),'"'), 
+  concat('"PlanName":		"', ifnull(a.PlanName,'null'),						'"'),  
+  concat('"PlanPriceBase":	"', convert( ifnull(a.PlanPriceBase,'null'), char), '"'),
+  concat('"PicURL":			"', ifnull(a.PicURL,'null'),                        '"'),
+  concat('"PlanDays":		"', convert( ifnull(a.PlanDays,'null'), char),      '"'),
+  concat('"CreateUserID":	"', convert( ifnull(a.CreateUserID,'null') ,char),  '"'),
+  concat('"ParentID":		"', convert( ifnull(b.ParentID ,'null') ,char),     '"'),
+  concat('"RegionCnName":	"', ifnull(c.RegionCnName,'null') ,                 '"'),
+  concat('"RegionEnName":	"', ifnull(c.RegionEnName,'null') ,                 '"'),
+  concat('"ShortCnName":	"', ifnull(c.ShortCnName ,'null') , 				'"}') ) separator ',')
+
+   from traveluserdb.tab_plansummary b 
+  left join  traveluserdb.vw_planlabels a  on b.PlanLabels like concat('%', a.Label, '%') WHERE a.Label is not null and trim(a.Label) <>'' GROUP BY a.Label;
+ 
+ 
+ 
+
+select a.*, b.PlanLabels, b.PlanFeature, b.StartTime, c.Label from traveluserdb.tab_planinfo a left join traveluserdb.tab_plansummary b on a.PlanID = b.PlanID join traveluserdb.vw_planlabels c on b.PlanLabels like concat('%', c.Label, '%')
+ 
+ 
+ 
+ select label,
+group_concat(concat_ws(',',  concat('{"PlanID":"', convert( ifnull(a.PlanID,'null') , char),'"'), 
+  concat('"PlanName":		"', ifnull(a.PlanName,'null'),						'"'),  
+  concat('"PlanPriceBase":	"', convert( ifnull(a.PlanPriceBase,'null'), char), '"'),
+  concat('"PicURL":			"', ifnull(a.PicURL,'null'),                        '"'),
+  concat('"PlanDays":		"', convert( ifnull(a.PlanDays,'null'), char),      '"'),
+  concat('"CreateUserID":	"', convert( ifnull(a.CreateUserID,'null') ,char),  '"'),
+  concat('"StartCityID":		"', convert( ifnull(a.StartCityID ,'null') ,char),     '"'),
+  concat('"PlanFeature":	"', ifnull(b.PlanFeature,'null') ,                 '"'),
+  concat('"StartTime":	"', ifnull(b.StartTime,'null') ,                 '"'),
+  concat('"PlanLabels":	"', ifnull(b.PlanLabels,'null') ,                 '"'),
+  concat('"Label":	"', ifnull(c.Label ,'null') , 				'"}'))  separator ',') Plan from traveluserdb.tab_planinfo a left join traveluserdb.tab_plansummary b on a.PlanID = b.PlanID join traveluserdb.vw_planlabels c on b.PlanLabels like concat('%', c.Label, '%') group by label
+ 

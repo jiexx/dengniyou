@@ -158,6 +158,7 @@ transition-delay:.2s;
 }
 
 .detail-img {
+	display: block;
 	height: 100%;
 }
 

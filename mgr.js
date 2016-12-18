@@ -9,7 +9,6 @@ var fs = require("fs");
 var request = require('request');
 var db = require("./db");
 var FdfsClient = require('fdfs');
-var IMG_HOST = "http://123.59.144.47/";
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true })); // for parsing application/x-www-form-urlencoded
@@ -54,19 +53,11 @@ function decodeBase64Image(dataString) {
   return response;
 }
 
-
-function getPage(page) {
-	console.log(page)	
-	if(page == 'attractions'){
-		return '1';
-	}else if(page == 'lodge'){
-		return '3';
-	}else if(page == 'food'){
-		return '2';
-	}else if(page == 'other'){
-		return '4';
-	}
+function doSql() {
+	
 }
+
+
 app.post('/login', upload.array(), function(req, res) {
 	db.login(req.body, function(error, results){
 		if(!error) {
@@ -78,7 +69,9 @@ app.post('/login', upload.array(), function(req, res) {
 app.post('/plan/detail', upload.array(), function(req, res) {
 	db.getPlanDetail(req.body, function(error, results){
 		if(!error) {
-			console.log(JSON.stringify(results));
+			//console.log(JSON.stringify(results));
+			var info = {PlanName:results[0].PlanName,PlanPriceBase:results[0].PlanPriceBase,};
+			
 			res.send(JSON.stringify({ IMGHOST:IMG_HOST, 
 										info:results}));
 		}
@@ -94,7 +87,7 @@ app.get('/roles', upload.array(), function(req, res) {
 });
 
 app.post('/home', upload.array(), function(req, res) {
-	var item = req.body;
+	/*var item = req.body;
 	db.getPlansByContinent({continent:3}, function(error, results1){
 		if(!error) {
 			db.getPlansByContinent({continent:3}, function(error, results2){
@@ -117,6 +110,9 @@ app.post('/home', upload.array(), function(req, res) {
 				}
 			});
 		}
+	});*/
+	db.rogerSmartSql('./modal/home.json', function(error, results){
+		res.send(results);
 	});
 });
 

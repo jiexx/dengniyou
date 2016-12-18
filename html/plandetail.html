@@ -1,47 +1,13 @@
-<script type="text/javascript">
-$.ajax({
-	url: '/plan/detail',
-	type: 'post',
-	dataType: 'json',
-	async: false,
-	success: function (data) {
-		console.log(JSON.stringify(data));
-		//console.log($("#gerHome").tmpl( data ));
-		//$("#roPlanDetail").empty();
-		var picurl = data.info[0].PicURL;
-		var i = picurl.lastIndexOf(".")
-		data.info[0].PicURL = 
-		$("#gerPlanDetail").tmpl( data ).appendTo("#roPlanDetail");
-		console.log($("#gerPlanDetail").tmpl( data ));
-		$('#calendar').fullCalendar({
-  	  		defaultDate: '2016-12-12',
-  	  		editable: true,
-  	  		eventLimit: true, // allow "more" link when too many events
-  	  		events: [
-  	  			{
-  	  				title: 'Long Event',
-  	  				start: '2016-12-07',
-  	  				end: '2016-12-10'
-  	  			},
-  	  		]
-  	  	});
-		initLinks();
-	},
-	data: {PlanID:getUrlParameter('id')}
-});
-
-
-</script>
-<script id="gerPlanDetail" type="text/x-jquery-tmpl">
-<div>
-  <div class="row">
-    <div class="col-md-7" id="calendar">
-    </div>
-	<div class="col-md-5">
+<div class="container">
+<table>
+  <tr >
+    <td class="col-md-6" id="calendar">
+    </td>
+	<td class="col-md-6">
 	  <img class="detail-img" src="${ $data.IMGHOST }${ $data.info[0].PicURL}" alt="">
-	</div>
-  </div>
-</div>
+	</td>
+  </tr>
+</table>
 <div class="clearfix"></div>
 <br>
 <div>
@@ -51,7 +17,4 @@ $.ajax({
 	<div class="col-md-4"><span class="small pull-right">20人玩过|18人点评</span></div>
   </div>
 </div>
-</script>
-<br>
-<div id="roPlanDetail">
 </div>

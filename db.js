@@ -10,6 +10,7 @@ var pool  = mysql.createPool({
 	connectionLimit: 500,
 //	acquireTimeout: 30000
 });
+var IMG_HOST = "http://123.59.144.47/";
 
 function execfinal(conn, sql, params, callback, close) {
 	conn.query(sql, params, function(err, results) {
@@ -43,6 +44,90 @@ function exec(conn, sql, params, callback) {
 			callback(false, results);
 		}
 	});
+}
+
+function doSql(name, sql, params, callback) {
+	pool.getConnection(function(err, conn) {
+		if(err) { 
+			console.log(err); 
+			callback(name, true); 
+			return;
+		}
+		conn.query(sql, params, function(err, results) {
+			conn.release(); // always put connection back in pool after last query
+			//console.log(results);
+			if(err) { 
+				console.log(err); 
+				if(callback) {
+					callback(name, true, results);
+				}
+				return; 
+			}
+			if(callback) {
+				callback(name, false, results);
+			}
+		});
+		//console.log(sql);
+	});
+};
+
+function prepareLoop(modal, count) {
+	if (modal && typeof modal =="object" && typeof modal !="string"&& !(modal instanceof Array)) {
+		for (var i in modal) {
+			if( modal[i].sql && typeof modal[i].sql =="string" && modal[i].params && modal[i].params.constructor == Array) {
+				count.value ++;
+				prepareLoop(modal[i], count);
+			}
+		}
+	}
+};
+var mapObj = {"\\t":"","\"[":"[", "]\"":"]", "\"{":"{", "}\"":"}", "\\\"":"\""};
+function remJson(json) {
+	json["IMGHOST"] = IMG_HOST;
+	return JSON.stringify(json).replace(/\"\[|\]\"|\"{|}\"|\\\"|\\t/g, function(matched){  //
+		return mapObj[matched];
+	});
+}
+function doLoop(modal, obj, count, callback) {
+	if (modal && typeof modal =="object" && typeof modal !="string"&& !(modal instanceof Array)) {
+		for (var i in modal) {
+			if(modal[i].sql && typeof modal[i].sql =="string" && modal[i].params && modal[i].params.constructor == Array) {
+				doSql(i, modal[i].sql, modal[i].params, function(name, error, results){
+					console.log("doSql: "+name+ "   "+ modal[name].sql +"  " +count.value +"   "+error);
+					if(count.value == 1) {
+						console.log("count.value: "+count.value);
+						callback(error, remJson(obj));
+					}else if(error) {
+						count.value --;
+						callback(error, remJson(results));
+					}else {
+						count.value --;
+						if(modal[name].key&&typeof modal[name].key =="string") {
+							obj[name] = new Object();
+							for(var j in results) {
+								if(results[j][modal[name].key]) {
+									obj[name][results[j][modal[name].key]] = results[j];
+								}
+							}
+						}else {
+							obj[name] = results;
+						}
+						doLoop(modal[name]);
+					}
+				});  
+			}
+		}
+	}
+};
+
+exports.rogerSmartSql = function(file, callback) {
+	var result =  new Object();
+	var count = new Object();
+	var modal = require(file);
+	count.value = 0;
+	prepareLoop(modal, count)
+	console.log(JSON.stringify(modal)+'    '+count.value);
+	doLoop(modal, result, count, callback)
 }
 
 exports.login = function(item, callback) {
@@ -162,6 +247,54 @@ exports.getRoles = function(item, callback) {
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
 	});
 };
+exports.getVW_PlansByContinent = function(item, callback) {
+	pool.getConnection(function(err, connection) {
+		if(err) { 
+			console.log(err); 
+			callback(true); 
+			return;
+		}
+		var sql = "SELECT * FROM traveluserdb.`vw_/home_plansbycontinent` WHERE Continent is not null and trim(Continent) <> ' ';";
+		exec(connection, sql, [item.continent], callback);
+		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+	});
+};
+exports.getVW_PlansByCountry = function(item, callback) {
+	pool.getConnection(function(err, connection) {
+		if(err) { 
+			console.log(err); 
+			callback(true); 
+			return;
+		}
+		var sql = "SELECT * FROM traveluserdb.`vw_/home_plansbycountry` WHERE Country is not null and trim(Country) <> ' ';";
+		exec(connection, sql, [item.continent], callback);
+		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+	});
+};
+exports.getVW_PlansByLabel = function(item, callback) {
+	pool.getConnection(function(err, connection) {
+		if(err) { 
+			console.log(err); 
+			callback(true); 
+			return;
+		}
+		var sql = "SELECT * FROM traveluserdb.`vw_/home_plansbylabel` WHERE Label is not null and trim(Label) <> ' ';";
+		exec(connection, sql, [item.continent], callback);
+		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+	});
+};
+exports.getVW_CountryByContinent = function(item, callback) {
+	pool.getConnection(function(err, connection) {
+		if(err) { 
+			console.log(err); 
+			callback(true); 
+			return;
+		}
+		var sql = "SELECT * FROM traveluserdb.`vw_/home_countrybycontinent` WHERE Country is not null and trim(Country) <> ' ';";
+		exec(connection, sql, [item.continent], callback);
+		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+	});
+};
 exports.getPlansByContinent = function(item, callback) {
 	pool.getConnection(function(err, connection) {
 		if(err) { 
@@ -183,7 +316,7 @@ exports.getPlanDetail = function(item, callback) {
 		}
 		var sql = "select PlanID,PlanName,PlanPriceBase,PicURL,ScheduleID,ScheduleType,AirportNameCN,AirportCode,SpotName,SpotPicUrl,PicURL, SequenceID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID  from traveluserdb.vw_plandetail where PlanID = ?;";
 		exec(connection, sql, [item.PlanID], callback);
-		console.log(sql + ' ' + item.PlanID);
+		console.log(sql + ' ' + item);
 	});
 };
 exports.getAdvs = function(item, callback) {
