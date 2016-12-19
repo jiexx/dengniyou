@@ -128,6 +128,7 @@ var server = app.listen(8088, function() {
 			console.log('------------');
 			console.log('POINT:'+point+ '  '+JSON.stringify(req.body));
 			db.rogerSmartSql(MODAL[point], req.body, function(error, results){
+				console.log('end.');
 				res.send(results);
 			});
 		});
