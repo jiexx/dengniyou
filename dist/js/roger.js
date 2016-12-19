@@ -49,6 +49,19 @@ $(function () {
 				});
 			}
 		},
+		rogerPost: function (reqURL, reqJSON, callback) {
+			$(this).on('submit', function(e) {
+				e.preventDefault();
+				$.ajax({
+					url: reqURL, type: 'post', dataType: 'json', data: reqJSON,
+					success: function(respJSON) {
+						if(callback) {
+							callback(respJSON);
+						}
+					}
+				});
+			});
+		},
 		rogerRouter: function(router) {
 			window._rogerRouter = router;
 		},
@@ -132,7 +145,7 @@ $(function () {
 				_this.show();
 			});
 		},
-		rogerSubmit: function (reqURL, reqJSON, callback) {
+		rogerSubmit: function (reqURL, callback) {
 			$(this).on('submit', function(e) {
 				e.preventDefault();
 				$.ajax({
