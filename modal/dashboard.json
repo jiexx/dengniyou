@@ -1,0 +1,4 @@
+{
+	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo`where CreateUserID=? LIMIT 0, 8;",	"params":["UserID"]},
+	"CountOFPlans": {"sql": "SELECT count(*) as Count FROM traveluserdb.`vw_/plan/detail_planinfo`where CreateUserID=?;",	"params":["UserID"]}
+}

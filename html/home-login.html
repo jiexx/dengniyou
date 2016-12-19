@@ -1,24 +1,17 @@
 <script type="text/javascript">
-$('#homeLogin').on('submit', function(e) {
-       e.preventDefault();
-    $.ajax({
-        url: '/login',
-        type: 'post',
-        dataType: 'json',
-        data: $('form#login-form').serialize(),
-        success: function(data) {
-                       if(data[0] && data[0].UserID > 0) {
-                               if(data[0].UserType == 2) {
-                                       window.location = '/dashboard.html';
-                               }else if(data[0].Auth == 8) {
-									window.location = '/dashboard-manager.html';
-							   }
-                               $.removeCookie("user");
-                               $.cookie("user", data[0], { expires : 10 });
-                       }
-        }
-    });
-     debug();
+$('#login-form').rogerSubmit('/login', function(respJSON){
+	if(respJSON[0] && respJSON[0].UserID > 0) {
+		if(respJSON[0].UserType == 2) {
+			console.log('/dashboard.html?UserID='+respJSON[0].UserID);
+			window.location = '/dashboard.html?UserID='+respJSON[0].UserID;
+		}else if(respJSON[0].Auth == 8) {
+			window.location = '/dashboard-manager.html';
+		}else {
+			window.location = '/';
+		}
+		$.removeCookie("dnyuser");
+		$.cookie("dnyuser", respJSON[0], { expires : 10 });
+	}
 });
 </script>
 <div class="modal fade" id="homeLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">

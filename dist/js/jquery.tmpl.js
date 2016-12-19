@@ -243,6 +243,11 @@
 			"!": {
 				// Comment tag. Skipped by parser
 				open: ""
+			},
+			"for": {
+				_default: {$2: "$value"},
+				open: 'for (var i=1;i<=$1a;i++){',
+				close: '};'
 			}
 		},
 

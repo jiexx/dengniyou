@@ -53,8 +53,22 @@ function decodeBase64Image(dataString) {
   return response;
 }
 
-function doSql() {
-	
+function readFiles(dirname, onFileContent, onError) {
+  fs.readdir(dirname, function(err, filenames) {
+    if (err) {
+      onError(err);
+      return;
+    }
+    filenames.forEach(function(filename) {
+      fs.readFile(dirname + filename, 'utf-8', function(err, content) {
+        if (err) {
+          onError(err);
+          return;
+        }
+        onFileContent(filename, content);
+      });
+    });
+  });
 }
 
 
@@ -63,17 +77,6 @@ app.post('/login', upload.array(), function(req, res) {
 		if(!error) {
 			console.log(JSON.stringify(results));
 			res.send(JSON.stringify(results));
-		}
-	});
-});
-app.post('/plan/detail', upload.array(), function(req, res) {
-	db.getPlanDetail(req.body, function(error, results){
-		if(!error) {
-			//console.log(JSON.stringify(results));
-			var info = {PlanName:results[0].PlanName,PlanPriceBase:results[0].PlanPriceBase,};
-			
-			res.send(JSON.stringify({ IMGHOST:IMG_HOST, 
-										info:results}));
 		}
 	});
 });
@@ -86,35 +89,11 @@ app.get('/roles', upload.array(), function(req, res) {
 	});
 });
 
-app.post('/home', upload.array(), function(req, res) {
-	/*var item = req.body;
-	db.getPlansByContinent({continent:3}, function(error, results1){
-		if(!error) {
-			db.getPlansByContinent({continent:3}, function(error, results2){
-				if(!error) {
-					db.getPlansByContinent({continent:3}, function(error, results3){
-						if(!error) {
-							db.getAdvs(item, function(error, results4){
-								if(!error) {
-									res.send(JSON.stringify(
-										{ IMGHOST:IMG_HOST, 
-										advs:results4,
-										continent1:results1, 
-										continent2:results2, 
-										continent3:results3}
-									));
-								}
-							});
-						}
-					});
-				}
-			});
-		}
-	});*/
+/*app.post('/home', upload.array(), function(req, res) {
 	db.rogerSmartSql('./modal/home.json', function(error, results){
 		res.send(results);
 	});
-});
+});*/
 
 app.post('/photo/insert', upload.array(), function(req, res) {
 	var data = req.body;
@@ -132,31 +111,38 @@ app.post('/photo/insert', upload.array(), function(req, res) {
 	
 })
 
-app.get('/detail', upload.array(), function(req, res) {
-	var id = req.query.id;
-	db.getALF(id, function(error, results1){
-		if(!error) {
-			db.getCity(function(error, results2){
-				if(!error) {
-					db.getCountry(function(error, results3){
-						if(!error) {
-							db.getLabel(id, function(error, results4){
-								if(!error) {
-									res.send(JSON.stringify({ country:results3, city:results2, label:results4, resoult: results1}));
-								}
-							});
-						}
-					});
-				}
-			});
-		}
-	});
-})
 
+var MODAL = {};
 var server = app.listen(8088, function() {
-
+	
 	var host = server.address().address;
 	var port = server.address().port;
+	
+	
+	readFiles('./modal/', function(filename, content) {
+		
+		var point = '/'+filename.substring(0,filename.indexOf('.')).replace(/-/g,'/');
+		MODAL[point] = JSON.parse(content);
+		console.log(point);
+		app.post(point, upload.array(), function(req, res) {
+			console.log('------------');
+			console.log('POINT:'+point+ '  '+JSON.stringify(req.body));
+			db.rogerSmartSql(MODAL[point], req.body, function(error, results){
+				res.send(results);
+			});
+		});
+		if(true) {
+			app.get(point, upload.array(), function(req, res) {
+				console.log('------------');
+				console.log('POINT:'+point+ '  '+JSON.stringify(req.query));
+				db.rogerSmartSql(MODAL[point], req.query, function(error, results){
+					res.send(results);
+				});
+			});
+		}
+	}, function(err) {
+		console.log("modal ERROR!");
+	});
 
 	console.log("RUNNING http://%s:%s", host, port);
 });

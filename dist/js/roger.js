@@ -10,10 +10,16 @@ $(function () {
 (function( $, undefined ){
 	$.extend({
 		rogerGetPath:function() {
-			return window._rogerCurrLink.substring(0, window._rogerCurrLink.indexOf("?"));
+			var link = $._rogerGetLocation();
+			return link.substring(0, link.indexOf("?"));
+		},
+		rogerWindowPath:function() {
+			var link = window.location;
+			return link.substring(0, link.indexOf("?"));
 		},
 		rogerGetURLJsonParams:function() {
-			var url = window._rogerCurrLink.substring(window._rogerCurrLink.indexOf("?")+1);
+			var link = $._rogerGetLocation();
+			var url = link.substring(link.indexOf("?")+1);
 			var hash;
 			var json = {};
 			var hashes = url.split('&');
@@ -22,6 +28,10 @@ $(function () {
 				json[hash[0]] = hash[1];
 			}
 			return json;
+		},
+		rogerWindowURLParamsString:function() {
+			var link = window.location.search;
+			return link;
 		},
 		rogerGetUrlParam:function(key) {
 			var params = $.rogerGetURLJsonParams()
@@ -65,30 +75,50 @@ $(function () {
 		rogerRouter: function(router) {
 			window._rogerRouter = router;
 		},
-		rogerLocation: function(loc) {
+		_rogerSetLocation: function(loc) {
 			window._rogerCurrLink = loc;
 		},
-		rogerGetLocation: function() {
+		_rogerGetLocation: function() {
 			return window._rogerCurrLink;
 		},
 		rogerGetRouter: function(path) {
 			return window._rogerRouter[path];
 		},
+		rogerLocation: function(url) {
+			if(url.substring(0,2)=='#/'){
+				var path = url.indexOf("?") > 0 ? url.substring(0, url.indexOf("?")): url;
+				var router = $.rogerGetRouter(path);
+				if (router) {
+					$._rogerSetLocation(url);
+					$._RogerLoadView(
+						router.view, 
+						window._rogerAppContainer, 
+						router.rootrest, 
+						$.rogerGetURLJsonParams(), 
+						function(respJSON, realView) {
+							realView._RogerReloadRouters();
+							router.ctrl(respJSON, realView);
+						}  
+					);
+				}
+			}
+		}
 	});
 	$.fn.extend({
 		_RogerReloadRouters: function () {
 			var elems = $(this).find('a[href]');
 			if(elems && elems.length > 0) {
 				elems.each(function(){
-					var attr = $(this).attr('href');
-					if(attr.substring(0,2)=='#/'){
+					var url = $(this).attr('href');
+					if(url.substring(0,2)=='#/'){
 						$(this).click(function (e) {
 							e.preventDefault();
-							var url = $(this).attr('href');
+							$.rogerLocation(url);
+							/*var url = $(this).attr('href');
 							var path = url.indexOf("?") > 0 ? url.substring(0, url.indexOf("?")): url;
 							var router = $.rogerGetRouter(path);
 							if (router) {
-								$.rogerLocation(url);
+								$._rogerSetLocation(url);
 								$._RogerLoadView(
 									router.view, 
 									window._rogerAppContainer, 
@@ -99,33 +129,20 @@ $(function () {
 										router.ctrl(respJSON, realView);
 									}  
 								);
-							}
+							}*/
 						});
 					}
 				});
 			}
 		},
 		rogerGo: function () {
-			var router = window._rogerRouter['#/'];
 			window._rogerAppContainer = $(this);
-			if (router) {
-				$.rogerLocation('#/');
-				$._RogerLoadView(
-					router.view, 
-					$(this), 
-					router.rootrest, 
-					$.rogerGetURLJsonParams(), 
-					function(respJSON, realView) {
-						$('html')._RogerReloadRouters();
-						router.ctrl(respJSON, realView);
-					}  
-				);
-			}
+			$.rogerLocation('#/'+$.rogerWindowURLParamsString());
 		},
 		rogerOnClickRouter: function(container, viewReqURL, viewReqJSON, callback ) {
 			$(this).click(function (e) {
 				e.preventDefault();
-				window._rogerCurrLink = $(this).data("href");
+				$._rogerSetLocation($(this).data("href"));
 				$._RogerLoadView($(this).data("href"), container, viewReqURL, viewReqJSON, callback );
 			});
 		},
@@ -135,7 +152,7 @@ $(function () {
 				$._RogerLoadView($(this).data("href"), container, viewReqURL, viewReqJSON, callback );
 			});
 		},
-		rogerReloadFile: function (file) {
+		rogerReloadFile: function (file, callback) {
 			var $div = $("<div/>");
 			var _this = $(this);
 			$($div).load(file, function () {
@@ -143,6 +160,9 @@ $(function () {
 				_this.hide();
 				_this.html("").append($div);
 				_this.show();
+				if(callback) {
+					callback($div);
+				}
 			});
 		},
 		rogerSubmit: function (reqURL, callback) {

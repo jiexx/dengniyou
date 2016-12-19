@@ -53,9 +53,10 @@ function doSql(name, sql, params, callback) {
 			callback(name, true); 
 			return;
 		}
+		console.log("doSql: "+sql+ "   "+ JSON.stringify(params));
 		conn.query(sql, params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
-			//console.log(results);
+			//console.log(JSON.stringify(results));
 			if(err) { 
 				console.log(err); 
 				if(callback) {
@@ -70,38 +71,63 @@ function doSql(name, sql, params, callback) {
 		//console.log(sql);
 	});
 };
+function shallow(name, obj) {
+    var copy = {};
+    if (obj instanceof Object && obj.sql && typeof obj.sql =="string" && obj.params && obj.params instanceof Array) {
+		copy.params = [];
+		for (var i = 0, len = obj.params.length; i < len; i++) {
+			if (null == obj.params[i] || "object" != typeof obj.params[i]) {
+				copy.params[i] = obj.params[i];
+			}
+		}
+		copy.name = name;
+        copy.sql = obj.sql; 
+		copy.visited = false;
+    }
+	return copy;
+}
 
 function prepareLoop(modal, count) {
 	if (modal && typeof modal =="object" && typeof modal !="string"&& !(modal instanceof Array)) {
 		for (var i in modal) {
-			if( modal[i].sql && typeof modal[i].sql =="string" && modal[i].params && modal[i].params.constructor == Array) {
+			if( modal[i].sql && typeof modal[i].sql =="string" && modal[i].params && modal[i].params instanceof Array){//modal[i].params.constructor == Array) {
 				count.value ++;
 				prepareLoop(modal[i], count);
 			}
 		}
 	}
 };
+function prepareLoop2(name, modal, list) {
+	for (var i in modal) {
+		if(modal[i] && modal[i] instanceof Object && typeof modal[i] !="string"&& !(modal[i].constructor == Array)) {
+			var one = shallow(i, modal[i]);
+			one.parent = shallow(name, modal);
+			
+			list.push(one);
+			prepareLoop2(i, modal[i], list);
+		}
+	}
+};
 var mapObj = {"\\t":"","\"[":"[", "]\"":"]", "\"{":"{", "}\"":"}", "\\\"":"\""};
 function remJson(json) {
 	json["IMGHOST"] = IMG_HOST;
+	//console.log(json);
 	return JSON.stringify(json).replace(/\"\[|\]\"|\"{|}\"|\\\"|\\t/g, function(matched){  //
 		return mapObj[matched];
 	});
 }
-function doLoop(modal, obj, count, callback) {
+function doLoop(modal, data, obj, count, callback) {
 	if (modal && typeof modal =="object" && typeof modal !="string"&& !(modal instanceof Array)) {
 		for (var i in modal) {
 			if(modal[i].sql && typeof modal[i].sql =="string" && modal[i].params && modal[i].params.constructor == Array) {
-				doSql(i, modal[i].sql, modal[i].params, function(name, error, results){
-					console.log("doSql: "+name+ "   "+ modal[name].sql +"  " +count.value +"   "+error);
+				var params = [];
+				for(var a in modal[i].params){
+					params.push(data[modal[i].params[a]]);
+				}
+				doSql(i, modal[i].sql, params, function(name, error, results){
+					//console.log("doSql: "+name+ "   "+ modal[name].sql +"  " +count.value +"   "+error);
 					if(count.value == 1) {
 						console.log("count.value: "+count.value);
-						callback(error, remJson(obj));
-					}else if(error) {
-						count.value --;
-						callback(error, remJson(results));
-					}else {
-						count.value --;
 						if(modal[name].key&&typeof modal[name].key =="string") {
 							obj[name] = new Object();
 							for(var j in results) {
@@ -112,22 +138,94 @@ function doLoop(modal, obj, count, callback) {
 						}else {
 							obj[name] = results;
 						}
-						doLoop(modal[name]);
+						callback(error, remJson(obj));
+					}else if(error) {
+						count.value --;
+						callback(error, remJson(obj));
+					}else {
+						count.value --;
+						if(modal[name].key&&typeof modal[name].key =="string") {
+							obj[name] = new Object();
+							/*for(var j in results) {
+								//console.log('results[j][modal[name].key]:'+JSON.stringify(results[j][modal[name].key]));
+								if(results[j][modal[name].key]) {
+									//obj[name][results[j][modal[name].key]] = results[j];
+									if(!obj[name][results[j][modal[name].key]]) {
+										obj[name][results[j][modal[name].key]] = [];
+									}
+									obj[name][results[j][modal[name].key]].push(results[j]);
+								}
+							}*/obj[name] = results;
+						}else {
+							obj[name] = results;
+						}
+						doLoop(modal[name], data, obj, count, callback);
 					}
 				});  
 			}
 		}
 	}
 };
+function doLoop2(list, data, obj, i, callback) {
+	if(i.value < list.length && list[i.value] && !list[i.value].visited && list[i.value].sql) {
+		var params = [];
+		for(var a in list[i.value].params){
+			params.push(data[list[i.value].params[a]]);
+		}
+		doSql(i, list[i.value].sql, params, function(index, error, results){
+			//console.log("doSql: "+i+ "   "+ list[name].sql +"  " +count.value +"   "+error);
+			
+			var name = list[index.value].name;
+			if(index.value + 1 == list.length) {
+				//console.log('index + 1 == list.length '+index.value + JSON.stringify(list[index.value]));
+				callback(error, remJson(obj));
+			}else if(error) {
+				list[index.value].visited = true;
+				index.value ++;
+				
+				callback(error, remJson(obj));
+			}else {
+				
+				if(list[index.value].key && typeof list[index.value].key =="string") {
+					console.log('1------------list[index.value].key ');
+					var key = list[index.value].key;
+					obj[name] = new Object();
+					for(var j in results) {
+						//console.log('results[j][modal[name].key]:'+JSON.stringify(results[j][modal[name].key]));
+						if(results[j][key]) {
+							//obj[name][results[j][modal[name].key]] = results[j];
+							var value = results[j][key];
+							if(!obj[name][value]) {
+								obj[name][value] = [];
+							}
+							obj[name][value].push(results[j]);
+						}
+					}
+					//obj[name] = results;
+				}else {
+					obj[name] = results;
+				}
+				list[index.value].visited = true;
+				index.value ++;
+				if(index.value + 1 == list.length) {
+					callback(error, remJson(obj));
+				}else {
+					doLoop2(list, data, obj, i, callback);
+				}
+			}
+		});  
+	}
+};
 
-exports.rogerSmartSql = function(file, callback) {
+exports.rogerSmartSql = function(modal, data, callback) {
 	var result =  new Object();
+	var list = [];
 	var count = new Object();
-	var modal = require(file);
+	//var modal = require(file);
 	count.value = 0;
-	prepareLoop(modal, count)
-	console.log(JSON.stringify(modal)+'    '+count.value);
-	doLoop(modal, result, count, callback)
+	prepareLoop2('', modal, list);
+	//console.log(JSON.stringify(modal)+'    '+count.value);
+	doLoop2(list, data, result, count, callback);
 }
 
 exports.login = function(item, callback) {
