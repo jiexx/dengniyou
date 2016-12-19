@@ -1,8 +1,8 @@
 {
 	"Advs": {"sql": "SELECT * FROM traveldb.tab_advertise;",	"params":[]}, 
 	"PlansByContinent": {"sql": "SELECT * FROM traveluserdb.`vw_/home_plansbycontinent` WHERE Continent is not null and trim(Continent) <> ' ';",	"params":[]}, 
-	"PlansByCountry": {"sql": "SELECT * FROM traveluserdb.`vw_/home_plansbycountry` WHERE Country is not null and trim(Country) <> ' ';",			"params":[], "key":"Country"},
-	"PlansByLabel": {"sql": "SELECT * FROM traveluserdb.`vw_/home_plansbylabel` WHERE Label is not null and trim(Label) <> ' ';",					"params":[], "key":"Label"},
-	"CountryByContinent": {"sql": "SELECT * FROM traveluserdb.`vw_/home_countrybycontinent` WHERE Country is not null and trim(Country) <> ' ';",	"params":[], "key":"Continent"},
-	"LabelByContinent": {"sql": "SELECT * FROM traveluserdb.`vw_/home_labelbycontinent` WHERE Label is not null and trim(Label) <> ' ';",			"params":[], "key":"Continent"}
+	"PlansByCountry": {"sql": "SELECT * FROM traveluserdb.`vw_/home_plansbycountry` WHERE Country is not null and trim(Country) <> ' ';",			"params":[], "orderby":"Country"},
+	"PlansByLabel": {"sql": "SELECT * FROM traveluserdb.`vw_/home_plansbylabel` WHERE Label is not null and trim(Label) <> ' ';",					"params":[], "orderby":"Label"},
+	"CountryByContinent": {"sql": "SELECT * FROM traveluserdb.`vw_/home_countrybycontinent` WHERE Country is not null and trim(Country) <> ' ';",	"params":[], "orderby":"Continent"},
+	"LabelByContinent": {"sql": "SELECT * FROM traveluserdb.`vw_/home_labelbycontinent` WHERE Label is not null and trim(Label) <> ' ';",			"params":[], "orderby":"Continent"}
 }

@@ -30,30 +30,32 @@
 	<div class="col-md-6"><span class="btn btn-warning">咨询</span></div>
 </div>
 <div class="container row">
-	{{each PlanSchedule}} 
-	<div class="col-md-2"><span class="small pull-right">第${$index}天</span></div>
-	{{/each}}
+	{{for $data.__PlanScheduleCount}}
+	<div class="col-md-2"><span class="small pull-right">第${i}天</span></div>
+	
+	{{/for}}
 </div>
 <div class="container row">
 	<div class="col-md-12"><span class="small pull-left">出发:${$data.PlanInfo[0].StartCity}</span></div>
 </div>
 <div class="container row">
-	<div class="col-md-12"><span class="small pull-left">经过:{{each PlanSchedule}} {{if CountryNameCn != null }} ${CountryNameCn} {{/if}} {{/each}}</span></div>
+	<div class="col-md-12"><span class="small pull-left">经过:{{each(key, val) PlanSchedule}} {{if  val[0].CountryNameCn != null  }} ${val[0].CountryNameCn} {{/if}} {{/each}}</span></div>
 </div>
 <div class="container row">
 	<div class="col-md-12"><span class="small pull-left">方案特色:${$data.PlanInfo[0].PlanFeature}</span></div>
 </div>
 
 <div class="container">
-	{{each PlanSchedule}} 
+	{{each(k,v) PlanSchedule}} 
     <div class="list-group">
 	  <div class="list-group-item clearfix disabled">第${$index}天
 	  </div>
 	  <div class="list-group-item clearfix btn-group">
+		  {{each  v}} 
 		  <div class="col-md-4 ">
 			<div class="media">
 			  <div class="media-left media-top">
-				<img src="${ $data.IMGHOST }${PicURL}" class="media-object" style="width:160px"></img>
+				<img data-src="${ $data.IMGHOST }${PicURL}" class="media-object" style="height:160px; width:160px"></img>
 			  </div>
 			  <div class="media-body">
 				<div class="media-heading">${NameCh}</div>
@@ -62,18 +64,7 @@
 			  </div>
 			</div>
 		  </div>
-		  <div class="col-md-4 ">
-			<div class="media">
-			  <div class="media-left media-top">
-				<img src="${ $data.IMGHOST }${PicURL}" class="media-object" style="width:160px"></img>
-			  </div>
-			  <div class="media-body">
-				<div class="media-heading">${NameCh}</div>
-				<div>${PlanNumber}</div>
-				<div>${StartCity}</div>
-			  </div>
-			</div>
-		  </div>
+		  {{/each}}
 	  </div>
 	</div>
 	{{/each}}

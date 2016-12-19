@@ -76,10 +76,14 @@ $(function () {
 			window._rogerRouter = router;
 		},
 		_rogerSetLocation: function(loc) {
-			window._rogerCurrLink = loc;
+			//window._rogerCurrLink = loc;
+			window.name = loc;
 		},
 		_rogerGetLocation: function() {
-			return window._rogerCurrLink;
+			if(!window.name) {
+				return '#/'+$.rogerWindowURLParamsString();
+			}
+			return window.name;//window._rogerCurrLink;
 		},
 		rogerGetRouter: function(path) {
 			return window._rogerRouter[path];
@@ -114,22 +118,6 @@ $(function () {
 						$(this).click(function (e) {
 							e.preventDefault();
 							$.rogerLocation(url);
-							/*var url = $(this).attr('href');
-							var path = url.indexOf("?") > 0 ? url.substring(0, url.indexOf("?")): url;
-							var router = $.rogerGetRouter(path);
-							if (router) {
-								$._rogerSetLocation(url);
-								$._RogerLoadView(
-									router.view, 
-									window._rogerAppContainer, 
-									router.rootrest, 
-									$.rogerGetURLJsonParams(), 
-									function(respJSON, realView) {
-										realView._RogerReloadRouters();
-										router.ctrl(respJSON, realView);
-									}  
-								);
-							}*/
 						});
 					}
 				});
@@ -137,7 +125,8 @@ $(function () {
 		},
 		rogerGo: function () {
 			window._rogerAppContainer = $(this);
-			$.rogerLocation('#/'+$.rogerWindowURLParamsString());
+			$('html')._RogerReloadRouters();
+			$.rogerLocation($._rogerGetLocation());//'#/'+$.rogerWindowURLParamsString());
 		},
 		rogerOnClickRouter: function(container, viewReqURL, viewReqJSON, callback ) {
 			$(this).click(function (e) {

@@ -248,7 +248,7 @@
 				_default: {$2: "$value"},
 				open: 'for (var i=1;i<=$1a;i++){',
 				close: '};'
-			}
+			},
 		},
 
 		// This stub can be overridden, e.g. in jquery.tmplPlus for providing rendered events

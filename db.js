@@ -56,7 +56,7 @@ function doSql(name, sql, params, callback) {
 		console.log("doSql: "+sql+ "   "+ JSON.stringify(params));
 		conn.query(sql, params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
-			console.log(JSON.stringify(results));
+			//console.log(JSON.stringify(results));
 			if(err) { 
 				console.log(err); 
 				if(callback) {
@@ -82,6 +82,7 @@ function shallow(name, obj) {
 		}
 		copy.name = name;
         copy.sql = obj.sql; 
+		copy.key = obj.orderby;
 		copy.visited = false;
     }
 	return copy;
@@ -112,27 +113,25 @@ function doLoop(list, data, obj, i, callback) {
 		for(var a in list[i.value].params){
 			params.push(data[list[i.value].params[a]]);
 		}
-		doSql(i, list[i.value].sql, params, function(index, error, results){
-			console.log("doSql: "+index.value +' ' +list.length);
-			
+		doSql(i, list[i.value].sql, params, function(index, error, results){			
 			var name = list[index.value].name;
 			if(index.value + 1 == list.length) {
-				//console.log('index + 1 == list.length '+index.value + JSON.stringify(list[index.value]));
-				if(list[index.value].key && typeof list[index.value].key =="string") {
-					var key = list[index.value].key;
+				var key = list[index.value].key;
+				if(key && typeof key =="string") {
+					
 					obj[name] = new Object();
+					var count = 0;
 					for(var j in results) {
-						//console.log('results[j][modal[name].key]:'+JSON.stringify(results[j][modal[name].key]));
-						if(results[j][key]) {
-							//obj[name][results[j][modal[name].key]] = results[j];
-							var value = results[j][key];
+						var value = results[j][key];
+						if(value) {
 							if(!obj[name][value]) {
 								obj[name][value] = [];
 							}
 							obj[name][value].push(results[j]);
+							count ++;
 						}
 					}
-					//obj[name] = results;
+					obj['__'+name+'Count'] = count;
 				}else {
 					obj[name] = results;
 				}
@@ -142,32 +141,27 @@ function doLoop(list, data, obj, i, callback) {
 				index.value ++;
 				callback(error, remJson(obj));
 			}else {
-				
-				if(list[index.value].key && typeof list[index.value].key =="string") {
-					var key = list[index.value].key;
+				var key = list[index.value].key;
+				if(key && typeof key =="string") {
 					obj[name] = new Object();
+					var count = 0;
 					for(var j in results) {
-						//console.log('results[j][modal[name].key]:'+JSON.stringify(results[j][modal[name].key]));
-						if(results[j][key]) {
-							//obj[name][results[j][modal[name].key]] = results[j];
-							var value = results[j][key];
+						var value = results[j][key];
+						if(value) {
 							if(!obj[name][value]) {
 								obj[name][value] = [];
 							}
 							obj[name][value].push(results[j]);
+							count ++;
 						}
+						obj['__'+name+'Count'] = count;
 					}
-					//obj[name] = results;
 				}else {
 					obj[name] = results;
 				}
 				list[index.value].visited = true;
 				index.value ++;
-				if(index.value + 1 == list.length) {
-					callback(error, remJson(obj));
-				}else {
-					doLoop(list, data, obj, i, callback);
-				}
+				doLoop(list, data, obj, i, callback);
 			}
 		});  
 	}
