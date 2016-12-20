@@ -125,13 +125,15 @@ function doLoop(list, data, obj, i, callback) {
 						var value = results[j][key];
 						if(value) {
 							if(!obj[name][value]) {
-								obj[name][value] = [];
+								obj[name][value] = {__index:0,__values:[]};
+								count ++;
 							}
-							obj[name][value].push(results[j]);
-							count ++;
+							obj[name][value].__values.push(results[j]);
+							obj[name][value].__index ++;
+							
 						}
 					}
-					obj['__'+name+'Count'] = count;
+					obj['__count'+name] = count;
 				}else {
 					obj[name] = results;
 				}
@@ -149,13 +151,14 @@ function doLoop(list, data, obj, i, callback) {
 						var value = results[j][key];
 						if(value) {
 							if(!obj[name][value]) {
-								obj[name][value] = [];
+								obj[name][value] = {__index:0,__values:[]};
+								count ++;
 							}
-							obj[name][value].push(results[j]);
-							count ++;
+							obj[name][value].__values.push(results[j]);
+							obj[name][value].__index ++;
 						}
-						obj['__'+name+'Count'] = count;
 					}
+					obj['__count'+name] = count;
 				}else {
 					obj[name] = results;
 				}

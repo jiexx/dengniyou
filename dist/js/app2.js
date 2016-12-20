@@ -1,9 +1,6 @@
 $(function () {
 	
-	var ctrlPlandetail = function(response, realView) {
-		realView.rogerCropImages();
-	};
-	
+
 	var ctrlDashboard = function(response, realView) {
 		//$.cookie("dnyuser").UserID;
 		//$.rogerPost(reqURL, reqJSON, callback)

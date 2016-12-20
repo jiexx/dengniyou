@@ -1,0 +1,4 @@
+{
+	"Text": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE UserID=?;",	"params":["UserID"]}, 
+	"Picture": {"sql": "UPDATE SET ?;",	"params":["Pics"]}
+}

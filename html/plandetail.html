@@ -30,7 +30,7 @@
 	<div class="col-md-6"><span class="btn btn-warning">咨询</span></div>
 </div>
 <div class="container row">
-	{{for $data.__PlanScheduleCount}}
+	{{for $data.__countPlanSchedule}}
 	<div class="col-md-2"><span class="small pull-right">第${i}天</span></div>
 	
 	{{/for}}
@@ -39,7 +39,7 @@
 	<div class="col-md-12"><span class="small pull-left">出发:${$data.PlanInfo[0].StartCity}</span></div>
 </div>
 <div class="container row">
-	<div class="col-md-12"><span class="small pull-left">经过:{{each(key, val) PlanSchedule}} {{if  val[0].CountryNameCn != null  }} ${val[0].CountryNameCn} {{/if}} {{/each}}</span></div>
+	<div class="col-md-12"><span class="small pull-left">经过:{{each(k, v) PlanSchedule}} {{if  (v.__values[0])  }} ${v.__values[0].CountryNameCn}${v.__values[0].CityNameCn} {{/if}} {{/each}}</span></div>
 </div>
 <div class="container row">
 	<div class="col-md-12"><span class="small pull-left">方案特色:${$data.PlanInfo[0].PlanFeature}</span></div>
@@ -48,10 +48,10 @@
 <div class="container">
 	{{each(k,v) PlanSchedule}} 
     <div class="list-group">
-	  <div class="list-group-item clearfix disabled">第${$index}天
+	  <div class="list-group-item clearfix disabled">第${k.__index}天
 	  </div>
 	  <div class="list-group-item clearfix btn-group">
-		  {{each  v}} 
+		  {{each  v.__values}} 
 		  <div class="col-md-4 ">
 			<div class="media">
 			  <div class="media-left media-top">
@@ -61,6 +61,13 @@
 				<div class="media-heading">${NameCh}</div>
 				<div>${PlanNumber}</div>
 				<div>${StartCity}</div>
+				{{if  ScheduleType == 0  }}
+				<div>${CountryNameCn}${CountryNameEn}</div>
+				<div>${CityNameCn}${CityNameEn}</div>
+				{{/if}}
+				{{if  ScheduleType == 1  }}
+				<div>${AirportNameCn}${AirportNameEn}${AirportCode}</div>
+				{{/if}}
 			  </div>
 			</div>
 		  </div>
@@ -70,4 +77,54 @@
 	{{/each}}
 </div>
 
+<div class="container">
+  <div class="jumbotron">
+    <p>预订须知</p>      
+    <h5 id="policy"></h5>
+  </div>     
+</div>
+
+<div class="container">
+    <div class="list-group">
+	  {{each PlanComment[0]}} 
+	  <div class="col-md-12 list-group-item ">
+	    <div class="media">
+		  <div class="media-left media-top">
+			<img src="${ $data.IMGHOST }${AvatarPicURL}}" class="media-object" style="width:80px"></img>
+			<div>${UserName}</div>
+		  </div>
+		  <div class="media-body">
+			<div class="media-heading">${CreateDate}</div>
+			<div>${Remark}</div>
+		  </div>
+		</div>
+		<div class="clearfix"></div>
+		<div class="row">
+		{{each(k,v) PicURLs}}
+			<div class="col-md-3 "><img data-src="${ $data.IMGHOST }${v}" class="media-object" style="height:100px; width:100px"></img></div>
+		{{/each}}
+		</div>
+	  </div>
+	{{/each}}
+	</div>
+</div>
+<div class="container">
+	<div class="list-group">
+		<div class="list-group-item clearfix disabled">我要评价
+	  </div>
+		<div class="list-group-item clearfix btn-group">
+			<div class="col-md-6 ">
+				<textarea class="form-control" rows="5"></textarea>
+			</div>
+			<div class="col-md-6 row">
+				<div class="col-md-2" id="photos" style="height:100px"><span class="glyphicon glyphicon-plus h1"></span></div> 
+			</div>
+		</div>
+		<div class="btn-group btn-group-justified">
+		  <div class="btn-group" role="group">
+			<button  id="commit" type="button" class="btn btn-info">提交</button>
+		  </div>
+		</div>
+	</div>
+</div>
 </div>

@@ -106,6 +106,36 @@ $(function () {
 					);
 				}
 			}
+		},
+		rogerScale: function(src_w, src_h, dst_w, dst_h) {
+			var sw = parseFloat(src_w);
+			var sh = parseFloat(src_h);
+			var dw = parseFloat(dst_w);
+			var dh = parseFloat(dst_h);
+			var k = dst_h > dst_w ? src_h / dst_h : src_w / dst_w ;
+			return  dst_h > dst_w ? (dst_h < src_h ? {w:dst_w, h:dst_h}:{w:dst_w * k, h:dst_h * k}) : (dst_w < src_w ? {w:dst_w, h:dst_h}:{w:dst_w * k, h:dst_h * k});
+		},
+		rogerGetLoginUser: function(){
+			return $.cookie("roger");
+		},
+		rogerShowLogin: function(){
+			$(window._rogerLoginForm).modal('show');
+		},
+		rogerInitLoginForm: function(loginFormID, reqURL, redirectURL) {
+			$(formID).rogerSubmit(reqURL, function(respJSON){
+				if(respJSON[0] && respJSON[0].UserID > 0) {
+					//window.open(redirectURL,'_blank');
+					//window.location = '/dashboard.html?UserID='+respJSON[0].UserID;
+					$.removeCookie("roger");
+					$.cookie("roger", respJSON[0], { expires : 10 });
+					$.rogerRefresh();
+				}
+			});
+			$(formID).modal({ show: false});
+			window._rogerLoginForm = loginFormID;
+		},
+		rogerRefresh: function() {
+			$.rogerLocation($._rogerGetLocation());
 		}
 	});
 	$.fn.extend({
@@ -126,7 +156,7 @@ $(function () {
 		rogerGo: function () {
 			window._rogerAppContainer = $(this);
 			$('html')._RogerReloadRouters();
-			$.rogerLocation($._rogerGetLocation());//'#/'+$.rogerWindowURLParamsString());
+			$.rogerRefresh();//$.rogerLocation($._rogerGetLocation());//'#/'+$.rogerWindowURLParamsString());
 		},
 		rogerOnClickRouter: function(container, viewReqURL, viewReqJSON, callback ) {
 			$(this).click(function (e) {
@@ -180,6 +210,43 @@ $(function () {
 					$(this).attr('src', newSrc);
 				});
 			}
+		},
+		rogerUploadImage: function ( width, height, callback) {
+			if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
+			  return;
+			}  
+			$(this).hide();
+			$(this).append('<div><canvas id="photo" style="position:relative;width:100%;height:100%" /><input type="file" style="position:absolute;opacity:0;top:0;bottom:0;left:0;right:0;width:100%" multiple="multiple"/></div>');
+			$('input[type="file"]').change(function(e){
+				var files = this.files;
+				if (!files[0] || !files[0].type) return;
+				for(var i in files) {
+				  if (files[i] && files[i].type && files[i].type.indexOf('image') > -1) {
+					var reader = new FileReader();
+					reader.onloadend = function (evt) {
+						var img = new Image();
+						img.src = evt.target.result;
+						var avatar = document.getElementById("photo");
+						var w = width ? width : 300;
+						var h = height ? height : 150;
+						var ctx = avatar.getContext("2d");
+						ctx.fillStyle="#ffffff";
+						ctx.fillRect(0, 0, avatar.width, avatar.height);
+						img.onload = function() {
+							var k = $.rogerScale(w, h, img.width, img.height);
+							avatar.width = k.w;
+							avatar.height = k.h;
+							ctx.drawImage(img, 0, 0, img.width, img.height, 0, 0, avatar.width, avatar.height);
+							callback({raw:avatar.toDataURL("image/jpeg")});
+							ctx.clearRect(0, 0, avatar.width, avatar.height);
+						}
+					}
+					reader.readAsDataURL(files[i]);
+				  }
+				}
+			});
+			$(this).show();
+			
 		},
 	});
 })( jQuery );
