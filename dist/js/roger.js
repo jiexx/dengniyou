@@ -40,7 +40,7 @@ $(function () {
 			}
 		},
 		_RogerLoadView:function(srcView, destContainer, srcViewReqURL, srcViewReqJSON, callback){
-			if(srcView && destContainer && URL) {
+			if(srcView && destContainer && srcViewReqURL) {
 				var $view = $("<div/>");
 				$($view).load(srcView, function () {
 					$.ajax({
