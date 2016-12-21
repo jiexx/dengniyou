@@ -36,10 +36,10 @@
 				$.rogerShowLogin();
 				return;
 			}
-			var data = {UserID:$.rogerGetLoginUser().UserID,Pics:[]};
+			var data = {UserID:$.rogerGetLoginUser().UserID,files:[]};
 			var elems = $('#photos').find('img["src"]').nextAll(), count = elems.length;
 			elems.each( function(i) {
-				data.Pics.push($(this).attr('src'));
+				data.files.push($(this).attr('src'));
 				if (!--count) {
 					$.rogerPost('/comment/plan', data, function(){
 						$.rogerRefresh();
