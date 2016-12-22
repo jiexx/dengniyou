@@ -87,9 +87,12 @@ var CallbackLooper = {
 		if(_this.i < _this.count) {
 			_this.func(_this.funcArgus[_this.i], function(){  //<--- eg. == before after callback
 				if(_this.onOneFinish) {
-					var one = [_this.funcArgus[_this.i]];
-					one.concat(arguments);
-					_this.onOneFinish.apply(this, one);
+					var args = new Array(arguments.length+1);
+					args[0] = _this.funcArgus[_this.i];
+					for(var i = 0; i < arguments.length; ++i) {
+						args[i+1] = (arguments[i]);
+					}
+					_this.onOneFinish.apply(this, args);
 				}
 
 				_this.i ++;
@@ -121,9 +124,12 @@ var CallbacksLooper = {
 		if(_this.i < _this.count) {
 			_this.func[_this.i](_this.funcArgus[_this.i], function(){
 				if(_this.onOneFinish) {
-					var one = [_this.funcArgus[_this.i]];
-					one.concat(arguments);
-					_this.onOneFinish.apply(this, one);
+					var args = new Array(arguments.length+1);
+					args[0] = _this.funcArgus[_this.i];
+					for(var i = 1; i < arguments.length; ++i) {
+						args[i+1] = (arguments[i]);
+					}
+					_this.onOneFinish.apply(this, args);
 				}
 				_this.i ++;
 				_this.loop();
@@ -189,9 +195,10 @@ var roger = {
 				var child = modal[key];
 				if("object" == typeof child && Array != child.constructor) {
 					roger.prepare(copy, key, child, out);
+				}else {
 					if(roger.tagHandler[key]) {
-						var val = child[key];
-						roger.tagHandler[key](modal, copy, key, val);
+						//var val = child[key];
+						roger.tagHandler[key](modal, copy, child);
 					}
 				}
 			}
@@ -309,7 +316,7 @@ var roger = {
 			}
 		},
 		"params": function(modal, copy, value) {
-			if( Array != value.constructor ) {
+			if( Array == value.constructor ) {
 				copy.params = value;
 				if(!copy.before) {
 					copy.before = [];
