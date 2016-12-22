@@ -22,7 +22,7 @@ var pool  = mysql.createPool({
 	user : 'root',
 	//password : '123456',
 	password: 'zl_2wsx!QAZ',
-	connectionLimit: 500,
+	connectionLimit: 500
 //	acquireTimeout: 30000
 });
 var IMG_HOST = "http://123.59.144.47/";
@@ -30,20 +30,20 @@ var IMG_HOST = "http://123.59.144.47/";
 function doSql(funcArgu, onFinish) {
 	pool.getConnection(function(err, conn) {
 		if(err) { 
-			console.log(err); 
-			onFinish(true); 
+			//console.log(err);
+			onFinish(true);
 			return;
 		}
-		console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
+		//console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
 		conn.query(funcArgu.sql, funcArgu.params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
-			//console.log(JSON.stringify(results));
-			if(err) { 
-				console.log(err); 
+			////console.log(JSON.stringify(results));
+			if(err) {
+				//console.log(err);
 				if(onFinish) {
 					onFinish(true, results);
 				}
-				return; 
+				return;
 			}
 			if(onFinish) {
 				onFinish(false, results);
@@ -52,7 +52,7 @@ function doSql(funcArgu, onFinish) {
 	});
 };
 function decodeBase64Image(dataString) {
-  //console.log(dataString);
+  ////console.log(dataString);
   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
 
@@ -72,7 +72,7 @@ var uploadImage = function uploadImage(funcArgu, onFinish){
 			onFinish(fileId);
 		}
 	}).catch(function(err) {
-		console.log(err);
+		//console.log(err);
 	});
 };
 
@@ -85,13 +85,13 @@ var CallbackLooper = {
 			}
 		}
 		if(_this.i < _this.count) {
-			_this.func(_this.funcArgus[_this.i], function(){
+			_this.func(_this.funcArgus[_this.i], function(){  //<--- eg. == before after callback
 				if(_this.onOneFinish) {
 					var one = [_this.funcArgus[_this.i]];
 					one.concat(arguments);
 					_this.onOneFinish.apply(this, one);
 				}
-				
+
 				_this.i ++;
 				_this.loop();
 			});
@@ -99,13 +99,13 @@ var CallbackLooper = {
 	},
 	create: function(count, func, funcArgus, onFinish, onOneFinish) {
 		var obj = {
-			func:func, 
-			count:count, 
-			i:0, 
-			onFinish:onFinish, 
-			onOneFinish:onOneFinish, 
+			func:func,
+			count:count,
+			i:0,
+			onFinish:onFinish,
+			onOneFinish:onOneFinish,
 			loop:CallbackLooper.loop,
-			funcArgus:funcArgus,
+			funcArgus:funcArgus
 		};
 		return obj;
 	}
@@ -132,16 +132,16 @@ var CallbacksLooper = {
 	},
 	create: function(count, func, funcArgus, onFinish, onOneFinish) {
 		var obj = {
-			func:func, 
-			count:count, 
-			i:0, 
-			onFinish:onFinish, 
-			onOneFinish:onOneFinish, 
-			loop:CallbackLooper.loop,
-			funcArgus:funcArgus,
+			func:func,
+			count:count,
+			i:0,
+			onFinish:onFinish,
+			onOneFinish:onOneFinish,
+			loop:CallbacksLooper.loop,
+			funcArgus:funcArgus
 		};
 		return obj;
-	},
+	}
 };
 
 var roger = {
@@ -159,32 +159,36 @@ var roger = {
 	},
 	"format":function(json) {
 		json["IMGHOST"] = IMG_HOST;
-		//console.log(json);
-		return JSON.stringify(json).replace(/\"\[|\]\"|\"{|}\"|\\\"|\\t/g, function(matched){  //
+		////console.log(json);
+		return JSON.stringify(json).replace(/\"\[|\]\"|\"{|}\"|\\\"|\\t/g, function(matched){
 			return mapObj[matched];
 		});
 	},
-	"finish":function(all) {
+	"after":function(list, data, onFinish) {
 		var funcArgus = [];
 		var funcs = [];
-		for(var i in all.list) {
-			var copy = all.list[i];
+		for(var i in list) {
+			var copy = list[i];
 			for(var b in copy.after) {
-				funcArgus.push({data:all.data, copy:all.copy});
-				funcs.push(copy.before[i]);
+				if(copy.after) {
+					funcArgus.push({output:copy.output, copy:copy});
+					funcs.push(copy.after[i]);
+				}
 			}
 		}
+		var csl = CallbacksLooper.create(funcs.length, funcs, funcArgus, onFinish, null);
+		csl.loop();
 	},
 	// superior:  current parent of Copy in out vector.
 	// tag: current parent's tag of Copy in out vector.
-	"loop":function (copy, tag, modal, out) {  
+	"prepare":function (superior, tag, modal, out) {
 		if("object" == typeof modal) {
-			var copy = {tag:tag, valid:false, superior: copy, vector:out}; 
-			for (var key in modal) { 
+			var copy = {tag:tag, valid:false, superior: superior, vector:out};
+			for (var key in modal) {
 				out.push(copy);
 				var child = modal[key];
 				if("object" == typeof child) {
-					roger.loop(copy, key, child, out);
+					roger.prepare(copy, key, child, out);
 				}
 				if(roger.tagHandler[key]) {
 					var val = child[key];
@@ -193,57 +197,95 @@ var roger = {
 			}
 		}
 	},
+	"complete":function(list) {
+		var root = null;
+		var out = [];
+		var tag = '';
+		var copy = null;
+		var superior = null;
+		for(var i in list) {
+			tag = list[i].tag;
+			if(!out[tag]){
+				out[tag] = {};
+			}else {
+				out[tag] = [];
+			}
+			if(!list[i].superior){
+				root = list[i];
+			}
+		}
+		for(var i in list) {
+			copy = list[i];
+			if(copy.superior != null) {
+				superior = out[copy.superior.tag];
+				if(superior){
+					if("object" != typeof superior){
+						superior[copy.tag] = copy;
+					}
+					else if(Array != superior.constructor){
+						superior.push(copy);
+					}
+				}
+			}
+		}
+		return JSON.stringify(root);
+	},
 	//all.data <-  receive req json data
 	//eg.{UserID:1234,Pics:["",""]}
-	//all.list 
-	"prepare":function(all, onFinish){
+	//all.list
+	"before":function(list, data, onFinish){
 		var funcArgus = [];
 		var funcs = [];
-		for(var i in all.list) {
-			var copy = all.list[i];
+		for(var i in list) {
+			var copy = list[i];
 			for(var b in copy.before) {
-				funcArgus.push({data:all.data, copy:all.copy});
-				funcs.push(copy.before[i]);
+				if(copy.before) {
+					funcArgus.push({data:data, copy:copy});
+					funcs.push(copy.before[i]);
+				}
 			}
 		}
 		var csl = CallbacksLooper.create(funcs.length, funcs, funcArgus, onFinish, null);
 		csl.loop();
 	},
-	//all.data <-  receive req json data
+	//data <-  receive req json data
 	//eg.{UserID:1234,Pics:["",""]}
-	//all.copy <-  semi list
+	//copy <-  semi list
 	//eg."Picture": {"sql": "UPDATE SET ?, ?;",	"params":["Pics", "UserID"], "files":"Pics"}
-	"uploadImages":function(all, onFinish){
-		var datafiles = all.data[all.copy.files];
-		var funcArgus = [];
-		for(var i in datafiles) {
-			funcArgus.push({base64:datafiles[i], copy:all.copy});
+	"uploadImages":function(copy, data, onFinish){
+		var datafiles = data[copy.files];
+		var funcArgus = [{base64:datafiles[i], copy:copy}];
+		for(var i = 0 ; i < datafiles.length - 1 ; i ++) {
+			var shallow = roger.shallow(copy);
+			copy.vector.push(shallow);
+			funcArgus.push({base64:datafiles[i], copy:shallow});
 		}
-		var cl = CallbackLooper.create(datafiles.length, uploadImage, funcArgus, 
+		var cl = CallbackLooper.create(funcArgus.length, uploadImage, funcArgus,
 			onFinish,
 			function(funcArgu, fileid){
 				var inputparams = [];
 				for(var i in funcArgu.copy.params){
-					var tag = funcArgu.copy.params[i];
-					if(tag == funcArgu.copy.files) {
+					var param = funcArgu.copy.params[i];
+					if(param == funcArgu.copy.files) {
 						inputparams.push(fileid);
 					}else {
-						inputparams.push(that.data[tag]);
+						inputparams.push(funcArgu.data[param]);
 					}
 				}
 				funcArgu.copy.input = inputparams;
 			});
 		cl.loop();
 	},
-	//all.data <-  receive req json data
 	//eg.{UserID:1234,Pics:["",""]}
 	//all.list <-  semi list, extract from modal tree.
-	"process": function (all, onFinish) {
+	"process": function (list, onFinish) {
 		var funcArgus = [];
-		for(var i in all.list) {
-			funcArgus.push({sql:all.list[i].sql, params:all.list[i].input, copy:list[i]});
+		for(var i in list) {
+			if(list[i].valid) {
+				funcArgus.push({sql:list[i].sql, params:list[i].input, copy:list[i]});
+			}
 		}
-		var cl = CallbackLooper.create(funcArgus.length, doSql, funcArgus, 
+		var cl = CallbackLooper.create(funcArgus.length, doSql, funcArgus,
 			onFinish,
 			function(funcArgu, err, results){
 				if(!err) {
@@ -261,9 +303,8 @@ var roger = {
 				if(!copy.before) {
 					copy.before = [];
 				}
-				copy.before.push(function(data, callback){
-					var all = {data: data, copy: this};
-					roger.uploadImages(all, callback);
+				copy.before.push(function(funcArgu, onFinish){ //funcArgus.push({data:data, copy:copy});
+					roger.uploadImages(funcArgu.copy, funcArgu.data, onFinish);
 				});
 			}
 		},
@@ -273,45 +314,43 @@ var roger = {
 				if(!copy.before) {
 					copy.before = [];
 				}
-				copy.before.push(function(funcArgu, callback){
-					var copy = this;
+				copy.before.push(function(funcArgu, onFinish){ //funcArgus.push({data:data, copy:copy}); //funcArgu -- rows  onFinish == self func finish
 					var inputParams = [];
-					for(var i in copy.params){
-						var index = copy.params[i];
-						inputParams.push(data[index]);
+					for(var i in funcArgu.copy.params){
+						var index = funcArgu.copy.params[i];
+						inputParams.push(funcArgu.data[index]);
 					}
-					copy.input = inputParams;
-					callback();
+					funcArgu.copy.input = inputParams;
+					onFinish();
 				});
 			}
 		},
 // ---------------do SQL
 		"sql": function(modal, copy, value) {
-			if( "string" == typeof value ) { 
+			if( "string" == typeof value ) {
 				copy.valid = true;
-				copy.after = function(funcArgu, callback){  //funcArgu -- rows
-					var copy = this;
-					copy.out = funcArgu;
-				};
 				copy.sql = value;
-			}	
+				copy.input = null;
+				copy.output = null;
+			}
 		},
 // ---------------after SQL ||| multi before need implement callback1,callback2,callback3..., last one callback trigger finish callback
 		"key": function(modal, copy, value) {
 			if( "string" == typeof value ) {
 				copy.key = value;
-				copy.after = function(funcArgu, callback){ //funcArgu -- rows
-					var copy = this;
+				copy.after.push(function(funcArgu, onFinish){ //funcArgu -- rows
+					var copy = funcArgu.copy;
 					var obj = {};
-					for(var i in funcArgu) {
-						var row = funcArgu[i];
+					for(var i in funcArgu.output) {
+						var row = funcArgu.output[i];
 						if(row[copy.key] && "object" != typeof row[copy.key] && Array != row[copy.key].constructor){
 							obj[copy.key] = {__index:0,__values:[]};
 							obj[copy.key].__index ++;
 							obj[copy.key].__values.push(row);
 						}
 					}
-					copy.out = obj;
+					funcArgu.copy.output = obj;
+					onFinish();
 				});
 			}
 		}
@@ -319,29 +358,19 @@ var roger = {
 
 }
 
-function process(target, data, callback) {
-	var copy = target.semi[target.i];
-	for(var i in copy.before) {
-		copy.before(data);
-	}
-	doSql(target, copy, copy.sql, copy.input, function(target, item, error, results){
-		if(error) {
-			callback(error, roger.finish(target));
-		}
-		var copy = item;
-		for(var i in copy.after) {
-			copy.after(results);
-		}
-		if(target.i < target.semi.length - 1) {
-			process(target, data, callback);
-		}
-		if(target.i == target.semi.length - 1) {
-			callback(error, roger.finish(target));
-		}
-	});
-};
 
 exports.rogerSmartSql = function(modal, data, callback) {
-	var target = roger.prepare(modal);
-	process(target, data, callback);
+	var out = [];
+	roger.prepare(null, 'root', modal, out);
+	roger.before(out, data, function(){
+		//console.log('BEFORE:'+JSON.stringify(out));
+		roger.process(out, function(){
+			//console.log('PROCESS:'+JSON.stringify(out));
+			roger.after(list, data, function(){
+				//console.log('AFTER:'+JSON.stringify(out));
+				var results = complete(out);
+				callback(results);
+			});
+		});
+	});
 }

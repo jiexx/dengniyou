@@ -8,6 +8,7 @@ var router = express.Router();
 var fs = require("fs");
 var request = require('request');
 var db = require("./db");
+var modal = require("./modal");
 var FdfsClient = require('fdfs');
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
@@ -39,7 +40,7 @@ var fdfs = new FdfsClient({
 });
 
 function decodeBase64Image(dataString) {
-  //console.log(dataString);
+  //////console.log(dataString);
   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
 
@@ -75,7 +76,7 @@ function readFiles(dirname, onFileContent, onError) {
 app.post('/login', upload.array(), function(req, res) {
 	db.login(req.body, function(error, results){
 		if(!error) {
-			console.log(JSON.stringify(results));
+			////console.log(JSON.stringify(results));
 			res.send(JSON.stringify(results));
 		}
 	});
@@ -83,7 +84,7 @@ app.post('/login', upload.array(), function(req, res) {
 app.get('/roles', upload.array(), function(req, res) {
 	db.getRoles(req.body, function(error, results){
 		if(!error) {
-			console.log(JSON.stringify(results));
+			////console.log(JSON.stringify(results));
 			res.send(JSON.stringify(results));
 		}
 	});
@@ -98,7 +99,7 @@ app.get('/roles', upload.array(), function(req, res) {
 app.post('/photo/insert', upload.array(), function(req, res) {
 	var data = req.body;
 	var pic = decodeBase64Image(data.pic);
-	//console.log(JSON.stringify(data));
+	//////console.log(JSON.stringify(data));
 	fdfs.upload(pic.data, {ext: 'jpg'}).then(function(fileId) {
 			db.insertPhoto(data.id, fileId, data.introduce, function(error, results){
 				if(!error) {
@@ -106,7 +107,7 @@ app.post('/photo/insert', upload.array(), function(req, res) {
 				}
 			});
 		}).catch(function(err) {
-			console.log(err);
+			////console.log(err);
 		});
 	
 })
@@ -123,37 +124,37 @@ var server = app.listen(8088, function() {
 		
 		var point = '/'+filename.substring(0,filename.indexOf('.')).replace(/-/g,'/');
 		MODAL[point] = JSON.parse(content);
-		console.log(point);
+		////console.log(point);
 		app.post(point, upload.array(), function(req, res) {
-			console.log('------------');
-			console.log('POINT:'+point+ '  '+JSON.stringify(req.body));
+			//console.log('------------');
+			//console.log('POINT:'+point+ '  '+JSON.stringify(req.body));
 			db.rogerSmartSql(MODAL[point], req.body, function(error, results){
-				console.log('end.');
+				//console.log('end.');
 				res.send(results);
 			});
 		});
 		if(true) {
 			app.get(point, upload.array(), function(req, res) {
-				console.log('------------');
-				console.log('POINT:'+point+ '  '+JSON.stringify(req.query));
-				db.rogerSmartSql(MODAL[point], req.query, function(error, results){
+				//console.log('------------');
+				//console.log('POINT:'+point+ '  '+JSON.stringify(req.query));
+				modal.rogerSmartSql(MODAL[point], req.query, function(error, results){
 					res.send(results);
 				});
 			});
 		}
 	}, function(err) {
-		console.log("modal ERROR!");
+		//console.log("modal ERROR!");
 	});
 
-	console.log("RUNNING http://%s:%s", host, port);
+	//console.log("RUNNING http://%s:%s", host, port);
 });
 process.on('uncaughtException', function(err) {
-    console.log('----------------------------------------   >>   uncaughtException:'+err);
+    //////console.log('----------------------------------------   >>   uncaughtException:'+err);
 });
 server.on('error', function(err) { 
-	console.log('SERVER ERR:  '+err);
+	//console.log('SERVER ERR:  '+err);
 });
 process.on('SIGINT', function() {
-    console.log('Naughty SIGINT-handler');
+    //console.log('Naughty SIGINT-handler');
 	process.exit()
 });
