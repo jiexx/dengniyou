@@ -184,15 +184,15 @@ var roger = {
 	"prepare":function (superior, tag, modal, out) {
 		if("object" == typeof modal) {
 			var copy = {tag:tag, valid:false, superior: superior, vector:out};
+			out.push(copy);
 			for (var key in modal) {
-				out.push(copy);
 				var child = modal[key];
-				if("object" == typeof child) {
+				if("object" == typeof child && Array != child.constructor) {
 					roger.prepare(copy, key, child, out);
-				}
-				if(roger.tagHandler[key]) {
-					var val = child[key];
-					roger.tagHandler[key](modal, copy, key, val);
+					if(roger.tagHandler[key]) {
+						var val = child[key];
+						roger.tagHandler[key](modal, copy, key, val);
+					}
 				}
 			}
 		}
@@ -239,9 +239,9 @@ var roger = {
 		for(var i in list) {
 			var copy = list[i];
 			for(var b in copy.before) {
-				if(copy.before) {
+				if(copy.before[b]) {
 					funcArgus.push({data:data, copy:copy});
-					funcs.push(copy.before[i]);
+					funcs.push(copy.before[b]);
 				}
 			}
 		}
