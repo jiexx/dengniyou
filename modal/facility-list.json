@@ -1,0 +1,4 @@
+{
+  "Facilities": {"sql": "SELECT * FROM traveluserdb.`vw_/facility/list` WHERE userID = ? order by updateDate desc",	"params":["userID"]}
+
+}
