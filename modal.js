@@ -34,7 +34,7 @@ function doSql(funcArgu, onFinish) {
 			onFinish(true);
 			return;
 		}
-		//console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
+		console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
 		conn.query(funcArgu.sql, funcArgu.params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
 			////console.log(JSON.stringify(results));
@@ -79,7 +79,8 @@ var uploadImage = function uploadImage(funcArgu, onFinish){
 var CallbackLooper = {
 	loop: function() {
 		var _this = this;
-		if(_this.i == _this.count - 1) {
+		//console.log(_this.func.toString() + ' 	'+_this.i+'  '+_this.count);
+		if(_this.i == _this.count) {
 			if(_this.onFinish) {
 				_this.onFinish();
 			}
@@ -96,6 +97,7 @@ var CallbackLooper = {
 				}
 
 				_this.i ++;
+				console.log(' 	sql'+_this.i+'  '+_this.count);
 				_this.loop();
 			});
 		}
@@ -116,7 +118,7 @@ var CallbackLooper = {
 var CallbacksLooper = {
 	loop: function() {
 		var _this = this;
-		if(_this.i == _this.count - 1) {
+		if(_this.i == _this.count) {
 			if(_this.onFinish) {
 				_this.onFinish();
 			}
@@ -171,6 +173,7 @@ var roger = {
 		});
 	},
 	"after":function(list, data, onFinish) {
+		console.log('after in:');
 		var funcArgus = [];
 		var funcs = [];
 		for(var i in list) {
@@ -210,28 +213,34 @@ var roger = {
 		var tag = '';
 		var copy = null;
 		var superior = null;
+		console.log(JSON.stringify(out));
 		for(var i in list) {
+			console.log(list[i].tag);
 			tag = list[i].tag;
 			if(!out[tag]){
-				out[tag] = {};
+				out[tag] = new Object();
 			}else {
-				out[tag] = [];
+				out[tag] = new Array();
 			}
+			console.log(out[tag]);
 			if(!list[i].superior){
 				root = list[i];
 			}
 		}
+		console.log(list.length);
 		for(var i in list) {
 			copy = list[i];
 			if(copy.superior != null) {
 				superior = out[copy.superior.tag];
+				console.log(superior);
 				if(superior){
 					if("object" != typeof superior){
-						superior[copy.tag] = copy;
+						superior[copy.tag] = copy.output;
 					}
 					else if(Array != superior.constructor){
-						superior.push(copy);
+						superior.push(copy.output);
 					}
+					console.log(JSON.stringify(superior));
 				}
 			}
 		}
@@ -370,12 +379,12 @@ exports.rogerSmartSql = function(modal, data, callback) {
 	var out = [];
 	roger.prepare(null, 'root', modal, out);
 	roger.before(out, data, function(){
-		//console.log('BEFORE:'+JSON.stringify(out));
+		console.log('BEFORE:');
 		roger.process(out, function(){
-			//console.log('PROCESS:'+JSON.stringify(out));
-			roger.after(list, data, function(){
-				//console.log('AFTER:'+JSON.stringify(out));
-				var results = complete(out);
+			console.log('PROCESS:');
+			roger.after(out, data, function(){
+				console.log('AFTER:');
+				var results = roger.complete(out);
 				callback(results);
 			});
 		});
