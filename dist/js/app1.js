@@ -48,10 +48,16 @@
 			});
 		});
 	};
-	
+
+    var ctrlOrderlist = function(response, realView) {
+
+        realView.rogerCropImages();
+    };
+
 	$.rogerRouter({
 		'#/':							{view:'home.html',								rootrest:'/home', 						ctrl: ctrlHome},
 		'#/plandetail': 				{view:'plandetail.html',						rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
+        '#/orderlist': {view: 'orderlist.html', rootrest: '/order/list', ctrl: ctrlOrderlist},
 	});
 	
 	

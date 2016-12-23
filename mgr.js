@@ -112,6 +112,17 @@ app.post('/photo/insert', upload.array(), function(req, res) {
 	
 })
 
+//usertype:1,游客，2导游,userID
+app.post('/order/list', upload.array(), function(req, res) {
+    db.getOrderList(req.body, function(error, results){
+        if(!error) {
+        	var datas = {"datas":results};
+            ////console.log(JSON.stringify(results));
+            res.send(JSON.stringify(datas));
+        }
+    });
+});
+
 
 var MODAL = {};
 var server = app.listen(8088, function() {

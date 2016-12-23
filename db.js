@@ -286,15 +286,60 @@ exports.enableGuide = function(id, enable, callback) {
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
 	});
 };
-exports.getRoles = function(item, callback) {
+
+////usertype:1,游客，2导游,userID,status,page
+exports.getOrderList = function(item, callback) {
 	pool.getConnection(function(err, connection) {
 		if(err) { 
 			console.log(err); 
 			callback(true); 
 			return;
 		}
-		var sql = "SELECT UserName, UserID FROM traveldb.tab_userinfo WHERE IfRobot='Y'; ";
-		exec(connection, sql, [], callback);
+
+        var sql =[];
+        if(item.usertype == 1){
+            sql.push( "select travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.GuideID as userid,userinfo.UserName as username,travelorder.Status as status, " +
+                "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl, " +
+                "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays, " +
+                "                           travelorder.IfEvaluate as ifevaluate,travelorder.IfReply as ifreply,userinfo.AvatarPicURL " +
+                "                           from travelorderdb.tab_travelorder travelorder left join traveldb.tab_userinfo userinfo on travelorder.GuideID = userinfo.UserID " +
+                "                                                            left join traveluserdb.tab_services userservice on travelorder.ServiceTripID=IF(travelorder.OrderType=1,userservice.ServiceID,-1) " +
+                "                                                            left join traveluserdb.tab_facilitypictures pict on (IF(travelorder.OrderType=1,userservice.ServiceID,-1)=pict.PictureID AND pict.PicType=1 AND pict.IsCover=1) " +
+                "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) " +
+                "							where travelorder.UserID = "+item.userID);
+		} else if(item.usertype == 2){
+            sql.push("select travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.UserID as userid,userinfo.UserName as username,travelorder.Status as status,\n" +
+            "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl,\n" +
+            "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays,\n" +
+            "                           travelorder.IfEvaluate as ifevaluate,travelorder.IfReply as ifreply,userinfo.AvatarPicURL\n" +
+            "                           from travelorderdb.tab_travelorder travelorder left join traveldb.tab_userinfo userinfo on travelorder.UserID = userinfo.UserID\n" +
+            "                                                            left join traveluserdb.tab_services userservice on travelorder.ServiceTripID=IF(travelorder.OrderType=1,userservice.ServiceID,-1)\n" +
+            "                                                            left join traveluserdb.tab_facilitypictures pict " +
+            "                                                                 on (IF(travelorder.OrderType=1,userservice.ServiceID,-1)=pict.PictureID AND pict.PicType=1 AND pict.IsCover=1)\n" +
+            "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) " +
+            "                            where travelorder.GuideID = "+item.userID);
+		}
+
+        if (0 != item.status) {
+
+            //前端接口的4:已完成，已关闭
+            if (3 == item.status) {
+                sql.push(" and travelorder.status in (4,3)");
+            } else {
+                sql.push(" and travelorder.status = " + item.status);
+            }
+        }
+        sql.push(" order by travelorder.UpdateTime desc");
+
+        if(!item.page) {
+
+        	var start = (page-1)*20;
+
+            sb.append(" limit "+start+",  20 ");
+        }
+
+
+		exec(connection, sql.join(""), [,], callback);
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
 	});
 };
