@@ -148,7 +148,7 @@ var server = app.listen(8088, function() {
 			app.get(point, upload.array(), function(req, res) {
 				//console.log('------------');
 				//console.log('POINT:'+point+ '  '+JSON.stringify(req.query));
-				modal.rogerSmartSql(MODAL[point], req.query, function(error, results){
+				db.rogerSmartSql(MODAL[point], req.query, function(error, results){
 					res.send(results);
 				});
 			});
