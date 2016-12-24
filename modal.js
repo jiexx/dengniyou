@@ -30,16 +30,16 @@ var IMG_HOST = "http://123.59.144.47/";
 function doSql(funcArgu, onFinish) {
 	pool.getConnection(function(err, conn) {
 		if(err) { 
-			//console.log(err);
+			////console.log(err);
 			onFinish(true);
 			return;
 		}
-		console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
+		//console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
 		conn.query(funcArgu.sql, funcArgu.params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
-			////console.log(JSON.stringify(results));
+			//////console.log(JSON.stringify(results));
 			if(err) {
-				//console.log(err);
+				////console.log(err);
 				if(onFinish) {
 					onFinish(true, results);
 				}
@@ -52,7 +52,7 @@ function doSql(funcArgu, onFinish) {
 	});
 };
 function decodeBase64Image(dataString) {
-  ////console.log(dataString);
+  //////console.log(dataString);
   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
 
@@ -72,20 +72,23 @@ var uploadImage = function uploadImage(funcArgu, onFinish){
 			onFinish(fileId);
 		}
 	}).catch(function(err) {
-		//console.log(err);
+		////console.log(err);
 	});
 };
 
 var CallbackLooper = {
 	loop: function() {
 		var _this = this;
-		//console.log(_this.func.toString() + ' 	'+_this.i+'  '+_this.count);
+		////console.log(_this.func.toString() + ' 	'+_this.i+'  '+_this.count);
 		if(_this.i == _this.count) {
 			if(_this.onFinish) {
 				_this.onFinish();
 			}
 		}
 		if(_this.i < _this.count) {
+			if(_this.funDoings && _this.funDoings[_this.i]) {
+				_this.funDoings(_this.funcArgus[_this.i]);
+			}
 			_this.func(_this.funcArgus[_this.i], function(){  //<--- eg. == before after callback
 				if(_this.onOneFinish) {
 					var args = new Array(arguments.length+1);
@@ -97,19 +100,25 @@ var CallbackLooper = {
 				}
 
 				_this.i ++;
-				console.log(' 	sql'+_this.i+'  '+_this.count);
+				//console.log(' 	sql'+_this.i+'  '+_this.count);
 				_this.loop();
 			});
 		}
 	},
-	create: function(count, func, funcArgus, onFinish, onOneFinish) {
+    expand: function(funcArgus) { // must be called in onOneFinish
+        this.count += funcArgus.length;
+        this.funcArgus = this.funcArgus.concat(funcArgus);
+    },
+	create: function(count, func, funDoings, funcArgus, onFinish, onOneFinish) {
 		var obj = {
 			func:func,
 			count:count,
 			i:0,
 			onFinish:onFinish,
 			onOneFinish:onOneFinish,
+            funDoings: funDoings,
 			loop:CallbackLooper.loop,
+            expand:CallbackLooper.expand,
 			funcArgus:funcArgus
 		};
 		return obj;
@@ -167,13 +176,41 @@ var roger = {
 	},
 	"format":function(json) {
 		json["IMGHOST"] = IMG_HOST;
-		////console.log(json);
+		//////console.log(json);
 		return JSON.stringify(json).replace(/\"\[|\]\"|\"{|}\"|\\\"|\\t/g, function(matched){
 			return mapObj[matched];
 		});
 	},
+	"replaceParam":function (params, replacement, matched) {  //input : have been replaced data by before handler.  Params === []
+        var inputparams = [];
+        for(var i in params){
+            var param = params[i];
+            if(param == matched) {
+                inputparams.push(replacement);
+            }else {
+                inputparams.push(param);
+            }
+        }
+        return inputparams;
+    },
+    "replaceParams":function (params, replacement, matched) {  //input : have been replaced data by before handler.  Params === [][]
+        var inputparams = [];
+        for(var i in params){
+        	var row = new Array(params[i].length);
+            for(var j in params) {
+                param = params[i][j]
+                if (param == matched) {
+                    row.push(replacement);
+                } else {
+                    row.push(param);
+                }
+            }
+            inputparams.push(row);
+        }
+        return inputparams;
+    },
 	"after":function(list, data, onFinish) {
-		console.log('after in:');
+		//console.log('after in:');
 		var funcArgus = [];
 		var funcs = [];
 		for(var i in list) {
@@ -208,43 +245,16 @@ var roger = {
 		}
 	},
 	"complete":function(list) {
-		var root = null;
-		var out = [];
+		var out = {};
 		var tag = '';
-		var copy = null;
-		var superior = null;
-		console.log(JSON.stringify(out));
 		for(var i in list) {
-			console.log(list[i].tag);
-			tag = list[i].tag;
-			if(!out[tag]){
-				out[tag] = new Object();
-			}else {
-				out[tag] = new Array();
-			}
-			console.log(out[tag]);
-			if(!list[i].superior){
-				root = list[i];
-			}
-		}
-		console.log(list.length);
-		for(var i in list) {
-			copy = list[i];
-			if(copy.superior != null) {
-				superior = out[copy.superior.tag];
-				console.log(superior);
-				if(superior){
-					if("object" != typeof superior){
-						superior[copy.tag] = copy.output;
-					}
-					else if(Array != superior.constructor){
-						superior.push(copy.output);
-					}
-					console.log(JSON.stringify(superior));
-				}
-			}
-		}
-		return JSON.stringify(root);
+            //console.log(list[i].tag);
+            tag = list[i].tag;
+            if ('root' != tag) {
+                out[tag] = list[i].output;
+            }
+        }
+		return roger.format(out);
 	},
 	//all.data <-  receive req json data
 	//eg.{UserID:1234,Pics:["",""]}
@@ -288,7 +298,14 @@ var roger = {
 						inputparams.push(funcArgu.data[param]);
 					}
 				}
-				funcArgu.copy.input = inputparams;
+				//expand...
+				//var shallow = roger.shallow(funcArgu.copy);
+                //shallow.input = inputparams;
+                //funcArgu.copy.list.push(shallow);
+				if(!funcArgu.copy.input) {
+                    funcArgu.copy.input = [];
+				}
+                funcArgu.copy.input.push(inputparams);
 			});
 		cl.loop();
 	},
@@ -296,12 +313,15 @@ var roger = {
 	//all.list <-  semi list, extract from modal tree.
 	"process": function (list, onFinish) {
 		var funcArgus = [];
+		var funDoings = [];
 		for(var i in list) {
 			if(list[i].valid) {
 				funcArgus.push({sql:list[i].sql, params:list[i].input, copy:list[i]});
+                funDoings.push(list[i].doing);
 			}
 		}
 		var cl = CallbackLooper.create(funcArgus.length, doSql, funcArgus,
+            funDoings,
 			onFinish,
 			function(funcArgu, err, results){
 				if(!err) {
@@ -350,6 +370,40 @@ var roger = {
 				copy.output = null;
 			}
 		},
+        "findkey": function(modal, copy, value) {
+            if( "string" == typeof value ) {
+                copy.findkey = value;
+                copy.doing = function(funcArgu){ //funcArgus.push({data:data, copy:copy}); //funcArgu -- rows  onFinish == self func finish
+                    var superior = funcArgu.copy.superior;
+                    var copy = funcArgu.copy;
+                    var key;
+                    if('object' == typeof superior.output) {
+                        key = superior.output[copy.findkey]
+                        copy.outkey = key;
+                        if(Array ==  copy.input[0].constructor) {
+                        	var inputParams = copy.input;
+                        	for(var i in inputParams) {
+                                copy.input = roger.replaceParams(inputParams[i], key, copy.findkey);
+                                var s = roger.shallow(funcArgu);
+                                s.copy = copy;
+                                shallows.push(s);
+                                this.expand(shallows);
+                            }
+						}else {
+                            copy.input = roger.replaceParam(copy.input, key, copy.findkey);
+						}
+					}else if(Array == superior.output.constructor && Array == copy.input.constructor && copy.input[0] && Array != copy.input[0].constructor){
+                    	var inputParams = [];
+                        var shallows = [];
+                    	for(var i in superior.output) {
+                            key = superior.output[i][copy.findkey]
+							copy.outkey = key;
+                            copy.input = roger.replaceParam(copy.input, key, copy.findkey);
+						}
+					}
+                };
+            }
+        },
 // ---------------after SQL ||| multi before need implement callback1,callback2,callback3..., last one callback trigger finish callback
 		"key": function(modal, copy, value) {
 			if( "string" == typeof value ) {
@@ -379,11 +433,11 @@ exports.rogerSmartSql = function(modal, data, callback) {
 	var out = [];
 	roger.prepare(null, 'root', modal, out);
 	roger.before(out, data, function(){
-		console.log('BEFORE:');
+		//console.log('BEFORE:');
 		roger.process(out, function(){
-			console.log('PROCESS:');
+			//console.log('PROCESS:');
 			roger.after(out, data, function(){
-				console.log('AFTER:');
+				//console.log('AFTER:');
 				var results = roger.complete(out);
 				callback(results);
 			});
