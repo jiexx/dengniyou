@@ -86,8 +86,8 @@ var CallbackLooper = {
 			}
 		}
 		if(_this.i < _this.count) {
-			if(_this.funDoings && _this.funDoings[_this.i]) {
-				_this.funDoings(_this.funcArgus[_this.i]);
+			if(_this.funDoings[_this.i]) {
+				_this.funDoings[_this.i](_this.funcArgus[_this.i]);
 			}
 			_this.func(_this.funcArgus[_this.i], function(){  //<--- eg. == before after callback
 				if(_this.onOneFinish) {
@@ -160,7 +160,7 @@ var CallbacksLooper = {
 		return obj;
 	}
 };
-
+var mapObj = {"\\t":"","\"[":"[", "]\"":"]", "\"{":"{", "}\"":"}", "\\\"":"\""};
 var roger = {
 	"shallow": function(obj) {
 		if("object" == typeof obj) {
@@ -215,8 +215,8 @@ var roger = {
 		var funcs = [];
 		for(var i in list) {
 			var copy = list[i];
-			for(var b in copy.after) {
-				if(copy.after) {
+			for(var i in copy.after) {
+				if(copy.after[i]) {
 					funcArgus.push({output:copy.output, copy:copy});
 					funcs.push(copy.after[i]);
 				}
@@ -320,8 +320,9 @@ var roger = {
                 funDoings.push(list[i].doing);
 			}
 		}
-		var cl = CallbackLooper.create(funcArgus.length, doSql, funcArgus,
-            funDoings,
+		var cl = CallbackLooper.create(funcArgus.length, doSql,
+			funDoings ,
+            funcArgus,
 			onFinish,
 			function(funcArgu, err, results){
 				if(!err) {
@@ -405,20 +406,31 @@ var roger = {
             }
         },
 // ---------------after SQL ||| multi before need implement callback1,callback2,callback3..., last one callback trigger finish callback
-		"key": function(modal, copy, value) {
+		"orderby": function(modal, copy, value) {
 			if( "string" == typeof value ) {
 				copy.key = value;
+                if(!copy.after) {
+                    copy.after = [];
+                }
 				copy.after.push(function(funcArgu, onFinish){ //funcArgu -- rows
 					var copy = funcArgu.copy;
 					var obj = {};
+                    var count = 0;
 					for(var i in funcArgu.output) {
 						var row = funcArgu.output[i];
-						if(row[copy.key] && "object" != typeof row[copy.key] && Array != row[copy.key].constructor){
-							obj[copy.key] = {__index:0,__values:[]};
-							obj[copy.key].__index ++;
-							obj[copy.key].__values.push(row);
-						}
+						var r = row[copy.key];
+						if(r && "object" != typeof r && Array != r.constructor) {
+                            var o = obj[r];
+							if(!o) {
+                                obj[r] = {__index: 0, __values: []};
+                                o = obj[r];
+                                count++;
+                                o.__index = count;
+							}
+                            o.__values.push(row);
+                        }
 					}
+                    obj['__count'+copy.key] = count;
 					funcArgu.copy.output = obj;
 					onFinish();
 				});
@@ -439,7 +451,7 @@ exports.rogerSmartSql = function(modal, data, callback) {
 			roger.after(out, data, function(){
 				//console.log('AFTER:');
 				var results = roger.complete(out);
-				callback(results);
+				callback(true, results);
 			});
 		});
 	});

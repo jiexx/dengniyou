@@ -60,16 +60,13 @@ $(function () {
 			}
 		},
 		rogerPost: function (reqURL, reqJSON, callback) {
-			$(this).on('submit', function(e) {
-				e.preventDefault();
-				$.ajax({
-					url: reqURL, type: 'post', dataType: 'json', data: reqJSON,
-					success: function(respJSON) {
-						if(callback) {
-							callback(respJSON);
-						}
+			$.ajax({
+				url: reqURL, type: 'post', dataType: 'json', data: reqJSON,
+				success: function(respJSON) {
+					if(callback) {
+						callback(respJSON);
 					}
-				});
+				}
 			});
 		},
 		rogerRouter: function(router) {
@@ -122,7 +119,7 @@ $(function () {
 			$(window._rogerLoginForm).modal('show');
 		},
 		rogerInitLoginForm: function(loginFormID, reqURL, redirectURL) {
-			$(formID).rogerSubmit(reqURL, function(respJSON){
+			$(loginFormID).rogerSubmit(reqURL, function(respJSON){
 				if(respJSON[0] && respJSON[0].UserID > 0) {
 					//window.open(redirectURL,'_blank');
 					//window.location = '/dashboard.html?UserID='+respJSON[0].UserID;
@@ -131,7 +128,7 @@ $(function () {
 					$.rogerRefresh();
 				}
 			});
-			$(formID).modal({ show: false});
+			$(loginFormID).modal({ show: false});
 			window._rogerLoginForm = loginFormID;
 		},
 		rogerRefresh: function() {

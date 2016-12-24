@@ -6,7 +6,7 @@
 		realView.rogerCropImages();
 		$('#footer').rogerReloadFile('./footer.html'); 
 		$('#modal').rogerReloadFile('./home-login.html', function(){
-			$.rogerInitLoginForm('#login-form', '/login', '/dashboard.html');
+			$.rogerInitLoginForm('#homeLogin', '/login', '/dashboard.html');
 		});
 	};
 	
@@ -28,7 +28,7 @@
 		var count = 0;
 		$('#photos').rogerUploadImage(100, 100, function(data){
 			if(count++ < 5)
-			$('#photos').before('<div style="width:100px;" class="col-sm-2" ><img style="width:100px;" src='+data.raw+'><span class="glyphicon glyphicon-remove-sign"></span></img></div>');
+			$('#photos').prepend('<div style="width:100px;" class="col-sm-2" ><img name="pic" style="width:100px;" src='+data.raw+'><span class="glyphicon glyphicon-remove-sign"></span></img></div>');
 		});
 		$('#commit').click(function(){
 			var user = $.rogerGetLoginUser()
@@ -36,16 +36,16 @@
 				$.rogerShowLogin();
 				return;
 			}
-			var data = {UserID:$.rogerGetLoginUser().UserID,files:[]};
-			var elems = $('#photos').find('img["src"]').nextAll(), count = elems.length;
-			elems.each( function(i) {
-				data.files.push($(this).attr('src'));
-				if (!--count) {
-					$.rogerPost('/comment/plan', data, function(){
-						$.rogerRefresh();
-					});
-				}
-			});
+			console.log(JSON.stringify($.rogerGetLoginUser()));
+			var data = {UserID:$.rogerGetLoginUser().UserID,   Pics:[],   PlanID:response.PlanInfo[0].PlanID, Comment:$('textarea#commentplan').val()};
+            var elems = document.getElementById('photos').querySelectorAll('img[name="pic"]');
+            for (var i = 0; i < elems.length; i++) {
+            	var pic = elems[i].src;
+                data.Pics.push(pic);
+			}
+            $.rogerPost('/comment/plan', data, function(){
+               // $.rogerRefresh();
+            });
 		});
 	};
 
@@ -56,8 +56,8 @@
 
 	$.rogerRouter({
 		'#/':							{view:'home.html',								rootrest:'/home', 						ctrl: ctrlHome},
-		'#/plandetail': 				{view:'plandetail.html',						rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
-        '#/orderlist': {view: 'orderlist.html', rootrest: '/order/list', ctrl: ctrlOrderlist},
+		'#/plandetail': 				{view:'plandetail.html',							rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
+        '#/orderlist': 				{view: 'orderlist.html', 						rootrest: '/order/list', 				ctrl: ctrlOrderlist},
 	});
 	
 	

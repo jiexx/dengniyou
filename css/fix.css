@@ -12,6 +12,9 @@
 	width:100%;
 }
 
+/*body.modal-open {
+	overflow: scroll;
+}*/
 .carousel-container {
 	padding-left: 10%;
 	padding-right: 10%;
@@ -165,13 +168,13 @@ transition-delay:.2s;
 @charset "utf-8";
 /* CSS reset */
 body,ul,ol,li,p,h1,h2,h3,h4,h5,h6,form,fieldset,table,td,img,div,dl,dt,dd,input{margin:0;padding:0;}
-body{font-size:12px; font-family: 'Microsoft Yahei','Î¢ÈíÑÅºÚ';}
+body{font-size:12px; font-family: 'Microsoft Yahei','Î¢ï¿½ï¿½ï¿½Åºï¿½';}
 img{border:none;}
 li{list-style:none;}
 input,select,textarea{outline:none;border:none; background:none;}
 textarea{resize:none;}
 a{text-decoration:none; color:#656565;}
-/*Çå¸¡¶¯*/
+/*ï¿½å¸¡ï¿½ï¿½*/
 .clearfix:after{content:"";display:block;clear:both;}
 .clearfix{zoom:1;}
 .fl{float:left;}
@@ -208,7 +211,7 @@ nav{width:100%; height: 96px; background-color: #00b8ee;}
 .fixedBar ul li i{width:36px; height: 36px; line-height: 36px; font-size: 20px;}
 .fixedBar ul li p{ margin-bottom: 6px;}
 .fixedBar ul li .kefu{background-image: url(../img/kefu.png); display: inline-block; width:24px; height: 24px;}
-/*×ó²àÐü¸¡¹¤¾ßÌõ*/
+/*ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½*/
 .fixedPos{position: fixed; top:220px;z-index: 9999; left:2.5%; }
 .fixedPos ul li {width:64px; height: 64px; background-color: #999; color: #FFF; margin-bottom: 1px; line-height: 64px; font-size: 20px; text-align: center;}
 .fixedPos ul li a{color:#FFF;}

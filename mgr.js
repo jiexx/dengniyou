@@ -135,11 +135,11 @@ var server = app.listen(8088, function() {
 		
 		var point = '/'+filename.substring(0,filename.indexOf('.')).replace(/-/g,'/');
 		MODAL[point] = JSON.parse(content);
-		////console.log(point);
+		console.log(point);
 		app.post(point, upload.array(), function(req, res) {
 			//console.log('------------');
-			//console.log('POINT:'+point+ '  '+JSON.stringify(req.body));
-			db.rogerSmartSql(MODAL[point], req.body, function(error, results){
+			console.log('POINT:'+point+ '  '+JSON.stringify(req.body));
+			modal.rogerSmartSql(MODAL[point], req.body, function(error, results){
 				//console.log('end.');
 				res.send(results);
 			});
@@ -147,8 +147,8 @@ var server = app.listen(8088, function() {
 		if(true) {
 			app.get(point, upload.array(), function(req, res) {
 				//console.log('------------');
-				//console.log('POINT:'+point+ '  '+JSON.stringify(req.query));
-				db.rogerSmartSql(MODAL[point], req.query, function(error, results){
+				console.log('POINT:'+point+ '  '+JSON.stringify(req.query));
+                modal.rogerSmartSql(MODAL[point], req.query, function(error, results){
 					res.send(results);
 				});
 			});
