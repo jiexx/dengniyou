@@ -16,7 +16,7 @@
         }else {
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogin" data-toggle="modal" data-target="#homeLogin">登录</span>');
             $('#usrlogin').click(function () {
-                $.rogerLogin('#homeLogin', '/login', '/dashboard.html');
+                $.rogerLogin('#homeLogin', '/login'/*, '/dashboard.html'*/);
             })
         }
     }

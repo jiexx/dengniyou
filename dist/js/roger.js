@@ -19,6 +19,9 @@ $(function () {
 		},
 		rogerGetURLJsonParams:function() {
 			var link = $._rogerGetLocation();
+			if(link.indexOf("?") < 0) {
+				return null;
+			}
 			var url = link.substring(link.indexOf("?")+1);
 			var hash;
 			var json = {};
@@ -104,6 +107,24 @@ $(function () {
 				}
 			}
 		},
+        rogerTrigger: function(container, url, viewReqJSON ) {
+            if(url.substring(0,2)=='#/') {
+                var router = $.rogerGetRouter(url);
+                if (router) {
+                    $._rogerSetLocation(url);
+                    $._RogerLoadView(
+                        router.view,
+                        $(container),
+                        router.rootrest,
+                        viewReqJSON,
+                        function(respJSON, realView) {
+                            realView._RogerReloadRouters();
+                            router.ctrl(respJSON, realView);
+                        }
+                    );
+                }
+            }
+        },
 		rogerScale: function(src_w, src_h, dst_w, dst_h) {
 			var sw = parseFloat(src_w);
 			var sh = parseFloat(src_h);
@@ -131,7 +152,7 @@ $(function () {
         rogerLogout: function(){
             $.removeCookie("roger");
         },
-		rogerLogin: function(loginFormID, reqURL, redirectURL) {
+		rogerLogin: function(loginFormID, reqURL) {
         	var user = $.rogerGetLoginUser();
         	if( !user || !user.UserID ) {
                 $(loginFormID).rogerSubmit(reqURL, function (respJSON) {

@@ -1,0 +1,4 @@
+{
+	"Attraction": {"sql": "SELECT * FROM traveldb.`vw_/dashboard/product/attraction` WHERE UserID=10066 LIMIT 0, 8;",	"params":["UserID","Page"]},
+	"Counts": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveldb.`vw_/dashboard/product/attraction` where  UserID=10066;",	"params":["UserID"]}
+}
