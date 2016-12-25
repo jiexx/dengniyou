@@ -88,11 +88,11 @@
 
 <div class="container">
     <div class="list-group">
-	  {{each PlanComment[0]}} 
+	  {{each PlanComment}}
 	  <div class="col-md-12 list-group-item ">
 	    <div class="media">
 		  <div class="media-left media-top">
-			<img src="${ $data.IMGHOST }${AvatarPicURL}}" class="media-object" style="width:80px"></img>
+			<img src="${ $data.IMGHOST }${AvatarPicURL}" class="media-object" style="width:80px"></img>
 			<div>${UserName}</div>
 		  </div>
 		  <div class="media-body">
@@ -103,7 +103,7 @@
 		<div class="clearfix"></div>
 		<div class="row">
 		{{each(k,v) PicURLs}}
-			<div class="col-md-3 "><img data-src="${ $data.IMGHOST }${v}" class="media-object" style="height:100px; width:100px"></img></div>
+			<div class="col-md-3 pull-left"><img data-src="${ $data.IMGHOST }${v}" class="media-object" style="height:100px; width:100px"></img></div>
 		{{/each}}
 		</div>
 	  </div>

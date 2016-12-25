@@ -113,22 +113,37 @@ $(function () {
 			return  dst_h > dst_w ? (dst_h < src_h ? {w:dst_w, h:dst_h}:{w:dst_w * k, h:dst_h * k}) : (dst_w < src_w ? {w:dst_w, h:dst_h}:{w:dst_w * k, h:dst_h * k});
 		},
 		rogerGetLoginUser: function(){
-			return $.cookie("roger");
+			if(!$.cookie("roger")) {
+				return null;
+			}
+			return JSON.parse($.cookie("roger"));
 		},
+        rogerIsLogined: function(){
+            return $.rogerGetLoginUser() && $.rogerGetLoginUser().UserID >0;
+        },
 		rogerShowLogin: function(){
 			$(window._rogerLoginForm).modal('show');
 		},
-		rogerInitLoginForm: function(loginFormID, reqURL, redirectURL) {
-			$(loginFormID).rogerSubmit(reqURL, function(respJSON){
-				if(respJSON[0] && respJSON[0].UserID > 0) {
-					//window.open(redirectURL,'_blank');
-					//window.location = '/dashboard.html?UserID='+respJSON[0].UserID;
-					$.removeCookie("roger");
-					$.cookie("roger", respJSON[0], { expires : 10 });
-					$.rogerRefresh();
-				}
-			});
-			$(loginFormID).modal({ show: false});
+        rogerHideLogin: function(){
+            $(window._rogerLoginForm).modal('hide');
+            //$(loginFormID).modal({ show: false});
+        },
+        rogerLogout: function(){
+            $.removeCookie("roger");
+        },
+		rogerLogin: function(loginFormID, reqURL, redirectURL) {
+        	var user = $.rogerGetLoginUser();
+        	if( !user || !user.UserID ) {
+                $(loginFormID).rogerSubmit(reqURL, function (respJSON) {
+                    if (respJSON[0] && respJSON[0].UserID > 0) {
+                        //window.open(redirectURL,'_blank');
+                        //window.location = '/dashboard.html?UserID='+respJSON[0].UserID;
+                        $.removeCookie("roger");
+                        $.cookie("roger", JSON.stringify(respJSON[0]), {expires: 10});
+                        $.rogerRefresh();
+                    }
+                });
+            }
 			window._rogerLoginForm = loginFormID;
 		},
 		rogerRefresh: function() {

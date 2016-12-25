@@ -291,6 +291,11 @@ var roger = {
 	"uploadImages":function(copy, data, onFinish){
 		var datafiles = data[copy.files];
 		var funcArgus = [];
+		if(!datafiles) {
+			copy.valid = false;
+            onFinish();
+			return;
+		}
 		for(var i = 0 ; i < datafiles.length; i ++) {
 /*			var shallow = roger.shallow(copy);
 			copy.vector.push(shallow);*/
