@@ -7,7 +7,7 @@ var fdfs = new FdfsClient({
     trackers: [
         {
             //host: '10.101.1.165',
-			host: '123.59.144.47',
+			host: '172.16.36.1',//'123.59.144.47',
             port: 22122
         }
     ],
@@ -30,16 +30,16 @@ var IMG_HOST = "http://123.59.144.47/";
 function doSql(funcArgu, onFinish) {
 	pool.getConnection(function(err, conn) {
 		if(err) { 
-			//console.log(err);
+			////console.log(err);
 			onFinish(true);
 			return;
 		}
-		console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
+		//console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
 		conn.query(funcArgu.sql, funcArgu.params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
-			////console.log(JSON.stringify(results));
+			//////console.log(JSON.stringify(results));
 			if(err) {
-				//console.log(err);
+				////console.log(err);
 				if(onFinish) {
 					onFinish(true, results);
 				}
@@ -52,7 +52,7 @@ function doSql(funcArgu, onFinish) {
 	});
 };
 function decodeBase64Image(dataString) {
-  ////console.log(dataString);
+  //////console.log(dataString);
   var matches = dataString.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/),
     response = {};
 
@@ -66,26 +66,33 @@ function decodeBase64Image(dataString) {
   return response;
 };
 var uploadImage = function uploadImage(funcArgu, onFinish){
+	if(!funcArgu.base64) {
+        onFinish('');
+        return;
+	}
 	var pic = decodeBase64Image(funcArgu.base64);
 	fdfs.upload(pic.data, {ext: 'jpg'}).then(function(fileId) {
 		if(onFinish) {
 			onFinish(fileId);
 		}
 	}).catch(function(err) {
-		//console.log(err);
+		////console.log(err);
 	});
 };
 
 var CallbackLooper = {
 	loop: function() {
 		var _this = this;
-		//console.log(_this.func.toString() + ' 	'+_this.i+'  '+_this.count);
+		////console.log(_this.func.toString() + ' 	'+_this.i+'  '+_this.count);
 		if(_this.i == _this.count) {
 			if(_this.onFinish) {
 				_this.onFinish();
 			}
 		}
 		if(_this.i < _this.count) {
+			if(_this.funDoings && _this.funDoings[_this.i]) {
+				_this.funDoings[_this.i](_this.funcArgus[_this.i]);
+			}
 			_this.func(_this.funcArgus[_this.i], function(){  //<--- eg. == before after callback
 				if(_this.onOneFinish) {
 					var args = new Array(arguments.length+1);
@@ -97,19 +104,27 @@ var CallbackLooper = {
 				}
 
 				_this.i ++;
-				console.log(' 	sql'+_this.i+'  '+_this.count);
+				//console.log(' 	sql'+_this.i+'  '+_this.count);
 				_this.loop();
 			});
 		}
 	},
-	create: function(count, func, funcArgus, onFinish, onOneFinish) {
+    expand: function(funcArgus) { // must be called in onOneFinish
+		if(funcArgus && funcArgus.length > 0) {
+            this.count += funcArgus.length;
+            this.funcArgus = this.funcArgus.concat(funcArgus);
+        }
+    },
+	create: function(count, func, funDoings, funcArgus, onFinish, onOneFinish) {
 		var obj = {
 			func:func,
 			count:count,
 			i:0,
 			onFinish:onFinish,
 			onOneFinish:onOneFinish,
+            funDoings: funDoings,
 			loop:CallbackLooper.loop,
+            expand:CallbackLooper.expand,
 			funcArgus:funcArgus
 		};
 		return obj;
@@ -151,7 +166,7 @@ var CallbacksLooper = {
 		return obj;
 	}
 };
-
+var mapObj = {"\\t":"","\"[":"[", "]\"":"]", "\"{":"{", "}\"":"}", "\\\"":"\""};
 var roger = {
 	"shallow": function(obj) {
 		if("object" == typeof obj) {
@@ -167,19 +182,51 @@ var roger = {
 	},
 	"format":function(json) {
 		json["IMGHOST"] = IMG_HOST;
-		////console.log(json);
+		//////console.log(json);
 		return JSON.stringify(json).replace(/\"\[|\]\"|\"{|}\"|\\\"|\\t/g, function(matched){
 			return mapObj[matched];
 		});
 	},
+    "findParamsPos":function (findkey, params) {
+        var pos = 0;
+        for(pos in params) {
+            if(params[pos] == findkey){
+                break;
+            }
+        }
+        return pos;
+	},
+	// input === 1d array
+	"replace1DInputParams":function (input, replacement, pos) {  //input : have been replaced data by before handler.  Params === []
+		var inputparams = [];
+        for(var i in input){
+            inputparams[i] = input[i];
+        }
+        inputparams[pos] = replacement;
+        return inputparams;
+    },
+    //  input === 2d array
+    "replace2DInputParams":function (input, replacement, pos) {  //input : have been replaced data by before handler.  Params === [][]
+        var inputparams = [];
+        for(var i in input){
+            inputparams[i] = [];
+        	for(var j in input[i]){
+                inputparams[i][j] = input[i][j];
+			}
+			if(pos < inputparams[i].length){
+                inputparams[i][pos] = replacement;
+			}
+        }
+        return inputparams;
+    },
 	"after":function(list, data, onFinish) {
-		console.log('after in:');
+		//console.log('after in:');
 		var funcArgus = [];
 		var funcs = [];
 		for(var i in list) {
 			var copy = list[i];
-			for(var b in copy.after) {
-				if(copy.after) {
+			for(var i in copy.after) {
+				if(copy.after[i]) {
 					funcArgus.push({output:copy.output, copy:copy});
 					funcs.push(copy.after[i]);
 				}
@@ -208,43 +255,16 @@ var roger = {
 		}
 	},
 	"complete":function(list) {
-		var root = null;
-		var out = [];
+		var out = {};
 		var tag = '';
-		var copy = null;
-		var superior = null;
-		console.log(JSON.stringify(out));
 		for(var i in list) {
-			console.log(list[i].tag);
-			tag = list[i].tag;
-			if(!out[tag]){
-				out[tag] = new Object();
-			}else {
-				out[tag] = new Array();
-			}
-			console.log(out[tag]);
-			if(!list[i].superior){
-				root = list[i];
-			}
-		}
-		console.log(list.length);
-		for(var i in list) {
-			copy = list[i];
-			if(copy.superior != null) {
-				superior = out[copy.superior.tag];
-				console.log(superior);
-				if(superior){
-					if("object" != typeof superior){
-						superior[copy.tag] = copy.output;
-					}
-					else if(Array != superior.constructor){
-						superior.push(copy.output);
-					}
-					console.log(JSON.stringify(superior));
-				}
-			}
-		}
-		return JSON.stringify(root);
+            //console.log(list[i].tag);
+            tag = list[i].tag;
+            if ('root' != tag) {
+                out[tag] = list[i].output;
+            }
+        }
+		return roger.format(out);
 	},
 	//all.data <-  receive req json data
 	//eg.{UserID:1234,Pics:["",""]}
@@ -270,13 +290,18 @@ var roger = {
 	//eg."Picture": {"sql": "UPDATE SET ?, ?;",	"params":["Pics", "UserID"], "files":"Pics"}
 	"uploadImages":function(copy, data, onFinish){
 		var datafiles = data[copy.files];
-		var funcArgus = [{base64:datafiles[i], copy:copy}];
-		for(var i = 0 ; i < datafiles.length - 1 ; i ++) {
-			var shallow = roger.shallow(copy);
-			copy.vector.push(shallow);
-			funcArgus.push({base64:datafiles[i], copy:shallow});
+		var funcArgus = [];
+		if(!datafiles) {
+			copy.valid = false;
+            onFinish();
+			return;
 		}
-		var cl = CallbackLooper.create(funcArgus.length, uploadImage, funcArgus,
+		for(var i = 0 ; i < datafiles.length; i ++) {
+/*			var shallow = roger.shallow(copy);
+			copy.vector.push(shallow);*/
+			funcArgus.push({base64:datafiles[i], copy:copy, data:data});
+		}
+		var cl = CallbackLooper.create(funcArgus.length, uploadImage, null, funcArgus,
 			onFinish,
 			function(funcArgu, fileid){
 				var inputparams = [];
@@ -288,7 +313,15 @@ var roger = {
 						inputparams.push(funcArgu.data[param]);
 					}
 				}
-				funcArgu.copy.input = inputparams;
+				//expand...
+				//var shallow = roger.shallow(funcArgu.copy);
+                //shallow.input = inputparams;
+                //funcArgu.copy.list.push(shallow);
+				if(!funcArgu.copy.updImg) {
+                    funcArgu.copy.updImg = true;
+                    funcArgu.copy.input = [];
+				}
+                funcArgu.copy.input.push(inputparams);
 			});
 		cl.loop();
 	},
@@ -296,18 +329,23 @@ var roger = {
 	//all.list <-  semi list, extract from modal tree.
 	"process": function (list, onFinish) {
 		var funcArgus = [];
+		var funDoings = [];
+        var cl = CallbackLooper.create(funcArgus.length, doSql,
+            funDoings ,
+            funcArgus,
+            onFinish,
+            function(funcArgu, err, results){
+                if(!err) {
+                    funcArgu.copy.output = results;
+                }
+            });
 		for(var i in list) {
 			if(list[i].valid) {
-				funcArgus.push({sql:list[i].sql, params:list[i].input, copy:list[i]});
+				funcArgus.push({sql:list[i].sql, params:list[i].input, copy:list[i], looper:cl});
+                funDoings.push(list[i].doing);
 			}
 		}
-		var cl = CallbackLooper.create(funcArgus.length, doSql, funcArgus,
-			onFinish,
-			function(funcArgu, err, results){
-				if(!err) {
-					funcArgu.copy.output = results;
-				}
-			});
+		cl.count = funcArgus.length;
 		cl.loop();
 	},
 	"tagHandler" :{
@@ -315,7 +353,7 @@ var roger = {
 		"files": function(modal, copy, value){
 			if( "string" == typeof value ){
 				copy.files = value;
-				copy.valid = false;
+				//copy.valid = false;
 				if(!copy.before) {
 					copy.before = [];
 				}
@@ -350,21 +388,73 @@ var roger = {
 				copy.output = null;
 			}
 		},
+        "findkey": function(modal, copy, value) {
+            if( "string" == typeof value ) {
+                copy.findkey = value;
+                copy.doing = function(funcArgu){ //funcArgus.push({data:data, copy:copy}); //funcArgu -- rows  onFinish == self func finish
+                    var superior = funcArgu.copy.superior;
+                    var copy = funcArgu.copy;
+                    if('object' == typeof superior.output && copy.input) {  //superior output is object
+                        var replacement = superior.output[copy.findkey];
+                        var pos = roger.findParamsPos(copy.findkey, copy.params);
+                        if(Array ==  copy.input[0].constructor) {  //input is 2d array
+                        	var inputParams = roger.replace2DInputParams(copy.input, replacement, pos);
+                            funcArgu.params = inputParams[0];
+							var shallows = [];
+							for(var i = 1; i < inputParams.length; i ++) {
+								var fa = roger.shallow(funcArgu);
+								fa.params = inputParams[i];
+								fa.copy = copy;
+								shallows.push(fa);
+							}
+                            funcArgu.looper.expand(shallows);
+						}else { //input is 1d array
+                            funcArgu.params = roger.replace1DInputParams(copy.input, replacement, pos);
+						}
+					}// superior output is 2d array.  input is 1d array
+					else if(Array == superior.output.constructor && Array == copy.input.constructor && copy.input[0] && Array != copy.input[0].constructor){
+                        var replacement;
+                        var pos = roger.findParamsPos(copy.findkey, copy.params);
+                        funcArgu.params = roger.replace1DInputParams(copy.input, replacement, pos);
+                        var shallows = [];
+						for (var i = 1; i < superior.output.length; i++) {
+                            replacement = superior.output[copy.findkey];
+                            var fa = roger.shallow(funcArgu);
+                            fa.params = roger.replace1DInputParams(copy.input, replacement, pos);
+                            fa.copy = copy;
+                            shallows.push(fa);
+						}
+                        funcArgu.looper.expand(shallows);
+					}
+                };
+            }
+        },
 // ---------------after SQL ||| multi before need implement callback1,callback2,callback3..., last one callback trigger finish callback
-		"key": function(modal, copy, value) {
+		"orderby": function(modal, copy, value) {
 			if( "string" == typeof value ) {
 				copy.key = value;
+                if(!copy.after) {
+                    copy.after = [];
+                }
 				copy.after.push(function(funcArgu, onFinish){ //funcArgu -- rows
 					var copy = funcArgu.copy;
 					var obj = {};
+                    var count = 0;
 					for(var i in funcArgu.output) {
 						var row = funcArgu.output[i];
-						if(row[copy.key] && "object" != typeof row[copy.key] && Array != row[copy.key].constructor){
-							obj[copy.key] = {__index:0,__values:[]};
-							obj[copy.key].__index ++;
-							obj[copy.key].__values.push(row);
-						}
+						var r = row[copy.key];
+						if(r && "object" != typeof r && Array != r.constructor) {
+                            var o = obj[r];
+							if(!o) {
+                                obj[r] = {__index: 0, __values: []};
+                                o = obj[r];
+                                count++;
+                                o.__index = count;
+							}
+                            o.__values.push(row);
+                        }
 					}
+                    obj['__count'+copy.key] = count;
 					funcArgu.copy.output = obj;
 					onFinish();
 				});
@@ -379,13 +469,13 @@ exports.rogerSmartSql = function(modal, data, callback) {
 	var out = [];
 	roger.prepare(null, 'root', modal, out);
 	roger.before(out, data, function(){
-		console.log('BEFORE:');
+		//console.log('BEFORE:');
 		roger.process(out, function(){
-			console.log('PROCESS:');
+			//console.log('PROCESS:');
 			roger.after(out, data, function(){
-				console.log('AFTER:');
+				//console.log('AFTER:');
 				var results = roger.complete(out);
-				callback(results);
+				callback(true, results);
 			});
 		});
 	});

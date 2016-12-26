@@ -14,11 +14,11 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 	}
 });
 </script> -->
-<div class="modal fade" id="homeLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+<form class="modal fade" id="homeLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" novalidate>
     	<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header" align="center">
-					<img class="img-circle" id="img_logo" src="img/logo.jpg">
+					<img class="img-circle" id="img_logo" src="img/logo.png">
 					<!--button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
 					</button-->
@@ -28,7 +28,7 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
                 <div id="div-forms">
                 
                     <!-- Begin # Login Form -->
-                    <form id="login-form">
+                    <div id="login-form">
 		                <div class="modal-body">
 				    		<div class="form-group"><span class="pull-left">手机号</span><input id="loginName" name="loginName" class="form-control" type="text" placeholder="手机号" required></div>
 				    		<div class="form-group"><span class="pull-left">密码</span><input id="loginPass" name="loginPass" class="form-control" type="password" placeholder="密码" required></div>
@@ -47,11 +47,11 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
                                 <span id="login_register_btn" type="button" class="btn btn-link">注册</span>
                             </div>
 				        </div>
-                    </form>
+                    </div>
                     <!-- End # Login Form -->
                     
                     <!-- Begin | Lost Password Form -->
-                    <form id="lost-form" style="display:none;">
+                    <div id="lost-form" style="display:none;">
     	    		    <div class="modal-body">
 		    				<div id="div-lost-msg">
                                 <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -68,11 +68,11 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
                                 <span id="lost_register_btn" type="button" class="btn btn-link">注册</span>
                             </div>
 		    		    </div>
-                    </form>
+                    </div>
                     <!-- End | Lost Password Form -->
                     
                     <!-- Begin | Register Form -->
-                    <form id="register-form" style="display:none;">
+                    <div id="register-form" style="display:none;">
             		    <div class="modal-body">
 		    				<div id="div-register-msg">
                                 <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
@@ -91,7 +91,7 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
                                 <span id="register_lost_btn" type="button" class="btn btn-link">忘记密码?</span>
                             </div>
 		    		    </div>
-                    </form>
+                    </div>
                     <!-- End | Register Form -->
                     
                 </div>
@@ -99,5 +99,5 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
                 
 			</div>
 		</div>
-	</div>
+	</form>
     <!-- END # MODAL LOGIN -->

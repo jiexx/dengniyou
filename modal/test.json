@@ -1,0 +1,4 @@
+{
+  "Facilities": {"sql": "update traveldb.tab_advertise set seq =0;",	"params":[]}
+
+}
