@@ -1,83 +1,119 @@
-<div class="orderAll" id="orderAll">
-	<ul class="navSecond">
-		<li class="active"><a href="">全部订单</a></li>
-		<li><a href="">待支付<span>3</span></a></li>
-		<li><a href="">待接单<span>1</span></a></li>
-		<li><a href="">待完成<span>6</span></a></li>
-		<li><a href="">待评价<span>2</span></a></li>
-	</ul>
 
-	<div class="searchBy">
-		订单号 <input type="text">
-		旅客 <input type="text">
-		预定日期 <input type="text" class="jedate" id="startTime"> —— <input type="text" class="jedate" id="endTime">
-		<button type="button" class="btn btn-warning btn-orange">查 询</button>
-	</div>
+<link rel="stylesheet" href="../css/userCenter.css">
+<!-- 内容部分 -->
+    <div class="contentBox clearfix">
 
-	<div class="orderBy">
-		<select name="" id="orderType">
-			<option value="">类型</option>
-			<option value="">方案</option>
-			<option value="">包车</option>
-		</select>
-		<select name="" id="orderState">
-			<option value="">订单状态</option>
-			<option value="">已完成</option>
-			<option value="">待支付</option>
-			<option value="">待接单</option>
-			<option value="">待完成</option>
-			<option value="">待评价</option>
-		</select>
-		<span>操作</span>
-	</div>
+      <!-- 左侧固定菜单 -->
+      <div class="menuLeft fl">
+        <div class="avatar">
+          <img src="" alt="个人头像">  <!--img/userAvatar.jpg -->
+        </div>
+        <h3>账号管理</h3>
+        <ul class="menu" id="menuLeftList">
+          <li><a href="#"  ui-sref="personInfo"><span></span>个人信息</a></li>
+          <li><a href="#" ui-sref="orderAll" ><span></span>我的订单</a></li>
+          <li><a href="#" ui-sref="shoppingCart"><span></span>购物车</a></li>
+          <li><a href="#" ><span></span>我的收藏</a></li>
+          <li><a href="#" ><span></span>我的好友</a></li>
+          <li><a href="#" ><span></span>安全中心</a></li>
+          <li><a href="#" ><span></span>常用地址</a></li>
+          <li><a href="#" ><span></span>导游中心</a></li>
+          <li><a href="#" ><span></span>我的攻略</a></li>
+        </ul>
+      </div>
+      <!-- 左侧固定菜单结束 -->
+      
+      <!-- 右侧详细内容 -->
+      <div class="contentRight fr">
+        <div ui-view>
+        	<div class="orderAll" id="orderAll">
+				<ul class="navSecond">
+					<li class="active"><a href="">全部订单</a></li>
+					<li><a href="">待支付<span>3</span></a></li>
+					<li><a href="">待接单<span>1</span></a></li>
+					<li><a href="">待完成<span>6</span></a></li>
+					<li><a href="">待评价<span>2</span></a></li>
+				</ul>
 
-	<ul class="orderList">
-		{{each(i,order) datas}}
-		<li>
-			<div class="title">
-				<input type="checkbox"> <h5>${datas[i].username} <span class="contactMe"></span></h5>
-				<span class="fr status">
-					{{if datas[i].status == 1}}待支付{{/if}}
-					{{if datas[i].status == 2}}待结单{{/if}}
-					{{if datas[i].status == 3}}待完成{{/if}}
-					{{if datas[i].status == 4}}待完成{{/if}}
-					{{if datas[i].status == 5}}已关闭{{/if}}
-					{{if datas[i].status == 6}}已结算{{/if}}
-				</span>
-			</div>
-			<div class="content">
-				<ul class="productList">
-					<li class="clearfix">
-						<input type="checkbox">
-						<div class="productPic">
-							<img src="" alt="">
+				<div class="searchBy">
+					订单号 <input type="text">
+					旅客 <input type="text">
+					预定日期 <input type="text" class="jedate" id="startTime"> —— <input type="text" class="jedate" id="endTime">
+					<button type="button" class="btn btn-warning btn-orange">查 询</button>
+				</div>
+
+				<div class="orderBy">
+					<select name="" id="orderType">
+						<option value="">类型</option>
+						<option value="">方案</option>
+						<option value="">包车</option>
+					</select>
+					<select name="" id="orderState">
+						<option value="">订单状态</option>
+						<option value="">已完成</option>
+						<option value="">待支付</option>
+						<option value="">待接单</option>
+						<option value="">待完成</option>
+						<option value="">待评价</option>
+					</select>
+					<span>操作</span>
+				</div>
+				<ul class="orderList">
+					{{each(i,order) datas}}
+					<li>
+						<div class="title">
+							<input type="checkbox"> <h5>${datas[i].username} <span class="contactMe"></span></h5>
+							<span class="fr status">
+								{{if datas[i].status == 1}}待支付{{/if}}
+								{{if datas[i].status == 2}}待结单{{/if}}
+								{{if datas[i].status == 3}}待完成{{/if}}
+								{{if datas[i].status == 4}}待完成{{/if}}
+								{{if datas[i].status == 5}}已关闭{{/if}}
+								{{if datas[i].status == 6}}已结算{{/if}}
+							</span>
 						</div>
-						<div class="productText">
-							<h4>${datas[i].ServiceTripName} </h4>
-							<p class="description">${datas[i].ServiceTripName}</p>
-							<p class="productLabel">${datas[i].ServiceTripTypeName}</p>
-							<p>${datas[i].starttime}-${datas[i].starttime}</p>
-						</div>
-						<div class="payBtn">
-							<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
-							{{if datas[i].status == 1}}立即支付{{/if}}
-							<button type="button" class="btn btn-warning btn-orange">
-								{{if datas[i].status == 1}}立即支付{{/if}}
-								{{if datas[i].status == 2}}接单{{/if}}
-								{{if datas[i].status == 3}}完成{{/if}}
-								{{if datas[i].status == 4}}确认完成{{/if}}
-								{{if datas[i].status == 6}}评价{{/if}}
-							</button>
+						<div class="content">
+							<ul class="productList">
+								<li class="clearfix">
+									<input type="checkbox">
+									<div class="productPic">
+										<img src="${ $data.IMGHOST + picurl}" alt="">
+									</div>
+									<div class="productText">
+										<h4>${datas[i].ServiceTripName} </h4>
+										<p class="description">${datas[i].ServiceTripName}</p>
+										<p class="productLabel">${datas[i].ServiceTripTypeName}</p>
+										<p>${datas[i].starttime}-${datas[i].starttime}</p>
+									</div>
+									{{if datas[i].status != 5}}
+									<div class="payBtn" id="payBtn" style="text-align: right">
+										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
+										<button type="button" class="btn btn-warning btn-orange">
+											{{if datas[i].status == 1}}立即支付{{/if}}
+											{{if datas[i].status == 2}}接单{{/if}}
+											{{if datas[i].status == 3}}完成{{/if}}
+											{{if datas[i].status == 4}}确认完成{{/if}}
+											{{if datas[i].status == 6}}评价{{/if}}
+										</button>
+									</div>
+									{{/if}}
+
+								</li>
+							</ul>
 						</div>
 					</li>
+					{{/each}}
 				</ul>
-			</div>
-		</li>
-		{{/each}}
-	</ul>
 
- 
-</div>
+			 
+			</div>
+        </div>
+      </div>    
+      <!-- 右侧详细内容结束 -->
+    </div>
+    <!-- 内容部分结束 -->
+
+
 <script>
 	$(function(){
 		$('#orderAll .navSecond').on('click','li',function(){
