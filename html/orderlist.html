@@ -58,7 +58,6 @@
 					</select>
 					<span>操作</span>
 				</div>
-
 				<ul class="orderList">
 					{{each(i,order) datas}}
 					<li>
@@ -78,7 +77,7 @@
 								<li class="clearfix">
 									<input type="checkbox">
 									<div class="productPic">
-										<img src="${ $data.IMGHOST + datas[i].picurl}" alt="">
+										<img src="${ $data.IMGHOST + picurl}" alt="">
 									</div>
 									<div class="productText">
 										<h4>${datas[i].ServiceTripName} </h4>
@@ -86,9 +85,9 @@
 										<p class="productLabel">${datas[i].ServiceTripTypeName}</p>
 										<p>${datas[i].starttime}-${datas[i].starttime}</p>
 									</div>
-									<div class="payBtn">
+									{{if datas[i].status != 5}}
+									<div class="payBtn" id="payBtn" style="text-align: right">
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
-										{{if datas[i].status == 1}}立即支付{{/if}}
 										<button type="button" class="btn btn-warning btn-orange">
 											{{if datas[i].status == 1}}立即支付{{/if}}
 											{{if datas[i].status == 2}}接单{{/if}}
@@ -97,6 +96,8 @@
 											{{if datas[i].status == 6}}评价{{/if}}
 										</button>
 									</div>
+									{{/if}}
+
 								</li>
 							</ul>
 						</div>

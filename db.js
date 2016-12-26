@@ -333,20 +333,18 @@ exports.getOrderList = function(item, callback) {
 
         if(0!=item.page) {
 
-        	var start = (page-1)*20;
+        	var start = (item.page-1)*20;
 
-            sb.append(" limit "+start+",  20 ");
+            sql.push(" limit "+start+",  20 ");
         }
 
-        callback;
 		exec(connection, sql.join(""), [,], function(err, results){
 
 			if (err){
                 callback(err,results);
 			}
-
-            var json = JSON.stringify(results);
-            callback(remJson(json));
+            datas = {"datas":results};
+            callback(err,remJson(datas));
 
         });
 
