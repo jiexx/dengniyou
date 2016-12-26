@@ -1,4 +1,4 @@
 {
-	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?  LIMIT 0, 8;",	"params":["UserID"]},
-	"CountOFPlans": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?;",	"params":["UserID"]}
+  "Attraction": {"sql": "SELECT * FROM traveldb.`vw_/dashboard/product/accommodation` WHERE UserID=10066 LIMIT 0, 8;",	"params":["UserID","Page"]},
+  "Counts": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveldb.`vw_/dashboard/product/accommodation` where  UserID=10066;",	"params":["UserID"]}
 }

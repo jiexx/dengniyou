@@ -31,18 +31,22 @@ $(function () {
     };
     var ctrlClassicplan = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     var ctrlService = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     var ctrlActivity = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     var ctrlCar = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     var ctrlAttraction = function(response, realView) {
@@ -54,19 +58,23 @@ $(function () {
     };
     var ctrlAccommodation = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     var ctrlDelicacy = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     var ctrlTravelogue = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
 
     var ctrlFacilityList = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
 
@@ -80,7 +88,7 @@ $(function () {
 
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
-        '#/spcialplan':                   {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlSpecialplan},
+        '#/spcialplan':                   {view:'product-specialplan.html',					rootrest:'/dashboard/product/specialplan',                        ctrl: ctrlSpecialplan},
         '#/classicplan':                  {view:'product-classicplan.html',					rootrest:'/dashboard/product/classicplan',                        ctrl: ctrlClassicplan},
         '#/service':                       {view:'product-service.html',						rootrest:'/dashboard/product/service',	                        ctrl: ctrlService},
         '#/activiy':                       {view:'product-activity.html',						rootrest:'/dashboard/product/activity',	                        ctrl: ctrlActivity},
