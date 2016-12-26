@@ -72,6 +72,24 @@ $(function () {
         realView.rogerCropImages();
     };
 
+    var ctrlShortplanDetail = function(response, realView) {
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+
+    var ctrlTemplateplanDetail = function(response, realView) {
+
+        $('#refundpolicy').html(response.PlansByUser[0].Policy.replace(/\r\n/g, '<br>'));
+        $('#costpolicy').html(response.PlansByUser[0].CostInclude.replace(/\r\n/g, '<br>'));
+        $('#excostpolicy').html(response.PlansByUser[0].CostExclude.replace(/\r\n/g, '<br>'));
+        $('#visapolicy').html(response.PlansByUser[0].VisaNotice.replace(/\r\n/g, '<br>'));
+        $('#noticepolicy').html(response.PlansByUser[0].Notice.replace(/\r\n/g, '<br>'));
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+
     var ctrlFacilityList = function(response, realView) {
 
         bindRidoesForSwitch();
@@ -98,7 +116,10 @@ $(function () {
         '#/accommodation':               {view:'product-accommodation.html',				rootrest:'/dashboard/product/accommodation',                     ctrl: ctrlAccommodation},
         '#/travelogue':                    {view:'travelogue-list.html',        				rootrest:'/travelogue/list',                                         ctrl: ctrlTravelogue},
         '#/facilitylist':                 {view:'facilitylist.html',                         rootrest:'/facility/list',                                             ctrl: ctrlFacilityList},
-        '#/orderlist':                     {view: 'orderlist.html',                           rootrest: '/order/list',                                              ctrl: ctrlOrderlist}
+        '#/orderlist':                     {view: 'orderlist.html',                           rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
+
+        '#/shortplandetail':             {view: 'product-shortplan-detail.html',      rootrest: '/dashboard/product/shortplan/detail',                ctrl: ctrlShortplanDetail},
+        '#/templateplandetail':          {view: 'product-tempplan-detail.html',      rootrest: '/dashboard/product/tempplan/detail',                ctrl: ctrlTemplateplanDetail}
 	});
 
 	

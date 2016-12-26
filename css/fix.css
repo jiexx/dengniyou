@@ -262,7 +262,7 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 }/*清除浮动*/
 
 
-.container{
+.container-box {
 	position: relative;
 	max-width: 1200px;
 	border: 1px solid #E0E0E0;
@@ -276,11 +276,6 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 
 /*经典方案预览*/
 .breadcrumb{
-	position: absolute;
-	top: 20px;
-	right: 20px;
-	z-index: 999;
-	width: 25%;
 	background-color: #fff;
 }
 .breadcrumb li a{

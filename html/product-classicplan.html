@@ -8,7 +8,12 @@
 	  <div class="col-md-5 ">
 	    <div class="media">
 		  <div class="media-left media-top">
-			<img src="${ $data.IMGHOST }${PicURL}" class="media-object" style="width:160px"></img>
+			{{if (CreateType==1)}}
+				<a href="#/templateplandetail?PlanID=${PlanID}">
+			{{else}}
+				<a href="#/shortplandetail?PlanID=${PlanID}">
+			{{/if}}
+				<div><img data-src="${ $data.IMGHOST }${PicURL[0]}" class="media-object" style="width:160px;height:160px"></div></a>
 		  </div>
 		  <div class="media-body">
 			<div class="media-heading">${PlanName}</div>
