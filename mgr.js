@@ -118,7 +118,8 @@ app.post('/order/list', upload.array(), function(req, res) {
         if(!error) {
         	var datas = {"datas":results};
             ////console.log(JSON.stringify(results));
-            res.send(JSON.stringify(datas));
+            var json = JSON.stringify(datas)
+            res.send(json);
         }
     });
 });

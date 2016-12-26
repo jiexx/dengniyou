@@ -141,7 +141,7 @@ function doLoop(list, data, obj, i, callback) {
 			}else if(error) {
 				list[index.value].visited = true;
 				index.value ++;
-				callback(error, remJson(obj));
+				callback(error, (obj));
 			}else {
 				var key = list[index.value].key;
 				if(key && typeof key =="string") {
@@ -331,15 +331,25 @@ exports.getOrderList = function(item, callback) {
         }
         sql.push(" order by travelorder.UpdateTime desc");
 
-        if(!item.page) {
+        if(0!=item.page) {
 
         	var start = (page-1)*20;
 
             sb.append(" limit "+start+",  20 ");
         }
 
+        callback;
+		exec(connection, sql.join(""), [,], function(err, results){
 
-		exec(connection, sql.join(""), [,], callback);
+			if (err){
+                callback(err,results);
+			}
+
+            var json = JSON.stringify(results);
+            callback(remJson(json));
+
+        });
+
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
 	});
 };
