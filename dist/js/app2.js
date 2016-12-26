@@ -62,6 +62,9 @@ $(function () {
     var ctrlOrderlist = function(response, realView) {
 
         realView.rogerCropImages();
+        if (5 == response.datas[0].status){
+            // $('#payBtn').hide()
+        }
     };
 
 	$.rogerRouter({
