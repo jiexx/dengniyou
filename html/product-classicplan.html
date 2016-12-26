@@ -1,4 +1,10 @@
 <div class="container">
+	<div class="pull-right btn-group panel-body">
+		<a class="btn btn-warning   " href="#/templateplannew">模板创建方案</a>
+		<a class="btn btn-warning  " href="#/shortplannew" >快捷创建方案</a>
+	</div>
+</div>
+<div class="container">
     <div class="list-group">
 	  {{each PlansByUser}} 
 	  <div class="list-group-item clearfix disabled"><div class="col-md-1"><input type="radio" name="optradio"></div><div class="col-md-5">方案</div><div class="col-md-2">价格</div><div class="col-md-2">行程天数</div>
@@ -8,7 +14,12 @@
 	  <div class="col-md-5 ">
 	    <div class="media">
 		  <div class="media-left media-top">
-			<img src="${ $data.IMGHOST }${PicURL}" class="media-object" style="width:160px"></img>
+			{{if (CreateType==1)}}
+				<a href="#/templateplandetail?PlanID=${PlanID}">
+			{{else}}
+				<a href="#/shortplandetail?PlanID=${PlanID}">
+			{{/if}}
+				<div><img data-src="${ $data.IMGHOST }${PicURL[0]}" class="media-object" style="width:160px;height:160px"></div></a>
 		  </div>
 		  <div class="media-body">
 			<div class="media-heading">${PlanName}</div>
