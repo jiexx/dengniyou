@@ -1,8 +1,12 @@
 <div class="container">
     <div class="list-group">
-	  {{each PlansByUser}} 
-	  <div class="list-group-item clearfix disabled"><div class="col-md-1"><input type="radio" name="optradio"></div><div class="col-md-5">方案</div><div class="col-md-2">价格</div><div class="col-md-2">行程天数</div>
-	    <div class="col-md-1 ">发布状态</div><div class="col-md-1 ">编辑</div>
+	  {{each Service}}
+	  <div class="list-group-item clearfix disabled">
+		  <div class="col-md-1"><input type="radio" name="optradio"></div>
+		  <div class="col-md-5">服务</div>
+		  <div class="col-md-2">服务类型</div>
+	    <div class="col-md-1 ">发布状态</div>
+		  <div class="col-md-1 ">编辑</div>
 	  </div>
 	  <div class="list-group-item clearfix btn-group"><div class="col-md-1"><input type="radio" name="optradio"></div>
 	  <div class="col-md-5 ">
@@ -11,14 +15,12 @@
 			<img src="${ $data.IMGHOST }${PicURL}" class="media-object" style="width:160px"></img>
 		  </div>
 		  <div class="media-body">
-			<div class="media-heading">${PlanName}</div>
-			<div>${PlanNumber}</div>
-			<div>${StartCity}</div>
+			<div class="media-heading">${ServiceName}</div>
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-md-2 ">${PlanPriceBase}</div><div class="col-md-2 ">${PlanDays}</div><div class="col-md-1 ">
-	   {{if PlanStatus ==1}}待审核 {{/if}}{{if PlanStatus ==2}}审核通过 {{/if}}{{if PlanStatus ==3}}导游隐藏 {{/if}}{{if PlanStatus ==4}}导游发布 {{/if}}{{if PlanStatus ==5}}导游定制 {{/if}}{{if PlanStatus ==6}}未加入 {{/if}}{{if PlanStatus ==7}}已加入 {{/if}}
+	  <div class="col-md-2 ">${TypeName}</div><div class="col-md-1 ">
+	   {{if ServiceStatus ==1}}待审核 {{/if}}{{if ServiceStatus ==2}}审核通过 {{/if}}{{if ServiceStatus ==3}}导游隐藏 {{/if}}{{if ServiceStatus ==4}}导游发布 {{/if}}{{if ServiceStatus ==5}}导游定制 {{/if}}{{if ServiceStatus ==6}}未加入 {{/if}}{{if ServiceStatus ==7}}已加入 {{/if}}
 	   </div><div class="col-md-1 "><div class="btn  glyphicon glyphicon-edit"></div></div></div>
 	  {{/each}}
 	</div>
@@ -30,7 +32,7 @@
         <span aria-hidden="true">&laquo;</span>
       </a>
     </li>
-	{{for $data.CountOFPlans[0].Count}}
+	{{for $data.Counts[0].Count}}
     <li><a href="#">${i}</a></li>
     {{/for}}
     <li>

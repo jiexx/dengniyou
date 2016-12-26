@@ -1,5 +1,15 @@
 $(function () {
 
+    function bindRidoesForSwitch (){
+        var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
+        if(!ev || !ev.change) {
+            $('#menu input[type=radio][name="optradio"]').change(function(e){
+                var usr = $.rogerGetLoginUser();
+                var url = $(this).next('a').attr('href');
+                $.rogerTrigger('#app',url, {UserID:usr.UserID});
+            });
+        }
+    }
 	var ctrlDashboard = function(response, realView) {
         if( !$.trim( $('#modal').html() ) ) {
             $('#modal').rogerReloadFile('./home-login.html');
@@ -12,12 +22,13 @@ $(function () {
                 $.rogerLocation('#/?UserID='+usr.UserID)
             }
         }
-        $('input[type=radio][name="optradio"]').change(function(e){
-            var usr = $.rogerGetLoginUser();
-            var url = $(this).next('a').attr('href');
-            $.rogerTrigger('#app',url, {UserID:usr.UserID});
-        });
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
 	};
+    var ctrlSpecialplan = function(response, realView) {
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
     var ctrlClassicplan = function(response, realView) {
 
         realView.rogerCropImages();
@@ -66,7 +77,7 @@ $(function () {
 
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
-        '#/spcialplan':                   {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
+        '#/spcialplan':                   {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlSpecialplan},
         '#/classicplan':                  {view:'product-classicplan.html',					rootrest:'/dashboard/product/classicplan',                        ctrl: ctrlClassicplan},
         '#/service':                       {view:'product-service.html',						rootrest:'/dashboard/product/service',	                        ctrl: ctrlService},
         '#/activiy':                       {view:'product-activity.html',						rootrest:'/dashboard/product/activity',	                        ctrl: ctrlActivity},
@@ -75,8 +86,8 @@ $(function () {
         '#/delicacy':                     {view:'product-delicacy.html',						rootrest:'/dashboard/product/delicacy',	                        ctrl: ctrlDelicacy},
         '#/accommodation':               {view:'product-accommodation.html',				rootrest:'/dashboard/product/accommodation',                     ctrl: ctrlAccommodation},
         '#/travelogue':                    {view:'travelogue-list.html',        				rootrest:'/travelogue/list',                                         ctrl: ctrlTravelogue},
-        '#/facilitylist':                 {view:'facilitylist.html',                      rootrest:'/facility/list',                  ctrl: ctrlFacilityList},
-        '#/orderlist':                  　{view: 'orderlist.html',                           rootrest: '/order/list',                    ctrl: ctrlOrderlist},
+        '#/facilitylist':                 {view:'facilitylist.html',                         rootrest:'/facility/list',                                             ctrl: ctrlFacilityList},
+        '#/orderlist':                     {view: 'orderlist.html',                           rootrest: '/order/list',                                              ctrl: ctrlOrderlist}
 	});
 
 	
