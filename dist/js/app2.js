@@ -77,7 +77,6 @@ $(function () {
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
-
     var ctrlTemplateplanDetail = function(response, realView) {
 
         $('#refundpolicy').html(response.PlansByUser[0].Policy.replace(/\r\n/g, '<br>'));
@@ -89,6 +88,17 @@ $(function () {
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
+    var ctrlTemplateplanNew = function(response, realView) {
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+    var ctrlShortplanNew = function(response, realView) {
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+
 
     var ctrlFacilityList = function(response, realView) {
 
@@ -119,7 +129,10 @@ $(function () {
         '#/orderlist':                     {view: 'orderlist.html',                           rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
 
         '#/shortplandetail':             {view: 'product-shortplan-detail.html',      rootrest: '/dashboard/product/shortplan/detail',                ctrl: ctrlShortplanDetail},
-        '#/templateplandetail':          {view: 'product-tempplan-detail.html',      rootrest: '/dashboard/product/tempplan/detail',                ctrl: ctrlTemplateplanDetail}
+        '#/templateplandetail':          {view: 'product-tempplan-detail.html',      rootrest: '/dashboard/product/tempplan/detail',                ctrl: ctrlTemplateplanDetail},
+
+        '#/shortplannew':           {view: 'product-shortplan-edit.html',      rootrest: '/dashboard/product/shortplan/new',                ctrl: ctrlTemplateplanNew},
+        '#/templateplannew':        {view: 'product-tempplan-edit.html',      rootrest: '/dashboard/product/tempplan/new',                ctrl: ctrlShortplanNew}
 	});
 
 	

@@ -1,0 +1,165 @@
+
+<link rel="stylesheet" href="../css/editPage.css">
+
+
+<div class="container editPage">
+	<!-- 方案基本信息 -->
+	<div class="baseInfo">
+		<ul class="breadcrumb">
+		  <li><a href="#">产品管理</a> <span class="divider"></span></li>
+		  <li><a href="#">经典方案</a> <span class="divider"></span></li>
+		  <li class="active">快捷方案编辑</li>
+		</ul>
+
+		<h4>基本信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">方案名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" id="name" placeholder="不能超过24个字符">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="adultPrice" class="col-sm-2 col-md-1 control-label">成人价格</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="number" class="form-control" id="adultPrice" placeholder="请输入数字"> 元/人
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="childPrice" class="col-sm-2 col-md-1 control-label">儿童价格</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="number" class="form-control" id="childPrice" placeholder="请输入数字"> 元/人
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">行程天数</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="number" class="form-control" id="" placeholder="请输入数字"> 天
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">方案标签</label>
+		    <div class="col-sm-10 col-md-11">
+		      <ul class="labels">
+				<li>历史文化<span class="glyphicon glyphicon-remove-circle"></span></li> / 
+				<li>异国风情<span class="glyphicon glyphicon-remove-circle"></span></li> /
+				<li>标签三<span class="glyphicon glyphicon-remove-circle"></span></li> / 
+				<li>标签四<span class="glyphicon glyphicon-remove-circle"></span></li> / 
+				<li class="addCityBtn glyphicon glyphicon-plus"></li>
+			</ul>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">方案特色</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control" rows="5" placeholder="请输入不少于300字描述"></textarea>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<!-- 方案基本信息结束 -->
+
+	<!-- 相册上传 -->
+	<div class="uploadImg">
+		<h4>相册信息</h4>
+		
+		<div class="col-md-1 col-sm-2">相册上传:</div>
+		<div class="col-md-11 col-sm-10">
+			<div class="uploadPic" id="photos">
+				<img src="" alt="">
+				<img src="" alt="">
+				<i class="glyphicon glyphicon-plus addImgBtn" id=""></i>
+			</div> 
+		</div>
+		
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="col-md-2 col-sm-4">封面照片：</div>
+				<div class="col-md-10 col-sm-8">
+					<div class="singleImg">点击上传图片</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 相册上传结束 -->
+
+	<!-- 行程信息（方案） -->
+	<div class="scheduleShort">
+		<h4>描述信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">段落标题</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" id="name" placeholder="不能超过24个字符">
+		    </div>
+		  </div>
+		</form>
+		<ul>
+			<li class="row">
+				<div class="col-md-1 col-sm-2">图片上传1:</div>
+				<div class="col-md-11 col-sm-10 clearfix">
+					<div class="singleImg">点击上传图片</div>
+					<div class="decritionImg">
+						<input type="text" placeholder="请输入图片标题">
+						<textarea name="" placeholder="请输入不少于300字描述"></textarea>
+					</div>
+				</div>
+			</li>
+			<li class="row">
+				<div class="col-md-1 col-sm-2">图片上传2:</div>
+				<div class="col-md-11 col-sm-10 clearfix">
+					<div class="singleImg">点击上传图片</div>
+					<div class="decritionImg">
+						<input type="text" placeholder="请输入图片标题">
+						<textarea name="" placeholder="请输入不少于300字描述"></textarea>
+					</div>
+					<i class="glyphicon glyphicon-plus addImgBtn" id=""></i>
+				</div>
+			</li>
+		</ul>
+	</div>
+	<!-- 行程信息结束（方案） -->
+
+	<!-- 须知信息 -->
+	<div class="notice">
+		<h4>须知信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">费用自理：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">签证须知：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">注意事项：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		</form>
+		<div class="optionBtn">
+			<button class="btn btn-warning">保存</button>
+			<button class="btn btn-warning">发布 </button>
+		</div>
+	</div>
+	<!-- 须知信息结束 -->
+</div>
+
