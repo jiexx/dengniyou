@@ -2,7 +2,7 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8">
-    <title>景点预览</title>
+    <title>住宿预览</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="renderer" content="webkit">
@@ -23,7 +23,7 @@
       <ol class="col-md-4 breadcrumb">
         <li><a href="">产品管理</a></li>
         <li><a href="">服务</a></li>
-        <li class="active"><a href="">景点预览</a></li>
+        <li class="active"><a href="">住宿预览</a></li>
         <li class="active"><a href="">返回</a></li>
       </ol> <!-- end 面包屑导航breadcrumb -->
 
@@ -31,10 +31,9 @@
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           {{each(i,p) SpotPics}}
-          <li data-target="#carousel-example-generic" data-slide-to="0" class="{{if i==1}}active{{/if}}"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==1}}active{{/if}}"></li>
           {{/each}}
         </ol>
-
         <div class="carousel-inner" role="listbox">
           {{each(i,p) SpotPics}}
           <div class="item {{if i==1}}active{{/if}}">
@@ -48,35 +47,38 @@
         <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
           <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
-      </div>
-      <!--  end  banner -->
+      </div><!--  end  banner -->
+      
       <div class="detailpage-mainbody">
         <div class="attraction detailpage-title">
-          <h1>${ SpotDetail[0].NameCh}</h1>
-          <p>${ SpotDetail[0].NameEn}</p>
-        </div>
+          <h1>${SpotDetail[0].NameCh}</h1>
+          <p>${SpotDetail[0].NameEn}</p>
+        </div> 
         <div class="row product-detail price-detail">
-          <h2>景点详情</h2>
+          <h2>商品详情</h2>
           <div class="col-md-3">
-            <p class="">建议游玩：<span>${SpotDetail[0].TravelTime}小时</span></p>
-            <p>联系电话：<span>${ SpotDetail[0].Tel}</span></p>
+           <!--  <p>入住人数：<span>2人</span></p> -->
+            <p>国家城市：<span>${SpotDetail[0].CountryName}－${SpotDetail[0].CityName}</span></p>
+            <p>地址：<span>${SpotDetail[0].Address}</span></p>
           </div>
           <div class="col-md-3">
-            <p class="">国家城市：<span>${ SpotDetail[0].CountryName}</span><span>|</span><span>${ SpotDetail[0].CityName}</span></p>
-            <p>地址：<span>${ SpotDetail[0].Address}</span></p>
+           <!--  <p >房间数：<span>1间</span></p> -->
+            <p>区号：<span>${SpotDetail[0].ZoneCode}</span></p>
           </div>
           <div class="col-md-3">
-            <p class="">区号：<span>${ SpotDetail[0].ZoneCode}</span></p>
+            <!-- <p>床数：<span>1张</span></p> -->
+            <p>邮编：<span>${SpotDetail[0].ZipCode}</span></p>
           </div>
           <div class="col-md-3">
-            <p class="">邮编：<span>${ SpotDetail[0].ZipCode}</span></p>
+            <p>卫生间：<span>123456</span></p>
+            <p>联系电话：<span>15001899199</span></p>
           </div>
         </div> <!-- end 商品详情product-detail -->
         <div class="service-description">
-          <h2>景点描述</h2>
+          <h2>服务描述</h2>
           <div class="des">
             <p>
-              ${ SpotDetail[0].Description}
+              Aliquam scelerisque ex vitae arcu feugiat condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam porttitor id nunc eget consequat. Proin egestas fringilla vulputate. Phasellus eu augue ut dolor porta finibus. Nunc egestas malesuada maximus. Donec vitae lacus at turpis tempor auctor in pellentesque eros. Donec sit amet nunc risus. Proin rutrum, lectus at pharetra cursus, nulla lorem lacinia augue, vel maximus enim ipsum non massa. Quisque sit amet elit luctus, vestibulum ligula et, rhoncus urna. Vestibulum ut pellentesque magna. Maecenas lacinia placerat rutrum. Nunc consectetur viverra maximus.
             </p>
           </div>
         </div><!-- end 服务描述service-description -->
