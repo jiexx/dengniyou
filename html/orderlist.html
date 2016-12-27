@@ -61,8 +61,7 @@
 				<ul class="orderList">
 					{{each(i,order) datas}}
 					<li>
-						<div class="title">
-							<input type="checkbox"> <h5>${datas[i].username} <span class="contactMe"></span></h5>
+						<div class="title"><h5>${datas[i].username} <span class="contactMe"></span></h5>
 							<span class="fr status">
 								{{if datas[i].status == 1}}待支付{{/if}}
 								{{if datas[i].status == 2}}待结单{{/if}}
@@ -75,7 +74,6 @@
 						<div class="content">
 							<ul class="productList">
 								<li class="clearfix">
-									<input type="checkbox">
 									<div class="productPic">
 										<img src="${ $data.IMGHOST + picurl}" alt="">
 									</div>
