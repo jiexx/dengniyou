@@ -351,6 +351,79 @@ exports.getOrderList = function(item, callback) {
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
 	});
 };
+
+exports.getAddorderDetail = function (item, callback) {
+    pool.getConnection(function (err, connection) {
+        if (err) {
+            console.log(err);
+            callback(true);
+            return;
+        }
+
+        //ordertype = 2
+        if (item.ordertype == 2) {
+            sql = "SELECT plan.PlanID AS ServiceTripID, plan.PlanName AS ServiceTripName, plan.PlanType AS ServiceTripTypeID, " +
+                "IF ( plan.PlanType = 1, '经典', IF ( plan.PlanType = 2, '特色', '私人' ) ) AS ServiceTripTypeName, " +
+                "place.ParentID AS CountryID, plan.StartCityID AS cityID, plan.StartCity AS CityNameCn, 2 AS OrderType " +
+                "FROM traveluserdb.tab_planinfo plan LEFT JOIN traveluserdb.tab_planschedule plansch " +
+                "ON ( plansch.PlanID = plan.PlanID AND plansch.DayName = 'D1' ) " +
+                "LEFT JOIN traveldb.tab_travelregion place ON ( place.RegionID = plan.StartCityID ) " +
+                "WHERE plan.PlanID = " + item.planID;
+            useersql = "SELECT DISTINCT pl.UserID, useri.AvatarPicURL, useri.`Identified`, useri.Labels, pl.PlanID " +
+                "FROM traveluserdb.tab_userplan pl LEFT JOIN traveldb.tab_userinfo useri ON " +
+                "( useri.UserID = pl.UserID AND useri.`Identified` = 1 ) WHERE PlanID =" + item.planID;
+
+            schedulerssql = "select DATE_FORMAT(ScheduleDate,'%Y-%m-%d')  from tab_travelorderschedule " +
+                "where GuideID=? and ScheduleDate>=NOW() and Status in('0','2')";
+        }
+
+        var userList;
+        var addDetail;
+        exec(connection, sql.join(""), [,], function (err, results) {
+
+            if (err) {
+                callback(err, results);
+            }
+
+            addDetail = {"addDetail": results};
+
+            if (null != useersql && typeof(useersql) != "undefined") {
+                exec(connection, useersql.join(""), [,], function (err, usrlist) {
+                    if (err) {
+                        callback(false, remJson(addDetail));
+                    }
+
+                    if (null != schedulerssql && typeof(schedulerssql) != "undefined") {
+                        for (i=0;i<usrlist.length;i++) {
+
+                            exec(connection, schedulerssql.join(""), [usrlist[i]["UserID"]], function (err, schedulars) {
+                                if (err) {
+                                    addDetail["userList"] = usrlist;
+                                    callback(false, remJson(addDetail));
+                                }
+                                usrlist[i]["userSchedules"] = schedulars;
+
+                                if(i == usrlist.length-1){
+                                    addDetail["userList"] = usrlist;
+                                    callback(false, remJson(addDetail));
+								}
+
+                            });
+                        }
+                    }
+
+
+                });
+            }
+
+
+        });
+
+
+        //console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
+    });
+};
+
 exports.getVW_PlansByContinent = function(item, callback) {
 	pool.getConnection(function(err, connection) {
 		if(err) { 

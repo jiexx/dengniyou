@@ -122,6 +122,17 @@ app.post('/order/list', upload.array(), function(req, res) {
     });
 });
 
+//usertype:1,游客，2导游,userID
+app.post('/order/getAddorderDetail', upload.array(), function(req, res) {
+    db.getAddorderDetail(req.body, function(error, results){
+        if(!error) {
+            ////console.log(JSON.stringify(results));
+            res.send(results);
+        }
+    });
+});
+
+
 
 var MODAL = {};
 var server = app.listen(8088, function() {
