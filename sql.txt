@@ -162,3 +162,172 @@ group_concat(concat_ws(',',  concat('{"PlanID":"', convert( ifnull(a.PlanID,'nul
   concat('"PlanLabels":	"', ifnull(b.PlanLabels,'null') ,                 '"'),
   concat('"Label":	"', ifnull(c.Label ,'null') , 				'"}'))  separator ',') Plan from traveluserdb.tab_planinfo a left join traveluserdb.tab_plansummary b on a.PlanID = b.PlanID join traveluserdb.vw_planlabels c on b.PlanLabels like concat('%', c.Label, '%') group by label
  
+INSERT INTO traveluserdb.tab_planinfo(
+PlanName     ,
+PlanStatus   ,
+AuditStatus  ,
+PlanType     ,
+PlanPriceBase,
+PicURL       ,
+CarURL       ,
+CreateType   ,
+PlanDays     ,
+StartTime    ,
+StartCity    ,
+StartCityID  ,
+PlanNumber   ,
+Policy       ,
+CostInclude  ,
+CostExclude  ,
+VisaNotice   ,
+Notice       ,
+IMUserID     ,
+CreateUserID ,
+AdultPrice   ,
+KidPrice     ,
+Weight       ,
+UpdateDate   ,
+CreateDate   )VALUES(
+?                                            ,
+3                                            ,
+0                                            ,
+2                                            ,
+?                                            ,
+?                                            ,
+?                                            ,
+1                                            ,
+?                                            ,
+'随时'                                       ,
+？                                           ,
+？                                           ,
+'PL-'||DATE_FORMAT(NOW(),'%Y%M%D%H%i%S%f')   ,
+?                                            ,
+?                                            ,
+?                                            ,
+?                                            ,
+?                                            ,
+?                                            ,
+?                                            ,
+?                                            ,
+0                                            ,
+NOW()                                        ,
+NOW()
+);
+
+
+
+PlanName     , ?      "PlanName
+PlanStatus   , 3      "
+AuditStatus  , 0      "
+PlanType     , 2      "
+PlanPriceBase, ?      "PlanPriceBase
+PicURL       , ?      "PicURL
+CarURL       , ?      "CarURL
+CreateType   , 1      "
+PlanDays     , ?      "PlanDays
+StartTime    , '随时' "
+StartCity    , ？     "StartCity
+StartCityID  , ？     "StartCityID
+PlanNumber   , -      "
+Policy       , ?      "Policy
+CostInclude  , ?      "CostInclude
+CostExclude  , ?      "CostExclude
+VisaNotice   , ?      "VisaNotice
+Notice       , ?      "Notice
+CreateUserID , ?      "CreateUserID
+AdultPrice   , ?      "AdultPrice
+KidPrice     , ?      "KidPrice
+Weight       , 0      "
+UpdateDate   , NOW()  "
+CreateDate   
+
+INSERT INTO traveluserdb.tab_planpicture (
+PlanID  ,
+PicUrl  
+)VALUES(
+?,
+?
+)
+
+INSERT INTO traveluserdb.tab_plansummary(
+PlanID       , 
+PlanName     , 
+PlanFeature  , 
+PlanLabels   , 
+PlanSeasons  , 
+PlanRhythm   , 
+StartTime    , 
+)VALUES(
+?,
+?,
+?,
+?,
+'一年四季,春季,夏季,秋季,冬季',
+0,
+'随时出发',
+)
+
+INSERT INTO  traveluserdb.tab_planscheduleplace(
+CountryID       ,
+CountryNameCn   ,
+CountryNameEn   ,
+CityID          ,
+CityNameCn      ,
+CityNameEn      ,
+AirportCode     ,
+AirportNameCn   ,
+AirportNameEn   ,
+SpotID          ,
+SpotName        ,
+SpotLocalName   ,
+SpotTravelTime  ,
+HotelStarLevel  ,
+ScheduleType    ,
+SpotPicUrl      
+)VALUES(
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?,
+?)
+
+INSERT INTO   traveluserdb.tab_planschedule(
+PlanID             , 
+DayName            , 
+TravelInstruction  , 
+CreateDate         , 
+)VALUES(
+?     ,
+?     ,
+?     ,
+NOW()
+)
+
+ 
+ 
+INSERT INTO traveluserdb.tab_planinfo(PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,IMUserID,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,3,0,2,?,?,?,1,?,'随时',？,？,'PL-'||DATE_FORMAT(NOW(),'%Y%M%D%H%i%S%f'),?,?,?,?,?,?,?,?,0,NOW(),NOW());
+INSERT INTO traveluserdb.tab_planpicture(PlanID,PicUrl)VALUES(?,?);
+INSERT INTO traveluserdb.tab_plansummary(PlanID,PlanName,PlanFeature,PlanLabels,PlanSeasons,PlanRhythm,StartTime,);VALUES(?,?,?,?,'一年四季,春季,夏季,秋季,冬季',0,'随时出发',);
+INSERT INTO traveluserdb.tab_planscheduleplace(CountryID,CountryNameCn,CountryNameEn,CityID,CityNameCn,CityNameEn,AirportCode,AirportNameCn,AirportNameEn,SpotID,SpotName,SpotLocalName,SpotTravelTime,HotelStarLevel,ScheduleType,SpotPicUrl);VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);
+INSERT INTO traveluserdb.tab_planschedule(PlanID,DayName,TravelInstruction,CreateDate,);VALUES(?,?,?,NOW());
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
