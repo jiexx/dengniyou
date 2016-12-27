@@ -19,7 +19,7 @@
   </head>
 <body>
   <div class="container">
-    <div class="container-box">
+    <div class="detailpage">
       <ol class="col-md-4 breadcrumb">
         <li><a href="">产品管理</a></li>
         <li><a href="">服务</a></li>
@@ -30,17 +30,17 @@
       <!--   banner -->
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          {{each(i,p) SpotPics}}
+          <li data-target="#carousel-example-generic" data-slide-to="0" class="{{if i==1}}active{{/if}}"></li>
+          {{/each}}
         </ol>
+
         <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <img src="img/Guide/ClassicSchemePre1.png" alt="...">
+          {{each(i,p) SpotPics}}
+          <div class="item {{if i==1}}active{{/if}}">
+            <img src="${$data.IMGHOST }${PicURL}" alt="...">
           </div>
-          <div class="item">
-            <img src="img/Guide/ClassicSchemePre1.png" alt="...">
-          </div>
+          {{/each}}
         </div>
         <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
           <span class="glyphicon glyphicon-chevron-left"></span>
@@ -50,33 +50,34 @@
         </a>
       </div><!--  end  banner -->
       
-      <div class="specialplan-mainbody">
-        <div class="attraction specialplan-title">
-          <h1>【中青旅】马尔代夫旅游安嘎嘎+萨芙莉双岛游酒店代理 度蜜月旅行全包自由行</h1>
-          <p>Nullam tempor tortor in cursus gravida. Sed fermentum quam eu libero</p>
+      <div class="detailpage-mainbody">
+        <div class="attraction detailpage-title">
+          <h1>${ SpotDetail[0].NameCh}</h1>
+          <p>${ SpotDetail[0].NameEn}</p>
         </div> 
         <div class="row product-detail price-detail">
-          <h2>商品详情</h2>
+          <h2>美食详情</h2>
           <div class="col-md-3">
-            <p class="">口  味:：<span>2人</span></p>
+            <p class="">口  味：{{each(i,p) SpotLabels}}<span>${ClassifyLabel}</span>
+              <span>{{if SpotLabels.length != i+1}},{{/if}}</span>{{/each}}</p>
             <p>联系电话：<span>15001899199</span></p>
           </div>
           <div class="col-md-3">
-            <p class="">国家城市：<span>法国</span><span>巴黎</span></p>
-            <p>地址：<span>xxxxxxxxxxxxxxxx</span></p>
+            <p class="">国家城市：<span>${ SpotDetail[0].CountryName}</span><span>|</span><span>${ SpotDetail[0].CityName}</span></p>
+            <p>地址：<span>${ SpotDetail[0].Address}</span></p>
           </div>
           <div class="col-md-3">
-            <p class="">区号：<span>0511</span></p>
+            <p class="">区号：<span>${ SpotDetail[0].ZoneCode}</span></p>
           </div>
           <div class="col-md-3">
-            <p class="">邮编：<span>123456</span></p>
+            <p class="">邮编：<span>${ SpotDetail[0].ZipCode}</span></p>
           </div>
         </div> <!-- end 商品详情product-detail -->
         <div class="service-description">
-          <h2>服务描述</h2>
+          <h2>美食描述</h2>
           <div class="des">
             <p>
-              Aliquam scelerisque ex vitae arcu feugiat condimentum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Nullam porttitor id nunc eget consequat. Proin egestas fringilla vulputate. Phasellus eu augue ut dolor porta finibus. Nunc egestas malesuada maximus. Donec vitae lacus at turpis tempor auctor in pellentesque eros. Donec sit amet nunc risus. Proin rutrum, lectus at pharetra cursus, nulla lorem lacinia augue, vel maximus enim ipsum non massa. Quisque sit amet elit luctus, vestibulum ligula et, rhoncus urna. Vestibulum ut pellentesque magna. Maecenas lacinia placerat rutrum. Nunc consectetur viverra maximus.
+              ${ SpotDetail[0].Description}
             </p>
           </div>
         </div><!-- end 服务描述service-description -->
@@ -91,8 +92,6 @@
     </div> <!-- end container-box -->
   </div> <!-- end container -->
 
-    <script src="js/jquery-1.11.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
 
   </body>
  

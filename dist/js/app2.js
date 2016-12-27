@@ -106,6 +106,24 @@ $(function () {
         realView.rogerCropImages();
     };
 
+    var ctrlDelicacyDetail = function(response, realView) {
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+
+    var ctrlAccommodationDetail = function(response, realView) {
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+
+    var ctrlAttractionDetail = function(response, realView) {
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+
     var ctrlOrderlist = function(response, realView) {
 
         realView.rogerCropImages();
@@ -113,6 +131,7 @@ $(function () {
             // $('#payBtn').hide()
         }
     };
+
 
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
@@ -132,8 +151,12 @@ $(function () {
         '#/templateplandetail':          {view: 'product-tempplan-detail.html',      rootrest: '/dashboard/product/tempplan/detail',                ctrl: ctrlTemplateplanDetail},
 
         '#/shortplannew':           {view: 'product-shortplan-edit.html',      rootrest: '/dashboard/product/shortplan/new',                ctrl: ctrlTemplateplanNew},
-        '#/templateplannew':        {view: 'product-tempplan-edit.html',      rootrest: '/dashboard/product/tempplan/new',                ctrl: ctrlShortplanNew}
-	});
+        '#/templateplannew':        {view: 'product-tempplan-edit.html',      rootrest: '/dashboard/product/tempplan/new',                ctrl: ctrlShortplanNew},
+        '#/delicacydetail':           {view:'product-delicacy-detail.html',	  rootrest:'/dashboard/product/delicacy/detail',	                        ctrl: ctrlDelicacyDetail},
+        '#/accommodationdetail':           {view:'product-accommodation-detail.html',	  rootrest:'/dashboard/product/accommodation/detail',	                        ctrl: ctrlAccommodationDetail},
+        '#/attractiondetail':           {view:'product-attraction-detail.html',	  rootrest:'/dashboard/product/attraction/detail',	                        ctrl: ctrlAttractionDetail},
+
+    });
 
 	
 });
