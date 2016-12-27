@@ -131,8 +131,8 @@ $(function () {
         '#/shortplandetail':             {view: 'product-shortplan-detail.html',           rootrest: '/dashboard/product/shortplan/detail',                 ctrl: ctrlShortplanDetail},
         '#/templateplandetail':          {view: 'product-tempplan-detail.html',            rootrest: '/dashboard/product/tempplan/detail',                  ctrl: ctrlTemplateplanDetail},
 
-        '#/shortplannew':                 {view: 'product-shortplan-edit.html',             rootrest: '/new/shortplan',                                         ctrl: ctrlTemplateplanNew},
-        '#/templateplannew':             {view: 'product-tempplan-edit.html',               rootrest: '/new/templateplan',                                       ctrl: ctrlShortplanNew}
+        '#/shortplannew':                 {view: 'product-shortplan-edit.html',             rootrest: '/new/shortplan',                                         ctrl: ctrlShortplanNew},
+        '#/templateplannew':             {view: 'product-tempplan-edit.html',               rootrest: '/new/templateplan',                                       ctrl: ctrlTemplateplanNew}
 	});
 
 	
