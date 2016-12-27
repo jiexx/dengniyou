@@ -18,6 +18,7 @@ app.use('/dist', express.static(__dirname + '/dist'));
 app.use('/css', express.static(__dirname + '/css'));
 app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/img', express.static(__dirname + '/img'));
+app.use('/fragment', express.static(__dirname + '/fragment'));
 app.use('/', express.static(__dirname + '/html'));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");

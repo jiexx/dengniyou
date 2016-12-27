@@ -231,3 +231,79 @@ img{outline: none;border: 0; /*解决在IE中的图片有黑边框问题*/}
 /*end 景点美食预览*/
 
 /*end 导游端预览页*/
+/*导游端编辑类页面*/
+.editPage>div{border:1px solid #e0e0e0; box-shadow: 0 0 3px #e0e0e0; margin-bottom:30px;padding:10px 20px;}
+.editPage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
+.editPage>div>h4{font-size: 16px; color:#f60; height: 50px; line-height: 50px;}
+
+.editPage .baseInfo form .col-sm-10.col-md-11 input,.editPage .baseInfo form .col-sm-10.col-md-11 textarea{width:70%; display: inline-block;}
+.editPage .addImgBtn{display: inline-block; border:3px solid #f60; border-radius: 8px; height: 50px; width:50px; font-size: 40px; color:#f60; line-height: 43px; text-align: center; text-indent: 4px; position: relative; top: 12px;}
+.editPage .uploadImg .uploadPic img{width:140px; height: 100px; margin-right: 10px;}
+.editPage .uploadImg .row{margin-top: 120px;}
+.editPage .uploadImg .col-sm-6 .singleImg{width: 200px; height: 100px; background-color: #ebebeb; border: 1px solid #959595;}
+
+.editPage .labels li{ display: inline-block; width:140px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0;}
+.editPage .labels li span{float: right; cursor: pointer;}
+.editPage .labels li.addCityBtn{width: 28px; border:2px solid #f60; background-color: #FFF; color:#F60; border-radius: 5px; line-height: 24px }
+
+.editPage .schedule .OrangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 16px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
+.editPage .schedule .addDetails li .blueBtn{float: right; width:20px; height: 20px; background-color: #00b8ee; color: #FFF; text-align: center; border-radius: 10px; line-height: 20px; cursor: pointer;}
+.editPage .schedule .addDetails li .glyphicon{color: #00b8ee; float: right; margin-right: 10px; height: 20px; width: 20px; line-height: 20px; font-size: 14px; cursor: pointer;}
+
+.editPage .schedule .list-group-item{text-align: center;}
+.editPage .schedule .list-group-item.active{color:#f60; background-color: #FFF; border: 1px solid #f60;}
+.editPage .schedule .dayBox{ border:2px solid #00b8ee; margin-bottom:20px; }
+.editPage .schedule .dayBox>h3{height: 50px; line-height: 50px; border-bottom: 2px solid #00b8ee; text-align: center; }
+.editPage .schedule .addCity{padding: 10px 20px; border-bottom: 1px solid #00b8ee;}
+.editPage .schedule .addCity .cities li{ display: inline-block; width:140px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0;}
+.editPage .schedule .addCity .cities li span{float: right; cursor: pointer;}
+.editPage .schedule .addCity .cities li.addCityBtn{width: 28px; border:2px solid #f60; background-color: #FFF; color:#F60; border-radius: 5px; line-height: 24px }
+.editPage .schedule .addDetails,.editPage .schedule .addDetails>h4,.editPage .schedule .addDetails>ul{border-bottom: 1px solid #00b8ee;}
+.editPage .schedule .addDetails>h4{padding-left: 20px; height: 50px; line-height: 50px; }
+.editPage .schedule .addDetails li {padding:10px 20px; height: 120px; border-bottom: 1px dashed #00b8ee;}
+.editPage .schedule .addDetails li:last-child{border-bottom: 0;}
+.editPage .schedule .addDetails li .detailImg{width:18%; height: 100px; margin-right: 2%; float: left;}
+.editPage .schedule .addDetails li .detailImg img{width:100%; height: 100%; }
+.editPage .schedule .addDetails li .detailText{width:70%; float: left;}
+.editPage .schedule .addDetails li .detailText h5{font-size: 16px; margin-bottom: 20px;}
+.editPage .schedule .addDetails li .detailText p{height: 30px; line-height: 30px;}
+.editPage .schedule .addAirport li{padding: 10px 20px; height:60px;}
+.editPage .schedule .addAirport li .planeIcon{float: left; width:40px; height: 44px; }
+.editPage .schedule .addAirport li .planeIcon img{width:40px; height: 44px;}
+.editPage .schedule .addAirport li .planeText{float: left; line-height: 22px; width:60%; margin-left: 10px;}
+.editPage .schedule .introduction{padding:0 20px 20px;}
+.editPage .schedule .introduction>h4{height: 50px; line-height: 50px;}
+.editPage .schedule .introduction textarea{border:1px solid #CCC; width:100%;}
+
+.editPage .notice textarea{width:100%; height: 100px;}
+.editPage .optionBtn {text-align: right;}
+.editPage .optionBtn button{width:110px; height: 38px; margin-left: 20px;}
+/*快捷方案*/
+.editPage .scheduleShort .col-md-11>div{float:left;}
+.editPage .scheduleShort ul li{margin-bottom: 12px;}
+.editPage .scheduleShort .singleImg{width:200px; height: 120px; background-color: #ebebeb; border: 1px solid #959595;}
+.editPage .scheduleShort .decritionImg{width:60%; padding-left: 20px;}
+.editPage .scheduleShort .decritionImg input,.editPage .scheduleShort .decritionImg textarea{width:90%; border:1px solid #CCC;}
+.editPage .scheduleShort .decritionImg input{height: 32px; margin-bottom: 6px;}
+.editPage .scheduleShort .decritionImg textarea{height: 80px; }
+.editPage .scheduleShort form input{width:70%; display: inline-block;}
+.editPage .scheduleShort form label{text-align: left;}
+/*导游端编辑类页面结束*/
+
+/*base controller*/
+.label-base input{outline: none;border: none;background: none;margin: 0;padding: 0;}
+.label-base{width:70%;}
+.label-base li{ display: inline-block; width:100px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0; position: relative;}
+.label-base li:after{content:'/'; position: absolute; right:-10px; color:#000;}
+.label-base li:last-child:after{content:''; position: absolute; right:-10px; color:#000;}
+.label-base li input{text-align: center; width:70%;}
+.label-base li input::-webkit-input-placeholder{color:#ddd;}
+.label-base li .glyphicon-remove-circle{float: right; font-size: 14px; color: #fff;}
+.label-base li>.addItemBtn{width:100%; height: 100%; background-color: #FFF; border-radius: 0; border:1px dotted #00b8ee; color:#00b8ee; cursor: pointer; }
+
+
+.imgBox{width:100%; height: 200px;display: inline-block; vertical-align: middle; position: relative;}
+.imgBox .glyphicon-remove-circle{position: absolute; font-size: 16px; color:#00b8ee; cursor: pointer; top: -8px; right: -8px; }
+.imgBox.addImg{border:1px dashed #ccc; font-size: 60px; text-align: center; color:#CCC; line-height: 200px;}
+.imgBox img{width:100%; height: 100%; }
+/*base controller end*/
