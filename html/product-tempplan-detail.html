@@ -14,14 +14,14 @@
         <li data-target="#carousel-example-generic" data-slide-to="2"></li>
       </ol>
       <div class="carousel-inner" role="listbox">
-        {{each PlansByUser[0].PicURL}}
-        {{if $index == 0}}
+        {{each(k,v) PlansByUser[0].PicURL}}
+        {{if k == 0}}
         <div class="item active">
           {{else}}
           <div class="item">
             {{/if}}
-            <img src="${ $data.IMGHOST }${PlansByUser[0].PicURL[$index]}" alt="Chania">
-          </div>
+            <img src="${ $data.IMGHOST }${v}" alt="Chania">
+        </div>
         {{/each}}
       </div>
       <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">

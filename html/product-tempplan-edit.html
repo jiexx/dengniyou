@@ -11,21 +11,21 @@
 		<h4>基本信息</h4>
 		<form class="form-horizontal">
 		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">方案名称</label>
+		    <label for="planName" class="col-sm-2 col-md-1 control-label">方案名称</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" id="name" placeholder="不能超过24个字符">
+		      <input type="text" class="form-control" id="PlanName" placeholder="不能超过24个字符">
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="adultPrice" class="col-sm-2 col-md-1 control-label">成人价格</label>
+		    <label for="AdultPrice" class="col-sm-2 col-md-1 control-label">成人价格</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="number" class="form-control" id="adultPrice" placeholder="请输入数字"> 元/人
+		      <input type="number" class="form-control" id="AdultPrice" placeholder="请输入数字"> 元/人
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="childPrice" class="col-sm-2 col-md-1 control-label">儿童价格</label>
+		    <label for="KidPrice" class="col-sm-2 col-md-1 control-label">儿童价格</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="number" class="form-control" id="childPrice" placeholder="请输入数字"> 元/人
+		      <input type="number" class="form-control" id="KidPrice" placeholder="请输入数字"> 元/人
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -41,9 +41,9 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">方案特色</label>
+		    <label for="PlanFeature" class="col-sm-2 col-md-1 control-label">方案特色</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" id="" class="form-control" rows="5" placeholder="请输入不少于300字描述"></textarea>
+		      <textarea name="" id="PlanFeature" class="form-control" rows="5" placeholder="请输入不少于300字描述"></textarea>
 		    </div>
 		  </div>
 		</form>
@@ -355,8 +355,8 @@
 		  </div>
 		</form>
 		<div class="optionBtn">
-			<button class="btn btn-warning">保存</button>
-			<button class="btn btn-warning">发布 </button>
+			<button id="save" class="btn btn-warning">保存</button>
+			<button id="publish" class="btn btn-warning">发布 </button>
 		</div>
 	</div>
 	<!-- 须知信息结束 -->

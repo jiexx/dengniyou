@@ -156,7 +156,10 @@ $(function () {
         '#/accommodationdetail':           {view:'product-accommodation-detail.html',	  rootrest:'/dashboard/product/accommodation/detail',	                        ctrl: ctrlAccommodationDetail},
         '#/attractiondetail':           {view:'product-attraction-detail.html',	  rootrest:'/dashboard/product/attraction/detail',	                        ctrl: ctrlAttractionDetail},
 
-    });
+        '#/shortplannew':                 {view: 'product-shortplan-edit.html',             rootrest: '/new/shortplan',                                         ctrl: ctrlShortplanNew},
+        '#/templateplannew':             {view: 'product-tempplan-edit.html',               rootrest: '/new/templateplan',                                       ctrl: ctrlTemplateplanNew}
+	});
+
 
 	
 });
