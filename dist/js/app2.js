@@ -132,6 +132,14 @@ $(function () {
         }
     };
 
+    var ctrlServicedetail = function(response, realView) {
+
+        realView.rogerCropImages();
+        if (5 == response.datas[0].status){
+            // $('#payBtn').hide()
+        }
+    };
+
 
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
@@ -157,7 +165,9 @@ $(function () {
         '#/attractiondetail':           {view:'product-attraction-detail.html',	  rootrest:'/dashboard/product/attraction/detail',	                        ctrl: ctrlAttractionDetail},
 
         '#/shortplannew':                 {view: 'product-shortplan-edit.html',             rootrest: '/new/shortplan',                                         ctrl: ctrlShortplanNew},
-        '#/templateplannew':             {view: 'product-tempplan-edit.html',               rootrest: '/new/templateplan',                                       ctrl: ctrlTemplateplanNew}
+        '#/templateplannew':             {view: 'product-tempplan-edit.html',               rootrest: '/new/templateplan',                                       ctrl: ctrlTemplateplanNew},
+
+        '#/servicedetail':           {view:'product-service-other-detail.html',	  rootrest:'/dashboard/product/service/detail.json',	                        ctrl: ctrlServicedetail},
 	});
 
 

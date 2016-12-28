@@ -1,0 +1,14 @@
+{
+  "DetailMain": {"sql": "SELECT * FROM traveluserdb.`vw_/service/detail_main` WHERE ServiceID=? LIMIT 1",	"params":["ServiceID"]},
+  "DetailServiceMethod": {"sql": "SELECT method.serviceMethodID, method.serviceTypeID, method.methodName, method.description, IF ( services.serviceMethod = method.serviceMethodID, '1', '0' ) FROM traveluserdb.tab_servicemethod method LEFT JOIN traveluserdb.tab_services services ON (services.ServiceID = ?) WHERE method.ServiceTypeID = ?","params":["ServiceID","ServiceTypeID"],"findkey": "serviceTypeID"},
+  "Facility": {"sql": "SELECT * FROM traveluserdb.`vw_/service/detail_facility` WHERE ServiceID=? LIMIT 1",	"params":["ServiceID"]},
+  "Airports": {"sql": "SELECT * FROM traveluserdb.tab_serviceairports WHERE ServiceID = ?",	"params":["ServiceID"]},
+  "Policy": {"sql": "SELECT sepolicy.PolicyType, policy.PolicyID, policy.PolicyName, policy.ServiceTypeID, policy.Day1, policy.Ratio1, policy.Day2, policy.Ratio2, policy.Day3, policy.Ratio3, policy.Day4, policy.Ratio4, policy.CustomRatio, policy.Caution, policy.Description, policy.Type FROM traveluserdb.tab_servicepolicy sepolicy LEFT JOIN traveluserdb.tab_policy policy ON sepolicy.PolicyID = policy.PolicyID WHERE sepolicy.ServiceID = ? ORDER BY sepolicy.PolicyType",	"params":["ServiceID"]},
+  "VehicleInfo": {"sql": "SELECT vehicleInfoID, serviceID, brand, model, produceYear, seats, person, clazz, insurance, luggage FROM traveluserdb.tab_servicevehicleinfo WHERE serviceID = ? LIMIT 1",	"params":["ServiceID"]},
+  "VehicleCharges": {"sql": "select chargeID as chargeID, serviceID as serviceID, chargeType as chargeType, chargePrice as chargePrice from traveluserdb.tab_servicevehiclecharge where ServiceID=?",	"params":["ServiceID"]},
+  "VehicleAddress": {"sql": "SELECT addressID AS addressID, serviceID AS serviceID, addressType AS addressType, address AS address FROM traveluserdb.tab_servicevehicleaddress WHERE ServiceID = ?",	"params":["ServiceID"]},
+  "VehicleSchedule": {"sql": "SELECT  serviceID,guideID,userID,scheduleDate, DATE_FORMAT(scheduleDate, '%Y-%m-%d') as scheduleFormatTime ,status FROM traveluserdb.tab_servicevehicleschedule WHERE STATUS in (0,2) AND ScheduleDate>=CURDATE() AND serviceID  = ?",	"params":["ServiceID"]},
+  "Labels": {"sql": "select label as label from traveluserdb.tab_servicelabel where ServiceID= ?",	"params":["ServiceID"]},
+  "ActivityPrice": {"sql": "	SELECT activityID AS activityID, serviceID AS serviceID, adultPrice AS adultPrice, kidPrice AS kidPrice, duration AS duration FROM traveluserdb.tab_serviceactivityprice WHERE ServiceID = ?",	"params":["ServiceID"]},
+  "HouseInfo": {"sql": "SELECT * FROM traveluserdb.`vw_/service/detail_house` WHERE serviceID = ? LIMIT 1",	"params":["ServiceID"]}
+}
