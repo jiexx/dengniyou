@@ -11,36 +11,36 @@
 		<h4>基本信息</h4>
 		<form class="form-horizontal">
 		  <div class="form-group">
-		    <label for="PlanName" class="col-sm-2 col-md-1 control-label">方案名称</label>
+		    <label   class="col-sm-2 col-md-1 control-label">方案名称</label>
 		    <div class="col-sm-10 col-md-11">
 		      <input type="text" class="form-control"  value="${$data.PlanInfo.PlanName}"  data-value="/PlanInfo/PlanName" placeholder="不能超过24个字符">
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="AdultPrice" class="col-sm-2 col-md-1 control-label">成人价格</label>
+		    <label   class="col-sm-2 col-md-1 control-label">成人价格</label>
 		    <div class="col-sm-10 col-md-11">
 				<input type="text" class="form-control"   value="${$data.PlanInfo.AdultPrice}"  data-value="/PlanInfo/AdultPrice" placeholder="请输入数字"> 元/人
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="KidPrice" class="col-sm-2 col-md-1 control-label">儿童价格</label>
+		    <label   class="col-sm-2 col-md-1 control-label">儿童价格</label>
 		    <div class="col-sm-10 col-md-11">
 				<input type="text" class="form-control"  value="${$data.PlanInfo.KidPrice}" data-value="/PlanInfo/KidPrice"  placeholder="请输入数字"> 元/人
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="" class="col-sm-2 col-md-1 control-label">方案标签</label>
+		    <label   class="col-sm-2 col-md-1 control-label">方案标签</label>
 		    <div class="col-sm-10 col-md-11">
 		      <ul class="label-base">
 				  {{each $data.PlanInfo.PlanLabels}}
-				    <li><input type="text" value="${$data.PlanInfo.PlanLabels[$index]}" data-value="/PlanInfo/PlanLabels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-oparm="/PlanInfo/PlanLabels" data-target="{$index}"></a></li>
+				    <li><input type="text" value="${$data.PlanInfo.PlanLabels[$index]}" data-value="/PlanInfo/PlanLabels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/PlanLabels/${$index}"></a></li>
 				  {{/each}}
-				  <li><div class="addItemBtn" data-op="create" data-oparm="/PlanInfo/PlanLabels/-" data-target="''"> + </div></li>
+				  <li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanLabels" data-action="createLabel"> + </div></li>
 			  </ul>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="PlanFeature" class="col-sm-2 col-md-1 control-label">方案特色</label>
+		    <label   class="col-sm-2 col-md-1 control-label">方案特色</label>
 		    <div class="col-sm-10 col-md-11">
 				<textarea name="" value="${$data.PlanInfo.PlanFeature}" data-value="/PlanInfo/PlanFeature" class="form-control" rows="5" placeholder="请输入不少于300字描述"></textarea>
 		    </div>
@@ -59,12 +59,12 @@
 				<div class="col-md-3">
 					<div class="imgBox">
 						<img src="${$data.PlanInfo.PicURL[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-oparm="/PlanInfo/PicURL" data-target="$index"></a>
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PicURL/${$index}"></a>
 					</div>
 				</div>
 				{{/each}}
 				<div class="col-md-3">
-					<div class="imgBox addImg" data-op="create" data-oparm="/PlanInfo/PicURL/-" data-target="?">+</div>
+					<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PicURL" data-action="createPicture">+</div>
 				</div>
 			</div>
 		</div>
@@ -76,12 +76,12 @@
 				<div class="col-md-3">
 					<div class="imgBox">
 						<img src="${$data.PlanInfo.CoverPicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-oparm="/PlanInfo/CoverPicURL" data-target="-1"></a>
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CoverPicURL"></a>
 					</div>
 				</div>
 				{{/if}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="create" data-oparm="/PlanInfo/CoverPicURL" data-target="?">+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/PlanInfo/CoverPicURL" data-action="createCover">+</div>
 				</div>
 			</div>
 		</div>
@@ -93,12 +93,12 @@
 				<div class="col-md-3">
 					<div class="imgBox">
 						<img src="${$data.PlanInfo.CarPicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-oparm="/PlanInfo/CarPicURL" data-target="${$index}"></a>
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CarPicURL/${$index}" ></a>
 					</div>
 				</div>
 				{{/each}}
 				<div class="col-md-3">
-					<div class="imgBox addImg" data-op="create" data-oparm="/PlanInfo/CarPicURL/-" data-target="?">+</div>
+					<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/CarPicURL" data-action="createCarPic">+</div>
 				</div>
 			</div>
 		</div>
@@ -121,20 +121,20 @@
 				<!-- 一天行程 -->
 				{{each(k, day) $data.PlanSchedule.Day}}
 				<div class="dayBox" >
-					<h3>第${k+1}天<span class="orangeBtn" data-op="remove" data-oparm="/PlanSchedule/Day" data-target="${k}">-</span></h3>
+					<h3>第${k+1}天<span class="orangeBtn" data-op="remove" data-pointer="/PlanSchedule/Day/${k}" >-</span></h3>
 					{{each(n,v) day.Spot}}
 					{{if (v.ScheduleType==0) }}
 					<div class="addCity">
 						<h4>添加城市</h4>
 						<ul class="label-base">
-							<li><input type="text" value="${CountryNameCn} ${CountryNameEn}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-oparm="/PlanSchedule/Day/${k}" data-target="${n}"></a></li>
-							<li><div class="addItemBtn" data-op="create" data-oparm="/PlanSchedule/Day/${k}/Spot/-" data-target="/PlanSchedule/Day/${k}/Spot/${n}"> + </div></li>
+							<li><input type="text" value="${CountryNameCn} ${CountryNameEn}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanSchedule/Day/${k}/${n}" ></a></li>
+							<li><div class="addItemBtn" data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot" data-action="createCity"> + </div></li>
 						</ul>
 					</div>
 					{{/if}}
 					{{if (v.ScheduleType==1) }}
 					<div class="addDetails addAirport">
-						<h4>添加机场<span class="orangeBtn" data-op="create" data-oparm="/PlanSchedule/Day/${k}/Spot/-" data-target="/PlanSchedule/Day/${k}/Spot/${n}">+</span></h4>
+						<h4>添加机场<span class="orangeBtn" data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot" data-action="createAirport">+</span></h4>
 						<ul class="airports">
 							<li>
 								<div class="planeIcon">
@@ -144,8 +144,8 @@
 									${AirportCode} ${AirportNameCn}<br>
 									${AirportNameEn}
 								</div>
-								<span class="blueBtn" data-op="change"  data-oparm="/PlanSchedule/Day/${k}/Spot/${n}" data-target="i">换</span>
-								<span class="glyphicon glyphicon-trash" data-op="remove" data-oparm="PlanSchedule.Day[${k}][${n}]"></span>
+								<span class="blueBtn" data-op="change"  data-pointer="/PlanSchedule/Day/${k}/Spot/${n}"  data-action="changeAirport">换</span>
+								<span class="glyphicon glyphicon-trash" data-op="remove" data-pointer="/PlanSchedule/Day/${k}/Spot/${n}" ></span>
 							</li>
 						</ul>
 					</div>
@@ -153,7 +153,7 @@
 					{{if (v.ScheduleType==2||v.ScheduleType==3||v.ScheduleType==4) }}
 					<div class="addDetails">
 						<h4>{{if v.ScheduleType==2}}添加景点{{/if}}{{if v.ScheduleType==3}}添加美食{{/if}}{{if v.ScheduleType==4}}添加住宿{{/if}}
-							<span class="orangeBtn"  data-op="create" data-oparm="/PlanSchedule/Day/${k}/Spot/-" data-target="/PlanSchedule/Day/${k}/Spot/${n}">+</span></h4>
+							<span class="orangeBtn"  data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot" data-action="createAccommodation">+</span></h4>
 						<ul class="details" data-i="${$index}">
 							<li>
 								<div class="detailImg">
@@ -164,8 +164,8 @@
 									<p>${CountryNameCn}：${CityNameCn}</p>
 									<p>地址：${Address}, 郵遞區號: ${ZipCode}</p>
 								</div>
-								<span class="blueBtn" data-op="change"  data-oparm="/PlanSchedule/Day/${k}/Spot/${n}" data-target="i">换</span>
-								<span class="glyphicon glyphicon-trash"  data-op="remove" data-oparm="PlanSchedule.Day[${k}][${n}]"></span>
+								<span class="blueBtn" data-op="change"  data-pointer="/PlanSchedule/Day/${k}/Spot"  data-action="changeAttraction">换</span>
+								<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanSchedule/Day/${k}/Spot/${n}"></span>
 							</li>
 						</ul>
 					</div>
@@ -189,31 +189,31 @@
 		<h4>须知信息</h4>
 		<form class="form-horizontal">
 		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
+		    <label  class="col-sm-2 col-md-1 control-label">退订政策：</label>
 		    <div class="col-sm-10 col-md-11">
 				<textarea name="" id="Policy" value="${ $data.PlanInfo.Policy}" data-value="/PlanInfo/Policy" class="form-control" ></textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
+		    <label   class="col-sm-2 col-md-1 control-label">费用包含：</label>
 		    <div class="col-sm-10 col-md-11">
 				<textarea name="" id="CostInclude" value="${ $data.PlanInfo.CostInclude}" data-value="/PlanInfo/CostInclude" class="form-control" ></textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">费用自理：</label>
+		    <label   class="col-sm-2 col-md-1 control-label">费用自理：</label>
 		    <div class="col-sm-10 col-md-11">
 				<textarea name="" id="CostExclude" value="${ $data.PlanInfo.CostExclude}" data-value="/PlanInfo/CostExclude" class="form-control" ></textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">签证须知：</label>
+		    <label  class="col-sm-2 col-md-1 control-label">签证须知：</label>
 		    <div class="col-sm-10 col-md-11">
 				<textarea name="" id="VisaNotice" value="${ $data.PlanInfo.VisaNotice}" data-value="/PlanInfo/VisaNotice" class="form-control" ></textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">注意事项：</label>
+		    <label  class="col-sm-2 col-md-1 control-label">注意事项：</label>
 		    <div class="col-sm-10 col-md-11">
 			    <textarea name="" id="Notice" value="${ $data.PlanInfo.Notice}" data-value="/PlanInfo/Notice" class="form-control"  ></textarea>
 		    </div>
