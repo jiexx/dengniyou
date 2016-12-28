@@ -1,0 +1,6 @@
+{
+	"Place":{
+	  "sql":"INSERT INTO traveluserdb.tab_planscheduleplace(ScheduleID,CountryID,CountryNameCn,CountryNameEn,CityID,CityNameCn,CityNameEn,AirportCode,AirportNameCn,AirportNameEn,SpotID,SpotName,SpotLocalName,SpotTravelTime,HotelStarLevel,ScheduleType,SpotPicUrl)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+	  "params":["insertId", "CountryID ","CountryNameCn","CountryNameEn","CityID","CityNameCn","CityNameEn","AirportCode","AirportNameCn","AirportNameEn","SpotID","SpotName","SpotLocalName","SpotTravelTime","HotelStarLevel","ScheduleType","SpotPicUrl"]
+	}
+}
