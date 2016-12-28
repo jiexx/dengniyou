@@ -174,16 +174,17 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 .plandetail-page .scheduleNav .navList li .btn-default { border-color: #00b8ee; }
 .plandetail-page .scheduleNav .navList li button.active{background-color: #00b8ee; color: #FFF;}
 .plandetail-page .scheduleNav .navList i { font-size: 30px; line-height: 46px; }
-.plandetail-page .address { border-bottom: 1px solid #00b8ee; text-align: left; padding-left: 55px;}
-.plandetail-page .address .starter, .address .pass { font-size: 14px; font-weight: bold; color: #333; margin-bottom: 10px; }
+.plandetail-page .address { border-bottom: 1px solid #00b8ee; text-align: left; padding-left: 45px;}
+.plandetail-page .address .starter{ position: relative; left: -44px;}
+.plandetail-page .address .starter, .address .pass { font-size: 14px; font-weight: bold; color: #333; padding: 5px; }
 .plandetail-page .address .starter i, .address .pass i { color: #00b8ee; }
 .plandetail-page .address .starter span, .address .pass span{ color: #666;}
 .plandetail-page .feature { padding: 10px 0; }
-.plandetail-page .feature .tittle { border: 1px solid #00b8ee; float: right; padding: 4px 8px; }
+.plandetail-page .feature .tittle { border: 1px solid #00b8ee; float: right; padding: 4px 8px; font-size: 14px;font-weight: bold; color: #00b8ee; }
 .plandetail-page .feature .text{ padding-top: 5px;}
 .plandetail-page .scheduleDetails ul li h3 { height: 45px; line-height: 45px; border-top: 2px solid #00b8ee; border-bottom: 1px solid #00b8ee; text-align: center; margin-top: 0; margin-bottom: 0;}
-.plandetail-page .scheduleDetails li .content { padding: 35px 55px; width: 100%; background-color: #fff;}
-.plandetail-page .scheduleDetails .content li { width: 290px; height: 220px; float: left; overflow: hidden; }
+.plandetail-page .scheduleDetails li .content { padding: 15px 55px; width: 100%; background-color: #fff;}
+.plandetail-page .scheduleDetails .content li { width: 290px; height: 200px; float: left; overflow: hidden; }
 .plandetail-page .scheduleDetails .content li:nth-child(3n){ width: 150px; }
 .plandetail-page .scheduleDetails .content li:last-child .nextBtn{ display: none; }
 .plandetail-page .scheduleDetails .content .picText img { height: 150px; width: 150px; }
@@ -216,8 +217,8 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 .plandetail-page .commentOn .uploadPic li { width: 80px; height: 80px; border: 1px solid #00b8ee; display: inline-block; }
 .plandetail-page .commentOn .uploadPic li img { width: 80px; height: 80px; }
 .plandetail-page .commentOn .uploadPic li i { font-size: 40px; color: #00b8ee; }
-.plandetail-page .commentOn .commit { float: right; margin-right: 10px; }
-.plandetail-page .commentOn .commit .btn-primary { background-color: #00b8ee; border: 1px solid #00b8ee; }
+.plandetail-page .commentOn .commit { float: right; margin-right: 10px; margin-bottom: 10px;}
+.plandetail-page .commentOn .commit button { background-color: #00b8ee; border: 1px solid #00b8ee; }
 .plandetail-page .commentOn li:last-child { border: none; vertical-align: middle; text-align: center; }
 .plandetail-page .commentOn li:last-child i { height: 80px; line-height: 80px; }
 /*end 方案详情页plandetail*/
