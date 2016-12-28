@@ -88,10 +88,57 @@ $(function () {
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
-    var ctrlTemplateplanNew = function(response, realView) {
-
+    var initTemplateplanNew = function(){
+        return {
+            PlanInfo:{
+                PlanName:'',
+                AdultPrice:'',
+                KidPrice:'',
+                PlanLabels:[],
+                PlanFeature:'',
+                CoverPicURL:'',
+                CarPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                VisaNotice:'',
+                Notice:''
+            },
+            PlanSchedule:{
+                __countScheduleID:1,
+                Day:[{
+                    City:[{Name:''}],
+                    Airport:[{AirportCode:'',AirportNameCn:'',AirportNameEn:''}],
+                    Attraction:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}],
+                    Delicacy:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}],
+                    Accommodation:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}]
+                }]
+            }
+        };
+    }
+    var ctrlTemplateplanNew = function(Plan, realView) {
+        $('#newOneDay').rogerOnceClick(function(){
+            Plan.PlanSchedule.__countScheduleID ++;
+            Plan.PlanSchedule.Day.push({
+                City:[{Name:''}],
+                Airport:[{AirportCode:'',AirportNameCn:'',AirportNameEn:''}],
+                Attraction:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}],
+                Delicacy:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}],
+                Accommodation:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}]
+            });
+            $.rogerRefresh(Plan);
+        });
+        $('#save').rogerOnceClick(function(){
+            $.rogerCollect(Plan, function(){
+                console.log(Plan);
+            })
+        });
         bindRidoesForSwitch();
         realView.rogerCropImages();
+    };
+    var initShortplanNew = function(){
+      return null;
     };
     var ctrlShortplanNew = function(response, realView) {
 
@@ -144,7 +191,7 @@ $(function () {
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
         '#/spcialplan':                   {view:'product-specialplan.html',					rootrest:'/dashboard/product/specialplan',                        ctrl: ctrlSpecialplan},
-        '#/classicplan':                  {view:'product-classicplan.html',					rootrest:'/dashboard/product/classicplan',                        ctrl: ctrlClassicplan},
+        '#/classicplan':                  {view:'product-classicplan.html',					rootrest:'/dashboard',                                               ctrl: ctrlClassicplan},
         '#/service':                       {view:'product-service.html',						rootrest:'/dashboard/product/service',	                        ctrl: ctrlService},
         '#/activiy':                       {view:'product-activity.html',						rootrest:'/dashboard/product/activity',	                        ctrl: ctrlActivity},
         '#/car':                           {view:'product-car.html',    						rootrest:'/dashboard/product/car', 		                        ctrl: ctrlCar},
@@ -155,19 +202,17 @@ $(function () {
         '#/facilitylist':                 {view:'facilitylist.html',                         rootrest:'/facility/list',                                             ctrl: ctrlFacilityList},
         '#/orderlist':                     {view: 'orderlist.html',                           rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
 
-        '#/shortplandetail':             {view: 'product-shortplan-detail.html',      rootrest: '/dashboard/product/shortplan/detail',                ctrl: ctrlShortplanDetail},
-        '#/templateplandetail':          {view: 'product-tempplan-detail.html',      rootrest: '/dashboard/product/tempplan/detail',                ctrl: ctrlTemplateplanDetail},
+        '#/shortplandetail':             {view: 'product-shortplan-detail.html',          rootrest: '/dashboard/product/shortplan/detail',                  ctrl: ctrlShortplanDetail},
+        '#/templateplandetail':          {view: 'product-tempplan-detail.html',           rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
 
-        '#/shortplannew':           {view: 'product-shortplan-edit.html',      rootrest: '/dashboard/product/shortplan/new',                ctrl: ctrlTemplateplanNew},
-        '#/templateplannew':        {view: 'product-tempplan-edit.html',      rootrest: '/dashboard/product/tempplan/new',                ctrl: ctrlShortplanNew},
-        '#/delicacydetail':           {view:'product-delicacy-detail.html',	  rootrest:'/dashboard/product/delicacy/detail',	                        ctrl: ctrlDelicacyDetail},
-        '#/accommodationdetail':           {view:'product-accommodation-detail.html',	  rootrest:'/dashboard/product/accommodation/detail',	                        ctrl: ctrlAccommodationDetail},
-        '#/attractiondetail':           {view:'product-attraction-detail.html',	  rootrest:'/dashboard/product/attraction/detail',	                        ctrl: ctrlAttractionDetail},
-
-        '#/shortplannew':                 {view: 'product-shortplan-edit.html',             rootrest: '/new/shortplan',                                         ctrl: ctrlShortplanNew},
-        '#/templateplannew':             {view: 'product-tempplan-edit.html',               rootrest: '/new/templateplan',                                       ctrl: ctrlTemplateplanNew},
+        '#/delicacydetail':             {view:'product-delicacy-detail.html',	            rootrest:'/dashboard/product/delicacy/detail',	                 ctrl: ctrlDelicacyDetail},
+        '#/accommodationdetail':       {view:'product-accommodation-detail.html',	        rootrest:'/dashboard/product/accommodation/detail',	             ctrl: ctrlAccommodationDetail},
+        '#/attractiondetail':           {view:'product-attraction-detail.html',	         rootrest:'/dashboard/product/attraction/detail',	             ctrl: ctrlAttractionDetail},
 
         '#/servicedetail':           {view:'product-service-other-detail.html',	  rootrest:'/dashboard/product/service/detail.json',	                        ctrl: ctrlServicedetail},
+        '#/shortplannew':                 {fragment: 'fragment/product-shortplan-edit.html',             init: initShortplanNew,                                          ctrl: ctrlShortplanNew},
+
+        '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',               init: initTemplateplanNew,                                      ctrl: ctrlTemplateplanNew}
 	});
 
 

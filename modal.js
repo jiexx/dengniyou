@@ -115,6 +115,9 @@ var CallbackLooper = {
             this.funcArgus = this.funcArgus.concat(funcArgus);
         }
     },
+	getArgus: function () {
+		return this.funcArgus;
+    },
 	create: function(count, func, funDoings, funcArgus, onFinish, onOneFinish) {
 		var obj = {
 			func:func,
@@ -264,7 +267,10 @@ var roger = {
                 out[tag] = list[i].output;
             }
         }
-		return roger.format(out);
+        list = null;
+		var r =  roger.format(out);
+		out = null;
+		return r;
 	},
 	//all.data <-  receive req json data
 	//eg.{UserID:1234,Pics:["",""]}
@@ -325,6 +331,43 @@ var roger = {
 			});
 		cl.loop();
 	},
+    "uploadImage":function(copy, data, onFinish){
+
+        var datafiles = [];
+        for(var i in copy.file) {
+        	datafiles.push(data[copy.file[i]]);
+		}
+        var funcArgus = [];
+        if(!datafiles) {
+            copy.valid = false;
+            onFinish();
+            return;
+        }
+        for(var i = 0 ; i < datafiles.length; i ++) {
+			/*			var shallow = roger.shallow(copy);
+			 copy.vector.push(shallow);*/
+            funcArgus.push({base64:datafiles[i], copy:copy, data:data, name:copy.file[i]});
+        }
+        var cl = CallbackLooper.create(funcArgus.length, uploadImage, null, funcArgus,
+            function () {
+                var argus = cl.getArgus();
+                var inputparams = funcArgu[0].copy.params;
+                for(var i in argus){
+                	var index = inputparams.indexOf(argus[i].name);
+                	if(index > -1) {
+                        inputparams[index] =  argus[i].fileid;
+					}
+                }
+                funcArgu[0].copy.params = inputparams;
+        		if(onFinish) {
+                    onFinish();
+				}
+            },
+            function(funcArgu, fileid){
+        		funcArgu.fileid = fileid;
+            });
+        cl.loop();
+    },
 	//eg.{UserID:1234,Pics:["",""]}
 	//all.list <-  semi list, extract from modal tree.
 	"process": function (list, onFinish) {
@@ -362,6 +405,18 @@ var roger = {
 				});
 			}
 		},
+		"file": function(modal, copy, value){
+            if( Array == value.constructor ){
+                copy.file = value;
+                //copy.valid = false;
+                if(!copy.before) {
+                    copy.before = [];
+                }
+                copy.before.push(function(funcArgu, onFinish){ //funcArgus.push({data:data, copy:copy});
+                    roger.uploadImage(funcArgu.copy, funcArgu.data, onFinish);
+                });
+            }
+        },
 		"params": function(modal, copy, value) {
 			if( Array == value.constructor ) {
 				copy.params = value;
@@ -396,8 +451,8 @@ var roger = {
                     var copy = funcArgu.copy;
                     if('object' == typeof superior.output && copy.input) {  //superior output is object
                         var replacement = superior.output[copy.findkey];
-                        var pos = roger.findParamsPos(copy.findkey, copy.params);
-                        if(Array ==  copy.input[0].constructor) {  //input is 2d array
+                        var pos = copy.params.indexOf(copy.findkey);//roger.findParamsPos(copy.findkey, copy.params);
+                        if(Array ==  copy.input[0].constructor) {  //current input is 2d array
                         	var inputParams = roger.replace2DInputParams(copy.input, replacement, pos);
                             funcArgu.params = inputParams[0];
 							var shallows = [];
@@ -408,13 +463,13 @@ var roger = {
 								shallows.push(fa);
 							}
                             funcArgu.looper.expand(shallows);
-						}else { //input is 1d array
+						}else { //current input is 1d array
                             funcArgu.params = roger.replace1DInputParams(copy.input, replacement, pos);
 						}
-					}// superior output is 2d array.  input is 1d array
+					}// superior output is 2d array. current input is 1d array
 					else if(Array == superior.output.constructor && Array == copy.input.constructor && copy.input[0] && Array != copy.input[0].constructor){
                         var replacement;
-                        var pos = roger.findParamsPos(copy.findkey, copy.params);
+                        var pos = copy.params.indexOf(copy.findkey);//roger.findParamsPos(copy.findkey, copy.params);
                         funcArgu.params = roger.replace1DInputParams(copy.input, replacement, pos);
                         var shallows = [];
 						for (var i = 1; i < superior.output.length; i++) {

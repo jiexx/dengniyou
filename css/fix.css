@@ -245,7 +245,7 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 .detailpage .detailpage-title .guidelist .guidehead{float: right;}
 .detailpage .detailpage-title .guidelist .guidehead img{width: 45px;height: 45px;border: 1px solid #ccc;-webkit-border-radius: 50%;-moz-border-radius: 50%;-ms-border-radius: 50%;-o-border-radius: 50%;border-radius: 50%;margin-right: 10px;}
 .detailpage .detailpage-mainbody .trip, .detailpage .detailpage-mainbody .policy, .detailpage .detailpage-mainbody .cost-include,
-.detailpage .detailpage-mainbody .cost-oneself, .detailpage .detailpage-mainbody .sign-notes, .detailpage .detailpage-mainbody .attention, 
+.detailpage .detailpage-mainbody .cost-oneself, .detailpage .detailpage-mainbody .sign-notes, .detailpage .detailpage-mainbody .attention,
 .detailpage .detailpage-mainbody .service-description,
 .detailpage .detailpage-mainbody .product-detail{margin-top: 25px;}
 .detailpage .detailpage-mainbody .trip h2, .detailpage .detailpage-mainbody .policy h2,
@@ -305,6 +305,9 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 
 
 
+
+/*end 导游端预览页*/
+
 /*导游端编辑类页面*/
 .editPage>div{border:1px solid #e0e0e0; box-shadow: 0 0 3px #e0e0e0; margin-bottom:30px;padding:10px 20px;}
 .editPage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
@@ -319,7 +322,8 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 .editPage .labels li span{float: right; cursor: pointer;}
 .editPage .labels li.addCityBtn{width: 28px; border:2px solid #f60; background-color: #FFF; color:#F60; border-radius: 5px; line-height: 24px }
 
-.editPage .schedule .orangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 16px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
+
+.editPage .schedule .OrangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 16px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
 .editPage .schedule .addDetails li .blueBtn{float: right; width:20px; height: 20px; background-color: #00b8ee; color: #FFF; text-align: center; border-radius: 10px; line-height: 20px; cursor: pointer;}
 .editPage .schedule .addDetails li .glyphicon{color: #00b8ee; float: right; margin-right: 10px; height: 20px; width: 20px; line-height: 20px; font-size: 14px; cursor: pointer;}
 
@@ -360,4 +364,23 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 .editPage .scheduleShort .decritionImg textarea{height: 80px; }
 .editPage .scheduleShort form input{width:70%; display: inline-block;}
 .editPage .scheduleShort form label{text-align: left;}
-/*导游端编辑类页面结束
+
+
+/*base controller*/
+.label-base input{outline: none;border: none;background: none;margin: 0;padding: 0;}
+.label-base{width:70%;}
+.label-base li{ display: inline-block; width:100px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0; position: relative;}
+.label-base li:after{content:'/'; position: absolute; right:-10px; color:#000;}
+.label-base li:last-child:after{content:''; position: absolute; right:-10px; color:#000;}
+.label-base li input{text-align: center; width:70%;}
+.label-base li input::-webkit-input-placeholder{color:#ddd;}
+.label-base li .glyphicon-remove-circle{float: right; font-size: 14px; color: #fff;}
+.label-base li>.addItemBtn{width:100%; height: 100%; background-color: #FFF; border-radius: 0; border:1px dotted #00b8ee; color:#00b8ee; cursor: pointer; }
+
+
+.imgBox{width:100%; height: 200px;display: inline-block; vertical-align: middle; position: relative;}
+.imgBox .glyphicon-remove-circle{position: absolute; font-size: 16px; color:#00b8ee; cursor: pointer; top: -8px; right: -8px; }
+.imgBox.addImg{border:1px dashed #ccc; font-size: 60px; text-align: center; color:#CCC; line-height: 200px;}
+.imgBox img{width:100%; height: 100%; }
+/*base controller end*/
+
