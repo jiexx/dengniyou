@@ -209,10 +209,12 @@ $(function () {
         '#/accommodationdetail':       {view:'product-accommodation-detail.html',	        rootrest:'/dashboard/product/accommodation/detail',	             ctrl: ctrlAccommodationDetail},
         '#/attractiondetail':           {view:'product-attraction-detail.html',	         rootrest:'/dashboard/product/attraction/detail',	             ctrl: ctrlAttractionDetail},
 
-        '#/servicedetail':           {view:'product-service-other-detail.html',	  rootrest:'/dashboard/product/service/detail.json',	                        ctrl: ctrlServicedetail},
+        '#/serviceotherdetail':           {view:'product-service-other-detail.html',	  rootrest:'/dashboard/product/service/detail',	                        ctrl: ctrlServicedetail},
         '#/shortplannew':                 {fragment: 'fragment/product-shortplan-edit.html',             init: initShortplanNew,                                          ctrl: ctrlShortplanNew},
 
-        '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',               init: initTemplateplanNew,                                      ctrl: ctrlTemplateplanNew}
+        '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',               init: initTemplateplanNew,                                      ctrl: ctrlTemplateplanNew},
+        '#/servicecardetail':           {view:'product-service-car-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
+
 	});
 
 

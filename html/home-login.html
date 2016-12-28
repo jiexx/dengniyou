@@ -14,90 +14,281 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 	}
 });
 </script> -->
+
+<style>
+	#homeLogin .modal-dialog{margin-top: 200px;}
+	/*loginBox Start*/
+	.loginBox { height: 420px; background-color: #fff; position: relative; border-radius: 5px; overflow: hidden; }
+	.loginBox .content{background-color: #fff;}
+	.loginBox .nav-tabs li { float: left; width: 50%; height: 76px; text-align: center; line-height: 76px; background-color: #f9f9f9; font-size: 28px;  }
+	.loginBox .nav-tabs li a{float:left; width:100%; height: 100%; line-height: 50px; border-radius: 0;}
+	.loginBox .nav-tabs li a:hover {border-color: #fff;}
+	.loginBox .nav-tabs li:first-child { font-size: 32px; }
+	.loginBox .nav-tabs li.active { background-color: #fff; }
+	.loginBox .nav-tabs li.active a{border:0;}
+	.loginBox .tab-content{width:500px; margin:0 auto;}
+	.loginBox .tab-content > div { display: none; }
+	.loginBox .tab-content > div.active { display: block; }
+	.loginBox .tab-content .form { padding-top: 20px; }
+	.loginBox .form .form-group input + label { color: #fa703e; font-weight: normal; font-size: 12px; }
+	.loginBox #logLeftTab .form .form-group { height: 75px; }
+	.loginBox #logRightTab .form .form-group { height: 55px; }
+	.loginBox #logRightTab .form .form-group > .inputBox input { width: 80%; }
+	.loginBox #logRightTab .form { padding-top: 30px; }
+	.loginBox .footer { padding-top: 20px; position: absolute; bottom: 0; left: 0; right: 0; width:500px; margin:0 auto;}
+	.loginBox .footer .btn-warning { background-color: #fa703e; }
+	.loginBox .footer p { margin-top: 12px; margin-bottom: 8px; text-align: center; }
+	.loginBox #login_lost_btn { float: right; color: #ff4800; text-decoration: underline; }
+	.loginBox .has-feedback span { color: #c8c8c8; }
+	.loginBox #logRightTab .row { margin-top: 20px; }
+	.loginBox .form-control { height: 40px; }
+	.loginBox .inputBox { height: 40px; border: 1px solid #c2c2c2; border-radius: 5px; }
+	.loginBox .inputBox input, .inputBox input:focus { border: none; outline: none; margin-left: 6px; }
+	.loginBox .inputBox i { font-size: 16px; color: #c8c8c8; line-height: 38px; height: 38px; margin-left: 12px; }
+	.loginBox .inputBox span { width: 1; height: 24px; background-color: #c2c2c2; }
+	.loginBox #phoneCode { width: 130px; }
+	.loginBox #phoneCodeBtn { height: 40px; }
+	.loginBox img { height: 40px; width: 120px; }
+	.loginBox input[type='checkbox']{height: 16px; width: 16px; margin-top: 1px;}
+	/*loginBox End*/
+	/*register Start*/
+	.register-header{height: 60px; width:90%; margin:0 auto; margin-bottom: 20px}
+	.register-header img{height: 60px; vertical-align: bottom;}
+	.register-header h3{display: inline-block;}
+	.register-header span{float:right; height: 6px; line-height: 60px;}
+	.register-form{padding:20px 0;}
+	.register-form label>i{color:#fa703e;display: inline-block; margin-right: 10px; font-size: 22px; line-height: 10px; vertical-align: bottom;}
+	.register-form p.passwordLeval{text-align: right; line-height: 16px; height: 16px; margin:10px 0 0;}
+	.register-form p.passwordLeval span{display: inline-block; width:20px; height: 16px; background-color: #CCC; text-align: center;}
+	.register-form p.passwordLeval span.active{background-color: #ffa63c;}
+	.register-form #verifyCode{width:80px; height: 34px;}
+	/*register End*/
+</style>
+
 <form class="modal fade" id="homeLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" novalidate>
-    	<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header" align="center">
-					<img class="img-circle" id="img_logo" src="img/logo.png">
-					<!--button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-					</button-->
-				</div>
-                
-                <!-- Begin # DIV Form -->
-                <div id="div-forms">
-                
-                    <!-- Begin # Login Form -->
-                    <div id="login-form">
-		                <div class="modal-body">
-				    		<div class="form-group"><span class="pull-left">手机号</span><input id="loginName" name="loginName" class="form-control" type="text" placeholder="手机号" required></div>
-				    		<div class="form-group"><span class="pull-left">密码</span><input id="loginPass" name="loginPass" class="form-control" type="password" placeholder="密码" required></div>
-                            <div class="checkbox">
-                                <label>
-                                    <input type="checkbox"> 保持一周
-                                </label>
-                            </div>
-        		    	</div>
-				        <div class="modal-footer">
-                            <div>
-                                <button type="submit" class="btn btn-warning  btn-block">登录</button>
-                            </div>
-				    	    <div>
-                                <span id="login_lost_btn" type="button" class="btn btn-link">忘记密码?</span>
-                                <span id="login_register_btn" type="button" class="btn btn-link">注册</span>
-                            </div>
-				        </div>
-                    </div>
-                    <!-- End # Login Form -->
-                    
-                    <!-- Begin | Lost Password Form -->
-                    <div id="lost-form" style="display:none;">
-    	    		    <div class="modal-body">
-		    				<div id="div-lost-msg">
-                                <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
-                                <span id="text-lost-msg">Type your e-mail.</span>
-                            </div>
-		    				<input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
-            			</div>
-		    		    <div class="modal-footer">
-                            <div>
-                                <button type="submit" class="btn btn-warning btn-lg btn-block">发送</button>
-                            </div>
-                            <div>
-                                <span id="lost_login_btn" type="button" class="btn btn-link">登录</span>
-                                <span id="lost_register_btn" type="button" class="btn btn-link">注册</span>
-                            </div>
-		    		    </div>
-                    </div>
-                    <!-- End | Lost Password Form -->
-                    
-                    <!-- Begin | Register Form -->
-                    <div id="register-form" style="display:none;">
-            		    <div class="modal-body">
-		    				<div id="div-register-msg">
-                                <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
-                                <span id="text-register-msg">注册</span>
-                            </div>
-		    				<input id="register_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
-                            <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
-                            <input id="register_password" class="form-control" type="password" placeholder="Password" required>
-            			</div>
-		    		    <div class="modal-footer">
-                            <div>
-                                <button type="submit" class="btn btn-warning btn-lg btn-block">注册</button>
-                            </div>
-                            <div>
-                                <span id="register_login_btn" type="button" class="btn btn-link">登录</span>
-                                <span id="register_lost_btn" type="button" class="btn btn-link">忘记密码?</span>
-                            </div>
-		    		    </div>
-                    </div>
-                    <!-- End | Register Form -->
-                    
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<!-- <div class="modal-header" align="center">
+				<img class="img-circle" id="img_logo" src="img/logo.png">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+				</button>
+			</div> -->
+            
+            <!-- Begin # DIV Form -->
+            <div id="div-forms">
+                <!-- Begin # Login Form -->
+                <div id="login-form"  style="display:none;">
+					<div class="loginBox">
+						<div class="content ">
+						  <!-- Tab nav -->
+						  <ul class="nav nav-tabs" id="myTabs"> 
+						    <li role="presentation" class="active" ><a href="#logLeftTab" role="tab" data-toggle="tab">登录</a></li>
+						    <li role="presentation" ><a href="#logRightTab" role="tab" data-toggle="tab">手机动态密码登录</a></li>
+						  </ul>
+						  <!-- Tab panes -->
+						  <div class="tab-content">
+						  	<!-- 账号密码登录 -->
+						    <div  role="tabpanel" class="tab-pane active" id="logLeftTab">
+								<div class="form">
+								  <div class="form-group">
+								    <label for="userName">用户名</label>
+								    <input type="text" class="form-control" id="loginName" name="loginName" placeholder="请输入用户名/手机号" required>
+								  </div>
+								  <div class="form-group has-feedback">
+								    <label for="password">密码</label>
+								    <input type="password" class="form-control" id="loginPass" name="loginPass" placeholder="请输入密码" required>
+								    <span class="glyphicon glyphicon-eye-open form-control-feedback " aria-hidden="true"></span>
+								  </div>
+								  <div class="checkbox">
+								    <label><input type="checkbox"> 记住账户</label>
+								    <label><input type="checkbox"> 记住密码</label>
+									<a href="javascript:void(0);" id="login_lost_btn" >忘记密码</a>
+								  </div>
+								  <div class="footer">
+									<button type="submit" class="btn btn-block btn-warning btn-lg">登 录</button>
+									<p>您还不是等你旅游网会员？请<a href="javascript:void(0);" id="login_register_btn">立即注册</a></p>
+								  </div>
+								</div>
+						    </div>
+						    <!-- 账号密码登录结束 -->
+
+						    <!-- 电话登录 -->
+						    <div role="tabpanel" class="tab-pane" id="logRightTab">
+								<div class="form">
+								    <div class="form-group">
+								    	<div class="inputBox">
+								    		<i class="glyphicon glyphicon-user"></i>
+								    		<span class="line"></span> 
+								    		<input type="text" placeholder="手机号" required>
+								    	</div>
+							    	</div>
+								    
+									<div class="form-group">
+										<div class="row">
+											<div class="col-xs-6">
+												<input type="text" id="code" class="form-control input-short required" name="verify" placeholder="验证码" maxlength="4" required tabindex="3" autocomplete="off" />
+											</div>
+											<div class="col-xs-6">
+												<img id="verifCode"  src="http:" alt="验证码" />
+											</div>
+											<!-- <div class="col-sm-1">
+												<span class="icon-refresh" id="captchaRefresh">换一张</span>
+											</div> -->
+										</div>
+									</div>
+								  	<div class="form-group">
+								  		<div class="row">
+								  			<div class="col-xs-6">
+								  				<div class="inputBox">
+										    		<i class="glyphicon glyphicon-lock"></i>
+										    		<span class="line"></span> 
+										    		<input type="text" id="phoneCode" placeholder="动态密码" required>
+										    	</div>
+								  			</div>
+								  			<div class="col-xs-6">
+								  				<button type="button" class="btn btn-default " id="phoneCodeBtn">获取手机动态密码</button>
+								  			</div>
+								  		</div>
+								    
+								  	</div>
+
+								  	<div class="footer">
+										<button type="submit" class="btn btn-block btn-warning btn-lg">登 录</button>
+										<p>您还不是等你旅游网会员？请<a href="register.html">立即注册</a></p>
+									</div>
+								</div>
+						    </div>
+							<!-- 电话登录结束 -->
+						  </div>
+						</div>
+				    </div>
                 </div>
-                <!-- End # DIV Form -->
+                <!-- End # Login Form -->
                 
-			</div>
+                <!-- Begin | Lost Password Form -->
+                <div id="lost-form" style="display:none;">
+	    		    <div class="modal-body">
+	    				<div id="div-lost-msg">
+                            <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
+                            <span id="text-lost-msg">Type your e-mail.</span>
+                        </div>
+	    				<input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
+        			</div>
+	    		    <div class="modal-footer">
+                        <div>
+                            <button type="submit" class="btn btn-warning btn-lg btn-block">发送</button>
+                        </div>
+                        <div>
+                            <span id="lost_login_btn" type="button" class="btn btn-link">登录</span>
+                            <span id="lost_register_btn" type="button" class="btn btn-link">注册</span>
+                        </div>
+	    		    </div>
+                </div>
+                <!-- End | Lost Password Form -->
+                
+                <!-- Begin | Register Form -->
+                <div id="register-form" class="register-form">
+					<div class="register-header">
+					    <img src="img/logo.png" alt="等你游"/>
+					    <h3>欢迎注册</h3>
+					    <span> 已有等你游账户？<button type="button" class="btn btn-default btn-sm"> <a href="login.html"> 登 录</a></button></span>
+					</div>
+
+					<div class="form-horizontal">
+			          <div class="form-group">
+			            <label for="register_username" class="col-sm-3 control-label"><i>*</i> 手机号码</label>
+			            <div class="col-sm-7">
+			              <input type="email" class="form-control" id="register_username" placeholder="phoneNumber"/>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="register_email" class="col-sm-3 control-label"><i>*</i> 邮箱</label>
+			            <div class="col-sm-7">
+			              <input type="email" class="form-control" id="register_email" placeholder="Email"/>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="register_password" class="col-sm-3 control-label"><i>*</i>登录密码</label>
+			            <div class="col-sm-7">
+			              <input type="password" class="form-control" id="register_password" placeholder="Password">
+			              <p class="passwordLeval">安全程度：<span class="active">弱</span> <span>中</span> <span>强</span></p>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="" class="col-sm-3 control-label"><i>*</i>确认密码</label>
+			            <div class="col-sm-7">
+			              <input type="password" class="form-control" id="" placeholder="Password">
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <label for="" class="col-sm-3 control-label"><i>*</i>图形验证码</label>
+			            <div class="col-sm-3">
+			              <input type="password" class="form-control" id="" placeholder="Password">
+			            </div>
+			            <div class="col-sm-4">
+			              <img src="" alt="验证码" id="verifyCode">
+			              <a href="javascript:0;">&nbsp;&nbsp;&nbsp;&nbsp;换一张</a>
+			            </div>
+			          </div>  
+			          <div class="form-group">
+			            <label for="" class="col-sm-3 control-label"><i>*</i>手机验证码</label>
+			            <div class="col-sm-3">
+			              <input type="password" class="form-control" id="" placeholder="手机验证码">
+			            </div>
+			            <div class="col-sm-4">
+			              <button type="button" class="btn btn-default">发送验证码</button>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <div class="col-sm-offset-3 col-sm-7">
+			              <div class="checkbox">
+			                <label>
+			                  <input type="checkbox"/> 我已阅读并同意 <a href="#">《等你游服务条款》</a>
+			                </label>
+			              </div>
+			            </div>
+			          </div>
+			          <div class="form-group">
+			            <div class="col-sm-offset-3 col-sm-7">
+			              <button type="submit" class="btn btn-warning btn-lg" id="register_login_btn">同意服务条款并注册</button>
+			            </div>
+			          </div>
+
+
+			          
+
+			        </div>
+
+<!-- 
+			          
+			           -->
+
+        		    <!-- <div class="modal-body">
+	    				<div id="div-register-msg">
+                            <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
+                            <span id="text-register-msg">注册</span>
+                        </div>
+	    				<input id="register_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
+                        <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
+                        <input id="register_password" class="form-control" type="password" placeholder="Password" required>
+        			</div>
+	    		    <div class="modal-footer">
+                        <div>
+                            <button type="submit" class="btn btn-warning btn-lg btn-block">注册</button>
+                        </div>
+                        <div>
+                            <span id="register_login_btn" type="button" class="btn btn-link">登录</span>
+                            <span id="register_lost_btn" type="button" class="btn btn-link">忘记密码?</span>
+                        </div> 
+	    		    </div>-->
+                </div>
+                <!-- End | Register Form -->
+                
+            </div>
+            <!-- End # DIV Form -->
+            
 		</div>
-	</form>
-    <!-- END # MODAL LOGIN -->
+	</div>
+</form>
+    <!-- END # MODAL LOGIN-->
