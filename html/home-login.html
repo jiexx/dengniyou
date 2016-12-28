@@ -45,7 +45,7 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 	.loginBox .inputBox { height: 40px; border: 1px solid #c2c2c2; border-radius: 5px; }
 	.loginBox .inputBox input, .inputBox input:focus { border: none; outline: none; margin-left: 6px; }
 	.loginBox .inputBox i { font-size: 16px; color: #c8c8c8; line-height: 38px; height: 38px; margin-left: 12px; }
-	.loginBox .inputBox span { width: 1; height: 24px; background-color: #c2c2c2; }
+	.loginBox .inputBox span { width: 1px; height: 24px; background-color: #c2c2c2; }
 	.loginBox #phoneCode { width: 130px; }
 	.loginBox #phoneCodeBtn { height: 40px; }
 	.loginBox img { height: 40px; width: 120px; }
@@ -56,29 +56,23 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 	.register-header img{height: 60px; vertical-align: bottom;}
 	.register-header h3{display: inline-block;}
 	.register-header span{float:right; height: 6px; line-height: 60px;}
-	.register-form{padding:20px 0;}
+	.register-form{padding:10px 0 20px;}
 	.register-form label>i{color:#fa703e;display: inline-block; margin-right: 10px; font-size: 22px; line-height: 10px; vertical-align: bottom;}
 	.register-form p.passwordLeval{text-align: right; line-height: 16px; height: 16px; margin:10px 0 0;}
-	.register-form p.passwordLeval span{display: inline-block; width:20px; height: 16px; background-color: #CCC; text-align: center;}
+	.register-form p.passwordLeval span{display: inline-block; width:30px; height: 16px; background-color: #CCC; text-align: center;}
 	.register-form p.passwordLeval span.active{background-color: #ffa63c;}
-	.register-form #verifyCode{width:80px; height: 34px;}
+	.register-form #verifyCode{width:100px; height: 34px;}
 	/*register End*/
 </style>
 
 <form class="modal fade" id="homeLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" novalidate>
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<!-- <div class="modal-header" align="center">
-				<img class="img-circle" id="img_logo" src="img/logo.png">
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-				</button>
-			</div> -->
-            
+	
             <!-- Begin # DIV Form -->
             <div id="div-forms">
                 <!-- Begin # Login Form -->
-                <div id="login-form"  style="display:none;">
+                <div id="login-form"  >
 					<div class="loginBox">
 						<div class="content ">
 						  <!-- Tab nav -->
@@ -107,7 +101,7 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 								  </div>
 								  <div class="footer">
 									<button type="submit" class="btn btn-block btn-warning btn-lg">登 录</button>
-									<p>您还不是等你旅游网会员？请<a href="javascript:void(0);" id="login_register_btn">立即注册</a></p>
+									<p>您还不是等你旅游网会员？请 <a href="javascript:void(0);" id="login_register_btn">立即注册</a></p>
 								  </div>
 								</div>
 						    </div>
@@ -155,7 +149,7 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 
 								  	<div class="footer">
 										<button type="submit" class="btn btn-block btn-warning btn-lg">登 录</button>
-										<p>您还不是等你旅游网会员？请<a href="register.html">立即注册</a></p>
+										<p>您还不是等你旅游网会员？请 <a href="register.html">立即注册</a></p>
 									</div>
 								</div>
 						    </div>
@@ -188,53 +182,56 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
                 <!-- End | Lost Password Form -->
                 
                 <!-- Begin | Register Form -->
-                <div id="register-form" class="register-form">
+                <div id="register-form" class="register-form" style="display:none;">
 					<div class="register-header">
 					    <img src="img/logo.png" alt="等你游"/>
 					    <h3>欢迎注册</h3>
-					    <span> 已有等你游账户？<button type="button" class="btn btn-default btn-sm"> <a href="login.html"> 登 录</a></button></span>
+					    <span> 已有等你游账户？
+					    <a id="register_lost_btn" type="button" class="btn btn-link btn-sm">忘记密码?</a>
+					    <button type="button" id="register_login_btn" class="btn btn-default btn-sm"> <a href="login.html"> 登 录</a></button>
+					    </span>
 					</div>
 
 					<div class="form-horizontal">
 			          <div class="form-group">
 			            <label for="register_username" class="col-sm-3 control-label"><i>*</i> 手机号码</label>
 			            <div class="col-sm-7">
-			              <input type="email" class="form-control" id="register_username" placeholder="phoneNumber"/>
+			              <input type="email" class="form-control" id="register_username" placeholder="phoneNumber" required/>
 			            </div>
 			          </div>
 			          <div class="form-group">
 			            <label for="register_email" class="col-sm-3 control-label"><i>*</i> 邮箱</label>
 			            <div class="col-sm-7">
-			              <input type="email" class="form-control" id="register_email" placeholder="Email"/>
+			              <input type="email" class="form-control" id="register_email" placeholder="Email" required/>
 			            </div>
 			          </div>
 			          <div class="form-group">
 			            <label for="register_password" class="col-sm-3 control-label"><i>*</i>登录密码</label>
 			            <div class="col-sm-7">
-			              <input type="password" class="form-control" id="register_password" placeholder="Password">
+			              <input type="password" class="form-control" id="register_password" placeholder="Password" required/>
 			              <p class="passwordLeval">安全程度：<span class="active">弱</span> <span>中</span> <span>强</span></p>
 			            </div>
 			          </div>
 			          <div class="form-group">
 			            <label for="" class="col-sm-3 control-label"><i>*</i>确认密码</label>
 			            <div class="col-sm-7">
-			              <input type="password" class="form-control" id="" placeholder="Password">
+			              <input type="password" class="form-control" id="" placeholder="Password" required/>
 			            </div>
 			          </div>
 			          <div class="form-group">
 			            <label for="" class="col-sm-3 control-label"><i>*</i>图形验证码</label>
 			            <div class="col-sm-3">
-			              <input type="password" class="form-control" id="" placeholder="Password">
+			              <input type="password" class="form-control" id="" placeholder="Password" required/>
 			            </div>
 			            <div class="col-sm-4">
 			              <img src="" alt="验证码" id="verifyCode">
-			              <a href="javascript:0;">&nbsp;&nbsp;&nbsp;&nbsp;换一张</a>
+			              <a href="javascript:0;">换一张</a>
 			            </div>
 			          </div>  
 			          <div class="form-group">
 			            <label for="" class="col-sm-3 control-label"><i>*</i>手机验证码</label>
 			            <div class="col-sm-3">
-			              <input type="password" class="form-control" id="" placeholder="手机验证码">
+			              <input type="password" class="form-control" id="" placeholder="手机验证码" required/>
 			            </div>
 			            <div class="col-sm-4">
 			              <button type="button" class="btn btn-default">发送验证码</button>
@@ -254,34 +251,7 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 			              <button type="submit" class="btn btn-warning btn-lg" id="register_login_btn">同意服务条款并注册</button>
 			            </div>
 			          </div>
-
-
-			          
-
 			        </div>
-
-<!-- 
-			          
-			           -->
-
-        		    <!-- <div class="modal-body">
-	    				<div id="div-register-msg">
-                            <div id="icon-register-msg" class="glyphicon glyphicon-chevron-right"></div>
-                            <span id="text-register-msg">注册</span>
-                        </div>
-	    				<input id="register_username" class="form-control" type="text" placeholder="Username (type ERROR for error effect)" required>
-                        <input id="register_email" class="form-control" type="text" placeholder="E-Mail" required>
-                        <input id="register_password" class="form-control" type="password" placeholder="Password" required>
-        			</div>
-	    		    <div class="modal-footer">
-                        <div>
-                            <button type="submit" class="btn btn-warning btn-lg btn-block">注册</button>
-                        </div>
-                        <div>
-                            <span id="register_login_btn" type="button" class="btn btn-link">登录</span>
-                            <span id="register_lost_btn" type="button" class="btn btn-link">忘记密码?</span>
-                        </div> 
-	    		    </div>-->
                 </div>
                 <!-- End | Register Form -->
                 
