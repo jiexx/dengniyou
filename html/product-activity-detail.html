@@ -32,17 +32,16 @@
       <!--   banner -->
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-          <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-          <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          {{each(i,p) DetailMain[0].picURLs}}
+          <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==1}}active{{/if}}"></li>
+          {{/each}}
         </ol>
         <div class="carousel-inner" role="listbox">
-          <div class="item active">
-            <img src="img/Guide/ClassicSchemePre1.png" alt="...">
+          {{each(i,p) DetailMain[0].picURLs}}
+          <div class="item {{if i==1}}active{{/if}}">
+            <img src="${$data.IMGHOST}${p}" alt="...">
           </div>
-          <div class="item">
-            <img src="img/Guide/ClassicSchemePre1.png" alt="...">
-          </div>
+          {{/each}}
         </div>
         <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" >
           <span class="glyphicon glyphicon-chevron-left"></span>
@@ -60,14 +59,16 @@
               <span>Denise<i class="glyphicon glyphicon-ok"></i></span>
             </div>
             <div class="col-md-10 guide-tit">
-              <h1>活动名称活动名称</h1>
-              <span>活动标签</span>
-              <span>活动标签</span>
-              <span>活动标签</span>
+              <h1>${DetailMain[0].serviceName}</h1>
+              {{each(i,p) Labels}}
+              <span>${p}</span>
+              {{/each}}
+              <!-- <span>活动标签</span>
+              <span>活动标签</span> -->
               <div class="price-box pull-right">
-                <p class="price">价格：¥ <span>10000</span>元/人起</p>
-                <p>儿童价：¥ <span>10000</span>元/人起</p>
-                <p>成人价：¥ <span>15000</span>元/人起</p>
+                <p class="price">价格：¥ <span>${DetailMain[0].primaryPrice}</span>元/人起</p>
+                <p>儿童价：¥ <span>${ActivityPrice[0].kidPrice}</span>元/人起</p>
+                <p>成人价：¥ <span>${ActivityPrice[0].adultPrice}</span>元/人起</p>
               </div>
             </div>
           </div>
@@ -76,17 +77,17 @@
         <div class="row product-detail price-detail">
           <h2>商品详情</h2>
           <div class="col-md-4">
-            <p>车辆名称：<span>Panamera</span></p>
-            <p>车辆级别：<span>豪华车</span></p>
-            <p>舒适乘坐：<span>2位</span></p>
+            <p>车辆名称：<span>${Facility[0].facilityName}</span></p>
+            <p>车辆级别：<span>${Facility[0].clazz}</span></p>
+            <p>舒适乘坐：<span>${Facility[0].seats}位</span></p>
           </div>
           <div class="col-md-4">
-            <p>品 牌：<span>保时捷</span></p>
-            <p>行李空间：<span>1000升</span></p>
+            <p>品 牌：<span>${Facility[0].brand}</span></p>
+            <p>行李空间：<span>${Facility[0].luggage}升</span></p>
           </div>
           <div class="col-md-4">
-            <p>型号：<span>4.8T 419kW</span></p>
-            <p>乘车险：<span>无</span></p>
+            <p>型号：<span>${Facility[0].model}</span></p>
+            <p>乘车险：<span>{{if Facility[0].insurance==1}}有{{else}}无{{/if}}</span></p>
           </div>
 
         </div> <!-- end 商品详情product-detail -->
@@ -94,12 +95,14 @@
         <div class="vihicle-list">
           <div class="vihicle-listbody">
             <ul class="vmcarousel-centered-infitine vmc-centered">
-              <li style="width:250px"><img src="img/Guide/1.jpg" alt=""></li>
-              <li style="width:250px"><img src="img/Guide/2.jpg" alt=""></li>
+              {{each(i,p) Facility[0].facilityPics}}
+              <li style="width:250px"><img src="${$data.IMGHOST}${p}" alt=""></li>
+              {{/each}}
+              <!-- <li style="width:250px"><img src="img/Guide/2.jpg" alt=""></li>
               <li style="width:250px"><img src="img/Guide/3.jpg" alt=""></li>
               <li style="width:250px"><img src="img/Guide/4.jpg" alt=""></li>
               <li style="width:250px"><img src="img/Guide/5.jpg" alt=""></li>
-              <li style="width:250px"><img src="img/Guide/6.jpg" alt=""></li>
+              <li style="width:250px"><img src="img/Guide/6.jpg" alt=""></li> -->
             </ul>
           </div>
         </div><!-- end 车辆轮播图vihicle-list -->
@@ -108,72 +111,45 @@
           <h2>服务说明</h2>
           <div class="des">
             <p>
-              出团通知不会晚于出团前1个工作日发送至您的邮箱，若能提前确定，我们将会及时通知您。出团时务必带上身份证原件，无身份证者带户口本原件，因个人证件不全所造成损失客人自行承担。因客人自身原因导致不能出入中国海关，责任由旅游者承担，我们仅将未发生的费用退还旅游者。收到出团书之后请认真阅读出团通知书，有疑义之处尽快联系客服解决，因未及时阅读出团书，导致不必要的损失，由游客自行承担，出团通知书有详细的集合时间、地点、领队联系方式、注意事项请仔细阅读，谢谢合作！
+              ${DetailMain[0].description}
             </p>
           </div>
         </div><!-- end 服务描述service-description -->
 
         <div class="policy">
-          <h2>退订政策</h2>
-          <div class="des">
-            <p>
-              1. {退订政策} <br>
-              2. {退订政策} <br>
-              3. {退订政策} <br>
-              4. {退订政策} <br>
-              5. {退订政策} <br>
-              6. {退订政策} <br>
-            </p>
-          </div>
-        </div>
-        <div class="cost-include">
-          <h2>费用包含</h2>
-          <div class="des">
-            <p>
-              1. 一个中文导游兼司机 <br>
-              2. 行程所列酒店住宿费用（或同级别酒店） <br>
-              3. 酒店标准2人间（或大床间） <br>
-              4. 商务旅行车（参考选择的包车服务），含停车费，高速费，燃油费，过路费 <br>
-              5. 部分景点门票，参看景点列表  <br>
-              6. ...... <br>
-            </p>
-          </div>
-        </div>
-        <div class="cost-oneself">
-          <h2>费用自理</h2>
-          <div class="des">
-            <p>
-              1. 个人物品海关征税，超重行李的托运费、保管费。<br>
-              2. 因交通延阻、罢工、天气、飞机、机器故障、航班取消或更改时间等不可抗力原因导致的额外费用。<br>
-              3. 酒店内洗衣、理发、电话、传真、收费电视、饮品、烟酒等个人消费。<br>
-              4. 正餐费用，原则上导游与客人一同用餐，餐费由客人支付。<br>
-            </p>
-          </div>
-        </div>
-        <div class="sign-notes">
-          <h2>签证须知</h2>
-          <div class="des">
-            <p>
-              1. 一经预定，不得退改。 <br>
-              2. 客人享受提前62天报名的特惠价格须满足：距出发62天前与我司签订合同并且开出机票。<br>
-            </p>
-          </div>
-        </div>
-        <div class="attention">
-          <h2>注意事项</h2>
-          <div class="des">
-            <p>
-              本商品为特价商品，在订单确认后，不得做任何更改，也不予退款，请您认真阅读商品详情后下单。<br>
-            </p>
-          </div>
-        </div>
+        {{each(i,p) Policy}}
+            {{if p.PolicyType==1}}
+            <h2>退订政策</h2>
+            <div class="des">
+              <p>${p.Description}</p>
+            </div>
+            {{/if}}
+            {{if p.PolicyType==2}}
+            <h2>费用包含</h2>
+            <div class="des">
+              <p>${p.CustomRatio}</p>
+            </div>
+            {{/if}}
+            {{if p.PolicyType==3}}
+            <h2>费用不包含</h2>
+            <div class="des">
+              <p>${p.CustomRatio}</p>
+            </div>
+            {{/if}}
+            {{if p.PolicyType==4}}
+            <h2>预定须知</h2>
+            <div class="des">
+              <p>${p.Caution}</p>
+            </div>
+            {{/if}}
+        {{/each}}
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
       <div class="buttons">
-        <button id="delete" type="button" class="btn btn-default btn-lg">删除</button>
-        <button id="copy" type="button" class="btn btn-lg">复制</button>
-        <button id="edit" type="button" class="btn btn-lg">编辑</button>
-        <button id="release" type="button" class="btn btn-lg">发布</button>
+        <button id="delete" type="button" class="btn btn-default">删除</button>
+        <button id="copy" type="button" class="btn">复制</button>
+        <button id="edit" type="button" class="btn">编辑</button>
+        <button id="release" type="button" class="btn">发布</button>
       </div>
     </div><!-- end container-box -->
   </div> <!-- end container -->

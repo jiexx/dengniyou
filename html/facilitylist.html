@@ -1,32 +1,58 @@
-
 <div class="container">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">
-                我的装备列表
-            </h3>
-        </div>
-        <div class="panel-body">
-            <div class="list-group">
+	<div class="list-group">
+		{{each Facilities}}
+	  	<div class="list-group-item clearfix disabled">
+		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+		  	<div class="col-md-5">装备</div>
+		  	<div class="col-md-2">装备类型</div>
+	      <div class="col-md-1 ">发布状态</div>
+		  	<div class="col-md-1 ">编辑</div>
+	  	</div>
+	  	<div class="list-group-item clearfix btn-group">
+		  	<div class="col-md-1">
+		  		<input type="radio" name="optradio">
+		  	</div>
+		  	<div class="col-md-5 ">
+		    	<div class="media">
+				   <div class="media-left media-top">
+					   {{each(i,pic) Facilities[$index].pics}}
+					   {{if i==1}}
+					   <a href="">
+						  <img src="${ $data.IMGHOST + pic}" class="media-object" style="width:160px;height:160px">
+					   </a>
+					   {{/if}}
+					   {{/each}}
+				   </div>
+			   	<div class="media-body">
+						<div class="media-heading">${ Facilities[$index].facilityType}：${ Facilities[$index].brand}：${ Facilities[$index].model}</div>
+			   	</div>
+				</div>
+			</div>
+			<div class="col-md-2 ">${ Facilities[$index].facilityName}</div>
+		
+			<div class="col-md-1 ">
+		   	<span class="btn  glyphicon glyphicon-edit"></span>
+			</div>
+		</div>
+		{{/each}}
+	</div><!-- end list-group -->
+</div><!-- end container -->
 
-                {{each Facilities}}
-                <li class="list-group-item">${ Facilities[$index].facilityName}</li>
-                <li class="list-group-item">${ Facilities[$index].facilityType}：${ Facilities[$index].brand}：${ Facilities[$index].model}</li>
-
-                <div class="row clearfix">
-                    {{each(i,pic) Facilities[$index].pics}}
-                    <div class="col-md-6 column"><img src="${ $data.IMGHOST + pic}" class="img-thumbnail"></div>
-                    <br>
-                    {{/each}}
-                    <div class="col-md-6 column"><a href="#">${ Facilities[$index].facilityID}</a></div>
-                </div>
-                <br>
-                {{/each}}
-            </div>
-        </div>
-    </div>
-
-</div>
+<!-- 页码 -->
 <div class="container">
-
-</div>
+	<div class="pagination">
+		<li>
+			<a href="#" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</a>
+		</li>
+		{{for $data.Counts[0].Count}}
+		<li><a href="#">${i}</a></li>
+		{{/for}}
+		<li>
+			<a href="#" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+	</div>
+</div><!-- end 页码 -->
