@@ -108,7 +108,7 @@ $(function () {
             PlanSchedule:{
                 __countScheduleID:1,
                 Day:[{
-                    Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''},
+                    Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
@@ -120,6 +120,7 @@ $(function () {
         };
     }
     var ctrlTemplateplanNew = function(Plan, realView) {
+        var data = Plan;
         $('#newOneDay').rogerOnceClick(function(){
             Plan.PlanSchedule.__countScheduleID ++;
             Plan.PlanSchedule.Day.push({
@@ -131,11 +132,11 @@ $(function () {
             });
             $.rogerRefresh(Plan);
         });
-        $('#save').rogerOnceClick(function(){
-            $.rogerCollect(Plan, function(){
-                console.log(Plan);
-            })
+        $('#save').rogerOnceClick(Plan, function(e){
+
+            console.log('test');
         });
+
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };

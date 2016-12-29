@@ -326,10 +326,10 @@ $(function () {
 			$('html')._RogerReloadRouters();
 			$.rogerRefresh();//$.rogerLocation($._rogerGetLocation());//'#/'+$.rogerWindowURLParamsString());
 		},
-		rogerOnceClick: function (callback) {
+		rogerOnceClick: function (data, callback) {
 			var ev = $._data($(this), 'events');
 			if(!ev || !ev.click) {
-				$(this).click(function (e) {
+				$(this).click(data, function (e) {
 					e.preventDefault();
 					callback(e);
 				});
