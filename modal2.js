@@ -96,9 +96,9 @@ var CallbackLooper = {
 			}
 		}
 		if(_this.i < _this.count) {
-			var funcs = _this.funcArgus[_this.i].doing;
-			for(var i in funcs) {
-				funcs[i](_this.funcArgus[_this.i]);
+			var doings = _this.funcArgus[_this.i].doing;
+			for(var i in doings) {
+                doings[i](_this.funcArgus[_this.i], null, _this);
 			}
 			_this.func(_this.funcArgus[_this.i], function(){  //<--- eg. == before after callback
 				if(_this.onOneFinish) {
@@ -196,28 +196,12 @@ var roger = {
 			return mapObj[matched];
 		});
 	},
-	"after":function(list, data, onFinish) {
-		//console.log('after in:');
-		var funcArgus = [];
-		var funcs = [];
-		for(var i in list) {
-			var copy = list[i];
-			for(var i in copy.after) {
-				if(copy.after[i]) {
-					funcArgus.push({output:copy.output, copy:copy});
-					funcs.push(copy.after[i]);
-				}
-			}
-		}
-		var csl = CallbacksLooper.create(funcs.length, funcs, funcArgus, onFinish, null);
-		csl.loop();
-	},
 	//data has array property with object instead of array.
 	//data has array property with base type. data maybe have multi array property, must be handle by tag.
 	"prepare":function (superior, tag, modal, data, out) {
-		if("object" == typeof data && Array != data.constructor && "object" == typeof modal && Array != modal.constructor) {
-			var copy = {tag:tag, valid:false, superior: superior, modal: modal, data: data};
-			out.push(copy);
+        var copy = {tag:tag, valid:false, superior: superior, modal: modal, data: data};
+        out.push(copy);
+        if(data && "object" == typeof data) {
 			for (var key in data) {
 				var m = modal[key], d = data[key];
 				if(m) {
@@ -225,27 +209,25 @@ var roger = {
 						roger.prepare(copy, key, m, d, out);
 					} else if (Array == d.constructor) {
 						for(var i in d) {
-							roger.prepare(copy, key, m, d, out);
+							roger.prepare(copy, key, m, d[i], out);
 						}
 					}
 				}
 			}
-		}
-	},
-	"complete":function(list) {
-		var out = {};
-		var tag = '';
-		for(var i in list) {
-            //console.log(list[i].tag);
-            tag = list[i].tag;
-            if ('root' != tag) {
-                out[tag] = list[i].output;
+		}else{
+            for (var key in modal) {
+                var m = modal[key];
+                if(m) {
+                    if ("object" == typeof m && Array != m.constructor) {
+                        roger.prepare(copy, key, m, null, out);
+                    } else if (Array == m.constructor) {
+                        for(var i in d) {
+                            roger.prepare(copy, key, m[i], null, out);
+                        }
+                    }
+                }
             }
-        }
-        list = null;
-		var r =  roger.format(out);
-		out = null;
-		return r;
+		}
 	},
 	//all.data <-  receive req json data
 	//eg.{UserID:1234,Pics:["",""]}
@@ -270,13 +252,13 @@ var roger = {
 		for(var i in list) {
 			var item = list[i];
 			if(item.valid) {
-				var funcDoings = [];
+				var doings = [];
 				for(var j in item.modal) {
 					if(roger.tagHandler[j] && roger.tagHandler[j].doing){
-						funcDoings.push(roger.tagHandler[j].doing);
+                        doings.push(roger.tagHandler[j].doing);
 					}
 				}
-				funcArgus.push({sql:item.sql, params:item.params, item:item, doing:funcDoings});
+				funcArgus.push({sql:item.sql, params:item.params, item:item, doing:doings});
 			}
 		}
 		var cl = CallbackLooper.create(funcArgus.length, doSql, funcArgus, onFinish,
@@ -287,6 +269,48 @@ var roger = {
 			});
 		cl.loop();
 	},
+    "after":function(list, data, onFinish) {
+        //console.log('after in:');
+        var funcArgus = [];
+        var funcs = [];
+        for(var i in list) {
+            var item = list[i];
+            for(var j in item.modal) {
+                if(roger.tagHandler[j] && roger.tagHandler[j].after){
+                    funcArgus.push({item:item, vector:list});
+                    funcs.push(roger.tagHandler[j].after);
+                }
+            }
+        }
+        var csl = CallbacksLooper.create(funcs.length, funcs, funcArgus, onFinish, null);
+        csl.loop();
+    },
+    "clear": function(obj) {
+    },
+    "complete":function(list) {
+        var out = {};
+        var tag = '';
+        for(var i in list) {
+            //console.log(list[i].tag);
+            tag = list[i].tag;
+            if ('root' != tag) {
+            	if(out[tag]) {
+            		if(Array != out[tag].constructor) {
+                        var a = out[tag];
+                        out[tag] = [a];
+					}
+					out[tag].push(list[i].output);
+				}else{
+                    out[tag] = list[i].output;
+				}
+            }
+        }
+
+        var r =  roger.format(out);
+        roger.clear(list);
+        roger.clear(out);
+        return r;
+    },
 	//data <-  receive req json data
 	//eg.{UserID:1234,Pics:["",""]}
 	//copy <-  semi list
@@ -374,7 +398,7 @@ var roger = {
 		},
 // ---------------do SQL
         "findkey": {
-			doing :function(funcArgu, onFinish) {
+			doing :function(funcArgu, onFinish, looper) {
 				var output = funcArgu.item.superior.output;
 				var findkey = funcArgu.item.modal.findkey;
 				var data = funcArgu.item.data;
@@ -386,57 +410,62 @@ var roger = {
 
 				}// superior output is 2d array
 				else if(Array == output.constructor){
+					var vector = [];
 					for(var j in output) {
 
 						funcArgu.item.params = roger.replace(params, findkey, output[findkey]);
 						var copy = roger.shallow(funcArgu.item);
 						funcArgu.vector.push(copy);
-
+                        vector.push({sql:copy.sql, params:copy.params, item:copy, doing:null});
 					}
-					//{sql:item.sql, params:item.params, item:item, doing:funcDoings}
+                    looper.expand(vector);
 				}
-				onFinish();
+				//onFinish();
 			}
 		},
 // ---------------after SQL ||| multi before need implement callback1,callback2,callback3..., last one callback trigger finish callback
-		"orderby": function(modal, copy, value) {
-			if( "string" == typeof value ) {
-				copy.key = value;
-                if(!copy.after) {
-                    copy.after = [];
-                }
-				copy.after.push(function(funcArgu, onFinish){ //funcArgu -- rows
-					var copy = funcArgu.copy;
-					var obj = {};
-                    var count = 0;
-					for(var i in funcArgu.output) {
-						var row = funcArgu.output[i];
-						var r = row[copy.key];
-						if(r && "object" != typeof r && Array != r.constructor) {
-                            var o = obj[r];
-							if(!o) {
-                                obj[r] = {__index: 0, __values: []};
-                                o = obj[r];
-                                count++;
-                                o.__index = count;
-							}
-                            o.__values.push(row);
+		"orderby": {
+            after :function(funcArgu, onFinish) {
+                var output = funcArgu.item.output;
+                var orderby = funcArgu.item.modal.orderby;
+                var obj = {};
+                var count = 0;
+                for(var i in output) {
+                    var row = output[i];
+                    var r = row[orderby];
+                    if(r && "object" != typeof r && Array != r.constructor) {
+                        var o = obj[r];
+                        if(!o) {
+                            obj[r] = {__index: 0, __values: []};
+                            o = obj[r];
+                            count++;
+                            o.__index = count;
                         }
-					}
-                    obj['__count'+copy.key] = count;
-					funcArgu.copy.output = obj;
-					onFinish();
-				});
-			}
-		}
+                        o.__values.push(row);
+                    }
+                }
+                obj['__count'+orderby] = count;
+                funcArgu.item.output = obj;
+                onFinish();
+            }
+        }
 	}
 
 }
-
+function isEmpty(obj) {
+    for(var prop in obj) {
+        if(obj.hasOwnProperty(prop))
+            return false;
+    }
+    return true;
+}
 
 exports.rogerSmartSql = function(modal, data, callback) {
 	var out = [];
-	roger.prepare(null, 'root', modal, out);
+	if(isEmpty(data)) {
+		data = null;
+	}
+	roger.prepare(null, 'root', modal, data, out);
 	roger.before(out, data, function(){
 		//console.log('BEFORE:');
 		roger.process(out, function(){
