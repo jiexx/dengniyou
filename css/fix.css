@@ -315,9 +315,11 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 /*end 导游端预览页*/
 
 /*导游端编辑类页面*/
+.editPage.container{width:95%;}
 .editPage>div{border:1px solid #e0e0e0; box-shadow: 0 0 3px #e0e0e0; margin-bottom:30px;padding:10px 20px;}
 .editPage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
 .editPage>div>h4{font-size: 16px; color:#f60; height: 50px; line-height: 50px;}
+
 .editPage .baseInfo form .col-sm-10.col-md-11 input,.editPage .baseInfo form .col-sm-10.col-md-11 textarea{width:70%; display: inline-block;}
 .editPage .addImgBtn{display: inline-block; border:3px solid #f60; border-radius: 8px; height: 50px; width:50px; font-size: 40px; color:#f60; line-height: 43px; text-align: center; text-indent: 4px; position: relative; top: 12px;}
 .editPage .uploadImg .uploadPic img{width:140px; height: 100px; margin-right: 10px;}
@@ -328,8 +330,7 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 .editPage .labels li span{float: right; cursor: pointer;}
 .editPage .labels li.addCityBtn{width: 28px; border:2px solid #f60; background-color: #FFF; color:#F60; border-radius: 5px; line-height: 24px }
 
-
-.editPage .schedule .OrangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 16px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
+.editPage .schedule .orangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 20px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
 .editPage .schedule .addDetails li .blueBtn{float: right; width:20px; height: 20px; background-color: #00b8ee; color: #FFF; text-align: center; border-radius: 10px; line-height: 20px; cursor: pointer;}
 .editPage .schedule .addDetails li .glyphicon{color: #00b8ee; float: right; margin-right: 10px; height: 20px; width: 20px; line-height: 20px; font-size: 14px; cursor: pointer;}
 
@@ -357,6 +358,7 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 .editPage .schedule .introduction{padding:0 20px 20px;}
 .editPage .schedule .introduction>h4{height: 50px; line-height: 50px;}
 .editPage .schedule .introduction textarea{border:1px solid #CCC; width:100%;}
+
 .editPage .notice textarea{width:100%; height: 100px;}
 .editPage .optionBtn {text-align: right;}
 .editPage .optionBtn button{width:110px; height: 38px; margin-left: 20px;}
@@ -370,6 +372,7 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 .editPage .scheduleShort .decritionImg textarea{height: 80px; }
 .editPage .scheduleShort form input{width:70%; display: inline-block;}
 .editPage .scheduleShort form label{text-align: left;}
+/*导游端编辑类页面结束*/
 
 
 /*base controller*/

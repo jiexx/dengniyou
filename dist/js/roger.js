@@ -109,7 +109,7 @@ $(function () {
 		rogerGetRouter: function(path) {
 			return window._rogerRouter[path];
 		},
-		rogerLocation: function(url, reqJSON) {
+		rogerLocation: function(url, reqJSON, onFinsh) {
 			if(url.substring(0,2)=='#/'){
 				var path = url.indexOf("?") > 0 ? url.substring(0, url.indexOf("?")): url;
 				var router = $.rogerGetRouter(path);
@@ -124,9 +124,13 @@ $(function () {
 							function(respJSON, realView) {
 								realView._RogerReloadRouters();
 								router.ctrl(respJSON, realView);
+								if(onFinsh){
+									onFinsh();
+								}
 							}
 						);
 					}else if(router.fragment) {
+                        $._rogerSetLocation(url);
 						var req = reqJSON ? reqJSON : router.init();
 						$._RogerLoadViewByJSON(
 							router.fragment,
@@ -134,7 +138,11 @@ $(function () {
 							req,
 							function(respJSON, realView) {
 								realView._RogerReloadRouters();
+                                realView.rogerBindPointer(respJSON);
 								router.ctrl(respJSON, realView);
+                                if(onFinsh){
+                                    onFinsh();
+                                }
 							}
 						)
 					}
@@ -158,12 +166,14 @@ $(function () {
 							}
 						);
 					}else if(router.fragment){
+                        $._rogerSetLocation(url);
 						$._RogerLoadViewByJSON(
 							router.fragment,
 							$(container),
 							router.init(),
 							function(respJSON, realView) {
 								realView._RogerReloadRouters();
+								realView.rogerBindPointer(respJSON);
 								router.ctrl(respJSON, realView);
 							}
 						)
@@ -213,8 +223,8 @@ $(function () {
             }
 			window._rogerLoginForm = loginFormID;
 		},
-		rogerRefresh: function(reqJSON) {
-			$.rogerLocation($._rogerGetLocation(),reqJSON);
+		rogerRefresh: function(reqJSON, onFinish) {
+			$.rogerLocation($._rogerGetLocation(),reqJSON, onFinish);
 		},
 		_rogerGetTarget: function(data, str){
 			var a = str.split(',');
@@ -228,37 +238,76 @@ $(function () {
 			}
 			return null;
 		},
-		rogerCollect: function(data, callback){
-			var app = $.rogerGetURLJsonParams();
-			var elems = app.find('[data-value]'), count = elems.length;
-			elems.each(function(){
-				var str = $(this).data('value');
-				var obj = $._rogerGetTarget(data, str);
-				obj = $(this).attr('value');
-				if(!obj) {
-					callback(true, data);
-					return false;
+        roger_pointer_unescape : function  (str) {
+            return str.replace(/~1/g, '/').replace(/~0/g, '~');
+        },
+        roger_pointer_parse: function(pointer) {
+            if (pointer === '') { return []; }
+            if (pointer.charAt(0) !== '/') { throw new Error('Invalid JSON pointer: ' + pointer); }
+            return pointer.substring(1).split(/\//).map($.roger_pointer_unescape);
+        },
+        roger_pointer_get: function(obj, pointer) {
+			var refTokens = Array.isArray(pointer) ? pointer : $.roger_pointer_parse(pointer);
+
+			for (var i = 0; i < refTokens.length; ++i) {
+				var tok = refTokens[i];
+				if (!(typeof obj == 'object' && tok in obj)) {
+					throw new Error('Invalid reference token: ' + tok);
 				}
-				if (!--count) {
-					var elems1 = app.find('[data-src]'), count1 = elems1.length;
-					elems1.each(function(){
-						var str1 = $(this).data('src');
-						var obj1 =$._rogerGetTarget(data, str1);
-						if(!obj1) {
-							callback(true, data);
-							return false;
-						}
-						obj1 = $(this).attr('src');
-						if (!--count1) {
-							if(callback) {
-								callback(false, data);
-								return false;
-							}
-						};
-					})
-				};
-			})
-		}
+				obj = obj[tok];
+			}
+			return obj;
+		},
+        roger_pointer_set: function (obj, pointer, value) {
+			var refTokens = Array.isArray(pointer) ? pointer : $.roger_pointer_parse(pointer),
+				nextTok = refTokens[0];
+
+			if (refTokens.length === 0) {
+				throw Error('Can not set the root object');
+			}
+
+			for (var i = 0; i < refTokens.length - 1; ++i) {
+				var tok = refTokens[i];
+				if (tok === '-' && Array.isArray(obj)) {
+					tok = obj.length;
+				}
+				nextTok = refTokens[i + 1];
+
+				if (!(tok in obj)) {
+					if (nextTok.match(/^(\d+|-)$/)) {
+						obj[tok] = [];
+					} else {
+						obj[tok] = {};
+					}
+				}
+				obj = obj[tok];
+			}
+			if (nextTok === '-' && Array.isArray(obj)) {
+				nextTok = obj.length;
+			}
+			obj[nextTok] = value;
+			return this;
+		},
+        roger_pointer_remove: function (obj, pointer) {
+            var refTokens = Array.isArray(pointer) ? pointer : $.roger_pointer_parse(pointer);
+            var finalToken = refTokens[refTokens.length -1];
+            if (finalToken === undefined) {
+                throw new Error('Invalid JSON pointer for remove: "' + pointer + '"');
+            }
+
+            var parent = $.roger_pointer_get(obj, refTokens.slice(0, -1));
+            if (Array.isArray(parent)) {
+                var index = +finalToken;
+                if (finalToken === '' && isNaN(index)) {
+                    throw new Error('Invalid array index: "' + finalToken + '"');
+                }
+
+                Array.prototype.splice.call(parent, index, 1);
+            } else {
+                delete parent[finalToken];
+            }
+        },
+
 	});
 	$.fn.extend({
 		_RogerReloadRouters: function () {
@@ -345,6 +394,51 @@ $(function () {
 				});
 			}
 		},
+        rogerBindPointer: function(data){
+			var fragment = $(this);
+            var elems = fragment.find('[data-value]');
+            elems.each(function(){
+                var ev = $._data($(this), 'events');
+                if(!ev || !ev.change) {
+                    $(this).on("change paste keyup", function () {
+                        var _this = $(this);
+                        var ptr = _this.data('value');
+                        var val = _this.val();
+                        $.roger_pointer_set(data, ptr, val);
+                        $.rogerRefresh(data, function () {
+                            _this.focus();
+                        });
+                    });
+                }
+            });
+            var op2 = fragment.find('[data-op="remove"]');
+            op2.each(function(){
+                var ev = $._data($(this), 'events');
+                if(!ev || !ev.click) {
+                    $(this).on("click", function () {
+                        var pointer = $(this).data('pointer');
+                        $.roger_pointer_remove(data, pointer);
+                        $.rogerRefresh(data);
+                    });
+                }
+            });
+            var op2 = fragment.find('[data-op="change"]');
+            op2.each(function(){
+                var ev = $._data($(this), 'events');
+                if(!ev || !ev.click) {
+                    $(this).on("click", function () {
+                        var pointer = $(this).data('pointer');
+                        var action = $(this).data('action');
+                        var func = data[action];
+                        if(func && typeof func === "function") {
+                            func(data, pointer, function (d) {
+								$.rogerRefresh(d);
+                            });
+                        }
+                    });
+                }
+            });
+        },
 		rogerUploadImage: function ( width, height, callback) {
 			if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
 			  return;
@@ -381,6 +475,6 @@ $(function () {
 			});
 			$(this).show();
 			
-		},
+		}
 	});
 })( jQuery );

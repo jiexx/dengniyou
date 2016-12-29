@@ -94,7 +94,7 @@ $(function () {
                 PlanName:'',
                 AdultPrice:'',
                 KidPrice:'',
-                PlanLabels:[],
+                PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
                 PlanFeature:'',
                 CoverPicURL:'',
                 CarPicURL:'',
@@ -108,12 +108,14 @@ $(function () {
             PlanSchedule:{
                 __countScheduleID:1,
                 Day:[{
-                    City:[{Name:''}],
-                    Airport:[{AirportCode:'',AirportNameCn:'',AirportNameEn:''}],
-                    Attraction:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}],
-                    Delicacy:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}],
-                    Accommodation:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}]
-                }]
+                    Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''},
+                          {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                          {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
+                          {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
+                          {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
+                    ],
+                    TravelInstruction:''
+                }]  //0 city, 1 airport, 2 attraction, 3 delicacy, 4 accommodation
             }
         };
     }
@@ -222,7 +224,7 @@ $(function () {
 
         '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',               init: initTemplateplanNew,                                      ctrl: ctrlTemplateplanNew},
         '#/servicecardetail':           {view:'product-service-car-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
-        '#/cardetail':           {view:'product-car-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
+        '#/cardetail':                   {view:'product-car-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
         '#/serviceactivitydetail':      {view:'product-activity-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
         '#/servicepickupdetail':      {view:'product-service-pickup-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
         '#/facilitydetail':      {view:'facilitydetail.html',	  rootrest:'/facility/detail',ctrl: ctrlFacilityDetail},
