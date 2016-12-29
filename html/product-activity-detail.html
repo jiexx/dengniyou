@@ -117,32 +117,33 @@
         </div><!-- end 服务描述service-description -->
 
         <div class="policy">
-        {{each(i,p) Policy}}
-            {{if p.PolicyType==1}}
-            <h2>退订政策</h2>
-            <div class="des">
-              <p>${p.Description}</p>
-            </div>
-            {{/if}}
-            {{if p.PolicyType==2}}
-            <h2>费用包含</h2>
-            <div class="des">
-              <p>${p.CustomRatio}</p>
-            </div>
-            {{/if}}
-            {{if p.PolicyType==3}}
-            <h2>费用不包含</h2>
-            <div class="des">
-              <p>${p.CustomRatio}</p>
-            </div>
-            {{/if}}
-            {{if p.PolicyType==4}}
-            <h2>预定须知</h2>
-            <div class="des">
-              <p>${p.Caution}</p>
-            </div>
-            {{/if}}
-        {{/each}}
+          {{each(i,p) Policy}}
+              {{if p.PolicyType==1}}
+              <h2>退订政策</h2>
+              <div class="des">
+                <p>${p.Description}</p>
+              </div>
+              {{/if}}
+              {{if p.PolicyType==2}}
+              <h2>费用包含</h2>
+              <div class="des">
+                <p>${p.CustomRatio}</p>
+              </div>
+              {{/if}}
+              {{if p.PolicyType==3}}
+              <h2>费用不包含</h2>
+              <div class="des">
+                <p>${p.CustomRatio}</p>
+              </div>
+              {{/if}}
+              {{if p.PolicyType==4}}
+              <h2>预定须知</h2>
+              <div class="des">
+                <p>${p.Caution}</p>
+              </div>
+              {{/if}}
+          {{/each}}
+        </div>
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
       <div class="buttons">

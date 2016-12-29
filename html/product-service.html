@@ -17,13 +17,14 @@
 					{{if ServiceTypeID==1}}
 					<a href="#/servicecardetail?ServiceID=${ServiceID}">
 					{{else ServiceTypeID==3}}
-					<a href="#">
+					<a href="#/servicepickupdetail?ServiceID=${ServiceID}">
 					{{else ServiceTypeID==4}}
-					<a href="#">
+					<a href="#/servicepickupdetail?ServiceID=${ServiceID}">
 					{{else}}
 					<a href="#/serviceotherdetail?ServiceID=${ServiceID}">
 					{{/if}}
 					<img src="${ $data.IMGHOST }${PicURL}" class="media-object" style="width:160px;height:160px">
+
 					</a>
 				</div>
 			   	<div class="media-body">

@@ -16,7 +16,7 @@
     <![endif]-->
 
   <!-- 车辆与装备轮播图css --> 
-  <link rel="stylesheet" href="js/detail/jquery.vm-carousel.css">
+  <link rel="stylesheet" href="dist/js/detail/jquery.vm-carousel.css">
 
   </head>
 <body>
@@ -169,10 +169,10 @@
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
       <div class="buttons">
-        <button id="delete" type="button" class="btn btn-default btn-lg">删除</button>
-        <button id="copy" type="button" class="btn btn-lg">复制</button>
-        <button id="edit" type="button" class="btn btn-lg">编辑</button>
-        <button id="release" type="button" class="btn btn-lg">发布</button>
+        <button id="delete" type="button" class="btn btn-default">删除</button>
+        <button id="copy" type="button" class="btn">复制</button>
+        <button id="edit" type="button" class="btn">编辑</button>
+        <button id="release" type="button" class="btn">发布</button>
       </div>
     </div><!-- end container-box -->
   </div> <!-- end container -->
@@ -181,17 +181,14 @@
     <script src="js/bootstrap.min.js"></script>
 
   <!-- 车辆轮播图JS --> 
-    <script type="text/javascript" src="js/detail/jquery.vm-carousel.js"></script> 
+    <script type="text/javascript" src="dist/js/detail/jquery.vm-carousel.js"></script> 
     <script type="text/javascript">
-      $(document).ready(function(){ 
-        // 车辆与装备轮播图初始化
         $('.vmcarousel-centered-infitine').vmcarousel({
            centered: true,
            start_item: 1,
            autoplay: false,
            infinite: true
-        });   
-    })
+        });
     </script>
   </body>
  

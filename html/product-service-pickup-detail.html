@@ -26,7 +26,7 @@
         <li><a href="">产品管理</a></li>
         <li><a href="">服务</a></li>
         <li class="active"><a href="">接机预览</a></li>
-        <li class="active"><a href="">返回</a></li>
+        <li><a href="">返回</a></li>
       </ol> <!-- end 面包屑导航breadcrumb -->
 
       <!--   banner -->
@@ -93,12 +93,9 @@
           <p>PVG <span>上海浦东国际机场</span> <br> <span>Shanghai Pudong International Airport</span></p>
           <div class="vihicle-listbody">
             <ul class="vmcarousel-centered-infitine vmc-centered">
-              <li style="width:250px"><img src="img/Guide/1.jpg" alt=""></li>
-              <li style="width:250px"><img src="img/Guide/2.jpg" alt=""></li>
-              <li style="width:250px"><img src="img/Guide/3.jpg" alt=""></li>
-              <li style="width:250px"><img src="img/Guide/4.jpg" alt=""></li>
-              <li style="width:250px"><img src="img/Guide/5.jpg" alt=""></li>
-              <li style="width:250px"><img src="img/Guide/6.jpg" alt=""></li>
+              {{each(i,p) Facility[0].facilityPics}}
+              <li style="width:250px"><img src="${$data.IMGHOST}${p}" alt=""></li>
+              {{/each}}
             </ul> 
           </div>
         </div><!-- end 车辆轮播图vihicle-list -->
@@ -107,64 +104,38 @@
           <h2>服务说明</h2>
           <div class="des">
             <p>
-              神州专车是为高端商务出行人群提供优质服务的产品，目前已经在北上广深等60个城市推出，神州专车随叫随到，可提前预约，飞机与地面无缝对接让用户直通家门。神州专车的接送机服务很好地解决了夜间机场往返运力不足的情况。只要有司机接单，即使是凌晨师傅也会按时出现，如果是送机还可以打电话叫你起床。
+              ${DetailMain[0].description}
             </p>
           </div>
         </div><!-- end 服务描述service-description -->
 
         <div class="policy">
-          <h2>退订政策</h2>
-          <div class="des">
-            <p>
-              1. {退订政策} <br>
-              2. {退订政策} <br>
-              3. {退订政策} <br>
-              4. {退订政策} <br>
-              5. {退订政策} <br>
-              6. {退订政策} <br>
-            </p>
-          </div>
-        </div>
-        <div class="cost-include">
-          <h2>费用包含</h2>
-          <div class="des">
-            <p>
-              1. 一个中文导游兼司机 <br>
-              2. 行程所列酒店住宿费用（或同级别酒店） <br>
-              3. 酒店标准2人间（或大床间） <br>
-              4. 商务旅行车（参考选择的包车服务），含停车费，高速费，燃油费，过路费 <br>
-              5. 部分景点门票，参看景点列表  <br>
-              6. ...... <br>
-            </p>
-          </div>
-        </div>
-        <div class="cost-oneself">
-          <h2>费用自理</h2>
-          <div class="des">
-            <p>
-              1. 个人物品海关征税，超重行李的托运费、保管费。<br>
-              2. 因交通延阻、罢工、天气、飞机、机器故障、航班取消或更改时间等不可抗力原因导致的额外费用。<br>
-              3. 酒店内洗衣、理发、电话、传真、收费电视、饮品、烟酒等个人消费。<br>
-              4. 正餐费用，原则上导游与客人一同用餐，餐费由客人支付。<br>
-            </p>
-          </div>
-        </div>
-        <div class="sign-notes">
-          <h2>签证须知</h2>
-          <div class="des">
-            <p>
-              1. 一经预定，不得退改。 <br>
-              2. 客人享受提前62天报名的特惠价格须满足：距出发62天前与我司签订合同并且开出机票。<br>
-            </p>
-          </div>
-        </div>
-        <div class="attention">
-          <h2>注意事项</h2>
-          <div class="des">
-            <p>
-              本商品为特价商品，在订单确认后，不得做任何更改，也不予退款，请您认真阅读商品详情后下单。<br>
-            </p>
-          </div>
+          {{each(i,p) Policy}}
+            {{if p.PolicyType==1}}
+	            <h2>退订政策</h2>
+	            <div class="des">
+	              <p>${p.Description}</p>
+	            </div>
+	            {{/if}}
+	            {{if p.PolicyType==2}}
+	            <h2>费用包含</h2>
+	            <div class="des">
+	              <p>${p.CustomRatio}</p>
+	            </div>
+	            {{/if}}
+	            {{if p.PolicyType==3}}
+	            <h2>费用不包含</h2>
+	            <div class="des">
+	              <p>${p.CustomRatio}</p>
+	            </div>
+	            {{/if}}
+	            {{if p.PolicyType==4}}
+	            <h2>预定须知</h2>
+	            <div class="des">
+	              <p>${p.Caution}</p>
+	            </div>
+	            {{/if}}
+	        {{/each}}
         </div>
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
