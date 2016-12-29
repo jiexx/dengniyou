@@ -97,7 +97,7 @@ $(function () {
                 PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
                 PlanFeature:'',
                 CoverPicURL:'',
-                CarPicURL:'',
+                CarPicURL:[],
                 PicURL:[],
                 Policy:'',
                 CostInclude:'',
