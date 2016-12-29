@@ -5,7 +5,7 @@
       "ServiceID"
     ],
     "DetailServiceMethod": {
-      "sql": "SELECT method.serviceMethodID, method.serviceTypeID, method.methodName, method.description, IF ( services.serviceMethod = method.serviceMethodID, '1', '0' ) FROM traveluserdb.tab_servicemethod method LEFT JOIN traveluserdb.tab_services services ON (services.ServiceID = ?) WHERE method.ServiceTypeID = ?",
+      "sql": "SELECT method.serviceMethodID, method.serviceTypeID, method.methodName, method.description, IF ( services.serviceMethod = method.serviceMethodID, '1', '0' ) as checked FROM traveluserdb.tab_servicemethod method LEFT JOIN traveluserdb.tab_services services ON (services.ServiceID = ?) WHERE method.ServiceTypeID = ?",
       "params": [
         "ServiceID",
         "serviceTypeID"

@@ -19,7 +19,7 @@
 <body>
   <div class="container">
     <div class="detailpage">
-      <ol class="col-md-4 breadcrumb">
+      <ol class="col-md-4 pull-right breadcrumb">
         <li><a href="">产品管理</a></li>
         <li><a href="">攻略</a></li>
         <li class="active"><a href="">攻略预览</a></li>
@@ -28,10 +28,24 @@
 
       <div class="tips-mainbody">
         <div class="tips-title">
-          <h1>法国巴黎攻略</h1>
+          <h1>${Travelogue[0].title}</h1>
         </div> 
         <ul class="tips-description">
+          {{each(i,p) TravelogueDetail}}
           <li>
+            {{if label!=null}}<h2>${label}<br><span></span></h2>{{/if}}
+            {{if picURL!=null}}<img src="${$data.IMGHOST}${picURL}" alt="">{{/if}}
+            {{if content!=null}}
+            <div class="tipsdes">
+              <p>
+                ${content}
+              </p>
+            </div>
+            {{/if}}
+          </li>
+          {{/each}}
+
+          <!-- <li>
             <h2>巴黎概况<br><span></span></h2>
             <img src="img/Guide/ClassicSchemePre1.png" alt="">
             <div class="tipsdes">
@@ -138,7 +152,7 @@
                 巴黎（英语：Paris） ，是法兰西共和国的首都，法国最大城市，欧洲第二大城市，法国的政治、经济、文化、商业中心。巴黎是世界四大国际化都市之一，其余分别为纽约，伦敦，东京。
                 巴黎位于法国北部巴黎盆地的中央，横跨塞纳河两岸。巴黎有小巴黎、大巴黎之分。小巴黎指大环城公路以内的巴黎城市内，面积105.4平方公里，人口200多万；大巴黎包括城区周围的上塞纳省、瓦勒德马恩省、塞纳-圣但尼省、伊夫林省、瓦勒德瓦兹省、塞纳-马恩省和埃松省七个省，共同组成巴黎大区，这片地区在古代就已经被称作“法兰西岛”（ile-de-france），面积达12000平方公里，人口约1000万，几乎占全国人口的五分之一。
               </p>
-          </li>
+          </li> -->
         </ul><!--  end tips-description -->
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 

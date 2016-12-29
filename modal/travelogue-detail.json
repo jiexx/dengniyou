@@ -1,6 +1,6 @@
 {
 	"Travelogue": {
-		"sql": "SELECT * FROM traveluserdb.`vw_/travelogue/detail`where articleID= ?  LIMIT 1",
+		"sql": "SELECT * FROM traveluserdb.`vw_/travelogue/detail` where articleID= ?  LIMIT 1",
 		"params": [
 			"articleID"
 		]
