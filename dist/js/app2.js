@@ -174,17 +174,25 @@ $(function () {
     var ctrlOrderlist = function(response, realView) {
 
         realView.rogerCropImages();
-        if (5 == response.datas[0].status){
-            // $('#payBtn').hide()
-        }
+
     };
 
     var ctrlServicedetail = function(response, realView) {
 
         realView.rogerCropImages();
-        if (5 == response.datas[0].status){
-            // $('#payBtn').hide()
-        }
+
+    };
+
+    var ctrlFacilityDetail = function(response, realView) {
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+
+    var ctrlTravelogueDetail = function(response, realView) {
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
     };
 
 
@@ -216,6 +224,9 @@ $(function () {
         '#/servicecardetail':           {view:'product-service-car-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
         '#/cardetail':           {view:'product-car-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
         '#/serviceactivitydetail':      {view:'product-activity-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
+        '#/servicepickupdetail':      {view:'product-service-pickup-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
+        '#/facilitydetail':      {view:'facilitydetail.html',	  rootrest:'/facility/detail',ctrl: ctrlFacilityDetail},
+        '#/traveloguedetail':      {view:'travelogue-detail.html',	  rootrest:'/travelogue/detail',ctrl: ctrlTravelogueDetail},
 
 	});
 
