@@ -123,6 +123,7 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 
 	/*end 首页*/
 	/*方案详情页plandetail*/
+.plandetail-page .h1, .plandetail-page .h2, .plandetail-page .h3, .plandetail-page h1, .plandetail-page h2, .plandetail-page h3{margin-top: 0;}
 .plandetail-page .widget { height: 370px; margin-top: 30px; }
 .plandetail-page .calender { height: 370px; }
 .plandetail-page #calendar{width: 100%;}
@@ -227,8 +228,9 @@ footer .copyright{height: 20px; line-height: 20px; font-size: 14px; text-align: 
 
 
 /*导游端预览类页面*/
-	/*经典方案预览*/
 .container{margin-bottom: 20px;}
+.detailpage .h1, .detailpage .h2, .detailpage .h3, .detailpage h1, .detailpage h2, .detailpage h3{margin-top: 0;}
+	/*经典方案预览*/
 /*.detailpage{position: relative;max-width: 1200px;border: 1px solid #E0E0E0;margin-top: 46px;margin-bottom: 46px;padding: 20px 0;}*/
 .detailpage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
 .detailpage .breadcrumb li a{font-size: 14px;color: #666;}
