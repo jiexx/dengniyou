@@ -449,7 +449,7 @@ var roger = {
                 copy.doing = function(funcArgu){ //funcArgus.push({data:data, copy:copy}); //funcArgu -- rows  onFinish == self func finish
                     var superior = funcArgu.copy.superior;
                     var copy = funcArgu.copy;
-                    if('object' == typeof superior.output && copy.input) {  //superior output is object
+                    if('object' == typeof superior.output && Array != superior.output.constructor && copy.input) {  //superior output is object
                         var replacement = superior.output[copy.findkey];
                         var pos = copy.params.indexOf(copy.findkey);//roger.findParamsPos(copy.findkey, copy.params);
                         if(Array ==  copy.input[0].constructor) {  //current input is 2d array
@@ -469,11 +469,12 @@ var roger = {
 					}// superior output is 2d array. current input is 1d array
 					else if(Array == superior.output.constructor && Array == copy.input.constructor && copy.input[0] && Array != copy.input[0].constructor){
                         var replacement;
-                        var pos = copy.params.indexOf(copy.findkey);//roger.findParamsPos(copy.findkey, copy.params);
-                        funcArgu.params = roger.replace1DInputParams(copy.input, replacement, pos);
+                        var pos;
                         var shallows = [];
-						for (var i = 1; i < superior.output.length; i++) {
-                            replacement = superior.output[copy.findkey];
+						for (var i = 0; i < superior.output.length; i++) {
+                            replacement = superior.output[i][copy.findkey];
+							pos = copy.params.indexOf(copy.findkey);//roger.findParamsPos(copy.findkey, copy.params);
+							funcArgu.params = roger.replace1DInputParams(copy.input, replacement, pos);
                             var fa = roger.shallow(funcArgu);
                             fa.params = roger.replace1DInputParams(copy.input, replacement, pos);
                             fa.copy = copy;
