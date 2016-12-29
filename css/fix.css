@@ -19,6 +19,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .banner{width:95%; max-width: 1440px; margin:0 auto;}
 .owl-theme .owl-controls {text-align: center;position: relative; top: -60px; margin-top:0;}
 .owl-theme .owl-controls .owl-page span {width:140px; height: 40px; background-color: #FFF; border-radius: 0; background: url(../img/banner/banner1.jpg); background-size: cover;}
+.carousel-inner > .item { height: 500px; }
+.carousel-inner > .item > img { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); max-height: 800px;  width: 100%; }
 
 /*游客端页面*/
 /*网站首页*/
@@ -66,8 +68,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .text-warning { color: #eea236; }
 .indexpage .hovereffect .overlay{width:100%; height:100%; position:absolute; overflow:hidden; bottom:0; left:0; opacity:0;background-color:rgba(0,0,0,0.5);-webkit-transition:all .4s ease-in-out;transition:all .4s ease-in-out}
 .indexpage .hovereffect img{display:block; -webkit-transition:all .4s linear; transition:all .4s linear; position: absolute; }
-.indexpage .hovereffect .head{text-transform:uppercase; color:#fff; text-align:center;position:absolute;bottom:0;left:0;width: 100%;opacity:0;font-size:17px;background:rgba(0,0,0,0.6);
- 		-webkit-transform:translatey(-100px); -ms-transform:translatey(-100px); transform:translatey(-100px); -webkit-transition:all .2s ease-in-out; transition:all .2s ease-in-out; padding:10px;}
+.indexpage .hovereffect .head{text-transform:uppercase; color:#fff; text-align:center;position:absolute; bottom:0; left:0; width: 100%; opacity:0; font-size:17px; background:rgba(0,0,0,0.5);
+ 		-webkit-transform:translatey(-100px); -ms-transform:translatey(-100px); transform:translatey(-100px); -webkit-transition:all .2s ease-in-out; transition:all .2s ease-in-out; padding:10px; margin-bottom: 0;}
 .indexpage .hovereffect .info{text-decoration:none;display:inline-block; text-transform:uppercase; color:#fff; border:1px solid #fff; background-color:transparent; opacity:0; filter:alpha(opacity=0); -webkit-transition:all .2s ease-in-out;
  		transition:all .2s ease-in-out; margin:50px 0 0; padding:7px 14px;}
 .indexpage .hovereffect .info:hover{box-shadow:0 0 5px #fff;}
@@ -79,15 +81,20 @@ div.c-wrapper{ width: 100%; margin: auto;}
 	/*首页主要内容homepage*/
 .homepage{background-color: #eaeaea;}
 .homepage .carousel-container { background-color: #fff; padding-left: 10%; padding-right: 10%;}
-.homepage .carousel-inner > .item { height: 500px; }
-.homepage .carousel-inner > .item > img { position: absolute; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); -ms-transform: translate(-50%, -50%); transform: translate(-50%, -50%); max-height: 800px;  width: 100%; }
 .homepage .well { height:200px; padding: 2px !important; }
 .homepage .mid { height:400px; padding: 2px !important;}
 .homepage .continent-tit{padding-bottom: 10px; border-bottom: 2px solid #fff;}
 .homepage .continent-tit img { width:100%; }
+.homepage .nav-buttons button{font-size: 16px; color: #fff; padding: 2px 15px;}
+.homepage .nav-buttons .btn-default{background-color: #ccc; }
+.homepage .nav-buttons .btn-warning{background-color: #FA713D;}
 .homepage .regular-grid  div{ padding: 0; margin: 0; }
-.hovereffect { width:100%; height:100%; float:left; overflow:hidden; position:relative; text-align:center; cursor:default;}
-.hovereffect a { font-size: 14px; color: #fff; text-decoration: none;}
+.homepage .hovereffect { width:100%; height:100%; float:left; overflow:hidden; position:relative; text-align:center; cursor:default;}
+.homepage .hovereffect ul li:first-child{margin-bottom: 10px;}
+.homepage .hovereffect li a { font-size: 14px; color: #fff; text-decoration: none; text-align: left;}
+.homepage .hovereffect li p{text-align: left; font-size: 14px; color: #fff;}
+.homepage .hovereffect li p span{font-size: 16px; color: #e54a1b;}
+
 	/*首页主要内容homepage*/
 /*end 网站首页*/
 
@@ -224,7 +231,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .detailpage-mainbody .trip h2, .detailpage .detailpage-mainbody .policy h2,.detailpage .detailpage-mainbody .service-description h2, 
 .detailpage .detailpage-mainbody .product-detail h2{font-size: 16px;color: #333;border-bottom: 1px solid #ccc;padding: 10px 0; margin-bottom: 10px;}
 .detailpage .detailpage-mainbody .trip p{font-size: 14px;color: #666;}
-.detailpage .detailpage-mainbody .policy .des,.detailpage .detailpage-mainbody .service-description .des{padding: 15px 0 30px 80px;}
+.detailpage .detailpage-mainbody .policy .des,.detailpage .detailpage-mainbody .service-description .des{padding: 15px 0 30px 80px; white-space: pre;}
 .detailpage .detailpage-mainbody .policy .des p{font-size: 14px;color: #666;}
 .detailpage .buttons {text-align: center;}
 .detailpage .buttons button{margin-left: 20px; background-color: #F1741F;color: #fff;}
@@ -263,7 +270,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .tips-mainbody{padding: 25px 10px;}
 .detailpage .tips-mainbody .tips-title h1{font-size: 20px;font-weight: bold; color: #000; text-align: center; padding-top: 20px;}
 .detailpage .tips-mainbody .tips-description li{list-style: none;}
-.detailpage .tips-mainbody .tips-description li h2{position: relative; font-size: 16px; color: #000; border-bottom: 1px solid #FF6700;padding: 10px 0 15px;}
+.detailpage .tips-mainbody .tips-description li h2{position: relative; font-size: 16px; color: #000; border-bottom: 1px solid #FF6700;padding: 10px 0 15px; white-space: pre;}
 .detailpage .tips-mainbody .tips-description li span{position: absolute; bottom: 0; left: 0; width: 94px; height: 4px; background-color: #FF6700;}
 .detailpage .tips-mainbody .tips-description li img{width: 1120px; height: auto;}
 .detailpage .tips-mainbody .tips-description li .tipsdes p{padding: 20px 50px; text-indent: 2em; line-height: 24px; font-size: 14px; color: #666;}
