@@ -109,7 +109,7 @@ $(function () {
 		rogerGetRouter: function(path) {
 			return window._rogerRouter[path];
 		},
-		rogerLocation: function(url, reqJSON, onFinsh) {
+		rogerLocation: function(url, reqJSON) {
 			if(url.substring(0,2)=='#/'){
 				var path = url.indexOf("?") > 0 ? url.substring(0, url.indexOf("?")): url;
 				var router = $.rogerGetRouter(path);
@@ -124,9 +124,6 @@ $(function () {
 							function(respJSON, realView) {
 								realView._RogerReloadRouters();
 								router.ctrl(respJSON, realView);
-								if(onFinsh){
-									onFinsh();
-								}
 							}
 						);
 					}else if(router.fragment) {
@@ -140,9 +137,6 @@ $(function () {
 								realView._RogerReloadRouters();
                                 realView.rogerBindPointer(respJSON);
 								router.ctrl(respJSON, realView);
-                                if(onFinsh){
-                                    onFinsh();
-                                }
 							}
 						)
 					}
@@ -223,8 +217,8 @@ $(function () {
             }
 			window._rogerLoginForm = loginFormID;
 		},
-		rogerRefresh: function(reqJSON, onFinish) {
-			$.rogerLocation($._rogerGetLocation(),reqJSON, onFinish);
+		rogerRefresh: function(reqJSON) {
+			$.rogerLocation($._rogerGetLocation(),reqJSON);
 		},
 		_rogerGetTarget: function(data, str){
 			var a = str.split(',');
@@ -251,6 +245,9 @@ $(function () {
 
 			for (var i = 0; i < refTokens.length; ++i) {
 				var tok = refTokens[i];
+				if(tok === '-' && Array.isArray(obj)) {
+					return obj;
+				}
 				if (!(typeof obj == 'object' && tok in obj)) {
 					throw new Error('Invalid reference token: ' + tok);
 				}
@@ -306,7 +303,7 @@ $(function () {
             } else {
                 delete parent[finalToken];
             }
-        },
+        }
 
 	});
 	$.fn.extend({
@@ -394,9 +391,32 @@ $(function () {
 				});
 			}
 		},
+		rogerTimer:function(max, evaluate, callback){
+			var timer = {
+				max: max,
+				inter: 10,
+				go : function(){
+					if(evaluate()) {
+						callback();
+					}else {
+						this.max --;
+						if(this.max > 0) {
+							setTimeout(function(){this.go()},this.inter);
+							this.inter = this.inter * 2;
+						}
+					}
+				}
+			}
+			return timer;
+		},
         rogerBindPointer: function(data){
 			var fragment = $(this);
             var elems = fragment.find('[data-value]');
+			if(data.__focus && 'string' == typeof data.__focus) {
+				fragment.find('[data-value="'+data.__focus+'"]').each(function(){
+					$(this).focus();
+				})
+			}
             elems.each(function(){
                 var ev = $._data($(this), 'events');
                 if(!ev || !ev.change) {
@@ -404,31 +424,58 @@ $(function () {
                         var _this = $(this);
                         var ptr = _this.data('value');
                         var val = _this.val();
+						data.__focus = ptr;
                         $.roger_pointer_set(data, ptr, val);
-                        $.rogerRefresh(data, function () {
-                            _this.focus();
-                        });
-                    });
-                }
-            });
-            var op2 = fragment.find('[data-op="remove"]');
-            op2.each(function(){
-                var ev = $._data($(this), 'events');
-                if(!ev || !ev.click) {
-                    $(this).on("click", function () {
-                        var pointer = $(this).data('pointer');
-                        $.roger_pointer_remove(data, pointer);
                         $.rogerRefresh(data);
                     });
                 }
             });
-            var op2 = fragment.find('[data-op="change"]');
+			var op1 = fragment.find('[data-op="toggle"]');
+			op1.each(function(){
+				var ptr = $(this).data('pointer');
+				var limit = $(this).data('limit');
+				if(limit) {
+					limit = parseInt(limit);
+					var o = $.roger_pointer_get(data, ptr);
+					if( Array.isArray(o) ) {
+						if(o.length < limit) {
+							$(this).show();
+						}else{
+							$(this).hide();
+						}
+					}else {
+						if(o) {
+							$(this).hide();
+						}else {
+							$(this).show();
+						}
+					}
+				}
+			});
+            var op2 = fragment.find('[data-op="remove"]');
             op2.each(function(){
                 var ev = $._data($(this), 'events');
-                if(!ev || !ev.click) {
+				var ptr = $(this).data('pointer');
+				var action = $(this).data('action');
+				if(!ev || !ev.click) {
                     $(this).on("click", function () {
-                        var pointer = $(this).data('pointer');
-                        var action = $(this).data('action');
+                        $.roger_pointer_remove(data, ptr);
+                        $.rogerRefresh(data);
+                    });
+                }
+            });
+            var op3 = fragment.find('[data-op="change"]');
+            op3.each(function(){
+                var ev = $._data($(this), 'events');
+				var action = $(this).data('action');
+				var ptr = $(this).data('pointer');
+				if(action=='image'){
+					$(this).rogerUploadImage(800,600,function(img){
+						$.roger_pointer_set(data, ptr, img.raw);
+						$.rogerRefresh(data);
+					});
+				}else if(!ev || !ev.click) {
+                    $(this).on("click", function () {
                         var func = data[action];
                         if(func && typeof func === "function") {
                             func(data, pointer, function (d) {
@@ -442,10 +489,11 @@ $(function () {
 		rogerUploadImage: function ( width, height, callback) {
 			if (!window.File || !window.FileReader || !window.FileList || !window.Blob) {
 			  return;
-			}  
+			}
+			var rogerImageId = Math.ceil(Math.random()*1000000000);
 			$(this).hide();
-			$(this).append('<div><canvas id="photo" style="position:relative;width:100%;height:100%" /><input type="file" style="position:absolute;opacity:0;top:0;bottom:0;left:0;right:0;width:100%" multiple="multiple"/></div>');
-			$('input[type="file"]').change(function(e){
+			$(this).append('<div><canvas id="CS'+rogerImageId+'" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%" /><input id="IT'+rogerImageId+'"type="file" style="position:absolute;opacity:0;top:0;bottom:0;left:0;right:0;width:100%" multiple="multiple"/></div>');
+			$('#IT'+rogerImageId).change(function(e){
 				var files = this.files;
 				if (!files[0] || !files[0].type) return;
 				for(var i in files) {
@@ -454,7 +502,7 @@ $(function () {
 					reader.onloadend = function (evt) {
 						var img = new Image();
 						img.src = evt.target.result;
-						var avatar = document.getElementById("photo");
+						var avatar = document.getElementById("CS"+rogerImageId);
 						var w = width ? width : 300;
 						var h = height ? height : 150;
 						var ctx = avatar.getContext("2d");

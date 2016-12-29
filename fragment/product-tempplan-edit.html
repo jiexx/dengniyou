@@ -35,7 +35,7 @@
 				  {{each $data.PlanInfo.PlanLabels}}
 				    <li><input type="text" value="${$data.PlanInfo.PlanLabels[$index]}" data-value="/PlanInfo/PlanLabels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/PlanLabels/${$index}"></a></li>
 				  {{/each}}
-				  <li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanLabels" data-action="createLabel"> + </div></li>
+				  <li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanLabels-" data-action="createLabel"> + </div></li>
 			  </ul>
 		    </div>
 		  </div>
@@ -63,8 +63,8 @@
 					</div>
 				</div>
 				{{/each}}
-				<div class="col-md-3">
-					<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PicURL" data-action="createPicture">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/PicURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PicURL/-" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -76,13 +76,14 @@
 				<div class="col-md-3">
 					<div class="imgBox">
 						<img src="${$data.PlanInfo.CoverPicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CoverPicURL"></a>
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CoverPicURL" ></a>
 					</div>
 				</div>
-				{{/if}}
+				{{else}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/PlanInfo/CoverPicURL" data-action="createCover">+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/PlanInfo/CoverPicURL" data-action="image" >+</div>
 				</div>
+				{{/if}}
 			</div>
 		</div>
 		<br>
@@ -92,13 +93,13 @@
 				{{each $data.PlanInfo.CarPicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.PlanInfo.CarPicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CarPicURL/${$index}" ></a>
+						<img src="${$data.PlanInfo.CarPicURL[$index]}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CarPicURL/${$index}"></a>
 					</div>
 				</div>
 				{{/each}}
-				<div class="col-md-3">
-					<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/CarPicURL" data-action="createCarPic">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/CarPicURL" data-limit="3">
+					<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/CarPicURL/-" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -128,13 +129,13 @@
 						<h4>添加城市</h4>
 						<ul class="label-base">
 							<li><input type="text" value="${CountryNameCn} ${CountryNameEn}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanSchedule/Day/${k}/${n}" ></a></li>
-							<li><div class="addItemBtn" data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot" data-action="createCity"> + </div></li>
+							<li><div class="addItemBtn" data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot/-" data-action="createCity"> + </div></li>
 						</ul>
 					</div>
 					{{/if}}
 					{{if (v.ScheduleType==1) }}
 					<div class="addDetails addAirport">
-						<h4>添加机场<span class="orangeBtn" data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot" data-action="createAirport">+</span></h4>
+						<h4>添加机场<span class="orangeBtn" data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot/-" data-action="createAirport">+</span></h4>
 						<ul class="airports">
 							<li>
 								<div class="planeIcon">
@@ -153,7 +154,7 @@
 					{{if (v.ScheduleType==2||v.ScheduleType==3||v.ScheduleType==4) }}
 					<div class="addDetails">
 						<h4>{{if v.ScheduleType==2}}添加景点{{/if}}{{if v.ScheduleType==3}}添加美食{{/if}}{{if v.ScheduleType==4}}添加住宿{{/if}}
-							<span class="orangeBtn"  data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot" data-action="createAccommodation">+</span></h4>
+							<span class="orangeBtn"  data-op="change" data-pointer="/PlanSchedule/Day/${k}/Spot/-" data-action="createAccommodation">+</span></h4>
 						<ul class="details" data-i="${$index}">
 							<li>
 								<div class="detailImg">
@@ -164,7 +165,7 @@
 									<p>${CountryNameCn}：${CityNameCn}</p>
 									<p>地址：${Address}, 郵遞區號: ${ZipCode}</p>
 								</div>
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanSchedule/Day/${k}/Spot"  data-action="changeAttraction">换</span>
+								<span class="blueBtn" data-op="change"  data-pointer="/PlanSchedule/Day/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
 								<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanSchedule/Day/${k}/Spot/${n}"></span>
 							</li>
 						</ul>
