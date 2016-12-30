@@ -221,7 +221,7 @@ $(function () {
                 ZoneCode:'',
             }
         };
-    },ctrlAttractionEdit=function(){
+    },ctrlAttractionEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
 
             console.log('test');
@@ -249,10 +249,10 @@ $(function () {
                 CityName:'',
                 ZipCode:'',
                 ZoneCode:'',
-                UselesDate:'',
+                UselesDate:''
             }
         };
-    },ctrlAccommodationEdit=function(){
+    },ctrlAccommodationEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
 
             console.log('test');
@@ -280,7 +280,7 @@ $(function () {
         };
     },ctrlActivityEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
-            
+            console.log('text');
         });
 
         bindRidoesForSwitch();
@@ -307,10 +307,10 @@ $(function () {
                 CountryName:'',
                 CityName:'',
                 ZipCode:'',
-                ZoneCode:'',
+                ZoneCode:''
             }
         };
-    },ctrlDelicacyEdit=function(){
+    },ctrlDelicacyEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
             console.log('test');
         });
@@ -320,19 +320,92 @@ $(function () {
     } ;
 
      var initCarEdit=function(){
-        return {};
-    },ctrlCarEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                ServicePrice:'',
+                description:'',
+                brand:'',
+                seats:'',
+                model:'',
+                luggage:'',
+                GPSPrice:'',
+                CrashPrice:'',
+                ExcluPrice:'',
+                CoverPicURL:'',
+                CarPicURL:[],
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:'',
+            }
+        };
+    },ctrlCarEdit=function(Plan, realView){
+        $('#save').rogerOnceClick(Plan, function(e){
+            console.log('test');
+        });
 
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
     } ;
+
      var initServiceCarEdit=function(){
-        return {};
-    },ctrlServiceCarEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                ServicePrice:'',
+                description:'',
+                brand:'',
+                seats:'',
+                model:'',
+                luggage:'',
+                GPSPrice:'',
+                CrashPrice:'',
+                ExcluPrice:'',
+                CoverPicURL:'',
+                CarPicURL:[],
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:'',
+            }
+        };
+    },ctrlServiceCarEdit=function(Plan, realView){
+        $('#save').rogerOnceClick(Plan, function(e){
+            console.log('test');
+        });
 
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
     } ;
 
-     var initServicePickupEdit=function(){
-        return {};
-    },ctrlServicePickupEdit=function(){
+     var initServicePickupEdit = function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                PrimaryPrice:'',
+                IncMileage:'',
+                ExMileagePrice:'',
+                ServiceTime:'',
+                ServiceOutTimePrice:'',
+                ServiceMethod:'',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
+            },
+            Airports: {
+                AirportCode: "CNX",
+                NameEn: "CHIANG MAI(Chiang Mai Intl Airport)",
+                NameCh: "清迈",
+            }
+        };
+    },ctrlServicePickupEdit = function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
             
         });
@@ -358,7 +431,7 @@ $(function () {
                 Notice:''
             }
         };
-    },ctrlServiceOtherEdit=function(){
+    },ctrlServiceOtherEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
             
         });
@@ -368,8 +441,33 @@ $(function () {
     } ;
     
      var initTraveLogueEdit=function(){
-        return {};
-    },ctrlTraveLogueEdit=function(){
+        return {
+            Travelogue:{
+                ServiceName:'',
+                PrimaryPrice:'',
+                IncMileage:'',
+                ExMileagePrice:'',
+                ServiceTime:'',
+                ServiceOutTimePrice:'',
+                ServiceMethod:'',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
+            },
+            TravelogueDetail: [
+                {
+                    ArticleDetailID: '',
+                    Label:'',
+                    PicURL:'',
+                    Content:''
+                }
+            ]
+        };
+    },ctrlTraveLogueEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
             
         });
@@ -418,7 +516,7 @@ $(function () {
         '#/servicepickupedit':   {fragment: 'fragment/product-service-pickup-edit.html',     init: initServicePickupEdit,   ctrl: ctrlServicePickupEdit},
         '#/serviceotheredit':    {fragment: 'fragment/product-service-other-edit.html',     init: initServiceOtherEdit,   ctrl: ctrlServiceOtherEdit},
         '#/travelogueedit':      {fragment: 'fragment/travelogue-edit.html',     init: initTraveLogueEdit,   ctrl: ctrlTraveLogueEdit},
-
+        '#/equipedit':      {fragment: 'fragment/product-equip-edit.html',     init: initEquipEdit,   ctrl: ctrlEquipEdit},
 
 	});
 
