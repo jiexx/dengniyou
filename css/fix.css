@@ -24,7 +24,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 
 /*游客端页面*/
 /*网站首页*/
-	/*首页共同部分*/
+/*首页共同部分*/
 .indexpage .fixedBar{position: fixed; width:36px; top:0; bottom:0; right: 0; background-color:#00b8ee; z-index: 9999; color: #FFF; }
 .indexpage .fixedBar ul{margin-top: 280px; text-align: center; }
 .indexpage @media screen and (max-height: 800px){.fixedBar ul{margin-top: 180px;}}
@@ -42,7 +42,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .topRight button:first-child{margin-right:-4px;}
 .indexpage .topRight #version{display: inline-block; width: 40px; height: 45px; line-height: 45px; font-size: 13px; margin-left: 15px; text-align: center; position: relative; top:1px;}
 .indexpage .topRight #user{padding: 0;width: 80px;border-radius: 0;background-color: #FFF; font-size: 13px; color:#333;}
-.indexpage .sidebar{top: 96px !important;}		
+.indexpage .sidebar{top: 96px !important;}
 .indexpage nav{width:100%; height: 96px; background-color: #00b8ee;}
 .indexpage .navBar{margin-bottom: 10px; padding-top: 5px;}
 .indexpage .navBar li{list-style: none; display: inline-block; width:92px; height: 34px; line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
@@ -69,16 +69,16 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .hovereffect .overlay{width:100%; height:100%; position:absolute; overflow:hidden; bottom:0; left:0; opacity:0;background-color:rgba(0,0,0,0.5);-webkit-transition:all .4s ease-in-out;transition:all .4s ease-in-out}
 .indexpage .hovereffect img{display:block; -webkit-transition:all .4s linear; transition:all .4s linear; position: absolute; }
 .indexpage .hovereffect .head{text-transform:uppercase; color:#fff; text-align:center;position:absolute; bottom:0; left:0; width: 100%; opacity:0; font-size:17px; background:rgba(0,0,0,0.5);
- 		-webkit-transform:translatey(-100px); -ms-transform:translatey(-100px); transform:translatey(-100px); -webkit-transition:all .2s ease-in-out; transition:all .2s ease-in-out; padding:10px; margin-bottom: 0;}
+	-webkit-transform:translatey(-100px); -ms-transform:translatey(-100px); transform:translatey(-100px); -webkit-transition:all .2s ease-in-out; transition:all .2s ease-in-out; padding:10px; margin-bottom: 0;}
 .indexpage .hovereffect .info{text-decoration:none;display:inline-block; text-transform:uppercase; color:#fff; border:1px solid #fff; background-color:transparent; opacity:0; filter:alpha(opacity=0); -webkit-transition:all .2s ease-in-out;
- 		transition:all .2s ease-in-out; margin:50px 0 0; padding:7px 14px;}
+	transition:all .2s ease-in-out; margin:50px 0 0; padding:7px 14px;}
 .indexpage .hovereffect .info:hover{box-shadow:0 0 5px #fff;}
 .indexpage .hovereffect:hover img{-ms-transform:scale(1.2) ; -webkit-transform:scale(1.2); transform:scale(1.2);}
 .indexpage .hovereffect:hover .overlay{opacity:1; filter:alpha(opacity=100);}
 .indexpage .hovereffect:hover .head,.hovereffect:hover .info{opacity:1; filter:alpha(opacity=100); -ms-transform:translatey(0); -webkit-transform:translatey(0); transform:translatey(0);}
 .indexpage .hovereffect:hover .info{-webkit-transition-delay:.2s; transition-delay:.2s;}
-	/*end 首页共同部分*/
-	/*首页主要内容homepage*/
+/*end 首页共同部分*/
+/*首页主要内容homepage*/
 .homepage{background-color: #eaeaea;}
 .homepage .carousel-container { background-color: #fff; padding-left: 10%; padding-right: 10%;}
 .homepage .well { height:200px; padding: 2px !important; }
@@ -95,7 +95,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .hovereffect li p{text-align: left; font-size: 14px; color: #fff;}
 .homepage .hovereffect li p span{font-size: 16px; color: #e54a1b;}
 
-	/*首页主要内容homepage*/
+/*首页主要内容homepage*/
 /*end 网站首页*/
 
 /*方案详情页plandetail*/
@@ -117,7 +117,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .pickmeup .pmu-instance .pmu-selected { background: #b8e9fa; color: #fff; border-radius: 50%; }
 .plandetail-page .pickmeup .pmu-instance nav.pmu-day-of-week { padding: 0 20px; }
 .plandetail-page .pickmeup .pmu-instance .pmu-day-of-week *, .pickmeup .pmu-instance .pmu-days * { line-height: 40px; width: 40px; margin: 2px 10px; }
- 	/*calender样式结束*/
+/*calender样式结束*/
 .plandetail-page .carousel img { height: 385px; width: 100%;}
 .plandetail-page .owl-theme .owl-controls { position: relative; top: -40px; }
 .plandetail-page .project{ margin-top: 50px;}
@@ -144,7 +144,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .recommendBox ul li .text p { font-size: 10px; color: #fa703e; }
 .plandetail-page .recommendBox ul li .text strong { font-size: 14px; }
 .plandetail-page .recommendBox p.moreBtn { text-align: center; height: 40px; line-height: 40px; }
-	/*更多推荐结束*/
+/*更多推荐结束*/
 .plandetail-page .scheduleNav { height: 48px; color: #00b8ee; border-bottom: 2px solid #00b8ee; border-top: 1px solid #00b8ee; border-left: 1px solid #00b8ee; border-right: 1px solid #00b8ee; background-color: #fff; z-index: 10;}
 .plandetail-page .scheduleNav h2 { font-size: 18px; color: #00b8ee; font-weight: bold; line-height: 46px; text-indent: 20px; margin-top: 0;}
 .plandetail-page .scheduleNav .navList ul, .scheduleNav .navList li { display: inline-block; height: 46px; line-height: 46px; }
@@ -170,8 +170,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .scheduleDetails .content .picText { width: 150px; }
 .plandetail-page .scheduleDetails .content .nextBtn span { font-size: 60px; height: 150px; line-height: 150px; color: #00b8ee; }
 .plandetail-page .scheduleDetails .footer, .comments .footer { height: 44px; background-color: #00b8ee; color: #fff; text-align: center; font-size: 16px; line-height: 46px; }
-	/*行程概览结束*/
-	/*上传图片功能自定义样式*/
+/*行程概览结束*/
+/*上传图片功能自定义样式*/
 .plandetail-page .featureAlone { border: 1px solid #00b8ee; margin: 10px 0; height: 150px;}
 .plandetail-page #orderNotice li { line-height: 28px; height: 28px; }
 .plandetail-page .comments { border: 1px solid #00b8ee; }
@@ -211,7 +211,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 
 /*导游端预览类页面*/
 .detailpage .h1, .detailpage .h2, .detailpage .h3, .detailpage h1, .detailpage h2, .detailpage h3{margin-top: 0;}
-	/*经典方案预览*/
+/*经典方案预览*/
 /*.detailpage{position: relative;max-width: 1200px;border: 1px solid #E0E0E0;margin-top: 46px;margin-bottom: 46px;padding: 20px 0;}*/
 .detailpage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
 .detailpage .breadcrumb li a{font-size: 14px;color: #666;}
@@ -233,7 +233,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .detailpage-title .guidelist .guidehead img{width: 45px;height: 45px;border: 1px solid #ccc;-webkit-border-radius: 50%;-moz-border-radius: 50%;-ms-border-radius: 50%;-o-border-radius: 50%;border-radius: 50%;margin-right: 10px;}
 .detailpage .detailpage-mainbody .trip, .detailpage .detailpage-mainbody .policy, .detailpage .detailpage-mainbody .service-description,
 .detailpage .detailpage-mainbody .product-detail{margin-top: 25px;}
-.detailpage .detailpage-mainbody .trip h2, .detailpage .detailpage-mainbody .policy h2,.detailpage .detailpage-mainbody .service-description h2, 
+.detailpage .detailpage-mainbody .trip h2, .detailpage .detailpage-mainbody .policy h2,.detailpage .detailpage-mainbody .service-description h2,
 .detailpage .detailpage-mainbody .product-detail h2{font-size: 16px;color: #333;border-bottom: 1px solid #ccc;padding: 10px 0; margin-bottom: 10px;}
 .detailpage .detailpage-mainbody .trip p{font-size: 14px;color: #666;}
 .detailpage .detailpage-mainbody .policy .des,.detailpage .detailpage-mainbody .service-description .des{padding: 15px 0 30px 80px; white-space: pre;}
@@ -241,16 +241,16 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .buttons {text-align: center;}
 .detailpage .buttons button{margin-left: 20px; background-color: #F1741F;color: #fff;}
 .detailpage .buttons #delete{background-color: #898989;}
-	/* end 经典方案预览*/
-	/*特色方案预览*/
+/* end 经典方案预览*/
+/*特色方案预览*/
 .detailpage .detailpage-mainbody .place-description h2{font-size: 16px;color: #333;}
 .detailpage .detailpage-mainbody .place-description ul li{float: left;margin-bottom: 30px;}
 .detailpage .detailpage-mainbody .place-description li img{float: left;width: 50%;height: auto;}
 .detailpage .detailpage-mainbody .place-description li .placedes{float: left;width: 50%;padding: 10px 60px 0;}
 .detailpage .detailpage-mainbody .place-description li .placedes h3{font-size: 16px;color: #333;}
 .detailpage .detailpage-mainbody .place-description li .placedes p{font-size: 12px;color: #666;line-height: 24px; text-indent: 2em;}
-	/*end 特色方案预览*/
-	/*租车预览*/
+/*end 特色方案预览*/
+/*租车预览*/
 .detailpage .cardetail-title .guide-headimg{text-align: center;}
 .detailpage .cardetail-title .guide-headimg img{display: inline-block;width: 136px;height: 136px;border: 6px solid #fff;-webkit-border-radius: 50%;-moz-border-radius: 50%;-ms-border-radius: 50%;-o-border-radius: 50%;border-radius: 50%;margin-top: -66px;}
 .detailpage .cardetail-title .guide-headimg span{font-size: 18px;font-weight: bold;color: #333;}
@@ -258,20 +258,20 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .cardetail-title .guide-tit>span{display: inline-block;width: 68px;height: 20px;line-height: 18px;font-size: 12px;color: #666;text-align: center;border: 1px solid #9B9B9B;-webkit-border-radius: 10px;-moz-border-radius: 10px;-ms-border-radius: 10px;-o-border-radius: 10px;border-radius: 10px;}
 .detailpage .cardetail-title .guide-tit .price{font-size: 16px; color: #ff6600;}
 .detailpage .detailpage-mainbody .pickup-detail p{padding: 15px 0 0 80px;}
-	/* end 租车预览*/
-	/*景点、美食、住宿、车辆详情、装备详情预览*/
+/* end 租车预览*/
+/*景点、美食、住宿、车辆详情、装备详情预览*/
 .detailpage .detailpage-mainbody .attraction p{font-size: 16px;color: #333;}
 .detailpage .detailpage-mainbody .attraction .price{font-size: 16px;color: #ff6600;}
 .detailpage .detailpage-mainbody .service-description .des p{font-size: 14px;color: #666;text-indent: 2em;}
-	/*end 景点、美食、住宿、车辆详情、装备详情预览*/
-	/*包车、接机、活动预览*/
+/*end 景点、美食、住宿、车辆详情、装备详情预览*/
+/*包车、接机、活动预览*/
 .detailpage .vihicle-list .vihicle-listbody{ padding: 0 10px;}
 .detailpage .vihicle-list ul> li img{display: block; margin: 0 auto; max-width: 95%;}
 .detailpage .vihicle-list h2{font-size: 16px; color: #333; border-bottom: 1px solid #ccc; padding: 10px 0; }
 .detailpage .vihicle-list>p{text-align: center; font-size: 14px; color: #666; margin-top: 26px;}
 .detailpage .detailpage-mainbody .price-box p{font-size: 14px;}
-	/*end 包车、接机、活动预览*/
-	/*攻略预览*/
+/*end 包车、接机、活动预览*/
+/*攻略预览*/
 .detailpage .tips-mainbody{padding: 25px 10px;}
 .detailpage .tips-mainbody .tips-title h1{font-size: 20px;font-weight: bold; color: #000; text-align: center; padding-top: 20px;}
 .detailpage .tips-mainbody .tips-description li{list-style: none;}
@@ -279,7 +279,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .tips-mainbody .tips-description li span{position: absolute; bottom: 0; left: 0; width: 94px; height: 4px; background-color: #FF6700;}
 .detailpage .tips-mainbody .tips-description li img{width: 1120px; height: auto;}
 .detailpage .tips-mainbody .tips-description li .tipsdes p{padding: 20px 50px; text-indent: 2em; line-height: 24px; font-size: 14px; color: #666;}
-	/*end 攻略预览*/
+/*end 攻略预览*/
 /*end 导游端预览页*/
 
 
