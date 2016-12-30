@@ -330,7 +330,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .notice textarea{width:100%; height: 100px;}
 .editPage .optionBtn {text-align: right;}
 .editPage .optionBtn button{width:110px; height: 38px; margin-left: 20px;}
-/*快捷方案*/
+/*快捷方案 待删除*/
 .editPage .scheduleShort .col-md-11>div{float:left;}
 .editPage .scheduleShort ul li{margin-bottom: 12px;}
 .editPage .scheduleShort .singleImg{width:200px; height: 120px; background-color: #ebebeb; border: 1px solid #959595;}
