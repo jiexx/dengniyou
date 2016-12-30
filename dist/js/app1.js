@@ -31,8 +31,8 @@
 		return {
 			Comment:{
 				PlanID: params.PlanID,
-				Text: '',
-				Pics:[]
+				Comment: '',
+				Picture:{Pics:[]}
 			}
 		};
 	};

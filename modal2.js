@@ -7,7 +7,7 @@ var fdfs = new FdfsClient({
     trackers: [
         {
             //host: '10.101.1.165',
-			host: '172.16.36.1',//'123.59.144.47',
+			host: '10.101.1.165',//'172.16.36.1',//'123.59.144.47','10.101.1.165'
             port: 22122
         }
     ],
@@ -72,11 +72,13 @@ var uploadImage = function uploadImage(funcArgu, onFinish){
 	}
 	var pic = decodeBase64Image(funcArgu.base64);
 	fdfs.upload(pic.data, {ext: 'jpg'}).then(function(fileId) {
+		//console.log(fileId);
 		if(onFinish) {
 			onFinish(fileId);
 		}
 	}).catch(function(err) {
-		////console.log(err);
+		var i = 1;
+		//console.log(err);
 	});
 };
 
@@ -324,10 +326,11 @@ var roger = {
 	//copy <-  semi list
 	//eg."Picture": {"sql": "UPDATE SET ?, ?;",	"params":["Pics", "UserID"], "files":"Pics"}
 	"uploadImages":function(files, funcArgu, onOneFinish, onFinish){
+		var funcArgus = [];
 		for(var i = 0 ; i < files.length; i ++) {
 			funcArgus.push({base64:files[i], funcArgu:funcArgu});
 		}
-		var cl = CallbackLooper.create(funcArgus.length, uploadImage, null, funcArgus,
+		var cl = CallbackLooper.create(funcArgus.length, uploadImage, funcArgus,
 			onFinish,
 			function(funcArgu, fileid){
 				onOneFinish(funcArgu, fileid);
