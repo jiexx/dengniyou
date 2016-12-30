@@ -199,6 +199,185 @@ $(function () {
     };
 
 
+    var initAttractionEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                NameEn:'',
+                AdultPrice:'',
+                KidPrice:'',
+                StudentPrice:'',
+                Labels:['交通旅游','人文建筑','休闲娱乐','亲子','动植物园','博物馆','传统文化','自然风光','美食','商务与投资'],
+                description:'',
+                CoverPicURL:'',
+                CarPicURL:[],
+                PicURL:[],
+                Policy:'',
+                Address:'',
+                Tel:'',
+                CountryName:'',
+                CityName:'',
+                ZipCode:'',
+                ZoneCode:'',
+            }
+        };
+    },ctrlAttractionEdit=function(){
+        $('#save').rogerOnceClick(Plan, function(e){
+
+            console.log('test');
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+
+     var initAccommodationEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                NameEn:'',
+                LocalName:'',
+                OtherName:'',
+                Labels:[],
+                description:'',
+                CoverPicURL:'',
+                CarPicURL:[],
+                PicURL:[],
+                Address:'',
+                Tel:'',
+                CountryName:'',
+                CityName:'',
+                ZipCode:'',
+                ZoneCode:'',
+                UselesDate:'',
+            }
+        };
+    },ctrlAccommodationEdit=function(){
+        $('#save').rogerOnceClick(Plan, function(e){
+
+            console.log('test');
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+
+    var initActivityEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                AdultPrice:'',
+                KidPrice:'',
+                ServiceTime:'',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
+            }
+        };
+    },ctrlActivityEdit=function(Plan, realView){
+        $('#save').rogerOnceClick(Plan, function(e){
+            
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+
+     var initDelicacyEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                NameEn:'',
+                LocalName:'',
+                OtherName:'',
+                AdultPrice:'',
+                KidPrice:'',
+                StudentPrice:'',
+                Labels:['甜点','咖啡与茶','面包糕点','酒吧','餐厅','酒馆','中餐','日式料理','亚洲料理'],
+                description:'',
+                CoverPicURL:'',
+                CarPicURL:[],
+                PicURL:[],
+                Address:'',
+                Tel:'',
+                CountryName:'',
+                CityName:'',
+                ZipCode:'',
+                ZoneCode:'',
+            }
+        };
+    },ctrlDelicacyEdit=function(){
+        $('#save').rogerOnceClick(Plan, function(e){
+            console.log('test');
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+
+     var initCarEdit=function(){
+        return {};
+    },ctrlCarEdit=function(){
+
+    } ;
+     var initServiceCarEdit=function(){
+        return {};
+    },ctrlServiceCarEdit=function(){
+
+    } ;
+
+     var initServicePickupEdit=function(){
+        return {};
+    },ctrlServicePickupEdit=function(){
+        $('#save').rogerOnceClick(Plan, function(e){
+            
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+
+     var initServiceOtherEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                ServiceTypeID:'',
+                ServiceTypeName:'',
+                PriceType:'',
+                PrimaryPrice:'',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
+            }
+        };
+    },ctrlServiceOtherEdit=function(){
+        $('#save').rogerOnceClick(Plan, function(e){
+            
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+    
+     var initTraveLogueEdit=function(){
+        return {};
+    },ctrlTraveLogueEdit=function(){
+        $('#save').rogerOnceClick(Plan, function(e){
+            
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
         '#/spcialplan':                   {view:'product-specialplan.html',					rootrest:'/dashboard/product/specialplan',                        ctrl: ctrlSpecialplan},
@@ -230,6 +409,16 @@ $(function () {
         '#/servicepickupdetail':      {view:'product-service-pickup-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
         '#/equipdetail':      {view:'product-equip-detail.html',	  rootrest:'/facility/detail',ctrl: ctrlFacilityDetail},
         '#/traveloguedetail':      {view:'travelogue-detail.html',	  rootrest:'/travelogue/detail',ctrl: ctrlTravelogueDetail},
+        '#/attractionedit':      {fragment: 'fragment/product-attraction-edit.html',     init: initAttractionEdit,   ctrl: ctrlAttractionEdit},
+        '#/accommodationedit':   {fragment: 'fragment/product-accommodation-edit.html',     init: initAccommodationEdit,   ctrl: ctrlAccommodationEdit},
+        '#/activityedit':        {fragment: 'fragment/product-activity-edit.html',     init: initActivityEdit,   ctrl: ctrlActivityEdit},
+        '#/delicacyedit':        {fragment: 'fragment/product-delicacy-edit.html',     init: initDelicacyEdit,   ctrl: ctrlDelicacyEdit},
+        '#/caredit':             {fragment: 'fragment/product-car-edit.html',     init: initCarEdit,   ctrl: ctrlCarEdit},
+        '#/servicecaredit':      {fragment: 'fragment/product-service-car-edit.html',     init: initServiceCarEdit,   ctrl: ctrlServiceCarEdit},
+        '#/servicepickupedit':   {fragment: 'fragment/product-service-pickup-edit.html',     init: initServicePickupEdit,   ctrl: ctrlServicePickupEdit},
+        '#/serviceotheredit':    {fragment: 'fragment/product-service-other-edit.html',     init: initServiceOtherEdit,   ctrl: ctrlServiceOtherEdit},
+        '#/travelogueedit':      {fragment: 'fragment/travelogue-edit.html',     init: initTraveLogueEdit,   ctrl: ctrlTraveLogueEdit},
+
 
 	});
 
