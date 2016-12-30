@@ -196,37 +196,45 @@ var roger = {
 			return mapObj[matched];
 		});
 	},
+	"check":function (data) { // if base data type e.g. {a:'x',b:3}
+		for (var key in data) {
+			var d = data[key];
+			if( "object" == typeof d && Array != d.constructor){
+				return 2;
+			}
+		}
+		return 1;
+	},
 	//data has array property with object instead of array.
 	//data has array property with base type. data maybe have multi array property, must be handle by tag.
-	"prepare":function (superior, tag, modal, data, out) {
+	"prepare2":function (superior, tag, modal, data, out) {
         var copy = {tag:tag, valid:false, superior: superior, modal: modal, data: data};
         out.push(copy);
-        if(data && "object" == typeof data) {
+        if(data && "object" == typeof data ) {
 			for (var key in data) {
 				var m = modal[key], d = data[key];
 				if(m) {
 					if ("object" == typeof d && Array != d.constructor) {
-						roger.prepare(copy, key, m, d, out);
+						roger.prepare2(copy, key, m, d, out);
 					} else if (Array == d.constructor) {
 						for(var i in d) {
-							roger.prepare(copy, key, m, d[i], out);
+							roger.prepare2(copy, key, m, d[i], out);
 						}
 					}
 				}
 			}
-		}else{
-            for (var key in modal) {
-                var m = modal[key];
-                if(m) {
-                    if ("object" == typeof m && Array != m.constructor) {
-                        roger.prepare(copy, key, m, null, out);
-                    } else if (Array == m.constructor) {
-                        for(var i in d) {
-                            roger.prepare(copy, key, m[i], null, out);
-                        }
-                    }
-                }
-            }
+		}
+	},
+	"prepare1":function (superior, tag, modal, data, out) {
+		var copy = {tag:tag, valid:false, superior: superior, modal: modal, data: data};
+		out.push(copy);
+		for (var key in modal) {
+			var m = modal[key];
+			if(m) {
+				if ("object" == typeof m && Array != m.constructor) {
+					roger.prepare1(copy, key, m, data, out);
+				}
+			}
 		}
 	},
 	//all.data <-  receive req json data
@@ -333,7 +341,7 @@ var roger = {
 			if(tag == findkey) {
 				finalParams.push(replacement);
 			}else {
-				inalParams.push(params[i]);
+				finalParams.push(row[i]);
 			}
 		}
 		return finalParams;
@@ -380,10 +388,17 @@ var roger = {
 		},
 		"params":{
 			before :function(funcArgu, onFinish) {
-				var finalParams = [];
 				var params = funcArgu.item.modal.params;
 				var data = funcArgu.item.data;
-				funcArgu.item.params = roger.shallow(params);
+				var finalParams = [];
+				for (var tag in params) {
+					if(data[params[tag]]) {
+						finalParams.push(data[params[tag]]);
+					}else {
+						finalParams.push(params[tag]);
+					}
+				}
+				funcArgu.item.params = finalParams;
 				onFinish();
 			}
 		},
@@ -413,7 +428,7 @@ var roger = {
 					var vector = [];
 					for(var j in output) {
 
-						funcArgu.item.params = roger.replace(params, findkey, output[findkey]);
+						funcArgu.item.params = roger.replace(params, findkey, output[j][findkey]);
 						var copy = roger.shallow(funcArgu.item);
 						funcArgu.vector.push(copy);
                         vector.push({sql:copy.sql, params:copy.params, item:copy, doing:null});
@@ -462,10 +477,11 @@ function isEmpty(obj) {
 
 exports.rogerSmartSql = function(modal, data, callback) {
 	var out = [];
-	if(isEmpty(data)) {
-		data = null;
+	if(roger.check(data) == 1) {
+		roger.prepare1(null, 'root', modal, data, out);
+	}else {
+		roger.prepare2(null, 'root', modal, data, out);
 	}
-	roger.prepare(null, 'root', modal, data, out);
 	roger.before(out, data, function(){
 		//console.log('BEFORE:');
 		roger.process(out, function(){

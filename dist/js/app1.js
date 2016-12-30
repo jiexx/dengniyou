@@ -26,7 +26,31 @@
 		realView.rogerCropImages();
         frameCtrl();
     };
-	
+
+	var initComment = function(params) {
+		return {
+			Comment:{
+				PlanID: params.PlanID,
+				Text: '',
+				Pics:[]
+			}
+		};
+	};
+	var ctrlComment = function(Comment, realView) {
+		$('.commit').rogerOnceClick(Comment, function(e){
+			var user = $.rogerGetLoginUser()
+			if(!user) {
+				$.rogerShowLogin();
+				return;
+			}
+			var usr =$.rogerGetLoginUser();
+			e.data.Comment.UserID = usr.UserID;
+			console.log(usr);
+			$.rogerPost('/comment/plan', e.data, function(respJSON){
+				$.rogerRefresh();
+			});
+		});
+	};
 	var ctrlPlandetail = function(response, realView) {
 
         $('#calendar').fullCalendar({
@@ -43,30 +67,11 @@
   	  	});
 		realView.rogerCropImages();
         frameCtrl();
+
 		$('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
-		var count = 0;
-		$('#photos').rogerUploadImage(100, 100, function(data){
-			if(count++ < 5)
-			$('#photos').prepend('<div style="width:100px;" class="col-sm-2" ><img name="pic" style="width:100px;" src='+data.raw+'><span class="glyphicon glyphicon-remove-sign"></span></img></div>');
-		});
-		$('#commit').click(function(){
-			var user = $.rogerGetLoginUser()
-			if(!user) {
-				$.rogerShowLogin();
-				return;
-			}
-			var usr =$.rogerGetLoginUser();
-			console.log(usr);
-			var data = {UserID:usr.UserID,   Pics:[],   PlanID:response.PlanInfo[0].PlanID, Comment:$('textarea#commentplan').val()};
-            var elems = document.getElementById('photos').querySelectorAll('img[name="pic"]');
-            for (var i = 0; i < elems.length; i++) {
-            	var pic = elems[i].src;
-                data.Pics.push(pic);
-			}
-            $.rogerPost('/comment/plan', data, function(respJSON){
-                $.rogerRefresh();
-            });
-		});
+		realView.rogerCropImages();
+		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
+
 	};
 
     var ctrlOrderlist = function(response, realView) {
@@ -75,9 +80,10 @@
     };
 
 	$.rogerRouter({
-		'#/':							{view:'home.html',								rootrest:'/home', 						ctrl: ctrlHome},
-		'#/plandetail': 				{view:'plandetail.html',							rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
-        '#/orderlist': 				{view: 'orderlist.html', 						rootrest: '/order/list', 				ctrl: ctrlOrderlist},
+		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
+		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
+        '#/orderlist': 				{view: 'orderlist.html', 								rootrest: '/order/list', 				ctrl: ctrlOrderlist},
+		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment}
 	});
 	
 	
