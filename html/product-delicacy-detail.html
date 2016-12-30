@@ -60,7 +60,7 @@
           <div class="col-md-3">
             <p class="">口  味：{{each(i,p) SpotLabels}}<span>${ClassifyLabel}</span>
               <span>{{if SpotLabels.length != i+1}},{{/if}}</span>{{/each}}</p>
-            <p>联系电话：<span>15001899199</span></p>
+            <p>联系电话：<span>${ SpotDetail[0].Tel}</span></p>
           </div>
           <div class="col-md-3">
             <p class="">国家城市：<span>${ SpotDetail[0].CountryName}</span><span>|</span><span>${ SpotDetail[0].CityName}</span></p>

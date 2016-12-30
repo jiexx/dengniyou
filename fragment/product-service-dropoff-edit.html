@@ -1,0 +1,185 @@
+
+<link rel="stylesheet" href="../css/editPage.css">
+
+<div class="container editPage">
+	<!-- 方案基本信息 -->
+	<div class="baseInfo">
+		<ul class="breadcrumb">
+		  <li><a href="#">产品管理</a> <span class="divider"></span></li>
+		  <li><a href="#">服务</a> <span class="divider"></span></li>
+		  <li class="active">送机编辑</li>
+		</ul>
+
+		<h4>基本信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">服务名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" id="name" placeholder="不能超过24个字符">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">商品价格</label>
+		    <div class="col-sm-10 col-md-11">
+		    	<input type="number" class="form-control" id="" > 元/天
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">包含里程</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="number" class="form-control" id="" > 公里
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">额外里程</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="number" class="form-control" id="" > 元/公里
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">免费时间</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="number" class="form-control" id="" > 小时
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">超额时间</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" id=""> 元/小时
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">服务模式</label>
+		    <div class="col-sm-10 col-md-11">
+		       <label class="radio-inline">
+				  <input type="radio" name="serviceType" id="Radio1" value="option1" checked> 无忧模式
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" name="serviceType" id="Radio2" value="option2"> 即停即走
+				</label>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">服务描述</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control" rows="5" placeholder="请输入不少于300字描述"></textarea>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<!-- 方案基本信息结束 -->
+
+	<!-- 车辆信息 -->
+	<div class="baseInfo airportInfo">
+		<h4>机场信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">机场代码</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" id="" placeholder="请输入">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">机场名称</label>
+		    <div class="col-sm-10 col-md-11">
+		        <input type="text" class="form-control" id="" placeholder="请输入">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">英文名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" id="" placeholder="请输入">
+		    </div> 
+		  </div>
+		</form>			
+		<div class="row textRight">
+			<div class="col-sm-10 col-md-8">
+			<button class="btn btn-warning">关联车辆</button>
+			</div>
+		</div>
+	</div>
+	<!-- 车辆信息结束 -->
+
+	<!-- 相册上传 -->
+	<div class="uploadImg">
+		<h4>相册信息</h4>
+		<div class="col-md-1 col-sm-2">相册上传:</div>
+		<div class="col-md-11 col-sm-10">
+			<div class="row uploadPic" id="">
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="" alt="">
+						<a class="glyphicon glyphicon-remove-circle"></a>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="" alt="">
+						<a class="glyphicon glyphicon-remove-circle"></a>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="" alt="">
+						<a class="glyphicon glyphicon-remove-circle"></a>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="imgBox addImg">+</div>
+				</div>
+			</div> 
+		</div>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="col-md-2 col-sm-4">封面照片：</div>
+				<div class="col-md-10 col-sm-8">
+					<div class="imgBox addImg">+</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- 相册上传结束 -->
+
+	<!-- 须知信息 -->
+	<div class="notice">
+		<h4>须知信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">费用自理：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">签证须知：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">注意事项：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="" class="form-control"></textarea>
+		    </div>
+		  </div>
+		</form>
+		<div class="optionBtn">
+			<button class="btn btn-warning">保存</button>
+			<button class="btn btn-warning">发布 </button>
+		</div>
+	</div>
+	<!-- 须知信息结束 -->
+</div>
+

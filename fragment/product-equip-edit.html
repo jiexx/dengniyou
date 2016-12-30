@@ -1,0 +1,160 @@
+
+<link rel="stylesheet" href="../css/editPage.css">
+
+<div class="container editPage">
+	<!-- 方案基本信息 -->
+	<div class="baseInfo">
+		<ul class="breadcrumb">
+		  <li><a href="#">产品管理</a> <span class="divider"></span></li>
+		  <li class="active">装备编辑</li>
+		</ul>
+
+		<h4>基本信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">服务名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.ServiceName}" data-value="/BaseInfo/ServiceName" placeholder="不能超过24个字符">
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<!-- 方案基本信息结束 -->
+
+	<!-- 车辆信息 -->
+	<div class="carInfo">
+		<h4>车辆信息</h4>
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-horizontal">
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">车辆品牌</label>
+				    <div class="col-sm-8 col-md-9">
+				      <input type="text" class="form-control" value="${$data.BaseInfo.brand}" data-value="/BaseInfo/brand" placeholder="请输入">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">舒适乘坐</label>
+				    <div class="col-sm-8 col-md-9">
+				      <input type="text" class="form-control" value="${$data.BaseInfo.seats}" data-value="/BaseInfo/seats" placeholder="请输入"> 人
+				    </div> 
+				  </div>
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">车辆级别</label>
+				    <div class="col-sm-8 col-md-9">
+				        <label class="radio-inline">
+						  <input type="radio" name="carLevel" id="Radio1" value="option1" checked> 经济
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="carLevel" id="Radio2" value="option2"> 舒适
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="carLevel" id="Radio3" value="option3"> 商务
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="carLevel" id="Radio4" value="option4"> 豪华
+						</label>
+				    </div>
+				  </div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-horizontal">
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">车辆型号</label>
+				    <div class="col-sm-8 col-md-9">
+				      <input type="text" class="form-control" value="${$data.BaseInfo.model}" data-value="/BaseInfo/model" placeholder="请输入">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">行李空间</label>
+				    <div class="col-sm-8 col-md-9">
+				      <input type="text" class="form-control" value="${$data.BaseInfo.luggage}" data-value="/BaseInfo/luggage" placeholder="请输入">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">成员保险</label>
+				    <div class="col-sm-8 col-md-9">
+				        <label class="radio-inline">
+						  <input type="radio" name="carLevel" id="Radio1" value="option1" checked> 有
+						</label>
+						<label class="radio-inline">
+						  <input type="radio" name="carLevel" id="Radio2" value="option2"> 无
+						</label>
+				    </div>
+				  </div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- 车辆信息结束 -->
+
+	<!-- 相册上传 -->
+	<div>
+		<h4>相册信息</h4>
+		<div class="row">
+			<div class="col-md-1 ">相册上传:</div>
+			<div class="col-md-11 row" >
+				{{each $data.BaseInfo.PicURL}}
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="${$data.BaseInfo.PicURL[$index]}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/PicURL/${$index}"></a>
+					</div>
+				</div>
+				{{/each}}
+				<div class="col-md-3" data-op="toggle" data-pointer="/BaseInfo/PicURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/BaseInfo/PicURL/-" data-action="image">+</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-1 ">封面照片:</div>
+			<div class="col-md-11 row" >
+				{{if $data.BaseInfo.CoverPicURL}}
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="${$data.BaseInfo.CoverPicURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/CoverPicURL" ></a>
+					</div>
+				</div>
+				{{else}}
+				<div class="col-md-3">
+					<div class="imgBox addImg"  data-op="change" data-pointer="/BaseInfo/CoverPicURL" data-action="image" >+</div>
+				</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+	<!-- 相册上传结束 -->
+
+	<!-- 须知信息 -->
+	<div class="notice spotDescription">
+		<h4>装备描述</h4>
+		<textarea name="" data-value="/BaseInfo/description" placeholder="可输入1200字">${$data.BaseInfo.description}</textarea>
+		<div class="optionBtn">
+			<a id="save" class="btn btn-warning">保存</a>
+			<a id="publish" class="btn btn-warning">发布 </a>
+		</div>
+	</div>
+	<!-- 须知信息结束 -->
+</div>
+
+<script>
+	initDelicacyEdit = function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                description:'',
+               	brand:'',
+               	seats:'',
+               	model:'',
+               	luggage:'',
+               	CoverPicURL:'',
+                CarPicURL:[],
+                PicURL:[],
+            }
+        };
+    }
+</script>

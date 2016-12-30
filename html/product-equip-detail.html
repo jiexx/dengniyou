@@ -2,12 +2,11 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8">
-    <title>景点预览</title>
+    <title>装备详情预览</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="renderer" content="webkit">
     
-    <link rel="stylesheet" type="text/css" href="css/reset.css">
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="css/style.css">
@@ -22,23 +21,22 @@
     <div class="detailpage">
       <ol class="col-md-4 pull-right breadcrumb">
         <li><a href="">产品管理</a></li>
-        <li><a href="">服务</a></li>
-        <li class="active"><a href="">景点预览</a></li>
+        <li><a href="">装备</a></li>
+        <li class="active"><a href="">装备预览</a></li>
         <li class="active"><a href="">返回</a></li>
       </ol> <!-- end 面包屑导航breadcrumb -->
 
       <!--   banner -->
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
-          {{each(i,p) SpotPics}}
-          <li data-target="#carousel-example-generic" data-slide-to="0" class="{{if i==1}}active{{/if}}"></li>
+          {{each(i,p) Facility[0].pics}}
+          <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==1}}active{{/if}}"></li>
           {{/each}}
         </ol>
-
         <div class="carousel-inner" role="listbox">
-          {{each(i,p) SpotPics}}
+          {{each(i,p) Facility[0].pics}}
           <div class="item {{if i==1}}active{{/if}}">
-            <img src="${$data.IMGHOST }${PicURL}" alt="...">
+            <img src="${$data.IMGHOST}${p}" alt="...">
           </div>
           {{/each}}
         </div>
@@ -48,47 +46,39 @@
         <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
           <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
-      </div>
-      <!--  end  banner -->
+      </div><!--  end  banner -->
+      
       <div class="detailpage-mainbody">
         <div class="attraction detailpage-title">
-          <h1>${ SpotDetail[0].NameCh}</h1>
-          <p>${ SpotDetail[0].NameEn}</p>
-        </div>
+          <h1>${Facility[0].facilityName}</h1>
+        </div> 
         <div class="row product-detail price-detail">
-          <h2>景点详情</h2>
           <div class="col-md-3">
-            <p class="">建议游玩：<span>${SpotDetail[0].TravelTime}小时</span></p>
-            <p>联系电话：<span>${ SpotDetail[0].Tel}</span></p>
+            <p>品牌：<span>${Facility[0].brand}</span></p>
           </div>
           <div class="col-md-3">
-            <p class="">国家城市：<span>${ SpotDetail[0].CountryName}</span><span>|</span><span>${ SpotDetail[0].CityName}</span></p>
-            <p>地址：<span>${ SpotDetail[0].Address}</span></p>
-          </div>
-          <div class="col-md-3">
-            <p class="">区号：<span>${ SpotDetail[0].ZoneCode}</span></p>
-          </div>
-          <div class="col-md-3">
-            <p class="">邮编：<span>${ SpotDetail[0].ZipCode}</span></p>
+            <p>型号：<span>${Facility[0].model}</span></p>
           </div>
         </div> <!-- end 商品详情product-detail -->
         <div class="service-description">
-          <h2>景点描述</h2>
+          <h2>服务说明</h2>
           <div class="des">
-            <p>
-              ${ SpotDetail[0].Description}
-            </p>
+            <p>${Facility[0].description}</p>
           </div>
         </div><!-- end 服务描述service-description -->
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
       <div class="buttons">
-        <button id="delete" type="button" class="btn">分享</button>
+        <button id="delete" type="button" class="btn btn-default">删除</button>
+        <button id="copy" type="button" class="btn">复制</button>
         <button id="edit" type="button" class="btn">编辑</button>
         <button id="release" type="button" class="btn">发布</button>
       </div>
     </div> <!-- end container-box -->
   </div> <!-- end container -->
+
+    <script src="js/jquery-1.11.3.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
 
   </body>
  

@@ -1,0 +1,151 @@
+
+<link rel="stylesheet" href="../css/editPage.css">
+
+<div class="container editPage">
+	<!-- 基本信息 -->
+	<div class="baseInfo">
+		<ul class="breadcrumb">
+		  <li><a href="#">产品管理</a> <span class="divider"></span></li>
+		  <li class="active">美食编辑</li>
+		</ul>
+
+		<h4>基本信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">商品名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.ServiceName}" data-value="/BaseInfo/ServiceName" placeholder="不能超过24个字符">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">英文名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.NameEn}" data-value="/BaseInfo/NameEn" id="" placeholder="最多20个字符">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">当地名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.LocalName}" data-value="/BaseInfo/LocalName" id="" placeholder="最多20个字符">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">其他名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.OtherName}" data-value="/BaseInfo/OtherName" placeholder="最多20个字符">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味</label>
+		    <div class="col-sm-10 col-md-11">
+		        <ul class="label-base">
+		        	{{each $data.BaseInfo.Labels}}
+					<li><input type="text" value="${$data.BaseInfo.Labels[$index]}" data-value="/BaseInfo/Labels/${$index}" placeholder="点击输入"><span class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/Labels/${$index}"></span></li>
+					{{/each}}
+					<li><div class="addItemBtn" data-op="change" data-pointer="/BaseInfo/Labels-" data-action="createLabel"> + </div></li>
+				</ul>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<!-- 方案基本信息结束 -->
+
+	<!-- 景点信息 -->
+	<div class="carInfo">
+		<h4>美食信息</h4>
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-horizontal">
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">所在地址</label>
+				    <div class="col-sm-8 col-md-9">
+				      <input type="text" class="form-control" value="${$data.BaseInfo.Address}" data-value="/BaseInfo/Address" placeholder="请输入">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话</label>
+				    <div class="col-sm-8 col-md-9">
+				    	<div class="input-group">
+						  <span class="input-group-addon" id="phone">+86</span>
+						  <input type="text" class="form-control" aria-describedby="phone" value="${$data.BaseInfo.Tel}" data-value="/BaseInfo/Tel">
+						</div>
+				     <!--  <input type="text" class="form-control" id="" placeholder="+86"> -->
+				    </div>
+				  </div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-horizontal">
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">所在城市</label>
+				    <div class="col-sm-8 col-md-9">
+				      <input type="text" class="form-control" value="${$data.BaseInfo.CountryName}" data-value="/BaseInfo/CountryName" placeholder="请输入">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label for="" class="col-sm-4 col-md-3 control-label">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编</label>
+				    <div class="col-sm-8 col-md-9">
+				      <input type="text" class="form-control" value="${$data.BaseInfo.ZipCode}" data-value="/BaseInfo/ZipCode" placeholder="请输入">
+				    </div>
+				  </div>
+				</form>
+			</div>
+		</div>
+		<!-- <div class="row textRight">
+			<a class="btn btn-warning">关联美食</a>
+		</div> -->
+	</div>
+	<!-- 车辆信息结束 -->
+
+	<!-- 相册上传 -->
+	<div>
+		<h4>相册信息</h4>		
+		<div class="row">
+			<div class="col-md-1 ">相册上传:</div>
+			<div class="col-md-11 row" >
+				{{each $data.BaseInfo.PicURL}}
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="${$data.BaseInfo.PicURL[$index]}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/PicURL/${$index}"></a>
+					</div>
+				</div>
+				{{/each}}
+				<div class="col-md-3" data-op="toggle" data-pointer="/BaseInfo/PicURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/BaseInfo/PicURL/-" data-action="image">+</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-1 ">封面照片:</div>
+			<div class="col-md-11 row" >
+				{{if $data.BaseInfo.CoverPicURL}}
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="${$data.BaseInfo.CoverPicURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/CoverPicURL" ></a>
+					</div>
+				</div>
+				{{else}}
+				<div class="col-md-3">
+					<div class="imgBox addImg"  data-op="change" data-pointer="/BaseInfo/CoverPicURL" data-action="image" >+</div>
+				</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+	<!-- 相册上传结束 -->
+
+	<!-- 须知信息 -->
+	<div class="notice spotDescription">
+		<h4>美食描述</h4>
+		<textarea name="" data-value="/BaseInfo/description" placeholder="可输入1200字">${$data.BaseInfo.description}</textarea>
+		<div class="optionBtn">
+			<a id="save" class="btn btn-warning">保存</a>
+			<a id="publish" class="btn btn-warning">发布 </a>
+		</div>
+	</div>
+	<!-- 须知信息结束 -->
+</div>
+
