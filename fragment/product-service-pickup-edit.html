@@ -1,0 +1,181 @@
+
+<div class="container editPage">
+	<!-- 方案基本信息 -->
+	<div class="baseInfo">
+		<ul class="breadcrumb">
+		  <li><a href="#">产品管理</a> <span class="divider"></span></li>
+		  <li><a href="#">服务</a> <span class="divider"></span></li>
+		  <li class="active">接送机编辑</li>
+		</ul>
+
+		<h4>基本信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">服务名称</label>
+		    <div class="col-sm-10 col-md-11">
+		    	<select name="" id="" class="form-control">
+		    		<option value="">接机</option>
+		    		<option value="">送机</option>
+		    	</select>
+		        <input type="text" class="form-control" value="${$data.BaseInfo.ServiceName}"  data-value="/BaseInfo/ServiceName" placeholder="不能超过24个字符">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">商品价格</label>
+		    <div class="col-sm-10 col-md-11">
+		    	<input type="text" class="form-control" value="${$data.BaseInfo.PrimaryPrice}"  data-value="/BaseInfo/PrimaryPrice" > 元/天
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">包含里程</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.IncMileage}"  data-value="/BaseInfo/IncMileage" > 公里
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">额外里程</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.ExMileagePrice}"  data-value="/BaseInfo/ExMileagePrice" > 元/公里
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">免费时间</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.ServiceTime}"  data-value="/BaseInfo/ServiceTime" > 小时
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">超额时间</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.BaseInfo.ServiceOutTimePrice}"  data-value="/BaseInfo/ServiceOutTimePrice"> 元/小时
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">服务方式</label>
+		    <div class="col-sm-10 col-md-11">
+		        <label class="radio-inline">
+				  <input type="radio" name="serviceType" id="Radio1" value="option1" checked> 举牌等候
+				</label>
+				<label class="radio-inline">
+				  <input type="radio" name="serviceType" id="Radio2" value="option2"> 即停即走
+				</label>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">服务描述</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" data-value="/BaseInfo/Description" class="form-control" rows="5" placeholder="请输入不少于300字描述" >${$data.BaseInfo.Description}</textarea>
+		    </div>
+		  </div>
+		</form>
+	</div>
+	<!-- 方案基本信息结束 -->
+
+	<!-- 机场信息 -->
+	<div class="baseInfo airportInfo">
+		<h4>机场信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">机场代码</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.Airports.AirportCode}" data-value="/Airports/AirportCode" placeholder="请输入">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">机场名称</label>
+		    <div class="col-sm-10 col-md-11">
+		        <input type="text" class="form-control" value="${$data.Airports.NameCh}" data-value="/Airports/NameCh" placeholder="请输入">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">英文名称</label>
+		    <div class="col-sm-10 col-md-11">
+		      <input type="text" class="form-control" value="${$data.Airports.NameEn}" data-value="/Airports/NameEn" placeholder="请输入">
+		    </div> 
+		  </div>
+		</form>			
+		<div class="row textRight">
+			<div class="col-sm-10 col-md-8">
+			<button class="btn btn-warning">关联车辆</button>
+			</div>
+		</div>
+	</div>
+	<!-- 机场信息结束 -->
+
+	<!-- 相册上传 -->
+	<div >
+		<h4>相册信息</h4>
+		<div class="row">
+			<div class="col-md-1 ">相册上传:</div>
+			<div class="col-md-11 row" >
+				{{each $data.BaseInfo.PicURL}}
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="${$data.BaseInfo.PicURL[$index]}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/PicURL/${$index}"></a>
+					</div>
+				</div>
+				{{/each}}
+				<div class="col-md-3" data-op="toggle" data-pointer="/BaseInfo/PicURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/BaseInfo/PicURL/-" data-action="image">+</div>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="row">
+			<div class="col-md-1 ">封面照片:</div>
+			<div class="col-md-11 row" >
+				{{if $data.BaseInfo.CoverPicURL}}
+				<div class="col-md-3">
+					<div class="imgBox">
+						<img src="${$data.BaseInfo.CoverPicURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/CoverPicURL" ></a>
+					</div>
+				</div>
+				{{else}}
+				<div class="col-md-3">
+					<div class="imgBox addImg"  data-op="change" data-pointer="/BaseInfo/CoverPicURL" data-action="image" >+</div>
+				</div>
+				{{/if}}
+			</div>
+		</div>
+	</div>
+	<!-- 相册上传结束 -->
+
+	<!-- 须知信息 -->
+	<div class="notice">
+		<h4>须知信息</h4>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="Policy" value="${ $data.BaseInfo.Policy}" data-value="/BaseInfo/Policy" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="CostInclude" value="${ $data.BaseInfo.CostInclude}" data-value="/BaseInfo/CostInclude" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="CostExclude" value="${ $data.BaseInfo.CostExclude}" data-value="/BaseInfo/CostExclude" class="form-control"></textarea>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">注意事项：</label>
+		    <div class="col-sm-10 col-md-11">
+		      <textarea name="" id="Notice" value="${ $data.BaseInfo.Notice}" data-value="/BaseInfo/Notice" class="form-control"></textarea>
+		    </div>
+		  </div>
+		</form>
+		<div class="optionBtn">
+			<button id="save" class="btn btn-warning">保存</button>
+			<button id="publish" class="btn btn-warning">发布 </button>
+		</div>
+	</div>
+	<!-- 须知信息结束 -->
+</div>
+
