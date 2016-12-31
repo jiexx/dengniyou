@@ -154,18 +154,36 @@
 					{{if (v.ScheduleType==2||v.ScheduleType==3||v.ScheduleType==4) }}
 					<div class="addDetails">
 						<h4>{{if v.ScheduleType==2}}添加景点{{/if}}{{if v.ScheduleType==3}}添加美食{{/if}}{{if v.ScheduleType==4}}添加住宿{{/if}}
-							<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAccommodation">+</span></h4>
+							{{if v.ScheduleType==2}}
+							<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAttraction">+</span>
+							{{/if}}
+							{{if v.ScheduleType==3}}
+							<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createDelicacy">+</span>
+							{{/if}}
+							{{if v.ScheduleType==4}}
+							<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAccommodation">+</span>
+							{{/if}}
+						</h4>
 						<ul class="details" data-i="${$index}">
 							<li>
 								<div class="detailImg">
-									<img src="${SpotPicUrl}" alt="">
+									<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
 								</div>
 								<div class="detailText">
 									<h5>${SpotName} ${SpotLocalName}</h5>
 									<p>${CountryNameCn}：${CityNameCn}</p>
 									<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
 								</div>
+								{{if v.ScheduleType==2}}
 								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
+								{{/if}}
+								{{if v.ScheduleType==3}}
+								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
+								{{/if}}
+								{{if v.ScheduleType==4}}
+								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
+								{{/if}}
+
 								<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
 							</li>
 						</ul>

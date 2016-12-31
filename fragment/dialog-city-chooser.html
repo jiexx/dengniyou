@@ -6,10 +6,17 @@
 				<h4 class="modal-title">选择国家城市</h4>
 			</div>
 			<div class="modal-body">
-					<div style='text-align:center;'><br><br>
-						 <select class="selectpicker" data-style="btn-info" data-live-search="true" name ="country" id="country" ></select> </br></br>
-						 <select class="selectpicker" data-style="btn-info" data-live-search="true" name ="state" id ="state"></select>  </br> </br>
+				<div class="container">
+					<div class="form-group" style='text-align:center;'>
+						<br><br>
+						 <select class="selectpicker  form-control input-lg" data-style="btn-info" data-live-search="true" name ="country" id="country" >
+							 <option>请选择国家</option>
+						 </select> </br></br>
+						 <select class="selectpicker  form-control input-lg" data-style="btn-info" data-live-search="true" name ="city" id ="city">
+							 <option>请选择城市</option>
+						 </select>  </br> </br>
 					</div>
+				</div>
 			</div>
 			<div class="modal-footer">
 				<button id="cityChooserOK" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
@@ -19,7 +26,7 @@
 </div>
 <script language="javascript">
 	$(function(){
-	    populateCountries("country", "state");
+	    populateCountries("country", "city");
     })
      // first parameter is id of country drop-down and second parameter is id of state drop-down
 </script>

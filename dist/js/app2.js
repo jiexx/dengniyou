@@ -91,21 +91,8 @@ $(function () {
     var initTemplateplanNew = function(params){
         return {
             PlanInfo:{
-                PlanName:'',
-                PlanPriceBase:'',
-                PicURL:'',
-                CarURL:[],
-                PlanDays:'',
-                StartCity:'',
-                StartCityID:'',
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                VisaNotice:'',
-                Notice:'',
-                CreateUserID:'',
-                AdultPrice:'',
-                KidPrice:'',
+                PlanName:'', PlanPriceBase:'',PicURL:'',CarURL:[],PlanDays:'',StartCity:'',StartCityID:'',Policy:'',CostInclude:'',
+                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:'',AdultPrice:'',KidPrice:'',
 
                 Picture:{
                     Pics:[]
@@ -126,6 +113,7 @@ $(function () {
                     DayName:''
                 }]  //0 city, 1 airport, 2 attraction, 3 delicacy, 4 accommodation
             },
+            IMGHOST:"http://123.59.144.47/"
         };
     };
     var initCityChooser = function (PS) {
@@ -135,13 +123,49 @@ $(function () {
             Plan:PS.Plan
         };
     };
+    var initSpotChooser = function (PS) {
+        return {
+            Type:PS.Type,
+            Spot:PS.Spot,
+            Plan:PS.Plan,
+            TypeCn:PS.TypeCn
+        };
+    };
     var ctrlCityChooser = function (PS, realView) {
         $('#cityChooser').modal('show');
         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
             var data = e.data;
             var country = $('#country option:selected').val().split(':');
-            var city = $('#state option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
             data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data.Plan);
+        });
+    };
+    var ctrlSpotChooser = function (PS, realView) {
+        $('#spotChooser').modal('show');
+        $('#spotlist').html('').append('<li class="list-group-item list-group-item-info">'+PS.TypeCn+'</li>');
+        $('#city').change(PS, function (e) {
+            var data = e.data;
+            var city = $('#city option:selected').val().split(':');
+            if(city && city[0]) {
+                $('#spotlist').rogerDialogTrigger('fragment/dialog-spotlist.html', '/dialog/'+PS.Type, {CityID:city[0]}, function (data, realView) {
+                    console.log('spot');
+                    $("#spotlist .list-group-item").click(function(e) {
+                        $("#spotlist .list-group-item").removeClass("active");
+                        $(this).addClass("active");
+                    });
+                });
+            }
+        });
+        $('#spotChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
+            var spot = $('#spotlist  .list-group-item.active').data('info').split(':');
+            //${SpotsID}:${NameCh}:${NameEn}:${PicURL}:${Rank}:${TravelTime}:${SpotsTypeID}
+            data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                SpotID:spot[0],SpotName:spot[1],SpotLocalName:spot[2],SpotTravelTime:spot[5],HotelStarLevel:spot[4],ScheduleType:parseInt(spot[6])+1,SpotPicUrl:spot[3]});
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.Plan);
         });
@@ -163,6 +187,15 @@ $(function () {
 
         Plan.createCity = function (Plan, Spot) {
             $.rogerTrigger('#modal', '#/citychooser', {Plan:Plan, Spot:Spot});
+        };
+        Plan.createAttraction = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'attraction', TypeCn:'景点'});
+        };
+        Plan.createDelicacy = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'delicacy', TypeCn:'美食'});
+        };
+        Plan.createAccommodation = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'accommodation', TypeCn:'酒店'});
         };
 
         $('#save').rogerOnceClick(Plan, function(e){
@@ -417,25 +450,11 @@ $(function () {
      var initServicePickupEdit = function(){
         return {
             BaseInfo:{
-                ServiceName:'',
-                PrimaryPrice:'',
-                IncMileage:'',
-                ExMileagePrice:'',
-                ServiceTime:'',
-                ServiceOutTimePrice:'',
-                ServiceMethod:'',
-                Description:'',
-                CoverPicURL:'',
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:''
+                ServiceName:'',PrimaryPrice:'',IncMileage:'',ExMileagePrice:'',ServiceTime:'',ServiceOutTimePrice:'',
+                ServiceMethod:'',Description:'',CoverPicURL:'',PicURL:[],Policy:'',CostInclude:'',CostExclude:'',Notice:''
             },
             Airports: {
-                AirportCode: "CNX",
-                NameEn: "CHIANG MAI(Chiang Mai Intl Airport)",
-                NameCh: "清迈",
+                AirportCode: "CNX", NameEn: "CHIANG MAI(Chiang Mai Intl Airport)",NameCh: "清迈",
             }
         };
     },ctrlServicePickupEdit = function(Plan, realView){
@@ -450,18 +469,8 @@ $(function () {
      var initServiceOtherEdit=function(){
         return {
             BaseInfo:{
-                ServiceName:'',
-                ServiceTypeID:'',
-                ServiceTypeName:'',
-                PriceType:'',
-                PrimaryPrice:'',
-                Description:'',
-                CoverPicURL:'',
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:''
+                ServiceName:'',ServiceTypeID:'',ServiceTypeName:'',PriceType:'',PrimaryPrice:'',Description:'',CoverPicURL:'',
+                PicURL:[],Policy:'',CostInclude:'',CostExclude:'',Notice:''
             }
         };
     },ctrlServiceOtherEdit=function(Plan, realView){
@@ -476,27 +485,12 @@ $(function () {
      var initTraveLogueEdit=function(){
         return {
             Travelogue:{
-                ServiceName:'',
-                PrimaryPrice:'',
-                IncMileage:'',
-                ExMileagePrice:'',
-                ServiceTime:'',
-                ServiceOutTimePrice:'',
-                ServiceMethod:'',
-                Description:'',
-                CoverPicURL:'',
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:''
+                ServiceName:'',PrimaryPrice:'',IncMileage:'',ExMileagePrice:'',ServiceTime:'',ServiceOutTimePrice:'',
+                ServiceMethod:'',Description:'',CoverPicURL:'',PicURL:[],Policy:'',CostInclude:'',CostExclude:'',Notice:''
             },
             TravelogueDetail: [
                 {
-                    ArticleDetailID: '',
-                    Label:'',
-                    PicURL:'',
-                    Content:''
+                    ArticleDetailID: '',Label:'',PicURL:'',Content:''
                 }
             ]
         };
@@ -510,30 +504,31 @@ $(function () {
     } ;
 
 	$.rogerRouter({
-		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
-        '#/spcialplan':                   {view:'product-specialplan.html',                         rootrest:'/dashboard/product/specialplan',                        ctrl: ctrlSpecialplan},
-        '#/classicplan':                  {view:'product-classicplan.html',                         rootrest:'/dashboard',                                               ctrl: ctrlClassicplan},
-        '#/service':                       {view:'product-service.html',                              rootrest:'/dashboard/product/service',	                        ctrl: ctrlService},
-        '#/activiy':                       {view:'product-activity.html',	                            rootrest:'/dashboard/product/activity',	                        ctrl: ctrlActivity},
-        '#/car':                           {view:'product-car.html',                                   rootrest:'/dashboard/product/car', 		                        ctrl: ctrlCar},
-        '#/attraction':                   {view:'product-attraction.html',                           rootrest:'/dashboard/product/attraction',	                        ctrl: ctrlAttraction},
-        '#/delicacy':                     {view:'product-delicacy.html',                              rootrest:'/dashboard/product/delicacy',	                        ctrl: ctrlDelicacy},
-        '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                     ctrl: ctrlAccommodation},
-        '#/travelogue':                    {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                        ctrl: ctrlTravelogue},
-        '#/facilitylist':                 {view:'facilitylist.html',                                  rootrest:'/facility/list',                                           ctrl: ctrlFacilityList},
+		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                          ctrl: ctrlDashboard},
+        '#/spcialplan':                   {view:'product-specialplan.html',                         rootrest:'/dashboard/product/specialplan',                          ctrl: ctrlSpecialplan},
+        '#/classicplan':                  {view:'product-classicplan.html',                         rootrest:'/dashboard',                                                 ctrl: ctrlClassicplan},
+        '#/service':                       {view:'product-service.html',                              rootrest:'/dashboard/product/service',	                          ctrl: ctrlService},
+        '#/activiy':                       {view:'product-activity.html',	                            rootrest:'/dashboard/product/activity',	                          ctrl: ctrlActivity},
+        '#/car':                           {view:'product-car.html',                                   rootrest:'/dashboard/product/car', 		                          ctrl: ctrlCar},
+        '#/attraction':                   {view:'product-attraction.html',                           rootrest:'/dashboard/product/attraction',	                          ctrl: ctrlAttraction},
+        '#/delicacy':                     {view:'product-delicacy.html',                              rootrest:'/dashboard/product/delicacy',	                          ctrl: ctrlDelicacy},
+        '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                       ctrl: ctrlAccommodation},
+        '#/travelogue':                    {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                         ctrl: ctrlTravelogue},
+        '#/facilitylist':                 {view:'facilitylist.html',                                  rootrest:'/facility/list',                                            ctrl: ctrlFacilityList},
         '#/orderlist':                     {view: 'orderlist.html',                                    rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
 
         '#/shortplandetail':             {view: 'product-shortplan-detail.html',                    rootrest: '/dashboard/product/shortplan/detail',                  ctrl: ctrlShortplanDetail},
         '#/templateplandetail':          {view: 'product-tempplan-detail.html',                     rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
 
-        '#/delicacydetail':               {view:'product-delicacy-detail.html',	                     rootrest:'/dashboard/product/delicacy/detail',                      ctrl: ctrlDelicacyDetail},
-        '#/accommodationdetail':        {view:'product-accommodation-detail.html',                 rootrest:'/dashboard/product/accommodation/detail',	            ctrl: ctrlAccommodationDetail},
-        '#/attractiondetail':            {view:'product-attraction-detail.html',                    rootrest:'/dashboard/product/attraction/detail',                    ctrl: ctrlAttractionDetail},
+        '#/delicacydetail':               {view:'product-delicacy-detail.html',	                     rootrest:'/dashboard/product/delicacy/detail',                     ctrl: ctrlDelicacyDetail},
+        '#/accommodationdetail':        {view:'product-accommodation-detail.html',                 rootrest:'/dashboard/product/accommodation/detail',	           ctrl: ctrlAccommodationDetail},
+        '#/attractiondetail':            {view:'product-attraction-detail.html',                    rootrest:'/dashboard/product/attraction/detail',                  ctrl: ctrlAttractionDetail},
 
-        '#/serviceotherdetail':           {view:'product-service-other-detail.html',               rootrest:'/dashboard/product/service/detail',                       ctrl: ctrlServicedetail},
-        '#/shortplannew':                 {fragment: 'fragment/product-shortplan-edit.html',       init: initShortplanNew,                                                    ctrl: ctrlShortplanNew},
-        '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',         init: initTemplateplanNew,                                                 ctrl: ctrlTemplateplanNew},
+        '#/serviceotherdetail':           {view:'product-service-other-detail.html',               rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/shortplannew':                 {fragment: 'fragment/product-shortplan-edit.html',       init: initShortplanNew,                                                   ctrl: ctrlShortplanNew},
+        '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',         init: initTemplateplanNew,                                                ctrl: ctrlTemplateplanNew},
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
+        '#/spotchooser':                 {fragment: 'fragment/dialog-spot-chooser.html',            init: initSpotChooser,                                                   ctrl: ctrlSpotChooser},
 
         '#/servicecardetail':             {view:'product-service-car-detail.html',                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',                             rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},

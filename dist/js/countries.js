@@ -263,9 +263,10 @@ function populateStates( countryElementId, stateElementId ){
 		stateElement.options[stateElement.length] = new Option(state[1],state_arr[i]);
 	}
     $('.selectpicker').selectpicker('refresh');
+
 }
 
-function populateCountries(countryElementId, stateElementId){
+function populateCountries(countryElementId, stateElementId, chooseSpot){
 	// given the id of the <select> tag as function argument, it inserts <option> tags
 	var countryElement = document.getElementById(countryElementId);
 	countryElement.length=0;
@@ -280,7 +281,7 @@ function populateCountries(countryElementId, stateElementId){
 
 	if( stateElementId ){
 		countryElement.onchange = function(){
-			populateStates( countryElementId, stateElementId );
+			populateStates( countryElementId, stateElementId, chooseSpot);
 		};
 	}
     $('.selectpicker').selectpicker('refresh');

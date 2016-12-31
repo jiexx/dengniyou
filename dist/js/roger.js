@@ -350,11 +350,8 @@ $(function () {
 				$._RogerLoadView($(this).data("href"), container, viewReqURL, viewReqJSON, callback );
 			});
 		},
-		rogerOnClickTrigger: function(container, viewReqURL, viewReqJSON, callback ) {
-			$(this).click(function (e) {
-				e.preventDefault();
-				$._RogerLoadView($(this).data("href"), container, viewReqURL, viewReqJSON, callback );
-			});
+		rogerDialogTrigger: function(url, viewReqURL, viewReqJSON, callback ) {
+			$._RogerLoadView(url, $(this), viewReqURL, viewReqJSON, callback );
 		},
 		/*rogerLoadView: function(href, jsondata, callback ) {
 			$._RogerLoadViewByJSON(srcView, $(this), jsondata, callback);
