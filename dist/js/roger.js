@@ -490,11 +490,8 @@ $(function () {
                     $(this).on("click", function () {
                         var func = data[action];
                         if(func && typeof func === "function") {
-                            func(data, pointer, function (d) {
-								if(onFinish) {
-									onFinish(d, onFinish, parcel);
-								}
-                            });
+                            var obj = $.roger_pointer_get(data, ptr);
+                            func(data, obj);
                         }
                     });
                 }

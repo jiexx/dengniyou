@@ -4,7 +4,7 @@ $(function () {
 	var ctrlHome = function(response, realView) {
 		$('#carousel-generic').carousel();
 		realView.rogerCropImages();
-		$('#modal').rogerReloadFile('./home-login.html');
+		$('#modal').rogerReloadFile('.//fragment/dialog-login.html');
 		$('#footer').rogerReloadFile('./footer.html'); 
 		$('#login-form').rogerSubmit('/login', function(respJSON){
 			if(respJSON[0] && respJSON[0].UserID > 0) {

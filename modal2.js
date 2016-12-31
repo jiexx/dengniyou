@@ -7,7 +7,7 @@ var fdfs = new FdfsClient({
     trackers: [
         {
             //host: '10.101.1.165',
-			host: '10.101.1.165',//'172.16.36.1',//'123.59.144.47','10.101.1.165'
+			host: '172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
             port: 22122
         }
     ],
@@ -77,15 +77,17 @@ var uploadImage = function uploadImage(funcArgu, onFinish){
 			onFinish(fileId);
 		}
 	}).catch(function(err) {
-		var i = 1;
-		//console.log(err);
+		console.log(err);
 	});
 };
 
 var CallbackLooper = {
 	clear: function(){
 		for(var i in this.funcArgus) {
-			this.funcArgus[i] = null;
+			for(var j in this.funcArgus[i]){
+                this.funcArgus[i][j] = null;
+			}
+            this.funcArgus[i] = null;
 		}
 		this.funcArgus = null;
 	},
@@ -94,7 +96,7 @@ var CallbackLooper = {
 		////console.log(_this.func.toString() + ' 	'+_this.i+'  '+_this.count);
 		if(_this.i == _this.count) {
 			if(_this.onFinish) {
-				_this.onFinish();
+				_this.onFinish(_this.funcArgus);
 			}
 		}
 		if(_this.i < _this.count) {
@@ -136,7 +138,8 @@ var CallbackLooper = {
 			onOneFinish:onOneFinish,
 			loop:CallbackLooper.loop,
             expand:CallbackLooper.expand,
-			funcArgus:funcArgus
+			funcArgus:funcArgus,
+			clear:CallbackLooper.clear
 		};
 		return obj;
 	}
@@ -325,11 +328,11 @@ var roger = {
 	//eg.{UserID:1234,Pics:["",""]}
 	//copy <-  semi list
 	//eg."Picture": {"sql": "UPDATE SET ?, ?;",	"params":["Pics", "UserID"], "files":"Pics"}
-	"uploadImages":function(files, funcArgu, onOneFinish, onFinish){
-		var funcArgus = [];
-		for(var i = 0 ; i < files.length; i ++) {
-			funcArgus.push({base64:files[i], funcArgu:funcArgu});
-		}
+	"uploadImages":function(files, onFinish, onOneFinish){
+		var funcArgus = files;
+		/*for(var i = 0 ; i < files.length; i ++) {
+			funcArgus.push({base64:files[i]});
+		}*/
 		var cl = CallbackLooper.create(funcArgus.length, uploadImage, funcArgus,
 			onFinish,
 			function(funcArgu, fileid){
@@ -357,35 +360,39 @@ var roger = {
 			before: function(funcArgu, onFinish){
 				var tags = funcArgu.item.modal.files;
 				var data = funcArgu.item.data;
-				var params = funcArgu.item.params;
+				var origin= funcArgu.item.modal.params;
+                var params = funcArgu.item.params;
 				var files = [];
 				for(var i in tags) {
-					var file = data[tags[i]];
-					if( Array == file.constructor ){
-						for(var j in file) {
-							files.push(file[j]);
+					var d = data[tags[i]];
+					var pos = origin.indexOf(tags[i]);
+					if( Array == d.constructor ){
+						for(var j in d) {
+							files.push({base64:d[j],index:pos});
 						}
-					}else if('string' == typeof file){
-						files.push(file);
+					}else if('string' == typeof d){
+						files.push(d);
+                        files.push({base64:d,index:pos});
 					}
 				}
-				roger.uploadImages(files, function(){
+				roger.uploadImages(files, function(fas){
+					var w = tags.length;
+					var h = fas.length /tags.length;
+					for( var i = 0 ; i < h ; ) {
+						for( var j = 0 ; j < w ; j ++ ) {
+							var f = fas[i +j*h];
+                            params[f.index] = f.fileid;
+						}
+						i ++;
+						if(i < h) {
+                            var copy = roger.shallow(funcArgu.item);
+                            funcArgu.vector.push(copy);
+						}
+					}
 					this.clear();
 					onFinish();
 				}, function(fa, fileid){//oneFinish
-					var finalParams = [];
-					for (var i in params) {
-						var tag = params[i];
-						var index = tags.indexOf(tag);
-						if(index>-1) {
-							finalParams.push(fileid);
-						}else {
-							finalParams.push(params[i]);
-						}
-					}
-					funcArgu.item.params = finalParams;
-					var copy = roger.shallow(funcArgu.item);
-					funcArgu.vector.push(copy);
+					fa.fileid = fileid;
 				});
 			}
 		},
@@ -420,23 +427,27 @@ var roger = {
 				var output = funcArgu.item.superior.output;
 				var findkey = funcArgu.item.modal.findkey;
 				var data = funcArgu.item.data;
-				var params = funcArgu.item.modal.params;
+				var params = funcArgu.item.params;
 				 //superior output is object
 				if(output && 'object' == typeof output && Array != output.constructor) {
 
-					funcArgu.item.params = roger.replace(params, findkey, output[findkey]);
+                    funcArgu.item.params = roger.replace(params, findkey, output[findkey]);
+                    funcArgu.params = funcArgu.item.params;
 
 				}// superior output is 2d array
 				else if(Array == output.constructor){
 					var vector = [];
-					for(var j in output) {
 
-						funcArgu.item.params = roger.replace(params, findkey, output[j][findkey]);
+					for(var j = 1; j < output.length ; j ++ ) {
 						var copy = roger.shallow(funcArgu.item);
+                        copy.item.params = roger.replace(params, findkey, output[j][findkey]);
 						funcArgu.vector.push(copy);
                         vector.push({sql:copy.sql, params:copy.params, item:copy, doing:null});
 					}
                     looper.expand(vector);
+                    funcArgu.params = roger.replace(params, findkey, output[j][findkey]);
+                    funcArgu.params = funcArgu.item.params;
+
 				}
 				//onFinish();
 			}

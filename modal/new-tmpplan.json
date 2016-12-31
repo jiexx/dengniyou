@@ -5,15 +5,15 @@
 	"file":["PicURL","CarURL"],
 	"Picture": {"sql": "INSERT INTO traveluserdb.tab_planpicture(PlanID,PicUrl)VALUES(?,?);",	"params":["insertId", "Pics"], "files":"Pics", "findkey": "insertId"},
 	"Summary":{"sql":"INSERT INTO traveluserdb.tab_plansummary(PlanID,PlanName,PlanFeature,PlanLabels,PlanSeasons,PlanRhythm,StartTime)VALUES(?,?,?,?,'一年四季,春季,夏季,秋季,冬季',0,'随时出发');",	"params":["insertId","PlanName","PlanFeature","PlanLabels"],"findkey": "insertId"},
-	"Schedule":[{
+	"PlanSchedule":{
 	  "sql":"INSERT INTO traveluserdb.tab_planschedule(PlanID,DayName,TravelInstruction,CreateDate)VALUES(?,?,?,NOW());",
 	  "params":["insertId", "DayName","TravelInstruction"],
 	  "findkey": "insertId",
-	  "Place":[{
+	  "Spot":{
 		"sql":"INSERT INTO traveluserdb.tab_planscheduleplace(ScheduleID,CountryID,CountryNameCn,CountryNameEn,CityID,CityNameCn,CityNameEn,AirportCode,AirportNameCn,AirportNameEn,SpotID,SpotName,SpotLocalName,SpotTravelTime,HotelStarLevel,ScheduleType,SpotPicUrl)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
 		"params":["insertId", "CountryID ","CountryNameCn","CountryNameEn","CityID","CityNameCn","CityNameEn","AirportCode","AirportNameCn","AirportNameEn","SpotID","SpotName","SpotLocalName","SpotTravelTime","HotelStarLevel","ScheduleType","SpotPicUrl"],
 		"findkey": "insertId"
-	  }]
-	}]
+	  }
+	}
   }
 }

@@ -4,7 +4,7 @@
             $('#footer').rogerReloadFile('./footer.html');
         }
         if( !$.trim( $('#modal').html() ) ) {
-            $('#modal').rogerReloadFile('./home-login.html');
+            $('#modal').rogerReloadFile('./fragment/dialog-login.html');
         }
         if($.rogerIsLogined()) {
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');

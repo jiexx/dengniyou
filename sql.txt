@@ -323,7 +323,9 @@ INSERT INTO traveluserdb.tab_planscheduleplace(CountryID,CountryNameCn,CountryNa
 INSERT INTO traveluserdb.tab_planschedule(PlanID,DayName,TravelInstruction,CreateDate,);VALUES(?,?,?,NOW());
  
  
- 
+
+select @rownum:=@rownum+1, concat('"',z.x,'",'), concat('s_a[', cast(@rownum as char), IFNULL(z.y,']="";')) from
+(select @rownum:=0, concat(CAST(b.RegionID AS CHAR),':',b.RegionCnName,':',b.ShortCnName,':',CAST(b.Continent AS CHAR)) x, concat(']="',group_concat(concat(CAST(a.RegionID AS CHAR),':',a.RegionCnName,':',a.ShortCnName) separator '|'),'";') y from  (SELECT RegionID, RegionCnName,ShortCnName,ParentID  FROM traveldb.tab_travelregion  where ifleaf=1 limit 0, 100000 ) a right join (SELECT RegionID, RegionCnName,ShortCnName,Continent FROM traveldb.tab_travelregion where ifleaf=0 ) b on a.ParentID = b.RegionID    group by b.regionid) z ;
  
  
  

@@ -12,7 +12,7 @@ $(function () {
     }
 	var ctrlDashboard = function(response, realView) {
         if( !$.trim( $('#modal').html() ) ) {
-            $('#modal').rogerReloadFile('./home-login.html');
+            $('#modal').rogerReloadFile('./fragment/dialog-login.html');
         }
         if(!$.rogerGetURLJsonParams()) {
             if(!$.rogerIsLogined()) {
@@ -92,46 +92,79 @@ $(function () {
         return {
             PlanInfo:{
                 PlanName:'',
-                AdultPrice:'',
-                KidPrice:'',
-                PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
-                PlanFeature:'',
-                CoverPicURL:'',
-                CarPicURL:[],
-                PicURL:[],
+                PlanPriceBase:'',
+                PicURL:'',
+                CarURL:[],
+                PlanDays:'',
+                StartCity:'',
+                StartCityID:'',
                 Policy:'',
                 CostInclude:'',
                 CostExclude:'',
                 VisaNotice:'',
-                Notice:''
-            },
-            PlanSchedule:{
-                __countScheduleID:1,
-                Day:[{
-                    Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                Notice:'',
+                CreateUserID:'',
+                AdultPrice:'',
+                KidPrice:'',
+
+                Picture:{
+                    Pics:[]
+                },
+                Summary:{
+                    PlanName:'',
+                    PlanFeature:'',
+                    PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
+                },
+                PlanSchedule: [{
+                    Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
                     ],
-                    TravelInstruction:''
+                    TravelInstruction:'',
+                    DayName:''
                 }]  //0 city, 1 airport, 2 attraction, 3 delicacy, 4 accommodation
-            }
+            },
         };
-    }
+    };
+    var initCityChooser = function (PS) {
+        return {
+            UserData:0,
+            Spot:PS.Spot,
+            Plan:PS.Plan
+        };
+    };
+    var ctrlCityChooser = function (PS, realView) {
+        $('#cityChooser').modal('show');
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#state option:selected').val().split(':');
+            data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data.Plan);
+        });
+    };
     var ctrlTemplateplanNew = function(Plan, realView) {
-        var data = Plan;
-        $('#newOneDay').rogerOnceClick(function(){
-            Plan.PlanSchedule.__countScheduleID ++;
-            Plan.PlanSchedule.Day.push({
-                City:[{Name:''}],
-                Airport:[{AirportCode:'',AirportNameCn:'',AirportNameEn:''}],
-                Attraction:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}],
-                Delicacy:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}],
-                Accommodation:[{NameCh:'',NameEn:'',CountryName:'',CityName:'',Address:'',ZipCode:''}]
+        Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            PlanSchedule.push({
+                Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
+                ],
+                TravelInstruction:'',
+                DayName:''
             });
             $.rogerRefresh(Plan);
-        });
+        };
+
+        Plan.createCity = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/citychooser', {Plan:Plan, Spot:Spot});
+        };
+
         $('#save').rogerOnceClick(Plan, function(e){
 
             console.log('test');
@@ -477,53 +510,54 @@ $(function () {
     } ;
 
 	$.rogerRouter({
-		'#/':                               {view:'product-specialplan.html',					rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
-        '#/spcialplan':                   {view:'product-specialplan.html',					rootrest:'/dashboard/product/specialplan',                        ctrl: ctrlSpecialplan},
-        '#/classicplan':                  {view:'product-classicplan.html',					rootrest:'/dashboard',                                               ctrl: ctrlClassicplan},
-        '#/service':                       {view:'product-service.html',						rootrest:'/dashboard/product/service',	                        ctrl: ctrlService},
-        '#/activiy':                       {view:'product-activity.html',						rootrest:'/dashboard/product/activity',	                        ctrl: ctrlActivity},
-        '#/car':                           {view:'product-car.html',    						rootrest:'/dashboard/product/car', 		                        ctrl: ctrlCar},
-        '#/attraction':                   {view:'product-attraction.html',					rootrest:'/dashboard/product/attraction',	                        ctrl: ctrlAttraction},
-        '#/delicacy':                     {view:'product-delicacy.html',						rootrest:'/dashboard/product/delicacy',	                        ctrl: ctrlDelicacy},
-        '#/accommodation':               {view:'product-accommodation.html',				rootrest:'/dashboard/product/accommodation',                     ctrl: ctrlAccommodation},
-        '#/travelogue':                    {view:'travelogue-list.html',        				rootrest:'/travelogue/list',                                        ctrl: ctrlTravelogue},
-        '#/facilitylist':                 {view:'facilitylist.html',                          rootrest:'/facility/list',                                           ctrl: ctrlFacilityList},
-        '#/orderlist':                     {view: 'orderlist.html',                            rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
+		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                        ctrl: ctrlDashboard},
+        '#/spcialplan':                   {view:'product-specialplan.html',                         rootrest:'/dashboard/product/specialplan',                        ctrl: ctrlSpecialplan},
+        '#/classicplan':                  {view:'product-classicplan.html',                         rootrest:'/dashboard',                                               ctrl: ctrlClassicplan},
+        '#/service':                       {view:'product-service.html',                              rootrest:'/dashboard/product/service',	                        ctrl: ctrlService},
+        '#/activiy':                       {view:'product-activity.html',	                            rootrest:'/dashboard/product/activity',	                        ctrl: ctrlActivity},
+        '#/car':                           {view:'product-car.html',                                   rootrest:'/dashboard/product/car', 		                        ctrl: ctrlCar},
+        '#/attraction':                   {view:'product-attraction.html',                           rootrest:'/dashboard/product/attraction',	                        ctrl: ctrlAttraction},
+        '#/delicacy':                     {view:'product-delicacy.html',                              rootrest:'/dashboard/product/delicacy',	                        ctrl: ctrlDelicacy},
+        '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                     ctrl: ctrlAccommodation},
+        '#/travelogue':                    {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                        ctrl: ctrlTravelogue},
+        '#/facilitylist':                 {view:'facilitylist.html',                                  rootrest:'/facility/list',                                           ctrl: ctrlFacilityList},
+        '#/orderlist':                     {view: 'orderlist.html',                                    rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
 
-        '#/shortplandetail':             {view: 'product-shortplan-detail.html',           rootrest: '/dashboard/product/shortplan/detail',                  ctrl: ctrlShortplanDetail},
-        '#/templateplandetail':          {view: 'product-tempplan-detail.html',            rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
+        '#/shortplandetail':             {view: 'product-shortplan-detail.html',                    rootrest: '/dashboard/product/shortplan/detail',                  ctrl: ctrlShortplanDetail},
+        '#/templateplandetail':          {view: 'product-tempplan-detail.html',                     rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
 
-        '#/delicacydetail':             {view:'product-delicacy-detail.html',	            rootrest:'/dashboard/product/delicacy/detail',	                 ctrl: ctrlDelicacyDetail},
-        '#/accommodationdetail':       {view:'product-accommodation-detail.html',	        rootrest:'/dashboard/product/accommodation/detail',	             ctrl: ctrlAccommodationDetail},
-        '#/attractiondetail':           {view:'product-attraction-detail.html',	         rootrest:'/dashboard/product/attraction/detail',	             ctrl: ctrlAttractionDetail},
+        '#/delicacydetail':               {view:'product-delicacy-detail.html',	                     rootrest:'/dashboard/product/delicacy/detail',                      ctrl: ctrlDelicacyDetail},
+        '#/accommodationdetail':        {view:'product-accommodation-detail.html',                 rootrest:'/dashboard/product/accommodation/detail',	            ctrl: ctrlAccommodationDetail},
+        '#/attractiondetail':            {view:'product-attraction-detail.html',                    rootrest:'/dashboard/product/attraction/detail',                    ctrl: ctrlAttractionDetail},
 
-        '#/serviceotherdetail':           {view:'product-service-other-detail.html',        rootrest:'/dashboard/product/service/detail',	                 ctrl: ctrlServicedetail},
-        '#/shortplannew':                 {fragment: 'fragment/product-shortplan-edit.html',init: initShortplanNew,                                               ctrl: ctrlShortplanNew},
+        '#/serviceotherdetail':           {view:'product-service-other-detail.html',               rootrest:'/dashboard/product/service/detail',                       ctrl: ctrlServicedetail},
+        '#/shortplannew':                 {fragment: 'fragment/product-shortplan-edit.html',       init: initShortplanNew,                                                    ctrl: ctrlShortplanNew},
+        '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',         init: initTemplateplanNew,                                                 ctrl: ctrlTemplateplanNew},
+        '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
 
-        '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',  init: initTemplateplanNew,                                            ctrl: ctrlTemplateplanNew},
-        '#/servicecardetail':           {view:'product-service-car-detail.html',              rootrest:'/dashboard/product/service/detail',                  ctrl: ctrlServicedetail},
-        '#/cardetail':                   {view:'product-car-detail.html',                       rootrest:'/dashboard/product/service/detail',                   ctrl: ctrlServicedetail},
-        '#/serviceactivitydetail':      {view:'product-activity-detail.html',                rootrest:'/dashboard/product/service/detail',                   ctrl: ctrlServicedetail},
-        '#/servicepickupdetail':       {view:'product-service-pickup-detail.html',	       rootrest:'/dashboard/product/service/detail',                  ctrl: ctrlServicedetail},
-        '#/equipdetail':                 {view:'product-equip-detail.html',                     rootrest:'/facility/detail',                                     ctrl: ctrlFacilityDetail},
-        '#/traveloguedetail':           {view:'travelogue-detail.html',	                       rootrest:'/travelogue/detail',                                    ctrl: ctrlTravelogueDetail},
-        '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',               init: initTemplateplanNew,                                      ctrl: ctrlTemplateplanNew},
-        '#/servicecardetail':           {view:'product-service-car-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
-        '#/cardetail':                   {view:'product-car-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
-        '#/serviceactivitydetail':      {view:'product-activity-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
-        '#/servicepickupdetail':      {view:'product-service-pickup-detail.html',	  rootrest:'/dashboard/product/service/detail',ctrl: ctrlServicedetail},
-        '#/equipdetail':      {view:'product-equip-detail.html',	  rootrest:'/facility/detail',ctrl: ctrlFacilityDetail},
-        '#/traveloguedetail':      {view:'travelogue-detail.html',	  rootrest:'/travelogue/detail',ctrl: ctrlTravelogueDetail},
-        '#/attractionedit':      {fragment: 'fragment/product-attraction-edit.html',     init: initAttractionEdit,   ctrl: ctrlAttractionEdit},
-        '#/accommodationedit':   {fragment: 'fragment/product-accommodation-edit.html',     init: initAccommodationEdit,   ctrl: ctrlAccommodationEdit},
-        '#/activityedit':        {fragment: 'fragment/product-activity-edit.html',     init: initActivityEdit,   ctrl: ctrlActivityEdit},
-        '#/delicacyedit':        {fragment: 'fragment/product-delicacy-edit.html',     init: initDelicacyEdit,   ctrl: ctrlDelicacyEdit},
-        '#/caredit':             {fragment: 'fragment/product-car-edit.html',     init: initCarEdit,   ctrl: ctrlCarEdit},
-        '#/servicecaredit':      {fragment: 'fragment/product-service-car-edit.html',     init: initServiceCarEdit,   ctrl: ctrlServiceCarEdit},
-        '#/servicepickupedit':   {fragment: 'fragment/product-service-pickup-edit.html',     init: initServicePickupEdit,   ctrl: ctrlServicePickupEdit},
-        '#/serviceotheredit':    {fragment: 'fragment/product-service-other-edit.html',     init: initServiceOtherEdit,   ctrl: ctrlServiceOtherEdit},
-        '#/travelogueedit':      {fragment: 'fragment/travelogue-edit.html',     init: initTraveLogueEdit,   ctrl: ctrlTraveLogueEdit},
-        '#/equipedit':      {fragment: 'fragment/product-equip-edit.html',     init: initEquipEdit,   ctrl: ctrlEquipEdit},
+        '#/servicecardetail':             {view:'product-service-car-detail.html',                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/cardetail':                    {view:'product-car-detail.html',                             rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/serviceactivitydetail':       {view:'product-activity-detail.html',                      rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/servicepickupdetail':        {view:'product-service-pickup-detail.html',	              rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/equipdetail':                  {view:'product-equip-detail.html',                          rootrest:'/facility/detail',                                          ctrl: ctrlFacilityDetail},
+        '#/traveloguedetail':            {view:'travelogue-detail.html',	                          rootrest:'/travelogue/detail',                                       ctrl: ctrlTravelogueDetail},
+        '#/templateplannew':              {fragment: 'fragment/product-tempplan-edit.html',        init: initTemplateplanNew,                                                ctrl: ctrlTemplateplanNew},
+        '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/cardetail':                    {view:'product-car-detail.html',	                          rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/serviceactivitydetail':       {view:'product-activity-detail.html',	                      rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/servicepickupdetail':         {view:'product-service-pickup-detail.html',	              rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/equipdetail':                  {view:'product-equip-detail.html',	                          rootrest:'/facility/detail',                                          ctrl: ctrlFacilityDetail},
+        '#/traveloguedetail':            {view:'travelogue-detail.html',	                           rootrest:'/travelogue/detail',                                       ctrl: ctrlTravelogueDetail},
+        '#/attractionedit':               {fragment: 'fragment/product-attraction-edit.html',       init: initAttractionEdit,                                                 ctrl: ctrlAttractionEdit},
+        '#/accommodationedit':            {fragment: 'fragment/product-accommodation-edit.html',   init: initAccommodationEdit,                                              ctrl: ctrlAccommodationEdit},
+        '#/activityedit':                 {fragment: 'fragment/product-activity-edit.html',          init: initActivityEdit,                                                   ctrl: ctrlActivityEdit},
+        '#/delicacyedit':                 {fragment: 'fragment/product-delicacy-edit.html',          init: initDelicacyEdit,                                                   ctrl: ctrlDelicacyEdit},
+        '#/caredit':                       {fragment: 'fragment/product-car-edit.html',                init: initCarEdit,                                                        ctrl: ctrlCarEdit},
+        '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',       init: initServiceCarEdit,                                                 ctrl: ctrlServiceCarEdit},
+        '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServicePickupEdit,                                              ctrl: ctrlServicePickupEdit},
+        '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceOtherEdit,                                               ctrl: ctrlServiceOtherEdit},
+        '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',                 init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},
+        //'#/equipedit':      {fragment: 'fragment/product-equip-edit.html',     init: initEquipEdit,   ctrl: ctrlEquipEdit},
 
 	});
 
