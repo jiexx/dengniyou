@@ -4,7 +4,7 @@
             $('#footer').rogerReloadFile('./footer.html');
         }
         if( !$.trim( $('#modal').html() ) ) {
-            $('#modal').rogerReloadFile('./fragment/dialog-login.html');
+            $('#modal').rogerReloadFile('./dialog/home-login.html');
         }
         if($.rogerIsLogined()) {
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
@@ -45,7 +45,7 @@
 			}
 			var usr =$.rogerGetLoginUser();
 			e.data.Comment.UserID = usr.UserID;
-			console.log(usr);
+			//console.log(usr);
 			$.rogerPost('/comment/plan', e.data, function(respJSON){
 				$.rogerRefresh();
 			});

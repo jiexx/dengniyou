@@ -89,10 +89,11 @@ $(function () {
         realView.rogerCropImages();
     };
     var initTemplateplanNew = function(params){
+        var usr =$.rogerGetLoginUser();
         return {
             PlanInfo:{
                 PlanName:'', PlanPriceBase:'',PicURL:'',CarURL:[],PlanDays:'',StartCity:'',StartCityID:'',Policy:'',CostInclude:'',
-                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:'',AdultPrice:'',KidPrice:'',
+                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:'',KidPrice:'',
 
                 Picture:{
                     Pics:[]
@@ -256,8 +257,14 @@ $(function () {
         Plan.createAccommodation = function (Plan, Spot) {
             $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'accommodation', TypeCn:'酒店'});
         };
-        Plan.changeSpot = function (Plan, SpotItem) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, SpotItem:SpotItem, Replace:true});
+        Plan.changeAttraction = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'attraction', TypeCn:'景点',SpotItem:SpotItem,Replace:true});
+        };
+        Plan.changeDelicacy = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'delicacy', TypeCn:'美食',SpotItem:SpotItem,Replace:true});
+        };
+        Plan.changeAccommodation = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'accommodation', TypeCn:'酒店',SpotItem:SpotItem,Replace:true});
         };
         Plan.createAirport = function (Plan, Spot) {
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Spot:Spot});
@@ -268,8 +275,9 @@ $(function () {
 
 
         $('#save').rogerOnceClick(Plan, function(e){
-
-            console.log('test');
+            $.rogerPost('/comment/plan', e.data, function(respJSON){
+                $.rogerRefresh();
+            });
         });
 
         bindRidoesForSwitch();

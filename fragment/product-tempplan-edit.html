@@ -139,8 +139,8 @@
 						<ul class="airports">
 							<li>
 								<div class="planeIcon">
-								<img src="../img/airPlaneIcon.png" alt="">
-							</div>
+									<img src="../img/airPlaneIcon.png" alt="">
+								</div>
 								<div class="planeText">
 									${AirportCode} ${AirportNameCn}<br>
 									${AirportNameEn}
@@ -174,8 +174,15 @@
 									<p>${CountryNameCn}：${CityNameCn}</p>
 									<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
 								</div>
-
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeSpot">换</span>
+								{{if v.ScheduleType==2}}
+								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
+								{{/if}}
+								{{if v.ScheduleType==3}}
+								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
+								{{/if}}
+								{{if v.ScheduleType==4}}
+								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
+								{{/if}}
 
 								<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
 							</li>
