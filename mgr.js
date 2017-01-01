@@ -8,8 +8,9 @@ var router = express.Router();
 var fs = require("fs");
 var request = require('request');
 var db = require("./db");
-var modal = require("./modal");
+var modal = require("./modal2");
 var FdfsClient = require('fdfs');
+var pay = require('./pay');
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true })); // for parsing application/x-www-form-urlencoded
@@ -72,8 +73,44 @@ function readFiles(dirname, onFileContent, onError) {
     });
   });
 }
+pay.config({
+    seller_email: 'pr@qinmaohao.com',
+    partner: '2088612188470577 ',
+    key: 'w8dmwl2awivsqjv7f3m1chynw49ya8yv',
+    notify_url: 'http://127.0.0.1:8088/notify',
+    return_url: 'http://127.0.0.1:8088/'
+});
 
-
+app.post('/pay', upload.array(), function(req, res) {
+    var fake = JSON.parse(fs.readFileSync('fakeorder', 'utf8'));
+    //WRITE ORDER INFO.
+	request.post(
+		'http://123.59.144.44/travel/order /addOrder', fake,
+		function (error, response, body) {
+			if (!error && response.statusCode == 200) {
+                var usr_redirect_url = pay.buildDirectPayURL({
+                    out_trade_no: body.datas.orderNO,
+                    subject: body.datas.orderId,
+                    body: body.datas.orderId,
+                    total_fee: body.datas.costMoney
+                });
+                res.send(usr_redirect_url);
+			}else {
+				console.error(error);
+			}
+		}
+	);
+});
+app.get('/notify', function (req, res) {
+    var params = req.body;
+    pay.verify(params, function (err, result) {
+        if (!err && result == true) {
+            res.send('');//pay success. this is return alipay instead of user. HERE can change order state.
+        } else {
+            console.error(err);
+        }
+    });
+});
 app.post('/login', upload.array(), function(req, res) {
 	db.login(req.body, function(error, results){
 		if(!error) {

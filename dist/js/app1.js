@@ -53,18 +53,11 @@
 	};
 	var ctrlPlandetail = function(response, realView) {
 
-        $('#calendar').fullCalendar({
-  	  		defaultDate: '2016-12-12',
-  	  		editable: true,
-  	  		eventLimit: true, // allow "more" link when too many events
-  	  		events: [
-  	  			{
-  	  				title: 'Long Event',
-  	  				start: '2016-12-07',
-  	  				end: '2016-12-10'
-  	  			},
-  	  		]
-  	  	});
+        var pickr = $("#calendar").flatpickr({
+            inline: true,
+            "mode": "multiple"
+		});
+        pickr.selectedDates.push('');
 		realView.rogerCropImages();
         frameCtrl();
 
