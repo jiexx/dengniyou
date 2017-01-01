@@ -1,0 +1,3 @@
+{
+	"Airport": {"sql": "SELECT AirPortCode,NameCh,NameEn FROM traveluserdb.tab_serviceairports;",	"params":[]}
+}

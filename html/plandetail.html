@@ -127,7 +127,11 @@
 										{{each  v.__values}}
 										<li>
 											<div class="picText">
+												{{if  ScheduleType == 1  }}
+												<img src="../img/airPlaneIcon.png" alt="">
+												{{else}}
 												<img data-src="${ $data.IMGHOST }${PicURL}">
+												{{/if}}
 												<div class="text media-body">
 													<div class="media-heading">${NameCh}</div>
 													<div>${PlanNumber}</div>

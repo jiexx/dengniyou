@@ -1,34 +1,18 @@
-<!-- Large modal -->
-<button type="button" class="btn btn-primary" data-toggle="modal" >Large modal</button>
-
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" >
-	<div class="modal-dialog modal-lg" role="document">
+<div id="airportChooser" class="modal fade" tabindex="-1" role="dialog" >
+	<div class="modal-dialog" role="document">
 		<div class="modal-content">
-				<div class="list-group">
-					{{each Attraction}}
-					<div class="list-group-item clearfix disabled"><div class="col-md-1"><input type="radio" name="optradio"></div><div class="col-md-5">方案</div><div class="col-md-2">价格</div><div class="col-md-2">行程天数</div>
-						<div class="col-md-1 ">发布状态</div><div class="col-md-1 ">编辑</div>
+			<div class="modal-header">
+				<h4 class="modal-title">选择</h4>
+			</div>
+			<div class="modal-body">
+				<div class="container">
+					<div class="form-group" id="airportlist">
 					</div>
-					<div class="list-group-item clearfix btn-group"><div class="col-md-1"><input type="radio" name="optradio"></div>
-						<div class="col-md-5 ">
-							<div class="media">
-								<div class="media-left media-top">
-									<a href="#/attractiondetail?spotsID=${id}">
-										<img src="${ $data.IMGHOST+PicURL }" class="media-object" style="width:160px;height:160px"></img>
-									</a>
-								</div>
-								<div class="media-body">
-									<div class="media-heading">${NameCh}</div>
-									<div>${NameEn}</div>
-									<div>${Country}|${City}</div>
-								</div>
-							</div>
-						</div>
-						<div class="col-md-2 ">${PlanPriceBase}</div><div class="col-md-2 ">${PlanDays}</div><div class="col-md-1 ">
-							{{if Status ==1}}待审核 {{/if}}{{if Status ==2}}审核通过 {{/if}}{{if Status ==3}}导游隐藏 {{/if}}{{if Status ==4}}导游发布 {{/if}}{{if Status ==5}}导游定制 {{/if}}{{if Status ==6}}未加入 {{/if}}{{if Status ==7}}已加入 {{/if}}
-						</div><div class="col-md-1 "><div class="btn  glyphicon glyphicon-edit"></div></div></div>
-					{{/each}}
 				</div>
+			</div>
+			<div class="modal-footer">
+				<button id="airportChooserOK" type="button" class="btn btn-default" data-dismiss="modal">确定</button>
+			</div>
 		</div>
 	</div>
 </div>

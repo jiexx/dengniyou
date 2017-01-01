@@ -1,0 +1,22 @@
+<div class="form-group">
+	<input class="form-control" id="searchinput" type="search" placeholder="..." />
+</div>
+<div id="searchlist" class="list-group" style="max-height:302px;overflow-y: scroll;">
+	{{if $data.Airport.length}}
+	{{each $data.Airport}}
+	<a href="javascript:void(0)" class="list-group-item" data-info="${AirPortCode}:${NameCh}:${NameEn}">
+		<div class="media">
+			<div class="media-left">
+					<img class="media-object" src="../img/airPlaneIcon.png" style="width:30px"></img>
+			</div>
+			<div class="media-body">
+				<h5 class="media-heading">${AirPortCode}</h5>
+				<p class="list-group-item-text">${NameEn}${NameCh}</p>
+			</div>
+		</div>
+	</a>
+	{{/each}}
+	{{else}}
+	<a href="#" class="list-group-item">该城市数据空</a>
+	{{/if}}
+</div>
