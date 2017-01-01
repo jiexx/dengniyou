@@ -92,8 +92,8 @@ $(function () {
         var usr =$.rogerGetLoginUser();
         return {
             PlanInfo:{
-                PlanName:'', PlanPriceBase:'',PicURL:'',CarURL:[],PlanDays:'',StartCity:'',StartCityID:'',Policy:'',CostInclude:'',
-                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:'',KidPrice:'',
+                PlanName:'', PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
+                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0,
 
                 Picture:{
                     Pics:[]
@@ -275,8 +275,11 @@ $(function () {
 
 
         $('#save').rogerOnceClick(Plan, function(e){
-            $.rogerPost('/comment/plan', e.data, function(respJSON){
-                $.rogerRefresh();
+            var data = {PlanInfo:e.data.PlanInfo};
+            data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+            $.rogerPost('/new/tmpplan', data, function(respJSON){
+                var i = 1;
+                //$.rogerRefresh();
             });
         });
 

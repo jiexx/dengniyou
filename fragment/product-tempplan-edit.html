@@ -72,18 +72,17 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{if $data.PlanInfo.PicURL}}
+				{{each $data.PlanInfo.PicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.PlanInfo.PicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PicURL" ></a>
+						<img src="${$data.PlanInfo.PicURL[$index]}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PicURL/${$index}" ></a>
 					</div>
 				</div>
-				{{else}}
-				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/PlanInfo/PicURL" data-action="image" >+</div>
+				{{/each}}
+				<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/PicURL" data-limit="1">
+					<div class="imgBox addImg"  data-op="change" data-pointer="/PlanInfo/PicURL/-" data-action="image" >+</div>
 				</div>
-				{{/if}}
 			</div>
 		</div>
 		<br>

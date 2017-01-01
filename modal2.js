@@ -39,7 +39,8 @@ function doSql(funcArgu, onFinish) {
 			conn.release(); // always put connection back in pool after last query
 			//////console.log(JSON.stringify(results));
 			if(err) {
-				////console.log(err);
+				console.log(err);
+                console.log(JSON.stringify(funcArgu));
 				if(onFinish) {
 					onFinish(true, results);
 				}
@@ -194,6 +195,18 @@ var roger = {
 		}
 		return null;
 	},
+    "copyArray": function(obj) {
+        if(Array == obj.constructor) {
+            var c = [];
+            for(var tag in obj){
+                //if("object" != typeof obj[tag] ) {
+                c[tag] = obj[tag];
+                //}
+            }
+            return c;
+        }
+        return null;
+    },
 	"format":function(json) {
 		json["IMGHOST"] = IMG_HOST;
 		//////console.log(json);
@@ -365,27 +378,36 @@ var roger = {
 				var files = [];
 				for(var i in tags) {
 					var d = data[tags[i]];
-					var pos = origin.indexOf(tags[i]);
-					if( Array == d.constructor ){
-						for(var j in d) {
-							files.push({base64:d[j],index:pos});
-						}
-					}else if('string' == typeof d){
-						files.push(d);
-                        files.push({base64:d,index:pos});
+                    var pos = origin.indexOf(tags[i]);
+					if(d){
+                        if( Array == d.constructor ){
+                            for(var j in d) {
+                                files.push({base64:d[j],index:pos});
+                            }
+                        }/*else if('string' == typeof d){
+                            files.push(d);
+                            //files.push({base64:d,index:pos});
+                        }*/
+					}else {
+                        params[pos] = null;
 					}
 				}
 				roger.uploadImages(files, function(fas){
 					var w = tags.length;
 					var h = fas.length /tags.length;
 					for( var i = 0 ; i < h ; ) {
-						for( var j = 0 ; j < w ; j ++ ) {
+						for( var j = 0 ; j < w ; j ++ ) {  //each row ===> params
 							var f = fas[i +j*h];
                             params[f.index] = f.fileid;
 						}
 						i ++;
 						if(i < h) {
                             var copy = roger.shallow(funcArgu.item);
+                            copy.params = roger.copyArray(params);
+                            for( var j = 0 ; j < w ; j ++ ) {  //each row ===> params
+                                var f = fas[i +j*h];
+                                copy.params[f.index] = f.fileid;
+                            }
                             funcArgu.vector.push(copy);
 						}
 					}
@@ -405,7 +427,7 @@ var roger = {
 					if(data[params[tag]]) {
 						finalParams.push(data[params[tag]]);
 					}else {
-						finalParams.push(params[tag]);
+						finalParams.push(null);
 					}
 				}
 				funcArgu.item.params = finalParams;
@@ -435,7 +457,7 @@ var roger = {
                     funcArgu.params = funcArgu.item.params;
 
 				}// superior output is 2d array
-				else if(Array == output.constructor){
+				else if(output &&  Array == output.constructor){
 					var vector = [];
 
 					for(var j = 1; j < output.length ; j ++ ) {
