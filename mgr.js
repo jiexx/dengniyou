@@ -82,24 +82,25 @@ pay.config({
 });
 
 app.post('/pay', upload.array(), function(req, res) {
-    var fake = JSON.parse(fs.readFileSync('fakeorder', 'utf8'));
+    var js = fs.readFileSync('./fakeorder.json', 'utf8');
+    var fake = JSON.parse(js);
     //WRITE ORDER INFO.
-	request.post(
+	/*request.post(
 		'http://123.59.144.44/travel/order /addOrder', fake,
 		function (error, response, body) {
-			if (!error && response.statusCode == 200) {
+			if (!error && response.statusCode == 200) {*/
                 var usr_redirect_url = pay.buildDirectPayURL({
-                    out_trade_no: body.datas.orderNO,
-                    subject: body.datas.orderId,
-                    body: body.datas.orderId,
-                    total_fee: body.datas.costMoney
+                    out_trade_no: 'test',//body.datas.orderNO,
+                    subject: 'order-312412',// 'order-312412',//body.datas.orderId,
+                    body:  'order-312412',//body.datas.orderId,
+                    total_fee:  '0.01',//body.datas.costMoney
                 });
-                res.send(usr_redirect_url);
-			}else {
+                res.send(JSON.stringify({url:usr_redirect_url}));
+			/*}else {
 				console.error(error);
 			}
 		}
-	);
+	);*/
 });
 app.get('/notify', function (req, res) {
     var params = req.body;

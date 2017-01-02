@@ -64,6 +64,13 @@
 		$('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
 		realView.rogerCropImages();
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
+		
+		$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
+			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
+				console.log(respJSON);
+                window.open(respJSON.url, '_blank');
+            })
+        })
 
 	};
 

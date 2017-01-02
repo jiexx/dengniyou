@@ -353,10 +353,10 @@ var roger = {
 			});
 		cl.loop();
 	},
-	"replace": function(row, findkey, replacement ){
+	"replace": function(row, modal, findkey, replacement ){
 		var finalParams = [];
-		for (var i in row) {
-			var tag = row[i];
+		for (var i in modal) {
+			var tag = modal[i];
 			if(tag == findkey) {
 				finalParams.push(replacement);
 			}else {
@@ -382,35 +382,32 @@ var roger = {
 					if(d){
                         if( Array == d.constructor ){
                             for(var j in d) {
-                                files.push({base64:d[j],index:pos});
+                                files.push({base64:d[j],index:pos, row:j});
                             }
-                        }/*else if('string' == typeof d){
-                            files.push(d);
-                            //files.push({base64:d,index:pos});
-                        }*/
+                        }else if('string' == typeof d){
+                            //files.push(d);
+                            files.push({base64:d,index:pos, row:0});
+                        }
 					}else {
                         params[pos] = null;
 					}
 				}
 				roger.uploadImages(files, function(fas){
-					var w = tags.length;
-					var h = fas.length /tags.length;
-					for( var i = 0 ; i < h ; ) {
-						for( var j = 0 ; j < w ; j ++ ) {  //each row ===> params
-							var f = fas[i +j*h];
-                            params[f.index] = f.fileid;
-						}
-						i ++;
-						if(i < h) {
+					var p = [];
+					for(var i in fas) {
+						if(fas[i].row == 0) {
+                            p[0] = params;
+						}else {
                             var copy = roger.shallow(funcArgu.item);
                             copy.params = roger.copyArray(params);
-                            for( var j = 0 ; j < w ; j ++ ) {  //each row ===> params
-                                var f = fas[i +j*h];
-                                copy.params[f.index] = f.fileid;
-                            }
                             funcArgu.vector.push(copy);
+                            p[fas[i].row] = copy.params;
 						}
 					}
+                    for(var i in fas) {
+						p[fas[i].row][fas[i].index] = fas[i].fileid;
+                    }
+                    p = null;
 					this.clear();
 					onFinish();
 				}, function(fa, fileid){//oneFinish
@@ -449,11 +446,10 @@ var roger = {
 				var output = funcArgu.item.superior.output;
 				var findkey = funcArgu.item.modal.findkey;
 				var data = funcArgu.item.data;
-				var params = funcArgu.item.params;
 				 //superior output is object
 				if(output && 'object' == typeof output && Array != output.constructor) {
 
-                    funcArgu.item.params = roger.replace(params, findkey, output[findkey]);
+                    funcArgu.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[findkey]);
                     funcArgu.params = funcArgu.item.params;
 
 				}// superior output is 2d array
@@ -462,12 +458,12 @@ var roger = {
 
 					for(var j = 1; j < output.length ; j ++ ) {
 						var copy = roger.shallow(funcArgu.item);
-                        copy.item.params = roger.replace(params, findkey, output[j][findkey]);
+                        copy.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[j][findkey]);
 						funcArgu.vector.push(copy);
                         vector.push({sql:copy.sql, params:copy.params, item:copy, doing:null});
 					}
                     looper.expand(vector);
-                    funcArgu.params = roger.replace(params, findkey, output[j][findkey]);
+                    funcArgu.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[j][findkey]);
                     funcArgu.params = funcArgu.item.params;
 
 				}

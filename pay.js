@@ -1,7 +1,7 @@
 var https = require('https');
 var crypto = require('crypto');
 var querystring = require('querystring');
-
+//https://doc.open.alipay.com/doc2/detail?treeId=62&articleId=103740&docType=1
 var _basicConfig = {
     alipay_gateway: 'https://mapi.alipay.com/gateway.do?',
     _input_charset: 'UTF-8',

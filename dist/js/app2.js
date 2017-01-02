@@ -90,9 +90,10 @@ $(function () {
     };
     var initTemplateplanNew = function(params){
         var usr =$.rogerGetLoginUser();
+        var type = $.rogerGetUrlParam('type');
         return {
             PlanInfo:{
-                PlanName:'', PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
+                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
                 CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0,
 
                 Picture:{
@@ -114,7 +115,7 @@ $(function () {
                     DayName:''
                 }]  //0 city, 1 airport, 2 attraction, 3 delicacy, 4 accommodation
             },
-            IMGHOST:"http://123.59.144.47/"
+            IMGHOST:$.rogerImgHost()
         };
     };
     var initCityChooser = function (PS) {
@@ -140,6 +141,27 @@ $(function () {
             Plan:PS.Plan,
             SpotItem:PS.SpotItem,
             Replace:PS.Replace
+        };
+    };
+    var initShortplanNew = function(params){
+        var usr =$.rogerGetLoginUser();
+        var type = $.rogerGetUrlParam('type');
+        return {
+            PlanInfo:{
+                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
+                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0,
+
+                Picture:{
+                    Pics:[]
+                },
+                Summary:{
+                    PlanName:'',
+                    PlanFeature:'',
+                    PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
+                },
+                PlanShort: []
+            },
+            IMGHOST:$.rogerImgHost()
         };
     };
     var ctrlCityChooser = function (PS, realView) {
@@ -278,18 +300,35 @@ $(function () {
             var data = {PlanInfo:e.data.PlanInfo};
             data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
             $.rogerPost('/new/tmpplan', data, function(respJSON){
-                var i = 1;
-                //$.rogerRefresh();
+                $.rogerNotice({Message:'新建模板方案成功'});
             });
         });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
-    var initShortplanNew = function(){
-      return null;
-    };
-    var ctrlShortplanNew = function(response, realView) {
+    var ctrlShortplanNew = function(Plan, realView) {
+        Plan.createDay = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            PlanShort.push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
+            $.rogerRefresh(Plan);
+        };
+        Plan.createPicture = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            PlanShort.push({Label:null, Day:null, Content:null, PicURL: null, PicEnable:true});
+            $.rogerRefresh(Plan);
+        };
+        Plan.createContent = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            PlanShort.push({Label:null, Day:null, Content:'desc', PicURL: null, PicEnable:false});
+            $.rogerRefresh(Plan);
+        };
+
+
+        $('#save').rogerOnceClick(Plan, function(e){
+            var data = {PlanInfo:e.data.PlanInfo};
+            data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+            $.rogerPost('/new/shortplan', data, function(respJSON){
+                $.rogerNotice({Message:'新建快捷方案成功'});
+            });
+        });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -586,7 +625,7 @@ $(function () {
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                          ctrl: ctrlDashboard},
         '#/spcialplan':                   {view:'product-specialplan.html',                         rootrest:'/dashboard/product/specialplan',                          ctrl: ctrlSpecialplan},
-        '#/classicplan':                  {view:'product-classicplan.html',                         rootrest:'/dashboard',                                                 ctrl: ctrlClassicplan},
+        '#/classicplan':                  {view:'product-classicplan.html',                         rootrest:'/dashboard/product/classicplan',                                                 ctrl: ctrlClassicplan},
         '#/service':                       {view:'product-service.html',                              rootrest:'/dashboard/product/service',	                          ctrl: ctrlService},
         '#/activiy':                       {view:'product-activity.html',	                            rootrest:'/dashboard/product/activity',	                          ctrl: ctrlActivity},
         '#/car':                           {view:'product-car.html',                                   rootrest:'/dashboard/product/car', 		                          ctrl: ctrlCar},

@@ -1,7 +1,7 @@
 {
   "PlanInfo": {
-	"sql": "INSERT INTO traveluserdb.tab_planinfo(PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,3,0,2,?,?,?,1,?,'随时',?,?,CONCAT('PL-',DATE_FORMAT(NOW(),'%Y%m%d%H%i%S'),CAST(unix_timestamp() AS char(4)) ) ,?,?,?,?,?,?,?,?,0,NOW(),NOW());",
-	"params":["PlanName","PlanPriceBase","PicURL","CarURL","PlanDays","StartCity","StartCityID","Policy","CostInclude","CostExclude","VisaNotice","Notice","CreateUserID","AdultPrice","KidPrice"],
+	"sql": "INSERT INTO traveluserdb.tab_planinfo(PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,3,0,?,?,?,?,1,?,'随时',?,?,CONCAT('PL-',DATE_FORMAT(NOW(),'%Y%m%d%H%i%S'),CAST(unix_timestamp() AS char(4)) ) ,?,?,?,?,?,?,?,?,0,NOW(),NOW());",
+	"params":["PlanName","PlanType", "PlanPriceBase","PicURL","CarURL","PlanDays","StartCity","StartCityID","Policy","CostInclude","CostExclude","VisaNotice","Notice","CreateUserID","AdultPrice","KidPrice"],
 	"files":["PicURL","CarURL"],
 	"Picture": {"sql": "INSERT INTO traveluserdb.tab_planpicture(PlanID,PicUrl)VALUES(?,?);",	"params":["insertId", "Pics"], "files":["Pics"], "findkey": "insertId"},
 	"Summary":{"sql":"INSERT INTO traveluserdb.tab_plansummary(PlanID,PlanName,PlanFeature,PlanLabels,PlanSeasons,PlanRhythm,StartTime)VALUES(?,?,?,?,'一年四季,春季,夏季,秋季,冬季',0,'随时出发');",	"params":["insertId","PlanName","PlanFeature","_PlanLabels"],"findkey": "insertId"},
