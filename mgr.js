@@ -74,11 +74,12 @@ function readFiles(dirname, onFileContent, onError) {
   });
 }
 pay.config({
-    seller_email: 'pr@qinmaohao.com',
-    partner: '2088612188470577 ',
+    //seller_email: 'pr@qinmaohao.com',
+    seller_id:'2088612188470577',
+    partner: '2088612188470577',
     key: 'w8dmwl2awivsqjv7f3m1chynw49ya8yv',
-    notify_url: 'http://127.0.0.1:8088/notify',
-    return_url: 'http://127.0.0.1:8088/'
+    notify_url: 'http://www.dengniyou.com/notify',
+    return_url: 'http://www.dengniyou.com'
 });
 
 app.post('/pay', upload.array(), function(req, res) {
@@ -88,30 +89,26 @@ app.post('/pay', upload.array(), function(req, res) {
     /*request.get('http://10.101.1.36:8080/travel/order/addOrder',function (error, response, body) {
         console.log();
     });*/
-	request.post(
+/*	request.post(
         {
-            url: 'http://10.101.1.36:8080/travel/order/addOrderPost',
+            url: 'http://10.101.1.36:8080/travel/order/addOrder',
             method: "POST",
-            json: true,
-            headers: {
-                "content-type": "application/json",
-            },
-            body:  req.body
+            json: req.body
         },
 		function (error, response, body) {
-			if (!error && response.statusCode == 200) {
+			if (!error && response.statusCode == 200) {*/
                 var usr_redirect_url = pay.buildDirectPayURL({
-                    out_trade_no: 'test',//body.datas.orderNO,
-                    subject: 'order-312412',// 'order-312412',//body.datas.orderId,
-                    body:  'order-312412',//body.datas.orderId,
+                    out_trade_no: '9890879868657',//body.datas.orderNO,
+                    subject: 'testjsdz',// 'order-312412',//body.datas.orderId,
+                    body:  'testjsdzbody',//body.datas.orderId,
                     total_fee:  '0.01',//body.datas.costMoney
                 });
                 res.send(JSON.stringify({url:usr_redirect_url}));
-			}else {
+			/*}else {
 				console.error(error);
 			}
 		}
-	);
+	);*/
 });
 app.get('/notify', function (req, res) {
     var params = req.body;

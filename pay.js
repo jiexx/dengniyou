@@ -4,7 +4,7 @@ var querystring = require('querystring');
 //https://doc.open.alipay.com/doc2/detail?treeId=62&articleId=103740&docType=1
 var _basicConfig = {
     alipay_gateway: 'https://mapi.alipay.com/gateway.do?',
-    _input_charset: 'UTF-8',
+    _input_charset: 'utf-8',
     sign_type: 'MD5'
 };
 
@@ -44,12 +44,13 @@ exports.buildDirectPayURL = function (orderParams) {
         notify_url: _basicConfig.notify_url,
         partner: _basicConfig.partner,
         return_url: _basicConfig.return_url,
-        seller_email: _basicConfig.seller_email
+        //seller_email: _basicConfig.seller_email
+        seller_id:_basicConfig.seller_id,
     };
     _assignMe(json, orderParams);
     json.sign = _buildSign(json);
     json.sign_type = _basicConfig.sign_type;
-    return _basicConfig.alipay_gateway + querystring.stringify(json);
+    return _basicConfig.alipay_gateway + querystring.unescape(querystring.stringify(json));
 };
 
 exports.verify = function (params, callback) {
