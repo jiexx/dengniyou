@@ -9,6 +9,9 @@ $(function () {
 });
 (function( $, undefined ){
 	$.extend({
+        rogerImgHost:function() {
+            return 'http://123.59.144.47/';
+        },
 		rogerGetPath:function() {
 			var link = $._rogerGetLocation();
 			return link.substring(0, link.indexOf("?"));
@@ -183,6 +186,11 @@ $(function () {
 				}
 			)
 		},
+        rogerNotice: function(json ) {
+            $._RogerLoadViewByJSON('fragment/dialog-notice.html', $('#modal'),json, function () {
+                $('#notice').modal('show');
+            });
+        },
 		rogerScale: function(src_w, src_h, dst_w, dst_h) {
 			var sw = parseFloat(src_w);
 			var sh = parseFloat(src_h);
@@ -247,6 +255,11 @@ $(function () {
             if (pointer === '') { return []; }
             if (pointer.charAt(0) !== '/') { throw new Error('Invalid JSON pointer: ' + pointer); }
             return pointer.substring(1).split(/\//).map($.roger_pointer_unescape);
+        },
+        roger_pointer_is_array_elem: function(obj, pointer) {
+            var ptr = pointer.substring(0,pointer.lastIndexOf('/'));
+            var o = $.roger_pointer_get(obj, ptr);
+            return Array.isArray(o);
         },
         roger_pointer_get: function(obj, pointer) {
 			var refTokens = Array.isArray(pointer) ? pointer : $.roger_pointer_parse(pointer);
@@ -350,11 +363,8 @@ $(function () {
 				$._RogerLoadView($(this).data("href"), container, viewReqURL, viewReqJSON, callback );
 			});
 		},
-		rogerOnClickTrigger: function(container, viewReqURL, viewReqJSON, callback ) {
-			$(this).click(function (e) {
-				e.preventDefault();
-				$._RogerLoadView($(this).data("href"), container, viewReqURL, viewReqJSON, callback );
-			});
+		rogerDialogTrigger: function(url, viewReqURL, viewReqJSON, callback ) {
+			$._RogerLoadView(url, $(this), viewReqURL, viewReqJSON, callback );
 		},
 		/*rogerLoadView: function(href, jsondata, callback ) {
 			$._RogerLoadViewByJSON(srcView, $(this), jsondata, callback);
@@ -467,7 +477,11 @@ $(function () {
 				var action = $(this).data('action');
 				if(!ev || !ev.click) {
                     $(this).on("click", function () {
-                        $.roger_pointer_remove(data, ptr);
+                    	if(!$.roger_pointer_is_array_elem(data, ptr)) {
+                            $.roger_pointer_set(data, ptr, null);
+						}else {
+                            $.roger_pointer_remove(data, ptr);
+						}
 						if(onFinish) {
 							onFinish(data, onFinish, parcel);
 						}
@@ -490,11 +504,8 @@ $(function () {
                     $(this).on("click", function () {
                         var func = data[action];
                         if(func && typeof func === "function") {
-                            func(data, pointer, function (d) {
-								if(onFinish) {
-									onFinish(d, onFinish, parcel);
-								}
-                            });
+                            var obj = $.roger_pointer_get(data, ptr);
+                            func(data, obj);
                         }
                     });
                 }

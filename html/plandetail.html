@@ -1,8 +1,10 @@
 <div class="container">
+	<br>
 	<div class="plandetail-page">
-		<div class="row widget">
+	<div >
+		<div class="row">
 			<div class="col-md-5 calender">
-				<div id="calendar"></div>	
+				<div id="calendar"></div>
 			</div><!-- end calender -->
 			<div class="col-md-7 carousel">
 				<div class="carousel-container">
@@ -28,8 +30,9 @@
 						</div><!-- end carousel -->
 					</div> <!-- end carousel-container -->
 				</div> <!-- end carousel-container -->
-		</div><!-- end 日历和banner部分widget -->
-	 	
+			</div><!-- end 日历和banner部分widget -->
+		</div>
+
 		<div class="row project">
 			<h1>${ $data.PlanInfo[0].PlanName}</h1>
 			<div class="project-main clearfix">
@@ -44,7 +47,7 @@
 				</div>
 				<div class="col-md-5">
 					<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].PlanPriceBase}</span>元</h4>
-					<a href="orderSubmit.html"><button class="btn btn-primary">立即购买</button></a>
+					<a href="orderSubmit.html"id="BUY"><button class="btn btn-primary">立即购买</button></a>
 				</div>
 				<div class="col-md-2">
 					<p><i class="fa fa-heart-o"></i>添加收藏</p>
@@ -127,7 +130,11 @@
 										{{each  v.__values}}
 										<li>
 											<div class="picText">
+												{{if  ScheduleType == 1  }}
+												<img src="../img/airPlaneIcon.png" alt="">
+												{{else}}
 												<img data-src="${ $data.IMGHOST }${PicURL}">
+												{{/if}}
 												<div class="text media-body">
 													<div class="media-heading">${NameCh}</div>
 													<div>${PlanNumber}</div>

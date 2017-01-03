@@ -4,7 +4,7 @@
             $('#footer').rogerReloadFile('./footer.html');
         }
         if( !$.trim( $('#modal').html() ) ) {
-            $('#modal').rogerReloadFile('./home-login.html');
+            $('#modal').rogerReloadFile('./dialog/home-login.html');
         }
         if($.rogerIsLogined()) {
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
@@ -31,8 +31,8 @@
 		return {
 			Comment:{
 				PlanID: params.PlanID,
-				Text: '',
-				Pics:[]
+				Comment: '',
+				Picture:{Pics:[]}
 			}
 		};
 	};
@@ -45,7 +45,7 @@
 			}
 			var usr =$.rogerGetLoginUser();
 			e.data.Comment.UserID = usr.UserID;
-			console.log(usr);
+			//console.log(usr);
 			$.rogerPost('/comment/plan', e.data, function(respJSON){
 				$.rogerRefresh();
 			});
@@ -53,24 +53,24 @@
 	};
 	var ctrlPlandetail = function(response, realView) {
 
-        $('#calendar').fullCalendar({
-  	  		defaultDate: '2016-12-12',
-  	  		editable: true,
-  	  		eventLimit: true, // allow "more" link when too many events
-  	  		events: [
-  	  			{
-  	  				title: 'Long Event',
-  	  				start: '2016-12-07',
-  	  				end: '2016-12-10'
-  	  			},
-  	  		]
-  	  	});
+        var pickr = $("#calendar").flatpickr({
+            inline: true,
+            "mode": "multiple"
+		});
+        pickr.selectedDates.push('');
 		realView.rogerCropImages();
         frameCtrl();
 
 		$('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
 		realView.rogerCropImages();
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
+		
+		$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
+			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
+				console.log(respJSON);
+                window.open(respJSON.url, '_blank');
+            })
+        })
 
 	};
 
