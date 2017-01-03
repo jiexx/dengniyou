@@ -539,7 +539,8 @@ $(function () {
         return {
             BaseInfo:{
                 ServiceName:'',
-                ServicePrice:'',
+                GoodsName:'奔驰',
+                ServicePrice:'780',
                 description:'',
                 brand:'',
                 seats:'',
@@ -569,16 +570,32 @@ $(function () {
      var initServicePickupEdit = function(){
         return {
             BaseInfo:{
-                ServiceName:'',PrimaryPrice:'',IncMileage:'',ExMileagePrice:'',ServiceTime:'',ServiceOutTimePrice:'',
-                ServiceMethod:'',Description:'',CoverPicURL:'',PicURL:[],Policy:'',CostInclude:'',CostExclude:'',Notice:''
+                ServiceName:'',
+                ServiceTypeName:'接机',
+                PrimaryPrice:'',
+                IncMileage:'',
+                ExMileagePrice:'',
+                ServiceTime:'',
+                ServiceOutTimePrice:'',
+                ServiceMethodID:'',
+                ServiceMethodName:'即停即走',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
             },
             Airports: {
-                AirportCode: "CNX", NameEn: "CHIANG MAI(Chiang Mai Intl Airport)",NameCh: "清迈",
+                AirportCode: "",
+                NameEn: "",
+                NameCh: "",
             }
         };
     },ctrlServicePickupEdit = function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
-
+            console.log('text')
         });
 
         bindRidoesForSwitch();
@@ -588,8 +605,18 @@ $(function () {
      var initServiceOtherEdit=function(){
         return {
             BaseInfo:{
-                ServiceName:'',ServiceTypeID:'',ServiceTypeName:'',PriceType:'',PrimaryPrice:'',Description:'',CoverPicURL:'',
-                PicURL:[],Policy:'',CostInclude:'',CostExclude:'',Notice:''
+                ServiceName:'',
+                ServiceTypeID:'',
+                ServiceTypeName:'',
+                PriceType:'自定义价格',
+                PrimaryPrice:'',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
             }
         };
     },ctrlServiceOtherEdit=function(Plan, realView){
@@ -602,18 +629,77 @@ $(function () {
     } ;
 
      var initTraveLogueEdit=function(){
+        var usr =$.rogerGetLoginUser();
+        var type = $.rogerGetUrlParam('type');
         return {
             Travelogue:{
-                ServiceName:'',PrimaryPrice:'',IncMileage:'',ExMileagePrice:'',ServiceTime:'',ServiceOutTimePrice:'',
-                ServiceMethod:'',Description:'',CoverPicURL:'',PicURL:[],Policy:'',CostInclude:'',CostExclude:'',Notice:''
+                ServiceName:'',
+                PrimaryPrice:'',
+                IncMileage:'',
+                ExMileagePrice:'',
+                ServiceTime:'',
+                ServiceOutTimePrice:'',
+                ServiceMethod:'',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
             },
-            TravelogueDetail: [
-                {
-                    ArticleDetailID: '',Label:'',PicURL:'',Content:''
-                }
-            ]
+            TravelogueDetail: [],
+            IMGHOST:$.rogerImgHost()
         };
+        
     },ctrlTraveLogueEdit=function(Plan, realView){
+        Plan.createDay = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({Label:'', Day:TravelogueDetail.length+1, Content:null, PicURL: null, PicEnable:false});
+            $.rogerRefresh(Plan);
+        };
+        Plan.createPicture = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({Label:null, Day:null, Content:null, PicURL: null, PicEnable:true});
+            $.rogerRefresh(Plan);
+        };
+        Plan.createContent = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({Label:null, Day:null, Content:'desc', PicURL: null, PicEnable:false});
+            $.rogerRefresh(Plan);
+        };
+
+
+        $('#save').rogerOnceClick(Plan, function(e){
+            var data = {
+                Travelogue:e.data.Travelogue,
+                TravelogueDetail:e.data.TravelogueDetail,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('url', data, function(respJSON){
+                $.rogerNotice({Message:'保存攻略成功'});
+            });
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+
+    var initEquipEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                ServiceTypeID:'',
+                ServiceTypeName:'',
+                PriceType:'',
+                PrimaryPrice:'',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
+            }
+        };
+    },ctrlEquipEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
 
         });
@@ -672,7 +758,7 @@ $(function () {
         '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServicePickupEdit,                                              ctrl: ctrlServicePickupEdit},
         '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceOtherEdit,                                               ctrl: ctrlServiceOtherEdit},
         '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',                 init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},
-        //'#/equipedit':      {fragment: 'fragment/product-equip-edit.html',     init: initEquipEdit,   ctrl: ctrlEquipEdit},
+        '#/equipedit':      {fragment: 'fragment/product-equip-edit.html',     init: initEquipEdit,   ctrl: ctrlEquipEdit},
 
 	});
 

@@ -1,38 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8"><meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>方案详情页</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+
+    <!--[if lt IE 9]>  
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>  
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>  
+    <![endif]-->
+    
+	<link rel="stylesheet" href="js/plugin/owl-carousel/owl.carousel.css">
+	<link rel="stylesheet" href="js/plugin/owl-carousel/owl.theme.css">    
+	<link rel="stylesheet" href="js/plugin/pickmeupCalender/pickmeup.css" /> 
+	<!-- 上传评论图片插件 -->
+ 	<link type="text/css" rel="stylesheet" href="js/plugin/userComment/ssi-uploader.css"/>
+	<link rel="stylesheet" href="css/projectInfo.css">
+</head>
+<body>
 <div class="container">
-	<br>
 	<div class="plandetail-page">
-	<div >
-		<div class="row">
+		<div class="row widget">
 			<div class="col-md-5 calender">
-				<div id="calendar"></div>
+				<div id="calendar"></div>	
 			</div><!-- end calender -->
 			<div class="col-md-7 carousel">
-				<div class="carousel-container">
-					<div id="carousel-generic" class="carousel slide" data-ride="carousel">
-						<!-- Wrapper for slides -->
-						<div class="carousel-inner">
-							{{each $data.PlanInfo[0].PicURL}}
-							{{if $index == 0}}
-							<div class="item active">
-							{{else}}
-								<div class="item">
-							{{/if}}
-									<img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
-								</div>
-							{{/each}}
-							</div>
-							<a class="left carousel-control" href="#" data-slide="prev">
-								<span class="glyphicon glyphicon-chevron-left"></span>
-							</a>
-							<a class="right carousel-control" href="#" data-slide="next">
-								<span class="glyphicon glyphicon-chevron-right"></span>
-								</a>
-						</div><!-- end carousel -->
-					</div> <!-- end carousel-container -->
-				</div> <!-- end carousel-container -->
-			</div><!-- end 日历和banner部分widget -->
-		</div>
-
+				<section class="banner">
+		  		<div id="owlBanner" class="owl-carousel owl-theme">
+					  <div class="item">
+					  	<img class="detail-img" data-src="${ $data.IMGHOST }${ $data.PlanInfo[0].PicURL}" alt="">
+					  </div>
+					</div>
+			  </section>
+			</div><!-- end carousel -->
+		</div><!-- end 日历和banner部分widget -->
+	 	
 		<div class="row project">
 			<h1>${ $data.PlanInfo[0].PlanName}</h1>
 			<div class="project-main clearfix">
@@ -42,14 +47,12 @@
 					</div>
 					<div class="planner">
 						<h3>策划师:${$data.PlanInfo[0].UserName}<span class="vipIcon"></span></h3>
-						<span class="name" id="planerName">${$data.PlanInfo[0].UserMobile}</span> 
-						<i class="fa fa-drupal"></i> 
-						<button type="button" class="btn btn-default">咨询</button>
+						<span class="name" id="planerName">${$data.PlanInfo[0].UserMobile}</span> <i class="fa fa-drupal"></i> 
 					</div>
 				</div>
 				<div class="col-md-5">
 					<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].PlanPriceBase}</span>元</h4>
-					<a href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}"<!--id="BUY"-->><button class="btn btn-primary">立即购买</button></a>
+					<a href="orderSubmit.html"><button class="btn btn-primary">立即购买</button></a>
 				</div>
 				<div class="col-md-2">
 					<p><i class="fa fa-heart-o"></i>添加收藏</p>
@@ -58,8 +61,8 @@
 			</div><!-- end main -->
 		</div><!-- end 咨询师部分project -->
 
-		<div class="row plandetail-main">
-			<div class="col-md-3 main-left">
+		<div class="row" style="margin-top: 20px;">
+			<div class="col-md-3 ">
 				<div class="recommendBox">
 					<h2>更多推荐</h2>
 					<ul id="recommendList">
@@ -84,7 +87,7 @@
 				</div>
 			</div><!-- end 店铺内推荐列表 -->
 
-			<div class="col-md-9 main-right">
+			<div class="col-md-9">
 				<div class="scheduleBox">
 					<div class="scheduleNav clearfix" id="scheduleNav">
 						<h2 class="pull-left">行程概览</h2>
@@ -132,18 +135,14 @@
 										{{each  v.__values}}
 										<li>
 											<div class="picText">
-												{{if  ScheduleType == 1  }}
-												<img src="../img/airPlaneIcon.png" alt="">
-												{{else}}
 												<img data-src="${ $data.IMGHOST }${PicURL}">
-												{{/if}}
 												<div class="text media-body">
 													<div class="media-heading">${NameCh}</div>
 													<div>${PlanNumber}</div>
 													<div>${StartCity}</div>
 													{{if  ScheduleType == 0  }}
-													<span>${CountryNameCn}${CountryNameEn}&nbsp;&nbsp;</span>
-													<span>${CityNameCn}${CityNameEn}</span>
+													<div>${CountryNameCn}${CountryNameEn}</div>
+													<div>${CityNameCn}${CityNameEn}</div>
 													{{/if}}
 													{{if  ScheduleType == 1  }}
 													<div>${AirportNameCn}${AirportNameEn}${AirportCode}</div>
@@ -195,19 +194,45 @@
 									</ul>
 								</div>
 							</div>
-							<<div class="reply col-md-offset-2">
+							<div class="reply col-md-offset-2">
 								<div class="triangle"></div>
-								<!--导游回复：<span class="replyText">导游回复内容</span>-->
+								导游回复：<span class="replyText">导游回复内容</span>
 							</div>
 						</li>
 						{{/each}}
 					</ul>
 				</div><!-- end 评论列表 -->
 				<!-- 评论区 -->
-				<div class="commentOn" id="plan-comment">
-
+				<div class="commentOn" id="commentOn">
+					<div class="row">
+						<div class="col-md-5">
+							<h6>我要点评</h6>
+							<textarea name="" id="commentText" ></textarea>
+							<span class="tip">还可以输入<strong>100</strong>个字符</span>
+						</div>
+						<div class="col-md-7">
+							<h6>附图：</h6>
+							<div id="photos">
+								<span class="glyphicon glyphicon-plus"></span>
+							</div>
+						</div>
+						<div class="commit"><button class="btn btn-primary">提交评论</button></div>
+					</div>	  					
 				</div><!--end  评论区 -->
 			</div>
 		</div>
 	</div>
 </div><!-- end container -->
+	
+  <script type="text/JavaScript" src="js/jquery-1.11.3.min.js"></script>
+  <script type="text/JavaScript" src="js/bootstrap.min.js"></script>
+
+	<!-- 插件部分js -->
+  <script type="text/JavaScript" src="js/jsrender.min.js"></script>
+	<script type="text/JavaScript" src="js/plugin/owl-carousel/owl.carousel.min.js"></script>
+	<script type="text/javascript" src="js/plugin/userComment/ssi-uploader.js"></script>
+  <script type="text/JavaScript" src="js/plugin/pickmeupCalender/pickmeup.js"></script>
+  <script type="text/JavaScript" src="js/projectInfo.js"></script>
+    
+</body>
+</html>

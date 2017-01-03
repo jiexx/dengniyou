@@ -1,67 +1,86 @@
-
-<div class="container editPage">
-	<div class="">
-		<!-- 基本信息 -->
+<div class="container">
+	<div class="editPage">
+		<!-- 方案基本信息 -->
 		<div class="baseInfo">
 			<ul class="breadcrumb">
-			  <li><a href="#">产品管理</a> <span class="divider"></span></li>
-			  <li class="active">攻略编辑</li>
+				<li><a href="#">产品管理</a> <span class="divider"></span></li>
+			    <li class="active">攻略编辑</li>
 			</ul>
 
 			<h4>基本信息</h4>
 			<form class="form-horizontal">
-			  <div class="form-group">
-			    <label for="name" class="col-sm-2 col-md-1 control-label">攻略名称</label>
-			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control" id="name" placeholder="不能超过24个字符">
-			    </div>
-			  </div>
+				<div class="form-group">
+					<label   class="col-sm-2 col-md-1 control-label">攻略名称</label>
+					<div class="col-sm-10 col-md-11">
+						<input type="text" class="form-control"  value="${$data.Travelogue.ServiceName}"  data-value="/Travelogue/ServiceName" placeholder="不能超过24个字符">
+					</div>
+				</div>
 			</form>
 		</div>
-		<!-- 基本信息结束 -->
+		<!-- 方案基本信息结束 -->
 
-		<!-- 攻略信息 -->
-		<div class="scheduleShort">
-			<h4>段落信息</h4>
-			<form class="form-horizontal">
-			  <div class="form-group">
-			  	<a class="glyphicon glyphicon-remove-circle"></a>
-			    <label for="name" class="col-sm-2 col-md-1 control-label">段落标题</label>
-			    <div class="col-sm-10 col-md-6">
-			      <input type="text" class="form-control" id="name" placeholder="不能超过24个字符">
-			    </div>
-			  </div>
-			</form>
-			<div class="row">
-				<a class="glyphicon glyphicon-remove-circle"></a>
-				<div class="col-sm-2 col-md-1">图片信息</div>
-				<div class="col-md-6 col-sm-10">
-					<img src="" alt="我是图片">
+		<!-- 行程信息（方案） -->
+		<div class="scheduleShort clearfix">
+			<div class="col-md-12">
+				<h4>行程信息</h4>
+				<div class="pull-right btn-group">
+					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/TravelogueDetail/-" data-action="createDay">添加段落</a>
+					<a class="btn btn-warning   " href="javascript:void(0)" data-op="change" data-pointer="/TravelogueDetail/-" data-action="createPicture">添加图片</a>
+					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/TravelogueDetail/-" data-action="createContent">添加描述</a>
 				</div>
 			</div>
-			<div class="row">
-				<a class="glyphicon glyphicon-remove-circle"></a>
-				<div class="col-sm-2 col-md-1">段落描述</div>
-				<div class="col-md-6 col-sm-10">
-					<textarea name="" id="" placeholder="请输入文本信息"></textarea>
+			{{each $data.TravelogueDetail}}
+			{{if Day}}
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-6">
+						<div class="col-md-3">第</div><div class="col-md-5"><input type="text" class="form-control"  value="${Day}"  data-value="/TravelogueDetail/${$index}/Day" placeholder="第几天"></div><div class="col-md-3">天</div>
+					</div>
+					<div class="col-md-6">
+						<input type="text" class="form-control"  value="${Label}"  data-value="/TravelogueDetail/${$index}/Label" placeholder="标题">
+					</div>
 				</div>
 			</div>
-			<div class="row textRight">
-				<div class="col-md-7 ">
-					<button class="btn btn-warning">添加标题</button>
-					<button class="btn btn-warning">添加图片</button>
-					<button class="btn btn-warning">添加描述</button>
+			{{/if}}
+			{{if PicEnable}}
+			<div class="col-md-6">
+				<div class="row">
+					{{if PicURL}}
+					<div class="col-md-12">
+						<div class="imgBox">
+							<img src="${PicURL}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/TravelogueDetail/${$index}/PicURL"></a>
+						</div>
+					</div>
+					{{/if}}
+					<div class="col-md-12" data-op="toggle" data-pointer="/TravelogueDetail/${$index}/PicURL" data-limit="1">
+						<div class="imgBox addImg" data-op="change" data-pointer="/TravelogueDetail/${$index}/PicURL" data-action="image">+</div>
+					</div>
 				</div>
 			</div>
+			{{/if}}
+			{{if Content}}
+			<div class="col-md-6">
+				<div class="introduction">
+					<textarea name="" rows="6" value ="${ Content}" data-value="/TravelogueDetail/${$index}/Content" placeholder="描述"></textarea>
+				</div>
+			</div>
+			{{/if}}
+			{{/each}}
 
+
+		</div>
+		<!-- 行程信息结束（方案） -->
+
+		<!-- 须知信息 -->
+		<div style="border:0; box-shadow: none;">
+			
 			<div class="optionBtn">
 				<button id="save" class="btn btn-warning">保存</button>
 				<button id="publish" class="btn btn-warning">发布 </button>
 			</div>
 		</div>
-		<!-- 攻略信息结束 -->
-
+		<!-- 须知信息结束 -->
 	</div>
-	
 </div>
 

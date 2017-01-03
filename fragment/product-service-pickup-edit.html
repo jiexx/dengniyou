@@ -13,11 +13,17 @@
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">服务名称</label>
 		    <div class="col-sm-10 col-md-11">
-		    	<select name="" id="" class="form-control">
+		        <input type="text" class="form-control" value="${$data.BaseInfo.ServiceName}"  data-value="/BaseInfo/ServiceName" placeholder="不能超过24个字符">
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="" class="col-sm-2 col-md-1 control-label">服务类型</label>
+		    <div class="col-sm-10 col-md-11">
+		    	<select name="" id="ServiceTypeChoice" class="form-control" >
 		    		<option value="">接机</option>
 		    		<option value="">送机</option>
 		    	</select>
-		        <input type="text" class="form-control" value="${$data.BaseInfo.ServiceName}"  data-value="/BaseInfo/ServiceName" placeholder="不能超过24个字符">
+		        <input type="hidden" class="form-control" id="ServiceTypeName" value="${$data.BaseInfo.ServiceTypeName}"  data-value="/BaseInfo/ServiceTypeName">
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -52,14 +58,26 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">服务方式</label>
-		    <div class="col-sm-10 col-md-11">
-		        <label class="radio-inline">
-				  <input type="radio" name="serviceType" id="Radio1" value="option1" checked> 举牌等候
-				</label>
-				<label class="radio-inline">
-				  <input type="radio" name="serviceType" id="Radio2" value="option2"> 即停即走
-				</label>
+		    <div class="col-sm-10 col-md-11" id="serviceType">
+			    <div id="pickupService">
+			    	<label class="radio-inline">
+					  <input type="radio" name="serviceType" id="" value="举牌等候" > 举牌等候
+					</label>
+					<label class="radio-inline"> 
+					  <input type="radio" name="serviceType" id="" value="即停即走" checked> 即停即走
+					</label>
+			    </div>
+			    <div id="dropoffService" style="display: none;">
+			    	<label class="radio-inline">
+					  <input type="radio" name="serviceType2" id="" value="无忧模式" > 无忧模式
+					</label>
+					<label class="radio-inline">
+					  <input type="radio" name="serviceType2" id="" value="即停即走" checked> 即停即走
+					</label>
+			    </div>		        
 		    </div>
+			<input type="hidden" class="form-control" id="ServiceMethodName"  value="${$data.BaseInfo.ServiceMethodName}"  data-value="/BaseInfo/ServiceMethodName">
+
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">服务描述</label>
@@ -178,4 +196,29 @@
 	</div>
 	<!-- 须知信息结束 -->
 </div>
+
+<script>
+	$(function(){
+		$('#ServiceTypeChoice').on('change',function(){
+			var ServiceTypeName = $(this).find('option:selected').text();
+			$('#ServiceTypeName').val(ServiceTypeName).trigger('keyup');
+			if (ServiceTypeName == '接机') {
+				$('#pickupService').show();
+				$('#dropoffService').hide();
+				var ServiceMethodName = $('#pickupService').find('input:checked').val();
+				$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
+			}else if(ServiceTypeName == '送机'){
+				$('#pickupService').hide();
+				$('#dropoffService').show();
+				var ServiceMethodName = $('#dropoffService').find('input:checked').val();
+				$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
+			}
+		});
+
+		$('#serviceType').on('click','input',function(){
+			var ServiceMethodName = $(this).val();
+			$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
+		});
+	});
+</script>
 
