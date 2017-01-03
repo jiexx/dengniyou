@@ -354,7 +354,8 @@ $(function () {
         return {
             BaseInfo:{
                 ServiceName:'',
-                ServicePrice:'',
+                GoodsName:'奔驰',
+                ServicePrice:'780',
                 description:'',
                 brand:'',
                 seats:'',
@@ -385,12 +386,14 @@ $(function () {
         return {
             BaseInfo:{
                 ServiceName:'',
+                ServiceTypeName:'接机',
                 PrimaryPrice:'',
                 IncMileage:'',
                 ExMileagePrice:'',
                 ServiceTime:'',
                 ServiceOutTimePrice:'',
-                ServiceMethod:'',
+                ServiceMethodID:'',
+                ServiceMethodName:'即停即走',
                 Description:'',
                 CoverPicURL:'',
                 PicURL:[],
@@ -407,7 +410,7 @@ $(function () {
         };
     },ctrlServicePickupEdit = function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
-
+            console.log('text')
         });
 
         bindRidoesForSwitch();
@@ -468,6 +471,32 @@ $(function () {
             ]
         };
     },ctrlTraveLogueEdit=function(Plan, realView){
+        $('#save').rogerOnceClick(Plan, function(e){
+
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    } ;
+
+    var initEquipEdit=function(){
+        return {
+            BaseInfo:{
+                ServiceName:'',
+                ServiceTypeID:'',
+                ServiceTypeName:'',
+                PriceType:'',
+                PrimaryPrice:'',
+                Description:'',
+                CoverPicURL:'',
+                PicURL:[],
+                Policy:'',
+                CostInclude:'',
+                CostExclude:'',
+                Notice:''
+            }
+        };
+    },ctrlEquipEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
 
         });

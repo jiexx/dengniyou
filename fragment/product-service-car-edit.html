@@ -22,23 +22,13 @@
 		    <label for="" class="col-sm-2 col-md-1 control-label">编辑价格</label>
 		    <div class="col-sm-10 col-md-11">
 		    	<ul class="carPrice ">
+		    		{{each $data.BaseInfo}}
 		    		<li><a class="glyphicon glyphicon-remove-circle"></a>
-		    			<input type="text" class="form-control" id="" placeholder="输入商品名称" > <br/>
-		    			<input type="text" class="form-control"> 元/天
+		    			<input type="text" class="form-control" value="${$data.BaseInfo.GoodsName[$index]}" data-value="/BaseInfo/GoodsName/${$index}" placeholder="输入商品名称" > <br/>
+		    			<input type="text" class="form-control" value="${$data.BaseInfo.ServicePrice[$index]}" data-value="/BaseInfo/ServicePrice/${$index}"> 元/天
 		    		</li>
-		    		<li><a class="glyphicon glyphicon-remove-circle"></a>
-		    			<input type="text" class="form-control" id="" placeholder="输入商品名称" > <br/>
-		    			<input type="text" class="form-control"> 元/天
-		    		</li>
-		    		<li><a class="glyphicon glyphicon-remove-circle"></a>
-		    			<input type="text" class="form-control" id="" placeholder="输入商品名称" > <br/>
-		    			<input type="text" class="form-control"> 元/天
-		    		</li>
-		    		<li><a class="glyphicon glyphicon-remove-circle"></a>
-		    			<input type="text" class="form-control" id="" placeholder="输入商品名称" > <br/>
-		    			<input type="text" class="form-control"> 元/天
-		    		</li>
-		    		<li><div class="addItemBtn"> + </div></li>
+		    		{{/each}}
+		    		<li><div class="addItemBtn" data-op="change" data-pointer="/BaseInfo/Labels-" data-action="createLabel"> + </div></li>
 		    	</ul>
 		    </div>
 		  </div>
