@@ -629,6 +629,8 @@ $(function () {
     } ;
 
      var initTraveLogueEdit=function(){
+        var usr =$.rogerGetLoginUser();
+        var type = $.rogerGetUrlParam('type');
         return {
             Travelogue:{
                 ServiceName:'',
@@ -646,18 +648,34 @@ $(function () {
                 CostExclude:'',
                 Notice:''
             },
-            TravelogueDetail: [
-                {
-                    ArticleDetailID: '',
-                    Label:'',
-                    PicURL:'',
-                    Content:''
-                }
-            ]
+            TravelogueDetail: [],
+            IMGHOST:$.rogerImgHost()
         };
+        
     },ctrlTraveLogueEdit=function(Plan, realView){
-        $('#save').rogerOnceClick(Plan, function(e){
+        Plan.createDay = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({Label:'', Day:TravelogueDetail.length+1, Content:null, PicURL: null, PicEnable:false});
+            $.rogerRefresh(Plan);
+        };
+        Plan.createPicture = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({Label:null, Day:null, Content:null, PicURL: null, PicEnable:true});
+            $.rogerRefresh(Plan);
+        };
+        Plan.createContent = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({Label:null, Day:null, Content:'desc', PicURL: null, PicEnable:false});
+            $.rogerRefresh(Plan);
+        };
 
+
+        $('#save').rogerOnceClick(Plan, function(e){
+            var data = {
+                Travelogue:e.data.Travelogue,
+                TravelogueDetail:e.data.TravelogueDetail,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('url', data, function(respJSON){
+                $.rogerNotice({Message:'保存攻略成功'});
+            });
         });
 
         bindRidoesForSwitch();

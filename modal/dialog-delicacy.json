@@ -1,0 +1,3 @@
+{
+	"Spots": {"sql": "SELECT * FROM traveldb.`vw_/dashboard/product/delicacy` WHERE CityID=?;",	"params":["CityID"]}
+}

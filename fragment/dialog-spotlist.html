@@ -1,0 +1,20 @@
+<div class="list-group" style="max-height:500px;overflow-y: scroll;">
+	{{if $data.Spots.length}}
+	{{each $data.Spots}}
+	<a href="javascript:void(0)" class="list-group-item" data-info="${SpotsID}:${NameCh}:${NameEn}:${PicURL}:${Rank}:${TravelTime}:${SpotsTypeID}">
+		<div class="media">
+			<div class="media-left">
+					<img class="media-object" src="${ $data.IMGHOST }${PicURL}" style="width:100px"></img>
+			</div>
+			<div class="media-body">
+				<h4 class="media-heading">${NameCn} ${NameEn}</h4>
+				<p class="list-group-item-text">${Description.substring(0,100)}</p>
+				<p class="list-group-item-text">${Address}</p>
+			</div>
+		</div>
+	</a>
+	{{/each}}
+	{{else}}
+	<a href="#" class="list-group-item">该城市数据空</a>
+	{{/if}}
+</div>
