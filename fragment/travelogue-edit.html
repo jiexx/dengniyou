@@ -12,7 +12,7 @@
 				<div class="form-group">
 					<label   class="col-sm-2 col-md-1 control-label">攻略名称</label>
 					<div class="col-sm-10 col-md-11">
-						<input type="text" class="form-control"  value="${$data.Travelogue.ServiceName}"  data-value="/Travelogue/ServiceName" placeholder="不能超过24个字符">
+						<input type="text" class="form-control"  value="${$data.Travelogue[0].title}"  data-value="/Travelogue/${0}/title" placeholder="不能超过24个字符">
 					</div>
 				</div>
 			</form>
@@ -42,7 +42,7 @@
 				</div>
 			</div>
 			{{/if}}
-			{{if PicEnable}}
+			{{if picURL}}
 			<div class="col-md-6">
 				<div class="row">
 					{{if PicURL}}
@@ -67,8 +67,6 @@
 			</div>
 			{{/if}}
 			{{/each}}
-
-
 		</div>
 		<!-- 行程信息结束（方案） -->
 

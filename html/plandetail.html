@@ -132,9 +132,14 @@
 										{{each  v.__values}}
 										<li>
 											<div class="picText">
-												{{if  ScheduleType == 1  }}
+												{{if ScheduleType == 0  }}
+													{{if PicURL == null }}<img src="../img/CityIcon.png" alt="">{{/if}}
+													{{if PicURL != null }}<img src="${ $data.IMGHOST }${PicURL}" alt="">{{/if}}
+												{{/if}}
+												{{if ScheduleType == 1 }}
 												<img src="../img/airPlaneIcon.png" alt="">
-												{{else}}
+												{{/if}}
+												{{if (ScheduleType == 2 ||ScheduleType == 3 ||ScheduleType == 4 ||ScheduleType == 5) }}
 												<img data-src="${ $data.IMGHOST }${PicURL}">
 												{{/if}}
 												<div class="text media-body">

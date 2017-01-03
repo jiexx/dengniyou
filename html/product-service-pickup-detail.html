@@ -116,25 +116,25 @@
 	            <div class="des">
 	              <p>${p.Description}</p>
 	            </div>
-	            {{/if}}
-	            {{if p.PolicyType==2}}
+	          {{/if}}
+	          {{if p.PolicyType==2}}
 	            <h2>费用包含</h2>
 	            <div class="des">
 	              <p>${p.CustomRatio}</p>
 	            </div>
-	            {{/if}}
-	            {{if p.PolicyType==3}}
+	          {{/if}}
+	          {{if p.PolicyType==3}}
 	            <h2>费用不包含</h2>
 	            <div class="des">
 	              <p>${p.CustomRatio}</p>
 	            </div>
-	            {{/if}}
-	            {{if p.PolicyType==4}}
+	          {{/if}}
+	          {{if p.PolicyType==4}}
 	            <h2>预定须知</h2>
 	            <div class="des">
 	              <p>${p.Caution}</p>
 	            </div>
-	            {{/if}}
+	          {{/if}}
 	        {{/each}}
         </div>
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->

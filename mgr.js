@@ -8,7 +8,7 @@ var router = express.Router();
 var fs = require("fs");
 var request = require('request');
 var db = require("./db");
-var modal = require("./modal2");
+var modal = require("./modal");
 var FdfsClient = require('fdfs');
 var pay = require('./pay');
 
