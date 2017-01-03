@@ -380,3 +380,12 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .imgBox img{width:100%; height: 100%; }
 /*base controller end*/
 
+
+/*导游端列表页*/
+.service-list{font-size: 14px; color: #666;}
+.service-list .service-name{padding-left: 6%;}
+.service-list .media-heading{margin-top: 10%;}
+.service-list .margin-top{margin-top: 2.6%;}
+.service-list .service-edit span{margin-top: 10%; font-size: 20px;}
+
+/* end 导游端列表页*/

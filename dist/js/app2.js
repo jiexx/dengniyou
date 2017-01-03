@@ -588,9 +588,9 @@ $(function () {
                 Notice:''
             },
             Airports: {
-                AirportCode: "CNX",
-                NameEn: "CHIANG MAI(Chiang Mai Intl Airport)",
-                NameCh: "清迈",
+                AirportCode: "",
+                NameEn: "",
+                NameCh: "",
             }
         };
     },ctrlServicePickupEdit = function(Plan, realView){
@@ -608,7 +608,7 @@ $(function () {
                 ServiceName:'',
                 ServiceTypeID:'',
                 ServiceTypeName:'',
-                PriceType:'',
+                PriceType:'自定义价格',
                 PrimaryPrice:'',
                 Description:'',
                 CoverPicURL:'',

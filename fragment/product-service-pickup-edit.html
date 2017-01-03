@@ -74,10 +74,9 @@
 					<label class="radio-inline">
 					  <input type="radio" name="serviceType2" id="" value="即停即走" checked> 即停即走
 					</label>
-			    </div>
-		        
+			    </div>		        
 		    </div>
-			<input type="text" class="form-control" id="ServiceMethodName"  value="${$data.BaseInfo.ServiceMethodName}"  data-value="/BaseInfo/ServiceMethodName">
+			<input type="hidden" class="form-control" id="ServiceMethodName"  value="${$data.BaseInfo.ServiceMethodName}"  data-value="/BaseInfo/ServiceMethodName">
 
 		  </div>
 		  <div class="form-group">
@@ -206,10 +205,13 @@
 			if (ServiceTypeName == '接机') {
 				$('#pickupService').show();
 				$('#dropoffService').hide();
+				var ServiceMethodName = $('#pickupService').find('input:checked').val();
+				$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
 			}else if(ServiceTypeName == '送机'){
 				$('#pickupService').hide();
 				$('#dropoffService').show();
-
+				var ServiceMethodName = $('#dropoffService').find('input:checked').val();
+				$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
 			}
 		});
 
