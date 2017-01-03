@@ -38,7 +38,7 @@ exports.config = function (params) {
 
 exports.buildDirectPayURL = function (orderParams) {
     var json = {
-        service: 'create_direct_pay_by_user',
+        service: 'alipay.wap.create.direct.pay.by.user',//'create_direct_pay_by_user',
         payment_type: '1',
         _input_charset: _basicConfig._input_charset,
         notify_url: _basicConfig.notify_url,
