@@ -8,7 +8,7 @@ var router = express.Router();
 var fs = require("fs");
 var request = require('request');
 var db = require("./db");
-var modal = require("./modal2");
+var modal = require("./modal");
 var FdfsClient = require('fdfs');
 var pay = require('./pay');
 
@@ -82,7 +82,7 @@ pay.config({
 });
 
 app.post('/pay', upload.array(), function(req, res) {
-    var js = fs.readFileSync('./fakeorder.json', 'utf8');
+    var js = fs.readFileSync('./fakeorder', 'utf8');
     var fake = JSON.parse(js);
     //WRITE ORDER INFO.
 	/*request.post(

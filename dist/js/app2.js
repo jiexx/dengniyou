@@ -245,8 +245,14 @@ $(function () {
                     }
                 }
             }else {
+                if(data.Plan.Airports){
+                    data.Plan.Airports.AirportCode = airport[0];
+                    data.Plan.Airports.NameCh = airport[1];
+                    data.Plan.Airports.NameEn = airport[2];
+                }else{
                 data.Spot.push({CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
                     SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''});
+                }
             }
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.Plan);
@@ -386,25 +392,39 @@ $(function () {
 
     var initAttractionEdit=function(){
         return {
-            BaseInfo:{
-                ServiceName:'',
-                NameEn:'',
-                AdultPrice:'',
-                KidPrice:'',
-                StudentPrice:'',
-                Labels:['交通旅游','人文建筑','休闲娱乐','亲子','动植物园','博物馆','传统文化','自然风光','美食','商务与投资'],
-                description:'',
-                CoverPicURL:'',
-                CarPicURL:[],
-                PicURL:[],
-                Policy:'',
-                Address:'',
-                Tel:'',
-                CountryName:'',
-                CityName:'',
-                ZipCode:'',
-                ZoneCode:'',
-            }
+        SpotDetail: [
+        {
+            SpotsID:'' ,
+            UserID:'' ,
+            CountryID:'' ,
+            CityID:'',
+            SpotsTypeID:'' ,
+            CommondReason: '' ,
+            CreateDate:'' ,
+            SpotsType:'' ,
+            NameEn:'' ,
+            NameCh:'',
+            Status:'' ,
+            UpdateDate: '' ,
+            Flavor:'' ,
+            PicURL:''  ,
+            Address:'' ,
+            ZipCode:'' ,
+            ZoneCode:'' ,
+            Tel:'' ,
+            Description:'' ,
+            Price:''  ,
+            Score: '' ,
+            LocalName: '',
+            Alias:'' ,
+            comment: '' ,
+            TravelTime:'' ,
+            CountryName:'' ,
+            CityName:'' 
+        }],
+        "SpotPics": [{"PicURL": "group1/M00/00/0D/CgkB6VghgC2AMC0tAAD2LvSIniI575.jpg"}],
+        "SpotLabels": [],
+        "IMGHOST": "http://123.59.144.47/"
         };
     },ctrlAttractionEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
@@ -419,7 +439,7 @@ $(function () {
      var initAccommodationEdit=function(){
         return {
             BaseInfo:{
-                ServiceName:'',
+                NameCh:'',
                 NameEn:'',
                 LocalName:'',
                 OtherName:'',
@@ -449,19 +469,140 @@ $(function () {
 
     var initActivityEdit=function(){
         return {
-            BaseInfo:{
-                ServiceName:'',
-                AdultPrice:'',
-                KidPrice:'',
-                ServiceTime:'',
+            DetailMain: [{
+                serviceID: '',
+                userID: '',
+                serviceName: '',
+                serviceTypeID: '',
+                serviceTypeName: '',
+                primaryPrice: '',
+                unit: '',
+                priceType: '',
+                serviceTime: '',
+                serviceOutTimePrice:'',
+                incMileage: '',
+                exMileagePrice: '',
+                freeForDelay: '',
+                waitOutTimePrice:'',
+                description:'',
+                serviceStatus: '',
+                serviceMethod: '',
+                pictureIDs: {},
+                picURLs: [],
+                covers: {}
+            }],
+            DetailServiceMethod: [],
+            Facility: [
+                {
+                    "serviceID": 100387,
+                    "facilityID": 122,
+                    "userID": 10083,
+                    "facilityType": 1,
+                    "facilityName": "奥迪A6",
+                    "brand": "奥迪",
+                    "model": "A6",
+                    "produceYear": "2014-09-28",
+                    "seats": 5,
+                    "person": 5,
+                    "clazz": 3,
+                    "insurance": 1,
+                    "description": "",
+                    "luggage": 5,
+                    "facilityPics": [
+                        "group1/M00/00/03/CgkB6VfrqGuAQP3IAAFKSs7UdPc307.jpg"
+                    ]
+                }
+            ],
+            Airports: [],
+            Policy: [
+            {
+                PolicyType: 1,
+                PolicyID: '',
+                PolicyName: '',
+                ServiceTypeID:'',
+                Day1: '',
+                Ratio1: '',
+                Day2: '',
+                Ratio2:'',
+                Day3: '',
+                Ratio3:'',
+                Day4: '',
+                Ratio4:'',
+                CustomRatio:'',
+                Caution: '',
                 Description:'',
-                CoverPicURL:'',
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:''
-            }
+                Type: ''
+            },
+            {
+                PolicyType: 2,
+                PolicyID: '',
+                PolicyName: '',
+                ServiceTypeID:'',
+                Day1: '',
+                Ratio1: '',
+                Day2: '',
+                Ratio2:'',
+                Day3: '',
+                Ratio3:'',
+                Day4: '',
+                Ratio4:'',
+                CustomRatio:'',
+                Caution: '',
+                Description:'',
+                Type: ''
+            },
+            {
+                PolicyType: 3,
+                PolicyID: '',
+                PolicyName: '',
+                ServiceTypeID:'',
+                Day1: '',
+                Ratio1: '',
+                Day2: '',
+                Ratio2:'',
+                Day3: '',
+                Ratio3:'',
+                Day4: '',
+                Ratio4:'',
+                CustomRatio:'',
+                Caution: '',
+                Description:'',
+                Type: ''
+            },
+            {
+                PolicyType: 4,
+                PolicyID: '',
+                PolicyName: '',
+                ServiceTypeID:'',
+                Day1: '',
+                Ratio1: '',
+                Day2: '',
+                Ratio2:'',
+                Day3: '',
+                Ratio3:'',
+                Day4: '',
+                Ratio4:'',
+                CustomRatio:'',
+                Caution: '',
+                Description:'',
+                Type: ''
+            }],
+            VehicleInfo: [],
+            VehicleCharges: [],
+            VehicleAddress: [],
+            VehicleSchedule: [],
+            Labels: [],
+            ActivityPrice: [
+                {
+                    activityID: '',
+                    serviceID: '',
+                    adultPrice: '',
+                    kidPrice: '',
+                    duration: ''
+                }
+            ],
+            HouseInfo: [],
+            IMGHOST: "http://123.59.144.47/"
         };
     },ctrlActivityEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
@@ -569,31 +710,145 @@ $(function () {
 
      var initServicePickupEdit = function(){
         return {
-            BaseInfo:{
-                ServiceName:'',
-                ServiceTypeName:'接机',
-                PrimaryPrice:'',
-                IncMileage:'',
-                ExMileagePrice:'',
-                ServiceTime:'',
-                ServiceOutTimePrice:'',
-                ServiceMethodID:'',
-                ServiceMethodName:'即停即走',
-                Description:'',
-                CoverPicURL:'',
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:''
-            },
-            Airports: {
-                AirportCode: "",
-                NameEn: "",
-                NameCh: "",
-            }
+            DetailMain: [
+                {
+                    serviceID: '',
+                    userID: '',
+                    serviceName: '',
+                    serviceTypeID: '',
+                    serviceTypeName: '接机',
+                    primaryPrice:'',
+                    unit: '',
+                    priceType: '',
+                    serviceTime: '',
+                    serviceOutTimePrice:'',
+                    incMileage: '',
+                    exMileagePrice: '',
+                    freeForDelay: '',
+                    waitOutTimePrice: '',
+                    description:'',
+                    serviceStatus: '',
+                    serviceMethod: '',
+                    pictureIDs: {},
+                    picURLs: [],
+                    covers: {}
+                }
+            ],
+            DetailServiceMethod: [],
+            Facility: [
+                {
+                    serviceID: '',
+                    facilityID: '',
+                    userID: '',
+                    facilityType: '',
+                    facilityName: '',
+                    brand:  '',
+                    model: '',
+                    produceYear: '',
+                    seats: '',
+                    person: '',
+                    clazz: '',
+                    insurance: '',
+                    description: '',
+                    luggage: '',
+                    facilityPics: []
+                }
+            ],
+            Airports:[{
+                    AirportID: '',
+                    ServiceID: '',
+                    AirportCode: '',
+                    NameEn: '',
+                    NameCh: '',
+                    CreateDate:'' 
+                }],
+            Policy: [
+                {
+                    PolicyType: 1,
+                    PolicyID: '',
+                    PolicyName: '',
+                    ServiceTypeID:'',
+                    Day1: '',
+                    Ratio1: '',
+                    Day2: '',
+                    Ratio2:'',
+                    Day3: '',
+                    Ratio3:'',
+                    Day4: '',
+                    Ratio4:'',
+                    CustomRatio:'',
+                    Caution: '',
+                    Description:'',
+                    Type: ''
+                },
+                {
+                    PolicyType: 2,
+                    PolicyID: '',
+                    PolicyName: '',
+                    ServiceTypeID:'',
+                    Day1: '',
+                    Ratio1: '',
+                    Day2: '',
+                    Ratio2:'',
+                    Day3: '',
+                    Ratio3:'',
+                    Day4: '',
+                    Ratio4:'',
+                    CustomRatio:'',
+                    Caution: '',
+                    Description:'',
+                    Type: ''
+                },
+                {
+                    PolicyType: 3,
+                    PolicyID: '',
+                    PolicyName: '',
+                    ServiceTypeID:'',
+                    Day1: '',
+                    Ratio1: '',
+                    Day2: '',
+                    Ratio2:'',
+                    Day3: '',
+                    Ratio3:'',
+                    Day4: '',
+                    Ratio4:'',
+                    CustomRatio:'',
+                    Caution: '',
+                    Description:'',
+                    Type: ''
+                },
+                {
+                    PolicyType: 4,
+                    PolicyID: '',
+                    PolicyName: '',
+                    ServiceTypeID:'',
+                    Day1: '',
+                    Ratio1: '',
+                    Day2: '',
+                    Ratio2:'',
+                    Day3: '',
+                    Ratio3:'',
+                    Day4: '',
+                    Ratio4:'',
+                    CustomRatio:'',
+                    Caution: '',
+                    Description:'',
+                    Type: ''
+                },
+            ],
+            VehicleInfo: [],
+            VehicleCharges: [],
+            VehicleAddress: [],
+            VehicleSchedule: [],
+            Labels: [],
+            ActivityPrice: [],
+            HouseInfo: [],
+            IMGHOST: "http://123.59.144.47/"
         };
     },ctrlServicePickupEdit = function(Plan, realView){
+        Plan.createAirport = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Airports:Spot});
+        };
         $('#save').rogerOnceClick(Plan, function(e){
             console.log('text')
         });
@@ -632,22 +887,21 @@ $(function () {
         var usr =$.rogerGetLoginUser();
         var type = $.rogerGetUrlParam('type');
         return {
-            Travelogue:{
-                ServiceName:'',
-                PrimaryPrice:'',
-                IncMileage:'',
-                ExMileagePrice:'',
-                ServiceTime:'',
-                ServiceOutTimePrice:'',
-                ServiceMethod:'',
-                Description:'',
-                CoverPicURL:'',
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:''
-            },
+            Travelogue:[{
+                "articleID":'',
+                "userID":'',
+                "articlePicURL":'',
+                "description":'',
+                "title":'',
+                "userName": null,
+                "avatarPicURL": '',
+                "type":'',
+                "STATUS":'',
+                "createDate":'',
+                "browseCount": '',
+                "praiseCount":'',
+                "evaluateCount":''
+            }],
             TravelogueDetail: [],
             IMGHOST:$.rogerImgHost()
         };
@@ -708,6 +962,12 @@ $(function () {
         realView.rogerCropImages();
     } ;
 
+    var ctrlOrderdetail = function(response, realView) {
+
+        realView.rogerCropImages();
+
+    };
+
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                          ctrl: ctrlDashboard},
         '#/spcialplan':                   {view:'product-specialplan.html',                         rootrest:'/dashboard/product/specialplan',                          ctrl: ctrlSpecialplan},
@@ -726,7 +986,7 @@ $(function () {
         '#/templateplandetail':          {view: 'product-tempplan-detail.html',                     rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
 
         '#/delicacydetail':               {view:'product-delicacy-detail.html',	                     rootrest:'/dashboard/product/delicacy/detail',                     ctrl: ctrlDelicacyDetail},
-        '#/accommodationdetail':        {view:'product-accommodation-detail.html',                 rootrest:'/dashboard/product/accommodation/detail',	           ctrl: ctrlAccommodationDetail},
+            '#/accommodationdetail':        {view:'product-accommodation-detail.html',                 rootrest:'/dashboard/product/accommodation/detail',	           ctrl: ctrlAccommodationDetail},
         '#/attractiondetail':            {view:'product-attraction-detail.html',                    rootrest:'/dashboard/product/attraction/detail',                  ctrl: ctrlAttractionDetail},
 
         '#/serviceotherdetail':           {view:'product-service-other-detail.html',               rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
@@ -759,8 +1019,9 @@ $(function () {
         '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceOtherEdit,                                               ctrl: ctrlServiceOtherEdit},
         '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',                 init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},
         '#/equipedit':      {fragment: 'fragment/product-equip-edit.html',     init: initEquipEdit,   ctrl: ctrlEquipEdit},
-
-	});
+        '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/orderdetail':            {view:'payCompletion.html',	                  rootrest:'/order/detail',                      ctrl: ctrlOrderdetail},
+    });
 
 
 	

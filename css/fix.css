@@ -205,8 +205,99 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .commentOn li:last-child i { height: 80px; line-height: 80px; }
 /*end 方案详情页plandetail*/
 
-/*end 游客端页面*/
+/*支付流程页*/
+.stepBarBox{width:60%; margin:0 auto; max-width:900px;}
+.step{max-width:1200px; width:90; margin:0 auto;}
+.step .stepPart{display: block;}
+/*进度条自定义颜色   备用*/
+.ui-stepBar-wrap .ui-stepBar .ui-stepProcess{background:#00b8ee;}
+.ui-stepBar-wrap .ui-stepInfo-wrap .ui-stepInfo .judge-stepSequence-pre-change:hover{box-shadow:0 0 3px 1px #00b8ee;}
+.judge-stepSequence-pre{background:#00b8ee;}
+/*进度条自定义颜色   备用结束*/
+/*进度条图片形式*/
+.stepBarBox .stepBarimg,.stepBarBox .stepBarimg img{width:610px; height: 62px;}
+.stepBarBox .stepBarimg{margin:40px auto 0;}
+.stepBarBox ul{width:610px; margin:10px auto 30px; }
+.stepBarBox ul li{display: inline-block; width:200px; font-size: 16px;}
+.stepBarBox ul li.active{color:#00b8ee;}
+.stepBarBox ul li:nth-child(1){text-align: left;}
+.stepBarBox ul li:nth-child(2){text-align: center;}
+.stepBarBox ul li:nth-child(3){text-align: right;}
+/*提交订单部分*/
+/*公共部分*/
+.stepPart .partTitle{font-size: 20px; border-bottom:2px solid #00b8ee; height: 40px; line-height: 40px; margin-bottom: 20px;}
+.stepPart .partTitle small{line-height: 40px;}
+.stepPart .content{padding:50px;}
+/*提交订单部分*/
+.submitpage #partOne .col-sm-10 input,#partOne .col-sm-10 select{ width:50%; display: inline-block; border-radius: 0; border-color: #00b8ee; box-shadow: none; -webkit-box-shadow: none;}
+.submitpage #partOne>form .col-sm-10 input{width:240px;}
+.submitpage #partOne>form .col-sm-10 select{width:100px;}
+.submitpage #partOne .control-label{font-weight: normal;}
+.submitpage #partOne .control-label .fa{color:#00b8ee; margin-right: 10px;}
+.submitpage #partOne .content{padding-top:50px;}
+.submitpage #partOne .content h4,#partThree .content>h4{font-size: 14px; height: 40px; line-height: 40px;}
+.submitpage #partOne .content h4 span{color:#00b8ee; margin-left: 10px;}
+.submitpage #partOne .projectInfo,#partThree .projectInfo{border: 1px solid #00b8ee; padding:15px;}
+.submitpage #partOne .projectInfo img,#partThree .projectInfo img{width:220px; height: 120px;}
+.submitpage #partOne .projectInfo .textInfo,#partThree .projectInfo .textInfo{height: 120px; margin-left: 20px;}
+.submitpage #partOne .projectInfo .textInfo h5,#partThree .projectInfo .textInfo h5{font-size: 20px; height: 30px; line-height: 30px; margin-bottom: 6px;}
+.submitpage #partOne .projectInfo .textInfo p,#partThree .projectInfo .textInfo p{font-size: 14px; height: 28px; line-height: 28px; color:#666666;}
+.submitpage #partOne .content .total{font-size: 24px; text-align: right; height: 60px; line-height: 60px;}
+.submitpage #partOne .content .detailInfo .row,#partThree .content .detailInfo .row{padding:20px; margin:0; min-height: 110px; border-top: 1px solid #00b8ee; border-right:1px solid #00b8ee;  border-left:1px solid #00b8ee; font-size: 14px;}
+.submitpage #partOne .content .detailInfo .row:last-child,#partThree .content .detailInfo .row:last-child{border-bottom: 1px solid #00b8ee; }
+.submitpage #partOne .content .detailInfo .col-md-2,#partThree .content .detailInfo .col-md-2  {position: relative;}
+.submitpage #partOne .content .detailInfo .col-md-2 .textBox{height: 30px; width:100px; text-align: center; line-height: 30px; position: absolute; right: 0; top:0; border: 1px solid #00b8ee;}
+.submitpage #partOne .content .detailInfo .markText{width:90%; height: 80px; border: 1px solid #ccc;}
+.submitpage #partOne .content dl,#partOne .content dl dt,#partOne .content dl dd{height: 40px; line-height: 40px; font-size: 22px;}
+.submitpage #partOne .content dl dt,#partOne .content dl dd{float:left;}
+.submitpage #partOne .content dl.totalPrice{font-size: 30px; color:#fa703e;}
+.submitpage #partOne .content .submitOrder{text-align: right;}
+/*选择付款方式并付款部分*/
+.payMethod{ height: 400px;   }
+.payMethod ul {height:210px; padding: 15px 230px; margin:0 auto; border:1px solid #00b8ee;}
+.payMethod ul li {height: 60px; line-height: 60px; }
+.payMethod ul li i{width:30px; height: 30px; background-color: #00b8ee; color:#FFF; font-size: 20px; line-height: 30px; text-align: center; border-radius: 3px; margin-right: 8px;}
+.payMethod ul li input{float:right;}
+.payMethod ul li .iradio_flat-blue{float:right; top:20px;}
+.payMethod .payMethodBt{height: 80px; line-height: 80px;}
+.payMethod .payMethodBt span{color:#ccc; }
+.payMethod .payMethodBt span.payPrice{color:#fa703e; font-size: 20px;}
+.payMethod .payMethodBt span.payPrice strong{font-size: 26px;}
+.payMethod .payBtn{text-align: right; margin-top:10px;}
+.bankAccount,.instruction{border:1px solid #00b8ee; }
+.payByBankCard h4{height: 34px; line-height: 34px; text-align: center; border-bottom: 1px solid #00b8ee; border-top:1px solid #00b8ee; }
+.bankAccount{height: 184px; }
+.bankAccount h4{margin-bottom: 15px;}
+.bankAccount dl dt,.bankAccount dl dd{float:left; height: 40px; line-height: 40px;}
+.bankAccount dl dt{width:200px; text-align: right; margin-right: 50px;}
+.payByBankCard .payPrice{height: 80px; line-height: 80px; text-align: right; font-size: 20px; color: #fa703e;}
+.payByBankCard .payPrice strong{font-size: 26px;}
+.instruction>div{height: 73px; text-align: center; line-height: 73px;}
+.btnList{height: 100px; line-height: 100px; text-align: right;}
+/*支付完成部分*/
+#partThree .projectInfo .scheduleOver{width:416px; height: 150px; border-left:1px dashed #ccc; margin:-15px 0; padding:15px;}
+#partThree .projectInfo .scheduleOver h4 {margin-bottom: 20px;}
+#partThree .projectInfo .scheduleOver h4 a{color:#337ab7;}
+#partThree .projectInfo .scheduleOver .col-sm-8 p{line-height: 40px;height: 40px;}
+#partThree .projectInfo .scheduleOver .col-sm-8 p span{display: inline-block; margin-left: 20px;}
+#partThree .projectInfo .scheduleOver .col-sm-4 div{ height: 78px; width:78px; border-radius: 39px; background-color: #00b8ee; line-height: 78px; text-align: center; font-size: 20px; color:#fff;}
+#partThree .aboutPrice{padding:15px 20px; border:1px solid #00b8ee; margin:20px 0;}
+#partThree .aboutPrice li{height: 30px; line-height: 30px; font-size: 18px;}
+#partThree .aboutPrice li span{float: right; width:170px;}
+#partThree .aboutPrice li span.priceAct{font-size: 1.5em; color:#fa703e;}
+#partThree .content .detailInfo .col-md-2 .textBox{height: 30px; width:100px; text-align: center; line-height: 30px; position: absolute; right: 0; top:0; color:#00b8ee;}
+#partThree .content .detailInfo .col-md-10{color:#666;}
+#partThree .content .detailInfo .col-md-10 .info dt,#partThree .content .detailInfo .col-md-10 .info dd{display: inline-block; line-height: 36px; font-weight: normal; }
+#partThree .content .detailInfo .col-md-10 .info dt{width:60px;}
+#partThree .aboutOrder{border:1px solid #00b8ee; height: 150px; margin:20px 0; }
+#partThree .aboutOrder .col-md-6{padding: 10px 0;}
+#partThree .aboutOrder dt,#partThree .aboutOrder dd{display: inline-block; text-align: right; font-weight: normal; line-height: 26px; font-size: 14px; }
+#partThree .aboutOrder dt{width:160px; }
+#partThree .aboutOrder dd{width:320px; }
+#partThree .btnList{text-align: right;}
 
+/* end 支付流程页*/
+/*end 游客端页面*/
 
 /*导游端公共部分*/
 .logo img{height: 60px;}
@@ -283,7 +374,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .tips-mainbody .tips-description li{list-style: none;}
 .detailpage .tips-mainbody .tips-description li h2{position: relative; font-size: 16px; color: #000; border-bottom: 1px solid #FF6700;padding: 10px 0 15px; white-space: pre;}
 .detailpage .tips-mainbody .tips-description li span{position: absolute; bottom: 0; left: 0; width: 94px; height: 4px; background-color: #FF6700;}
-.detailpage .tips-mainbody .tips-description li img{width: 1120px; height: auto;}
+.detailpage .tips-mainbody .tips-description li img{width: 100%; height: auto; margin-bottom: 10px;}
 .detailpage .tips-mainbody .tips-description li .tipsdes p{padding: 20px 50px; text-indent: 2em; line-height: 24px; font-size: 14px; color: #666;}
 /*end 攻略预览*/
 /*end 导游端预览页*/

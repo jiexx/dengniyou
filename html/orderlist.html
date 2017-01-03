@@ -126,7 +126,9 @@
 							<ul class="productList">
 								<li class="clearfix">
 									<div class="productPic">
-										<img src="${ $data.IMGHOST + picurl}" alt="">
+										<a href="#/orderdetail?OrderID=${datas[i].OrderID}&UserType=1">
+											<img src="${ $data.IMGHOST + picurl}" alt="">
+										</a>
 									</div>
 									<div class="productText">
 										<h4>${datas[i].ServiceTripName} </h4>

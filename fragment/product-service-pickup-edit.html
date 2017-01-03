@@ -13,7 +13,7 @@
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">服务名称</label>
 		    <div class="col-sm-10 col-md-11">
-		        <input type="text" class="form-control" value="${$data.BaseInfo.ServiceName}"  data-value="/BaseInfo/ServiceName" placeholder="不能超过24个字符">
+		        <input type="text" class="form-control" value="${$data.DetailMain[0].serviceName}"  data-value="/DetailMain[0]/serviceName" placeholder="不能超过24个字符">
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -23,37 +23,37 @@
 		    		<option value="">接机</option>
 		    		<option value="">送机</option>
 		    	</select>
-		        <input type="hidden" class="form-control" id="ServiceTypeName" value="${$data.BaseInfo.ServiceTypeName}"  data-value="/BaseInfo/ServiceTypeName">
+		        <input type="hidden" class="form-control" id="ServiceTypeName" value="${$data.DetailMain[0].serviceTypeName}"  data-value="/DetailMain[0]/serviceTypeName">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">商品价格</label>
 		    <div class="col-sm-10 col-md-11">
-		    	<input type="text" class="form-control" value="${$data.BaseInfo.PrimaryPrice}"  data-value="/BaseInfo/PrimaryPrice" > 元/天
+		    	<input type="text" class="form-control" value="${$data.DetailMain[0].primaryPrice}"  data-value="/DetailMain/${0}/primaryPrice" > 元/天
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">包含里程</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.BaseInfo.IncMileage}"  data-value="/BaseInfo/IncMileage" > 公里
+		      <input type="text" class="form-control" value="${$data.DetailMain[0].incMileage}"  data-value="/DetailMain/${0}/incMileage" > 公里
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">额外里程</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.BaseInfo.ExMileagePrice}"  data-value="/BaseInfo/ExMileagePrice" > 元/公里
+		      <input type="text" class="form-control" value="${$data.DetailMain[0].exMileagePrice}"  data-value="/DetailMain/${0}/exMileagePrice" > 元/公里
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">免费时间</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.BaseInfo.ServiceTime}"  data-value="/BaseInfo/ServiceTime" > 小时
+		      <input type="text" class="form-control" value="${$data.DetailMain[0].serviceTime}"  data-value="/DetailMain/${0}/serviceTime" > 小时
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">超额时间</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.BaseInfo.ServiceOutTimePrice}"  data-value="/BaseInfo/ServiceOutTimePrice"> 元/小时
+		      <input type="text" class="form-control" value="${$data.DetailMain[0].serviceOutTimePrice}"  data-value="/DetailMain/${0}/serviceOutTimePrice"> 元/小时
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -76,13 +76,13 @@
 					</label>
 			    </div>		        
 		    </div>
-			<input type="hidden" class="form-control" id="ServiceMethodName"  value="${$data.BaseInfo.ServiceMethodName}"  data-value="/BaseInfo/ServiceMethodName">
+			<input type="hidden" class="form-control" id="ServiceMethodName"  value="${$data.DetailMain[0].serviceMethod}"  data-value="/DetailMain/${0}/serviceMethod">
 
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">服务描述</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/BaseInfo/Description" class="form-control" rows="5" placeholder="请输入不少于300字描述" >${$data.BaseInfo.Description}</textarea>
+		      <textarea name="" data-value="/DetailMain/${0}/description" class="form-control" rows="5" placeholder="请输入不少于300字描述" >${$data.DetailMain[0].description}</textarea>
 		    </div>
 		  </div>
 		</form>
@@ -114,7 +114,8 @@
 		</form>			
 		<div class="row textRight">
 			<div class="col-sm-10 col-md-8">
-			<button class="btn btn-warning">关联车辆</button>
+			<!-- <button class="btn btn-warning">关联车辆</button> -->
+			<button class="btn btn-warning" data-op="change" data-pointer="/Airports" data-action="createAirport">选择</button>
 			</div>
 		</div>
 	</div>
@@ -126,16 +127,16 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
 			<div class="col-md-11 row" >
-				{{each $data.BaseInfo.PicURL}}
+				{{each $data.DetailMain[0].PicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.BaseInfo.PicURL[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/PicURL/${$index}"></a>
+						<img src="${$data.DetailMain[0].picURLs[$index]}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/picURLs/${$index}"></a>
 					</div>
 				</div>
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/BaseInfo/PicURL" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/BaseInfo/PicURL/-" data-action="image">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/${0}/picURLs" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/${0}/picURLs/-" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -143,16 +144,16 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{if $data.BaseInfo.CoverPicURL}}
+				{{if $data.DetailMain[0].CoverPicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.BaseInfo.CoverPicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/CoverPicURL" ></a>
+						<img src="${$data.DetailMain[0].CoverPicURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/covers" ></a>
 					</div>
 				</div>
 				{{else}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/BaseInfo/CoverPicURL" data-action="image" >+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/${0}/covers" data-action="image" >+</div>
 				</div>
 				{{/if}}
 			</div>
@@ -164,31 +165,41 @@
 	<div class="notice">
 		<h4>须知信息</h4>
 		<form class="form-horizontal">
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
-		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" id="Policy" value="${ $data.BaseInfo.Policy}" data-value="/BaseInfo/Policy" class="form-control"></textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
-		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" id="CostInclude" value="${ $data.BaseInfo.CostInclude}" data-value="/BaseInfo/CostInclude" class="form-control"></textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
-		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" id="CostExclude" value="${ $data.BaseInfo.CostExclude}" data-value="/BaseInfo/CostExclude" class="form-control"></textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">注意事项：</label>
-		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" id="Notice" value="${ $data.BaseInfo.Notice}" data-value="/BaseInfo/Notice" class="form-control"></textarea>
-		    </div>
-		  </div>
-		</form>
+		{{each(i,p) Policy}}
+			{{if p.PolicyType==1}}
+				<div class="form-group">
+				    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
+				    <div class="col-sm-10 col-md-11">
+				      <textarea name="" id="Policy" data-value="/Policy/${i}/Description" class="form-control">${p.Description}</textarea>
+				    </div>
+				</div>
+	        {{/if}}
+	        {{if p.PolicyType==2}}
+				<div class="form-group">
+				    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
+				    <div class="col-sm-10 col-md-11">
+				      <textarea name="" id="Policy" data-value="/Policy/${i}/CustomRatio" class="form-control">${p.CustomRatio}</textarea>
+				    </div>
+				</div>
+	        {{/if}}
+	        {{if p.PolicyType==3}}
+				<div class="form-group">
+				    <label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
+				    <div class="col-sm-10 col-md-11">
+				      <textarea name="" id="Policy" data-value="/Policy/${i}/CustomRatio" class="form-control">${p.CustomRatio}</textarea>
+				    </div>
+				</div>
+	        {{/if}}
+	        {{if p.PolicyType==4}}
+				<div class="form-group">
+				    <label for="name" class="col-sm-2 col-md-1 control-label">注意事项：</label>
+				    <div class="col-sm-10 col-md-11">
+				      <textarea name="" id="Policy" data-value="/Policy/${i}/Caution" class="form-control">${p.Caution}</textarea>
+				    </div>
+				</div>
+	        {{/if}}
+		{{/each}}
+		</form>		
 		<div class="optionBtn">
 			<button id="save" class="btn btn-warning">保存</button>
 			<button id="publish" class="btn btn-warning">发布 </button>

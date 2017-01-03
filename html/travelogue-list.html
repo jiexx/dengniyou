@@ -17,9 +17,13 @@
 		  </div>
 		</div>
 	  </div>
-	  <div class="col-md-2 ">
-	   {{if STATUS==0}}草稿中{{else}}已发布{{/if}}
-	   </div><div class="col-md-1 "><div class="btn  glyphicon glyphicon-edit"></div></div></div>
+	    <div class="col-md-2 ">
+	    	{{if STATUS==0}}草稿中{{else}}已发布{{/if}}
+	    </div>
+	    <div class="col-md-1 ">
+	   		<a href="#/travelogueedit?"><div class="btn  glyphicon glyphicon-edit"></div></a>
+	   	</div>
+	   	</div>
 	  {{/each}}
 	</div>
 </div>

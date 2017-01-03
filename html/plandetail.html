@@ -49,7 +49,7 @@
 				</div>
 				<div class="col-md-5">
 					<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].PlanPriceBase}</span>元</h4>
-					<a href="orderSubmit.html"id="BUY"><button class="btn btn-primary">立即购买</button></a>
+					<a href="orderSubmit.html" id="BUY"><button class="btn btn-primary">立即购买</button></a>
 				</div>
 				<div class="col-md-2">
 					<p><i class="fa fa-heart-o"></i>添加收藏</p>
@@ -132,9 +132,14 @@
 										{{each  v.__values}}
 										<li>
 											<div class="picText">
-												{{if  ScheduleType == 1  }}
+												{{if ScheduleType == 0  }}
+													{{if PicURL == null }}<img src="../img/CityIcon.png" alt="">{{/if}}
+													{{if PicURL != null }}<img src="${ $data.IMGHOST }${PicURL}" alt="">{{/if}}
+												{{/if}}
+												{{if ScheduleType == 1 }}
 												<img src="../img/airPlaneIcon.png" alt="">
-												{{else}}
+												{{/if}}
+												{{if (ScheduleType == 2 ||ScheduleType == 3 ||ScheduleType == 4 ||ScheduleType == 5) }}
 												<img data-src="${ $data.IMGHOST }${PicURL}">
 												{{/if}}
 												<div class="text media-body">
