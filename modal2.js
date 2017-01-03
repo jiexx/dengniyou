@@ -6,8 +6,8 @@ var fdfs = new FdfsClient({
     // tracker servers
     trackers: [
         {
-            //host: '10.101.1.165',
-			host: '172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
+            host: '10.101.1.165',
+			//host: '172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
             port: 22122
         }
     ],
@@ -25,7 +25,7 @@ var pool  = mysql.createPool({
 	connectionLimit: 500
 //	acquireTimeout: 30000
 });
-var IMG_HOST = "http://123.59.144.47/";
+var IMG_HOST = "http://123.59.144.47/";//"http://10.101.1.165/";
 
 function doSql(funcArgu, onFinish) {
 	pool.getConnection(function(err, conn) {

@@ -82,13 +82,24 @@ pay.config({
 });
 
 app.post('/pay', upload.array(), function(req, res) {
-    var js = fs.readFileSync('./fakeorder', 'utf8');
-    var fake = JSON.parse(js);
-    //WRITE ORDER INFO.
-	/*request.post(
-		'http://123.59.144.44/travel/order /addOrder', fake,
+    //var js = fs.readFileSync('./fakeorder', 'utf8');
+    //var fake = JSON.parse(js);
+    //WRITE ORDER INFO.123.59.144.44
+    /*request.get('http://10.101.1.36:8080/travel/order/addOrder',function (error, response, body) {
+        console.log();
+    });*/
+	request.post(
+        {
+            url: 'http://10.101.1.36:8080/travel/order/addOrderPost',
+            method: "POST",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+            },
+            body:  req.body
+        },
 		function (error, response, body) {
-			if (!error && response.statusCode == 200) {*/
+			if (!error && response.statusCode == 200) {
                 var usr_redirect_url = pay.buildDirectPayURL({
                     out_trade_no: 'test',//body.datas.orderNO,
                     subject: 'order-312412',// 'order-312412',//body.datas.orderId,
@@ -96,11 +107,11 @@ app.post('/pay', upload.array(), function(req, res) {
                     total_fee:  '0.01',//body.datas.costMoney
                 });
                 res.send(JSON.stringify({url:usr_redirect_url}));
-			/*}else {
+			}else {
 				console.error(error);
 			}
 		}
-	);*/
+	);
 });
 app.get('/notify', function (req, res) {
     var params = req.body;
