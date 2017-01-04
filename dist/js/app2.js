@@ -102,7 +102,7 @@ $(function () {
         return {
             PlanInfo:{
                 PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
-                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0,
+                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
 
                 Picture:{
                     Pics:[]
@@ -157,7 +157,7 @@ $(function () {
         return {
             PlanInfo:{
                 PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
-                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0,
+                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
 
                 Picture:{
                     Pics:[]
@@ -317,12 +317,22 @@ $(function () {
 
 
         $('#save').rogerOnceClick(Plan, function(e){
-            var data = {PlanInfo:e.data.PlanInfo};
-            data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
-            $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
+            $.rogerPost('/delete/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
                 $.rogerPost('/new/tmpplan', data, function(respJSON){
                     $.rogerNotice({Message:'模板方案保存成功'});
                 });
+            });
+        });
+        $('#publish').rogerOnceClick(Plan, function(e){
+            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
+                $.rogerNotice({Message:'模板方案待审核..'});
+                $.rogerRefresh(Plan);
+            });
+        });
+        $('#cancel').rogerOnceClick(Plan, function(e){
+            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
+                $.rogerNotice({Message:'模板方案已取消发布..'});
+                $.rogerRefresh(Plan);
             });
         });
 
@@ -351,6 +361,19 @@ $(function () {
                 $.rogerPost('/new/shortplan', data, function(respJSON){
                     $.rogerNotice({Message:'快捷方案保存成功'});
                 });
+            });
+        });
+
+        $('#publish').rogerOnceClick(Plan, function(e){
+            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
+                $.rogerNotice({Message:'模板方案待审核..'});
+                $.rogerRefresh(Plan);
+            });
+        });
+        $('#cancel').rogerOnceClick(Plan, function(e){
+            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
+                $.rogerNotice({Message:'模板方案已取消发布..'});
+                $.rogerRefresh(Plan);
             });
         });
 
