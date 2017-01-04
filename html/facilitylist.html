@@ -3,18 +3,15 @@
 		{{each Facilities}}
 	  	<div class="list-group-item clearfix disabled">
 		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
-		  	<div class="col-md-5 service-name">装备</div>
+		  	<div class="col-md-8 service-name">装备</div>
 		  	<div class="col-md-2">装备类型</div>
-	      <div class="col-md-1 ">发布状态</div>
 		  	<div class="col-md-1 ">编辑</div>
 	  	</div>
 	  	<div class="list-group-item clearfix btn-group">
-		  	<div class="col-md-1">
-		  		<input type="radio" name="optradio">
-		  	</div>
-		  	<div class="col-md-5 ">
+		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+		  	<div class="col-md-8 ">
 		    	<div class="media">
-				   <div class="media-left media-top">
+				    <div class="media-left media-top">
 					   {{each(i,pic) Facilities[$index].pics}}
 					   {{if i==1}}
 					   <a href="#/equipdetail?facilityID=${facilityID}">
@@ -22,16 +19,15 @@
 					   </a>
 					   {{/if}}
 					   {{/each}}
-				   </div>
-			   	<div class="media-body">
+				    </div>
+			   		<div class="media-body">
 						<div class="media-heading">${ Facilities[$index].facilityType}：${ Facilities[$index].brand}：${ Facilities[$index].model}</div>
-			   	</div>
-				</div>
+			   		</div>
+				</div> <!-- end media -->
 			</div>
-			<div class="col-md-2 ">${ Facilities[$index].facilityName}</div>
-		
-			<div class="col-md-1 ">
-		   	<span class="btn  glyphicon glyphicon-edit"></span>
+			<div class="col-md-2 margin-top">${ Facilities[$index].facilityName}</div>	
+			<div class="col-md-1 service-edit">
+		   		<span class="btn  glyphicon glyphicon-edit"></span>
 			</div>
 		</div>
 		{{/each}}

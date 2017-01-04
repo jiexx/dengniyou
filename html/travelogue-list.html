@@ -1,32 +1,38 @@
 <div class="container">
-    <div class="list-group">
-	  {{each TravelogueList}}
-	  <div class="list-group-item clearfix disabled"><div class="col-md-1"><input type="radio" name="optradio"></div><div class="col-md-8">攻略</div><div class="col-md-2 ">发布状态</div><div class="col-md-1 ">编辑</div>
-	  </div>
-	  <div class="list-group-item clearfix btn-group"><div class="col-md-1"><input type="radio" name="optradio"></div>
-	  <div class="col-md-8 ">
-	    <div class="media">
-		  <div class="media-left media-top">
-			  <a href="#/traveloguedetail?articleID=${articleID}">
-				<img src="${ $data.IMGHOST }${articlePicURL}" class="media-object" style="width:160px;height:160px"></img>
-			  </a>
-		  </div>
-		  <div class="media-body">
-			<div class="media-heading">${title}</div>
-			<div>${description}</div>
-		  </div>
+    <div class="list-group service-list">
+	{{each TravelogueList}}
+		<div class="list-group-item clearfix disabled">
+		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+		  	<div class="col-md-8 service-name">攻略</div>
+		  	<div class="col-md-2 ">发布状态</div>
+		  	<div class="col-md-1 ">编辑</div>
 		</div>
-	  </div>
-	    <div class="col-md-2 ">
-	    	{{if STATUS==0}}草稿中{{else}}已发布{{/if}}
-	    </div>
-	    <div class="col-md-1 ">
-	   		<a href="#/travelogueedit?"><div class="btn  glyphicon glyphicon-edit"></div></a>
-	   	</div>
-	   	</div>
-	  {{/each}}
-	</div>
-</div>
+		<div class="list-group-item clearfix btn-group">
+		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+		  	<div class="col-md-8 ">
+			    <div class="media">
+				  	<div class="media-left media-top">
+					  	<a href="#/traveloguedetail?articleID=${articleID}">
+							<img src="${ $data.IMGHOST }${articlePicURL}" class="media-object" style="width:160px;height:160px"></img>
+					  	</a>
+					</div>
+					<div class="media-body">
+						<div class="media-heading">${title}</div>
+						<div>${description}</div>
+					</div>
+				</div> <!-- end media -->
+		  	</div>
+		    <div class="col-md-2 margin-top">{{if STATUS==0}}草稿中{{else}}已发布{{/if}}</div>
+		    <div class="col-md-1 service-edit">
+		   		<a href="#/travelogueedit?">
+		   			<span class="btn  glyphicon glyphicon-edit"></span>
+		   		</a>
+		   	</div>
+		</div>
+	{{/each}}
+	</div> <!-- end list-group -->
+</div> <!-- end container -->
+<!-- 页码 -->
 <div class="container">
   <div class="pagination">
     <li>

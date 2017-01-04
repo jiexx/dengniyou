@@ -298,7 +298,7 @@ exports.getOrderList = function(item, callback) {
 
         var sql =[];
         if(item.usertype == 1){
-            sql.push( "select travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.GuideID as userid,userinfo.UserName as username,travelorder.Status as status, " +
+            sql.push( "select 1 as usertype,travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.GuideID as userid,userinfo.UserName as username,travelorder.Status as status, " +
                 "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl, " +
                 "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays, " +
                 "                           travelorder.IfEvaluate as ifevaluate,travelorder.IfReply as ifreply,userinfo.AvatarPicURL " +
@@ -308,7 +308,7 @@ exports.getOrderList = function(item, callback) {
                 "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) " +
                 "							where travelorder.UserID = "+item.userID);
 		} else if(item.usertype == 2){
-            sql.push("select travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.UserID as userid,userinfo.UserName as username,travelorder.Status as status,\n" +
+            sql.push("select 1 as usertype,travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.UserID as userid,userinfo.UserName as username,travelorder.Status as status,\n" +
             "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl,\n" +
             "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays,\n" +
             "                           travelorder.IfEvaluate as ifevaluate,travelorder.IfReply as ifreply,userinfo.AvatarPicURL\n" +

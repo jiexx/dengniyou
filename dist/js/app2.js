@@ -384,6 +384,17 @@ $(function () {
     };
 
     var ctrlOrderlist = function(response, realView) {
+        
+        // if(!$.rogerGetURLJsonParams()) {
+        //     if(!$.rogerIsLogined()) {
+        //         $.rogerShowLogin();
+        //     }else{
+        //         var usr = $.rogerGetLoginUser();
+        //         $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=1&status=3&page=1')
+        //     }
+        // }
+        // bindRidoesForSwitch();
+        
 
         realView.rogerCropImages();
 
@@ -982,6 +993,7 @@ $(function () {
 
     var ctrlOrderdetail = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
 
     };

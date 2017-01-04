@@ -79,11 +79,11 @@
         <div ui-view>
         	<div class="orderAll" id="orderAll">
 				<ul class="navSecond">
-					<li class="active"><a href="">全部订单</a></li>
-					<li><a href="">待支付<span>3</span></a></li>
-					<li><a href="">待接单<span>1</span></a></li>
-					<li><a href="">待完成<span>6</span></a></li>
-					<li><a href="">待评价<span>2</span></a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=0&page=1">全部订单</a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=1&page=1">待支付<span></span></a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=2&page=1">待接单<span></span></a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=3&page=1">待完成<span></span></a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=4&page=1">待评价<span></span></a></li>
 				</ul>
 
 				<!-- <div class="searchBy">
@@ -93,7 +93,7 @@
 					<button type="button" class="btn btn-warning btn-orange">查 询</button>
 				</div> -->
 
-				<div class="orderBy">
+				<!-- <div class="orderBy">
 					<select name="" id="orderType">
 						<option value="">类型</option>
 						<option value="">方案</option>
@@ -108,30 +108,34 @@
 						<option value="">待评价</option>
 					</select>
 					<span>操作</span>
-				</div>
+				</div> -->
 				<ul class="orderList">
+					{{if datas.length == 0}}
+					<h4 style="height: 50px; line-height: 50px; text-align: center;">暂无数据</h4>
+					{{/if}}
 					{{each(i,order) datas}}
 					<li>
 						<div class="title"><h5>${datas[i].username} <span class="contactMe"></span></h5>
 							<span class="fr status">
 								{{if datas[i].status == 1}}待支付{{/if}}
-								{{if datas[i].status == 2}}待结单{{/if}}
+								{{if datas[i].status == 2}}待接单{{/if}}
 								{{if datas[i].status == 3}}待完成{{/if}}
 								{{if datas[i].status == 4}}待完成{{/if}}
 								{{if datas[i].status == 5}}已关闭{{/if}}
 								{{if datas[i].status == 6}}已结算{{/if}}
 							</span>
 						</div>
+
 						<div class="content">
 							<ul class="productList">
 								<li class="clearfix">
 									<div class="productPic">
-										<a href="#/orderdetail?OrderID=${datas[i].OrderID}&UserType=1">
+										<a href="#/orderdetail?OrderID=${datas[i].orderid}&UserType=1">
 											<img src="${ $data.IMGHOST + picurl}" alt="">
 										</a>
 									</div>
 									<div class="productText">
-										<h4>${datas[i].ServiceTripName} </h4>
+										<h4>${datas[i].ServiceTripName}</h4>
 										<p class="description">${datas[i].ServiceTripName}</p>
 										<p class="productLabel">${datas[i].ServiceTripTypeName}</p>
 										<p>${datas[i].starttime}-${datas[i].starttime}</p>
@@ -148,8 +152,8 @@
 										</button>
 									</div>
 									{{/if}}
-
 								</li>
+
 							</ul>
 						</div>
 					</li>
@@ -164,3 +168,33 @@
     </div>
     <!-- 内容部分结束 -->
 
+
+<script>
+	$(function(){
+		var status = $.rogerGetURLJsonParams().status;
+		var navSecond = $('.navSecond li');
+		switch (status)
+		{
+			case '0':
+			navSecond.eq(0).addClass('active');
+			break;
+			case '1':
+			navSecond.eq(1).addClass('active');
+			break;
+			case '2':
+			navSecond.eq(2).addClass('active');
+			break;
+			case '3':
+			navSecond.eq(3).addClass('active');
+			break;
+			case '4':
+			navSecond.eq(4).addClass('active');
+			break;
+		}
+
+
+	});
+	
+
+
+</script>

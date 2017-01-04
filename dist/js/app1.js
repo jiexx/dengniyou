@@ -177,7 +177,14 @@
 
     var ctrlOrderlist = function(response, realView) {
 
+        var user = $.rogerGetLoginUser();
         realView.rogerCropImages();
+    };
+
+    var ctrlOrderdetail = function(response, realView) {
+
+        realView.rogerCropImages();
+
     };
 
 	$.rogerRouter({
@@ -185,7 +192,8 @@
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist.html', 								rootrest: '/order/list', 				ctrl: ctrlOrderlist},
-		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment}
+		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment},
+        '#/orderdetail':            {view:'payCompletion.html',	                  rootrest:'/order/detail',                      ctrl: ctrlOrderdetail},
 	});
 	
 	

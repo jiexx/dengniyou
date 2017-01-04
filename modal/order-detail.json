@@ -1,3 +1,3 @@
 {
-  "OrderDetail": {"sql": "SELECT useri.UserName, useri.AvatarPicURL, orderdetail.* FROM traveluserdb.`vw_/order/detail` orderdetail LEFT JOIN traveldb.tab_userinfo useri ON ( IF ( ?=2,orderdetail.UserID,orderdetail.GuideID)=useri.UserID) WHERE orderID = ?;","params":["UserType","OrderID"]}
+  "OrderDetail": {"sql": "SELECT useri.UserName, useri.AvatarPicURL, orderdetail.* FROM traveluserdb.`vw_/order/detail` orderdetail LEFT JOIN traveldb.tab_userinfo useri ON ( IF ( ?=2,orderdetail.UserID,orderdetail.GuideID)=useri.UserID) WHERE orderID = ? LIMIT 1;","params":["UserType","OrderID"]}
 }
