@@ -158,11 +158,19 @@
                     email: $('#mail').val()
                 }]
 			};
+            
+            $('#app').rogerReloadFile('./plandetail-pay-2.html', function (realView) {
+                var price = realView.find('#totalprice');
+                price.html(''+cash);
 
-            $.rogerPost('/pay',buy, function (respJSON) {
-                console.log(respJSON);
-                window.open(respJSON.url, '_blank');
-            })
+                var ok = realView.find('#OK');
+                ok.rogerOnceClick(null,function () {
+                    $.rogerPost('/pay',buy, function (respJSON) {
+                        console.log(respJSON);
+                        window.open(respJSON.url, '_blank');
+                    })
+                })
+            });
         })
 
     };

@@ -164,28 +164,3 @@
     </div>
     <!-- 内容部分结束 -->
 
-
-<script>
-	$(function(){
-		$('#orderAll .navSecond').on('click','li',function(){
-		    $('#orderAll .navSecond li').removeClass('active');
-		    $(this).addClass('active');
-		  });
-
-		jeDate({
-			dateCell:"#startTime",
-			isinitVal:true,
-			format:"YYYY-MM-DD",
-			isTime:false,
-		});
-		jeDate({
-			dateCell:"#endTime",
-			isinitVal:true,
-			format:"YYYY-MM-DD",
-			isTime:false,
-		});
-	});
-	
-
-
-</script>

@@ -464,8 +464,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 #partOne .content h4 span{color:#00b8ee; margin-left: 10px;}
 
 #partOne .projectInfo,#partThree .projectInfo{border: 1px solid #00b8ee; padding:15px;}
-#partOne .projectInfo img,#partThree .projectInfo img{width:220px; height: 120px;}
-#partOne .projectInfo .textInfo,#partThree .projectInfo .textInfo{height: 120px; margin-left: 20px;}
+#partOne .projectInfo img,#partThree .projectInfo img{width:150px;}
+#partOne .projectInfo .textInfo,#partThree .projectInfo .textInfo{margin-left: 20px;}
 #partOne .projectInfo .textInfo h5,#partThree .projectInfo .textInfo h5{font-size: 20px; height: 30px; line-height: 30px; margin-bottom: 6px;}
 #partOne .projectInfo .textInfo p,#partThree .projectInfo .textInfo p{font-size: 14px; height: 28px; line-height: 28px; color:#666666;}
 
