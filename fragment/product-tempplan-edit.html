@@ -58,7 +58,7 @@
 				{{each $data.PlanInfo.Picture.Pics}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.PlanInfo.Picture.Pics[$index]}">
+						<img name="needPrefix" src="${$data.PlanInfo.Picture.Pics[$index]}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/Picture/Pics/${$index}"></a>
 					</div>
 				</div>
@@ -75,7 +75,7 @@
 				{{each $data.PlanInfo.PicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.PlanInfo.PicURL[$index]}">
+						<img name="needPrefix" src="${$data.PlanInfo.PicURL[$index]}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PicURL/${$index}" ></a>
 					</div>
 				</div>
@@ -92,7 +92,7 @@
 				{{each $data.PlanInfo.CarURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.PlanInfo.CarURL[$index]}">
+						<img name="needPrefix" src="${$data.PlanInfo.CarURL[$index]}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CarURL/${$index}"></a>
 					</div>
 				</div>
