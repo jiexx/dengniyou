@@ -23,7 +23,18 @@
 	
 	var ctrlHome = function(response, realView) {
 		$('#carousel-generic').carousel();
+        $('#homeSearch').rogerOnceClick(null, function () {
+            var k = $('#homeSearchKey').val();
+            $.rogerLocation('#/search?key='+k);
+        })
+		
 		realView.rogerCropImages();
+        frameCtrl();
+    };
+    var ctrlHomeSearch = function(response, realView) {
+
+
+        realView.rogerCropImages();
         frameCtrl();
     };
 
@@ -189,6 +200,7 @@
 
 	$.rogerRouter({
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
+        '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist.html', 								rootrest: '/order/list', 				ctrl: ctrlOrderlist},

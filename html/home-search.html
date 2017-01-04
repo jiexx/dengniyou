@@ -1,0 +1,37 @@
+<div class="container">
+
+</div>
+<div class="container">
+    <div class="list-group">
+	  {{each Plans}}
+	  <div class="list-group-item clearfix disabled">
+		  <div class="col-md-1"></div>
+		  <div class="col-md-5">方案</div>
+		  <div class="col-md-2">价格</div>
+		  <div class="col-md-2">行程天数</div>
+	  </div>
+	  <div class="list-group-item clearfix btn-group">
+		  <div class="col-md-1"></div>
+			  <div class="col-md-5 ">
+				<div class="media">
+				  <div class="media-left media-top">
+						<a href="#/plandetail?PlanID=${PlanID}">
+						<div><img data-src="${ $data.IMGHOST }${PicURL}" class="media-object" style="width:160px;height:160px"></div></a>
+				  </div>
+				  <div class="media-body">
+					<div class="media-heading">${PlanName}</div>
+					<div>${PlanNumber}</div>
+					<div>${StartCity}</div>
+				  </div>
+				</div>
+			  </div>
+		      <div class="col-md-2 ">${PlanPriceBase}</div><div class="col-md-2 ">${PlanDays}</div>
+	  </div>
+	  {{/each}}
+	</div>
+</div>
+<div class="container">
+  <div class="pagination">
+
+  </div>
+</div>
