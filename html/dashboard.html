@@ -20,9 +20,9 @@
 
     <!-- Custom styles for this template -->
     <link href="../css/fix.css" rel="stylesheet">
-	<link href='../css/fullcalendar.css' rel='stylesheet' />
+	  <link href='../css/fullcalendar.css' rel='stylesheet' />
     <link href='../css/fullcalendar.print.css' rel='stylesheet' media='print' />
-	<link href="../css/dashboard.css" rel="stylesheet">
+	  <link href="../css/dashboard.css" rel="stylesheet">
     <link href="../dist/css/bootstrap-select.min.css" rel="stylesheet" >
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -56,8 +56,8 @@
   <div class="dashboard-page">
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
-        <div class="navbar-header">
-          <div class="logo pull-left"><img src="img/logo.png" height="70px"/></div>
+        <div class="container navbar-header">
+          <div class="logo "><img src="img/logo.png" height="70px"/></div>
           <a class="navbar-brand" href="#">等你旅游管理中心</a>
         </div>
       </div>
@@ -85,42 +85,44 @@
           </ul-->
         </div>
         <div class="col-sm-10 mainbody">
-          <h5 class="list-group">产品信息</h5>
-          <div id="menu" class="list-group">
-              <span class="text-warning">产品类型</span>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/spcialplan" >特色方案</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/classicplan" >经典方案</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/service" >服务</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/activiy" >活动</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/car" >租车</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/attraction" >景点</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/delicacy" >美食</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/accommodation" >住宿</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/facilitylist?userID=10129" >装备</a></label>
-          </div>
-          <div id="filter" class="list-group">
-              <span class="text-warning">产品状态</span>
-              <label class="radio-inline"><input type="radio" name="optradio">全部</label>
-              <label class="radio-inline"><input type="radio" name="optradio">已发布</label>
-              <label class="radio-inline"><input type="radio" name="optradio">已加入</label>
-              <label class="radio-inline"><input type="radio" name="optradio">定制中</label>
-          </div>
-          <div id="menu" class="list-group">
-              <span class="text-warning">临时</span>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/attractionedit" >景点编辑</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/delicacyedit" >美食编辑</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/accommodationedit" >住宿编辑</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/caredit" >租车编辑</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/servicecaredit" >包车编辑</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/activityedit" >活动编辑</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/servicepickupedit" >接送机编辑</a></label>
-              <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/serviceotheredit" >其他服务编辑</a></label>
-              <!-- <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/travelogueedit" >攻略编辑</a></label> -->
-          </div>
-        <div id="app">
-      </div>	      
+          <div class="mainbody-top">
+            <h5 class="list-group">产品信息</h5>
+            <div id="menu" class="list-group">
+                <span class="text-warning">产品类型 <i>|</i></span>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/spcialplan" >特色方案</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/classicplan" >经典方案</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/service" >服务</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/activiy" >活动</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/car" >租车</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/attraction" >景点</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/delicacy" >美食</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/accommodation" >住宿</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/facilitylist?userID=10129" >装备</a></label>
+            </div>
+            <div id="filter" class="list-group">
+                <span class="text-warning">产品状态 <i>|</i></span>
+                <label class="radio-inline"><input type="radio" name="optradio">全部</label>
+                <label class="radio-inline"><input type="radio" name="optradio">已发布</label>
+                <label class="radio-inline"><input type="radio" name="optradio">已加入</label>
+                <label class="radio-inline"><input type="radio" name="optradio">定制中</label>
+            </div>
+            <div id="menu" class="list-group">
+                <span class="text-warning">临时编辑 <i>|</i></span>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/attractionedit" >景点编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/delicacyedit" >美食编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/accommodationedit" >住宿编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/caredit" >租车编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/servicecaredit" >包车编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/activityedit" >活动编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/servicepickupedit" >接送机编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/serviceotheredit" >其他服务编辑</a></label>
+                <!-- <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/travelogueedit" >攻略编辑</a></label> -->
+            </div>
+          </div> <!-- end mainbody-top -->
+          <div id="app" class="mainbody-main">
+          </div>	<!-- end mainbody-main --> 
           <!-- Modal -->
-	    <div id="modal">
+	      <div id="modal">
 	    </div>
     </div> <!-- end container-fluid -->
   </div> <!-- end dashboard-page -->

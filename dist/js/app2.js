@@ -366,6 +366,17 @@ $(function () {
     };
 
     var ctrlOrderlist = function(response, realView) {
+        
+        // if(!$.rogerGetURLJsonParams()) {
+        //     if(!$.rogerIsLogined()) {
+        //         $.rogerShowLogin();
+        //     }else{
+        //         var usr = $.rogerGetLoginUser();
+        //         $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=1&status=3&page=1')
+        //     }
+        // }
+        // bindRidoesForSwitch();
+        
 
         realView.rogerCropImages();
 
@@ -964,6 +975,7 @@ $(function () {
 
     var ctrlOrderdetail = function(response, realView) {
 
+        bindRidoesForSwitch();
         realView.rogerCropImages();
 
     };
@@ -986,7 +998,7 @@ $(function () {
         '#/templateplandetail':          {view: 'product-tempplan-detail.html',                     rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
 
         '#/delicacydetail':               {view:'product-delicacy-detail.html',	                     rootrest:'/dashboard/product/delicacy/detail',                     ctrl: ctrlDelicacyDetail},
-            '#/accommodationdetail':        {view:'product-accommodation-detail.html',                 rootrest:'/dashboard/product/accommodation/detail',	           ctrl: ctrlAccommodationDetail},
+        '#/accommodationdetail':        {view:'product-accommodation-detail.html',                 rootrest:'/dashboard/product/accommodation/detail',	           ctrl: ctrlAccommodationDetail},
         '#/attractiondetail':            {view:'product-attraction-detail.html',                    rootrest:'/dashboard/product/attraction/detail',                  ctrl: ctrlAttractionDetail},
 
         '#/serviceotherdetail':           {view:'product-service-other-detail.html',               rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},

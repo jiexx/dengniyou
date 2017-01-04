@@ -107,12 +107,14 @@
 
 		<!-- 行程信息（方案） -->
 		<div class="schedule clearfix">
-			<div class="col-md-12">
-				<h4>行程信息</h4>
-				<div class="pull-right btn-group">
-					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createDay">添加段落</a>
-					<a class="btn btn-warning   " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createPicture">添加图片</a>
-					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createContent">添加描述</a>
+			<div class="row">
+				<h4 class="col-md-6">行程信息</h4>
+				<div class="col-md-6 pull-right">
+					<div class="btn-group">
+						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createDay">添加段落</a>
+						<a class="btn btn-warning   " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createPicture">添加图片</a>
+						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createContent">添加描述</a>
+					</div>
 				</div>
 			</div>
 			{{each $data.PlanInfo.PlanShort}}

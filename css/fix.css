@@ -314,7 +314,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .breadcrumb li a{font-size: 14px;color: #666;}
 .detailpage .carousel{width: 100%;overflow: hidden;margin-top: 80px;}
 .detailpage .carousel .carousel-control{width: 10%;}
-.detailpage .detailpage-mainbody{padding: 25px 0px;}
+.detailpage .detailpage-mainbody{padding: 25px 0px; border-left: 1px solid #eee; -webkit-box-shadow: 5px 5px 10px #eee; -moz-box-shadow: 5px 5px 10px #eee; -ms-box-shadow: 5px 5px 10px #eee; -o-box-shadow: 5px 5px 10px #eee; box-shadow: 5px 5px 10px #eee;}
 .detailpage .detailpage-mainbody .row{margin-left: 0;margin-right: 0;}
 .detailpage .detailpage-title h1{font-size: 18px;color: #333; font-weight: bold; margin-bottom: 20px;}
 .detailpage .detailpage-title>span{display: inline-block;width: 68px;height: 20px;line-height: 18px;font-size: 12px;color: #666;text-align: center;border: 1px solid #9B9B9B;-webkit-border-radius: 10px;-moz-border-radius: 10px;-ms-border-radius: 10px;-o-border-radius: 10px;border-radius: 10px;}
@@ -537,9 +537,9 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*导游端列表页*/
 .service-list{font-size: 14px; color: #666;}
 .service-list .service-name{padding-left: 6%;}
-.service-list .media-heading{margin-top: 10%;}
-.service-list .margin-top{margin-top: 2.6%;}
-.service-list .service-edit span{margin-top: 10%; font-size: 20px;}
+.service-list .media-heading{margin-top: 30px;}
+.service-list .margin-top{margin-top: 30px;}
+.service-list .service-edit span{margin-top: 20px; font-size: 20px;}
 
 /* end 导游端列表页*/
 

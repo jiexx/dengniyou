@@ -1,14 +1,17 @@
 <div class="container">
-	<div class="list-group">
+	<div class="list-group service-list">
 		{{each Service}}
 		<div class="list-group-item clearfix disabled">
 			<div class="col-md-1"><input type="radio" name="optradio"></div>
-			<div class="col-md-5">服务</div>
-			<div class="col-md-1 ">发布状态</div>
+			<div class="col-md-8 service-name">服务</div>
+			<div class="col-md-2 ">发布状态</div>
 			<div class="col-md-1 ">编辑</div>
 		</div>
-		<div class="list-group-item clearfix btn-group"><div class="col-md-1"><input type="radio" name="optradio"></div>
-			<div class="col-md-5 ">
+		<div class="list-group-item clearfix btn-group">
+			<div class="col-md-1">
+				<input type="radio" name="optradio">
+			</div>
+			<div class="col-md-8 ">
 				<div class="media">
 					<div class="media-left media-top">
 						<a href="#/serviceactivitydetail?ServiceID=${ServiceID}">
@@ -20,12 +23,17 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-md-1 ">
+			<div class="col-md-2 margin-top">
 				{{if ServiceStatus ==1}}待审核 {{/if}}{{if ServiceStatus ==2}}审核通过 {{/if}}{{if ServiceStatus ==3}}导游隐藏 {{/if}}{{if ServiceStatus ==4}}导游发布 {{/if}}{{if ServiceStatus ==5}}导游定制 {{/if}}{{if ServiceStatus ==6}}未加入 {{/if}}{{if ServiceStatus ==7}}已加入 {{/if}}
-			</div><div class="col-md-1 "><div class="btn  glyphicon glyphicon-edit"></div></div></div>
+			</div>
+			<div class="col-md-1 service-edit">
+				<span class="btn  glyphicon glyphicon-edit"></span>
+			</div>
+		</div>
 		{{/each}}
-	</div>
-</div>
+	</div> <!-- end list-group -->
+</div> <!-- end container -->
+<!-- 页码 -->
 <div class="container">
 	<div class="pagination">
 		<li>
