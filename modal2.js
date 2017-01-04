@@ -455,15 +455,14 @@ var roger = {
 				}// superior output is 2d array
 				else if(output &&  Array == output.constructor){
 					var vector = [];
-
 					for(var j = 1; j < output.length ; j ++ ) {
 						var copy = roger.shallow(funcArgu.item);
                         copy.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[j][findkey]);
 						funcArgu.vector.push(copy);
-                        vector.push({sql:copy.sql, params:copy.params, item:copy, doing:null});
+                        vector.push({sql:copy.sql, params:copy.item.params, item:copy, doing:null});
 					}
                     looper.expand(vector);
-                    funcArgu.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[j][findkey]);
+                    funcArgu.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[0][findkey]);
                     funcArgu.params = funcArgu.item.params;
 
 				}

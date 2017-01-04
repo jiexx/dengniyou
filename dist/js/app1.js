@@ -79,6 +79,7 @@
     }
     var ctrlPlanpay1 = function(response, realView) {
     	var days = parseInt(response.PlanInfo[0].PlanDays)+1;
+        var dates = [];
         var pickr = $("#calendar").flatpickr({
             inline: true,
             onChange:function (dateObj, dateStr) {
@@ -86,6 +87,10 @@
                     pickr.selectedDates.push(addDays(dateStr, i));
 				}
                 pickr.redraw();
+            	for(var i  in pickr.selectedDates) {
+            	    var d = pickr.selectedDates[i]
+            	    dates[i] =  d.getUTCFullYear() +'-'+(d.getUTCMonth() + 1)+'-'+ d.getUTCDate();
+                }
             }
         });
         //pickr.selectedDates.push('');
@@ -131,7 +136,7 @@
             	return;
 			}
         	var buy = {visitid:usr.UserID,
-				servicetripid:response.PlanInfo[0].PlanID,
+                servicetripid:response.PlanInfo[0].PlanID,
 				servicetripname:response.PlanInfo[0].PlanName,
                 servicetriptypeid:response.PlanInfo[0].PlanType,
                 username:usr.UserName,
@@ -142,8 +147,9 @@
                 remarks: $('#note').val(),
                 countryid:response.PlanInfo[0].CountryID,
                 cityid:response.PlanInfo[0].StartCityID,
+                ordertype:2,
                 orderdetails: [{
-                    schedules: pickr.selectedDates,
+                    schedules: dates,
                     personnum: adult,
                     adultNum: adult,
                     kidNum: kid,
@@ -152,11 +158,19 @@
                     email: $('#mail').val()
                 }]
 			};
+            
+            $('#app').rogerReloadFile('./plandetail-pay-2.html', function (realView) {
+                var price = realView.find('#totalprice');
+                price.html(''+cash);
 
-            $.rogerPost('/pay',buy, function (respJSON) {
-                console.log(respJSON);
-                window.open(respJSON.url, '_blank');
-            })
+                var ok = realView.find('#OK');
+                ok.rogerOnceClick(null,function () {
+                    $.rogerPost('/pay',buy, function (respJSON) {
+                        console.log(respJSON);
+                        window.open(respJSON.url, '_blank');
+                    })
+                })
+            });
         })
 
     };
