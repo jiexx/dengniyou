@@ -35,6 +35,20 @@ $(function () {
 			}
 			return json;
 		},
+        rogerGetJsonUrlParams:function(link) {
+            if(link.indexOf("?") < 0) {
+                return null;
+            }
+            var url = link.substring(link.indexOf("?")+1);
+            var hash;
+            var json = {link:link.substring(0, link.indexOf("?"))};
+            var hashes = url.split('&');
+            for (var i = 0; i < hashes.length; i++) {
+                hash = hashes[i].split('=');
+                json[hash[0]] = hash[1];
+            }
+            return json;
+        },
 		rogerWindowURLParamsString:function() {
 			var link = window.location.search;
 			return link;
@@ -90,7 +104,10 @@ $(function () {
 					if(callback) {
 						callback(respJSON);
 					}
-				}
+				},
+				error: function (e) {
+					var i = 1;
+                }
 			});
 		},
 		rogerRouter: function(router) {

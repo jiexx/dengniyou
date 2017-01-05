@@ -75,12 +75,12 @@
 		$('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
 		
-		$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
+		/*$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
 			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
 				console.log(respJSON);
                 window.open(respJSON.url, '_blank');
             })
-        })
+        })*/
 
 	};
     function addDays(date, days) {
@@ -143,6 +143,7 @@
         $('#BUY').rogerOnceClick(null,function (e) {
             var usr = $.rogerGetLoginUser();
             if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
             	$.rogerShowLogin();
             	return;
 			}
@@ -177,8 +178,22 @@
                 var ok = realView.find('#OK');
                 ok.rogerOnceClick(null,function () {
                     $.rogerPost('/pay',buy, function (respJSON) {
-                        console.log(respJSON);
-                        window.open(respJSON.url, '_blank');
+
+                        if( respJSON.ERR) {
+                            $.rogerNotice({Message:'生成订单有错,错误码:'+respJSON.ERR});
+                        }else {
+                            window.open(respJSON.url, '_blank');
+                            /*var parms = $.rogerGetJsonUrlParams(respJSON.url);
+                            for(var i in parms) {
+                                $('<input>').attr({
+                                    type: 'hidden',
+                                    name: i,
+                                    value: parms[i]
+                                }).appendTo('#Alipay');
+                            }
+                            $('#Alipay').attr('action', parms.link);
+                            $('#Alipay').submit();*/
+                        }
                     })
                 })
             });
