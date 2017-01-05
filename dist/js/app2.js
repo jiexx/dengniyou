@@ -317,13 +317,21 @@ $(function () {
 
 
         $('#save').rogerOnceClick(Plan, function(e){
-            $.rogerPost('/delete/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
+            if(!Plan.PlanInfo.PlanID) {
                 var data = {PlanInfo:e.data.PlanInfo};
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 $.rogerPost('/new/tmpplan', data, function(respJSON){
                     $.rogerNotice({Message:'模板方案保存成功'});
                 });
-            });
+            }else {
+                $.rogerPost('/delete/plan', {PlanID:Plan.PlanInfo.PlanID}, function(respJSON){
+                    var data = {PlanInfo:e.data.PlanInfo};
+                    data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                    $.rogerPost('/new/tmpplan', data, function(respJSON){
+                        $.rogerNotice({Message:'模板方案保存成功'});
+                    });
+                });
+            }
         });
         $('#publish').rogerOnceClick(Plan, function(e){
             $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
@@ -357,13 +365,21 @@ $(function () {
 
 
         $('#save').rogerOnceClick(Plan, function(e){
-            var data = {PlanInfo:e.data.PlanInfo};
-            data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
-            $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
+            if(!Plan.PlanInfo.PlanID) {
+                var data = {PlanInfo:e.data.PlanInfo};
+                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 $.rogerPost('/new/shortplan', data, function(respJSON){
                     $.rogerNotice({Message:'快捷方案保存成功'});
                 });
-            });
+            }else {
+                var data = {PlanInfo:e.data.PlanInfo};
+                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
+                    $.rogerPost('/new/shortplan', data, function(respJSON){
+                        $.rogerNotice({Message:'快捷方案保存成功'});
+                    });
+                });
+            }
         });
 
         $('#publish').rogerOnceClick(Plan, function(e){
