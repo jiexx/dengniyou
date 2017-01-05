@@ -1,0 +1,26 @@
+{
+	"Travelogue": {
+		"sql": "INSERT INTO `traveluserdb`.`tab_travelarticle` ( `UserID`, `ArticlePicURL`, `Description`, `Title`, `Type`, `Status`, `EvaluateCount`, `PraiseCount`, `BrowseCount`, `CreateDate` ) VALUES ( ?, ?, ?, ?, '6', ?, 0, 0, 0, NOW() )",
+		"params": [
+			"userID",
+			"articlePicURL",
+			"description",
+			"title",
+			"STATUS"
+		],
+		"TravelogueDetail": {
+			"sql": "INSERT INTO `traveluserdb`.`tab_travelarticledetail` (`ArticleID`, `Label`, `PicURL`, `Content`, `Day`, `CreateDate`) VALUES (?, ?, ?, ?, ?, NOW())",
+			"params": [
+				"insertId",
+				"label",
+				"picURL",
+				"content",
+				"DAY"
+			],
+			"files": [
+				"picURL"
+			],
+			"findkey": "insertId"
+		}
+	}
+}
