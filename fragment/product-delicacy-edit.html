@@ -40,9 +40,9 @@
 		    <div class="col-sm-10 col-md-11">
 		        <ul class="label-base">
 		        	{{each $data.SpotLabels}}
-					<li><input type="text" value="${$data.SpotLabels[$index].ClassifyLabel}" data-value="/SpotLabels/${index}/ClassifyLabel" placeholder="点击输入"><span class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotLabels/${index}/ClassifyLabel"></span></li>
+					<li><input type="text" value="${$data.SpotLabels[$index].ClassifyLabel}" data-value="/SpotLabels/${$index}/ClassifyLabel" placeholder="点击输入"><span class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotLabels/${$index}/ClassifyLabel"></span></li>
 					{{/each}}
-					<li><div class="addItemBtn" data-op="change" data-pointer="/SpotLabels/${index}/ClassifyLabel-" data-action="createLabel"> + </div></li>
+					<li><div class="addItemBtn" data-op="change" data-pointer="/SpotLabels/${$index}/ClassifyLabel-" data-action="createLabel"> + </div></li>
 				</ul>
 		    </div>
 		  </div>
@@ -98,27 +98,29 @@
 	<!-- 车辆信息结束 -->
 
 	<!-- 相册上传 -->
-	<div>
+	<div class="photoInfo">
 		<h4>相册信息</h4>		
 		<div class="row">
-			<div class="col-md-1 ">相册上传:</div>
+			<div class="col-md-1 ">相册上传：</div>
 			<div class="col-md-11 row" >
-				{{each $data.SpotPics[0].PicURL}}
+				{{each $data.SpotPics}}
+				{{if $data.SpotPics[$index].PicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.SpotPics[0].PicURL[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotPics/${0}/PicURL/${$index}"></a>
+						<img src="${$data.SpotPics[$index].PicURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotPics/${$index}/PicURL"></a>
 					</div>
 				</div>
+				{{/if}}
 				{{/each}}
 				<div class="col-md-3" data-op="toggle" data-pointer="/SpotPics/${0}/PicURL" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/SpotPics/${0}/PicURL-" data-action="image">+</div>
+					<div class="imgBox addImg" data-op="change" data-pointer="/SpotPics/-/PicURL" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
 		<br>
 		<div class="row">
-			<div class="col-md-1 ">封面照片:</div>
+			<div class="col-md-1 ">封面照片：</div>
 			<div class="col-md-11 row" >
 				{{if $data.SpotDetail[0].PicURL}}
 				<div class="col-md-3">
@@ -142,8 +144,8 @@
 		<h4>美食描述</h4>
 		<textarea name="" data-value="/SpotDetail/${0}/Description" placeholder="可输入1200字">${$data.SpotDetail[0].Description}</textarea>
 		<div class="optionBtn">
-			<a id="save" class="btn btn-warning">保存</a>
-			<a id="publish" class="btn btn-warning">发布 </a>
+			<button id="save" class="btn btn-warning">保存</button>
+			<button id="publish" class="btn btn-warning">发布 </button>
 		</div>
 	</div>
 	<!-- 须知信息结束 -->

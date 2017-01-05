@@ -20,16 +20,16 @@
 		    <label for="" class="col-sm-2 col-md-1 control-label">服务类型</label>
 		    <div class="col-sm-10 col-md-11" id="ServiceTypeChoice">
 		        <label class="radio-inline">
-				  <input type="radio" name="serviceType" id="" value="106"> <span>签证</span>
+				  {{if $data.DetailMain[0].serviceTypeName=='签证'}}<input type="radio" name="serviceType" id="" value="106" checked>  <span>签证</span>{{else}}<input type="radio" name="serviceType" id="" value="106">  <span>签证</span>{{/if}}
 				</label>
 				<label class="radio-inline">
-				  <input type="radio" name="serviceType" id="" value="119"> <span>机票</span>
+				  {{if $data.DetailMain[0].serviceTypeName=='机票'}}<input type="radio" name="serviceType" id="" value="119" checked>  <span>机票</span>{{else}}<input type="radio" name="serviceType" id="" value="119">  <span>机票</span>{{/if}}
 				</label>
 				<label class="radio-inline">
-				  <input type="radio" name="serviceType" id="" value="101"> <span>保险</span>
+				  {{if $data.DetailMain[0].serviceTypeName=='保险'}}<input type="radio" name="serviceType" id="" value="101" checked>  <span>保险</span>{{else}}<input type="radio" name="serviceType" id="" value="101">  <span>保险</span>{{/if}}
 				</label>
 				<label class="radio-inline">
-				  <input type="radio" name="serviceType" id="" value="7"> <span>民宿</span>
+				  {{if $data.DetailMain[0].serviceTypeName=='民宿'}}<input type="radio" name="serviceType" id="" value="106" checked>  <span>民宿</span>{{else}}<input type="radio" name="serviceType" id="" value="106">  <span>民宿</span>{{/if}}
 				</label>
 				<label class="radio-inline">
 				  <input type="radio" name="serviceType" id="" value=""> <span>其他</span>
@@ -143,7 +143,7 @@
 	<!-- 住宿信息结束 -->
 
 	<!-- 相册上传 -->
-	<div >
+	<div class="photoInfo">
 		<h4>相册信息</h4>
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
@@ -243,6 +243,7 @@
 				$('#minsuInfo').hide();
 			}
 		});
+
 		$('#PriceTypeChoice').on('click','input[type="radio"]',function(){
 			var PriceType = $(this).next().text();
 			$('#PriceType').val(PriceType).trigger('keyup');			

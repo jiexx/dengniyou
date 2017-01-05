@@ -1,21 +1,29 @@
 {
-	"Travelogue": {
-		"sql": "INSERT INTO `traveluserdb`.`tab_travelarticle` ( `UserID`, `ArticlePicURL`, `Description`, `Title`, `Type`, `Status`, `EvaluateCount`, `PraiseCount`, `BrowseCount`, `CreateDate` ) VALUES ( ?, ?, ?, ?, '6', ?, 0, 0, 0, NOW() )",
+	"DetailMain": {
+		"sql": "INSERT INTO travelorderdb.tab_services ( UserID, ServiceTypeID, ServiceName, PrimaryPrice, Unit, PriceType, ServiceTime, ServiceOutTimePrice, IncMileage, ExMileagePrice, FreeForDelay, WaitOutTimePrice, Description, ServiceStatus, ServiceMethod, UpdateDate, CreateDate ) VALUES ( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,NOW(),NOW() )",
 		"params": [
 			"userID",
-			"articlePicURL",
+			"serviceTypeID",
+			"serviceName",
+			"primaryPrice",
+			"unit",
+			"priceType",
+			"serviceTime",
+			"serviceOutTimePrice",
+			"incMileage",
+			"exMileagePrice",
+			"freeForDelay",
+			"waitOutTimePrice",
 			"description",
-			"title",
-			"STATUS"
+			"serviceStatus",
+			"serviceMethod"
 		],
-		"TravelogueDetail": {
-			"sql": "INSERT INTO `traveluserdb`.`tab_travelarticledetail` (`ArticleID`, `Label`, `PicURL`, `Content`, `Day`, `CreateDate`) VALUES (?, ?, ?, ?, ?, NOW())",
+		"Picture": {
+			"sql": "INSERT INTO traveluserdb.tab_facilitypictures ( PictureID, PicURL, IsCover, PicType ) VALUES (?,?,?,1)",
 			"params": [
 				"insertId",
-				"label",
 				"picURL",
-				"content",
-				"DAY"
+				"cover"
 			],
 			"files": [
 				"picURL"

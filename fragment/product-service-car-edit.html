@@ -97,20 +97,21 @@
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-2 control-label">车辆级别</label>
-				    <div class="col-sm-8 col-md-8">
+				    <div class="col-sm-8 col-md-8" id="serviceType">
 				        <label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio1" value="option1" checked> 经济
+						  <input type="radio" name="serviceType" id="Radio1" value="经济" checked> 经济
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio2" value="option2"> 舒适
+						  <input type="radio" name="serviceType" id="Radio2" value="舒适"> 舒适
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio3" value="option3"> 商务
+						  <input type="radio" name="serviceType" id="Radio3" value="商务"> 商务
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio4" value="option4"> 豪华
+						  <input type="radio" name="serviceType" id="Radio4" value="豪华"> 豪华
 						</label>
 				    </div>
+				    <input type="text" class="form-control" id="ServiceMethodName"  value="${$data.Facility[0].clazz}"  data-value="/Facility/${0}/clazz">
 				  </div>
 				</form>
 			</div>
@@ -130,14 +131,15 @@
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-2 control-label">成员保险</label>
-				    <div class="col-sm-8 col-md-8">
+				    <div class="col-sm-8 col-md-8" id="serviceType">
 				        <label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio1" value="option1" checked> 有
+						  <input type="radio" name="serviceType" id="Radio1" value="有" checked> 有
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio2" value="option2"> 无
+						  <input type="radio" name="serviceType" id="Radio2" value="无"> 无
 						</label>
 				    </div>
+				    <input type="text" class="form-control" id="ServiceMethodName" value="${$data.Facility[0].insurance}"  data-value="/Facility/${0}/insurance">
 				  </div>
 				</form>
 			</div>
@@ -149,7 +151,7 @@
 	<!-- 车辆信息结束 -->
 
 	<!-- 相册上传 -->
-	<div>
+	<div class="photoInfo">
 		<h4>相册信息</h4>
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
@@ -224,4 +226,14 @@
 	</div>
 	<!-- 须知信息结束 -->
 </div>
+
+
+<script>
+	$(function(){
+		$('#serviceType').on('click','input',function(){
+			var ServiceMethodName = $(this).val();
+			$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
+		});
+	});
+</script>
 

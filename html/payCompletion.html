@@ -16,15 +16,15 @@
 {{each OrderDetail }}
 ${Status}
   <div class="stepBarBox">
-    {{if Status==4}}<li>已关闭</li>
-    <p>${CloseReason}</p>{{else}}
+    {{if Status==5}}<h2>已关闭</h2>
+    <p>关闭原因：${CloseReason}</p>{{else}}
     <div class="stepBarimg">
       <img src="img/payStepBar3.png" alt="">
     </div>
     <ul class="stepBarText">
       <li>提交订单</li>
-      <li class="active">支付方式</li>
-      <li class=" ">支付完成</li>
+      <li class="">支付方式</li>
+      <li class="active">支付完成</li>
     </ul>
     {{/if}}
   </div>
@@ -35,9 +35,9 @@ ${Status}
 <div class="step" > 
   <!-- 支付完成界面 -->
   <div class="stepPart active" id="partThree">
-      <h3 class="partTitle">订单信息 <small class="fr">导游将在24小时内接单</small></h3>
+      <h3 class="partTitle">订单信息 <!-- <small class="fr">导游将在24小时内接单</small> --></h3>
       <div class="content">
-        <h4><span class="fa fa-weixin">${UserName}</span></h4>
+        <h4>${UserName}</h4>
         <div class="projectInfo clearfix">
           <div class="fl">
             <img src="${ $data.IMGHOST + picurl}" alt="">
@@ -188,7 +188,6 @@ ${Status}
           <div class="col-sm-2">
             <div class="radio">
               <label>
-                <input type="radio" name="optionsRadios" name="optionsRadios" value="option1" checked>
                 投诉
               </label>
             </div>
@@ -201,7 +200,7 @@ ${Status}
           <div class="col-sm-3">
             <div class="radio">
               <label>
-                <input type="radio" name="optionsRadios" name="optionsRadios" value="option1" checked>
+                <input type="radio" id="optionsRadios1" name="optionsRadios" value="option1" checked>
                 不需要退款
               </label>
             </div>
@@ -211,7 +210,7 @@ ${Status}
           <div class="col-sm-2">
             <div class="radio">
               <label>
-                <input type="radio" name="optionsRadios" name="optionsRadios" value="option1" checked>
+                <input type="radio" id="optionsRadios2" name="optionsRadios" value="option1" checked>
                 需要退款
               </label>
             </div>

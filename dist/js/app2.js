@@ -104,8 +104,8 @@ $(function () {
                 PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
                 CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
 
-                Picture:{
-                    Pics:[]
+                Picture: {
+                    Pics: []
                 },
                 Summary:{
                     PlanName:'',
@@ -476,10 +476,8 @@ $(function () {
         }
         ],
         SpotPics: [
-            {PicURL: ""}, 
-            {PicURL: ""}, 
-            {PicURL: ""}, 
-            {PicURL: ""}
+            {PicURL: ''},
+            {PicURL: ''}
         ], 
         SpotLabels: [
             {ClassifyLabel: "场馆"}, 
@@ -488,6 +486,7 @@ $(function () {
             ], 
         IMGHOST: "http://123.59.144.47/" };
     },ctrlAttractionEdit=function(Plan, realView){
+
         $('#save').rogerOnceClick(Plan, function(e){
 
             console.log('test');
@@ -532,9 +531,9 @@ $(function () {
             }
         ],
         SpotPics: [
-            // {"PicURL": "group1/M00/00/0D/CgkB6VghgC2AMC0tAAD2LvSIniI575.jpg"},
-            // {"PicURL": "group1/M00/00/0D/CgkB6VghgC6AQYd_AAFV89onmkw680.jpg"},
-            // {"PicURL": "group1/M00/00/0D/CgkB6VghgC6AQC_8AAET0v25_aE848.jpg"},   
+            {PicURL: ""},
+            {PicURL: ""},
+            {PicURL: ""},   
         ],
         SpotLabels: [
             {ClassifyLabel: "民宿"}, 
@@ -580,23 +579,21 @@ $(function () {
             DetailServiceMethod: [],
             Facility: [
                 {
-                    "serviceID": 100387,
-                    "facilityID": 122,
-                    "userID": 10083,
-                    "facilityType": 1,
-                    "facilityName": "奥迪A6",
-                    "brand": "奥迪",
-                    "model": "A6",
-                    "produceYear": "2014-09-28",
-                    "seats": 5,
-                    "person": 5,
-                    "clazz": 3,
-                    "insurance": 1,
-                    "description": "",
-                    "luggage": 5,
-                    "facilityPics": [
-                        "group1/M00/00/03/CgkB6VfrqGuAQP3IAAFKSs7UdPc307.jpg"
-                    ]
+                    serviceID:'',
+                    facilityID:'',
+                    userID: '',
+                    facilityType: '',
+                    facilityName: '',
+                    brand: '',
+                    model: '',
+                    produceYear:'',
+                    seats: '',
+                    person: '',
+                    clazz: '',
+                    insurance: '',
+                    description: '',
+                    luggage: '',
+                    facilityPics: []
                 }
             ],
             Airports: [],
@@ -742,7 +739,8 @@ $(function () {
             {PicURL: ""}
           ], 
         SpotLabels: [
-            {ClassifyLabel: "咖啡简餐"}
+            {ClassifyLabel: "咖啡简餐"},
+            {ClassifyLabel: "甜点"}
         ], 
         IMGHOST: "http://123.59.144.47/"
      };
@@ -786,7 +784,7 @@ $(function () {
                             // "group1/M00/01/B5/CgkB6VhaehyAaPGJAAGLFb2AtBw223.jpg"
                         ], 
                 covers: {
-                            type: '', 
+                            type: null, 
                             data: []
                         }
             }], 
@@ -868,18 +866,18 @@ $(function () {
             }
             ], 
             VehicleInfo: [
-                          {
-                            vehicleInfoID: '', 
-                            serviceID: '', 
-                            brand: '', 
-                            model: '', 
-                            produceYear: '', 
-                            seats: '', 
-                            person: '', 
-                            clazz: '', 
-                            insurance: '', 
-                            luggage: ''
-                          }
+            {
+                vehicleInfoID: '', 
+                serviceID: '', 
+                brand: '', 
+                model: '', 
+                produceYear: '', 
+                seats: '', 
+                person: '', 
+                clazz: '', 
+                insurance: '', 
+                luggage: ''
+            }
             ], 
             VehicleCharges: [
             {
@@ -961,7 +959,7 @@ $(function () {
                         // "group1/M00/00/00/CgkB6Vfo6-yAbULzAAFPULilh9I027.jpg"
                   ], 
                   covers: {
-                    type: '', 
+                    type: null, 
                     data: []
                   }
                 }
@@ -1067,7 +1065,7 @@ $(function () {
             VehicleCharges: [ ], 
             VehicleAddress: [ ], 
             VehicleSchedule: [ ], 
-            Labels: [ ], 
+            Labels: ["咖啡简餐" ], 
             ActivityPrice: [ ], 
             HouseInfo: [ ], 
             IMGHOST: "http://123.59.144.47/"
@@ -1374,45 +1372,47 @@ $(function () {
      var initTraveLogueEdit=function(){
         var usr =$.rogerGetLoginUser();
         var type = $.rogerGetUrlParam('type');
+
+         // '/travelogue/detail'
         return {
-            Travelogue:{
-                articleID:'',
-                userID:usr.UserID,
-                articlePicURL:'',
-                description:'',
-                title:'',
+            Travelogue: {
+                articleID: '',
+                userID: usr.UserID,
+                articlePicURL: '',
+                description: '',
+                title: '',
                 userName: null,
                 avatarPicURL: '',
-                type:'',
-                STATUS:'',
-                createDate:'',
+                type: '',
+                STATUS: '',
+                createDate: '',
                 browseCount: '',
-                praiseCount:'',
-                evaluateCount:'',
+                praiseCount: '',
+                evaluateCount: '',
                 TravelogueDetail: [
                     {
-                        articleID : 135,
-                        articleDetailID : 283,
-                        label : 'ssssssss',
-                        picURL : null,
-                        content : null,
-                        DAY : 1
+                        articleID: 135,
+                        articleDetailID: 283,
+                        label: 'ssssssss',
+                        picURL: null,
+                        content: null,
+                        DAY: 1
                     },
                     {
-                        articleID : 135,
-                        articleDetailID : 283,
-                        label : null,
-                        picURL : "group1/M00/01/B6/CgkB6VhjMWmAGBzOAAECKGQnCKs190.jpg",
-                        content : null,
-                        DAY : null
+                        articleID: 135,
+                        articleDetailID: 283,
+                        label: null,
+                        picURL: "group1/M00/01/B6/CgkB6VhjMWmAGBzOAAECKGQnCKs190.jpg",
+                        content: null,
+                        DAY: null
                     },
                     {
-                        articleID : 135,
-                        articleDetailID : 284,
-                        label : null,
-                        picURL : null,
-                        content : "阿富汗伊斯兰共和国简称阿富汗，是一个位于亚洲中南部的内陆国家，坐落在亚洲的心脏地区。阿富汗的位置有不同的定义，有时候会被认为处在中亚或者南亚，甚至被归类于中东地区（西亚）。阿富汗与大部分比邻的国家有着宗教上、语言上、地理上相当程度的关联。阿富汗的北部和土库曼斯坦、乌兹别克斯坦以及塔吉克斯坦接壤，东部与中国以及部分巴基斯坦控制查谟-克什米尔地区（有争议）接壤，南部与巴基斯坦接壤，西部与伊朗接壤。\n阿富汗的名字在普什图语中的意思就是“普什图人的地方”，而普什图人亦是现时国内人口最多的族群。\n阿富汗领土中的五分之三交通不便。农业是主要的经济支柱，但可耕地还不足农用地的2/3。人口为3000多万，是世界上最贫穷的国家之一。阿富汗是个落后的农牧业国家，阿矿藏资源较为丰富，但未得到充分开发。阿富汗的河流大部分是内陆河，多注入沙漠和湖泊。主要河流有阿姆河、喀布尔河、赫尔曼德河和哈里鲁河等。",
-                        DAY : null
+                        articleID: 135,
+                        articleDetailID: 284,
+                        label: null,
+                        picURL: null,
+                        content: "阿富汗伊斯兰共和国简称阿富汗，是一个位于亚洲中南部的内陆国家，坐落在亚洲的心脏地区。阿富汗的位置有不同的定义，有时候会被认为处在中亚或者南亚，甚至被归类于中东地区（西亚）。阿富汗与大部分比邻的国家有着宗教上、语言上、地理上相当程度的关联。阿富汗的北部和土库曼斯坦、乌兹别克斯坦以及塔吉克斯坦接壤，东部与中国以及部分巴基斯坦控制查谟-克什米尔地区（有争议）接壤，南部与巴基斯坦接壤，西部与伊朗接壤。\n阿富汗的名字在普什图语中的意思就是“普什图人的地方”，而普什图人亦是现时国内人口最多的族群。\n阿富汗领土中的五分之三交通不便。农业是主要的经济支柱，但可耕地还不足农用地的2/3。人口为3000多万，是世界上最贫穷的国家之一。阿富汗是个落后的农牧业国家，阿矿藏资源较为丰富，但未得到充分开发。阿富汗的河流大部分是内陆河，多注入沙漠和湖泊。主要河流有阿姆河、喀布尔河、赫尔曼德河和哈里鲁河等。",
+                        DAY: null
                     },
                 ],
             },
@@ -1436,11 +1436,10 @@ $(function () {
 
 
         $('#save').rogerOnceClick(TraveLogue, function(e){
-            alert(e.data.Travelogue);
-            alert(e.data.TravelogueDetail);
+            temp = e.data.Travelogue;
+            temp.STATUS=0;
             var data = {
-                Travelogue:e.data.Travelogue,
-                TravelogueDetail:e.data.TravelogueDetail,
+                Travelogue:temp,
                 IMGHOST:e.data.IMGHOST
             };
             $.rogerPost('/new/travellogue', data, function(respJSON){
@@ -1448,6 +1447,20 @@ $(function () {
 
             });
         });
+
+         $('#publish').rogerOnceClick(TraveLogue, function(e){
+             temp = e.data.Travelogue;
+             temp.STATUS=1;
+             var data = {
+                 Travelogue:temp,
+                 IMGHOST:e.data.IMGHOST
+             };
+             $.rogerPost('/new/travellogue', data, function(respJSON){
+                 $.alert(respJSON.toString());
+                 $.rogerNotice({Message:'保存攻略成功'});
+
+             });
+         });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();

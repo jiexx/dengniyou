@@ -1,4 +1,4 @@
-
+ 
 <div class="container editPage">
 	<!-- 方案基本信息 -->
 	<div class="baseInfo">
@@ -20,8 +20,14 @@
 		    <label for="" class="col-sm-2 col-md-1 control-label">服务类型</label>
 		    <div class="col-sm-10 col-md-11">
 		    	<select name="" id="ServiceTypeChoice" class="form-control" >
-		    		<option value="">接机</option>
+		    		{{if $data.DetailMain[0].serviceTypeName=='接机'}}
+		    		<option value="" selected>接机</option>		    		
 		    		<option value="">送机</option>
+		    		{{/if}}
+		    		{{if $data.DetailMain[0].serviceTypeName=='送机'}}
+		    		<option value="" >接机</option>		    		
+		    		<option value="" selected>送机</option>
+		    		{{/if}}
 		    	</select>
 		        <input type="hidden" class="form-control" id="ServiceTypeName" value="${$data.DetailMain[0].serviceTypeName}"  data-value="/DetailMain/${0}/serviceTypeName">
 		    </div>
@@ -67,7 +73,7 @@
 					  <input type="radio" name="serviceType" id="" value="即停即走" checked> 即停即走
 					</label>
 			    </div>
-			    <div id="dropoffService" style="display: none;">
+			    <div id="dropoffService">
 			    	<label class="radio-inline">
 					  <input type="radio" name="serviceType2" id="" value="无忧模式" > 无忧模式
 					</label>
@@ -122,7 +128,7 @@
 	<!-- 机场信息结束 -->
 
 	<!-- 相册上传 -->
-	<div >
+	<div class="photoInfo">
 		<h4>相册信息</h4>
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
@@ -210,6 +216,7 @@
 
 <script>
 	$(function(){
+
 		$('#ServiceTypeChoice').on('change',function(){
 			var ServiceTypeName = $(this).find('option:selected').text();
 			$('#ServiceTypeName').val(ServiceTypeName).trigger('keyup');
@@ -217,15 +224,14 @@
 				$('#pickupService').show();
 				$('#dropoffService').hide();
 				var ServiceMethodName = $('#pickupService').find('input:checked').val();
-				$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
 			}else if(ServiceTypeName == '送机'){
 				$('#pickupService').hide();
 				$('#dropoffService').show();
 				var ServiceMethodName = $('#dropoffService').find('input:checked').val();
-				$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
 			}
+			$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
 		});
-
+		$('#ServiceTypeChoice').trigger('change');
 		$('#serviceType').on('click','input',function(){
 			var ServiceMethodName = $(this).val();
 			$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
