@@ -318,7 +318,9 @@ $(function () {
 
         $('#save').rogerOnceClick(Plan, function(e){
             $.rogerPost('/delete/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
-                $.rogerPost('/new/tmpplan', Plan, function(respJSON){
+                var data = {PlanInfo:e.data.PlanInfo};
+                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                $.rogerPost('/new/tmpplan', data, function(respJSON){
                     $.rogerNotice({Message:'模板方案保存成功'});
                 });
             });
