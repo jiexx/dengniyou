@@ -209,19 +209,19 @@
 		  <div class="form-group">
 		    <label  class="col-sm-2 col-md-1 control-label">退订政策：</label>
 		    <div class="col-sm-10 col-md-11">
-				<textarea name="" id="Policy" value="${ $data.PlanInfo.Policy}" data-value="/PlanInfo/Policy" class="form-control" ></textarea>
+				<textarea name="" id="Policy" data-value="/PlanInfo/Policy" class="form-control" >${ $data.PlanInfo.Policy}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label   class="col-sm-2 col-md-1 control-label">费用包含：</label>
 		    <div class="col-sm-10 col-md-11">
-				<textarea name="" id="CostInclude" value="${ $data.PlanInfo.CostInclude}" data-value="/PlanInfo/CostInclude" class="form-control" ></textarea>
+				<textarea name="" id="CostInclude"　data-value="/PlanInfo/CostInclude" class="form-control" >${ $data.PlanInfo.CostInclude}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label   class="col-sm-2 col-md-1 control-label">费用自理：</label>
 		    <div class="col-sm-10 col-md-11">
-				<textarea name="" id="CostExclude" value="${ $data.PlanInfo.CostExclude}" data-value="/PlanInfo/CostExclude" class="form-control" ></textarea>
+				<textarea name="" id="CostExclude" 　 data-value="/PlanInfo/CostExclude" class="form-control" >${ $data.PlanInfo.CostExclude}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -233,18 +233,18 @@
 		  <div class="form-group">
 		    <label  class="col-sm-2 col-md-1 control-label">注意事项：</label>
 		    <div class="col-sm-10 col-md-11">
-			    <textarea name="" id="Notice" value="${ $data.PlanInfo.Notice}" data-value="/PlanInfo/Notice" class="form-control"  ></textarea>
+			    <textarea name="" id="Notice"  data-value="/PlanInfo/Notice" class="form-control"  >${ $data.PlanInfo.Notice}</textarea>
 		    </div>
 		  </div>
 		</form>
 		<div class="optionBtn">
-			<button id="save" class="btn btn-warning">保存</button>
-			{{if  $data.PlanInfo.PlanStatus == 3}}
+			<button id="save" class="btn btn-warning">发布</button>
+			<!--{{if  $data.PlanInfo.PlanStatus == 3}}
 			<button id="publish" class="btn btn-warning">发布 </button>
 			{{/if}}
 			{{if  $data.PlanInfo.PlanStatus == 1}}
 			<button id="publish" class="btn btn-warning">发布 </button>
-			{{/if}}
+			{{/if}}-->
 			{{if  $data.PlanInfo.PlanStatus == 4}}
 			<button id="cancel" class="btn btn-warning">隐藏 </button>
 			{{/if}}

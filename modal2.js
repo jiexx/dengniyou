@@ -527,10 +527,10 @@ var roger = {
                 onFinish();
             }
         },
-        "toarray": {
+        "stoa": {  //field : s1,s2.. --> [s1,s2,..]
             after :function(funcArgu, onFinish) {
                 var output = funcArgu.item.output;
-                var toarray = funcArgu.item.modal.toarray;
+                var toarray = funcArgu.item.modal.stoa;
                 if(Array == output.constructor) {
                 	for(var i in output) {
                 		for(var j in toarray) {
@@ -541,6 +541,25 @@ var roger = {
 						}
 					}
 				}
+                onFinish();
+            }
+        },
+        "otoa": {  //field : s1,s2.. --> [s1,s2,..]
+            after :function(funcArgu, onFinish) {
+                var output = funcArgu.item.output;
+                var toarray = funcArgu.item.modal.otoa;
+                if(Array == output.constructor) {
+                	var obj = {};
+                    for(var j in toarray) {
+                        obj[toarray[j]] = [];
+                        var o = obj[toarray[j]];
+						for(var i in output) {
+							var item = output[i][toarray[j]];
+							o.push(item);
+						}
+                    }
+                    funcArgu.item.output = obj;
+                }
                 onFinish();
             }
         }

@@ -321,24 +321,24 @@ $(function () {
                 var data = {PlanInfo:e.data.PlanInfo};
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 $.rogerPost('/new/tmpplan', data, function(respJSON){
-                    $.rogerNotice({Message:'模板方案保存成功'});
+                    $.rogerNotice({Message:'模板方案成功'});
                 });
             }else {
                 $.rogerPost('/delete/plan', {PlanID:Plan.PlanInfo.PlanID}, function(respJSON){
                     var data = {PlanInfo:e.data.PlanInfo};
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function(respJSON){
-                        $.rogerNotice({Message:'模板方案保存成功'});
+                        $.rogerNotice({Message:'模板方案发布成功'});发布
                     });
                 });
             }
         });
-        $('#publish').rogerOnceClick(Plan, function(e){
+        /*$('#publish').rogerOnceClick(Plan, function(e){
             $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
                 $.rogerNotice({Message:'模板方案待审核..'});
                 $.rogerRefresh(Plan);
             });
-        });
+        });*/
         $('#cancel').rogerOnceClick(Plan, function(e){
             $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
                 $.rogerNotice({Message:'模板方案已取消发布..'});
