@@ -3,7 +3,7 @@
 		"sql": "SELECT PlanID,PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,IMUserID,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate FROM traveluserdb.tab_planinfo WHERE PlanID=?;",
 		"params":["PlanID"],
 		"toarray":["PicURL","CarURL"],
-		"Picture": {"sql": "SELECT PicUrl AS Pics FROM traveluserdb.tab_planpicture WHERE PlanID=?;",	"params":["PlanID"],"findkey":"PlanID","toarray":["Pics"] },
+		"Picture": { "sql": "SELECT PicUrl AS Pics FROM traveluserdb.tab_planpicture WHERE PlanID=?;",	"params":["PlanID"],"findkey":"PlanID" },
 		"Summary":{"sql":"SELECT * FROM traveluserdb.tab_plansummary WHERE PlanID=?;",	"params":["PlanID"],"findkey":"PlanID","toarray":["PlanLabels"]},
 		"PlanSchedule":{
 			"sql":"SELECT ScheduleID, DayName,TravelInstruction,CreateDate FROM traveluserdb.tab_planschedule WHERE PlanID=?;",

@@ -1,3 +1,3 @@
 {
-	"Plans": {"sql": "SELECT * FROM traveluserdb.`vw_/home_search`where  PlanName like ? OR StartCity like ? OR RegionCnName like ?  ",	"params":["key", "key","key"]}
+	"Plans": {"sql": "SELECT * FROM traveluserdb.`tab_planinfo`where  PlanName like ? OR StartCity like ? OR RegionCnName like ?  ",	"params":["key", "key","key"]}
 }

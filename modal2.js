@@ -7,7 +7,7 @@ var fdfs = new FdfsClient({
     trackers: [
         {
             //host: '10.101.1.165',
-			host: '172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
+			host: '123.59.144.47',//'172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
             port: 22122
         }
     ],
@@ -34,7 +34,7 @@ function doSql(funcArgu, onFinish) {
 			onFinish(true);
 			return;
 		}
-		console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
+		//console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
 		conn.query(funcArgu.sql, funcArgu.params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
 			//////console.log(JSON.stringify(results));
@@ -402,19 +402,24 @@ var roger = {
 				for(var i in tags) {
 					var d = data[tags[i]];
                     var pos = origin.indexOf(tags[i]);
-					if(d && d.indexOf('data:image')>-1){
+					if(d ){
                         if( Array == d.constructor ){
                             for(var j in d) {
-                                files.push({base64:d[j],index:pos, row:j});
+                            	if(d[j].indexOf('data:image')>-1){
+                                    files.push({base64:d[j],index:pos, row:j});
+								}
                             }
                         }else if('string' == typeof d){
                             //files.push(d);
-                            files.push({base64:d,index:pos, row:0});
+                            if(d.indexOf('data:image')>-1) {
+                                files.push({base64: d, index: pos, row: 0});
+                            }
                         }
 					}/*else {
                         params[pos] = null;
 					}*/
 				}
+                console.log('uploadimages num:'+files.length);
 				roger.uploadImages(files, function(fas){
 					var p = [];
 					for(var i in fas) {
@@ -434,6 +439,7 @@ var roger = {
 					this.clear();
 					onFinish();
 				}, function(fa, fileid){//oneFinish
+					console.log('uploadimages:'+fileid);
 					fa.fileid = fileid;
 				});
 			}

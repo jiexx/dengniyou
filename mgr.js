@@ -31,8 +31,8 @@ var fdfs = new FdfsClient({
     // tracker servers
     trackers: [
         {
-            host: '10.101.1.165',
-			//host: '123.59.144.47',
+            //host: '10.101.1.165',
+			host: '123.59.144.47',
             port: 22122
         }
     ],
@@ -182,7 +182,7 @@ app.post('/order/getAddorderDetail', upload.array(), function(req, res) {
 
 
 var MODAL = {};
-var server = app.listen(8088, function() {
+var server = app.listen(8888, function() {
 	
 	var host = server.address().address;
 	var port = server.address().port;
