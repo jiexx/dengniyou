@@ -32,7 +32,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .fixedBar ul li p{ margin-bottom: 6px;}
 .indexpage .fixedBar ul li .kefu{background-image: url(../img/kefu.png); display: inline-block; width:24px; height: 24px;}
 .indexpage .topWidth{width:90%; max-width: 1200px; margin:0 auto;}
-.indexpage .topWidth .panel-body .col-md-6 span{font-size: 14px;}
+.indexpage .topWidth .panel-body .col-md-6 span,.indexpage .topWidth .panel-body .col-md-6 a{font-size: 14px;}
 .indexpage .topWidth .panel-body #userlogin span{color: #F9703C; font-weight: bold;}
 .indexpage .topWidth .panel-body .topLeft a span{font-size: 21px;}
 .indexpage .topWidth .logo img{height: 80px;}
