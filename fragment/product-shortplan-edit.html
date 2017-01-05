@@ -118,6 +118,15 @@
 				</div>
 			</div>
 			{{each $data.PlanInfo.PlanShort}}
+			<div class="addCity">
+				<h4>添加城市</h4>
+				<ul class="label-base">
+					{{if ($data.PlanInfo.StartCityID==0) }}
+					<li><input type="text" value="${$data.PlanInfo.StartCityID}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/StartCityID" ></a></li>
+					{{/if}}
+					<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/StartCityID" data-action="createCity"> + </div></li>
+				</ul>
+			</div>
 			{{if Day}}
 			<div class="row day-edit">
 				<div class="col-md-4">
@@ -147,7 +156,7 @@
 
 			{{if Content}}
 			<div class="col-md-4 introduction">
-				<textarea name="" rows="10" value ="${ Content}" data-value="/PlanInfo/PlanShort/${$index}/Content" placeholder="描述"></textarea>
+				<textarea name="" rows="10"   data-value="/PlanInfo/PlanShort/${$index}/Content" placeholder="描述">${ Content}</textarea>
 			</div>
 			{{/if}}
 			{{/each}}
@@ -161,31 +170,31 @@
 				<div class="form-group">
 					<label  class="col-sm-2 col-md-1 control-label">退订政策：</label>
 					<div class="col-sm-10 col-md-11">
-						<textarea name="" id="Policy" value="${ $data.PlanInfo.Policy}" data-value="/PlanInfo/Policy" class="form-control" ></textarea>
+						<textarea name="" id="Policy"  data-value="/PlanInfo/Policy" class="form-control" >${ $data.PlanInfo.Policy}</textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label   class="col-sm-2 col-md-1 control-label">费用包含：</label>
 					<div class="col-sm-10 col-md-11">
-						<textarea name="" id="CostInclude" value="${ $data.PlanInfo.CostInclude}" data-value="/PlanInfo/CostInclude" class="form-control" ></textarea>
+						<textarea name="" id="CostInclude"    data-value="/PlanInfo/CostInclude" class="form-control" >${ $data.PlanInfo.CostInclude}</textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label   class="col-sm-2 col-md-1 control-label">费用自理：</label>
 					<div class="col-sm-10 col-md-11">
-						<textarea name="" id="CostExclude" value="${ $data.PlanInfo.CostExclude}" data-value="/PlanInfo/CostExclude" class="form-control" ></textarea>
+						<textarea name="" id="CostExclude"   data-value="/PlanInfo/CostExclude" class="form-control" >${ $data.PlanInfo.CostExclude}</textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label  class="col-sm-2 col-md-1 control-label">签证须知：</label>
 					<div class="col-sm-10 col-md-11">
-						<textarea name="" id="VisaNotice" value="${ $data.PlanInfo.VisaNotice}" data-value="/PlanInfo/VisaNotice" class="form-control" ></textarea>
+						<textarea name="" id="VisaNotice"   data-value="/PlanInfo/VisaNotice" class="form-control" >${ $data.PlanInfo.VisaNotice}</textarea>
 					</div>
 				</div>
 				<div class="form-group">
 					<label  class="col-sm-2 col-md-1 control-label">注意事项：</label>
 					<div class="col-sm-10 col-md-11">
-						<textarea name="" id="Notice" value="${ $data.PlanInfo.Notice}" data-value="/PlanInfo/Notice" class="form-control"  ></textarea>
+						<textarea name="" id="Notice"   data-value="/PlanInfo/Notice" class="form-control"  >${ $data.PlanInfo.Notice}</textarea>
 					</div>
 				</div>
 			</form>

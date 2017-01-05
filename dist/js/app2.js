@@ -315,10 +315,20 @@ $(function () {
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
         };
 
+        function getStartCityID(Spot) {
+            for(var i in Spot) {
+                if(Spot[i].CityID > 0){
+                    return Spot[i].CityID;
+                }
+            }
+            return 0;
+        }
+
 
         $('#save').rogerOnceClick(Plan, function(e){
             if(!Plan.PlanInfo.PlanID) {
                 var data = {PlanInfo:e.data.PlanInfo};
+                data.PlanInfo.StartCityID =getStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 $.rogerPost('/new/tmpplan', data, function(respJSON){
                     $.rogerNotice({Message:'模板方案成功'});
@@ -326,9 +336,10 @@ $(function () {
             }else {
                 $.rogerPost('/delete/plan', {PlanID:Plan.PlanInfo.PlanID}, function(respJSON){
                     var data = {PlanInfo:e.data.PlanInfo};
+                    data.PlanInfo.StartCityID =getStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function(respJSON){
-                        $.rogerNotice({Message:'模板方案发布成功'});发布
+                        $.rogerNotice({Message:'模板方案发布成功'});
                     });
                 });
             }

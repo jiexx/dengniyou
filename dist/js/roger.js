@@ -149,7 +149,7 @@ $(function () {
 								router.ctrl(respJSON, realView);
 							}
 						);
-					}else if(router.fragment && router.init && !router.rootrest) {
+					}else if(router.fragment && (router.init || json) ) {
 						$._rogerSetLocation(url);
 						var req = json ? json : router.init();
 						$._RogerLoadViewByJSON(
@@ -164,7 +164,7 @@ $(function () {
 								router.ctrl(respJSON, realView);
 							}
 						)
-					}else if(router.fragment && !router.init && router.rootrest) {
+					}else if(router.fragment && !router.init && router.rootrest && !json) {
                         $._rogerSetLocation(url);
                         $._RogerLoadView(
                             router.fragment,
