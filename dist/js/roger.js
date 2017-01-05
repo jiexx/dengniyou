@@ -60,7 +60,10 @@ $(function () {
 							if(callback) {
 								callback(respJSON, realView);
 							}
-						}
+						},
+                        error: function(XMLHttpRequest, textStatus, errorThrown) {
+                            var i = 1;
+                        }
 					});
 				});
 			}
@@ -129,7 +132,7 @@ $(function () {
 								router.ctrl(respJSON, realView);
 							}
 						);
-					}else if(router.fragment) {
+					}else if(router.fragment && router.init && !router.rootrest) {
 						$._rogerSetLocation(url);
 						var req = json ? json : router.init();
 						$._RogerLoadViewByJSON(
@@ -144,7 +147,22 @@ $(function () {
 								router.ctrl(respJSON, realView);
 							}
 						)
-					}
+					}else if(router.fragment && !router.init && router.rootrest) {
+                        $._rogerSetLocation(url);
+                        $._RogerLoadView(
+                            router.fragment,
+                            $.rogerGetAppContainer(),
+                            router.rootrest,
+                            $.rogerGetURLJsonParams(),
+                            function(respJSON, realView) {
+                                realView._RogerReloadRouters();
+                                realView._rogerBindPointer(respJSON,function(d, onFinish){
+                                    $.rogerRefresh(d);
+                                });
+                                router.ctrl(respJSON, realView);
+                            }
+                        );
+                    }
 				}
 			}
 		},

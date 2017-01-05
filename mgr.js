@@ -31,8 +31,8 @@ var fdfs = new FdfsClient({
     // tracker servers
     trackers: [
         {
-            //host: '10.101.1.165',
-			host: '123.59.144.47',
+            host: '10.101.1.165',
+			//host: '123.59.144.47',
             port: 22122
         }
     ],

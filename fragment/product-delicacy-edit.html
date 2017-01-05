@@ -103,16 +103,16 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
 			<div class="col-md-11 row" >
-				{{each $data.SpotPics}}
+				{{each $data.SpotPics[0].PicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.SpotPics[$index].PicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotPics/${index}/PicURL"></a>
+						<img src="${$data.SpotPics[0].PicURL[$index]}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotPics/${0}/PicURL/${$index}"></a>
 					</div>
 				</div>
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/SpotPics/${index}/PicURL" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/SpotPics/${index}/PicURL-" data-action="image">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/SpotPics/${0}/PicURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/SpotPics/${0}/PicURL-" data-action="image">+</div>
 				</div>
 			</div>
 		</div>

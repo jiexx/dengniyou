@@ -1,0 +1,3 @@
+{
+	"Pub":{"sql":"update traveluserdb.tab_planinfo  set PlanStatus = ？ where PlanID = ?;","params":["Status","PlanID"]}
+}

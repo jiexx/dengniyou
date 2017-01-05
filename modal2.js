@@ -6,8 +6,8 @@ var fdfs = new FdfsClient({
     // tracker servers
     trackers: [
         {
-            host: '10.101.1.165',
-			//host: '172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
+            //host: '10.101.1.165',
+			host: '172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
             port: 22122
         }
     ],
@@ -34,7 +34,7 @@ function doSql(funcArgu, onFinish) {
 			onFinish(true);
 			return;
 		}
-		//console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
+		console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
 		conn.query(funcArgu.sql, funcArgu.params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
 			//////console.log(JSON.stringify(results));
@@ -225,7 +225,7 @@ var roger = {
 	},
 	//data has array property with object instead of array.
 	//data has array property with base type. data maybe have multi array property, must be handle by tag.
-	"prepare2":function (superior, tag, modal, data, out) {
+	"prepare2":function (superior, tag, modal, data, out) {  //prepare by data
         var copy = {tag:tag, valid:false, superior: superior, modal: modal, data: data};
         out.push(copy);
         if(data && "object" == typeof data ) {
@@ -284,7 +284,7 @@ var roger = {
                         doings.push(roger.tagHandler[j].doing);
 					}
 				}
-				funcArgus.push({sql:item.sql, params:item.params, item:item, doing:doings});
+				funcArgus.push({sql:item.sql, params:item.params, item:item, doing:doings, vector:list});
 			}
 		}
 		var cl = CallbackLooper.create(funcArgus.length, doSql, funcArgus, onFinish,
@@ -313,28 +313,51 @@ var roger = {
     },
     "clear": function(obj) {
     },
-    "complete":function(list) {
+    "restruct":function(node, out) {
+        if ('root' == node.tag) {
+        	node.ptr = out;
+        }else {
+        	if(Array == node.superior.ptr.constructor) {
+                node.superior.ptr[node.__idx][node.tag] = node.output;
+                node.ptr = node.output;
+			}else if(Array ==  node.output.constructor &&  node.output.length == 1 && !node.modal.isarray){
+                node.superior.ptr[node.tag] = node.output[0];
+                node.ptr = node.output[0];
+			}else {
+                node.superior.ptr[node.tag] = node.output;
+                node.ptr = node.output;
+			}
+		}
+    },
+    "complete":function(list, version) {
         var out = {};
         var tag = '';
-        for(var i in list) {
-            //console.log(list[i].tag);
-            tag = list[i].tag;
-            if ('root' != tag) {
-            	if(out[tag]) {
-            		if(Array != out[tag].constructor) {
-                        var a = out[tag];
-                        out[tag] = [a];
-					}
-					out[tag].push(list[i].output);
-				}else{
-                    out[tag] = list[i].output;
-				}
+        if(!version) {
+            for(var i in list) {
+                //console.log(list[i].tag);
+                tag = list[i].tag;
+                if ('root' != tag) {
+                    if(out[tag]) {
+                        if(Array != out[tag].constructor) {
+                            var a = out[tag];
+                            out[tag] = [a];
+                        }
+                        out[tag].push(list[i].output);
+                    }else{
+                        out[tag] = list[i].output;
+                    }
+                }
             }
-        }
-
+		}else if(version==2){
+            for(var i in list) {
+                roger.restruct(list[i], out);
+            }
+		}
         var r =  roger.format(out);
-        roger.clear(list);
-        roger.clear(out);
+        list = null;
+        out = null;
+        //roger.clear(list);
+        //roger.clear(out);
         return r;
     },
 	//data <-  receive req json data
@@ -379,7 +402,7 @@ var roger = {
 				for(var i in tags) {
 					var d = data[tags[i]];
                     var pos = origin.indexOf(tags[i]);
-					if(d){
+					if(d && d.indexOf('data:image')>-1){
                         if( Array == d.constructor ){
                             for(var j in d) {
                                 files.push({base64:d[j],index:pos, row:j});
@@ -388,9 +411,9 @@ var roger = {
                             //files.push(d);
                             files.push({base64:d,index:pos, row:0});
                         }
-					}else {
+					}/*else {
                         params[pos] = null;
-					}
+					}*/
 				}
 				roger.uploadImages(files, function(fas){
 					var p = [];
@@ -454,15 +477,18 @@ var roger = {
 
 				}// superior output is 2d array
 				else if(output &&  Array == output.constructor){
-					var vector = [];
+					var argus = [];
 					for(var j = 1; j < output.length ; j ++ ) {
 						var copy = roger.shallow(funcArgu.item);
-                        copy.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[j][findkey]);
-						funcArgu.vector.push(copy);
-                        vector.push({sql:copy.sql, params:copy.item.params, item:copy, doing:null});
+                        copy.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[j][findkey]);
+                        var newArgu = {sql:copy.sql, params:copy.params, item:copy, doing:null};
+                        newArgu.item.__idx = j;
+                        funcArgu.vector.push(copy);
+                        argus.push(newArgu);
 					}
-                    looper.expand(vector);
+                    looper.expand(argus);
                     funcArgu.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[0][findkey]);
+                    funcArgu.item.__idx = 0;
                     funcArgu.params = funcArgu.item.params;
 
 				}
@@ -494,6 +520,23 @@ var roger = {
                 funcArgu.item.output = obj;
                 onFinish();
             }
+        },
+        "toarray": {
+            after :function(funcArgu, onFinish) {
+                var output = funcArgu.item.output;
+                var toarray = funcArgu.item.modal.toarray;
+                if(Array == output.constructor) {
+                	for(var i in output) {
+                		for(var j in toarray) {
+                			var str = output[i][toarray[j]];
+                            if( 'string' == typeof str){
+                                funcArgu.item.output[i][toarray[j]] = str.split(',');
+                            }
+						}
+					}
+				}
+                onFinish();
+            }
         }
 	}
 
@@ -508,6 +551,7 @@ function isEmpty(obj) {
 
 exports.rogerSmartSql = function(modal, data, callback) {
 	var out = [];
+	var version = data.version;
 	if(roger.check(data) == 1) {
 		roger.prepare1(null, 'root', modal, data, out);
 	}else {
@@ -519,7 +563,7 @@ exports.rogerSmartSql = function(modal, data, callback) {
 			//console.log('PROCESS:');
 			roger.after(out, data, function(){
 				//console.log('AFTER:');
-				var results = roger.complete(out);
+				var results = roger.complete(out, version);
 				callback(true, results);
 			});
 		});
