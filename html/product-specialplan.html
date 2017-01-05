@@ -41,7 +41,11 @@
 		   		{{if PlanStatus ==1}}待审核 {{/if}}{{if PlanStatus ==2}}审核通过 {{/if}}{{if PlanStatus ==3}}导游隐藏 {{/if}}{{if PlanStatus ==4}}导游发布 {{/if}}{{if PlanStatus ==5}}导游定制 {{/if}}{{if PlanStatus ==6}}未加入 {{/if}}{{if PlanStatus ==7}}已加入 {{/if}}
 		   	</div>
 		   	<div class="col-md-1 service-edit">
-		   		<span class="btn  glyphicon glyphicon-edit"></span>
+				{{if CreateType==1}}
+				<a href="#/templateplanedit?version=2&PlanID=${PlanID}"><div class="btn  glyphicon glyphicon-edit"></div></a>
+				{{else}}
+				<a href="#/shortplanedit?version=2&PlanID=${PlanID}"><div class="btn  glyphicon glyphicon-edit"></div></a>
+				{{/if}}
 		   	</div>
 		</div>
 		{{/each}}

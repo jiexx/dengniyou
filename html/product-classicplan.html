@@ -45,7 +45,11 @@
 		    </div>
 		    <div class="col-md-1 service-edit">
 		   		<a hre="">
-		   			<span class="btn  glyphicon glyphicon-edit"></span>
+					{{if CreateType==1}}
+					<a href="#/templateplanedit?version=2&PlanID=${PlanID}"><div class="btn  glyphicon glyphicon-edit"></div></a>
+					{{else}}
+					<a href="#/shortplanedit?version=2&PlanID=${PlanID}"><div class="btn  glyphicon glyphicon-edit"></div></a>
+					{{/if}}
 		   		</a>
 		   	</div>
 		</div>
