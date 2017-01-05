@@ -187,6 +187,10 @@
 
     };
 
+    var ctrlPlanSearch = function(response, realView) {
+        realView.rogerCropImages();
+    };
+
 	$.rogerRouter({
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
@@ -194,7 +198,8 @@
         '#/orderlist': 				{view: 'orderlist.html', 								rootrest: '/order/list', 				ctrl: ctrlOrderlist},
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment},
         '#/orderdetail':            {view:'payCompletion.html',	                  rootrest:'/order/detail',                      ctrl: ctrlOrderdetail},
-	});
+	    '#/plansearch':             {view:'planSearch.html',                   rootrest:'/plan/plansearch',                      ctrl: ctrlPlanSearch}
+    });
 	
 	
 })();

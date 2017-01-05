@@ -12,7 +12,7 @@
 				<div class="form-group">
 					<label   class="col-sm-2 col-md-1 control-label">攻略名称</label>
 					<div class="col-sm-10 col-md-11">
-						<input type="text" class="form-control"  value="${$data.Travelogue[0].title}"  data-value="/Travelogue/${0}/title" placeholder="不能超过24个字符">
+						<input type="text" class="form-control"  value="${$data.Travelogue.title}"  data-value="/Travelogue/${0}/title" placeholder="不能超过24个字符">
 					</div>
 				</div>
 			</form>
@@ -24,45 +24,64 @@
 			<div class="col-md-12">
 				<h4>行程信息</h4>
 				<div class="pull-right btn-group">
-					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/TravelogueDetail/-" data-action="createDay">添加段落</a>
-					<a class="btn btn-warning   " href="javascript:void(0)" data-op="change" data-pointer="/TravelogueDetail/-" data-action="createPicture">添加图片</a>
-					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/TravelogueDetail/-" data-action="createContent">添加描述</a>
+					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createDay">添加段落</a>
+					<a class="btn btn-warning   " href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createPicture">添加图片</a>
+					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createContent">添加描述</a>
 				</div>
 			</div>
-			{{each $data.TravelogueDetail}}
-			{{if Day}}
+			{{each $data.Travelogue.TravelogueDetail}}
+			{{if label}}
 			<div class="col-md-12">
 				<div class="row">
 					<div class="col-md-6">
-						<div class="col-md-3">第</div><div class="col-md-5"><input type="text" class="form-control"  value="${Day}"  data-value="/TravelogueDetail/${$index}/Day" placeholder="第几天"></div><div class="col-md-3">天</div>
+						<div class="col-md-3">第</div><div class="col-md-5"><input type="text" class="form-control"  value="${DAY}"  data-value="/Travelogue/TravelogueDetail/${$index}/DAY" placeholder="第几天"></div><div class="col-md-3">天</div>
 					</div>
 					<div class="col-md-6">
-						<input type="text" class="form-control"  value="${Label}"  data-value="/TravelogueDetail/${$index}/Label" placeholder="标题">
+						<input type="text" class="form-control"  value="${label}"  data-value="/Travelogue/TravelogueDetail/${$index}/label" placeholder="标题">
 					</div>
 				</div>
 			</div>
 			{{/if}}
-			{{if picURL}}
+			
+			{{if label==null}}{{if content==null}}{{if articleID}}
 			<div class="col-md-6">
-				<div class="row">
-					{{if PicURL}}
+				<div class="row">					
+					{{if picURL}}
 					<div class="col-md-12">
 						<div class="imgBox">
-							<img src="${PicURL}">
-							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/TravelogueDetail/${$index}/PicURL"></a>
+							<img src="${picURL}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/Travelogue/TravelogueDetail/${$index}/picURL"></a>
 						</div>
 					</div>
 					{{/if}}
-					<div class="col-md-12" data-op="toggle" data-pointer="/TravelogueDetail/${$index}/PicURL" data-limit="1">
-						<div class="imgBox addImg" data-op="change" data-pointer="/TravelogueDetail/${$index}/PicURL" data-action="image">+</div>
+					<div class="col-md-12" data-op="toggle" data-pointer="/Travelogue/TravelogueDetail/${$index}/picURL" data-limit="1">
+						<div class="imgBox addImg" data-op="change" data-pointer="/Travelogue/TravelogueDetail/${$index}/picURL" data-action="image">+</div>
+					</div>					
+				</div>
+			</div>
+			{{/if}}{{/if}}{{/if}}
+			{{if PE}}
+			<div class="col-md-6">
+				<div class="row">					
+					{{if picURL}}
+					<div class="col-md-12">
+						<div class="imgBox">
+							<img src="${picURL}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/Travelogue/TravelogueDetail/${$index}/picURL"></a>
+						</div>
+					</div>
+					{{/if}}
+					<div class="col-md-12" data-op="toggle" data-pointer="/Travelogue/TravelogueDetail/${$index}/picURL" data-limit="1">
+						<div class="imgBox addImg" data-op="change" data-pointer="/Travelogue/TravelogueDetail/${$index}/picURL" data-action="image">+</div>
 					</div>
 				</div>
 			</div>
 			{{/if}}
-			{{if Content}}
+			
+			{{if content }}
 			<div class="col-md-6">
 				<div class="introduction">
-					<textarea name="" rows="6" value ="${ Content}" data-value="/TravelogueDetail/${$index}/Content" placeholder="描述"></textarea>
+					<textarea name="" rows="6" data-value="/Travelogue/TravelogueDetail/${$index}/content" placeholder="描述">${ content}</textarea>
 				</div>
 			</div>
 			{{/if}}

@@ -51,7 +51,7 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
 			<div class="col-md-11 row" >
-				{{each $data.DetailMain[0].PicURL}}
+				{{each $data.DetailMain[0].picURLs}}
 				<div class="col-md-3">
 					<div class="imgBox">
 						<img src="${$data.DetailMain[0].picURLs[$index]}">
@@ -68,10 +68,10 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{if $data.DetailMain[0].CoverPicURL}}
+				{{if $data.DetailMain[0].covers}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain[0].CoverPicURL}">
+						<img src="${$data.DetailMain[0].covers}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/covers" ></a>
 					</div>
 				</div>

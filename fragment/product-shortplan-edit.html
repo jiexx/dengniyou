@@ -119,41 +119,35 @@
 			</div>
 			{{each $data.PlanInfo.PlanShort}}
 			{{if Day}}
-			<div class="col-md-12">
-				<div class="row">
-					<div class="col-md-6">
-						<div class="col-md-3">第</div><div class="col-md-5"><input type="text" class="form-control"  value="${Day}"  data-value="/PlanInfo/PlanShort/${$index}/Day" placeholder="第几天"></div><div class="col-md-3">天</div>
-					</div>
-					<div class="col-md-6">
-						<input type="text" class="form-control"  value="${Label}"  data-value="/PlanInfo/PlanShort/${$index}/Label" placeholder="标题">
-					</div>
+			<div class="row day-edit">
+				<div class="col-md-4">
+					<label>第</label>
+					<input type="text" class="form-control one"  value="${Day}"  data-value="/PlanInfo/PlanShort/${$index}/Day" placeholder="第几天">
+					<label>天</label>
+				</div>
+				<div class="col-md-8">
+					<input type="text" class="form-control"  value="${Label}"  data-value="/PlanInfo/PlanShort/${$index}/Label" placeholder="标题">
 				</div>
 			</div>
 			{{/if}}
+
 			{{if PicEnable}}
-			<div class="col-md-6">
-				<div class="row">
-					<div class="col-md-12 row" >
-						{{if PicURL}}
-						<div class="col-md-12">
-							<div class="imgBox">
-								<img src="${PicURL}">
-								<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL"></a>
-							</div>
-						</div>
-						{{/if}}
-						<div class="col-md-12" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
-							<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-action="image">+</div>
-						</div>
-					</div>
+			{{if PicURL}}
+			<div class="col-md-4 picture-edit">
+				<div class="imgBox">
+					<img src="${PicURL}">
+					<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL"></a>
 				</div>
 			</div>
 			{{/if}}
+			<div class="col-md-4 picture-edit" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
+				<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-action="image">+</div>
+			</div>
+			{{/if}}
+
 			{{if Content}}
-			<div class="col-md-6">
-				<div class="introduction">
-					<textarea name="" rows="6" value ="${ Content}" data-value="/PlanInfo/PlanShort/${$index}/Content" placeholder="描述"></textarea>
-				</div>
+			<div class="col-md-4 introduction">
+				<textarea name="" rows="10" value ="${ Content}" data-value="/PlanInfo/PlanShort/${$index}/Content" placeholder="描述"></textarea>
 			</div>
 			{{/if}}
 			{{/each}}

@@ -17,6 +17,7 @@
 .dashboard-page .mainbody .mainbody-top .list-group span i{display: inline-block; width: 1px; font-style: normal; margin-left: 10px; margin-right: 10px;}
 .dashboard-page .mainbody .mainbody-main .editPage{padding-left: 0; padding-right: 0;}
 .dashboard-page .mainbody .mainbody-main .container{padding-left: 0; padding-right: 0;}
+.dashboard-page .mainbody .mainbody-main .create-plan .panel-body a{ background-color:#FA7B00; color: #fff; padding: 7px 7px; margin-left: 6px;}
 .dashboard-page .mainbody .page-header{margin-top: 0;}
 .dashboard-page .placeholders{margin-bottom: 30px; text-align: center;}
 .dashboard-page .placeholders h4{margin-bottom: 0;}

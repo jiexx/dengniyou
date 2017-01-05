@@ -297,7 +297,9 @@ exports.getOrderList = function(item, callback) {
 		}
 
         var sql =[];
+		var countSql = [];
         if(item.usertype == 1){
+            countSql.push("SELECT cast(count(*)/8 as decimal(10,0)) as Count  from travelorderdb.tab_travelorder travelorder where travelorder.UserID = "+item.userID);
             sql.push( "select 1 as usertype,travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.GuideID as userid,userinfo.UserName as username,travelorder.Status as status, " +
                 "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl, " +
                 "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays, " +
@@ -308,6 +310,7 @@ exports.getOrderList = function(item, callback) {
                 "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) " +
                 "							where travelorder.UserID = "+item.userID);
 		} else if(item.usertype == 2){
+            countSql.push("SELECT cast(count(*)/8 as decimal(10,0)) as Count from travelorderdb.tab_travelorder travelorder where travelorder.GuideID = "+item.userID);
             sql.push("select 1 as usertype,travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.UserID as userid,userinfo.UserName as username,travelorder.Status as status,\n" +
             "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl,\n" +
             "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays,\n" +
@@ -338,15 +341,25 @@ exports.getOrderList = function(item, callback) {
             sql.push(" limit "+start+",  20 ");
         }
 
-		exec(connection, sql.join(""), [,], function(err, results){
+        datas = {};
+        exec(connection, sql.join(""), [,], function(err, results){
 
 			if (err){
                 callback(err,results);
 			}
-            datas = {"datas":results};
+            datas["datas"]=results;
             callback(err,remJson(datas));
 
         });
+
+        // exec(connection, countSql.join(""), [,], function(err2, results2){
+        //     if (err2){
+        //         callback(err2,results2);
+        //     }
+        //     datas.set("Counts",results2)
+        //     callback(err2,remJson(datas));
+        //
+        // });
 
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
 	});

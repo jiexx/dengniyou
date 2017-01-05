@@ -459,14 +459,14 @@ $(function () {
             SpotsID:'' ,
             UserID:'' ,
             CountryID:'' ,
-            CityID:'',
+            CityID:'' ,
             SpotsTypeID:'' ,
             CommondReason: '' ,
             CreateDate:'' ,
             SpotsType:'' ,
             NameEn:'' ,
             NameCh:'',
-            Status:'' ,
+            Status:'',
             UpdateDate: '' ,
             Flavor:'' ,
             PicURL:''  ,
@@ -482,12 +482,21 @@ $(function () {
             comment: '' ,
             TravelTime:'' ,
             CountryName:'' ,
-            CityName:'' 
-        }],
-        "SpotPics": [{"PicURL": "group1/M00/00/0D/CgkB6VghgC2AMC0tAAD2LvSIniI575.jpg"}],
-        "SpotLabels": [],
-        "IMGHOST": "http://123.59.144.47/"
-        };
+            CityName: ''
+        }
+        ],
+        SpotPics: [
+            {PicURL: ""}, 
+            {PicURL: ""}, 
+            {PicURL: ""}, 
+            {PicURL: ""}
+        ], 
+        SpotLabels: [
+            {ClassifyLabel: "场馆"}, 
+            {ClassifyLabel: "建筑"}, 
+            {ClassifyLabel: "历史"}
+            ], 
+        IMGHOST: "http://123.59.144.47/" };
     },ctrlAttractionEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
 
@@ -500,25 +509,50 @@ $(function () {
 
      var initAccommodationEdit=function(){
         return {
-            BaseInfo:{
-                NameCh:'',
-                NameEn:'',
-                LocalName:'',
-                OtherName:'',
-                Labels:[],
-                description:'',
-                CoverPicURL:'',
-                CarPicURL:[],
-                PicURL:[],
-                Address:'',
-                Tel:'',
-                CountryName:'',
-                CityName:'',
-                ZipCode:'',
-                ZoneCode:'',
-                UselesDate:''
+        SpotDetail: [
+        {
+            SpotsID: '',
+            UserID: '',
+            CountryID: '',
+            CityID: '',
+            SpotsTypeID:'',
+            CommondReason: '',
+            CreateDate: '',
+            SpotsType: '',
+            NameEn: '',
+            NameCh: '',
+            Status: '',
+            UpdateDate: '',
+            Flavor: '',
+            PicURL: '',
+            Address: '',
+            ZipCode: '',
+            ZoneCode: '',
+            Tel: '',
+            Description:'',
+            Rank: '',
+            Price: '',
+            Score: '',
+            LocalName: '',
+            Alias: '',
+            comment:'',
+            TravelTime: '',
+            CountryName: '',
+            CityName: ''
             }
-        };
+        ],
+        SpotPics: [
+            // {"PicURL": "group1/M00/00/0D/CgkB6VghgC2AMC0tAAD2LvSIniI575.jpg"},
+            // {"PicURL": "group1/M00/00/0D/CgkB6VghgC6AQYd_AAFV89onmkw680.jpg"},
+            // {"PicURL": "group1/M00/00/0D/CgkB6VghgC6AQC_8AAET0v25_aE848.jpg"},   
+        ],
+        SpotLabels: [
+            {ClassifyLabel: "民宿"}, 
+            {ClassifyLabel: "人文"}, 
+            {ClassifyLabel: "历史"}
+        ],
+        IMGHOST: "http://123.59.144.47/"
+    };
     },ctrlAccommodationEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
 
@@ -551,7 +585,7 @@ $(function () {
                 serviceMethod: '',
                 pictureIDs: {},
                 picURLs: [],
-                covers: {}
+                covers: ''
             }],
             DetailServiceMethod: [],
             Facility: [
@@ -677,27 +711,51 @@ $(function () {
 
      var initDelicacyEdit=function(){
         return {
-            BaseInfo:{
-                ServiceName:'',
-                NameEn:'',
-                LocalName:'',
-                OtherName:'',
-                AdultPrice:'',
-                KidPrice:'',
-                StudentPrice:'',
-                Labels:['甜点','咖啡与茶','面包糕点','酒吧','餐厅','酒馆','中餐','日式料理','亚洲料理'],
-                description:'',
-                CoverPicURL:'',
-                CarPicURL:[],
-                PicURL:[],
-                Address:'',
-                Tel:'',
-                CountryName:'',
-                CityName:'',
-                ZipCode:'',
-                ZoneCode:''
+        SpotDetail: [
+            {
+              SpotsID: '', 
+              UserID:'' , 
+              CountryID:'', 
+              CityID: '', 
+              SpotsTypeID: '', 
+              CommondReason: '', 
+              CreateDate: '', 
+              SpotsType: '', 
+              NameEn: '', 
+              NameCh: '', 
+              Status: '', 
+              UpdateDate: '', 
+              Flavor: '', 
+              PicURL: '', 
+              Address: '', 
+              ZipCode: '', 
+              ZoneCode: '', 
+              Tel: '', 
+              Description: '', 
+              Rank: '', 
+              Price: '', 
+              Score: '', 
+              LocalName:'' , 
+              Alias:'' , 
+              comment:'' , 
+              TravelTime:'', 
+              CountryName: '', 
+              CityName: ''
             }
-        };
+          ], 
+        SpotPics: [
+            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeANYNaAAFL8rI9fLs777.jpg"}, 
+            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeAErCLAAGHRCtYdig543.jpg"}, 
+            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeAF6dOAAElfxGo9GU775.jpg"}, 
+            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeAXqt6AAGfBXknb_0042.jpg"}, 
+            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeABuXzAAGXgARrVUk599.jpg"}, 
+            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeADnkfAAHCjaO3uEE000.jpg"}
+          ], 
+        SpotLabels: [
+            {ClassifyLabel: "咖啡简餐"}
+        ], 
+        IMGHOST: "http://123.59.144.47/"
+     };
     },ctrlDelicacyEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
             console.log('test');
@@ -709,25 +767,169 @@ $(function () {
 
      var initCarEdit=function(){
         return {
-            BaseInfo:{
-                ServiceName:'',
-                ServicePrice:'',
-                description:'',
-                brand:'',
-                seats:'',
-                model:'',
-                luggage:'',
-                GPSPrice:'',
-                CrashPrice:'',
-                ExcluPrice:'',
-                CoverPicURL:'',
-                CarPicURL:[],
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:'',
+            DetailMain: [
+            {
+                serviceID:'', 
+                userID: '', 
+                serviceName:'', 
+                serviceTypeID: '', 
+                serviceTypeName: '', 
+                primaryPrice: '', 
+                unit: '', 
+                priceType: '', 
+                serviceTime: '', 
+                serviceOutTimePrice: '', 
+                incMileage: '', 
+                exMileagePrice: '', 
+                freeForDelay: '',  
+                waitOutTimePrice: '', 
+                description: '', 
+                serviceStatus: '', 
+                serviceMethod: '', 
+                pictureIDs: {
+                            type: '', 
+                            data: []
+                            }, 
+                picURLs: [
+                            // "group1/M00/01/B5/CgkB6VhaehyAYheWAASv3_ET1H0121.jpg", 
+                            // "group1/M00/01/B5/CgkB6VhaehyACN_NAAGLFb2AtBw022.jpg", 
+                            // "group1/M00/01/B5/CgkB6VhaehyAaPGJAAGLFb2AtBw223.jpg"
+                        ], 
+                covers: {
+                            type: '', 
+                            data: []
+                        }
+            }], 
+            DetailServiceMethod: [ ], 
+            Facility: [ ], 
+            Airports: [ ], 
+            Policy: [
+            {
+                PolicyType: 1, 
+                PolicyID: 2167, 
+                PolicyName: '退订政策', 
+                ServiceTypeID: 5, 
+                Day1: '', 
+                Ratio1: '', 
+                Day2: '', 
+                Ratio2: '', 
+                Day3: '', 
+                Ratio3: '', 
+                Day4: '', 
+                Ratio4: '', 
+                CustomRatio: '', 
+                Caution: '', 
+                Description: '', 
+                Type: 2
+            }, 
+            {
+                PolicyType: 2, 
+                PolicyID: 2174, 
+                PolicyName: '费用包含', 
+                ServiceTypeID:5, 
+                Day1: '', 
+                Ratio1: '', 
+                Day2: '', 
+                Ratio2: '', 
+                Day3: '', 
+                Ratio3: '', 
+                Day4: '', 
+                Ratio4: '', 
+                CustomRatio: '', 
+                Caution: '', 
+                Description: '', 
+                Type: 6
+            }, 
+            {
+                PolicyType: 3, 
+                PolicyID: 2175, 
+                PolicyName: '费用不包含', 
+                ServiceTypeID: 5, 
+                Day1: '', 
+                Ratio1: '', 
+                Day2: '', 
+                Ratio2: '', 
+                Day3: '', 
+                Ratio3: '', 
+                Day4: '', 
+                Ratio4: '', 
+                CustomRatio: '', 
+                Caution: '', 
+                Description: '', 
+                Type: 7
+            }, 
+            {
+                PolicyType: 4, 
+                PolicyID: 2176, 
+                PolicyName: '预订须知', 
+                ServiceTypeID: 5, 
+                Day1: '', 
+                Ratio1: '', 
+                Day2: '', 
+                Ratio2: '', 
+                Day3: '', 
+                Ratio3: '', 
+                Day4: '', 
+                Ratio4: '', 
+                CustomRatio: '', 
+                Caution: '', 
+                Description: '', 
+                Type: 8
             }
+            ], 
+            VehicleInfo: [
+                          {
+                            vehicleInfoID: '', 
+                            serviceID: '', 
+                            brand: '', 
+                            model: '', 
+                            produceYear: '', 
+                            seats: '', 
+                            person: '', 
+                            clazz: '', 
+                            insurance: '', 
+                            luggage: ''
+                          }
+            ], 
+            VehicleCharges: [
+            {
+                chargeID: 100674, 
+                serviceID: 100388, 
+                chargeType: 1, 
+                chargePrice: ''
+            }, 
+            {
+                chargeID: 100675, 
+                serviceID: 100388, 
+                chargeType: 2, 
+                chargePrice: ''
+            }, 
+            {
+                chargeID: 100676, 
+                serviceID: 100388, 
+                chargeType: 3, 
+                chargePrice: ''
+            }
+            ], 
+            VehicleAddress: [
+            {
+                addressID: 100761, 
+                serviceID: 100388, 
+                addressType: 1, 
+                address: ''
+            }, 
+            {
+                addressID: 100762, 
+                serviceID: 100388, 
+                addressType: 2, 
+                address: ''
+            }
+            ], 
+            VehicleSchedule: [ ], 
+            Labels: [ ], 
+            ActivityPrice: [ ], 
+            HouseInfo: [ ], 
+            IMGHOST: "http://123.59.144.47/"
         };
     },ctrlCarEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
@@ -740,26 +942,145 @@ $(function () {
 
      var initServiceCarEdit=function(){
         return {
-            BaseInfo:{
-                ServiceName:'',
-                GoodsName:'奔驰',
-                ServicePrice:'780',
-                description:'',
-                brand:'',
-                seats:'',
-                model:'',
-                luggage:'',
-                GPSPrice:'',
-                CrashPrice:'',
-                ExcluPrice:'',
-                CoverPicURL:'',
-                CarPicURL:[],
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:'',
+            DetailMain: [
+                {
+                  serviceID: '', 
+                  userID: '', 
+                  serviceName: '', 
+                  serviceTypeID: '', 
+                  serviceTypeName: '', 
+                  primaryPrice: '', 
+                  unit: '', 
+                  priceType: '', 
+                  serviceTime: '', 
+                  serviceOutTimePrice: '', 
+                  incMileage: '', 
+                  exMileagePrice: '', 
+                  freeForDelay: '', 
+                  waitOutTimePrice: '', 
+                  description: '', 
+                  serviceStatus: '', 
+                  serviceMethod: '', 
+                  pictureIDs: {
+                   type: '', 
+                    data: []
+                  }, 
+                  picURLs: [
+                        // "group1/M00/00/00/CgkB6Vfo6-yAeZZ2AAFoo8pmrAM386.jpg", 
+                        // "group1/M00/00/00/CgkB6Vfo6-yAOqreAAFPULilh9I505.jpg", 
+                        // "group1/M00/00/00/CgkB6Vfo6-yAbULzAAFPULilh9I027.jpg"
+                  ], 
+                  covers: {
+                    type: '', 
+                    data: []
+                  }
+                }
+              ], 
+            DetailServiceMethod: [ ], 
+            Facility: [
+                {
+                  serviceID: '', 
+                  facilityID: '', 
+                  userID: '', 
+                  facilityType: '', 
+                  facilityName: '', 
+                  brand: '', 
+                  model: '', 
+                  produceYear: '', 
+                  seats: '', 
+                  person: '', 
+                  clazz: '', 
+                  insurance: '', 
+                  description: '', 
+                  luggage: '', 
+                  facilityPics: [
+                    // "group1/M00/00/00/CgkB6Vfo4B-AIZdyAAFCQ2cYzZ8551.jpg"
+                  ]
+                }
+              ], 
+            Airports: [ ], 
+            Policy: [
+            {
+                  PolicyType: 1, 
+                  PolicyID: 26, 
+                  PolicyName: "退订政策", 
+                  ServiceTypeID: 1, 
+                  Day1: '', 
+                  Ratio1: '', 
+                  Day2: '', 
+                  Ratio2: '', 
+                  Day3: '', 
+                  Ratio3: '', 
+                  Day4: '', 
+                  Ratio4: '', 
+                  CustomRatio: '', 
+                  Caution: '', 
+                  Description: '', 
+                  Type: 1
+                }, 
+                {
+                  PolicyType: 2, 
+                  PolicyID: 984, 
+                  PolicyName: '费用包含', 
+                  ServiceTypeID: 1, 
+                  Day1: '', 
+                  Ratio1: '', 
+                  Day2: '', 
+                  Ratio2: '', 
+                  Day3: '', 
+                  Ratio3: '', 
+                  Day4: '', 
+                  Ratio4: '', 
+                  CustomRatio: '', 
+                  Caution: '', 
+                  Description: '', 
+                  Type: 5
+                }, 
+                {
+                  PolicyType: 3, 
+                  PolicyID: 985, 
+                  PolicyName: '费用不包含', 
+                  ServiceTypeID: 1, 
+                  Day1: '', 
+                  Ratio1: '', 
+                  Day2: '', 
+                  Ratio2: '', 
+                  Day3: '', 
+                  Ratio3: '', 
+                  Day4: '', 
+                  Ratio4: '', 
+                  CustomRatio: '', 
+                  Caution: '', 
+                  Description: '', 
+                  Type: 5
+                }, 
+                {
+                  PolicyType: 4, 
+                  PolicyID: 986, 
+                  PolicyName: '预订须知', 
+                  ServiceTypeID: 1, 
+                  Day1: '', 
+                  Ratio1: '', 
+                  Day2: '', 
+                  Ratio2: '', 
+                  Day3: '', 
+                  Ratio3: '', 
+                  Day4: '', 
+                  Ratio4: '', 
+                  CustomRatio: '', 
+                  Caution: '', 
+                  Description: '', 
+                  Type: 5
             }
+            ], 
+            VehicleInfo: [ ], 
+            VehicleCharges: [ ], 
+            VehicleAddress: [ ], 
+            VehicleSchedule: [ ], 
+            Labels: [ ], 
+            ActivityPrice: [ ], 
+            HouseInfo: [ ], 
+            IMGHOST: "http://123.59.144.47/"
         };
     },ctrlServiceCarEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
@@ -793,7 +1114,7 @@ $(function () {
                     serviceMethod: '',
                     pictureIDs: {},
                     picURLs: [],
-                    covers: {}
+                    covers: ''
                 }
             ],
             DetailServiceMethod: [],
@@ -921,24 +1242,139 @@ $(function () {
 
      var initServiceOtherEdit=function(){
         return {
-            BaseInfo:{
-                ServiceName:'',
-                ServiceTypeID:'',
-                ServiceTypeName:'',
-                PriceType:'自定义价格',
-                PrimaryPrice:'',
-                Description:'',
-                CoverPicURL:'',
-                PicURL:[],
-                Policy:'',
-                CostInclude:'',
-                CostExclude:'',
-                Notice:''
-            }
+            DetailMain: [
+                {
+                    serviceID: '',
+                    userID: '',
+                    serviceName: '',
+                    serviceTypeID: '',
+                    serviceTypeName: '',
+                    primaryPrice: '',
+                    unit: '',
+                    priceType: '自定义价格',
+                    serviceTime: '',
+                    serviceOutTimePrice: '',
+                    incMileage: '',
+                    exMileagePrice: '',
+                    freeForDelay: '',
+                    waitOutTimePrice: '',
+                    description: '',
+                    serviceStatus: '',
+                    serviceMethod: '',
+                    pictureIDs: {},
+                    picURLs: [],
+                    covers: ''
+                }
+            ],
+            DetailServiceMethod: [],
+            Facility: [],
+            Airports: [],
+            Policy: [
+                {
+                    PolicyType: 1,
+                    PolicyID: '',
+                    PolicyName: '',
+                    ServiceTypeID:'',
+                    Day1: '',
+                    Ratio1: '',
+                    Day2: '',
+                    Ratio2:'',
+                    Day3: '',
+                    Ratio3:'',
+                    Day4: '',
+                    Ratio4:'',
+                    CustomRatio:'',
+                    Caution: '',
+                    Description:'',
+                    Type: ''
+                },
+                {
+                    PolicyType: 2,
+                    PolicyID: '',
+                    PolicyName: '',
+                    ServiceTypeID:'',
+                    Day1: '',
+                    Ratio1: '',
+                    Day2: '',
+                    Ratio2:'',
+                    Day3: '',
+                    Ratio3:'',
+                    Day4: '',
+                    Ratio4:'',
+                    CustomRatio:'',
+                    Caution: '',
+                    Description:'',
+                    Type: ''
+                },
+                {
+                    PolicyType: 3,
+                    PolicyID: '',
+                    PolicyName: '',
+                    ServiceTypeID:'',
+                    Day1: '',
+                    Ratio1: '',
+                    Day2: '',
+                    Ratio2:'',
+                    Day3: '',
+                    Ratio3:'',
+                    Day4: '',
+                    Ratio4:'',
+                    CustomRatio:'',
+                    Caution: '',
+                    Description:'',
+                    Type: ''
+                },
+                {
+                    PolicyType: 4,
+                    PolicyID: '',
+                    PolicyName: '',
+                    ServiceTypeID:'',
+                    Day1: '',
+                    Ratio1: '',
+                    Day2: '',
+                    Ratio2:'',
+                    Day3: '',
+                    Ratio3:'',
+                    Day4: '',
+                    Ratio4:'',
+                    CustomRatio:'',
+                    Caution: '',
+                    Description:'',
+                    Type: ''
+                },
+            ],
+            VehicleInfo: [],
+            VehicleCharges: [],
+            VehicleAddress: [],
+            VehicleSchedule: [],
+            Labels: [],
+            ActivityPrice: [],
+            HouseInfo: [
+                {
+                houseID: '',
+                serviceID: '',
+                person: '',
+                room: '',
+                bed: '',
+                address: '',
+                zipCode: '',
+                zoneCode: '+86',
+                tel: '',
+                toilet: '',
+                checkInTime: '',
+                checkOutTime: '',
+                countryID: '',
+                countryNameCn: '',
+                countryNameEn:'' ,
+                cityID: '',
+                cityNameCn: '',
+                cityNameEn: ''
+            }],
+            IMGHOST: 'http://123.59.144.47/'
         };
     },ctrlServiceOtherEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){
-
+            console.log('text');
         });
 
         bindRidoesForSwitch();
@@ -949,48 +1385,77 @@ $(function () {
         var usr =$.rogerGetLoginUser();
         var type = $.rogerGetUrlParam('type');
         return {
-            Travelogue:[{
-                "articleID":'',
-                "userID":'',
-                "articlePicURL":'',
-                "description":'',
-                "title":'',
-                "userName": null,
-                "avatarPicURL": '',
-                "type":'',
-                "STATUS":'',
-                "createDate":'',
-                "browseCount": '',
-                "praiseCount":'',
-                "evaluateCount":''
-            }],
-            TravelogueDetail: [],
+            Travelogue:{
+                articleID:'',
+                userID:usr.UserID,
+                articlePicURL:'',
+                description:'',
+                title:'',
+                userName: null,
+                avatarPicURL: '',
+                type:'',
+                STATUS:'',
+                createDate:'',
+                browseCount: '',
+                praiseCount:'',
+                evaluateCount:'',
+                TravelogueDetail: [
+                    {
+                        articleID : 135,
+                        articleDetailID : 283,
+                        label : 'ssssssss',
+                        picURL : null,
+                        content : null,
+                        DAY : 1
+                    },
+                    {
+                        articleID : 135,
+                        articleDetailID : 283,
+                        label : null,
+                        picURL : "group1/M00/01/B6/CgkB6VhjMWmAGBzOAAECKGQnCKs190.jpg",
+                        content : null,
+                        DAY : null
+                    },
+                    {
+                        articleID : 135,
+                        articleDetailID : 284,
+                        label : null,
+                        picURL : null,
+                        content : "阿富汗伊斯兰共和国简称阿富汗，是一个位于亚洲中南部的内陆国家，坐落在亚洲的心脏地区。阿富汗的位置有不同的定义，有时候会被认为处在中亚或者南亚，甚至被归类于中东地区（西亚）。阿富汗与大部分比邻的国家有着宗教上、语言上、地理上相当程度的关联。阿富汗的北部和土库曼斯坦、乌兹别克斯坦以及塔吉克斯坦接壤，东部与中国以及部分巴基斯坦控制查谟-克什米尔地区（有争议）接壤，南部与巴基斯坦接壤，西部与伊朗接壤。\n阿富汗的名字在普什图语中的意思就是“普什图人的地方”，而普什图人亦是现时国内人口最多的族群。\n阿富汗领土中的五分之三交通不便。农业是主要的经济支柱，但可耕地还不足农用地的2/3。人口为3000多万，是世界上最贫穷的国家之一。阿富汗是个落后的农牧业国家，阿矿藏资源较为丰富，但未得到充分开发。阿富汗的河流大部分是内陆河，多注入沙漠和湖泊。主要河流有阿姆河、喀布尔河、赫尔曼德河和哈里鲁河等。",
+                        DAY : null
+                    },
+                ],
+            },
+
             IMGHOST:$.rogerImgHost()
         };
         
-    },ctrlTraveLogueEdit=function(Plan, realView){
-        Plan.createDay = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            TravelogueDetail.push({Label:'', Day:TravelogueDetail.length+1, Content:null, PicURL: null, PicEnable:false});
+    },ctrlTraveLogueEdit=function(TraveLogue, realView){
+         TraveLogue.createDay = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({label:' ', DAY:'', content:null, picURL: null});
             $.rogerRefresh(Plan);
         };
-        Plan.createPicture = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            TravelogueDetail.push({Label:null, Day:null, Content:null, PicURL: null, PicEnable:true});
+         TraveLogue.createPicture = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({label:null, DAY:null, content:null, picURL: null, PE:true});
             $.rogerRefresh(Plan);
         };
-        Plan.createContent = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            TravelogueDetail.push({Label:null, Day:null, Content:'desc', PicURL: null, PicEnable:false});
+         TraveLogue.createContent = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({label:null, DAY:null, content:'请输入描述', picURL: null});
             $.rogerRefresh(Plan);
         };
 
 
-        $('#save').rogerOnceClick(Plan, function(e){
+        $('#save').rogerOnceClick(TraveLogue, function(e){
+            alert(e.data.Travelogue);
+            alert(e.data.TravelogueDetail);
             var data = {
                 Travelogue:e.data.Travelogue,
                 TravelogueDetail:e.data.TravelogueDetail,
                 IMGHOST:e.data.IMGHOST
             };
-            $.rogerPost('url', data, function(respJSON){
+            $.rogerPost('/new/travellogue', data, function(respJSON){
                 $.rogerNotice({Message:'保存攻略成功'});
+
             });
         });
 
@@ -1030,6 +1495,7 @@ $(function () {
         realView.rogerCropImages();
 
     };
+
 
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                          ctrl: ctrlDashboard},
@@ -1086,6 +1552,7 @@ $(function () {
         '#/equipedit':      {fragment: 'fragment/product-equip-edit.html',     init: initEquipEdit,   ctrl: ctrlEquipEdit},
         '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/orderdetail':            {view:'payCompletion.html',	                  rootrest:'/order/detail',                      ctrl: ctrlOrderdetail},
+       
     });
 
 

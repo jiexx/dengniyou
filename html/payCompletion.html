@@ -30,11 +30,6 @@ ${Status}
   </div>
 <!-- 进度条部分结束 -->
 <script type="text/javascript">
-    function abc(tem){
-        alert(tem.substr(0,3));
-        return tem.substr(0,3);
-    }
-
 
 </script>
 <div class="step" > 
@@ -42,7 +37,7 @@ ${Status}
   <div class="stepPart active" id="partThree">
       <h3 class="partTitle">订单信息 <small class="fr">导游将在24小时内接单</small></h3>
       <div class="content">
-        <h4>${UserName}<span class="fa fa-weixin"></span></h4>
+        <h4><span class="fa fa-weixin">${UserName}</span></h4>
         <div class="projectInfo clearfix">
           <div class="fl">
             <img src="${ $data.IMGHOST + picurl}" alt="">
@@ -123,7 +118,7 @@ ${Status}
                 <dt>订单号：</dt> <dd>${OrderNo}</dd>
               </dl>
               <dl>
-                <dt>创建时间：</dt> <dd>${ abc(CreateTime)}</dd>
+                <dt>创建时间：</dt> <dd>${ CreateTime}</dd>
               </dl>
               <dl>
                 <dt>接单时间：</dt> <dd>${orderTakeTime}</dd>
@@ -140,7 +135,7 @@ ${Status}
                 <dt>付款时间：</dt> <dd>${paidTime}</dd>
               </dl>
               <dl>
-                <dt>付款渠道：</dt> <dd>支付宝</dd>
+                <dt>付款渠道：</dt> <dd>${PayWay}</dd>
               </dl>
               <dl>
                 <dt>流水号：</dt> <dd>${ paidSerialNumber}</dd>
@@ -155,13 +150,26 @@ ${Status}
 
         <div class="btnList">
           <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#complainModal">投诉</button>
+          {{if Status==1}}
+          <button class="btn btn-warning">立即支付</button>
+          {{/if}}
           {{if Status==1 || Status==2}}
           <button class="btn btn-warning">取消订单</button>
           {{/if}}
-          <button class="btn btn-warning">联系导游</button>
+          {{if Status==4 }}
+          {{if UserType==1}}
+          <button class="btn btn-warning">确认完成</button>
+          {{/if}}
+          {{/if}}
+          {{if Status==3}}
+          {{if UserType==2}}
+          <button class="btn btn-warning">完成</button>
+          {{/if}}
+          {{/if}}
           {{if Status==6}}
           <button class="btn btn-warning">评价</button>
           {{/if}}
+          <button class="btn btn-warning">联系导游</button>
         </div>
       </div>   
   </div>
