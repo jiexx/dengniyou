@@ -156,16 +156,18 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
 			<div class="col-md-11 row" >
-				{{each $data.DetailMain[0].picURLs}}
+				{{each $data.DetailMain[0].Picture}}
+				{{if $data.DetailMain[0].Picture.cover != 1}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain[0].picURLs[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/picURLs/${$index}"></a>
+						<img src="${$data.DetailMain[0].Picture[$index].picURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/Picture/${$index}/picURL"></a>
 					</div>
 				</div>
+				{{/if}}
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/${0}/picURLs" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/${0}/picURLs/-" data-action="image">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/${0}/Picture/${$index}/picURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/${0}/Picture/${$index}/picURL" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -173,18 +175,19 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{if $data.DetailMain[0].covers}}
+				{{each $data.DetailMain[0].Picture}}
+				{{if $data.DetailMain[0].Picture.cover==1}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain[0].covers}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/covers" ></a>
+						<img src="${$data.DetailMain[0].Picture[$index].picURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/Picture/${$index}/picURL" ></a>
 					</div>
 				</div>
-				{{else}}
+				{{/if}}
+				{{/each}}
 				<div class="col-md-3">
 					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/${0}/covers" data-action="image" >+</div>
 				</div>
-				{{/if}}
 			</div>
 		</div>
 	</div>

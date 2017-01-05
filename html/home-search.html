@@ -1,18 +1,16 @@
 <div class="container">
-
 </div>
-<div class="container">
-    <div class="list-group">
+
+<div class="container homesearch-list">
+    <div class="list-group service-list">
 	  {{each Plans}}
-	  <div class="list-group-item clearfix disabled">
-		  <div class="col-md-1"></div>
-		  <div class="col-md-5">方案</div>
+	  <div class="list-group-item clearfix">
+		  <div class="col-md-9 service-name">方案</div>
 		  <div class="col-md-2">价格</div>
-		  <div class="col-md-2">行程天数</div>
+		  <div class="col-md-1">行程天数</div>
 	  </div>
 	  <div class="list-group-item clearfix btn-group">
-		  <div class="col-md-1"></div>
-			  <div class="col-md-5 ">
+			<div class="col-md-9 ">
 				<div class="media">
 				  <div class="media-left media-top">
 						<a href="#/plandetail?PlanID=${PlanID}">
@@ -23,13 +21,15 @@
 					<div>${PlanNumber}</div>
 					<div>${StartCity}</div>
 				  </div>
-				</div>
-			  </div>
-		      <div class="col-md-2 ">${PlanPriceBase}</div><div class="col-md-2 ">${PlanDays}</div>
+				</div> <!-- end media -->
+			</div>
+		    <div class="col-md-2 margin-top">${PlanPriceBase}</div>
+		    <div class="col-md-1 margin-top">${PlanDays}</div>
 	  </div>
 	  {{/each}}
-	</div>
-</div>
+	</div><!-- end 搜索列表list-group -->
+</div> <!-- end container -->
+<!-- 页码 -->
 <div class="container">
   <div class="pagination">
 

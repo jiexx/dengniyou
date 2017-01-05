@@ -25,6 +25,9 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*游客端页面*/
 /*网站首页*/
 /*首页共同部分*/
+.indexpage #app .homesearch-list{margin-top: 50px;}
+.indexpage #app .carousel-inner > .item { height: 500px; }
+.indexpage #app .carousel-inner > .item > img{top: 49%;}
 .indexpage .fixedBar{position: fixed; width:36px; top:0; bottom:0; right: 0; background-color:#00b8ee; z-index: 9999; color: #FFF; }
 .indexpage .fixedBar ul{margin-top: 280px; text-align: center; }
 .indexpage @media screen and (max-height: 800px){.fixedBar ul{margin-top: 180px;}}
@@ -33,6 +36,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .fixedBar ul li .kefu{background-image: url(../img/kefu.png); display: inline-block; width:24px; height: 24px;}
 .indexpage .topWidth{width:90%; max-width: 1200px; margin:0 auto;}
 .indexpage .topWidth .panel-body .col-md-6 span,.indexpage .topWidth .panel-body .col-md-6 a{font-size: 14px;}
+.indexpage .topWidth .panel-body .col-md-6 .on{background-color: #F9703C;}
 .indexpage .topWidth .panel-body #userlogin span{color: #F9703C; font-weight: bold;}
 .indexpage .topWidth .panel-body .topLeft a span{font-size: 21px;}
 .indexpage .topWidth .logo img{height: 80px;}
@@ -46,10 +50,13 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .topRight #user{padding: 0;width: 80px;border-radius: 0;background-color: #FFF; font-size: 13px; color:#333;}
 .indexpage .sidebar{top: 96px !important;}
 .indexpage nav{width:100%; height: 96px; background-color: #00b8ee;}
-.indexpage .navBar{margin-bottom: 10px; padding-top: 5px;}
-.indexpage .navBar li{list-style: none; display: inline-block; width:88px; height: 34px; line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
-.indexpage .navBar li.active{background-color: #006583;}
-.indexpage .navBar li a{color: #fff; font-weight: bold;}
+.indexpage .topWidth .navBar{margin-bottom: 10px; padding-top: 5px;}
+.indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:88px; height: 34px; line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
+.indexpage .topWidth .navBar li.active{background-color: #006583;}
+.indexpage .topWidth .navBar li a{color: #fff; font-weight: bold;}
+.indexpage .topWidth .form-group .input-group{-webkit-box-shadow: 2px 3px 3px #666; -moz-box-shadow: 2px 3px 3px #666; -ms-box-shadow: 2px 3px 3px #666; -o-box-shadow: 2px 3px 3px #666; box-shadow: 2px 3px 3px #666;}
+.indexpage .topWidth .form-group .input-group #homeSearch{width: 80px; background-color: #F9703C;}
+.indexpage .topWidth .form-group .input-group #homeSearch a{color: #fff;}
 .indexpage footer{height: 366px; background-color: #4d4d4d; color: #FFF; padding-top: 20px}
 .indexpage footer .hr{height: 0; border-top:1px dashed #FFF;margin:10px 0;}
 .indexpage footer .info {width: 90%; max-width: 1200px; margin:0 auto;}
@@ -82,7 +89,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*end 首页共同部分*/
 /*首页主要内容homepage*/
 .homepage{background-color: #eaeaea;}
-.homepage .carousel-container { background-color: #fff; padding-left: 10%; padding-right: 10%;}
+.homepage .carousel-container { background-color: #fff; /*padding-left: 10%; padding-right: 10%;*/}
 .homepage .well { height:200px; padding: 2px !important; }
 .homepage .mid { height:400px; padding: 2px !important;}
 .homepage .continent-tit{padding-bottom: 10px; border-bottom: 2px solid #fff;}
@@ -90,6 +97,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .nav-buttons button{font-size: 16px; color: #fff; padding: 2px 15px;}
 .homepage .nav-buttons .btn-default{background-color: #ccc; }
 .homepage .nav-buttons .btn-warning{background-color: #FA713D;}
+.homepage .continent-tips span{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px;}
 .homepage .regular-grid  div{ padding: 0; margin: 0; }
 .homepage .hovereffect { width:100%; height:100%; float:left; overflow:hidden; position:relative; text-align:center; cursor:default;}
 .homepage .hovereffect ul li:first-child{margin-bottom: 10px;}

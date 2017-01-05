@@ -177,12 +177,15 @@
 
                 var ok = realView.find('#OK');
                 ok.rogerOnceClick(null,function () {
+                     var newWin = window.open('about:blank');
                     $.rogerPost('/pay',buy, function (respJSON) {
 
                         if( respJSON.ERR) {
                             $.rogerNotice({Message:'生成订单有错,错误码:'+respJSON.ERR});
+                            newWin.close();
                         }else {
-                            window.open(respJSON.url, '_blank');
+                            newWin.location.href = respJSON.url;
+                            //window.open(respJSON.url, '_blank');
                             /*var parms = $.rogerGetJsonUrlParams(respJSON.url);
                             for(var i in parms) {
                                 $('<input>').attr({
@@ -216,6 +219,9 @@
     var ctrlPlanSearch = function(response, realView) {
         realView.rogerCropImages();
     };
+    var ctrlUserInfo = function(response, realView) {
+        realView.rogerCropImages();
+    };
 
 	$.rogerRouter({
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
@@ -225,7 +231,8 @@
         '#/orderlist': 				{view: 'orderlist.html', 								rootrest: '/order/list', 				ctrl: ctrlOrderlist},
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment},
         '#/orderdetail':            {view:'payCompletion.html',	                  rootrest:'/order/detail',                      ctrl: ctrlOrderdetail},
-	    '#/plansearch':             {view:'planSearch.html',                   rootrest:'/plan/plansearch',                      ctrl: ctrlPlanSearch}
+	    '#/plansearch':             {view:'planSearch.html',                   rootrest:'/plan/plansearch',                      ctrl: ctrlPlanSearch},
+        '#/userinfo':    {view:'userInfo.html',     rootrest:'/user/userinfo',    ctrl: ctrlUserInfo}
     });
 	
 	

@@ -932,36 +932,28 @@ $(function () {
         return {
             DetailMain: [
                 {
-                  serviceID: '', 
-                  userID: '', 
-                  serviceName: '', 
-                  serviceTypeID: '', 
-                  serviceTypeName: '', 
-                  primaryPrice: '', 
-                  unit: '', 
-                  priceType: '', 
-                  serviceTime: '', 
-                  serviceOutTimePrice: '', 
-                  incMileage: '', 
-                  exMileagePrice: '', 
-                  freeForDelay: '', 
-                  waitOutTimePrice: '', 
-                  description: '', 
-                  serviceStatus: '', 
-                  serviceMethod: '', 
-                  pictureIDs: {
-                   type: '', 
-                    data: []
-                  }, 
-                  picURLs: [
-                        // "group1/M00/00/00/CgkB6Vfo6-yAeZZ2AAFoo8pmrAM386.jpg", 
-                        // "group1/M00/00/00/CgkB6Vfo6-yAOqreAAFPULilh9I505.jpg", 
-                        // "group1/M00/00/00/CgkB6Vfo6-yAbULzAAFPULilh9I027.jpg"
-                  ], 
-                  covers: {
-                    type: null, 
-                    data: []
-                  }
+                    serviceID: '',
+                    userID: '',
+                    serviceName: '',
+                    serviceTypeID: '',
+                    serviceTypeName: '',
+                    primaryPrice: '',
+                    unit: '',
+                    priceType: '',
+                    serviceTime: '',
+                    serviceOutTimePrice: '',
+                    incMileage: '',
+                    exMileagePrice: '',
+                    freeForDelay: '',
+                    waitOutTimePrice: '',
+                    description: '',
+                    serviceStatus: '',
+                    serviceMethod: '',
+                    Picture: [
+                        {picURL: '', cover: ''},
+                        {picURL: '', cover: ''},
+                        {picURL: '', cover: ''}
+                    ]
                 }
               ], 
             DetailServiceMethod: [ ], 
