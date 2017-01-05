@@ -112,9 +112,14 @@ app.post('/pay', upload.array(), function(req, res) {
 });
 app.get('/notify', function (req, res) {
     var params = req.body;
+    console.log(JSON.stringify(params));
     pay.verify(params, function (err, result) {
         if (!err && result == true) {
-            res.send('');//pay success. this is return alipay instead of user. HERE can change order state.
+            res.send('http://10.101.1.36:8080/apply/pay/updateOrderAfterPaid?out_trade_no='
+                +params.out_trade_no
+            +'&total_fee='+params.total_amount
+                +'&trade_no='+params.trade_no
+            );//pay success. this is return alipay instead of user. HERE can change order state.
         } else {
             console.error(err);
         }

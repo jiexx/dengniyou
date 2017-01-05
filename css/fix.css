@@ -142,7 +142,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .project .planner i { font-size: 20px; text-indent: 10px; color: #fa703e; }
 .plandetail-page .project .price { color: #fa703e; height: 24px; line-height: 24px; }
 .plandetail-page .project .price span { font-size: 24px; }
-.plandetail-page .project .btn-primary { border-color: #00b8ee; background-color: #00b8ee; color: #fff; border-radius: 20px; margin: 10px 0 0; }
+.plandetail-page .project .btn-primary { border-color: #00b8ee; background-color: #00b8ee; color: #fff; border-radius: 20px; margin: 10px 0 0; outline: none;}
 .plandetail-page .project .project-main .col-md-2 p { height: 30px; line-height: 30px; }
 .plandetail-page .plandetail-main{ margin-top: 20px}
 .plandetail-page .plandetail-main .main-left{padding-left: 0;}

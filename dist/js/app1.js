@@ -26,6 +26,16 @@
         $('#homeSearch').rogerOnceClick(null, function () {
             var k = $('#homeSearchKey').val();
             $.rogerLocation('#/search?key='+k);
+        });
+
+        $('#usercenter').rogerOnceClick(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerShowLogin();
+                return;
+            }
+
+            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
         })
 		
 		realView.rogerCropImages();
