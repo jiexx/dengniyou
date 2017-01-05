@@ -96,7 +96,7 @@ app.post('/pay', upload.array(), function(req, res) {
             json: req.body
         },
 		function (error, response, body) {
-			if (!error && response.statusCode == 200) {
+			if (!error && response.statusCode == 200 && body.datas) {
                 var usr_redirect_url = pay.buildDirectPayURL({
                     out_trade_no: ''+body.datas.orderNo,
                     subject: 'dengniyou-order',// 'order-312412',//body.datas.orderId,
@@ -105,7 +105,7 @@ app.post('/pay', upload.array(), function(req, res) {
                 });
                 res.send(JSON.stringify({url:usr_redirect_url}));
 			}else {
-				console.error(error);
+                res.send(JSON.stringify({ERR:+body.errcode}));
 			}
 		}
 	);
