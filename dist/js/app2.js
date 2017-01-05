@@ -734,12 +734,12 @@ $(function () {
             }
           ], 
         SpotPics: [
-            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeANYNaAAFL8rI9fLs777.jpg"}, 
-            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeAErCLAAGHRCtYdig543.jpg"}, 
-            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeAF6dOAAElfxGo9GU775.jpg"}, 
-            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeAXqt6AAGfBXknb_0042.jpg"}, 
-            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeABuXzAAGXgARrVUk599.jpg"}, 
-            // {PicURL: "group1/M00/00/0A/CgkB6VgJxkeADnkfAAHCjaO3uEE000.jpg"}
+            {PicURL: ""}, 
+            {PicURL: ""}, 
+            {PicURL: ""}, 
+            {PicURL: ""}, 
+            {PicURL: ""}, 
+            {PicURL: ""}
           ], 
         SpotLabels: [
             {ClassifyLabel: "咖啡简餐"}
