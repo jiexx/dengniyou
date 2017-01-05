@@ -929,6 +929,8 @@ $(function () {
     } ;
 
      var initServiceCarEdit=function(){
+
+
         return {
             DetailMain: [
                 {
@@ -953,31 +955,32 @@ $(function () {
                         {picURL: '', cover: ''},
                         {picURL: '', cover: ''},
                         {picURL: '', cover: ''}
-                    ]
+                    ],
+                    DetailServiceMethod: [ ],
+                    Facility: [
+                        {
+                            serviceID: '',
+                            facilityID: '',
+                            userID: '',
+                            facilityType: '',
+                            facilityName: '',
+                            brand: '',
+                            model: '',
+                            produceYear: '',
+                            seats: '',
+                            person: '',
+                            clazz: '',
+                            insurance: '',
+                            description: '',
+                            luggage: '',
+                            facilityPics: [
+                                // "group1/M00/00/00/CgkB6Vfo4B-AIZdyAAFCQ2cYzZ8551.jpg"
+                            ]
+                        }
+                    ],
                 }
               ], 
-            DetailServiceMethod: [ ], 
-            Facility: [
-                {
-                  serviceID: '', 
-                  facilityID: '', 
-                  userID: '', 
-                  facilityType: '', 
-                  facilityName: '', 
-                  brand: '', 
-                  model: '', 
-                  produceYear: '', 
-                  seats: '', 
-                  person: '', 
-                  clazz: '', 
-                  insurance: '', 
-                  description: '', 
-                  luggage: '', 
-                  facilityPics: [
-                    // "group1/M00/00/00/CgkB6Vfo4B-AIZdyAAFCQ2cYzZ8551.jpg"
-                  ]
-                }
-              ], 
+
             Airports: [ ], 
             Policy: [
             {
