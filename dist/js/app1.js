@@ -227,8 +227,9 @@
         frameCtrl();
 
         $('#confirm').rogerOnceClick(null, function () {
-            var orderid= $(this).data('id');
-            var status= $(this).data('status');
+            var orderid= $('#confirm').data('id');
+            var status= $('#confirm').data('status');
+            var user = $.rogerGetLoginUser();
             if('1'==status) {
                 var newWin = window.open('about:blank');
                 $.rogerPost('/pay',buy, function (respJSON) {
@@ -241,12 +242,13 @@
                 })
             }
             if('4'==status) {
+
                 $.rogerPost('/update/order',{OrderID:orderid,Status:6, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
                     $.rogerRefresh();
                 });
             }
         });
-        var user = $.rogerGetLoginUser();
+
         realView.rogerCropImages();
     };
 

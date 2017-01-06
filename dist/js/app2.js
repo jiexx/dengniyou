@@ -446,17 +446,27 @@ $(function () {
 
     var ctrlOrderlist = function(response, realView) {
 
+        $('#usercenter').rogerOnceClick(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerShowLogin();
+                return;
+            }
 
+            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
+        });
 
         $('#confirm').rogerOnceClick(null, function () {
-            var orderid= $(this).data('id');
-            var status= $(this).data('status');
+            var orderid= $('#confirm').data('id');
+            var status= $('#confirm').data('status');
+            var user = $.rogerGetLoginUser();
             if('2'==status) {
                 $.rogerPost('/update/order',{OrderID:orderid,Status:3, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
                     $.rogerRefresh();
                 });
             }
             if('3'==status) {
+
                 $.rogerPost('/update/order',{OrderID:orderid,Status:4, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
                     $.rogerRefresh();
                 });
