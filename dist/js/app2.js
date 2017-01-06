@@ -516,6 +516,10 @@ $(function () {
         IMGHOST: "http://123.59.144.47/" };
     },ctrlAttractionEdit=function(Plan, realView){
 
+        // Plan.createDay = function(Plan, PlanShort){ 
+        //     PlanShort.push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
+        //     $.rogerRefresh(Plan);
+
         $('#save').rogerOnceClick(Plan, function(e){
 
             console.log('test');
@@ -527,7 +531,7 @@ $(function () {
 
      var initAccommodationEdit=function(){
         return {
-        SpotDetail: [
+        SpotDetail: 
         {
             SpotsID: '',
             UserID: '',
@@ -556,19 +560,18 @@ $(function () {
             comment:'',
             TravelTime: '',
             CountryName: '',
-            CityName: ''
-            }
-        ],
-        SpotPics: [
-            {PicURL: ""},
-            {PicURL: ""},
-            {PicURL: ""},   
-        ],
-        SpotLabels: [
-            {ClassifyLabel: "民宿"}, 
-            {ClassifyLabel: "人文"}, 
-            {ClassifyLabel: "历史"}
-        ],
+            CityName: '',
+            SpotPics: [
+                {PicURL: ""},
+                {PicURL: ""},
+                {PicURL: ""}  
+            ],
+            SpotLabels: [
+                {ClassifyLabel: "民宿"}, 
+                {ClassifyLabel: "人文"}, 
+                {ClassifyLabel: "历史"}
+            ],
+        },        
         IMGHOST: "http://123.59.144.47/"
     };
     },ctrlAccommodationEdit=function(Plan, realView){
@@ -727,52 +730,50 @@ $(function () {
 
      var initDelicacyEdit=function(){
         return {
-        SpotDetail: [
-            {
-              SpotsID: '', 
-              UserID:'' , 
-              CountryID:'', 
-              CityID: '', 
-              SpotsTypeID: '', 
-              CommondReason: '', 
-              CreateDate: '', 
-              SpotsType: '', 
-              NameEn: '', 
-              NameCh: '', 
-              Status: '', 
-              UpdateDate: '', 
-              Flavor: '', 
-              PicURL: '', 
-              Address: '', 
-              ZipCode: '', 
-              ZoneCode: '', 
-              Tel: '', 
-              Description: '', 
-              Rank: '', 
-              Price: '', 
-              Score: '', 
-              LocalName:'' , 
-              Alias:'' , 
-              comment:'' , 
-              TravelTime:'', 
-              CountryName: '', 
-              CityName: ''
-            }
-          ], 
-        SpotPics: [
-            {PicURL: ""}, 
-            {PicURL: ""}, 
-            {PicURL: ""}, 
-            {PicURL: ""}, 
-            {PicURL: ""}, 
-            {PicURL: ""}
-          ], 
-        SpotLabels: [
-            {ClassifyLabel: "咖啡简餐"},
-            {ClassifyLabel: "甜点"}
-        ], 
+        SpotDetail: 
+        {
+            SpotsID: '', 
+            UserID:'' , 
+            CountryID:'', 
+            CityID: '', 
+            SpotsTypeID: '', 
+            CommondReason: '', 
+            CreateDate: '', 
+            SpotsType: '', 
+            NameEn: '', 
+            NameCh: '', 
+            Status: '', 
+            UpdateDate: '', 
+            Flavor: '', 
+            PicURL: '', 
+            Address: '', 
+            ZipCode: '', 
+            ZoneCode: '', 
+            Tel: '', 
+            Description: '', 
+            Rank: '', 
+            Price: '', 
+            Score: '', 
+            LocalName:'' , 
+            Alias:'' , 
+            comment:'' , 
+            TravelTime:'', 
+            CountryName: '', 
+            CityName: '',
+            SpotPics: [
+                {PicURL: ""}, 
+                {PicURL: ""}, 
+                {PicURL: ""}, 
+                {PicURL: ""}, 
+                {PicURL: ""}, 
+                {PicURL: ""}
+            ], 
+            SpotLabels: [
+                {ClassifyLabel: "咖啡简餐"},
+                {ClassifyLabel: "甜点"}
+            ],   
+        },         
         IMGHOST: "http://123.59.144.47/"
-
      };
     },ctrlDelicacyEdit=function(Plan, realView){
         $('#save').rogerOnceClick(Plan, function(e){

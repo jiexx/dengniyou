@@ -111,14 +111,14 @@
 				<h4 class="col-md-6">行程信息</h4>
 				<div class="col-md-6 pull-right">
 					<div class="btn-group">
-						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createDay">添加段落</a>
+						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createDay">添加标题</a>
 						<a class="btn btn-warning   " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createPicture">添加图片</a>
 						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createContent">添加描述</a>
 					</div>
 				</div>
 			</div>
 			{{each $data.PlanInfo.PlanShort}}
-			<div class="addCity">
+			<!-- <div class="addCity">
 				<h4>添加城市</h4>
 				<ul class="label-base">
 					{{if ($data.PlanInfo.StartCityID==0) }}
@@ -126,15 +126,15 @@
 					{{/if}}
 					<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/StartCityID" data-action="createCity"> + </div></li>
 				</ul>
-			</div>
+			</div> -->
 			{{if Day}}
 			<div class="row day-edit">
-				<div class="col-md-4">
+				<div class="col-md-5">
 					<label>第</label>
 					<input type="text" class="form-control one"  value="${Day}"  data-value="/PlanInfo/PlanShort/${$index}/Day" placeholder="第几天">
 					<label>天</label>
 				</div>
-				<div class="col-md-8">
+				<div class="col-md-5">
 					<input type="text" class="form-control"  value="${Label}"  data-value="/PlanInfo/PlanShort/${$index}/Label" placeholder="标题">
 				</div>
 			</div>
@@ -142,20 +142,20 @@
 
 			{{if PicEnable}}
 			{{if PicURL}}
-			<div class="col-md-4 picture-edit">
+			<div class="col-md-5 picture-edit">
 				<div class="imgBox">
 					<img src="${PicURL}">
 					<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL"></a>
 				</div>
 			</div>
 			{{/if}}
-			<div class="col-md-4 picture-edit" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
+			<div class="col-md-5 picture-edit" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
 				<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-action="image">+</div>
 			</div>
 			{{/if}}
 
 			{{if Content}}
-			<div class="col-md-4 introduction">
+			<div class="col-md-5 introduction">
 				<textarea name="" rows="10"   data-value="/PlanInfo/PlanShort/${$index}/Content" placeholder="描述">${ Content}</textarea>
 			</div>
 			{{/if}}

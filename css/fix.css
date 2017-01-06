@@ -26,8 +26,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*网站首页*/
 /*首页共同部分*/
 .indexpage #app .homesearch-list{margin-top: 50px;}
-.indexpage #app .carousel-inner > .item { height: 500px; }
-.indexpage #app .carousel-inner > .item > img{top: 49%;}
+.indexpage #app .homepage .carousel-inner > .item { height: 486px; }
+.indexpage #app .homepage .carousel-inner > .item > img{top: 49%;}
 .indexpage .fixedBar{position: fixed; width:36px; top:0; bottom:0; right: 0; background-color:#00b8ee; z-index: 9999; color: #FFF; }
 .indexpage .fixedBar ul{margin-top: 280px; text-align: center; }
 .indexpage @media screen and (max-height: 800px){.fixedBar ul{margin-top: 180px;}}
@@ -76,8 +76,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .fixedPos ul li.kefu{background:#999 url(../img/kefuLg.png) no-repeat center center ;}
 .indexpage .text-warning { color: #eea236; }
 .indexpage .hovereffect .overlay{width:100%; height:100%; position:absolute; overflow:hidden; bottom:0; left:0; opacity:0;background-color:rgba(0,0,0,0.5);-webkit-transition:all .4s ease-in-out;transition:all .4s ease-in-out}
-.indexpage .hovereffect img{display:block; -webkit-transition:all .4s linear; transition:all .4s linear; position: absolute; }
-.indexpage .hovereffect .head{text-transform:uppercase; color:#fff; text-align:center;position:absolute; bottom:0; left:0; width: 100%; opacity:0; font-size:17px; background:rgba(0,0,0,0.5);
+.indexpage .hovereffect img{height: 100%; width:100%; display:block; -webkit-transition:all .4s linear; transition:all .4s linear; position: absolute; }
+.indexpage .hovereffect .head{text-transform:uppercase; color:#fff; text-align:left;position:absolute; bottom:0; left:0; width: 100%; opacity:0; font-size:17px; background:rgba(0,0,0,0.5);
 	-webkit-transform:translatey(-100px); -ms-transform:translatey(-100px); transform:translatey(-100px); -webkit-transition:all .2s ease-in-out; transition:all .2s ease-in-out; padding:10px; margin-bottom: 0;}
 .indexpage .hovereffect .info{text-decoration:none;display:inline-block; text-transform:uppercase; color:#fff; border:1px solid #fff; background-color:transparent; opacity:0; filter:alpha(opacity=0); -webkit-transition:all .2s ease-in-out;
 	transition:all .2s ease-in-out; margin:50px 0 0; padding:7px 14px;}
@@ -98,7 +98,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .nav-buttons .btn-default{background-color: #ccc; }
 .homepage .nav-buttons .btn-warning{background-color: #FA713D;}
 .homepage .continent-tips span{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px;}
-.homepage .regular-grid  div{ padding: 0; margin: 0; }
+.homepage .regular-grid div{padding: 0; margin: 0; }
+.homepage .regular-grid  .continent-box{ margin-bottom: 70px;}
 .homepage .hovereffect { width:100%; height:100%; float:left; overflow:hidden; position:relative; text-align:center; cursor:default;}
 .homepage .hovereffect ul li:first-child{margin-bottom: 10px;}
 .homepage .hovereffect li a { font-size: 14px; color: #fff; text-decoration: none; text-align: left;}

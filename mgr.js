@@ -78,8 +78,8 @@ pay.config({
     seller_id:'2088612188470577',
     partner: '2088612188470577',
     key: 'w8dmwl2awivsqjv7f3m1chynw49ya8yv',
-    notify_url: 'http://123.59.144.169:8888/notify',//'http://www.dengniyou.com/notify',
-    return_url: 'http://www.dengniyou.com'
+    notify_url: 'http://123.59.144.169:8888/notify',//'http://123.59.144.169:8888/notify',//'http://www.dengniyou.com/notify',
+    return_url: 'http://123.59.144.169:8888'
 });
 
 app.post('/pay', upload.array(), function(req, res) {
@@ -110,17 +110,31 @@ app.post('/pay', upload.array(), function(req, res) {
 		}
 	);
 });
-app.get('/notify', function (req, res) {
+app.post('/notify', function (req, res) {
     var params = req.body;
-    console.log(JSON.stringify(params));
+    console.log("params type:" + typeof params);
+    console.log("params:" + JSON.stringify(params));
     pay.verify(params, function (err, result) {
-        if (!err && result == true) {
-            res.send('http://123.59.144.44/apply/pay/updateOrderAfterPaid?out_trade_no='
-                +params.out_trade_no
-            +'&total_fee='+params.total_amount
-                +'&trade_no='+params.trade_no
-            );//pay success. this is return alipay instead of user. HERE can change order state.
+        console.log("err:" + err);
+        console.log("result:" + result);
+        console.log("result type:" + typeof result);
+        if (result == "true") {
+            console.log("success start:http://123.59.144.44/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
+                "&total_fee=" + params.total_fee +
+                "&trade_no=" + params.trade_no +
+                "&buyer_email=" + params.buyer_email);
+            request.get("http://123.59.144.44/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
+                "&total_fee=" + params.total_fee +
+                "&trade_no=" + params.trade_no +
+                "&buyer_email=" + params.buyer_email,
+                function (error, response, body) {
+                    console.log("error:" + error);
+                });
+            console.log("success end");
+            console.log("success:" + 'success');
+            res.send('success');//pay success. this is return alipay instead of user. HERE can change order state.
         } else {
+            res.send('fail')
             console.error(err);
         }
     });
