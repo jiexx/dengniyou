@@ -110,7 +110,7 @@
         return result;
     }
     var ctrlPlanpay1 = function(response, realView) {
-    	var days = parseInt(response.PlanInfo[0].PlanDays)+1;
+    	var days = parseInt(response.PlanInfo[0].PlanDays);
         var dates = [];
         var pickr = $("#calendar").flatpickr({
             inline: true,
