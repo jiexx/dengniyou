@@ -110,7 +110,7 @@ $(function () {
         var type = $.rogerGetUrlParam('type');
         return {
             PlanInfo:{
-                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
+                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
                 CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
 
                 Picture: {
@@ -165,7 +165,7 @@ $(function () {
         var type = $.rogerGetUrlParam('type');
         return {
             PlanInfo:{
-                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:0,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
+                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
                 CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
 
                 Picture:{
@@ -293,6 +293,7 @@ $(function () {
                 TravelInstruction:'',
                 DayName:''
             });
+            Plan.PlanInfo.PlanDays ++;
             $.rogerRefresh(Plan);
         };
 

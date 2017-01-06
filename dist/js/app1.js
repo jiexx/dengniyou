@@ -17,6 +17,7 @@
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogin" data-toggle="modal" data-target="#homeLogin">登录</span>');
             $('#usrlogin').click(function () {
                 $.rogerLogin('#homeLogin', '/login'/*, '/dashboard.html'*/);
+                //$.rogerShowLogin();
             })
         }
         $('#usercenter').rogerOnceClick(null, function () {
@@ -67,6 +68,7 @@
 		};
 	};
 	var ctrlComment = function(Comment, realView) {
+        frameCtrl();
 		$('.commit').rogerOnceClick(Comment, function(e){
 			var user = $.rogerGetLoginUser()
 			if(!user) {
@@ -108,7 +110,7 @@
         return result;
     }
     var ctrlPlanpay1 = function(response, realView) {
-    	var days = parseInt(response.PlanInfo[0].PlanDays)+1;
+    	var days = parseInt(response.PlanInfo[0].PlanDays);
         var dates = [];
         var pickr = $("#calendar").flatpickr({
             inline: true,
@@ -156,8 +158,11 @@
                 })
             });
         }
+        if( response.PlanInfo[0].Policy ){
+            $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
+        }
 
-        $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
+
 
         $('#BUY').rogerOnceClick(null,function (e) {
             var usr = $.rogerGetLoginUser();
@@ -255,14 +260,16 @@
     var ctrlOrderdetail = function(response, realView) {
 
         realView.rogerCropImages();
-
+        frameCtrl();
     };
 
     var ctrlPlanSearch = function(response, realView) {
         realView.rogerCropImages();
+        frameCtrl();
     };
     var ctrlUserInfo = function(response, realView) {
         realView.rogerCropImages();
+        frameCtrl();
     };
 
 	$.rogerRouter({
