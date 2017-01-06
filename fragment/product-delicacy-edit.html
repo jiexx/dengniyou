@@ -39,10 +39,10 @@
 		    <label for="" class="col-sm-2 col-md-1 control-label">口&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;味</label>
 		    <div class="col-sm-10 col-md-11">
 		        <ul class="label-base">
-		        	{{each $data.SpotLabels}}
-					<li><input type="text" value="${$data.SpotLabels[$index].ClassifyLabel}" data-value="/SpotLabels/${$index}/ClassifyLabel" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotLabels/${$index}/ClassifyLabel"></a></li>
+		        	{{each $data.SpotDetail.SpotLabels}}
+					<li><input type="text" value="${$data.SpotDetail.SpotLabels[$index].ClassifyLabel}" data-value="/SpotDetail/SpotLabels/${$index}/ClassifyLabel" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotLabels/${$index}/ClassifyLabel"></a></li>
 					{{/each}}
-					<li><div class="addItemBtn" data-op="change" data-pointer="/SpotLabels/${$index}-" data-action="createLabel"> + </div></li>
+					<li><div class="addItemBtn" data-op="change" data-pointer="/SpotDetail/SpotLabels/${$index}-" data-action="createLabel"> + </div></li>
 				</ul>
 		    </div>
 		  </div>
@@ -103,18 +103,18 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传：</div>
 			<div class="col-md-11 row" >
-				{{each $data.SpotPics}}
-				{{if $data.SpotPics[$index].PicURL}}
+				{{each $data.SpotDetail.SpotPics}}
+				{{if $data.SpotDetail.SpotPics[$index].PicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.SpotPics[$index].PicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotPics/${$index}/PicURL"></a>
+						<img src="${$data.SpotDetail.SpotPics[$index].PicURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotPics/${$index}/PicURL"></a>
 					</div>
 				</div>
 				{{/if}}
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/SpotPics/${0}/PicURL" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/SpotPics/-/PicURL" data-action="image">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/SpotDetail/SpotPics/${0}/PicURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/SpotDetail/SpotPics/-/PicURL" data-action="image">+</div>
 				</div>
 			</div>
 		</div>

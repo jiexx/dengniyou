@@ -1,22 +1,26 @@
 {
-	"Order": {"sql": "INSERT INTO traveluserdb.tab_planinfo(PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,4,0,?,?,?,?,1,?,'随时',?,?,CONCAT('PL-',DATE_FORMAT(NOW(),'%Y%m%d%H%i%S'),CAST(unix_timestamp() AS char(4)) ) ,?,?,?,?,?,?,?,?,0,NOW(),NOW());",
+	"OrderScheduler": {
+		"sql": "update travelorderdb.tab_travelorder travelorder left join travelorderdb.tab_travelorderdetail orderdetail on travelorder.OrderID = orderdetail.OrderID left join travelorderdb.tab_travelorderschedule schedule on orderdetail.OrderDetailID = schedule.OrderDetailID set schedule.Status=1 where travelorder.OrderID = ?",
 		"params": [
-			"PlanName",
-			"PlanType",
-			"PlanPriceBase",
-			"PicURL",
-			"CarURL",
-			"PlanDays",
-			"StartCity",
-			"StartCityID",
-			"Policy",
-			"CostInclude",
-			"CostExclude",
-			"VisaNotice",
-			"Notice",
-			"CreateUserID",
-			"AdultPrice",
-			"KidPrice"]},
-
-	"Order": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?;",	"params":["UserID"]}
+			"Status",
+			"OrderID"
+		]
+	},
+	"Order": {
+		"sql": "update travelorderdb.tab_travelorder set UpdateTIme=now(),Status=?,CloseReason=? where OrderID=?",
+		"params": [
+			"Status",
+			"CloseReason",
+			"OrderID"
+		]
+	},
+	"OrderList": {
+		"sql": "insert into travelorderdb.tab_travelorderlist (OrderID,OperateDesc,OperateDate,Status,OperateUserID) values(?,?,Now(),?,?)",
+		"params": [
+			"OrderID",
+			"OperateDesc",
+			"Status",
+			"OperateUserID"
+		]
+	}
 }

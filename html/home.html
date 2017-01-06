@@ -425,6 +425,10 @@
     </div><!-- end content -->
 </div><!-- end homepage -->
 
+<script id="" type="text/x-jquery-tmpl">
+  
+</script>
+
 
 <script>
   $(function(){
@@ -436,12 +440,13 @@
     $.ajax({
       url:'http://10.101.1.36:8888/home',
       success:function(data){
-        console.log(data);
+        
       }
     });
+    console.log(${PlansByContinent[0].Continent});
     var item = $.tmplItem(this); 
 
-    alert(item); 
+    console.log(item.data); 
       
   })
 </script>

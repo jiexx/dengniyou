@@ -473,7 +473,7 @@ $(function () {
 
     var initAttractionEdit=function(){
         return {
-        SpotDetail: [
+        SpotDetail: 
         {
             SpotsID:'' ,
             UserID:'' ,
@@ -501,18 +501,17 @@ $(function () {
             comment: '' ,
             TravelTime:'' ,
             CountryName:'' ,
-            CityName: ''
-        }
-        ],
-        SpotPics: [
-            {PicURL: ''},
-            {PicURL: ''}
-        ], 
-        SpotLabels: [
-            {ClassifyLabel: "场馆"}, 
-            {ClassifyLabel: "建筑"}, 
-            {ClassifyLabel: "历史"}
+            CityName: '',
+            SpotPics: [
+                {PicURL: ''},
+                {PicURL: ''}
             ], 
+            SpotLabels: [
+                {ClassifyLabel: "场馆"}, 
+                {ClassifyLabel: "建筑"}, 
+                {ClassifyLabel: "历史"}
+            ], 
+        },        
         IMGHOST: "http://123.59.144.47/" };
     },ctrlAttractionEdit=function(Plan, realView){
 
@@ -786,7 +785,7 @@ $(function () {
 
      var initCarEdit=function(){
         return {
-            DetailMain: [
+            DetailMain: 
             {
                 serviceID:'', 
                 userID: '', 
@@ -809,145 +808,141 @@ $(function () {
                             type: '', 
                             data: []
                             }, 
-                picURLs: [
-                            // "group1/M00/01/B5/CgkB6VhaehyAYheWAASv3_ET1H0121.jpg", 
-                            // "group1/M00/01/B5/CgkB6VhaehyACN_NAAGLFb2AtBw022.jpg", 
-                            // "group1/M00/01/B5/CgkB6VhaehyAaPGJAAGLFb2AtBw223.jpg"
-                        ], 
-                covers: {
-                            type: null, 
-                            data: []
-                        }
-            }], 
-            DetailServiceMethod: [ ], 
-            Facility: [ ], 
-            Airports: [ ], 
-            Policy: [
-            {
-                PolicyType: 1, 
-                PolicyID: 2167, 
-                PolicyName: '退订政策', 
-                ServiceTypeID: 5, 
-                Day1: '', 
-                Ratio1: '', 
-                Day2: '', 
-                Ratio2: '', 
-                Day3: '', 
-                Ratio3: '', 
-                Day4: '', 
-                Ratio4: '', 
-                CustomRatio: '', 
-                Caution: '', 
-                Description: '', 
-                Type: 2
+                Picture: [
+                    {picURL: '', cover: ''},
+                    {picURL: '', cover: ''},
+                    {picURL: '', cover: ''}
+                ],
+                DetailServiceMethod: [ ], 
+                Facility: [ ], 
+                Airports: [ ], 
+                Policy: [
+                {
+                    PolicyType: 1, 
+                    PolicyID: 2167, 
+                    PolicyName: '退订政策', 
+                    ServiceTypeID: 5, 
+                    Day1: '', 
+                    Ratio1: '', 
+                    Day2: '', 
+                    Ratio2: '', 
+                    Day3: '', 
+                    Ratio3: '', 
+                    Day4: '', 
+                    Ratio4: '', 
+                    CustomRatio: '', 
+                    Caution: '', 
+                    Description: '', 
+                    Type: 2
+                }, 
+                {
+                    PolicyType: 2, 
+                    PolicyID: 2174, 
+                    PolicyName: '费用包含', 
+                    ServiceTypeID:5, 
+                    Day1: '', 
+                    Ratio1: '', 
+                    Day2: '', 
+                    Ratio2: '', 
+                    Day3: '', 
+                    Ratio3: '', 
+                    Day4: '', 
+                    Ratio4: '', 
+                    CustomRatio: '', 
+                    Caution: '', 
+                    Description: '', 
+                    Type: 6
+              }, 
+              {
+                    PolicyType: 3, 
+                    PolicyID: 2175, 
+                    PolicyName: '费用不包含', 
+                    ServiceTypeID: 5, 
+                    Day1: '', 
+                    Ratio1: '', 
+                    Day2: '', 
+                    Ratio2: '', 
+                    Day3: '', 
+                    Ratio3: '', 
+                    Day4: '', 
+                    Ratio4: '', 
+                    CustomRatio: '', 
+                    Caution: '', 
+                    Description: '', 
+                    Type: 7
+              }, 
+              {
+                    PolicyType: 4, 
+                    PolicyID: 2176, 
+                    PolicyName: '注意事项', 
+                    ServiceTypeID: 5, 
+                    Day1: '', 
+                    Ratio1: '', 
+                    Day2: '', 
+                    Ratio2: '', 
+                    Day3: '', 
+                    Ratio3: '', 
+                    Day4: '', 
+                    Ratio4: '', 
+                    CustomRatio: '', 
+                    Caution: '', 
+                    Description: '', 
+                    Type: 8
+                }
+                ], 
+                VehicleInfo: [
+                {
+                    vehicleInfoID: '', 
+                    serviceID: '', 
+                    brand: '', 
+                    model: '', 
+                    produceYear: '', 
+                    seats: '', 
+                    person: '', 
+                    clazz: '', 
+                    insurance: '', 
+                    luggage: ''
+                }
+                ], 
+                VehicleCharges: [
+                {
+                    chargeID: 100674, 
+                    serviceID: 100388, 
+                    chargeType: 1, 
+                    chargePrice: ''
+                }, 
+                {
+                    chargeID: 100675, 
+                    serviceID: 100388, 
+                    chargeType: 2, 
+                    chargePrice: ''
+                }, 
+                {
+                    chargeID: 100676, 
+                    serviceID: 100388, 
+                    chargeType: 3, 
+                    chargePrice: ''
+                }
+                ], 
+                VehicleAddress: [
+                {
+                    addressID: 100761, 
+                    serviceID: 100388, 
+                    addressType: 1, 
+                    address: ''
+                }, 
+                {
+                    addressID: 100762, 
+                    serviceID: 100388, 
+                    addressType: 2, 
+                    address: ''
+                }
+                ], 
+                VehicleSchedule: [ ], 
+                Labels: [ ], 
+                ActivityPrice: [ ], 
+                HouseInfo: [ ], 
             }, 
-            {
-                PolicyType: 2, 
-                PolicyID: 2174, 
-                PolicyName: '费用包含', 
-                ServiceTypeID:5, 
-                Day1: '', 
-                Ratio1: '', 
-                Day2: '', 
-                Ratio2: '', 
-                Day3: '', 
-                Ratio3: '', 
-                Day4: '', 
-                Ratio4: '', 
-                CustomRatio: '', 
-                Caution: '', 
-                Description: '', 
-                Type: 6
-            }, 
-            {
-                PolicyType: 3, 
-                PolicyID: 2175, 
-                PolicyName: '费用不包含', 
-                ServiceTypeID: 5, 
-                Day1: '', 
-                Ratio1: '', 
-                Day2: '', 
-                Ratio2: '', 
-                Day3: '', 
-                Ratio3: '', 
-                Day4: '', 
-                Ratio4: '', 
-                CustomRatio: '', 
-                Caution: '', 
-                Description: '', 
-                Type: 7
-            }, 
-            {
-                PolicyType: 4, 
-                PolicyID: 2176, 
-                PolicyName: '预订须知', 
-                ServiceTypeID: 5, 
-                Day1: '', 
-                Ratio1: '', 
-                Day2: '', 
-                Ratio2: '', 
-                Day3: '', 
-                Ratio3: '', 
-                Day4: '', 
-                Ratio4: '', 
-                CustomRatio: '', 
-                Caution: '', 
-                Description: '', 
-                Type: 8
-            }
-            ], 
-            VehicleInfo: [
-            {
-                vehicleInfoID: '', 
-                serviceID: '', 
-                brand: '', 
-                model: '', 
-                produceYear: '', 
-                seats: '', 
-                person: '', 
-                clazz: '', 
-                insurance: '', 
-                luggage: ''
-            }
-            ], 
-            VehicleCharges: [
-            {
-                chargeID: 100674, 
-                serviceID: 100388, 
-                chargeType: 1, 
-                chargePrice: ''
-            }, 
-            {
-                chargeID: 100675, 
-                serviceID: 100388, 
-                chargeType: 2, 
-                chargePrice: ''
-            }, 
-            {
-                chargeID: 100676, 
-                serviceID: 100388, 
-                chargeType: 3, 
-                chargePrice: ''
-            }
-            ], 
-            VehicleAddress: [
-            {
-                addressID: 100761, 
-                serviceID: 100388, 
-                addressType: 1, 
-                address: ''
-            }, 
-            {
-                addressID: 100762, 
-                serviceID: 100388, 
-                addressType: 2, 
-                address: ''
-            }
-            ], 
-            VehicleSchedule: [ ], 
-            Labels: [ ], 
-            ActivityPrice: [ ], 
-            HouseInfo: [ ], 
             IMGHOST: "http://123.59.144.47/"
         };
     },ctrlCarEdit=function(Plan, realView){

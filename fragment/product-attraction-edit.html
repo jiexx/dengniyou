@@ -12,43 +12,43 @@
 			<div class="form-group">
 			    <label for="name" class="col-sm-2 col-md-1 control-label">商品名称</label>
 			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control"  value="${$data.SpotDetail[0].NameCh}" data-value="/SpotDetail/${0}/NameCh" placeholder="不能超过24个字符">
+			      <input type="text" class="form-control"  value="${$data.SpotDetail.NameCh}" data-value="/SpotDetail/NameCh" placeholder="不能超过24个字符">
 			    </div>
 			</div>
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">英文名称</label>
 			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control" value="${$data.SpotDetail[0].NameEn}" data-value="/SpotDetail/${0}/NameEn" placeholder="请输入">
+			      <input type="text" class="form-control" value="${$data.SpotDetail.NameEn}" data-value="/SpotDetail/NameEn" placeholder="请输入">
 			    </div>
 			</div>
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">建议游玩</label>
 			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control" value="${$data.SpotDetail[0].TravelTime}" data-value="/SpotDetail/${0}/TravelTime" placeholder="请输入"> 小时
+			      <input type="text" class="form-control" value="${$data.SpotDetail.TravelTime}" data-value="/SpotDetail/TravelTime" placeholder="请输入"> 小时
 			    </div>
 			</div>
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">所在地址</label>
 			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control" value="${$data.SpotDetail[0].Address}" data-value="/SpotDetail/${0}/Address" placeholder="请输入">
+			      <input type="text" class="form-control" value="${$data.SpotDetail.Address}" data-value="/SpotDetail/Address" placeholder="请输入">
 			    </div>
 			</div>
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">所在城市</label>
 			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control" value="${$data.SpotDetail[0].CountryName}" data-value="/SpotDetail/${0}/CountryName" placeholder="请输入">
+			      <input type="text" class="form-control" value="${$data.SpotDetail.CountryName}" data-value="/SpotDetail/CountryName" placeholder="请输入">
 			    </div>
 			</div>
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编</label>
 			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control" value="${$data.SpotDetail[0].ZipCode}" data-value="/SpotDetail/${0}/ZipCode" placeholder="请输入">
+			      <input type="text" class="form-control" value="${$data.SpotDetail.ZipCode}" data-value="/SpotDetail/ZipCode" placeholder="请输入">
 			    </div>
 			</div>
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">区&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号</label>
 			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control" value="${$data.SpotDetail[0].ZoneCode}" data-value="/SpotDetail/${0}/ZoneCode" placeholder="请输入">
+			      <input type="text" class="form-control" value="${$data.SpotDetail.ZoneCode}" data-value="/SpotDetail/ZoneCode" placeholder="请输入">
 			    </div>
 			</div>
 			<div class="form-group">
@@ -56,7 +56,7 @@
 		      	<div class="col-sm-10 col-md-11">
 		      		<div class="input-group">
 		  		  		<span class="input-group-addon" id="phone">+86</span>
-		  		  		<input type="text" class="form-control" aria-describedby="phone" value="${$data.SpotDetail[0].Tel}" data-value="/SpotDetail/${0}/Tel">
+		  		  		<input type="text" class="form-control" aria-describedby="phone" value="${$data.SpotDetail.Tel}" data-value="/SpotDetail/Tel">
 		  			</div>
 		      	</div>
 			</div>
@@ -64,10 +64,10 @@
 			    <label for="" class="col-sm-2 col-md-1 control-label">景点分类</label>
 			    <div class="col-sm-10 col-md-11">
 			        <ul class="label-base">
-			        	{{each $data.SpotLabels}}
-						<li><input type="text" value="${$data.SpotLabels[$index].ClassifyLabel}" data-value="/SpotLabels/${$index}/ClassifyLabel" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotLabels/${$index}/ClassifyLabel"></a></li>
+			        	{{each $data.SpotDetail.SpotLabels}}
+						<li><input type="text" value="${$data.SpotDetail.SpotLabels[$index].ClassifyLabel}" data-value="/SpotDetail/SpotLabels/${$index}/ClassifyLabel" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotLabels/${$index}/ClassifyLabel"></a></li>
 						{{/each}}
-						<li><div class="addItemBtn" data-op="change" data-pointer="/SpotLabels/${$index}-" data-action="createLabel"> + </div></li>
+						<li><div class="addItemBtn" data-op="change" data-pointer="/SpotDetail/SpotLabels/${$index}-" data-action="createLabel"> + </div></li>
 					</ul>
 			    </div>
 			</div>	
@@ -99,18 +99,18 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传：</div>
 			<div class="col-md-11 row" >
-				{{each $data.SpotPics}}
-				{{if $data.SpotPics[$index].PicURL}}
+				{{each $data.SpotDetail.SpotPics}}
+				{{if $data.SpotDetail.SpotPics[$index].PicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.SpotPics[$index].PicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotPics/${$index}/PicURL"></a>
+						<img src="${$data.SpotDetail.SpotPics[$index].PicURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotPics/${$index}/PicURL"></a>
 					</div>
 				</div>
 				{{/if}}
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/SpotPics/${0}/PicURL" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/SpotPics/-/PicURL" data-action="image">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/SpotDetail/SpotPics/${0}/PicURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/SpotDetail/SpotPics/-/PicURL" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -138,7 +138,7 @@
 	<!-- 须知信息 -->
 	<div class="notice spotDescription">
 		<h4>景点描述</h4>
-		<textarea name="" id="" data-value="/SpotDetail/${0}/Description" placeholder="可输入1200字">${$data.SpotDetail[0].Description}</textarea>
+		<textarea name="" id="" data-value="/SpotDetail/Description" placeholder="可输入1200字">${$data.SpotDetail.Description}</textarea>
 		<div class="optionBtn">
 			<button id="save" class="btn btn-warning">保存</button>
 			<button id="publish" class="btn btn-warning">发布 </button>
