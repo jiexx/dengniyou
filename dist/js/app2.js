@@ -612,7 +612,8 @@ $(function () {
 
     var initActivityEdit=function(){
         return {
-            DetailMain: {
+            DetailMain: 
+            {
                 serviceID: '',
                 userID: '',
                 serviceName: '',
@@ -1031,7 +1032,7 @@ $(function () {
                 ],
                 Airports: [ ], 
                 Policy: [
-                {
+                    {
                       PolicyType: 1, 
                       PolicyID: 26, 
                       PolicyName: "退订政策", 
@@ -1102,15 +1103,15 @@ $(function () {
                       Caution: '', 
                       Description: '', 
                       Type: 5
-                }
+                    }
                 ], 
                 VehicleInfo: [ ], 
                 VehicleCharges: [ ], 
                 VehicleAddress: [ ], 
                 VehicleSchedule: [ ], 
-                Labels: ["咖啡简餐" ], 
+                Labels: ["咖啡简餐"], 
                 ActivityPrice: [ ], 
-                HouseInfo: [ ], 
+                HouseInfo: [ ]
             }, 
             IMGHOST: "http://123.59.144.47/"
         };

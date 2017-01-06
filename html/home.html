@@ -75,7 +75,7 @@
             <button type="button" id="country" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" >
               国家 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" id="">            
+            <ul class="dropdown-menu" role="menu" >            
             {{each(i,p) CountryByContinent[$data.PlansByContinent[i].Continent].__values[0].Country}}
             <li>${p}</li>
             {{/each}}  
@@ -443,11 +443,11 @@
         
       }
     });
-    console.log(${PlansByContinent[0].Continent});
-    var item = $.tmplItem(this); 
-
-    console.log(item.data); 
+    
+    var item = $.tmplItem($('.carousel-caption'));
+        console.log(item); 
+    
       
-  })
+  });
 </script>
 

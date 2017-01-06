@@ -26,7 +26,7 @@
 		    			<input type="text" class="form-control" value="${$data.DetailMain.primaryPrice}" data-value="/DetailMain/primaryPrice}"> 元/天
 		    		</li>
 		    		{{/each}}
-		    		<li><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/Labels-" data-action="createLabel"> + </div></li>
+		    		<li><div class="addItemBtn" data-op="change" data-pointer="/DetailMain-" data-action="createLabel"> + </div></li>
 		    	</ul>
 		    </div>
 		  </div>
@@ -59,7 +59,7 @@
 		    <div class="col-sm-10 col-md-11">
 		      <ul class="label-base">
 		      	{{each $data.DetailMain.Labels}}
-				<li><input type="text" value="${$data.Labels[$index]}" data-value="/DetailMain/Labels/${$index}" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/Labels/${$index}"></a></li>
+				<li><input type="text" value="${$data.DetailMain.Labels[$index]}" data-value="/DetailMain/Labels/${$index}" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/Labels/${$index}"></a></li>
 				{{/each}}
 				<li><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/Labels-" data-action="createLabel"> + </div></li>
 			  </ul>

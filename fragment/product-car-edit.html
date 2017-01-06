@@ -168,13 +168,13 @@
 				{{if $data.DetailMain.Picture}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain.Picture}">
+						<img src="${$data.DetailMain.Picture[$index].cover}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/Picture/${$index}/cover" ></a>
 					</div>
 				</div>
 				{{else}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/Picture/${$index}/cover" data-action="image" >+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/Picture/-/cover" data-action="image" >+</div>
 				</div>
 				{{/if}}
 			</div>
@@ -186,12 +186,12 @@
 	<div class="notice">
 		<h4>须知信息</h4>
 		<form class="form-horizontal">
-		  {{each(i,p) DetailMain.Policy}}
+		  {{each(i,p) Policy}}
 			{{if p.PolicyType==1}}
 				<div class="form-group">
 				    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
 				    <div class="col-sm-10 col-md-11">
-				      <textarea name="" id="Policy" data-value="/DetailMain/Policy/${i}/Description" class="form-control">${p.Description}</textarea>
+				      <textarea name="" id="Policy" data-value="/Policy/${i}/Description" class="form-control">${p.Description}</textarea>
 				    </div>
 				</div>
 	        {{/if}}
@@ -199,7 +199,7 @@
 				<div class="form-group">
 				    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
 				    <div class="col-sm-10 col-md-11">
-				      <textarea name="" id="Policy" data-value="/DetailMain/Policy/${i}/CustomRatio" class="form-control">${p.CustomRatio}</textarea>
+				      <textarea name="" id="Policy" data-value="/Policy/${i}/CustomRatio" class="form-control">${p.CustomRatio}</textarea>
 				    </div>
 				</div>
 	        {{/if}}
@@ -207,7 +207,7 @@
 				<div class="form-group">
 				    <label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
 				    <div class="col-sm-10 col-md-11">
-				      <textarea name="" id="Policy" data-value="/DetailMain/Policy/${i}/CustomRatio" class="form-control">${p.CustomRatio}</textarea>
+				      <textarea name="" id="Policy" data-value="/Policy/${i}/CustomRatio" class="form-control">${p.CustomRatio}</textarea>
 				    </div>
 				</div>
 	        {{/if}}
@@ -215,7 +215,7 @@
 				<div class="form-group">
 				    <label for="name" class="col-sm-2 col-md-1 control-label">注意事项：</label>
 				    <div class="col-sm-10 col-md-11">
-				      <textarea name="" id="Policy" data-value="/DetailMain/Policy/${i}/Caution" class="form-control">${p.Caution}</textarea>
+				      <textarea name="" id="Policy" data-value="/Policy/${i}/Caution" class="form-control">${p.Caution}</textarea>
 				    </div>
 				</div>
 	        {{/if}}
