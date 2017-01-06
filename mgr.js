@@ -78,7 +78,7 @@ pay.config({
     seller_id:'2088612188470577',
     partner: '2088612188470577',
     key: 'w8dmwl2awivsqjv7f3m1chynw49ya8yv',
-    notify_url: 'http://123.59.144.44/apply/pay/payNotice',//'http://www.dengniyou.com/notify',
+    notify_url: 'http://123.59.144.169:8888/notify',//'http://www.dengniyou.com/notify',
     return_url: 'http://www.dengniyou.com'
 });
 
@@ -115,7 +115,7 @@ app.get('/notify', function (req, res) {
     console.log(JSON.stringify(params));
     pay.verify(params, function (err, result) {
         if (!err && result == true) {
-            res.send('http://10.101.1.36:8080/apply/pay/updateOrderAfterPaid?out_trade_no='
+            res.send('http://123.59.144.44/apply/pay/updateOrderAfterPaid?out_trade_no='
                 +params.out_trade_no
             +'&total_fee='+params.total_amount
                 +'&trade_no='+params.trade_no
