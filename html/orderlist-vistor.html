@@ -140,13 +140,27 @@
 										<p class="productLabel">${datas[i].ServiceTripTypeName}</p>
 										<p>${datas[i].starttime}-${datas[i].starttime}</p>
 									</div>
-									{{if (datas[i].status == 1 ||datas[i].status == 2 || datas[i].status != 6)}}
+									{{if (datas[i].status == 1 )}}
 									<div class="payBtn" id="payBtn" style="text-align: right">
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
 										<button id="confirm" data-id="${datas[i].orderid}" data-status="${datas[i].status}" type="button" class="btn btn-warning btn-orange">
-											{{if datas[i].status == 1}}立即支付{{/if}}
-											{{if datas[i].status == 4}}确认完成{{/if}}
-											{{if datas[i].status == 6}}评价{{/if}}
+											立即支付
+										</button>
+									</div>
+									{{/if}}
+									{{if (datas[i].status == 4 )}}
+									<div class="payBtn" id="payBtn" style="text-align: right">
+										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
+										<button id="confirm" data-id="${datas[i].orderid}" data-status="${datas[i].status}" type="button" class="btn btn-warning btn-orange">
+											确认完成
+										</button>
+									</div>
+									{{/if}}
+									{{if (datas[i].status == 6 )}}
+									<div class="payBtn" id="payBtn" style="text-align: right">
+										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
+										<button id="confirm" data-id="${datas[i].orderid}" data-status="${datas[i].status}" type="button" class="btn btn-warning btn-orange">
+											评价
 										</button>
 									</div>
 									{{/if}}
