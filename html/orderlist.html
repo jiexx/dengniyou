@@ -1,0 +1,200 @@
+
+<!-- <link rel="stylesheet" href="../css/userCenter.css">
+ --><!-- header开始 -->
+    <!-- <div class="header">
+      <div class="topWidth">
+        <div class="top">
+          <div class="topLeft fl">
+              <a href="index.html"><span class="fa fa-home"></span></a>
+              <span>您好，欢迎您使用等你游旅行网站！</span> <a
+              href="login.html">登入</a> <a class="register" href="register.html">免费注册</a>
+          </div>
+          <div class="topRight fr">
+            <button class="active">游客端</button>
+            <button class="">司导端</button>
+            <span id="version">国际版</span>
+            <div class="btn-group">
+              <button type="button" class="btn ropdown-toggle"
+                data-toggle="dropdown" id="user">
+                用户中心 <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="userInfo.html#!/personInfo">个人信息</a></li>
+                <li><a href="userInfo.html#!/orderAll">我的订单</a></li>
+                <li><a href="userInfo.html#!/shoppingCart">购物车</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="navBarBox">
+        <div class="topWidth">
+          <h2>用户中心</h2> 
+          <div class="btn-group">
+            <button type="button" class="btn dropdown-toggle"
+              data-toggle="dropdown" id="user">
+              账户设置 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#">待定项</a></li>
+              <li><a href="#">待定项</a></li>
+            </ul>
+          </div>
+          <a href="#"><i class="fa fa-shopping-cart"> </i> 购物车</a>
+          <div class="fr">
+            <span>客服电话：400-800-9999</span>
+            <div class="search">
+              <span class="fa fa-search"></span><input type="text" placeholder="请输入关键字搜索" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+<!-- header结束 -->
+<!-- 内容部分 -->
+    <div class="contentBox clearfix">
+
+      <!-- 左侧固定菜单 -->
+      <div class="menuLeft fl">
+        <div class="avatar">
+          <img src="" alt="个人头像">  <!--img/userAvatar.jpg -->
+        </div>
+        <h3>账号管理</h3>
+        <ul class="menu" id="menuLeftList">
+          <li><a href="#/userinfo"  ui-sref="personInfo"><span></span>个人信息</a></li>
+          <li><a href="#" ui-sref="orderAll" ><span></span>我的订单</a></li>
+          <!-- <li><a href="#" ui-sref="shoppingCart"><span></span>购物车</a></li>
+          <li><a href="#" ><span></span>我的收藏</a></li>
+          <li><a href="#" ><span></span>我的好友</a></li>
+          <li><a href="#" ><span></span>安全中心</a></li>
+          <li><a href="#" ><span></span>常用地址</a></li>
+          <li><a href="#" ><span></span>导游中心</a></li>
+          <li><a href="#" ><span></span>我的攻略</a></li> -->
+        </ul>
+      </div>
+      <!-- 左侧固定菜单结束 -->
+      
+      <!-- 右侧详细内容 -->
+      <div class="contentRight fr">
+        <div ui-view>
+        	<div class="orderAll" id="orderAll">
+				<ul class="navSecond">
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=0&page=1">全部订单</a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=1&page=1">待支付<span></span></a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=2&page=1">待接单<span></span></a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=3&page=1">待完成<span></span></a></li>
+					<li><a href="#/orderlist?userID=10083&usertype=1&status=4&page=1">待评价<span></span></a></li>
+				</ul>
+
+				<!-- <div class="searchBy">
+					订单号 <input type="text">
+					旅客 <input type="text">
+					预定日期 <input type="text" class="jedate" id="startTime"> —— <input type="text" class="jedate" id="endTime">
+					<button type="button" class="btn btn-warning btn-orange">查 询</button>
+				</div> -->
+
+				<!-- <div class="orderBy">
+					<select name="" id="orderType">
+						<option value="">类型</option>
+						<option value="">方案</option>
+						<option value="">包车</option>
+					</select>
+					<select name="" id="orderState">
+						<option value="">订单状态</option>
+						<option value="">已完成</option>
+						<option value="">待支付</option>
+						<option value="">待接单</option>
+						<option value="">待完成</option>
+						<option value="">待评价</option>
+					</select>
+					<span>操作</span>
+				</div> -->
+				<ul class="orderList">
+					{{if datas.length == 0}}
+					<h4 style="height: 50px; line-height: 50px; text-align: center;">暂无数据</h4>
+					{{/if}}
+					{{each(i,order) datas}}
+					<li>
+						<div class="title"><h5>${datas[i].username} <span class="contactMe"></span></h5>
+							<span class="fr status">
+								{{if datas[i].status == 1}}待支付{{/if}}
+								{{if datas[i].status == 2}}待接单{{/if}}
+								{{if datas[i].status == 3}}待完成{{/if}}
+								{{if datas[i].status == 4}}待完成{{/if}}
+								{{if datas[i].status == 5}}已关闭{{/if}}
+								{{if datas[i].status == 6}}已结算{{/if}}
+							</span>
+						</div>
+
+						<div class="content">
+							<ul class="productList">
+								<li class="clearfix">
+									<div class="productPic">
+										<a href="#/orderdetail?OrderID=${datas[i].orderid}&UserType=1">
+											<img src="${ $data.IMGHOST + picurl}" alt="">
+										</a>
+									</div>
+									<div class="productText">
+										<h4>${datas[i].ServiceTripName}</h4>
+										<p class="description">${datas[i].ServiceTripName}</p>
+										<p class="productLabel">${datas[i].ServiceTripTypeName}</p>
+										<p>${datas[i].starttime}-${datas[i].starttime}</p>
+									</div>
+									{{if datas[i].status != 5}}
+									<div class="payBtn" id="payBtn" style="text-align: right">
+										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
+										<button type="button" class="btn btn-warning btn-orange">
+											{{if datas[i].status == 1}}立即支付{{/if}}
+											{{if datas[i].status == 2}}接单{{/if}}
+											{{if datas[i].status == 3}}完成{{/if}}
+											{{if datas[i].status == 4}}确认完成{{/if}}
+											{{if datas[i].status == 6}}评价{{/if}}
+										</button>
+									</div>
+									{{/if}}
+								</li>
+
+							</ul>
+						</div>
+					</li>
+					{{/each}}
+				</ul>
+
+			 
+			</div>
+        </div>
+      </div>    
+      <!-- 右侧详细内容结束 -->
+    </div>
+    <!-- 内容部分结束 -->
+
+
+<script>
+	$(function(){
+		var status = $.rogerGetURLJsonParams().status;
+		var navSecond = $('.navSecond li');
+		switch (status)
+		{
+			case '0':
+			navSecond.eq(0).addClass('active');
+			break;
+			case '1':
+			navSecond.eq(1).addClass('active');
+			break;
+			case '2':
+			navSecond.eq(2).addClass('active');
+			break;
+			case '3':
+			navSecond.eq(3).addClass('active');
+			break;
+			case '4':
+			navSecond.eq(4).addClass('active');
+			break;
+		}
+
+
+	});
+	
+
+
+</script>

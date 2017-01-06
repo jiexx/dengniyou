@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>提交订单页</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/payment.css">
+</head>
+<body>
+<div class="submitpage">
+<!-- 公共header部分 -->
+  <!-- <header>
+    <div class="topWidth">
+      <div class="top">
+        <div class="topLeft fl">
+          <a href="index.html"><span class="fa fa-home"></span></a>
+          <span>您好，欢迎您使用等你游旅行网站！</span>
+          <a href="login.html">登入</a> <a href="register.html" class="register">免费注册</a>
+        </div>
+        <div class="topRight fr">
+          <button class="active">游客端</button>
+          <button class="">司导端</button>
+          <span id="version">国际版</span>
+          <div class="btn-group">
+            <button type="button" id="user" class="btn btn-default dropdown-toggle" data-toggle="dropdown" >
+              用户中心 <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu" role="menu" id="">
+              <li><a href="userInfo.html#!/personInfo">个人信息</a></li>
+              <li><a href="userInfo.html#!/orderAll">我的订单</a></li>
+              <li><a href="userInfo.html#!/shoppingCart">购物车</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="logo">
+        <img src="img/logo.png" alt="品牌logo">
+      </div>
+    </div>
+    <div class="navBarBox">
+      <div class="topWidth">
+        <ul class="navBar" id="navBar">
+          <li class="active"><a href="index.html" >首页</a></li>
+            <li><a href="itemSearch.html" >方案</a></li>
+            <li><a href="charterSearch.html" >用车</a></li>
+            <li><a href="#" >活动</a></li>
+            <li><a href="#" >订制</a></li>
+            <li><a href="plannerPage.html" >策划</a></li>
+            <li><a href="#" >住宿</a></li>
+            <li><a href="#" >签证</a></li>
+            <li><a href="#" >机票</a></li>
+            <li><a href="#" >保险</a></li>
+            <li><a href="#" >景点</a></li>
+            <li><a href="#" >美食</a></li>
+        </ul>
+      </div>
+    </div>  
+  </header> -->
+<!-- 公共header部分结束 -->
+<!-- 进度条部分 -->
+  <div class="stepBarBox">
+    <div class="stepBarimg">
+      <img src="img/payStepBar1.png" alt="">
+    </div>
+    <ul class="stepBarText">
+      <li class="active">提交订单</li>
+      <li>支付方式</li>
+      <li>支付完成</li>
+    </ul>
+  </div>
+  <!-- 进度条部分结束 -->
+  <div class="step" > 
+    <!-- 提交订单 -->
+    <div class="stepPart" id="partOne">
+        <h3 class="partTitle">确认订单信息</h3>
+        <form class="form-horizontal">
+          <div class="form-group">
+            <label for="" class="col-sm-2 control-label"><span class="fa fa-calendar"></span> 行程时间：</label>
+            <div class="col-sm-10">
+              <input type="text" class="form-control" id="startDate" placeholder="请选择出发日期"> 出发 
+              <input type="text" class="form-control" id="endDate" placeholder="请选择返回日期"> 返回
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="" class="col-sm-2 control-label"><span class="fa fa-user"></span> 行程人数：</label>
+            <div class="col-sm-10">
+              <select id="" class="form-control">
+                <option>4成人</option>
+              </select>
+              <select id="" class="form-control">
+                <option>2儿童</option>
+              </select>
+            </div>
+          </div>
+        </form>
+
+        <div class="content">
+          <h4>店铺名称或导游名字<span class="fa fa-weixin"></span></h4>
+          <div class="projectInfo clearfix">
+            <div class="fl">
+              <img src="" alt="">
+            </div>
+            <div class="textInfo fl">
+              <h5>长滩岛5晚6日自由行</h5>
+              <p>上海出发 直飞</p>
+              <p>行程景点</p>
+              <p>套餐数量 <strong>X1</strong></p>
+            </div>
+          </div>
+          <h3 class="total"><small>总价：￥</small><span>3999.00</span>元</h3>
+          <div class="detailInfo">
+            <div class="row">
+              <div class="col-md-2">
+                <div class="textBox">退订政策</div>
+              </div>
+              <div class="col-md-10">
+                <div class="unsubscribeText">
+                  我是退订信息
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <div class="textBox">身份信息</div>
+              </div>
+              <div class="col-md-10">
+                <div class="idText">
+                  <form class="form-horizontal">
+                    <div class="form-group">
+                      <label for="" class="col-sm-2 control-label">姓名：</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="col-sm-2 control-label">手机：</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="" placeholder="请输入">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="" class="col-sm-2 control-label">Email：</label>
+                      <div class="col-sm-10">
+                        <input type="text" class="form-control" id="" placeholder="请输入">
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-2">
+                <div class="textBox">备注</div>
+              </div>
+              <div class="col-md-10">
+                <div class="markText">
+                  <textarea name="" id=""></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <dl>
+            <dt>价格：</dt>
+            <dl><small>￥</small><span class="price">3899.00</span></dl>
+          </dl>
+          <dl>
+            <dt>优惠券：</dt>
+            <dl><small>-￥</small><span class="price">500.00</span></dl>
+          </dl>
+          <dl class="totalPrice">
+            <dt>总价：</dt>
+            <dl><small>￥</small><span class="price">3499.00</span></dl>
+          </dl>
+
+          <div class="submitOrder">
+            <a href="payMode.html"><button class="btn btn-warning btn-lg">马上预订</button></a>
+          </div>
+        </div>      
+    </div>
+    <!-- 提交订单结束 -->  
+  </div> <!-- end step -->
+</div> <!-- end submitpage -->
+
+<script src="js/jquery-1.11.3.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+<script type="text/javascript" src="js/plugin/jedate/jedate.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+  
+    //日期选择
+    jeDate({
+      dateCell:"#startDate",
+      format:"YYYY年MM月DD日"
+    });
+    jeDate({
+      dateCell:"#endDate",
+      format:"YYYY年MM月DD日"
+    });
+
+    
+	});
+</script>
+
+</body>
+</html>

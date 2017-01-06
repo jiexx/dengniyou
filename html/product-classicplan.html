@@ -1,0 +1,76 @@
+<div class="container create-plan">
+	<div class="pull-right btn-group panel-body">
+		<a class="btn btn-warning   " href="#/templateplannew?type=1">模板创建方案</a>
+		<a class="btn btn-warning  " href="#/shortplannew?type=1" >快捷创建方案</a>
+	</div>
+</div><!-- end create-plan -->
+
+<div class="container">
+    <div class="list-group service-list">
+	    {{each PlansByUser}}
+	    <div class="list-group-item clearfix disabled">
+		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+		  	<div class="col-md-5 service-name">方案</div>
+		  	<div class="col-md-1">价格</div>
+		  	<div class="col-md-2">行程天数</div>
+		    <div class="col-md-2 ">发布状态</div>
+		    <div class="col-md-1 ">编辑</div>
+	  	</div>
+	  	<div class="list-group-item clearfix btn-group">
+		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+		  	<div class="col-md-5 ">
+			    <div class="media">
+				  <div class="media-left media-top">
+					{{if (CreateType==1)}}
+					<a href="#/templateplandetail?PlanID=${PlanID}">
+					{{else}}
+					<a href="#/shortplandetail?PlanID=${PlanID}">
+					{{/if}}
+					<div>
+						<img data-src="${ $data.IMGHOST }${PicURL}" class="media-object" style="width:160px;height:160px">
+					</div>
+					</a>
+				  </div>
+				  <div class="media-body">
+					<div class="media-heading">${PlanName}</div>
+					<div>${PlanNumber}</div>
+					<div>${StartCity}</div>
+				  </div>
+				</div><!-- end media -->
+		  	</div>
+		  	<div class="col-md-1 margin-top">${PlanPriceBase}</div>
+		  	<div class="col-md-2 margin-top">${PlanDays}</div>
+		  	<div class="col-md-2 margin-top">
+		   		{{if PlanStatus ==1}}待审核 {{/if}}{{if PlanStatus ==2}}审核通过 {{/if}}{{if PlanStatus ==3}}导游隐藏 {{/if}}{{if PlanStatus ==4}}导游发布 {{/if}}{{if PlanStatus ==5}}导游定制 {{/if}}{{if PlanStatus ==6}}未加入 {{/if}}{{if PlanStatus ==7}}已加入 {{/if}}
+		    </div>
+		    <div class="col-md-1 service-edit">
+		   		<a hre="">
+					{{if CreateType==1}}
+					<a href="#/templateplanedit?version=2&PlanID=${PlanID}"><div class="btn  glyphicon glyphicon-edit"></div></a>
+					{{else}}
+					<a href="#/shortplanedit?version=2&PlanID=${PlanID}"><div class="btn  glyphicon glyphicon-edit"></div></a>
+					{{/if}}
+		   		</a>
+		   	</div>
+		</div>
+	{{/each}}
+	</div><!-- end list-group -->
+</div> <!-- end container -->
+<!-- 页码 -->
+<div class="container">
+  <div class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+	{{for $data.CountOFPlans[0].Count}}
+    <li><a href="#">${i}</a></li>
+    {{/for}}
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </div>
+</div>

@@ -1,0 +1,134 @@
+<div class="container">
+<!-- 进度条部分 -->
+<div class="stepBarBox">
+    <div class="stepBarimg">
+        <img src="../img/payStepBar1.png" alt="">
+    </div>
+    <ul class="stepBarText">
+        <li class="active">提交订单</li>
+        <li>支付方式</li>
+        <li>支付完成</li>
+    </ul>
+</div>
+<!-- 进度条部分结束 -->
+
+<div class="step">
+    <!-- 提交订单 -->
+    <div class="stepPart" id="partOne">
+        <h3 class="partTitle">确认订单信息</h3>
+        <form class="form-horizontal">
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label"><span class="fa fa-calendar"></span> 行程时间：</label>
+                <div class="col-sm-6">
+                    <div id="calendar"></div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="" class="col-sm-2 control-label"><span class="fa fa-user"></span> 行程人数：</label>
+                <div class="col-sm-10">
+                    <select id="adult" class="form-control" >
+                        <option value="4">4成人</option>
+                        <option value="3">3成人</option>
+                        <option value="2">2成人</option>
+                        <option value="1">1成人</option>
+                    </select>
+                    <select id="kid" class="form-control">
+                        <option value="2">2儿童</option>
+                        <option value="1">1儿童</option>
+                    </select>
+                </div>
+            </div>
+        </form>
+
+        <div class="content">
+            <h4>${$data.PlanInfo[0].UserName}<span class="fa fa-weixin"></span></h4>
+            <div class="projectInfo clearfix">
+                <div class="col-sm-3">
+                    <img src="${$data.IMGHOST}${$data.PlanInfo[0].AvatarPicURL}">
+                </div>
+                <div class="col-sm-9 textInfo">
+                    <h5>${$data.PlanInfo[0].PlanName}</h5>
+                    <p>${$data.PlanInfo[0].StartCity}</p>
+                    <p>${$data.PlanInfo[0].PlanFeature}</p>
+                    <p>${$data.PlanInfo[0].StartTime2}出发</p>
+                </div>
+            </div>
+            <h3 class="total">
+                <small>总价：￥</small>
+                <span class="price">0</span>元
+            </h3>
+            <div class="detailInfo">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="textBox">退订政策</div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="unsubscribeText" id="policy">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="textBox">身份信息</div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="idText">
+                            <form class="form-horizontal">
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">姓名：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="username" placeholder="请输入">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">手机：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="phone" placeholder="请输入">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="" class="col-sm-2 control-label">Email：</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="mail" placeholder="请输入">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="textBox">备注</div>
+                    </div>
+                    <div class="col-md-10">
+                        <div class="markText">
+                            <textarea  id="note"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <dl>
+                <dt>价格：</dt>
+                <dl>
+                    <small>￥</small>
+                    <span class="price" ></span></dl>
+            </dl>
+            <dl class="totalPrice">
+                <dt>总价：</dt>
+                <dl>
+                    <small>￥</small>
+                    <span class="price"></span></dl>
+            </dl>
+
+            <div class="submitOrder">
+                <a href="payMode.html">
+                    <button class="btn btn-warning btn-lg" id="BUY">马上预订</button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <!-- 提交订单结束 -->
+
+</div>
+</div>

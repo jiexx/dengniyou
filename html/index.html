@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../img/logo.png">
+
+    <title>等你旅游</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../dist/css/bootstrap.css" rel="stylesheet">
+	<link href="../dist/css/font-awesome.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/fix.css" rel="stylesheet">
+	<link href='../css/airbnb.css' rel='stylesheet' />
+
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="../assets/js/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../assets/js/html5shiv.min.js"></script>
+      <script src="../assets/js/respond.min.js"></script>
+    <![endif]-->
+	<script src="../dist/js/moment.min.js" type="text/javascript" ></script>
+	<!--script src="../dist/js/jquery.js" type="text/javascript"></script-->
+	
+    <script src="../dist/js/jquery-1.12.4.js"></script>
+	<script src="../dist/js/bootstrap.js" type="text/javascript"></script>
+	<script src="../dist/js/roger.js" type="text/javascript"></script>
+	<script src="../dist/js/flatpickr.js" type="text/javascript" ></script>
+	<script src="../dist/js/jquery.cookie.js" type="text/javascript"></script>  
+	<script src="../dist/js/jquery.tmpl.js" type="text/javascript"></script>
+	<script src="../dist/js/app1.js" type="text/javascript"></script>
+	<script src="http://cdn.ronghub.com/RongIMLib-2.2.4.min.js" type="text/javascript"></script>
+  </head>
+
+  <body>
+  <div class="indexpage">
+	<header id="header">
+  		<div class="topWidth">
+  			<div class="row panel-body">
+	  			<div class="col-md-6 topLeft">
+	  			    <a href="#/" class="pull-left"><span class="fa fa-home"></span></a>
+	  				<span class="pull-left btn-xs" >您好，欢迎您使用等你游旅行网站！</span>
+	  				<div id="userlogin" class="pull-left"><span class="btn btn-link btn-xs" id="usrlogin" data-toggle="modal" data-target="#homeLogin">登录</span></div>
+	  			</div>
+	  			<div class="col-md-6">
+					<div class="col-md-6">
+						<div class="pull-right btn-group ">
+							<span class="btn btn-warning btn-xs on">游客端</span>
+							<a class="btn btn-default btn-xs " href="./dashboard.html" target="_blank">司导端</a>
+						</div>
+					</div>
+	  				<span id="version" class="btn-xs col-md-2">国际版</span>
+					<div class="col-md-4 ">
+						<div class="btn-group pull-right ">
+						  <button type="button" class="btn btn-default btn-xs dropdown-toggle "  id="user">
+							<a id="usercenter" href="#">用户中心</a>
+								<!-- <span class="caret"></span>-->
+						  </button>
+						  <!-- <ul class="dropdown-menu" role="menu">
+							<li><a href="javascript:void(0);">1</a></li>
+							<li><a href="javascript:void(0);">2</a></li>
+							<li><a href="javascript:void(0);">3</a></li>
+						  </ul> -->
+						</div>
+					</div>
+	  			</div>
+	  		</div>
+	  		<div class="logo">
+	  			<a href="#/" ><img src="img/logo.png" /></a>
+	  		</div>
+  		</div>
+  		<nav >
+  			<div class="topWidth">
+				<ul class="navBar" id="navBar">
+					<li class="active"><a id="home"  href="#/" >首页</a></li>
+	  				<li><!-- <a href="#/plansearch" > -->方案<!-- </a> --></li>
+	  				<li><a href="#/" >用车</a></li>
+	  				<li><a href="#/" >活动</a></li>
+	  				<li><a href="#/" >订制</a></li>
+	  				<li><a href="#/" >策划</a></li>
+	  				<li><a href="#/" >住宿</a></li>
+	  				<li><a href="#/" >签证</a></li>
+	  				<li><a href="#/" >机票</a></li>
+	  				<li><a href="#/" >保险</a></li>
+	  				<li><a href="#/" >景点</a></li>
+	  				<li><a href="#/" >美食</a></li>
+	  				<li><a href="#/" >其他</a></li>
+				</ul>
+				<div class="form-group" style="display:inline;">
+					<div class="input-group">
+						<span class="input-group-btn btn-block" >
+							<button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+								<span class="glyphicon glyphicon-search"></span>
+								<span class="nav-label">查找:</span><span class="text-warning">目的地</span>
+								<span class="fa fa-caret-down"></span>
+							</button>
+
+							<ul id="search-option" class="dropdown-menu pull-left" role="menu">
+								<li>
+									<a href="#/" data-searchtype="search-user" data-placeholder="Enter First or Last Name">
+										<span class="nav-label">国家:</span>
+									</a>
+								</li>
+								<li>
+									<a href="#/" data-searchtype="search-org" data-placeholder="Enter Organization Name">
+									<span class="nav-label">行程天数:</span>
+									</a>
+								</li>
+								<li>
+									<a href="#/" data-searchtype="search-kb" data-placeholder="Enter Knowledgebase Search Terms">
+									<span class="nav-label">出行人数:</span>
+									</a>
+								</li>
+								<li>
+									<a href="#/" data-searchtype="search-venue" data-placeholder="Enter Venue Search Terms">
+									<span class="nav-label">主题:</span>
+									</a>
+								</li>
+								<li>
+									<a href="#/" data-searchtype="search-pl" data-placeholder="Enter Private Label">
+									<span class="nav-label">住宿:</span>
+									</a>
+								</li>
+							</ul>
+						</span>				
+						<div class="input-group col-lg-12 center-block">
+							<input class="form-control" id="homeSearchKey" class="search-input" type="text" placeholder="酒店/景点/玩乐活动">
+						</div>
+						<div class="input-group-btn navbar-btn">
+							<button id="homeSearch" class="btn btn-default btn-nav">
+							搜索
+							</button>
+						</div>
+					</div><!-- end input-group -->
+				</div><!-- end form-group -->
+			</div>
+  		</nav><!-- end topWidth -->
+  	</header>
+	<!-- /container -->
+	<div id="app">
+	</div><!-- end app -->
+	<!-- Modal -->
+	<div id="modal">
+	</div> <!-- end modal -->
+	<!--div>
+		<div class="modal fade" id="homeModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title" id="myModalLabel">登录</h4>
+			  </div>
+			  <div class="modal-body">
+				<div class="form-group"><input id="loginname" type="text" class="form-control" placeholder="手机号"/></div>
+				<div class="form-group"><input id="loginpwd" type="text" class="form-control" placeholder="密码"/></div>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-warning" onclick="login()">确认</button>
+			  </div>
+			</div>
+		  </div>
+		</div>
+	</div-->
+	<!-- fix banner -->
+	<div class="fixedBar">
+  		<ul>
+  			<li><i class="kefu"></i><p>小游游</p></li>
+  			<li><i class="fa fa-shopping-cart"></i><p>购物车</p></li>
+  			<li><i class="fa fa-share-square-o"></i><p>分享</p></li>
+  			<li><i class="glyphicon glyphicon-edit"></i><p>游记</p></li>
+  			<li><i class="fa fa-floppy-o"></i><p>攻略</p></li>
+  			<li><i class="glyphicon glyphicon-phone-alt"></i><p>热线</p></li>
+  			<li><i class="fa fa-qrcode"></i><p>扫码</p></li>
+  		</ul>
+  	</div> <!-- end fixedBar -->
+
+  	<div class="fixedPos">
+  		<ul>
+  			<li id="backTop" ></li>
+  			<li style="background-color: #667980"><a href="#qceania">大洋洲</a></li>
+  			<li style="background-color: #99b0b9"><a href="#Africa">非洲</a></li>
+  			<li ><a href="#SouthAmerica">南美</a></li>
+  			<li style="background-color: #667980"><a href="#NorthAmerica">北美</a></li>
+  			<li style="background-color: #99b0b9"><a href="#Asia">亚洲</a></li>
+  			<li ><a href="#Europe">欧洲</a></li>
+  			<li ><a href="#NSpoles">南北极</a></li>
+  			<li class="kefu"> </li>
+  		</ul>
+  	</div> <!-- end fixedPos -->
+
+	<!-- Site footer -->
+	<div id="footer">
+	</div> <!-- end footer -->
+</div> <!-- end indexpage -->
+	
+	<script>
+		$('#app').rogerGo();
+	</script>
+
+
+  </body>
+</html>

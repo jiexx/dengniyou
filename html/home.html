@@ -1,0 +1,226 @@
+<div class="homepage">
+  <div class="carousel-container">
+    <div id="carousel-generic" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+            <li data-target="#carousel-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-generic" data-slide-to="2"></li>
+        </ol>
+        <!-- Wrapper for slides -->
+        <div class="carousel-inner">
+          {{each Advs}} 
+		      {{if $index == 0}}
+			    <div class="item active">
+          {{else}}
+			    <div class="item">
+          {{/if}}
+            <img src="${ $data.IMGHOST }${PicUrl}" alt="Chania">
+            <div class="carousel-caption">
+              <h3>${Note}</h3>
+              <p>${Note}</p>
+            </div>
+          </div>
+          {{/each}}
+        </div>
+            <!-- Controls 
+            <a class="left carousel-control" href="#" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            </a>
+            <a class="right carousel-control" href="#" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            </a-->
+    </div><!-- end carousel -->
+  </div> <!-- end carousel-container -->
+  <br>
+    <div class="content">
+      {{each PlansByContinent}} 
+      <div class="container">
+        <div class="continent-tit">
+            <img src="../img/home-banner${$index+1}.jpg"></img>
+        </div><!-- end 大洲continent-tit -->
+        <br>
+        <div class="nav-buttons">
+            <button type="button" class="btn btn-sm btn-default">主题 <!-- <span class="caret"></span> --></button>
+            <button type="button" class="btn btn-sm btn-warning"> 国家 <!-- <span class="caret"></span> --></button>
+        </div>
+        <br>
+        <div class="continent-tips">
+            <span class="label label-warning media-left">澳大利亚</span>
+            <span class="label label-default media-left">新西兰</span>
+            <span class="label label-default media-left">文莱</span>
+        </div>
+        <br>
+        <div class="regular-grid">
+          <div class="row">
+            <div class="col-md-2">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="well mid">
+                    <div class="hovereffect">
+                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[0].PicURL}" alt="">
+                      <div class="overlay">
+                        <ul class="head ">
+      										<li class="clearfix">
+                            <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[0].PlanID}">${ $data.PlansByContinent[0].Plans[0].PlanName}</a>
+                          </li>
+      										<li class="clearfix">
+                            <p><span>${ $data.PlansByContinent[0].Plans[0].PlanPriceBase}</span>元/人</p>
+                          </li>
+      									</ul>
+                      </div>
+                    </div><!-- end hovereffect -->
+                  </div>
+                </div>
+              </div>
+            </div><!-- end col-md-2 -->
+            <div class="col-md-6">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="well">
+                    <div class="hovereffect">
+                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[1].PicURL}" alt="">
+                      <div class="overlay">
+                        <ul class="head ">
+      										<li class="clearfix">
+                            <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[1].PlanID}">${ $data.PlansByContinent[0].Plans[1].PlanName}</a>
+                          </li>
+      										<li class="clearfix">
+                            <p><span>${ $data.PlansByContinent[0].Plans[1].PlanPriceBase}</span>元/人</p>
+                          </li>
+      									</ul>
+                      </div>
+                    </div><!-- end hovereffect -->
+                  </div><!-- end well -->
+                </div>
+                <div class="col-md-4">
+                  <div class="well">
+                    <div class="hovereffect">
+                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[2].PicURL}" alt="">
+                      <div class="overlay">
+                        <ul class="head ">
+      										<li class="clearfix">
+                            <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[2].PlanID}">${ $data.PlansByContinent[0].Plans[2].PlanName}</a>
+                          </li>
+      										<li class="clearfix">
+                            <p><span>${ $data.PlansByContinent[0].Plans[2].PlanPriceBase}</span>元/人</p>
+                          </li>
+      									</ul>
+                      </div>
+                    </div><!-- end hovereffect -->
+                  </div><!-- end well -->
+                </div>
+                <div class="col-md-4">
+                  <div class="well">
+                    <div class="hovereffect">
+                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[3].PicURL}" alt="">
+      								<div class="overlay">
+                        <ul class="head ">
+      										<li class="clearfix">
+                            <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[3].PlanID}">${ $data.PlansByContinent[0].Plans[3].PlanName}</a>
+                          </li>
+      										<li class="clearfix">
+                            <p><span>${ $data.PlansByContinent[0].Plans[3].PlanPriceBase}</span>元/人</p>
+                          </li>
+      									</ul>
+                      </div>
+                    </div><!-- end hovereffect -->
+                  </div><!-- end well -->
+                </div>
+                <div class="col-md-4">
+                  <div class="well">
+                    <div class="hovereffect">
+                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[4].PicURL}" alt="">
+      								<div class="overlay">
+                        <ul class="head ">
+      										<li class="clearfix">
+                            <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[4].PlanID}">${ $data.PlansByContinent[0].Plans[4].PlanName}</a>
+                          </li>
+      										<li class="clearfix">
+                            <p><span>${ $data.PlansByContinent[0].Plans[4].PlanPriceBase}</span>元/人</p>
+                          </li>
+      									</ul>
+                      </div>
+                    </div> <!-- end hovereffect -->
+                  </div> <!-- end well -->
+                </div>
+              </div> <!-- end row -->
+            </div><!-- end col-md-6 -->
+            <div class="col-md-2">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="well">
+                    <div class="hovereffect">
+                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[5].PicURL}" alt="">
+      								<div class="overlay">
+                        <ul class="head ">
+      										<li class="clearfix">
+                            <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[5].PlanID}">${ $data.PlansByContinent[0].Plans[5].PlanName}</a>
+                          </li>
+      										<li class="clearfix">
+                            <p><span>${ $data.PlansByContinent[0].Plans[5].PlanPriceBase}</span>元/人</p>
+                          </li>
+      									</ul>
+                      </div>
+                    </div> <!-- end hovereffect -->
+                  </div> <!-- end well -->
+                  <div class="well">
+                    <div class="hovereffect">
+                        <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[6].PicURL}" alt="">
+        								<div class="overlay">
+                          <ul class="head ">
+        										<li class="clearfix">
+                              <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[6].PlanID}">${ $data.PlansByContinent[0].Plans[6].PlanName}</a>
+                            </li>
+        										<li class="clearfix">
+                              <p><span>${ $data.PlansByContinent[0].Plans[6].PlanPriceBase}</span>元/人</p>
+                            </li>
+        									</ul>
+                        </div>
+                    </div> <!-- end hovereffect -->
+                  </div><!-- end well -->
+                </div><!-- end col-md-12 -->
+              </div> <!-- end row -->
+            </div><!-- end col-md-2 -->
+            <div class="col-md-2">
+              <div class="row">
+                <div class="col-md-12">
+                  <div class="well">
+                    <div class="hovereffect">
+                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[7].PicURL}" alt="">
+      								<div class="overlay">
+                        <ul class="head ">
+      										<li class="clearfix">
+                            <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[7].PlanID}">${ $data.PlansByContinent[0].Plans[7].PlanName}</a>
+                          </li>
+      										<li class="clearfix">
+                            <p><span>${ $data.PlansByContinent[0].Plans[7].PlanPriceBase}</span>元/人</p>
+                          </li>
+      									</ul>
+                      </div>
+                    </div><!-- end hovereffect -->
+                  </div> <!-- end well -->
+                  <div class="well">
+                    <div class="hovereffect">
+                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[0].Plans[8].PicURL}" alt="">
+                      <div class="overlay">
+                        <ul class="head ">
+      										<li class="clearfix">
+                            <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[0].Plans[8].PlanID}">${ $data.PlansByContinent[0].Plans[8].PlanName}</a>
+                          </li>
+      										<li class="clearfix">
+                            <p><span>${ $data.PlansByContinent[0].Plans[8].PlanPriceBase}</span>元/人</p>
+                          </li>
+      									</ul>
+                      </div>
+                    </div><!-- end hovereffect -->
+                  </div><!-- end well -->
+                </div> <!-- end col-md-12 -->
+              </div> <!-- end row -->
+            </div><!-- end col-md-2 -->
+          </div> <!-- end row -->
+        </div> <!-- end regular-grid -->
+      </div><!-- end container -->
+      {{/each}}
+    </div><!-- end content -->
+</div><!-- end homepage -->
