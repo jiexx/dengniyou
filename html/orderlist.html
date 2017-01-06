@@ -62,7 +62,7 @@
         <h3>账号管理</h3>
         <ul class="menu" id="menuLeftList">
           <li><a href="#/userinfo"  ui-sref="personInfo"><span></span>个人信息</a></li>
-          <li><a href="#" ui-sref="orderAll" ><span></span>我的订单</a></li>
+          <li><a href="#" ui-sref="orderAll" id="usercenter"><span></span>我的订单</a></li>
           <!-- <li><a href="#" ui-sref="shoppingCart"><span></span>购物车</a></li>
           <li><a href="#" ><span></span>我的收藏</a></li>
           <li><a href="#" ><span></span>我的好友</a></li>
@@ -145,7 +145,7 @@
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
 										<button type="button" class="btn btn-warning btn-orange">
 											{{if datas[i].status == 1}}立即支付{{/if}}
-											{{if datas[i].status == 2}}接单{{/if}}
+											{{if datas[i].status == 2 }}接单{{/if}}
 											{{if datas[i].status == 3}}完成{{/if}}
 											{{if datas[i].status == 4}}确认完成{{/if}}
 											{{if datas[i].status == 6}}评价{{/if}}
