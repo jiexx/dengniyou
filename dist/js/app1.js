@@ -19,6 +19,15 @@
                 $.rogerLogin('#homeLogin', '/login'/*, '/dashboard.html'*/);
             })
         }
+        $('#usercenter').rogerOnceClick(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerShowLogin();
+                return;
+            }
+
+            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
+        });
     }
 	
 	var ctrlHome = function(response, realView) {
@@ -28,15 +37,7 @@
             $.rogerLocation('#/search?key='+k);
         });
 
-        $('#usercenter').rogerOnceClick(null, function () {
-            var user = $.rogerGetLoginUser();
-            if(!user) {
-                $.rogerShowLogin();
-                return;
-            }
 
-            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
-        })
 		
 		realView.rogerCropImages();
         frameCtrl();
@@ -51,7 +52,15 @@
 	var initComment = function(params) {
 		return {
 			Comment:{
-				PlanID: params.PlanID,
+				PlanID: params$('#usercenter').rogerOnceClick(null, function () {
+                    var user = $.rogerGetLoginUser();
+                    if(!user) {
+                        $.rogerShowLogin();
+                        return;
+                    }
+
+                    $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
+                }).PlanID,
 				Comment: '',
 				Picture:{Pics:[]}
 			}
@@ -215,7 +224,28 @@
     };
 
     var ctrlOrderlist = function(response, realView) {
+        frameCtrl();
 
+        $('#confirm').rogerOnceClick(null, function () {
+            var orderid= $(this).data('id');
+            var status= $(this).data('status');
+            if('1'==status) {
+                var newWin = window.open('about:blank');
+                $.rogerPost('/pay',buy, function (respJSON) {
+                    if( respJSON.ERR) {
+                        $.rogerNotice({Message:'生成订单有错,错误码:'+respJSON.ERR});
+                        newWin.close();
+                    }else {
+                        newWin.location.href = respJSON.url;
+                    }
+                })
+            }
+            if('4'==status) {
+                $.rogerPost('/update/order',{OrderID:orderid,Status:6, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
+                    $.rogerRefresh();
+                });
+            }
+        });
         var user = $.rogerGetLoginUser();
         realView.rogerCropImages();
     };
@@ -238,11 +268,11 @@
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
-        '#/orderlist': 				{view: 'orderlist.html', 								rootrest: '/order/list', 				ctrl: ctrlOrderlist},
+        '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment},
-        '#/orderdetail':            {view:'payCompletion.html',	                  rootrest:'/order/detail',                      ctrl: ctrlOrderdetail},
-	    '#/plansearch':             {view:'planSearch.html',                   rootrest:'/plan/plansearch',                      ctrl: ctrlPlanSearch},
-        '#/userinfo':    {view:'userInfo.html',     rootrest:'/user/userinfo',    ctrl: ctrlUserInfo}
+        '#/orderdetail':            {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
+	    '#/plansearch':             {view:'planSearch.html',                                  rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
+        '#/userinfo':               {view:'userInfo.html',                                     rootrest:'/user/userinfo',               ctrl: ctrlUserInfo}
     });
 	
 	
