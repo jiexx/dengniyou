@@ -30,6 +30,15 @@ $(function () {
                 $.rogerLocation('#/?UserID='+usr.UserID)
             }
         }
+        $('#usercenter').rogerOnceClick(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerShowLogin();
+                return;
+            }
+
+            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
+        });
         bindRidoesForSwitch();
         realView.rogerCropImages();
 	};
@@ -436,18 +445,36 @@ $(function () {
     };
 
     var ctrlOrderlist = function(response, realView) {
-        
-        // if(!$.rogerGetURLJsonParams()) {
-        //     if(!$.rogerIsLogined()) {
-        //         $.rogerShowLogin();
-        //     }else{
-        //         var usr = $.rogerGetLoginUser();
-        //         $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=1&status=3&page=1')
-        //     }
-        // }
-        // bindRidoesForSwitch();
-        
 
+        $('#usercenter').rogerOnceClick(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerShowLogin();
+                return;
+            }
+
+            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
+        });
+
+        $('#confirm').rogerOnceClick(null, function () {
+            var orderid= $('#confirm').data('id');
+            var status= $('#confirm').data('status');
+            var user = $.rogerGetLoginUser();
+            if('2'==status) {
+                $.rogerPost('/update/order',{OrderID:orderid,Status:3, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
+                    $.rogerRefresh();
+                });
+            }
+            if('3'==status) {
+
+                $.rogerPost('/update/order',{OrderID:orderid,Status:4, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
+                    $.rogerRefresh();
+                });
+            }
+        });
+
+
+        bindRidoesForSwitch();
         realView.rogerCropImages();
 
     };
@@ -1529,7 +1556,7 @@ $(function () {
         '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                       ctrl: ctrlAccommodation},
         '#/travelogue':                    {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                         ctrl: ctrlTravelogue},
         '#/facilitylist':                 {view:'facilitylist.html',                                  rootrest:'/facility/list',                                            ctrl: ctrlFacilityList},
-        '#/orderlist':                     {view: 'orderlist.html',                                    rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
+        '#/orderlist':                     {view: 'orderlist-guide.html',                             rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
 
         '#/shortplandetail':             {view: 'product-shortplan-detail.html',                    rootrest: '/dashboard/product/shortplan/detail',                  ctrl: ctrlShortplanDetail},
         '#/templateplandetail':          {view: 'product-tempplan-detail.html',                     rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
