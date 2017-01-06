@@ -315,30 +315,41 @@ $(function () {
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
         };
 
+        function getStartCityID(Spot) {
+            for(var i in Spot) {
+                if(Spot[i].CityID > 0){
+                    return Spot[i].CityID;
+                }
+            }
+            return 0;
+        }
+
 
         $('#save').rogerOnceClick(Plan, function(e){
             if(!Plan.PlanInfo.PlanID) {
                 var data = {PlanInfo:e.data.PlanInfo};
+                data.PlanInfo.StartCityID =getStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 $.rogerPost('/new/tmpplan', data, function(respJSON){
-                    $.rogerNotice({Message:'模板方案保存成功'});
+                    $.rogerNotice({Message:'模板方案成功'});
                 });
             }else {
                 $.rogerPost('/delete/plan', {PlanID:Plan.PlanInfo.PlanID}, function(respJSON){
                     var data = {PlanInfo:e.data.PlanInfo};
+                    data.PlanInfo.StartCityID =getStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function(respJSON){
-                        $.rogerNotice({Message:'模板方案保存成功'});
+                        $.rogerNotice({Message:'模板方案发布成功'});
                     });
                 });
             }
         });
-        $('#publish').rogerOnceClick(Plan, function(e){
+        /*$('#publish').rogerOnceClick(Plan, function(e){
             $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
                 $.rogerNotice({Message:'模板方案待审核..'});
                 $.rogerRefresh(Plan);
             });
-        });
+        });*/
         $('#cancel').rogerOnceClick(Plan, function(e){
             $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
                 $.rogerNotice({Message:'模板方案已取消发布..'});
