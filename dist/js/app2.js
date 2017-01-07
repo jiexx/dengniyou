@@ -371,6 +371,12 @@ $(function () {
         realView.rogerCropImages();
     };
     var ctrlShortplanNew = function(Plan, realView) {
+        $('img[name="needPrefix"]').each(function () {
+            var src = $(this).attr('src');
+            if(src.indexOf('group1') > -1) {
+                $(this).attr('src',Plan.IMGHOST+src);
+            }
+        })
         Plan.createDay = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanShort.push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
             $.rogerRefresh(Plan);
@@ -1571,7 +1577,7 @@ $(function () {
         '#/shortplannew':                 {fragment: 'fragment/product-shortplan-edit.html',       init: initShortplanNew,                                                   ctrl: ctrlShortplanNew},
         '#/templateplannew':             {fragment: 'fragment/product-tempplan-edit.html',         init: initTemplateplanNew,                                                ctrl: ctrlTemplateplanNew},
 
-        '#/shortplanedit':               {fragment: 'fragment/product-shortplan-edit.html',        rootrest:'/plan/detail/tmpl',                                         ctrl: ctrlShortplanNew},
+        '#/shortplanedit':               {fragment: 'fragment/product-shortplan-edit.html',        rootrest:'/plan/detail/short',                                         ctrl: ctrlShortplanNew},
         '#/templateplanedit':            {fragment: 'fragment/product-tempplan-edit.html',         rootrest:'/plan/detail/tmpl',                                         ctrl: ctrlTemplateplanNew},
 
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
