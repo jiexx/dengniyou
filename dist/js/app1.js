@@ -97,7 +97,7 @@
                 $.rogerShowLogin();
                 return;
             }
-            $(this).attr("href","talk.html?uid="
+            $(this).attr("href","talk?uid="
                 +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
         });
 		

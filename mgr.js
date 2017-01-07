@@ -21,11 +21,14 @@ app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/img', express.static(__dirname + '/img'));
 app.use('/fragment', express.static(__dirname + '/fragment'));
 app.use('/', express.static(__dirname + '/html'));
-app.use('/', express.static(__dirname + '/talk'));
+app.use('/talk', express.static(__dirname + '/talk', {setHeaders:function (res, path, stat) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+}}));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-	next();
+    next();
 });
 
 var fdfs = new FdfsClient({
@@ -155,6 +158,32 @@ app.get('/roles', upload.array(), function(req, res) {
 			res.send(JSON.stringify(results));
 		}
 	});
+});
+
+app.get('/talk', function (req, res) {
+    var key = '4z3hlwrv4zzyt';
+    request.post(
+        {
+            url: 'http://api.cn.ronghub.com/user/getToken.json',
+            method: "POST",
+            body: 'userId='+req.query.uid +'&name='+req.query.uname+'&portraitUri='+req.query.picurl,
+            headers: {'Content-Type': 'application/x-www-form-urlencoded',
+                'App-Key':key,
+                'Nonce': '1658717659',
+                'Timestamp':'1483791557',
+                'Signature': '8d23cb813948c1ff901391630ddc66bd2433bd38'
+            },
+        },
+        function (error, response, body) {
+            var data = JSON.parse(body);
+            if (!error && response.statusCode == 200 && data.code == 200) {
+                console.log(data.token);
+                var token = new Buffer(data.token).toString('base64');
+                var url = encodeURIComponent('uid='+req.query.uid+'&uname='+req.query.uname+'&picurl='+req.query.picurl+'&tid='+req.query.tid+'&no='+key+'&token='+token);
+                res.redirect('/talk/talk.html?'+encodeURIComponent(url));
+            }
+        }
+    );
 });
 
 /*app.post('/home', upload.array(), function(req, res) {
