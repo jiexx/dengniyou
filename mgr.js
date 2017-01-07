@@ -21,6 +21,7 @@ app.use('/assets', express.static(__dirname + '/assets'));
 app.use('/img', express.static(__dirname + '/img'));
 app.use('/fragment', express.static(__dirname + '/fragment'));
 app.use('/', express.static(__dirname + '/html'));
+app.use('/', express.static(__dirname + '/talk'));
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");

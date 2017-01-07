@@ -53,15 +53,7 @@
 	var initComment = function(params) {
 		return {
 			Comment:{
-				PlanID: params$('#usercenter').rogerOnceClick(null, function () {
-                    var user = $.rogerGetLoginUser();
-                    if(!user) {
-                        $.rogerShowLogin();
-                        return;
-                    }
-
-                    $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
-                }).PlanID,
+				PlanID: params.PlanID,
 				Comment: '',
 				Picture:{Pics:[]}
 			}
@@ -93,8 +85,21 @@
 		realView.rogerCropImages();
         frameCtrl();
 
-		$('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
+        if( response.PlanInfo[0].Policy ){
+            $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
+        }
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
+
+        $('#TALK').each(function () {
+            var usr = $.rogerGetLoginUser();
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $(this).attr("href","talk.html?uid="
+                +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+        });
 		
 		/*$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
 			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
@@ -161,8 +166,6 @@
         if( response.PlanInfo[0].Policy ){
             $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
         }
-
-
 
         $('#BUY').rogerOnceClick(null,function (e) {
             var usr = $.rogerGetLoginUser();

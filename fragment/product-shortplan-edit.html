@@ -108,11 +108,16 @@
 		<!-- 行程信息（方案） -->
 		<div class="schedule clearfix">
 			<div class="row">
-				<h4 class="col-md-6">行程信息</h4>
+				<h4 class="col-md-3">开始城市</h4>
+				<div class="col-md-3">
+					<ul class="label-base">
+						<li data-op="change" data-pointer="/PlanInfo/StartCityID" data-action="createCity"><a><input type="text" value="${$data.PlanInfo.StartCityID}" disabled></a></li>
+					</ul>
+				</div>
 				<div class="col-md-6 pull-right">
 					<div class="btn-group">
 						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createDay">添加标题</a>
-						<a class="btn btn-warning   " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createPicture">添加图片</a>
+						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createPicture">添加图片</a>
 						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createContent">添加描述</a>
 					</div>
 				</div>
@@ -120,11 +125,6 @@
 			{{each $data.PlanInfo.PlanShort}}
 			{{if Day}}
 			<div class="row day-edit">
-				<div class="col-md-4">
-					<ul class="label-base">
-						<li data-op="change" data-pointer="/PlanInfo/StartCityID" data-action="createCity"><input type="text" value="${$data.PlanInfo.StartCityID}" disabled></li>
-					</ul>
-				</div>
 				<div class="col-md-3">
 					<label>第</label>
 					<input type="text" class="form-control one"  value="${Day}"  data-value="/PlanInfo/PlanShort/${$index}/Day" placeholder="第几天">
