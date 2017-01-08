@@ -1,5 +1,9 @@
 $(function () {
-
+    var policy1 = '1  游客在行程开始日期前60天以上提出取消，扣除已产生的费用以外的全部费用；\r\n2  游客在行程开始日期前30天以上提出取消，退还总费用的50%；\r\n3  游客在行程开始日期前15天以上提出取消，退还总费用的20%；\r\n4  游客在行程开始日期前15天（含）以内提出取消，不退还服务费用。';
+    var policy2 = '1  一辆如服务描述（或同级别）的车辆使用费（在限定时间和里程范围内）；\r\n2  服务发布者本人作为司机兼导游的服务费（限定时间内），含小费；\r\n3  燃油费\r\n4  停车费\r\n5  车载WiFi热点每天1GB流量\r\n6  高速，桥梁，隧道的过路费，进城费\r\n7  司机/导游的住宿费，空程费\r\n8  如下景点的门票费用：\r\n9  行程描述中酒店（或同等级别酒店）的双人标准间；\r\n10  酒店内自助式早餐；\r\n11  旅行医疗及意外保险；\r\n12  签证办理费用。';
+    var policy3 = '1  景点游览和公务/商务活动期间的服务费用；\r\n2  超时等待的费用，资费参看服务描述；\r\n3  机场和送达目的地的停车费。';
+    var policy4 = '1  公务和商务活动中的专业翻译费用（可另付费提供）\r\n2  护照费用；\r\n3  航空公司燃油涨幅；\r\n4  酒店内电话、上网，传真、洗熨、收费电视、饮料等额外费用；\r\n5  酒店门童，餐馆服务生小费；\r\n6  报价中未提及的门票；\r\n7  因不可抗拒的客观原因（如天灾、战争、罢工等）、航空公司航班延误或取消等特殊情况导致行程取消或变更，由此产生的额外费用（如延期签证费、住、食及交通费、国家航空运价调整等）；\r\n8  导游及司机加班工资，资费如服务描述；\r\n9  导游及司机行程中缺餐补助，资费如服务描述；\r\n10  服务及方案描述中未提及的景点费用。';
+    var policy5 = '1  因游客擅自行动走失，发生事故等产生的费用由游客自行承担；\r\n2  如遇不可预见的事件，如堵车，交通事故等，导游与游客商定可临时合理更改行程，并继续旅程，由此产生的加班费用和超程费用由游客承担；\r\n3  旅客不可要求导游进行违反交通规则、法律、当地风俗的活动，如旅客有违规、违法行为倾向导游须劝阻，劝阻无效则报警处理；\r\n4  导游不可强制旅客参与购物活动或参加自费项目，约定行程外项目需取得旅客同意；\r\n5  原则上导游与游客共进正餐（午餐和晚餐），费用由游客支付，缺少正餐时游客应支付缺餐补助；\r\n6  如导游陪同游客游览景点，游客需为导游支付门票费用。';
     function bindRidoesForSwitch (){
         var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
         if(!ev || !ev.change) {
@@ -96,12 +100,6 @@ $(function () {
     };
     var ctrlTemplateplanDetail = function(response, realView) {
 
-        $('#refundpolicy').html(response.PlansByUser[0].Policy.replace(/\r\n/g, '<br>'));
-        $('#costpolicy').html(response.PlansByUser[0].CostInclude.replace(/\r\n/g, '<br>'));
-        $('#excostpolicy').html(response.PlansByUser[0].CostExclude.replace(/\r\n/g, '<br>'));
-        $('#visapolicy').html(response.PlansByUser[0].VisaNotice.replace(/\r\n/g, '<br>'));
-        $('#noticepolicy').html(response.PlansByUser[0].Notice.replace(/\r\n/g, '<br>'));
-
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
@@ -110,8 +108,8 @@ $(function () {
         var type = $.rogerGetUrlParam('type');
         return {
             PlanInfo:{
-                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
-                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
+                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:policy1,CostInclude:policy2,
+                CostExclude:policy3,VisaNotice:policy4,Notice:policy5,CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
 
                 Picture: {
                     Pics: []
@@ -165,8 +163,8 @@ $(function () {
         var type = $.rogerGetUrlParam('type');
         return {
             PlanInfo:{
-                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
-                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
+                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:policy1,CostInclude:policy2,
+                CostExclude:policy3,VisaNotice:policy4,Notice:policy5,CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
 
                 Picture:{
                     Pics:[]
