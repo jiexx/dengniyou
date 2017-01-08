@@ -286,3 +286,11 @@ function populateCountries(countryElementId, stateElementId, chooseSpot){
 	}
     $('.selectpicker').selectpicker('refresh');
 }
+
+function setCountryCity(CountryNameCn, CityID) {
+    $('#country option[value*="'+CountryNameCn+'"]').prop('selected', true);
+    $('.selectpicker').selectpicker('refresh');
+    populateStates('country','city');
+    $('#city option[value^="'+CityID+'"]').prop('selected', true);
+    $('.selectpicker').selectpicker('refresh');
+}

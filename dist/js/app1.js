@@ -275,10 +275,291 @@
         frameCtrl();
     };
 
+    //-------------------------------plan customize begin---------------------------------
+    var initTemplateplanNew = function(params){
+        var usr =$.rogerGetLoginUser();
+        var type = $.rogerGetUrlParam('type');
+        return {
+            PlanInfo:{
+                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
+                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
+
+                Picture: {
+                    Pics: []
+                },
+                Summary:{
+                    PlanName:'',
+                    PlanFeature:'',
+                    PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
+                },
+                PlanSchedule: [{
+                    Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''},
+                        {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                        {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
+                        {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
+                        {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
+                    ],
+                    TravelInstruction:'',
+                    DayName:''
+                }]  //0 city, 1 airport, 2 attraction, 3 delicacy, 4 accommodation
+            },
+            IMGHOST:$.rogerImgHost()
+        };
+    };
+    var initCityChooser = function (PS) {
+        return {
+            UserData:0,
+            Spot:PS.Spot,
+            Plan:PS.Plan
+        };
+    };
+    var initSpotChooser = function (PS) {
+        return {
+            Type:PS.Type,
+            Spot:PS.Spot,
+            Plan:PS.Plan,
+            TypeCn:PS.TypeCn,
+            SpotItem:PS.SpotItem,
+            Replace:PS.Replace
+        };
+    };
+    var initAirportChooser = function (PS) {
+        return {
+            Spot:PS.Spot,
+            Plan:PS.Plan,
+            SpotItem:PS.SpotItem,
+            Replace:PS.Replace
+        };
+    };
+    function getItemWithStartCityID(Spot) {
+        for(var i in Spot) {
+            if(Spot[i].CityID > 0 && Spot[i].ScheduleType == 0){
+                return Spot[i];
+            }
+        }
+        return null;
+    };
+    function getSpotBySpotItem(PlanSchedule, SpotItem) {
+        for(var i = 0 ; i < PlanSchedule.length ; i ++ ){
+            var ps = PlanSchedule[i];
+            for ( var j = 0; j < ps.Spot.length ; j ++ ) {
+                if(ps.Spot[j] === SpotItem) {
+                    return ps.Spot;
+                }
+            }
+        }
+        return null;
+    };
+
+    var ctrlCityChooser = function (PS, realView) {
+        $('#cityChooser').modal('show');
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
+            data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data.Plan);
+        });
+    };
+    var ctrlSpotChooser = function (PS, realView) {
+        $('#spotChooser').modal('show');
+        $('#spotlist').html('').append('<li class="list-group-item">'+PS.TypeCn+'</li>');
+        $('#city').change(PS, function (e) {
+            var data = e.data;
+            var city = $('#city option:selected').val().split(':');
+            if(city && city[0]) {
+                $('#spotlist').rogerDialogTrigger('fragment/dialog-spotlist.html', '/dialog/'+PS.Type, {CityID:city[0]}, function (data, realView) {
+                    //console.log('spot');
+                    $("#spotlist .list-group-item").click(function(e) {
+                        $("#spotlist .list-group-item").removeClass("active");
+                        $(this).addClass("active");
+                    });
+                });
+            }
+        });
+        var item = getItemWithStartCityID(getSpotBySpotItem(PS.Plan.PlanInfo.PlanSchedule, PS.SpotItem));
+        if(item && item.CityID > 0) {
+            setCountryCity(item.CountryNameCn, item.CityID);
+            $('#spotlist').rogerDialogTrigger('fragment/dialog-spotlist.html', '/dialog/'+PS.Type, {CityID:item.CityID}, function (data, realView) {
+                //console.log('spot');
+                realView.rogerCropImages();
+                $("#spotlist .list-group-item").click(function(e) {
+                    $("#spotlist .list-group-item").removeClass("active");
+                    $(this).addClass("active");
+                });
+            });
+        }
+        $('#spotChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
+            var spot = $('#spotlist  .list-group-item.active').data('info').split(':');
+            //${SpotsID}:${NameCh}:${NameEn}:${PicURL}:${Rank}:${TravelTime}:${SpotsTypeID}
+            if(data.Replace) {
+                ok:
+                    for(var i = 0 ; i < data.Plan.PlanInfo.PlanSchedule.length ; i ++ ){
+                        var ps = data.Plan.PlanInfo.PlanSchedule[i];
+                        for ( var j = 0; j < ps.Spot.length ; i ++ ) {
+                            if(ps.Spot[i] === data.SpotItem) {
+                                ps.Spot[i]= {CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                                    SpotID:spot[0],SpotName:spot[1],SpotLocalName:spot[2],SpotTravelTime:spot[5],HotelStarLevel:spot[4],ScheduleType:parseInt(spot[6])+1,SpotPicUrl:spot[3]};
+                                break ok;
+                            }
+                        }
+                    }
+            }else {
+                data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                    SpotID:spot[0],SpotName:spot[1],SpotLocalName:spot[2],SpotTravelTime:spot[5],HotelStarLevel:spot[4],ScheduleType:parseInt(spot[6])+1,SpotPicUrl:spot[3]});
+            }
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data.Plan);
+        });
+    };
+    var ctrlAirportChooser = function (PS, realView) {
+        $('#airportChooser').modal('show');
+        $('#airportlist').html('').append('<li class="list-group-item">机场</li>');
+        $('#airportlist').rogerDialogTrigger('fragment/dialog-airportlist.html', '/dialog/airport', {}, function (data, realView) {
+            $('#searchlist').btsListFilter('#searchinput', {itemChild: '.list-group-item-text',initial:false});
+            $("#airportlist .list-group-item").click(function(e) {
+                $("#airportlist .list-group-item").removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+        $('#airportChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data;
+            var airport = $('#airportlist  .list-group-item.active').data('info').split(':');
+            //${AirPortCode}:${NameCh}:${NameEn}
+            if(data.Replace) {
+                ok:
+                    for(var i = 0 ; i < data.Plan.PlanInfo.PlanSchedule.length ; i ++ ){
+                        var ps = data.Plan.PlanInfo.PlanSchedule[i];
+                        for ( var j = 0; j < ps.Spot.length ; i ++ ) {
+                            if(ps.Spot[i] === data.SpotItem) {
+                                ps.Spot[i]= {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
+                                    SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''}
+                                break ok;
+                            }
+                        }
+                    }
+            }else {
+                if(data.Plan.Airports){
+                    data.Plan.Airports.AirportCode = airport[0];
+                    data.Plan.Airports.NameCh = airport[1];
+                    data.Plan.Airports.NameEn = airport[2];
+                }else{
+                    data.Spot.push({CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
+                        SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''});
+                }
+            }
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data.Plan);
+        });
+    };
+    var ctrlTemplateplanNew = function(Plan, realView) {
+        $('img[name="needPrefix"]').each(function () {
+            var src = $(this).attr('src');
+            if(src.indexOf('group1') > -1) {
+                $(this).attr('src',Plan.IMGHOST+src);
+            }
+        })
+        Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            PlanSchedule.push({
+                Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
+                ],
+                TravelInstruction:'',
+                DayName:''
+            });
+            Plan.PlanInfo.PlanDays ++;
+            $.rogerRefresh(Plan);
+        };
+
+        Plan.createCity = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/citychooser', {Plan:Plan, Spot:Spot});
+        };
+        Plan.createAttraction = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'attraction', TypeCn:'景点'});
+        };
+        Plan.createDelicacy = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'delicacy', TypeCn:'美食'});
+        };
+        Plan.createAccommodation = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'accommodation',TypeCn:'酒店'});
+        };
+        Plan.changeAttraction = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'attraction', TypeCn:'景点', SpotItem:SpotItem,Replace:true});
+        };
+        Plan.changeDelicacy = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'delicacy', TypeCn:'美食', SpotItem:SpotItem,Replace:true});
+        };
+        Plan.changeAccommodation = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'accommodation', TypeCn:'酒店',SpotItem:SpotItem,Replace:true});
+        };
+        Plan.createAirport = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Spot:Spot});
+        };
+        Plan.changeAirport = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
+        };
+
+        $('#save').rogerOnceClick(Plan, function(e){
+            var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
+            if(item && item.CityID > 0) {
+                if (!Plan.PlanInfo.PlanID) {
+                    var data = {PlanInfo: e.data.PlanInfo};
+                    data.PlanInfo.StartCityID = item.CityID;
+                    data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                    $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                        $.rogerNotice({Message: '模板方案成功'});
+                    });
+                } else {
+                    $.rogerPost('/delete/plan', {PlanID: Plan.PlanInfo.PlanID}, function (respJSON) {
+                        var data = {PlanInfo: e.data.PlanInfo};
+                        data.PlanInfo.StartCityID = item.CityID;
+                        data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                        $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                            $.rogerNotice({Message: '模板方案发布成功'});
+                        });
+                    });
+                }
+            }else {
+                $.rogerNotice({Message: '请选择起始城市'});
+            }
+        });
+        /*$('#publish').rogerOnceClick(Plan, function(e){
+         $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
+         $.rogerNotice({Message:'模板方案待审核..'});
+         $.rogerRefresh(Plan);
+         });
+         });*/
+        $('#cancel').rogerOnceClick(Plan, function(e){
+            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
+                $.rogerNotice({Message:'模板方案已取消发布..'});
+                $.rogerRefresh(Plan);
+            });
+        });
+
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
+    //-------------------------------plan customize end---------------------------------
+
 	$.rogerRouter({
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
+
+        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                  ctrl: ctrlTemplateplanNew},
+
+        '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
+        '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
+        '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
+
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment},

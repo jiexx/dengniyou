@@ -1,0 +1,185 @@
+<div class="container">
+	<div class="editPage">
+		<!-- 方案基本信息 -->
+		<div class="baseInfo">
+			<h4>基本信息</h4>
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label   class="col-sm-2 col-md-1 control-label">方案名称</label>
+					<div class="col-sm-10 col-md-11">
+						<input type="text" class="form-control"  value="${$data.PlanInfo.PlanName}"  data-value="/PlanInfo/PlanName" placeholder="不能超过24个字符">
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- 方案基本信息结束 -->
+
+		<!-- 行程信息（方案） -->
+		<div class="schedule">
+			<h4>行程信息</h4>
+			<div class="row">
+				<div class="col-md-1 col-sm-2">
+					<div class="list-group">
+						{{for $data.PlanInfo.PlanSchedule.length}}
+						<a href="#day1" class="list-group-item active">第${i}天</a>
+						{{/for}}
+						<a href="#" id="newOneDay" class="list-group-item" data-op="change" data-pointer="/PlanInfo/PlanSchedule/-" data-action="createDay">+</a>
+					</div>
+				</div>
+				<div class="col-md-11 col-sm-10">
+					<!-- 一天行程 -->
+					{{each(k, day) $data.PlanInfo.PlanSchedule}}
+					<div class="dayBox" >
+						<h3>第${k+1}天<span class="orangeBtn" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}" >-</span></h3>
+						<div class="addCity">
+							<h4>添加城市</h4>
+							<ul class="label-base">
+								{{each(n,v) day.Spot}}
+								{{if (v.ScheduleType==0) }}
+								<li><input type="text" value="${CountryNameCn} ${CountryNameEn}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}" ></a></li>
+								{{/if}}
+								{{/each}}
+								<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createCity"> + </div></li>
+							</ul>
+						</div>
+						<div class="addDetails addAirport">
+							<h4>添加机场<span class="orangeBtn" data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAirport">+</span></h4>
+							{{each(n,v) day.Spot}}
+							{{if (v.ScheduleType==1) }}
+							<ul class="airports">
+								<li>
+									<div class="planeIcon">
+										<img src="../img/airPlaneIcon.png" alt="">
+									</div>
+									<div class="planeText">
+										${AirportCode} ${AirportNameCn}<br>
+										${AirportNameEn}
+									</div>
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAirport">换</span>
+									<span class="glyphicon glyphicon-trash" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}" ></span>
+								</li>
+							</ul>
+							{{/if}}
+							{{/each}}
+						</div>
+						<div class="addDetails">
+							<h4>添加景点
+								<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAttraction">+</span>
+							</h4>
+							{{each(n,v) day.Spot}}
+							{{if (v.ScheduleType==2) }}
+							<ul class="details" data-i="${$index}">
+								<li>
+									<div class="detailImg">
+										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+									</div>
+									<div class="detailText">
+										<h5>${SpotName} ${SpotLocalName}</h5>
+										<p>${CountryNameCn}：${CityNameCn}</p>
+										<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
+									</div>
+									{{if v.ScheduleType==2}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
+									{{/if}}
+									{{if v.ScheduleType==3}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
+									{{/if}}
+									{{if v.ScheduleType==4}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
+									{{/if}}
+									<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
+								</li>
+							</ul>
+							{{/if}}
+							{{/each}}
+						</div>
+						<div class="addDetails">
+							<h4>添加美食
+								<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createDelicacy">+</span>
+							</h4>
+							{{each(n,v) day.Spot}}
+							{{if (v.ScheduleType==3) }}
+							<ul class="details" data-i="${$index}">
+								<li>
+									<div class="detailImg">
+										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+									</div>
+									<div class="detailText">
+										<h5>${SpotName} ${SpotLocalName}</h5>
+										<p>${CountryNameCn}：${CityNameCn}</p>
+										<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
+									</div>
+									{{if v.ScheduleType==2}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
+									{{/if}}
+									{{if v.ScheduleType==3}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
+									{{/if}}
+									{{if v.ScheduleType==4}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
+									{{/if}}
+									<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
+								</li>
+							</ul>
+							{{/if}}
+							{{/each}}
+						</div>
+						<div class="addDetails">
+							<h4>添加住宿
+								<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAccommodation">+</span>
+							</h4>
+							{{each(n,v) day.Spot}}
+							{{if (v.ScheduleType==4) }}
+							<ul class="details" data-i="${$index}">
+								<li>
+									<div class="detailImg">
+										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+									</div>
+									<div class="detailText">
+										<h5>${SpotName} ${SpotLocalName}</h5>
+										<p>${CountryNameCn}：${CityNameCn}</p>
+										<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
+									</div>
+									{{if v.ScheduleType==2}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
+									{{/if}}
+									{{if v.ScheduleType==3}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
+									{{/if}}
+									{{if v.ScheduleType==4}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
+									{{/if}}
+									<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
+								</li>
+							</ul>
+							{{/if}}
+							{{/each}}
+						</div>
+
+						<div class="introduction">
+							<h4>出行说明</h4>
+							<textarea name="" rows="6"   data-value="/PlanInfo/PlanSchedule/${k}/TravelInstruction">"${ day.TravelInstruction}</textarea>
+						</div>
+					</div>
+					{{/each}}
+					<!-- 一天行程结束 -->
+				</div>
+			</div>
+		</div>
+		<!-- 行程信息结束（方案） -->
+		<!-- 须知信息 -->
+		<div class="notice">
+			<div class="optionBtn">
+				<button id="save" class="btn btn-warning">提交</button>
+				<!--{{if  $data.PlanInfo.PlanStatus == 3}}
+                <button id="publish" class="btn btn-warning">发布 </button>
+                {{/if}}
+                {{if  $data.PlanInfo.PlanStatus == 1}}
+                <button id="publish" class="btn btn-warning">发布 </button>
+                {{/if}}-->
+			</div>
+		</div>
+		<!-- 须知信息结束 -->
+	</div>
+</div>
+

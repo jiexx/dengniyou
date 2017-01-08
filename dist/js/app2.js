@@ -181,6 +181,26 @@ $(function () {
             IMGHOST:$.rogerImgHost()
         };
     };
+    function getItemWithStartCityID(Spot) {
+        for(var i in Spot) {
+            if(Spot[i].CityID > 0 && Spot[i].ScheduleType == 0){
+                return Spot[i];
+            }
+        }
+        return null;
+    };
+    function getSpotBySpotItem(PlanSchedule, SpotItem) {
+        for(var i = 0 ; i < PlanSchedule.length ; i ++ ){
+            var ps = PlanSchedule[i];
+            for ( var j = 0; j < ps.Spot.length ; j ++ ) {
+                if(ps.Spot[j] === SpotItem) {
+                    return ps.Spot;
+                }
+            }
+        }
+        return null;
+    };
+
     var ctrlCityChooser = function (PS, realView) {
         $('#cityChooser').modal('show');
         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
@@ -209,6 +229,18 @@ $(function () {
                 });
             }
         });
+        var item = getItemWithStartCityID(getSpotBySpotItem(PS.Plan.PlanInfo.PlanSchedule, PS.SpotItem));
+        if(item && item.CityID > 0) {
+            setCountryCity(item.CountryNameCn, item.CityID);
+            $('#spotlist').rogerDialogTrigger('fragment/dialog-spotlist.html', '/dialog/'+PS.Type, {CityID:item.CityID}, function (data, realView) {
+                //console.log('spot');
+                realView.rogerCropImages();
+                $("#spotlist .list-group-item").click(function(e) {
+                    $("#spotlist .list-group-item").removeClass("active");
+                    $(this).addClass("active");
+                });
+            });
+        }
         $('#spotChooserOK').rogerOnceClick(PS,function (e) {
             var data = e.data;
             var country = $('#country option:selected').val().split(':');
@@ -307,17 +339,17 @@ $(function () {
             $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'delicacy', TypeCn:'美食'});
         };
         Plan.createAccommodation = function (Plan, Spot) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'accommodation', TypeCn:'酒店'});
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'accommodation',TypeCn:'酒店'});
         };
         Plan.changeAttraction = function (Plan, SpotItem) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'attraction', TypeCn:'景点',SpotItem:SpotItem,Replace:true});
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'attraction', TypeCn:'景点', SpotItem:SpotItem,Replace:true});
         };
         Plan.changeDelicacy = function (Plan, SpotItem) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'delicacy', TypeCn:'美食',SpotItem:SpotItem,Replace:true});
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'delicacy', TypeCn:'美食', SpotItem:SpotItem,Replace:true});
         };
         Plan.changeAccommodation = function (Plan, SpotItem) {
             $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'accommodation', TypeCn:'酒店',SpotItem:SpotItem,Replace:true});
-        };
+         };
         Plan.createAirport = function (Plan, Spot) {
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Spot:Spot});
         };
@@ -325,36 +357,31 @@ $(function () {
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
         };
 
-        function getStartCityID(Spot) {
-            for(var i in Spot) {
-                if(Spot[i].CityID > 0){
-                    return Spot[i].CityID;
-                }
-            }
-            return 0;
-        }
-
-
         $('#save').rogerOnceClick(Plan, function(e){
-            if(!Plan.PlanInfo.PlanID) {
-                var data = {PlanInfo:e.data.PlanInfo};
-                data.PlanInfo.StartCityID =getStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
-                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
-                $.rogerPost('/new/tmpplan', data, function(respJSON){
-                    $.rogerNotice({Message:'模板方案成功'});
-                });
-            }else {
-                $.rogerPost('/delete/plan', {PlanID:Plan.PlanInfo.PlanID}, function(respJSON){
-                    var data = {PlanInfo:e.data.PlanInfo};
-                    data.PlanInfo.StartCityID =getStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
+            var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
+            if(item && item.CityID > 0) {
+                if (!Plan.PlanInfo.PlanID) {
+                    var data = {PlanInfo: e.data.PlanInfo};
+                    data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
-                    $.rogerPost('/new/tmpplan', data, function(respJSON){
-                        $.rogerNotice({Message:'模板方案发布成功'});
+                    $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                        $.rogerNotice({Message: '模板方案成功'});
                     });
-                });
+                } else {
+                    $.rogerPost('/delete/plan', {PlanID: Plan.PlanInfo.PlanID}, function (respJSON) {
+                        var data = {PlanInfo: e.data.PlanInfo};
+                        data.PlanInfo.StartCityID = item.CityID;
+                        data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                        $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                            $.rogerNotice({Message: '模板方案发布成功'});
+                        });
+                    });
+                }
+            }else {
+                $.rogerNotice({Message: '请选择起始城市'});
             }
         });
-        /*$('#publish').rogerOnceClick(Plan, function(e){
+      /*$('#publish').rogerOnceClick(Plan, function(e){
             $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
                 $.rogerNotice({Message:'模板方案待审核..'});
                 $.rogerRefresh(Plan);
@@ -1590,7 +1617,6 @@ $(function () {
         '#/servicepickupdetail':        {view:'product-service-pickup-detail.html',	              rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/equipdetail':                  {view:'product-equip-detail.html',                          rootrest:'/facility/detail',                                          ctrl: ctrlFacilityDetail},
         '#/traveloguedetail':            {view:'travelogue-detail.html',	                          rootrest:'/travelogue/detail',                                       ctrl: ctrlTravelogueDetail},
-        '#/templateplannew':              {fragment: 'fragment/product-tempplan-edit.html',        init: initTemplateplanNew,                                                ctrl: ctrlTemplateplanNew},
         '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',	                          rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/serviceactivitydetail':       {view:'product-activity-detail.html',	                      rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
