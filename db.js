@@ -194,6 +194,19 @@ exports.login = function(item, callback) {
 		console.log(sql);
 	});
 };
+exports.registe = function(item, callback) {
+    pool.getConnection(function(err, connection) {
+        if(err) {
+            console.log(err);
+            callback(true);
+            return;
+        }
+        var pwd = crypto.createHash('md5').update(item.loginPass).digest('hex').toUpperCase();
+        var sql = "INSERT INTO traveldb.tab_userinfo (UserMobile, Password)VALUES(?,?); ";
+        exec(connection, sql, [item.loginName, pwd], callback);
+        console.log(sql);
+    });
+};
 exports.getGuides = function(item, callback) {
 	pool.getConnection(function(err, connection) {
 		if(err) { 

@@ -265,12 +265,13 @@ $(function () {
                         $.cookie("roger", JSON.stringify(respJSON[0]), {expires: 10});
                         $.rogerRefresh();
                     }else if(respJSON.message) {
-                    	$('#message').html(respJSON.message);
+                    	$('#result').html(respJSON.message);
+                        $('#message').html(respJSON.message);
 					}
                 });
                 $('#getCaptcha').rogerOnceClick(null, function () {
                     var phone = $('#loginNameCaptcha').val();
-                    $.rogerPost('/sms/get', {mobile:phone}, function () {
+                    $.rogerPost('/sms/get', {mobile:phone}, function (respJSON) {
                         $('#message').html(respJSON.message);
                     })
                 })

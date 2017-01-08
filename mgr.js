@@ -144,8 +144,9 @@ app.post('/notify', function (req, res) {
     });
 });
 var usr = [];
-function registe(req) {
-    var i;
+function registe(req,res) {
+    var i = 0;
+    var now = new Date().getTime();
     for(i in usr) {
         if(usr[i].loginName == req.body.loginName) {
             break;
@@ -164,7 +165,8 @@ function registe(req) {
     if(usr[i].captcha == req.body.captcha) {
         db.registe(req.body, function(error, results){
             if(!error) {
-                res.send(JSON.stringify(results));
+                console.log(JSON.stringify(results));
+                res.send(JSON.stringify({message:'注册成功请登录'}));
             }
         });
         usr.splice(i,1);
@@ -173,17 +175,27 @@ function registe(req) {
     }
 }
 app.post('/login', upload.array(), function(req, res) {
-    if(req.body.captcha && req.body.loginName && req.body.loginPass) {
-        registe(req);
+    if(req.body.captcha && req.body.loginName[1] && req.body.loginPass[1]) {
+        req.body.loginName = req.body.loginName[1];
+        req.body.loginPass = req.body.loginPass[1];
+        registe(req,res);
+        return;
     }
-	db.login(req.body, function(error, results){
-		if(!error) {
-			////console.log(JSON.stringify(results));
-			res.send(JSON.stringify(results));
-		}else {
-            res.send(JSON.stringify({message:'用户名密码错误'}));
-        }
-	});
+    if(req.body.loginName[0] && req.body.loginPass[0]){
+        req.body.loginName = req.body.loginName[0];
+        req.body.loginPass = req.body.loginPass[0];
+        db.login(req.body, function(error, results){
+            if(!error) {
+                ////console.log(JSON.stringify(results));
+                res.send(JSON.stringify(results));
+            }else {
+                res.send(JSON.stringify({message:'用户名密码错误'}));
+            }
+        });
+    }else {
+        res.send(JSON.stringify({message:'用户名密码不能为空'}));
+    }
+
 });
 app.get('/roles', upload.array(), function(req, res) {
 	db.getRoles(req.body, function(error, results){
@@ -223,6 +235,10 @@ app.get('/talk', function (req, res) {
 
 
 app.post('/sms/get', function (req, res) {
+    if(!req.body.mobile) {
+        res.send(JSON.stringify({message:'请输入手机号'}));
+        return;
+    }
     var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
     var now = new Date().getTime();
     for(var i in usr) {
@@ -236,7 +252,7 @@ app.post('/sms/get', function (req, res) {
     }
     var key = '9cb31422e774d4fef8a8b767a7862646';
     var captcha = Math.floor(Math.random()*10000);
-    var text = '[等你游]您的验证码是'+captcha;
+    var text = '【等你游】您的验证码是'+captcha;
     request.post(
         {
             url: 'https://sms.yunpian.com/v2/sms/single_send.json',
@@ -249,6 +265,7 @@ app.post('/sms/get', function (req, res) {
             if(!data.code) {
                 var index = req.body.mobile+captcha;
                 usr.push({loginName:req.body.mobile, captcha:captcha, time:now });
+                console.log(req.body.mobile+' '+captcha);
                 for(var i in usr) {
                     var milisec_diff = usr[i].time < now  ? now - usr[i].time :usr[i].time - now;
                     if(milisec_diff > 600000) {
