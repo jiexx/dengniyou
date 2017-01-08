@@ -78,7 +78,7 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 						  <!-- Tab nav -->
 						  <ul class="nav nav-tabs" id="myTabs"> 
 						    <li role="presentation" class="active" ><a href="#logLeftTab" role="tab" data-toggle="tab">登录</a></li>
-						    <li role="presentation" ><a href="#logRightTab" role="tab" data-toggle="tab">手机动态密码登录</a></li>
+						    <li role="presentation" ><a href="#logRightTab" role="tab" data-toggle="tab">手机注册</a></li>
 						  </ul>
 						  <!-- Tab panes -->
 						  <div class="tab-content">
@@ -114,17 +114,14 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 								    	<div class="inputBox">
 								    		<i class="glyphicon glyphicon-user"></i>
 								    		<span class="line"></span> 
-								    		<input type="text" placeholder="手机号" required>
+								    		<input type="text" placeholder="手机号" id="loginNameCaptcha" name="loginName" required>
 								    	</div>
 							    	</div>
-								    
+
 									<div class="form-group">
 										<div class="row">
-											<div class="col-xs-6">
-												<input type="text" id="code" class="form-control input-short required" name="verify" placeholder="验证码" maxlength="4" required tabindex="3" autocomplete="off" />
-											</div>
-											<div class="col-xs-6">
-												<img id="verifCode"  src="http:" alt="验证码" />
+											<div class="col-xs-12">
+												<input type="text" id="code" class="form-control input-short requir" id="loginPass2" name="loginPass" placeholder="密码" maxlength="6" required tabindex="3" autocomplete="off" />
 											</div>
 											<!-- <div class="col-sm-1">
 												<span class="icon-refresh" id="captchaRefresh">换一张</span>
@@ -137,11 +134,11 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 								  				<div class="inputBox">
 										    		<i class="glyphicon glyphicon-lock"></i>
 										    		<span class="line"></span> 
-										    		<input type="text" id="phoneCode" placeholder="动态密码" required>
+										    		<input type="text" id="captcha"  name="captcha" placeholder="验证码" required>
 										    	</div>
 								  			</div>
 								  			<div class="col-xs-6">
-								  				<button type="button" class="btn btn-default " id="phoneCodeBtn">获取手机动态密码</button>
+								  				<button type="button" class="btn btn-default " id="getCaptcha">获取手机动态密码</button>
 								  			</div>
 								  		</div>
 								    
@@ -149,7 +146,7 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 
 								  	<div class="footer">
 										<button type="submit" class="btn btn-block btn-warning btn-lg">登 录</button>
-										<p>您还不是等你旅游网会员？请 <a href="register.html">立即注册</a></p>
+										<p ip="message" class="text-danger"></p>
 									</div>
 								</div>
 						    </div>
@@ -159,101 +156,6 @@ $('#login-form').rogerSubmit('/login', function(respJSON){
 				    </div>
                 </div>
                 <!-- End # Login Form -->
-                
-                <!-- Begin | Lost Password Form -->
-                <div id="lost-form" style="display:none;">
-	    		    <div class="modal-body">
-	    				<div id="div-lost-msg">
-                            <div id="icon-lost-msg" class="glyphicon glyphicon-chevron-right"></div>
-                            <span id="text-lost-msg">Type your e-mail.</span>
-                        </div>
-	    				<input id="lost_email" class="form-control" type="text" placeholder="E-Mail (type ERROR for error effect)" required>
-        			</div>
-	    		    <div class="modal-footer">
-                        <div>
-                            <button type="submit" class="btn btn-warning btn-lg btn-block">发送</button>
-                        </div>
-                        <div>
-                            <span id="lost_login_btn" type="button" class="btn btn-link">登录</span>
-                            <span id="lost_register_btn" type="button" class="btn btn-link">注册</span>
-                        </div>
-	    		    </div>
-                </div>
-                <!-- End | Lost Password Form -->
-                
-                <!-- Begin | Register Form -->
-                <div id="register-form" class="register-form" style="display:none;">
-					<div class="register-header">
-					    <img src="img/logo.png" alt="等你游"/>
-					    <h3>欢迎注册</h3>
-					    <span> 已有等你游账户？
-					    <a id="register_lost_btn" type="button" class="btn btn-link btn-sm">忘记密码?</a>
-					    <button type="button" id="register_login_btn" class="btn btn-default btn-sm"> <a href="login.html"> 登 录</a></button>
-					    </span>
-					</div>
-
-					<div class="form-horizontal">
-			          <div class="form-group">
-			            <label for="register_username" class="col-sm-3 control-label"><i>*</i> 手机号码</label>
-			            <div class="col-sm-7">
-			              <input type="email" class="form-control" id="register_username" placeholder="phoneNumber" required/>
-			            </div>
-			          </div>
-			          <div class="form-group">
-			            <label for="register_email" class="col-sm-3 control-label"><i>*</i> 邮箱</label>
-			            <div class="col-sm-7">
-			              <input type="email" class="form-control" id="register_email" placeholder="Email" required/>
-			            </div>
-			          </div>
-			          <div class="form-group">
-			            <label for="register_password" class="col-sm-3 control-label"><i>*</i>登录密码</label>
-			            <div class="col-sm-7">
-			              <input type="password" class="form-control" id="register_password" placeholder="Password" required/>
-			              <p class="passwordLeval">安全程度：<span class="active">弱</span> <span>中</span> <span>强</span></p>
-			            </div>
-			          </div>
-			          <div class="form-group">
-			            <label for="" class="col-sm-3 control-label"><i>*</i>确认密码</label>
-			            <div class="col-sm-7">
-			              <input type="password" class="form-control" id="" placeholder="Password" required/>
-			            </div>
-			          </div>
-			          <div class="form-group">
-			            <label for="" class="col-sm-3 control-label"><i>*</i>图形验证码</label>
-			            <div class="col-sm-3">
-			              <input type="password" class="form-control" id="" placeholder="Password" required/>
-			            </div>
-			            <div class="col-sm-4">
-			              <img src="" alt="验证码" id="verifyCode">
-			              <a href="javascript:0;">换一张</a>
-			            </div>
-			          </div>  
-			          <div class="form-group">
-			            <label for="" class="col-sm-3 control-label"><i>*</i>手机验证码</label>
-			            <div class="col-sm-3">
-			              <input type="password" class="form-control" id="" placeholder="手机验证码" required/>
-			            </div>
-			            <div class="col-sm-4">
-			              <button type="button" class="btn btn-default">发送验证码</button>
-			            </div>
-			          </div>
-			          <div class="form-group">
-			            <div class="col-sm-offset-3 col-sm-7">
-			              <div class="checkbox">
-			                <label>
-			                  <input type="checkbox"/> 我已阅读并同意 <a href="#">《等你游服务条款》</a>
-			                </label>
-			              </div>
-			            </div>
-			          </div>
-			          <div class="form-group">
-			            <div class="col-sm-offset-3 col-sm-7">
-			              <button type="submit" class="btn btn-warning btn-lg" id="register_login_btn">同意服务条款并注册</button>
-			            </div>
-			          </div>
-			        </div>
-                </div>
-                <!-- End | Register Form -->
                 
             </div>
             <!-- End # DIV Form -->

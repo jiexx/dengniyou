@@ -254,6 +254,7 @@ $(function () {
             $.removeCookie("roger");
         },
 		rogerLogin: function(loginFormID, reqURL) {
+            $('#message').html('');
         	var user = $.rogerGetLoginUser();
         	if( !user || !user.UserID ) {
                 $(loginFormID).rogerSubmit(reqURL, function (respJSON) {
@@ -263,8 +264,16 @@ $(function () {
                         $.removeCookie("roger");
                         $.cookie("roger", JSON.stringify(respJSON[0]), {expires: 10});
                         $.rogerRefresh();
-                    }
+                    }else if(respJSON.message) {
+                    	$('#message').html(respJSON.message);
+					}
                 });
+                $('#getCaptcha').rogerOnceClick(null, function () {
+                    var phone = $('#loginNameCaptcha').val();
+                    $.rogerPost('/sms/get', {mobile:phone}, function () {
+                        $('#message').html(respJSON.message);
+                    })
+                })
             }
 			window._rogerLoginForm = loginFormID;
 		},

@@ -143,12 +143,46 @@ app.post('/notify', function (req, res) {
         }
     });
 });
+var usr = [];
+function registe(req) {
+    var i;
+    for(i in usr) {
+        if(usr[i].loginName == req.body.loginName) {
+            break;
+        }
+    }
+    if(i >= usr.length) {
+        res.send(JSON.stringify({message:'请先获取验证码'}));
+        return;
+    }
+    var milisec_diff = usr[i].time < now  ? now - usr[i].time :usr[i].time - now;
+    if(milisec_diff > 600000) {
+        res.send(JSON.stringify({message:'验证码超时'}));
+        usr.splice(i,1);
+        return;
+    }
+    if(usr[i].captcha == req.body.captcha) {
+        db.registe(req.body, function(error, results){
+            if(!error) {
+                res.send(JSON.stringify(results));
+            }
+        });
+        usr.splice(i,1);
+    }else {
+        res.send(JSON.stringify({message:'验证码错误'}));
+    }
+}
 app.post('/login', upload.array(), function(req, res) {
+    if(req.body.captcha && req.body.loginName && req.body.loginPass) {
+        registe(req);
+    }
 	db.login(req.body, function(error, results){
 		if(!error) {
 			////console.log(JSON.stringify(results));
 			res.send(JSON.stringify(results));
-		}
+		}else {
+            res.send(JSON.stringify({message:'用户名密码错误'}));
+        }
 	});
 });
 app.get('/roles', upload.array(), function(req, res) {
@@ -182,6 +216,48 @@ app.get('/talk', function (req, res) {
                 var url = encodeURIComponent('uid='+req.query.uid+'&uname='+req.query.uname+'&picurl='+req.query.picurl+'&tid='+req.query.tid+'&no='+key+'&token='+token);
                 res.redirect('/talk/talk.html?'+encodeURIComponent(url));
             }
+        }
+    );
+});
+
+
+
+app.post('/sms/get', function (req, res) {
+    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
+    var now = new Date().getTime();
+    for(var i in usr) {
+        if(usr[i].ip == ip) {
+            var milisec_diff = usr[i].time < now  ? now - usr[i].time :usr[i].time - now;
+            if(milisec_diff < 120000) {
+                res.send(JSON.stringify({message:'请不要频繁获取验证码'}));
+                return;
+            }
+        }
+    }
+    var key = '9cb31422e774d4fef8a8b767a7862646';
+    var captcha = Math.floor(Math.random()*10000);
+    var text = '[等你游]您的验证码是'+captcha;
+    request.post(
+        {
+            url: 'https://sms.yunpian.com/v2/sms/single_send.json',
+            method: "POST",
+            body: 'apikey='+key +'&mobile='+req.body.mobile+'&text='+text,
+        },
+        function (error, response, body) {
+            var data = JSON.parse(body);
+            console.log(body);
+            if(!data.code) {
+                var index = req.body.mobile+captcha;
+                usr.push({loginName:req.body.mobile, captcha:captcha, time:now });
+                for(var i in usr) {
+                    var milisec_diff = usr[i].time < now  ? now - usr[i].time :usr[i].time - now;
+                    if(milisec_diff > 600000) {
+                        usr.splice(i,1);
+                    }
+                }
+                res.send(JSON.stringify({message:'请输入手机验证码'}));
+            }
+            res.send(JSON.stringify({message:body}));
         }
     );
 });
