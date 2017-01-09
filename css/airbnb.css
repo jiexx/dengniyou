@@ -414,7 +414,10 @@
     border-color: #e9e9e9;
     cursor: default
 }
-
+.flatpickr-day.disabled {  /* origin none*/
+    background: #4f99ff;
+    border-color: #4f99ff;
+}
 span.flatpickr-weekday {
     cursor: default;
     font-size: 90%;
