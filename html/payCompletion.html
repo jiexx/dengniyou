@@ -149,7 +149,15 @@ ${Status}
         
 
         <div class="btnList">
-          <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#complainModal">投诉</button>
+          {{if Status==2 || Status==3 || Status==4}}
+          {{if UserType==1}}
+          {{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}
+            <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#complainModal">投诉</button>
+          {{else}}
+            <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#complainModal2">查看投诉</button>
+          {{/if}}
+          {{/if}}
+          {{/if}}
           {{if Status==1}}
           <button class="btn btn-warning">立即支付</button>
           {{/if}}
@@ -193,7 +201,7 @@ ${Status}
             </div>
           </div>
           <div class="col-sm-9">
-            <textarea class="form-control" rows="5"></textarea>
+            <textarea id="Reason"class="form-control" rows="5"></textarea>
           </div>
         </div>
         <div class="row">
@@ -218,23 +226,41 @@ ${Status}
           <div class="col-sm-9" style="margin-top: 12px;">
             <div class="row">
               <div class="col-sm-3">退款金额</div>
-              <div class="col-sm-9"><input type="text" class="form-control"></div>
+              <div class="col-sm-9"><input id="ApplyRefund" type="text" class="form-control"></div>
             </div>
             <div class="row" style="margin-top: 14px;">
               <div class="col-sm-3">退款说明</div>
-              <div class="col-sm-9"><textarea class="form-control" rows="5"></textarea></div>
+              <div class="col-sm-9"><textarea id="RefundDec" class="form-control" rows="5"></textarea></div>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        <button type="button" class="btn btn-primary">提交</button>
+        <button id="complain-commit" type="button" class="btn btn-primary">提交</button>
       </div>
     </div>
   </div>
 </div>
 
+  <!-- Modal2 -->
+  <div class="modal fade" id="complainModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title" id="myModalLabel">您的投诉</h4>
+        </div>
+        <div class="modal-body">
+          <p>您的投诉信息已反馈</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+          <button id="complain-commit" type="button" class="btn btn-primary">提交</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
 </div>
 {{/each}}

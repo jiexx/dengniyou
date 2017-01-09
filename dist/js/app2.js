@@ -41,7 +41,7 @@ $(function () {
                 return;
             }
 
-            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
+            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
         });
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -478,14 +478,20 @@ $(function () {
 
     var ctrlOrderlist = function(response, realView) {
 
-        $('#usercenter').rogerOnceClick(null, function () {
-            var user = $.rogerGetLoginUser();
-            if(!user) {
-                $.rogerShowLogin();
-                return;
-            }
+        $("#order-a_all").find("a").each(function () {
+            var el = $(this);
+            console.log(el.attr("id"));
 
-            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
+            el.rogerOnceClick(null, function () {
+                var user = $.rogerGetLoginUser();
+                if(!user) {
+                    $.rogerShowLogin();
+                    return;
+                }
+                data_href = el.attr("data-value");
+                $.rogerLocation(data_href+'&userID='+user.UserID);
+            });
+
         });
 
         $('#confirm').rogerOnceClick(null, function () {
@@ -1036,8 +1042,6 @@ $(function () {
                 serviceStatus: '',
                 serviceMethod: '',
                 Picture: [
-                    {picURL: '', cover: ''},
-                    {picURL: '', cover: ''},
                     {picURL: '', cover: ''}
                 ],
                 DetailServiceMethod: [ ],

@@ -1,4 +1,56 @@
-<div class="homepage">
+<div class="index-searchbox">
+  <div class="container">   
+    <div class="form-group" style="display:inline;">
+      <div class="input-group">
+        <span class="input-group-btn btn-block" >
+          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+            <span class="glyphicon glyphicon-search"></span>
+            <span class="nav-label">查找:</span><span class="text-warning">目的地</span>
+            <span class="fa fa-caret-down"></span>
+          </button>
+
+          <ul id="search-option" class="dropdown-menu pull-left" role="menu">
+            <li>
+              <a href="#/" data-searchtype="search-user" data-placeholder="Enter First or Last Name">
+                <span class="nav-label">国家:</span>
+              </a>
+            </li>
+            <li>
+              <a href="#/" data-searchtype="search-org" data-placeholder="Enter Organization Name">
+              <span class="nav-label">行程天数:</span>
+              </a>
+            </li>
+            <li>
+              <a href="#/" data-searchtype="search-kb" data-placeholder="Enter Knowledgebase Search Terms">
+              <span class="nav-label">出行人数:</span>
+              </a>
+            </li>
+            <li>
+              <a href="#/" data-searchtype="search-venue" data-placeholder="Enter Venue Search Terms">
+              <span class="nav-label">主题:</span>
+              </a>
+            </li>
+            <li>
+              <a href="#/" data-searchtype="search-pl" data-placeholder="Enter Private Label">
+              <span class="nav-label">住宿:</span>
+              </a>
+            </li>
+          </ul>
+        </span>       
+        <div class="input-group col-lg-12 center-block">
+          <input class="form-control" id="homeSearchKey" class="search-input" type="text" placeholder="酒店/景点/玩乐活动">
+        </div>
+        <div class="input-group-btn navbar-btn">
+          <button id="homeSearch" class="btn btn-default btn-nav">
+          搜索
+          </button>
+        </div>
+      </div><!-- end input-group -->
+    </div><!-- end form-group -->  
+  </div><!-- end container -->
+</div> <!-- end 搜索框index-searchbox -->
+
+<div class="homepage">  
   <div class="carousel-container">
     <div id="carousel-generic" class="carousel slide" data-ride="carousel">
         <!-- Indicators -->
@@ -62,20 +114,30 @@
         <br>
         <div class="nav-buttons">
           <div class="btn-group">
-            <button type="button" id="theme" class="btn btn-default active dropdown-toggle" data-toggle="dropdown">
+            <button type="button" class="btn btn-default active dropdown-toggle" data-toggle="dropdown">
               主题 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu themeTest" role="menu">
-            {{each(i,p) LabelByContinent[$data.PlansByContinent[i].Continent].__values[0].Label}}
+            <ul class="dropdown-menu theme" role="menu">
+              <li>观光旅游</li>
+              <li>艺术</li>
+              <li>轻探险</li>
+              <li>亲子</li>
+              <li>浪漫</li>
+              <li>游学</li>
+              <li>传统文化</li>
+              <li>自然风光</li>
+              <li>美食</li>
+              <li>商务与投资</li>
+            <!-- {{each(i,p) LabelByContinent[$data.PlansByContinent[i].Continent].__values[0].Label}}
             <li>${p}</li>
-            {{/each}} 
+            {{/each}}  -->
             </ul>
           </div>
           <div class="btn-group">
-            <button type="button" id="country" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" >
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" >
               国家 <span class="caret"></span>
             </button>
-            <ul class="dropdown-menu" role="menu" >            
+            <ul class="dropdown-menu country" role="menu" >            
             {{each(i,p) CountryByContinent[$data.PlansByContinent[i].Continent].__values[0].Country}}
             <li>${p}</li>
             {{/each}}  
@@ -96,7 +158,7 @@
                 <div class="col-md-12">
                   <div class="well mid">
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head">
@@ -120,7 +182,7 @@
                   <div class="well">
                     {{if PlansByContinent[i].Plans[1]}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[1].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[1].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[1].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -136,7 +198,7 @@
                     </div><!-- end hovereffect -->
                     {{else}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -157,7 +219,7 @@
                   <div class="well">
                     {{if PlansByContinent[i].Plans[2]}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[2].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[2].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[2].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -173,7 +235,7 @@
                     </a>
                     {{else}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -194,7 +256,7 @@
                   <div class="well">
                     {{if PlansByContinent[i].Plans[3]}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[3].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[3].PicURL}" alt="">
       								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[3].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -210,7 +272,7 @@
                     </a>
                     {{else}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -231,7 +293,7 @@
                   <div class="well">
                     {{if PlansByContinent[i].Plans[4]}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[4].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[4].PicURL}" alt="">
       								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[4].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -247,7 +309,7 @@
                     </a>
                     {{else}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -272,7 +334,7 @@
                   <div class="well">
                     {{if PlansByContinent[i].Plans[5]}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[5].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[5].PicURL}" alt="">
       								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[5].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -288,7 +350,7 @@
                     </a>
                     {{else}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -307,7 +369,7 @@
                   <div class="well">
                     {{if PlansByContinent[i].Plans[6]}}
                     <div class="hovereffect">
-                        <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[6].PicURL}" alt="">
+                        <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[6].PicURL}" alt="">
         								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[6].PlanID}">
                         <div class="overlay">
                           <ul class="head ">
@@ -323,7 +385,7 @@
                     </a>  
                     {{else}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -348,7 +410,7 @@
                   <div class="well">
                     {{if PlansByContinent[i].Plans[7]}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[7].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[7].PicURL}" alt="">
       								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[7].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -364,7 +426,7 @@
                     </a>
                     {{else}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -383,7 +445,7 @@
                   <div class="well">
                     {{if PlansByContinent[i].Plans[8]}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[8].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[8].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[8].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -399,7 +461,7 @@
                     </a>
                     {{else}}
                     <div class="hovereffect">
-                      <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      <img class="img-responsive" src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
                       <div class="overlay">
                         <ul class="head ">
@@ -425,27 +487,10 @@
     </div><!-- end content -->
 </div><!-- end homepage -->
 
-<script id="" type="text/x-jquery-tmpl">
-  
-</script>
-
+<div id="movieList"></div>
 
 <script>
   $(function(){
-    
-    $('.nav-buttons .dropdown-menu').on('click','li',function(){
-      var text = $(this).text();
-      $(this).parent().prev().text(text);
-    });
-    $.ajax({
-      url:'http://10.101.1.36:8888/home',
-      success:function(data){
-        
-      }
-    });
-    
-    var item = $.tmplItem($('.carousel-caption'));
-        console.log(item); 
     
       
   });

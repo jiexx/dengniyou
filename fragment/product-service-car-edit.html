@@ -18,19 +18,15 @@
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">编辑价格</label>
-		    <div class="col-sm-10 col-md-11">
-		    	<ul class="carPrice ">
-		    		{{each $data.DetailMain}}
-		    		<li><a class="glyphicon glyphicon-remove-circle"></a>
-		    			<input type="text" class="form-control" value="${$data.DetailMain.serviceName}" data-value="/DetailMain/serviceName" placeholder="输入商品名称" > <br/>
-		    			<input type="text" class="form-control" value="${$data.DetailMain.primaryPrice}" data-value="/DetailMain/primaryPrice}"> 元/天
-		    		</li>
-		    		{{/each}}
-		    		<li><div class="addItemBtn" data-op="change" data-pointer="/DetailMain-" data-action="createLabel"> + </div></li>
-		    	</ul>
-		    </div>
+			  <div class="col-sm-10 col-md-11">
+
+					  <p>基础价格</p><input type="text" class="form-control" value="${$data.DetailMain.primaryPrice}"
+										data-value="/DetailMain/primaryPrice}"> 元/天
+
+
+			  </div>
 		  </div>
-		  <!-- <div class="form-group">
+		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">包含里程</label>
 		    <div class="col-sm-10 col-md-11">
 		      <input type="number" class="form-control" > 公里
@@ -53,17 +49,6 @@
 		    <div class="col-sm-10 col-md-11">
 		      <input type="text" class="form-control" > 元/小时
 		    </div>
-		  </div> -->
-		  <div class="form-group">
-		    <label for="" class="col-sm-2 col-md-1 control-label">商品标签</label>
-		    <div class="col-sm-10 col-md-11">
-		      <ul class="label-base">
-		      	{{each $data.DetailMain.Labels}}
-				<li><input type="text" value="${$data.DetailMain.Labels[$index]}" data-value="/DetailMain/Labels/${$index}" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/Labels/${$index}"></a></li>
-				{{/each}}
-				<li><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/Labels-" data-action="createLabel"> + </div></li>
-			  </ul>
-		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">服务描述</label>
@@ -75,78 +60,6 @@
 	</div>
 	<!-- 方案基本信息结束 -->
 
-	<!-- 车辆信息 -->
-	<div class="carInfo">
-		<h4>车辆信息</h4>
-		<div class="row">
-			<div class="col-md-6">
-				<form class="form-horizontal">
-				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-2 control-label">车辆品牌</label>
-				    <div class="col-sm-8 col-md-8">
-				      <input type="text" class="form-control" value="${$data.DetailMain.Facility[0].brand}" data-value="/DetailMain/Facility/${0}/brand" placeholder="请输入">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-2 control-label">舒适乘坐</label>
-				    <div class="col-sm-8 col-md-8">
-				      <input type="text" class="form-control" value="${$data.DetailMain.Facility[0].seats}" data-value="/DetailMain/Facility/${0}/seats" placeholder="请输入">
-				    </div> 人
-				  </div>
-				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-2 control-label">车辆级别</label>
-				    <div class="col-sm-8 col-md-8" id="serviceType">
-				        <label class="radio-inline">
-						  <input type="radio" name="serviceType" id="Radio1" value="经济" checked> 经济
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="serviceType" id="Radio2" value="舒适"> 舒适
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="serviceType" id="Radio3" value="商务"> 商务
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="serviceType" id="Radio4" value="豪华"> 豪华
-						</label>
-				    </div>
-				    <input type="text" class="form-control" id="ServiceMethodName"  value="${$data.DetailMain.Facility[0].clazz}"  data-value="/DetailMain/Facility/${0}/clazz">
-				  </div>
-				</form>
-			</div>
-			<div class="col-md-6">
-				<form class="form-horizontal">
-				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-2 control-label">车辆型号</label>
-				    <div class="col-sm-8 col-md-8">
-				      <input type="text" class="form-control" value="${$data.DetailMain.Facility[0].model}" data-value="/DetailMain/Facility/${0}/model" placeholder="请输入">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-2 control-label">行李空间</label>
-				    <div class="col-sm-8 col-md-8">
-				      <input type="text" class="form-control" value="${$data.DetailMain.Facility[0].luggage}" data-value="/DetailMain/Facility/${0}/luggage" placeholder="请输入">
-				    </div>
-				  </div>
-				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-2 control-label">成员保险</label>
-				    <div class="col-sm-8 col-md-8" id="serviceType">
-				        <label class="radio-inline">
-						  <input type="radio" name="serviceType" id="Radio1" value="有" checked> 有
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="serviceType" id="Radio2" value="无"> 无
-						</label>
-				    </div>
-				    <input type="text" class="form-control" id="ServiceMethodName" value="${$data.Facility[0].insurance}"  data-value="/Facility/${0}/insurance">
-				  </div>
-				</form>
-			</div>
-		</div>
-		<!-- <div class="row">
-			<button class="btn btn-warning">关联车辆</button>
-		</div> -->
-	</div>
-	<!-- 车辆信息结束 -->
 
 	<!-- 相册上传 -->
 	<div class="photoInfo">
@@ -154,18 +67,20 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
 			<div class="col-md-11 row" >
-				{{each $data.DetailMain.Picture}}
-				{{if $data.DetailMain.Picture.cover != 1}}
+				{{each(i,itemtem) $data.DetailMain.Picture}}
+				{{if itemtem.cover != 1}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain.Picture[$index].picURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/Picture/${$index}/picURL"></a>
+						<img src="${$data.DetailMain.Picture[i].picURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/Picture/${i}/picURL"></a>
 					</div>
 				</div>
+				<input type="hidden" value="0" data-value="/DetailMain/Picture/${$index}/cover">
 				{{/if}}
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/Picture/${$index}/picURL" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/Picture/${$index}/picURL" data-action="image">+</div>
+
+				<div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/Picture/${0}/picURL" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/Picture/-/picURL" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -173,18 +88,19 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{each $data.DetailMain.Picture}}
-				{{if $data.DetailMain.Picture.cover==1}}
+				{{each(i,itemtem) $data.DetailMain.Picture}}
+				{{if itemtem.cover==1}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain.Picture[$index].picURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/Picture/${$index}/picURL" ></a>
+						<img src="${$data.DetailMain.Picture[i].picURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/Picture/${i}/picURL" ></a>
 					</div>
+					<input type="hidden" value="1" data-value="/DetailMain/Picture/${$index}/cover">
 				</div>
 				{{/if}}
 				{{/each}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/covers" data-action="image" >+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/Picture/-/picURL" data-action="image" >+</div>
 				</div>
 			</div>
 		</div>

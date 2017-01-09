@@ -49,14 +49,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .topRight #version{display: inline-block; width: 40px; height: 45px; line-height: 45px; font-size: 13px; margin-left: 15px; text-align: center; position: relative; top:1px;}
 .indexpage .topRight #user{padding: 0;width: 80px;border-radius: 0;background-color: #FFF; font-size: 13px; color:#333;}
 .indexpage .sidebar{top: 96px !important;}
-.indexpage nav{width:100%; height: 96px; background-color: #00b8ee;}
-.indexpage .topWidth .navBar{margin-bottom: 10px; padding-top: 5px;}
+.indexpage nav{width:100%; /*height: 96px;*/ background-color: #00b8ee; padding-top: 10px; padding-bottom: 1px;}
+.indexpage .topWidth .navBar{margin-bottom: 10px; /*padding-top: 5px;*/}
 .indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:88px; height: 34px; line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
 .indexpage .topWidth .navBar li.active{background-color: #006583;}
 .indexpage .topWidth .navBar li a{color: #fff; font-weight: bold;}
-.indexpage .topWidth .form-group .input-group{-webkit-box-shadow: 2px 3px 3px #666; -moz-box-shadow: 2px 3px 3px #666; -ms-box-shadow: 2px 3px 3px #666; -o-box-shadow: 2px 3px 3px #666; box-shadow: 2px 3px 3px #666;}
-.indexpage .topWidth .form-group .input-group #homeSearch{width: 80px; background-color: #F9703C;}
-.indexpage .topWidth .form-group .input-group #homeSearch a{color: #fff;}
 .indexpage footer{height: 366px; background-color: #4d4d4d; color: #FFF; padding-top: 20px}
 .indexpage footer .hr{height: 0; border-top:1px dashed #FFF;margin:10px 0;}
 .indexpage footer .info {width: 90%; max-width: 1200px; margin:0 auto;}
@@ -105,7 +102,13 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .hovereffect li a { font-size: 14px; color: #fff; text-decoration: none; text-align: left;}
 .homepage .hovereffect li p{text-align: left; font-size: 14px; color: #fff;}
 .homepage .hovereffect li p span{font-size: 16px; color: #e54a1b;}
-
+	/*首页搜索框*/
+.index-searchbox{background-color: #00B8EE; padding-bottom: 15px; padding-top: 5px;}
+.index-searchbox .container{margin-top: 0;}	
+.index-searchbox .form-group .input-group{-webkit-box-shadow: 2px 3px 3px #666; -moz-box-shadow: 2px 3px 3px #666; -ms-box-shadow: 2px 3px 3px #666; -o-box-shadow: 2px 3px 3px #666; box-shadow: 2px 3px 3px #666;}
+.index-searchbox .form-group .input-group #homeSearch{width: 80px; background-color: #F9703C; border-color: #F9703C;}
+.index-searchbox .form-group .input-group #homeSearch a{color: #fff;}
+	/* end 首页搜索框*/
 /*首页主要内容homepage*/
 /*end 网站首页*/
 
@@ -133,17 +136,18 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .owl-theme .owl-controls { position: relative; top: -40px; }
 .plandetail-page .project{ margin-top: 30px;}
 .plandetail-page .project h1 { font-size: 24px; font-weight: bold; color: #333;}
+.plandetail-page .project h1 a{display: inline-block; margin-left: 15px; background-color: #00B8EE; color: #fff; border-color: #00B8EE;}
 .plandetail-page .project .project-main { border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; padding: 10px 0; }
 .plandetail-page .project .project-main .imgBox, .project .project-main .planner { float: left; }
 .plandetail-page .project .project-main .imgBox { height: 68px; width: 68px; border-radius: 32px; overflow: hidden; margin-right: 20px; }
 .plandetail-page .project .project-main .imgBox img { width: 68px; height: 68px; }
 .plandetail-page .project .planner h3 { margin-bottom: 24px; }
-.plandetail-page .project .planner button{padding: 3px 12px; background-color: #00b8ee; color: #fff; margin-left: 5px;}
+.plandetail-page .project .planner a{padding: 3px 12px; background-color: #00b8ee; color: #fff; margin-left: 5px; border-color: #00B8EE;}
 .plandetail-page .project .planner .vipIcon { display: inline-block; width: 20px; height: 20px; background-image: url(../img/vip.png); margin-left: 10px; }
 .plandetail-page .project .planner i { font-size: 20px; text-indent: 10px; color: #fa703e; }
 .plandetail-page .project .price { color: #fa703e; height: 24px; line-height: 24px; }
 .plandetail-page .project .price span { font-size: 24px; }
-.plandetail-page .project .btn-primary { border-color: #00b8ee; background-color: #00b8ee; color: #fff; border-radius: 20px; margin: 10px 0 0; outline: none;}
+.plandetail-page .project .btn-primary { border-color: #F9703C; background-color: #F9703C; color: #fff; border-radius: 20px; margin: 10px 0 0; outline: none;}
 .plandetail-page .project .project-main .col-md-2 p { height: 30px; line-height: 30px; }
 .plandetail-page .plandetail-main{ margin-top: 20px}
 .plandetail-page .plandetail-main .main-left{padding-left: 0;}
@@ -214,54 +218,79 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .commentOn .commit button { background-color: #00b8ee; border: 1px solid #00b8ee; }
 .plandetail-page .commentOn li:last-child { border: none; vertical-align: middle; text-align: center; }
 .plandetail-page .commentOn li:last-child i { height: 80px; line-height: 80px; }
+/*企业信息部分*/
+.interpriseArea{width:100%; color: #FFF;}
+.interpriseArea .content{/*background-color: inherit;*/}
+.interpriseInfo {height: 94px; line-height: 94px; border-bottom: 1px dotted #b2b2b2; }
+.interpriseInfo img { height: 60px; width: 100px; }
+.interpriseInfo div { float: left; height: 94px; font-size: 16px; }
+.interpriseInfo .contact,.interpriseInfo .ad{ line-height: 30px; padding:14px 8px 0; font-size: 16px; color: #333;}
+.interpriseArea .nav ul li { display: inline-block;  min-width: 60px;  margin: 12px 10px 10px; text-align: center;  }
+.interpriseArea .nav ul li a{ display: inline-block; font-size: 16px; color: #333; line-height: 30px; padding: 0 15px; border: 1px solid #333; -webkit-border-radius: 17px; -moz-border-radius: 17px; -ms-border-radius: 17px; -o-border-radius: 17px; border-radius: 17px;}
+.interpriseArea .nav ul li a:hover{background-color: #00b8ee; color: #fff; border-color: #00b8ee;}
+.interpriseArea .nav ul li.active { background-color: #00b8ee; color: #fff; border-color: #00b8ee; }
+/*企业信息部分*/
 /*end 方案详情页plandetail*/
 
 /*方案列表及搜索页开始*/
-.PS .searchBox { width: 1200px;  background-color: #FFF; z-index: 888; padding-top: 24px; }
-.PS .searchBox #cancelSearchBox { position: absolute; top: 10px; right: 10px; }
-.PS .searchBox dl { border-bottom: 1px solid #f3f5f8; margin: 0 24px; }
-.PS .searchBox dt,.PS .searchBox dd,.PS .searchBox dd ul,.PS .searchBox dd ul li { display: inline-block; line-height: 66px; }
-.PS .searchBox dt { width: 200px; vertical-align: top; }
-.PS .searchBox dt i { display: inline-block; width: 4px; height: 26px; background-color: #fa703e; margin: 0 10px; position: relative; top: 6px; }
-.PS .searchBox dd { width: 900px; }
-.PS .searchBox dt span { float: right; margin: 19px 3px 15px; width: 60px; height: 28px; line-height: 28px; text-align: center; }
-.PS .searchBox dt span.active { background-color: #fa703e; color: #FFF; }
-.PS .searchBox dd ul li { margin: 0 10px; cursor: pointer; line-height: 28px; height: 28px; padding: 0px 10px 4px; }
-.PS .searchBox dd ul li.active { background-color: #fa703e; color: #FFF; }
-.PS .searchBox dd ul li i { text-indent: 10px; }
-.PS .searchBox .moreChoice { display: none; }
-.PS .searchBox .moreChoice { line-height: 30px; }
-.PS.bgBox { background-color: #f5f5f5; }
-.PS.bgBox .content { width: 1200px; margin: 0 auto; background-color: #FFF; }
-.PS nav { height: 48px; }
-.PS .navBar li { height: 48px; line-height: 48px; padding-top: 0; }
-.PS .searchArea { width: 800px; margin: 10px auto 20px; border: 1px solid #CCC; border-radius: 3px; height: 42px; position: relative; }
-.PS .searchText label { display: inline-block; width: 14%; height: 40px; line-height: 40px; text-indent: 10px; background-color: #FFF; border-radius: 3px 0 0 3px; border: 1px solid #fefefe; text-align: center; }
-.PS .searchText input { height: 40px; width: 86%; margin-left: -4px; border: none; background-color: #FFF; position: relative; top: -1px; }
-.PS .searchArea #searchText1 { width: 700px; }
-.PS .searchArea .search { width: 94px; height: 42px; left: initial; position: absolute; right: 0; top: -1px; background-color: #00b8ee; }
-
-/*搜索条目列表*/
-.PS .itemArea .sortRule { height: 46px; border-bottom: 2px solid #f5f5f5; }
-.PS .itemArea .sortRule li { display: inline-block; min-width: 90px; height: 46px; line-height: 46px; text-align: center; font-size: 16px; margin-right: 16px; }
-.PS .itemArea .sortRule li.default { color: #fa703e; font-size: 13px; }
-.PS .itemArea .itemList li { border-bottom: 2px solid #f5f5f5; }
-.PS .itemArea .leftP,.PS .itemArea .rightP { float: left; }
-.PS .itemArea .leftP { width: 30%; height: 220px; padding: 28px 24px; }
-.PS .itemArea .leftP img { height: 100%; width: 100%; }
-.PS .itemArea .rightP { width: 66%; }
-.PS .itemArea .rightP strong { display: inline-block; margin-bottom: 40px; }
-.PS .itemArea .rightP .info { display: inline-block; width: 70%; padding: 28px 0; }
-.PS .itemArea .rightP dl{margin-bottom: 0;}
-.PS .itemArea .rightP dl dt,.PS .itemArea .rightP dl dd { display: inline-block; height: 20px; line-height: 20px; }
-.PS .itemArea .rightP .shop { margin-top: 20px; }
-.PS .itemArea .rightP .price { display: inline-block; width: 26%; height: 164px; border-left: 1px solid #f5f5f5; margin: 28px 0; padding-left: 10px; text-align: center; float: right; }
-.PS .itemArea .rightP .price .money { font-size: 36px; color: #fa703e; }
-.PS .itemArea .rightP .price .money span { font-size: 16px; color: #999; }
-.PS .itemArea .rightP .price .money span.unit { color: #fa703e; }
-.PS .itemArea .rightP .price .btn-orange { background-color: #fa703e; margin-top: 16px; }
-.PS .pagination { width: 100%; }
+.homesearch-page{background-color: #f5f5f5;}
+.homesearch-page .container{background-color: #fff;}
+.homesearch-page .plannersearch-top{width: 100%;margin-top: 40px;background-color: #fff;}/*搜索框searchBox开始*/
+.homesearch-page .searchArea div{display: inline-block;height: 40px;line-height: 40px}
+.homesearch-page .searchText label{display: inline-block;width: 9%;height: 40px;line-height: 40px;text-indent: 10px;font-size: 16px; color: #333;background-color: #FFF;border-radius: 3px 0 0 3px;border: 1px solid #fefefe}
+.homesearch-page #searchText2 label{border-radius: 0;border-left: 1px solid #999}
+.homesearch-page .searchText input{height: 40px;width: 91%;margin-left: -4px;border: none;background-color: #FFF;position: relative;top: -2px}
+.homesearch-page #searchText1{width: 48%}
+.homesearch-page #searchText2{width: 42%;position: relative;left: -5px}
+.homesearch-page .search{width: 9%; background-color: #FA703E; height: 40px; border: none;position: relative;left: -10px;border-radius: 0 3px 3px 0;color: #FFF;font-size: 16px}
+.homesearch-page .searchBox{position: absolute; top: 210px; background-color: #FFF; z-index: 888;padding-top: 24px; display: none}
+.homesearch-page .searchBox dl{height: 66px;border-bottom: 1px solid #f3f5f8;margin: 0 24px}
+.homesearch-page .searchBox dt, .searchBox dd, .searchBox dd ul, .searchBox dd ul li{display: inline-block;line-height: 66px}
+.homesearch-page .searchBox dt{width: 200px;vertical-align: middle ;font-size: 16px; color: #666;}
+.homesearch-page .searchBox dt i{display: inline-block;width: 4px; height: 26px;background-color: #fa703e;margin: 0 10px;position: relative; top: 6px}
+.homesearch-page .searchBox dt span{float: right;margin: 17px 15px;width: 60px;height: 28px;line-height: 28px;text-align: center;background-color: #fa703e; color: #FFF}
+.homesearch-page .searchBox dd ul li{margin: 0 15px;font-size: 16px; color: #666;}
+.homesearch-page .searchBox dd ul li i{text-indent: 3px; font-size: 22px;}
+.homesearch-page nav{height: 48px}
+.homesearch-page .navBar li{height: 48px;line-height: 48px;padding-top: 0}
+.homesearch-page .searchBox{display: block; position: relative;top: 0;}
+.homesearch-page .searchArea{width: 800px;margin: 10px auto 20px;border: 1px solid #CCC;border-radius: 3px;height: 42px;-ms-box-shadow: -2px 3px 3px #BCC1C3;-moz-box-shadow: -2px 3px 3px #BCC1C3;-webkit-box-shadow: -2px 3px 3px #BCC1C3;-o-box-shadow: -2px 3px 3px #BCC1C3;box-shadow: -2px 3px 3px #BCC1C3;}
+.homesearch-page .searchArea #searchText1{width: 700px;}
+.homesearch-page .searchArea .search{width: 94px;left: 1px;top: -1px;}
+.homesearch-page .plannersearch-list{margin-top: 30px;}
+.homesearch-page .sortRule{height: 46px;border-bottom: 2px solid #f5f5f5;background-color: #fff;}
+.homesearch-page .sortRule li{display: inline-block;min-width: 90px;height: 46px;line-height: 46px;text-align: center;font-size: 16px;margin-right: 20px;}
+.homesearch-page .sortRule ul .default{font-size: 14px;color: #FD6F34;}
+.homesearch-page .searchlist-main{margin-top: 15px;}
+.homesearch-page .searchlist-main ul{margin-bottom: 0;}
+.homesearch-page .searchlist-main ul>li{float: left;width: 275px;height: 275px;background-color: #fff;margin-right: 23px;margin-bottom: 20px;}
+.homesearch-page .searchlist-main li:nth-child(4n){margin-right: 0;}
+.homesearch-page .searchlist-main ul>li img{width: 275px;height: 200px;}
+.homesearch-page .guide-name{padding: 10px;}
+.homesearch-page .guidename-top{position: relative;}
+.homesearch-page .guidename-top h3{font-size: 18px;font-weight: bold;color: #333;margin-bottom: 15px;}
+.homesearch-page .guidename-top h3 span{display: inline-block;font-size: 12px;color: #666;font-weight: normal;margin-left: 5px;}
+.homesearch-page .guidename-top>span{position: absolute;top: 5px;right: 0;}
+.homesearch-page .guidename-bottom span{display: inline;border: 1px solid #00B6EF;border-radius: 10px;padding: 2px 8px;text-align: center;color: #00B6EF;margin-right: 5px;}
+.homesearch-page .guidename-bottom .consult{float: right;width: 70px;height: 20px;background-color: #FB6F35;color: #fff;border: 0;border-radius: 0;margin-right: 0;}/*策划师搜索页列表主要内容searchlist-main结束*/
+.homesearch-page .itemList li { border-bottom: 2px solid #f5f5f5; }
+.homesearch-page .leftP, .itemArea .rightP { float: left; }
+.homesearch-page .leftP { width: 30%; height: 220px; padding: 28px 24px; }
+.homesearch-page .leftP img { height: 100%; width: 100%; }
+.homesearch-page .rightP { width: 66%; }
+.homesearch-page .rightP h3 { display: inline-block; margin-bottom: 40px; margin-top: 0; font-size: 20px; font-weight: bold;}
+.homesearch-page .rightP .info { display: inline-block; width: 70%; padding: 28px 0; }
+.homesearch-page .rightP .detail dl{margin-bottom: 0;}
+.homesearch-page .rightP dl dt, .itemArea .rightP dl dd { display: inline-block; height: 20px; line-height: 20px; }
+.homesearch-page .rightP .shop { margin-top: 20px; }
+.homesearch-page .rightP .price { display: inline-block; width: 26%; height: 164px; border-left: 1px solid #f5f5f5; margin: 28px 0; padding-left: 10px; text-align: center; float: right; }
+.homesearch-page .rightP .price .money { font-size: 36px; color: #fa703e; }
+.homesearch-page .rightP .price .money span { font-size: 16px; color: #999; }
+.homesearch-page .rightP .price .money span.unit { color: #fa703e; }
+.homesearch-page .rightP .price .btn-orange { background-color: #fa703e; margin-top: 16px; }
+.homesearch-page .pagination{width: 100%;padding: 20px 100px !important;margin: 0;}
 /*方案列表及搜索页结束*/
+
 
 /*支付流程页*/
 .stepBarBox{width:60%; margin:0 auto; max-width:900px;}
@@ -350,7 +379,6 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .menuLeft .menu li.active span{background-color: #fff;}
 .contentRight{min-height: 640px;}
 /*内容部分结束*/
-
 /*个人信息页*/
 .personInfo{width: 978px; padding:60px 80px;}
 .personInfo p{margin-bottom: 20px; text-indent: 40px;}
@@ -370,23 +398,19 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .orderAll .navSecond li:last-child{border-right: none;}
 .orderAll .navSecond li.active a{color:#00b8ee;}
 /*.orderAll .navSecond li a:hover{color:#fa703e;}*/
-
 .orderAll .searchBy{height: 76px; line-height: 76px;}
 .orderAll .searchBy input{border:1px solid #999; width:130px; height: 24px; margin-right: 15px; margin-left:10px; text-indent: 4px;}
 .orderAll .searchBy .jedate{background-image: url(../img/calendar.png); background-position: top right; background-repeat: no-repeat;}
 .orderAll .searchBy .btn{height: 24px; width:72px; border-radius: none; line-height: 24px; padding:0 20px; position: relative; top: -3px;}
-
 .orderAll .orderBy{height: 36px; border:1px solid #999; line-height: 36px; }
 .orderAll .orderBy select{width:80px; margin:0 20px;}
 .orderAll .orderBy span{float:right; margin-right: 30px;}
-
 .orderAll .orderList>li{border:1px solid #999; margin-top: 10px;}
 .orderAll .orderList>li .title{border-bottom: 1px solid #999; height: 38px; line-height: 38px; padding-left: 10px;}
 .orderAll .orderList>li input[type="checkbox"]{height: 14px; width:14px; margin:0 14px;}
 .orderAll .orderList>li .title h5{display: inline-block; height: 32px; line-height: 32px; font-size: 16px;}
 .orderAll .orderList>li .title h5 .contactMe{display: inline-block; width:32px; height: 32px; background-image: url(../../img/talking.png); float:right; margin-left: 10px;}
 .orderAll .orderList>li .title .status{margin-right: 30px;}
-
 .orderAll .productList>li{padding: 12px 20px 12px 0; background-color: #FFF;}
 .orderAll .productList>li input[type="checkbox"]{float:left; margin:36px 14px;}
 .orderAll .productList>li .productPic{ width:156px; height: 86px; float: left; padding-left: 10px;}
@@ -401,6 +425,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*.orderAll .productList>li .payBtn .btn-orange{background-color: #fa703e; border-radius: 0;}*/
 /*全部订单页结束*/
 /*个人中心全部结束*/
+
 
 
 /*end 游客端页面*/
@@ -630,12 +655,12 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*base controller*/
 .label-base input{outline: none;border: none;background: none;margin: 0;padding: 0;}
 .label-base{width:70%;}
-.label-base li{ display: inline-block; width:100px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0; position: relative;}
+.label-base li{ display: inline-block; width:100px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0; position: relative; -webkit-border-radius: 15px; -moz-border-radius: 15px; -ms-border-radius: 15px; -o-border-radius: 15px; border-radius: 15px; }
 .label-base li:after{content:'/'; position: absolute; right:-10px; color:#000;}
 .label-base li:last-child:after{content:''; position: absolute; right:-10px; color:#000;}
 .label-base li input{text-align: center; width:70%;}
 .label-base li input::-webkit-input-placeholder{color:#ddd;}
-.label-base li .glyphicon-remove-circle{float: right; font-size: 14px; color: #fff;}
+.label-base li .glyphicon-remove-circle{float: right; font-size: 14px; color: #fff; margin-left: -6px;}
 .label-base li>.addItemBtn{width:100%; height: 100%; background-color: #FFF; border-radius: 0; border:1px dotted #00b8ee; color:#00b8ee; cursor: pointer; }
 .imgBox{width:100%; height: 200px;display: inline-block; vertical-align: middle; position: relative;}
 .imgBox .glyphicon-remove-circle{position: absolute; font-size: 16px; color:#00b8ee; cursor: pointer; top: -8px; right: -8px; }

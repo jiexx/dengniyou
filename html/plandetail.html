@@ -1,7 +1,43 @@
+<!-- 企业信息 -->
+<div class="interpriseArea">
+	<div class="container">
+		<div class="interpriseInfo">
+			<div class="col-md-6">
+				<div><img src="" alt="企业logo"></div>
+				<!-- <div class="ad">我是广告语</div> -->
+			</div>
+			<div class="col-md-6">
+				<!-- <div><img src="" alt="经理/客服头像"></div> -->
+				<div class="contact">
+					<p>企业联系方式：<span class="tel">12345678</span></p>
+					<!-- <p>企业联系邮箱：<span class="email">1234@134.com</span></p> -->
+				</div>
+			</div>
+		</div>
+  	<div class="nav">
+  		<ul>
+  			<li><a href="">企业主页</a></li>
+  			<li><a href="">方案</a></li>
+  			<li><a href="">包车</a></li>
+  			<li><a href="">导游</a></li>
+  			<li><a href="">签证</a></li>
+  			<li><a href="">住宿</a></li>
+  			<li><a href="">保险</a></li>
+  			<li><a href="">机票</a></li>
+  			<li><a href="">活动</a></li>
+  			<li><a href="">景点</a></li>
+  			<li><a href="">美食</a></li>
+  		</ul>
+  	</div>
+	</div>  
+</div>
+
+<!-- 企业信息结束 -->
+
 <div class="container">
 	<br>
 	<div class="plandetail-page">
-	<div >
+	<div>
 		<div class="row">
 			<div class="col-md-5 calender">
 				<div id="calendar"></div>
@@ -34,7 +70,10 @@
 		</div>
 
 		<div class="row project">
-			<h1>${ $data.PlanInfo[0].PlanName}</h1>
+			<h1>${ $data.PlanInfo[0].PlanName} 
+				<a  class="btn btn-warning" href="#/templateplannew">定制</a>
+			</h1>
+			
 			<div class="project-main clearfix">
 				<div class="col-md-5">
 					<div class="imgBox">
@@ -43,8 +82,7 @@
 					<div class="planner">
 						<h3>策划师:${$data.PlanInfo[0].UserName}<span class="vipIcon"></span></h3>
 						<span class="name" id="planerName">${$data.PlanInfo[0].UserMobile}</span> 
-						<a  class="btn btn-warning" id="TALK" target="_blank">咨询</a>
-						<a  class="btn btn-warning" href="#/templateplannew">定制</a>
+						<a  class="btn btn-warning" id="TALK" target="_blank">咨询</a>						
 					</div>
 				</div>
 				<div class="col-md-5">
@@ -211,8 +249,9 @@
 				<!-- 评论区 -->
 			  <div class="commentOn" id="plan-comment">
 
-			  </div><!--end  评论区 --
+			  </div><!--end  评论区 -->
 			</div>
-		</div>
+		</div> <!-- end plandetail-main -->
 	</div>
-</div><!-- end container -->
+	</div> <!-- end plandetail-page -->
+</div> <!-- end container -->
