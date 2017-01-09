@@ -30,6 +30,29 @@
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
         });
     }
+
+    var initHomeList = function (param) {
+        return {
+            Title: "Meet Joe Black",
+            Languages: [
+                { Name: "English" },
+                { Name: "French" }
+            ]
+        },
+        {
+            Title: "Eyes Wide Shut",
+            Languages: [
+                { Name: "French" },
+                { Name: "German" },
+                { Name: "Spanish" }
+            ]
+        };
+    };
+    var ctrlHomeList = function(response, realView) {
+
+         var i = 0;
+
+    };
 	
 	var ctrlHome = function(response, realView) {
 		$('#carousel-generic').carousel();
@@ -38,7 +61,25 @@
             $.rogerLocation('#/search?key='+k);
         });
 
+        var item = $.tmplItem($('.carousel-caption'));
+        console.log(item); 
+    
+        $('.nav-buttons .theme').on('click','li',function(){
+          var text = $(this).text();
+          $(this).parent().prev().text(text);
+          var changeData = item.data.PlansByLabel[text].__values;
+          console.log(changeData);
+          
+        });
+        $('.nav-buttons .country').on('click','li',function(){
+          var text = $(this).text();
+          $(this).parent().prev().text(text);
+          var changeData = item.data.PlansByCountry[text].__values;
+          console.log(changeData);
+          
+        });
 
+        $.rogerTrigger('#movieList', '#/homelist', {Plan:1});
 		
 		realView.rogerCropImages();
         frameCtrl();
@@ -251,27 +292,45 @@
 
     };
 
-    var ctrlOrderlist = function(response, realView) {
-        frameCtrl();
+    var ctrlOrderlist = function (response, realView) {
 
+        $("#order-a_all").find("a").each(function () {
+            var el = $(this);
+
+            el.rogerOnceClick(null, function () {
+                var user = $.rogerGetLoginUser();
+                if(!user) {
+                    $.rogerShowLogin();
+                    return;
+                }
+                data_href = el.attr("data-value");
+                $.rogerLocation(data_href+'&userID='+user.UserID);
+            });
+
+        });
+
+
+        frameCtrl();
         $('#confirm').rogerOnceClick(null, function () {
-            var orderid= $('#confirm').data('id');
-            var status= $('#confirm').data('status');
+            var orderid = $('#confirm').data('id');
+            var status = $('#confirm').data('status');
             var user = $.rogerGetLoginUser();
-            if('1'==status) {
+            if ('1' == status) {
                 var newWin = window.open('about:blank');
-                $.rogerPost('/pay',buy, function (respJSON) {
-                    if( respJSON.ERR) {
-                        $.rogerNotice({Message:'生成订单有错,错误码:'+respJSON.ERR});
+                $.rogerPost('/pay', buy, function (respJSON) {
+                    if (respJSON.ERR) {
+                        $.rogerNotice({Message: '生成订单有错,错误码:' + respJSON.ERR});
                         newWin.close();
-                    }else {
+                    } else {
                         newWin.location.href = respJSON.url;
                     }
                 })
             }
-            if('4'==status) {
+            if ('4' == status) {
 
-                $.rogerPost('/update/order',{OrderID:orderid,Status:6, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
+                $.rogerPost('http://123.59.144.44/travel/order/confirmFinish', {
+                    orderID: orderid,
+                }, function () {
                     $.rogerRefresh();
                 });
             }
@@ -282,8 +341,27 @@
 
     var ctrlOrderdetail = function(response, realView) {
 
+        // console.log(JSON.stringify(response));
         realView.rogerCropImages();
         frameCtrl();
+
+        $('#complain-commit').rogerOnceClick(null, function () {
+            var Reason = $('#Reason').val();
+            var ApplyRefund = $('#ApplyRefund').val();
+            var RefundDec = $('#RefundDec').val();
+            var OrderID = response.OrderDetail[0].OrderID
+
+            var user = $.rogerGetLoginUser();
+            complaintdetail = {"Reason":Reason,"ApplyRefund":ApplyRefund,"UserID":user.UserID,"OrderID":OrderID};
+            $.rogerPost('/new/ordercomplaint', complaintdetail, function (respJSON) {
+                if (respJSON.ERR) {
+                    $.rogerNotice({Message: '投诉提交失败:' + respJSON.ERR});
+                } else {
+                    window.location.reload();
+                }
+            });
+
+        });
     };
 
     var ctrlPlanSearch = function(response, realView) {
@@ -573,6 +651,7 @@
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
+        '#/homelist':                  {fragment: 'fragment/home-list.html',           init: initHomeList,                                                    ctrl: ctrlHomeList},
 
         '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                  ctrl: ctrlTemplateplanNew},
 

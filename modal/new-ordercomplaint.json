@@ -1,0 +1,15 @@
+{
+	"Complaint": {
+		"sql": "INSERT INTO travelorderdb.tab_ordercomplaint ( OrderID, UserID, IMUserID, ApplyRefund, ActualRefund, Status, Reason, CreateTime, UpdateTime, BankName, AccountNum, IDNum,AccountName ) VALUES (  ?, ?, '', ?, 0, 1, ?, NOW(), NOW(), ?, ?, ?,?  )",
+		"params": [
+			"OrderID",
+			"UserID",
+			"ApplyRefund",
+			"Reason",
+			"BankName",
+			"AccountNum",
+			"IDNum",
+			"AccountName"
+		]
+	}
+}
