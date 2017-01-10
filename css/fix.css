@@ -435,12 +435,12 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .orderAll .orderBy span{float:right; margin-right: 30px;}
 .orderAll .orderList>li{border:1px solid #999; margin-top: 10px;}
 .orderAll .orderList>li .title{position:relative; border-bottom: 1px solid #999; height: 38px; line-height: 38px; padding-left: 10px; margin-left: 0; margin-right: 0;}
-.orderAll .orderList>li .title .num{position: absolute; right: 15%; }
 .orderAll .orderList>li input[type="checkbox"]{height: 14px; width:14px; margin:0 14px;}
 .orderAll .orderList>li .title h5{display: inline-block; font-size: 16px;}
 .orderAll .orderList>li .title h5 .contactMe{display: inline-block; width:32px; height: 32px; background-image: url(../../img/talking.png); float:right; margin-left: 10px;}
 .orderAll .orderList>li .title .status{margin-right: 30px;}
 .orderAll .productList>li{padding: 12px 20px 12px 0; background-color: #FFF;}
+.orderAll .productList>li .nums{margin-left: -25px;}
 .orderAll .productList>li input[type="checkbox"]{float:left; margin:36px 14px;}
 .orderAll .productList>li .productPic{ /*width:156px; height: 86px;*/ float: left; padding-left: 10px;}
 .orderAll .productList>li .productPic img{width:156px; height: 86px;}
@@ -449,7 +449,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .orderAll .productList>li .productText h4{margin-bottom: 4px; margin-top: 0;}
 .orderAll .productList>li .productText .description{margin-bottom: 12px;}
 .orderAll .productList>li .productText p{margin-bottom: 0;}
-.orderAll .productList>li .payBtn{float:right; height: 80px; }
+/*.orderAll .productList>li .payBtn{float:right; height: 80px; }*/
 .orderAll .productList>li .payBtn p{color:#00B8EE; /*height: 50px; line-height: 50px;*/ font-size: 18px; margin-bottom: 10px; text-align: center;}
 .orderAll-guide .productList>li .payBtn p{color:#fa703e;}
 /*.orderAll .productList>li .payBtn .btn-orange{background-color: #fa703e; border-radius: 0;}*/
