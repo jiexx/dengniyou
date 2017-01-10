@@ -11,6 +11,7 @@ var db = require("./db");
 var modal = require("./modal2");
 var FdfsClient = require('fdfs');
 var pay = require('./pay');
+var http= require("http");
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true })); // for parsing application/x-www-form-urlencoded
@@ -167,24 +168,69 @@ app.post('/new/service/car', upload.array(), function(req, res) {
     /*request.get('http://10.101.1.36:8080/travel/order/addOrder',function (error, response, body) {
      console.log();
      });*/
-    request(
+
+
+    request.post(
         {
+            url: 'http://10.101.1.36:8080/travel/service/uploadServiceWeb',
             method: "POST",
-            headers: {
-                "content-type": "multipart/form-data","boundary":'----#$%^&*------'
-            },
-            url: 'http://10.101.1.36:8080/travel/service/uploadService',
-            buff: req.body
-        },
+            json: req.body.reqUploadService
+        }
+        ,
         function (error, response, body) {
             if (!error && response.statusCode == 200 && body.datas) {
-                res.send(JSON.stringify({ERR:false}));
-            } else{
-                res.send(JSON.stringify({ERR:body.errcode}));
-            }
 
+                res.send(JSON.stringify({url:+false}));
+            }else {
+                res.send(JSON.stringify({ERR:+body.errcode}));
+            }
         }
     );
+
+    // var opt = {
+    //     host:'10.101.1.36',
+    //     port:'8080',
+    //     path:"/travel/service/uploadService",
+    //     method: "POST",
+    //     headers: {
+    //         "Content-Type": 'multipart/form-data'
+    //     }
+    // };
+    //
+    // data = req.body
+    // var req = http.request(opt, function (serverFeedback) {
+    //     if (serverFeedback.statusCode == 200) {
+    //         var body = "";
+    //         serverFeedback.on('data', function (data) {
+    //             body += data;
+    //         })
+    //             .on('end', function () {
+    //                 res.send(body);
+    //             });
+    //     }
+    //     else {
+    //         res.send("error");
+    //     }
+    // });
+
+    // request(
+    //     {
+    //         method: "POST",
+    //         headers: {
+    //             "content-type": "multipart/form-data","boundary":'----#$%^&*------'
+    //         },
+    //         url: 'http://10.101.1.36:8080/travel/service/uploadService',
+    //         buff: req.body
+    //     },
+    //     function (error, response, body) {
+    //         if (!error && response.statusCode == 200 && body.datas) {
+    //             res.send(JSON.stringify({ERR:false}));
+    //         } else{
+    //             res.send(JSON.stringify({ERR:body.errcode}));
+    //         }
+    //
+    //     }
+    // );
 });
 var usr = [];
 function registe(req,res) {
