@@ -206,10 +206,18 @@ function registe(req,res) {
         return;
     }
     if(usr[i].captcha == req.body.captcha) {
-        db.registe(req.body, function(error, results){
+        db.getUser(req.body, function(error, results){
             if(!error) {
-                console.log(JSON.stringify(results));
-                res.send(JSON.stringify({message:'注册成功请登录'}));
+                if((result && results.length == 0) || !results) {
+                    db.registe(req.body, function(error, results){
+                        if(!error) {
+                            console.log(JSON.stringify(results));
+                            res.send(JSON.stringify({message:'注册成功请登录'}));
+                        }
+                    });
+                }else {是
+                    res.send(JSON.stringify({message:'重复注册'}));
+                }
             }
         });
         usr.splice(i,1);
@@ -218,13 +226,17 @@ function registe(req,res) {
     }
 }
 app.post('/login', upload.array(), function(req, res) {
-    if(req.body.captcha && req.body.loginName[1] && req.body.loginPass[1]) {
-        req.body.loginName = req.body.loginName[1];
-        req.body.loginPass = req.body.loginPass[1];
-        registe(req,res);
-        return;
+    if( req.body.loginName[1] && req.body.loginPass[1] && req.body.loginName[1].length > 0) {
+        if(req.body.captcha && req.body.captcha.length > 0) {
+            req.body.loginName = req.body.loginName[1];
+            req.body.loginPass = req.body.loginPass[1];
+            registe(req,res);
+            return;
+        }else {
+            res.send(JSON.stringify({message:'验证码不能为空'}));
+        }
     }
-    if(req.body.loginName[0] && req.body.loginPass[0]){
+    if(req.body.loginName[0] && req.body.loginPass[0] && req.body.loginName[0].length > 0){
         req.body.loginName = req.body.loginName[0];
         req.body.loginPass = req.body.loginPass[0];
         db.login(req.body, function(error, results){

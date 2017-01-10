@@ -194,6 +194,17 @@ exports.login = function(item, callback) {
 		console.log(sql);
 	});
 };
+exports.getUser = function(item, callback) {
+    pool.getConnection(function(err, connection) {
+        if(err) {
+            console.log(err);
+            callback(true);
+            return;
+        }
+        var sql = "SELECT * FROM traveldb.tab_userinfo WHERE UserMobile = ?; ";
+        exec(connection, sql, [item.loginName], callback);
+    });
+};
 exports.registe = function(item, callback) {
     pool.getConnection(function(err, connection) {
         if(err) {
