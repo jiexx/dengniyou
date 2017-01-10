@@ -149,7 +149,7 @@
 											<span class="productNum">${datas[i].traveldays}</span>
 										</p>
 										<button type="button" class="btn btn-warning btn-orange">
-											{{if datas[i].status == 1}}立即支付{{/if}}
+											{{if datas[i].status == 1}}<span id="confirm">立即支付</span>{{/if}}
 											{{if datas[i].status == 2 }}接单{{/if}}
 											{{if datas[i].status == 3}}完成{{/if}}
 											{{if datas[i].status == 4}}确认完成{{/if}}

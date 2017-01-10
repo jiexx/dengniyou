@@ -116,7 +116,7 @@
 					{{each(i,order) datas}}
 					<li>
 						<div class="row title">
-							<h5 class="col-md-9">${datas[i].username} <span class="glyphicon glyphicon-comment"></span></h5>
+							<h5 class="col-md-8">${datas[i].username} <span class="glyphicon glyphicon-comment"></span></h5>
 							<span class="col-md-2 num">出行人数</span>
 							<span class="col-md-1 fr status">
 								{{if datas[i].status == 1}}待支付{{/if}}
@@ -131,7 +131,7 @@
 						<div class="content">
 							<ul class="productList clearfix">
 								<li class="clearfix">
-									<div class="col-md-9">
+									<div class="col-md-8">
 										<div class="productPic">
 											<a href="#/orderdetail?OrderID=${datas[i].orderid}&UserType=1">
 												<img src="${ $data.IMGHOST + picurl}" alt="">
@@ -144,13 +144,13 @@
 											<p>${datas[i].starttime}-${datas[i].starttime}</p>
 										</div>
 									</div>
-									<div class="col-md-2 nums">
+									<div class="col-md-3 nums">
 										<span class="productNum">${datas[i].traveldays}</span>
 									</div>
 									{{if (datas[i].status == 1 )}}
 									<div class="col-md-1 payBtn" id="payBtn">
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span></p>
-										<button id="confirm" data-id="${datas[i].orderid}" data-status="${datas[i].status}" type="button" class="btn btn-warning btn-orange">
+										<button id="confirm" data-id="${datas[i].orderNo}" data-status="${datas[i].status}" data-name="${datas[i].ServiceTripName}" type="button" class="btn btn-warning btn-orange">
 											立即支付
 										</button>
 									</div>

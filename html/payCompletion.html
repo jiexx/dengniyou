@@ -14,10 +14,19 @@
 <!-- 公共header部分结束 -->
 <!-- 进度条部分 -->
 {{each OrderDetail }}
-${Status}
   <div class="stepBarBox">
     {{if Status==5}}<h2>已关闭</h2>
-    <p>关闭原因：${CloseReason}</p>{{else}}
+    <p>关闭原因：${CloseReason}</p>
+    {{else Status==1}}
+    <div class="stepBarimg">
+      <img src="img/payStepBar2.png" alt="">
+    </div>
+    <ul class="stepBarText">
+      <li>提交订单</li>
+      <li class="active">支付方式</li>
+      <li class="">支付完成</li>
+    </ul>
+    {{else}}
     <div class="stepBarimg">
       <img src="img/payStepBar3.png" alt="">
     </div>
@@ -35,7 +44,15 @@ ${Status}
 <div class="step" > 
   <!-- 支付完成界面 -->
   <div class="stepPart active" id="partThree">
-      <h3 class="partTitle">订单信息 <!-- <small class="fr">导游将在24小时内接单</small> --></h3>
+      <h3 class="partTitle">订单信息 
+      {{if Status==1}}<small class="fr">订单状态：未支付</small>
+      {{else Status==2}}<small class="fr">订单状态：待接单</small>
+      {{else Status==3}}<small class="fr">订单状态：待完成</small>
+      {{else Status==4}}<small class="fr">订单状态：待评价</small>
+      {{else Status==5}}<small class="fr">订单状态：已关闭</small>
+      {{else Status==6}}<small class="fr">订单状态：已结算</small>
+      {{/if}}
+      </h3>
       <div class="content">
         <h4>${UserName}</h4>
         <div class="projectInfo clearfix">
@@ -47,7 +64,35 @@ ${Status}
             <p>${countryName} ${cityName}</p>
           </div>
           <div class="scheduleOver fr">
-            <h4>行程概览 <a href="#">查看></a></h4>
+            <h4>行程概览 
+              <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#previewdiv" style="margin-bottom: 8px; background-color: #FF6600; padding: 5px;">查看</button>
+            </h4>
+            <!-- 行程预览弹出框 -->
+            <div class="modal fade" id="previewdiv">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title">行程概览</h4>
+                  </div>
+                  <div class="modal-body">
+                    <ul>
+                      <li>
+                        <div class="tit">
+                          <span class="col-md-1"></span>
+                          <h3 class="col-md-11">第一天</h3>
+                        </div>
+                        <div class="bod">
+                          <span class="col-md-1"></span>
+                          <p>点击下面的按钮即可通过 JavaScript 启动一个模态框。此模态框将从上到下、逐渐浮现到页面前。</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div><!-- /.modal -->
+            <!--  end 行程预览弹出框 -->
             <div class="row">
               <div class="col-sm-8">
                 <p>出发 <span>${starttime}</span></p>
@@ -159,7 +204,7 @@ ${Status}
           {{/if}}
           {{/if}}
           {{if Status==1}}
-          <button class="btn btn-warning">立即支付</button>
+          <button class="btn btn-warning" id="confirm">立即支付</button>
           {{/if}}
           {{if Status==1 || Status==2}}
           <button class="btn btn-warning">取消订单</button>
@@ -201,14 +246,14 @@ ${Status}
             </div>
           </div>
           <div class="col-sm-9">
-            <textarea id="Reason"class="form-control" rows="5"></textarea>
+            <textarea id="Reason" class="form-control" rows="5"></textarea>
           </div>
         </div>
         <div class="row">
           <div class="col-sm-3">
             <div class="radio">
               <label>
-                <input type="radio" id="optionsRadios1" name="optionsRadios" value="option1" checked>
+                <input type="radio" id="returnOption1" name="optionsRadios" value="option1" checked>
                 不需要退款
               </label>
             </div>
@@ -218,12 +263,12 @@ ${Status}
           <div class="col-sm-2">
             <div class="radio">
               <label>
-                <input type="radio" id="optionsRadios2" name="optionsRadios" value="option1" checked>
+                <input type="radio" id="returnOption2" name="optionsRadios" value="option1" checked>
                 需要退款
               </label>
             </div>
           </div>
-          <div class="col-sm-9" style="margin-top: 12px;">
+          <div class="col-sm-9" style="margin-top: 12px;" id="returnOption2Con">
             <div class="row">
               <div class="col-sm-3">退款金额</div>
               <div class="col-sm-9"><input id="ApplyRefund" type="text" class="form-control"></div>
@@ -275,7 +320,12 @@ ${Status}
 
 <script type="text/javascript">
 	$(function(){
-    
+    $('#returnOption1').on('click',function(){
+      $("#returnOption2Con").hide();
+    });
+    $('#returnOption2').on('click',function(){
+      $("#returnOption2Con").show();
+    });
 	});
 </script>
 

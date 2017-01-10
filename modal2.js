@@ -6,8 +6,8 @@ var fdfs = new FdfsClient({
     // tracker servers
     trackers: [
         {
-            //host: '10.101.1.165',
-			host: '123.59.144.47',//'172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
+            host: '10.101.1.165',
+			// host: '123.59.144.47',//'172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
             port: 22122
         }
     ],
@@ -34,7 +34,7 @@ function doSql(funcArgu, onFinish) {
 			onFinish(true);
 			return;
 		}
-		//console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
+		console.log("doSql: "+funcArgu.sql+ "   "+ JSON.stringify(funcArgu.params));
 		conn.query(funcArgu.sql, funcArgu.params, function(err, results) {
 			conn.release(); // always put connection back in pool after last query
 			//////console.log(JSON.stringify(results));

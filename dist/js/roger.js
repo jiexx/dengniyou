@@ -276,8 +276,8 @@ $(function () {
                     var phone = $('#loginNameCaptcha').val();
                     $.rogerPost('/sms/get', {mobile:phone}, function (respJSON) {
                         $('#message').html(respJSON.message);
-                    });
-                });
+                    })
+                })
             }
 			window._rogerLoginForm = loginFormID;
 		},

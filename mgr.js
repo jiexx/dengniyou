@@ -115,6 +115,20 @@ app.post('/pay', upload.array(), function(req, res) {
 		}
 	);
 });
+
+//立即支付的时候
+app.post("/pay2",function (req, res) {
+    var params = req.body;
+    var usr_redirect_url = pay.buildDirectPayURL({
+        out_trade_no: ''+ params.orderNo,
+        subject: 'dengniyou-order',// 'order-312412',//body.datas.orderId,
+        body:  params.ServiceTripName,//body.datas.orderId,
+        total_fee:  '0.01',//body.datas.costMoney
+    });
+    res.send(JSON.stringify({url:usr_redirect_url}));
+
+});
+
 app.post('/notify', function (req, res) {
     var params = req.body;
     console.log("params type:" + typeof params);
@@ -143,6 +157,34 @@ app.post('/notify', function (req, res) {
             console.error(err);
         }
     });
+});
+
+
+app.post('/new/service/car', upload.array(), function(req, res) {
+    //var js = fs.readFileSync('./fakeorder', 'utf8');
+    //var fake = JSON.parse(js);
+    //WRITE ORDER INFO.123.59.144.44
+    /*request.get('http://10.101.1.36:8080/travel/order/addOrder',function (error, response, body) {
+     console.log();
+     });*/
+    request(
+        {
+            method: "POST",
+            headers: {
+                "content-type": "multipart/form-data","boundary":'----#$%^&*------'
+            },
+            url: 'http://10.101.1.36:8080/travel/service/uploadService',
+            buff: req.body
+        },
+        function (error, response, body) {
+            if (!error && response.statusCode == 200 && body.datas) {
+                res.send(JSON.stringify({ERR:false}));
+            } else{
+                res.send(JSON.stringify({ERR:body.errcode}));
+            }
+
+        }
+    );
 });
 var usr = [];
 function registe(req,res) {
