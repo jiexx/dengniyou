@@ -37,7 +37,7 @@
         return param;
     };
     var ctrlHomeList = function(response, realView) {
-         var i = 0;
+        realView.rogerCropImages();
     };
 	
 	var ctrlHome = function(response, realView) {
@@ -84,8 +84,8 @@
         var MyMar = setInterval(Marquee,speed); 
         marqueeE.onmouseover = function(){clearInterval(MyMar)} 
         marqueeE.onmouseout = function(){MyMar = setInterval(Marquee,speed)}
-        //跑马灯效果结束 
 
+        //跑马灯效果结束
         //左边栏工具条
         var $btn=$(".fixedPos");
         checkScrollT($(window).height());
