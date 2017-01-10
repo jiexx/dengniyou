@@ -1042,7 +1042,7 @@ $(function () {
                 serviceStatus: '',
                 serviceMethod: '',
                 picURLs:[],
-                coverURL:'',
+                coverURL:'11122.jpg',
                 DetailServiceMethod: [ ],
                 Facility: [
                     {
@@ -1151,9 +1151,9 @@ $(function () {
             IMGHOST: "http://123.59.144.47/"
         };
     },ctrlServiceCarEdit=function(DetailMain, realView){
-         var usr =$.rogerGetLoginUser();
 
         $('#save').rogerOnceClick(DetailMain, function(e){
+            var usr =$.rogerGetLoginUser();
             console.log('test');
             temp = e.data.DetailMain;
 
@@ -1187,6 +1187,7 @@ $(function () {
         });
 
          $('#publish').rogerOnceClick(DetailMain, function(e){
+             var usr =$.rogerGetLoginUser();
              console.log('test');
              temp = e.data.DetailMain;
 

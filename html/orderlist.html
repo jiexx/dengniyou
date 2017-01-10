@@ -115,7 +115,9 @@
 					{{/if}}
 					{{each(i,order) datas}}
 					<li>
-						<div class="title"><h5>${datas[i].username} <span class="contactMe"></span></h5>
+						<div class="title">
+							<h5>${datas[i].username} <span class="glyphicon glyphicon-comment"></span></h5>
+							<span>出行人数</span>
 							<span class="fr status">
 								{{if datas[i].status == 1}}待支付{{/if}}
 								{{if datas[i].status == 2}}待接单{{/if}}
@@ -142,7 +144,10 @@
 									</div>
 									{{if datas[i].status != 5}}
 									<div class="payBtn" id="payBtn" style="text-align: right">
-										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span> * <span class="productNum">${datas[i].traveldays}</span></p>
+										<p>￥
+											<span class="productPrice">${datas[i].realCostMoney}</span> 
+											<span class="productNum">${datas[i].traveldays}</span>
+										</p>
 										<button type="button" class="btn btn-warning btn-orange">
 											{{if datas[i].status == 1}}立即支付{{/if}}
 											{{if datas[i].status == 2 }}接单{{/if}}
@@ -153,14 +158,11 @@
 									</div>
 									{{/if}}
 								</li>
-
 							</ul>
 						</div>
 					</li>
 					{{/each}}
-				</ul>
-
-			 
+				</ul>			 
 			</div>
         </div>
       </div>    

@@ -23,6 +23,7 @@
         $('#usercenter').rogerOnceClick(null, function () {
             var user = $.rogerGetLoginUser();
             if(!user) {
+                $.rogerLogin('#homeLogin', '/login');
                 $.rogerShowLogin();
                 return;
             }
@@ -36,9 +37,7 @@
         return param;
     };
     var ctrlHomeList = function(response, realView) {
-
          var i = 0;
-
     };
 	
 	var ctrlHome = function(response, realView) {
@@ -73,11 +72,8 @@
         //推荐区跑马灯效果
         var marqueeE = document.getElementById("solution"); 
         var marqueeE1 = document.getElementById("RunTopic");
-        // var demo2 = document.getElementById("RunTopic2"); 
         var speed=200;    //数值越大滚动速度越慢 
-        // demo2.innerHTML = demo1.innerHTML 
         function Marquee(){ 
-            //console.log(marqueeE.scrollLeft,marqueeE1.offsetWidth,marqueeE.offsetWidth,marqueeE.scrollLeft);
             if(marqueeE1.offsetWidth<=marqueeE.scrollLeft+1100){               
                 marqueeE.scrollLeft=0
             }
@@ -108,16 +104,10 @@
             }
         } 
         // 左边栏工具条结束
-
-
-        //$.rogerTrigger('#movieList', '#/homelist', {Plan:1});
-		
 		realView.rogerCropImages();
         frameCtrl();
     };
     var ctrlHomeSearch = function(response, realView) {
-
-
         realView.rogerCropImages();
         frameCtrl();
     };
@@ -155,7 +145,7 @@
 		});
         pickr.selectedDates.push('');
 		realView.rogerCropImages();
-        frameCtrl();
+        // frameCtrl();
 
         if( response.PlanInfo[0].Policy ){
             $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
@@ -179,6 +169,16 @@
                 window.open(respJSON.url, '_blank');
             })
         })*/
+        $('#BUYNOW').rogerOnceClick(null,function (e) {
+            var usr = $.rogerGetLoginUser();
+            //var href = $(this).attr('data_href');
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+
+        });
 
 	};
     function addDays(date, days) {
@@ -306,7 +306,6 @@
 
         $("#order-a_all").find("a").each(function () {
             var el = $(this);
-
             el.rogerOnceClick(null, function () {
                 var user = $.rogerGetLoginUser();
                 if(!user) {
@@ -316,7 +315,6 @@
                 data_href = el.attr("data-value");
                 $.rogerLocation(data_href+'&userID='+user.UserID);
             });
-
         });
 
         frameCtrl();
@@ -670,10 +668,10 @@
 	$.rogerRouter({
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
-		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
-        '#/homelist':                  {fragment: 'fragment/home-list.html',           init: initHomeList,                                                    ctrl: ctrlHomeList},
+		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			ctrl: ctrlPlandetail},
+        '#/homelist':                  {fragment: 'fragment/home-list.html',           init: initHomeList,                          ctrl: ctrlHomeList},
 
-        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                  ctrl: ctrlTemplateplanNew},
+        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                 ctrl: ctrlTemplateplanNew},
 
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
         '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
@@ -681,11 +679,10 @@
 
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
-		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment},
+		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						ctrl: ctrlComment},
         '#/orderdetail':            {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
-	    '#/plansearch':             {view:'planSearch.html',                                  rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
-        '#/userinfo':               {view:'userInfo.html',                                     rootrest:'/user/userinfo',               ctrl: ctrlUserInfo}
+	    '#/plansearch':             {view:'planSearch.html',                                  rootrest:'/plan/plansearch',          ctrl: ctrlPlanSearch},
+        '#/userinfo':               {view:'userInfo.html',                                     rootrest:'/user/userinfo',           ctrl: ctrlUserInfo}
     });
-	
 	
 })();

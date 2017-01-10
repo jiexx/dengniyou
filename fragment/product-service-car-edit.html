@@ -82,7 +82,7 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{if $data.DetailMain.coverURL}}
+				{{if DetailMain.coverURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
 						<img src="${$data.DetailMain.coverURL}">
@@ -108,6 +108,12 @@
 		    <div class="col-sm-10 col-md-11">
 		      <textarea name="" data-value="/Policy/${0}/Description" class="form-control">${$data.DetailMain.Policy[0].Description}</textarea>
 		    </div>
+			  <input id="PolicyName" type="text" class="form-control" value="${$data.DetailMain.Policy[0].PolicyName}" data-value="/DetailMain/Policy/${0}/PolicyName">
+			  <input id="Day1" type="text" class="form-control" value="${$data.DetailMain.Policy[0].Day1}" data-value="/DetailMain/Policy/${0}/Day1">
+			  <input id="Day2" type="text" class="form-control" value="${$data.DetailMain.Policy[0].Day2}" data-value="/DetailMain/Policy/${0}/Day2">
+			  <input id="Day3" type="text" class="form-control" value="${$data.DetailMain.Policy[0].Day3}" data-value="/DetailMain/Policy/${0}/Day3">
+			  <input id="Day4" type="text" class="form-control" value="${$data.DetailMain.Policy[0].Day4}" data-value="/DetailMain/Policy/${0}/Day4">
+			  <input id="PolicyID" type="text" class="form-control" value="${$data.DetailMain.Policy[0].PolicyID}" data-value="/DetailMain/Policy/${0}/PolicyID">
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
