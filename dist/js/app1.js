@@ -174,13 +174,44 @@
         var result = new Date(date);
         result.setDate(result.getDate() + days);
         return result;
-    }
+    };
+    function checkDayInDisable(day, len, disable) {
+        var begin = new Date(day);
+        var end = addDays(day, len-1);
+        for(var i in disable) {
+            var start = new Date(disable[i].from);
+            var close = new Date(disable[i].to);
+            if((begin >= start && end <= close) || (begin >= start && begin <= close) || (end >= start && end <= close)){
+                return true;
+            }
+        }
+        return false;
+    };
     var ctrlPlanpay1 = function(response, realView) {
     	var days = parseInt(response.PlanInfo[0].PlanDays);
         var dates = [];
+        var disday = [];
+        if(response.PlanCalender.length > 0 && response.PlanCalender[0].Calender) {
+            var arr = response.PlanCalender[0].Calender.split(',');
+            arr = arr.filter( function( item, index, inputArray ) {
+                return inputArray.indexOf(item) == index;
+            });
+            for(var i in arr) {
+                var a = arr[i].split(';');
+                if(a.length == 2) {
+                    disday.push({from: a[0], to: a[1]});
+                }
+            }
+        }
         var pickr = $("#calendar").flatpickr({
             inline: true,
+            disable: disday,
             onChange:function (dateObj, dateStr) {
+                if(checkDayInDisable(dateStr, days, disday)) {
+                    pickr.selectedDates.splice(0,pickr.selectedDates.length);
+                    pickr.redraw();
+                    return;
+                }
             	for(var i = 1 ; i < days ; i++) {
                     pickr.selectedDates.push(addDays(dateStr, i));
 				}

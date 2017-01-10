@@ -1,3 +1,4 @@
 {
-	"PlanInfo": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE PlanID=?;",	"params":["PlanID"]}
+	"PlanInfo": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE PlanID=?;",	"params":["PlanID"]},
+	"PlanCalender": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_plancalender`  WHERE PlanID=?;",	"params":["PlanID"]}
 }

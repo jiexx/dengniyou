@@ -173,21 +173,28 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", '$location', function
         if(data.code != 200) {
             return;
         }*/
+    var height = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
+    var width = "innerWidth" in window ? window.innerWidth : document.documentElement.offsetWdith;
+
         WebIMWidget.init({
             appkey: no,
             token: token,
             style: {
-                width: 600,
                 positionFixed: true,
-                bottom: 20,
+                width:600,
+                height:500,
+                bottom: (height/2 - 250),
+                left: (width/2 - 400),
             },
             displayConversationList: true,
             conversationListPosition: WebIMWidget.EnumConversationListPosition.right,
             //hiddenConversations: [{type: WebIMWidget.EnumConversationType.PRIVATE, id: 'bb'}],
             onSuccess: function (id) {
-                WebIMWidget.setUserInfoProvider(function (targetId, obj) {
+                /*WebIMWidget.setUserInfoProvider(function (targetId, obj) {
                     obj.onSuccess({id: uid, name: uname, portraitUri: picurl});
-                });
+                });*/
+                WebIMWidget.providerdata.currentUserInfo = {userId:uid, name:uname, portraitUri:picurl };
+                //console.log(1,WebIMWidget.providerdata.currentUserInfo);
                 WebIMWidget.setConversation(WebIMWidget.EnumConversationType.PRIVATE, tid, '对话中');
                 WebIMWidget.show();
             },
@@ -195,14 +202,26 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", '$location', function
                 console.log("error:" + error);
             }
         });
+    WebIMWidget.onReceivedMessage = function(message) {
+        //console.log(message);
+        //console.log(2,WebIMWidget.providerdata.currentUserInfo);
+        if(message.content.user) {
+            WebIMWidget.setUserInfoProvider(function (targetId, obj) {
+                obj.onSuccess({id: message.senderUserId, name: message.content.user.name, portraitUri: message.content.user.portraitUri});
+            });
+        }
+        if(!WebIMWidget.providerdata.currentUserInfo.userId) {
+            WebIMWidget.providerdata.currentUserInfo = {userId:uid, name:uname, portraitUri:picurl };
+        }else {
+            WebIMWidget.providerdata.currentUserInfo.uid = uid;
+            WebIMWidget.providerdata.currentUserInfo.name = uname;
+            WebIMWidget.providerdata.currentUserInfo.portraitUri = picurl;
+        }
+
+    };
    /* }).error(function (data, status, headers, config) {
         $scope.status = status;
     });*/
-
-
-
-
-
     WebIMWidget.onClose = function () {
         console.log("已关闭");
     }
