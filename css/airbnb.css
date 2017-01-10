@@ -415,8 +415,8 @@
     cursor: default
 }
 .flatpickr-day.disabled {  /* origin none*/
-    background: #4f99ff;
-    border-color: #4f99ff;
+    background: #efefef;
+    /*border-color: #4f99ff;*/
 }
 span.flatpickr-weekday {
     cursor: default;
