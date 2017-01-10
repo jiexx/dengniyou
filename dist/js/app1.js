@@ -137,13 +137,33 @@
 			});
 		});
 	};
+    function addDays(date, days) {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    };
 	var ctrlPlandetail = function(response, realView) {
+        $('#carousel-generic').carousel();
 
+        var disday = [];
+        if(response.PlanCalender.length > 0 && response.PlanCalender[0].Calender) {
+            var arr = response.PlanCalender[0].Calender.split(',');
+            arr = arr.filter( function( item, index, inputArray ) {
+                return inputArray.indexOf(item) == index;
+            });
+            for(var i in arr) {
+                var a = arr[i].split(';');
+                if(a.length == 2) {
+                    disday.push({from: a[0], to: a[1]})
+                }
+            }
+        }
         var pickr = $("#calendar").flatpickr({
             inline: true,
-            "mode": "multiple"
+            "mode": "multiple",
+            disable: disday
 		});
-        pickr.selectedDates.push('');
+
 		realView.rogerCropImages();
         // frameCtrl();
 
