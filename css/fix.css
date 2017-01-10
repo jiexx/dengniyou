@@ -94,7 +94,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .nav-buttons button{font-size: 16px; color: #fff; padding: 2px 15px;}
 .homepage .nav-buttons .btn-default{background-color: #ccc; }
 .homepage .nav-buttons .btn-warning{background-color: #FA713D;}
-.homepage .continent-tips span{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px;}
+.homepage .nav-buttons .btn-group ul{background-color: #ccc; min-width: 100px;}
+.homepage .nav-buttons .btn-group ul li{ padding-left: 10px; padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #fff; color: #FA713D; font-weight: bold;}
+.homepage .continent-tips{margin:10px 0;}
+.homepage .continent-tips li{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px;}
 .homepage .regular-grid div{padding: 0; margin: 0; }
 .homepage .regular-grid  .continent-box{ margin-bottom: 70px;}
 .homepage .hovereffect { width:100%; height:100%; float:left; overflow:hidden; position:relative; text-align:center; cursor:default;}
@@ -109,6 +112,23 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .index-searchbox .form-group .input-group #homeSearch{width: 80px; background-color: #F9703C; border-color: #F9703C;}
 .index-searchbox .form-group .input-group #homeSearch a{color: #fff;}
 	/* end 首页搜索框*/
+
+	/*跑马灯推荐区*/
+.solution{width:60%; max-width: 1000px; height: 106px; margin:0 auto 30px; padding-top:30px; overflow: hidden; position: relative; }
+/*.solution .box{width:600px; overflow: visible;}*/
+.solution .box ul{display: inline-block; width:3550px;}
+.solution li {display: inline-block; width:335px; margin-right: 10px;}
+.solution li .detail{width:335px; margin:0 auto; background-color: #FFF;}
+.solution li .img{width:115px; height: 80px; display: inline-block; vertical-align: top;}
+.solution li img{width:115px; height:80px;}
+.solution li .text{width:200px; padding-left:10px; height: 80px; display: inline-block; }
+.solution li .text *{margin:0;}
+.solution .text h4,.solution .text .textCon{text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
+.solution .text h4{height: 30px; line-height: 30px;}
+.solution .text .textCon{line-height: 20px; height: 20px;}
+.solution .text .price{color:#fa703e;}
+.solution .text .unit{padding-left: 30px;}
+/*跑马灯推荐区结束*/
 /*首页主要内容homepage*/
 /*end 网站首页*/
 
@@ -373,11 +393,14 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .menuLeft h3{ text-indent: 30px; height: 60px; line-height: 60px;}
 .menuLeft .menu li{height: 36px; line-height: 36px; padding-left: 52px; font-size: 16px; }
 .menuLeft .menu li a{color:#333;}
-.menuLeft .menu li span{display: inline-block; width:12px; height: 12px; background-color: #999; margin-right: 14px;}
+.menuLeft .menu li span{display: inline-block; width:12px; height: 12px; background-color: #00B8EE; margin-right: 14px;}
 .menuLeft .menu li.active{background-color: #fac73e; color:#fff;}
 .menuLeft .menu li.active a{color:#FFF;}
 .menuLeft .menu li.active span{background-color: #fff;}
 .contentRight{min-height: 640px;}
+.contentBox-guide{border:1px solid #C0C0C0; width: 1170px; -webkit-box-shadow: 5px 5px 10px #eee; -moz-box-shadow: 5px 5px 10px #eee; -o-box-shadow: 5px 5px 10px #eee; box-shadow: 5px 5px 10px #eee;}
+.menuLeft-guide{border-right:1px solid #C0C0C0; width: 210px;}
+.menuLeft-guide .menu li span{background-color: #FA703E;}
 /*内容部分结束*/
 /*个人信息页*/
 .personInfo{width: 978px; padding:60px 80px;}
@@ -391,12 +414,17 @@ div.c-wrapper{ width: 100%; margin: auto;}
 
 /*全部订单页*/
 .orderAll{width:978px; padding:25px 35px 50px;}
-.orderAll .btn-orange {background-color: #fa703e; border-radius: 0;}
+.orderAll .btn-orange {background-color: #00B8EE; border-radius: 0; border: 0;}
 .orderAll .btn-yellow {background-color: #fac73e; border-radius: 0;}
-.orderAll .navSecond{border-bottom: 2px solid #00b8ee; height: 36px; padding: 2px 0; }
-.orderAll .navSecond li{float: left; height: 30px; line-height: 30px; width:99px; border-right: 1px solid #00b8ee; text-align: center; font-size: 16px;}
+.orderAll .navSecond{border-bottom: 2px solid #00B8EE; height: 36px; padding: 2px 0; }
+.orderAll .navSecond li{float: left; height: 30px; line-height: 30px; width:99px; border-right: 1px solid #00B8EE; text-align: center; font-size: 16px;}
 .orderAll .navSecond li:last-child{border-right: none;}
-.orderAll .navSecond li.active a{color:#00b8ee;}
+.orderAll .navSecond li.active a{color:#00B8EE;}
+.orderAll .orderList li h5 span{color: #00B8EE;}
+.orderAll-guide .btn-orange{background-color: #fa703e;}
+.orderAll-guide .navSecond{border-bottom: 2px solid #FA703E;}
+.orderAll-guide .navSecond li{border-right: 1px solid #FA703E;}
+.orderAll-guide .navSecond li.active a{color:#FA703E;}
 /*.orderAll .navSecond li a:hover{color:#fa703e;}*/
 .orderAll .searchBy{height: 76px; line-height: 76px;}
 .orderAll .searchBy input{border:1px solid #999; width:130px; height: 24px; margin-right: 15px; margin-left:10px; text-indent: 4px;}
@@ -406,22 +434,24 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .orderAll .orderBy select{width:80px; margin:0 20px;}
 .orderAll .orderBy span{float:right; margin-right: 30px;}
 .orderAll .orderList>li{border:1px solid #999; margin-top: 10px;}
-.orderAll .orderList>li .title{border-bottom: 1px solid #999; height: 38px; line-height: 38px; padding-left: 10px;}
+.orderAll .orderList>li .title{position:relative; border-bottom: 1px solid #999; height: 38px; line-height: 38px; padding-left: 10px; margin-left: 0; margin-right: 0;}
+.orderAll .orderList>li .title .num{position: absolute; right: 15%; }
 .orderAll .orderList>li input[type="checkbox"]{height: 14px; width:14px; margin:0 14px;}
-.orderAll .orderList>li .title h5{display: inline-block; height: 32px; line-height: 32px; font-size: 16px;}
+.orderAll .orderList>li .title h5{display: inline-block; font-size: 16px;}
 .orderAll .orderList>li .title h5 .contactMe{display: inline-block; width:32px; height: 32px; background-image: url(../../img/talking.png); float:right; margin-left: 10px;}
 .orderAll .orderList>li .title .status{margin-right: 30px;}
 .orderAll .productList>li{padding: 12px 20px 12px 0; background-color: #FFF;}
 .orderAll .productList>li input[type="checkbox"]{float:left; margin:36px 14px;}
-.orderAll .productList>li .productPic{ width:156px; height: 86px; float: left; padding-left: 10px;}
+.orderAll .productList>li .productPic{ /*width:156px; height: 86px;*/ float: left; padding-left: 10px;}
 .orderAll .productList>li .productPic img{width:156px; height: 86px;}
-.orderAll .productList>li .productText{width:560px; height: 86px; float: left; margin-left: 20px; }
+.orderAll .productList>li .productText{/*width:560px; height: 86px;*/ float: left; margin-left: 20px; }
 .orderAll .productList>li .productText h4, .orderAll .productList>li .productText .description{ text-overflow: ellipsis; overflow: hidden; white-space: nowrap; }
 .orderAll .productList>li .productText h4{margin-bottom: 4px; margin-top: 0;}
 .orderAll .productList>li .productText .description{margin-bottom: 12px;}
 .orderAll .productList>li .productText p{margin-bottom: 0;}
 .orderAll .productList>li .payBtn{float:right; height: 80px; }
-.orderAll .productList>li .payBtn p{color:#fa703e; height: 50px; line-height: 50px; font-size: 18px; margin-bottom: 0;}
+.orderAll .productList>li .payBtn p{color:#00B8EE; /*height: 50px; line-height: 50px;*/ font-size: 18px; margin-bottom: 10px; text-align: center;}
+.orderAll-guide .productList>li .payBtn p{color:#fa703e;}
 /*.orderAll .productList>li .payBtn .btn-orange{background-color: #fa703e; border-radius: 0;}*/
 /*全部订单页结束*/
 /*个人中心全部结束*/

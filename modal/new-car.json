@@ -1,4 +1,79 @@
 {
-	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?  LIMIT 0, 8;",	"params":["UserID"]},
-	"CountOFPlans": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?;",	"params":["UserID"]}
+	"DetailMain": {
+		"sql": "INSERT INTO travelorderdb.tab_services ( UserID, ServiceTypeID, ServiceName, PrimaryPrice, Unit, PriceType, ServiceTime, ServiceOutTimePrice, IncMileage, ExMileagePrice, FreeForDelay, WaitOutTimePrice, Description, ServiceStatus, ServiceMethod, UpdateDate, CreateDate ) VALUES ( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,NOW(),NOW() )",
+		"params": [
+			"userID",
+			"serviceTypeID",
+			"serviceName",
+			"primaryPrice",
+			"unit",
+			"priceType",
+			"serviceTime",
+			"serviceOutTimePrice",
+			"incMileage",
+			"exMileagePrice",
+			"freeForDelay",
+			"waitOutTimePrice",
+			"description",
+			"serviceStatus",
+			"serviceMethod"
+		],
+		"Picture": {
+			"sql": "INSERT INTO traveluserdb.tab_facilitypictures ( PictureID, PicURL, IsCover, PicType ) VALUES (?,?,?,1)",
+			"params": [
+				"insertId",
+				"picURL",
+				"cover"
+			],
+			"files": [
+				"picURL"
+			],
+			"findkey": "insertId"
+		},
+
+		"VehicleInfo": {
+			"sql": "INSERT INTO tab_servicevehicleinfo ( ServiceID, Brand, Model, ProduceYear, Seats, Person, Clazz, Insurance, CreateDate, Luggage ) VALUES (?,?,?,?,?,?,?,?, Now() ,?)",
+			"params": [
+				"insertId",
+				"brand",
+				"model",
+				"produceYear",
+				"seats",
+				"person",
+				"clazz",
+				"insurance",
+				"luggage"
+			],
+
+			"findkey": "insertId"
+		},
+		"VehicleCharges": {
+			"sql": "INSERT INTO tab_servicevehiclecharge(serviceID,chargeType,chargePrice,CreateDate) values(?,?,?,NOW())",
+			"params": [
+				"insertId",
+				"chargeType",
+				"chargePrice"
+			],
+			"findkey": "insertId"
+		},
+		"VehicleAddress": {
+			"sql": "INSERT INTO tab_servicevehicleaddress(serviceID,addressType,address,CreateDate) values(#{serviceID},#{addressType},#{address}, NOW())",
+			"params": [
+				"insertId",
+				"addressType",
+				"address"
+			],
+			"findkey": "insertId"
+		},
+		"VehicleSchedule": {
+			"sql": "insert into tab_servicevehicleschedule (ServiceID,GuideID,UserID,ScheduleDate,Status,CreateDate) values(#{serviceID},#{guideID},0,#{scheduleDate},1,NOW())",
+			"params": [
+				"insertId",
+				"guideID",
+				"scheduleDate"
+			],
+			"findkey": "insertId"
+		}
+
+	}
 }

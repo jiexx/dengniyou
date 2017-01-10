@@ -1041,9 +1041,8 @@ $(function () {
                 description: '',
                 serviceStatus: '',
                 serviceMethod: '',
-                Picture: [
-                    {picURL: '', cover: ''}
-                ],
+                picURLs:[],
+                coverURL:'11122.jpg',
                 DetailServiceMethod: [ ],
                 Facility: [
                     {
@@ -1151,10 +1150,75 @@ $(function () {
             }, 
             IMGHOST: "http://123.59.144.47/"
         };
-    },ctrlServiceCarEdit=function(Plan, realView){
-        $('#save').rogerOnceClick(Plan, function(e){
+    },ctrlServiceCarEdit=function(DetailMain, realView){
+
+        $('#save').rogerOnceClick(DetailMain, function(e){
+            var usr =$.rogerGetLoginUser();
             console.log('test');
+            temp = e.data.DetailMain;
+
+            var picURLs = e.data.DetailMain.picURLs;
+            var coverURL = e.data.DetailMain.coverURL;
+            var Pictures =[];
+            for(key in picURLs){
+                Pictures.push({"picURL":picURLs[key],"cover":0});
+            }
+
+            if (null != coverURL && coverURL!=''){
+                Pictures.push({"picURL":coverURL,"cover":1});
+            }
+
+            temp["Pictures"]=Pictures;
+            temp["userID"]=usr.UserID;
+            temp["serviceTypeID"]=1;
+            temp["unit"]='天';
+            temp["priceType"]='1';
+            temp["serviceStatus"]='3';
+
+            var data = {
+                DetailMain:temp,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('/new/service/car', data, function(respJSON){
+                $.rogerNotice({Message:'保存包车成功'});
+
+            });
+
         });
+
+         $('#publish').rogerOnceClick(DetailMain, function(e){
+             var usr =$.rogerGetLoginUser();
+             console.log('test');
+             temp = e.data.DetailMain;
+
+             var picURLs = e.data.DetailMain.picURLs;
+             var coverURL = e.data.DetailMain.coverURL;
+             var Pictures =[];
+             for(key in picURLs){
+                 Pictures.push({"picURL":picURLs[key],"cover":0});
+             }
+
+             if (null != coverURL && coverURL!=''){
+                 Pictures.push({"picURL":coverURL,"cover":1});
+             }
+
+             temp["Pictures"]=Pictures;
+             temp["userID"]=usr.UserID;
+             temp["serviceTypeID"]=1;
+             temp["unit"]='天';
+             temp["priceType"]='1';
+             temp["serviceStatus"]='4';
+
+             var data = {
+                 DetailMain:temp,
+                 IMGHOST:e.data.IMGHOST
+             };
+             $.rogerPost('/new/service/car', data, function(respJSON){
+                 $.rogerNotice({Message:'发布包车成功'});
+
+             });
+
+         });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -1537,7 +1601,6 @@ $(function () {
                  IMGHOST:e.data.IMGHOST
              };
              $.rogerPost('/new/travellogue', data, function(respJSON){
-                 $.alert(respJSON.toString());
                  $.rogerNotice({Message:'保存攻略成功'});
 
              });

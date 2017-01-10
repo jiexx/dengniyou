@@ -23,35 +23,21 @@
         $('#usercenter').rogerOnceClick(null, function () {
             var user = $.rogerGetLoginUser();
             if(!user) {
+                $.rogerLogin('#homeLogin', '/login');
                 $.rogerShowLogin();
                 return;
             }
-
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
         });
     }
 
     var initHomeList = function (param) {
-        return {
-            Title: "Meet Joe Black",
-            Languages: [
-                { Name: "English" },
-                { Name: "French" }
-            ]
-        },
-        {
-            Title: "Eyes Wide Shut",
-            Languages: [
-                { Name: "French" },
-                { Name: "German" },
-                { Name: "Spanish" }
-            ]
-        };
+        param[0].IMGHOST = "http://123.59.144.47/";
+        console.log(param);
+        return param;
     };
     var ctrlHomeList = function(response, realView) {
-
          var i = 0;
-
     };
 	
 	var ctrlHome = function(response, realView) {
@@ -62,31 +48,66 @@
         });
 
         var item = $.tmplItem($('.carousel-caption'));
-        console.log(item); 
     
-        $('.nav-buttons .theme').on('click','li',function(){
+        $('.nav-buttons .theme,.nav-buttons .country,.continent-tips').on('click','li',function(){
+          var changeData,desE;
           var text = $(this).text();
-          $(this).parent().prev().text(text);
-          var changeData = item.data.PlansByLabel[text].__values;
-          console.log(changeData);
           
+          if($(this).parent().hasClass('theme')){
+            $(this).parent().prev().text(text);
+            changeData = item.data.PlansByLabel[text].__values;
+            desE = $(this).parent().parent().parent().next().next().attr('id');
+          }else if($(this).parent().hasClass('country')){
+            $(this).parent().prev().text(text);
+            changeData = item.data.PlansByCountry[text].__values;
+            desE = $(this).parent().parent().parent().next().next().attr('id');
+          }else if($(this).parent().hasClass('continent-tips')){
+            changeData = item.data.PlansByCountry[text].__values;
+            desE = $(this).parent().next().attr('id');
+          }
+          desE = '#' + desE;
+          $.rogerTrigger(desE, '#/homelist', changeData);
         });
-        $('.nav-buttons .country').on('click','li',function(){
-          var text = $(this).text();
-          $(this).parent().prev().text(text);
-          var changeData = item.data.PlansByCountry[text].__values;
-          console.log(changeData);
-          
-        });
+        
+        //推荐区跑马灯效果
+        var marqueeE = document.getElementById("solution"); 
+        var marqueeE1 = document.getElementById("RunTopic");
+        var speed=200;    //数值越大滚动速度越慢 
+        function Marquee(){ 
+            if(marqueeE1.offsetWidth<=marqueeE.scrollLeft+1100){               
+                marqueeE.scrollLeft=0
+            }
+            else{ 
+                marqueeE.scrollLeft+=2;    
+            } 
+        }  
+        var MyMar = setInterval(Marquee,speed); 
+        marqueeE.onmouseover = function(){clearInterval(MyMar)} 
+        marqueeE.onmouseout = function(){MyMar = setInterval(Marquee,speed)}
+        //跑马灯效果结束 
 
-        $.rogerTrigger('#movieList', '#/homelist', {Plan:1});
-		
+        //左边栏工具条
+        var $btn=$(".fixedPos");
+        checkScrollT($(window).height());
+        $("#backTop").bind('click',moveTop);
+        $(window).on('scroll',function(){
+            checkScrollT($(window).height());
+        });
+        function moveTop(){
+            $("body,html").animate({scrollTop:0},200);
+        }
+        function checkScrollT (pos) {
+            if($(window).scrollTop()>pos){
+                $btn.fadeIn();
+            }else{
+                $btn.fadeOut();
+            }
+        } 
+        // 左边栏工具条结束
 		realView.rogerCropImages();
         frameCtrl();
     };
     var ctrlHomeSearch = function(response, realView) {
-
-
         realView.rogerCropImages();
         frameCtrl();
     };
@@ -144,7 +165,7 @@
 		});
 
 		realView.rogerCropImages();
-        frameCtrl();
+        // frameCtrl();
 
         if( response.PlanInfo[0].Policy ){
             $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
@@ -168,6 +189,16 @@
                 window.open(respJSON.url, '_blank');
             })
         })*/
+        $('#BUYNOW').rogerOnceClick(null,function (e) {
+            var usr = $.rogerGetLoginUser();
+            //var href = $(this).attr('data_href');
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+
+        });
 
 	};
     function addDays(date, days) {
@@ -320,14 +351,12 @@
                 })
             });
         })
-
     };
 
     var ctrlOrderlist = function (response, realView) {
 
         $("#order-a_all").find("a").each(function () {
             var el = $(this);
-
             el.rogerOnceClick(null, function () {
                 var user = $.rogerGetLoginUser();
                 if(!user) {
@@ -337,9 +366,7 @@
                 data_href = el.attr("data-value");
                 $.rogerLocation(data_href+'&userID='+user.UserID);
             });
-
         });
-
 
         frameCtrl();
         $('#confirm').rogerOnceClick(null, function () {
@@ -399,7 +426,18 @@
         realView.rogerCropImages();
         frameCtrl();
     };
+
+    var initUserInfo = function (param) {
+        return param;
+    };
     var ctrlUserInfo = function(response, realView) {
+        var userInfo = $.rogerGetLoginUser();
+        console.log(userInfo);
+        var Avatar = "http://123.59.144.47/" + userInfo.AvatarPicURL;
+        $('.avatar img').attr('src', Avatar);
+        $('.personInfo>p>strong').text(userInfo.UserName);
+        $('#UserName').val(userInfo.UserName);
+        $('#TrueName').val(userInfo.TrueName);
         realView.rogerCropImages();
         frameCtrl();
     };
@@ -681,10 +719,10 @@
 	$.rogerRouter({
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
-		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 				ctrl: ctrlPlandetail},
-        '#/homelist':                  {fragment: 'fragment/home-list.html',           init: initHomeList,                                                    ctrl: ctrlHomeList},
+		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			ctrl: ctrlPlandetail},
+        '#/homelist':                  {fragment: 'fragment/home-list.html',           init: initHomeList,                          ctrl: ctrlHomeList},
 
-        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                  ctrl: ctrlTemplateplanNew},
+        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                 ctrl: ctrlTemplateplanNew},
 
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
         '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
@@ -692,11 +730,10 @@
 
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
-		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,							ctrl: ctrlComment},
+		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						ctrl: ctrlComment},
         '#/orderdetail':            {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
-	    '#/plansearch':             {view:'planSearch.html',                                  rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
-        '#/userinfo':               {view:'userInfo.html',                                     rootrest:'/user/userinfo',               ctrl: ctrlUserInfo}
+	    '#/plansearch':             {view:'planSearch.html',                                  rootrest:'/plan/plansearch',          ctrl: ctrlPlanSearch},
+        '#/userinfo':               {view:'userInfo.html',                                     rootrest:'/user/userinfo',           ctrl: ctrlUserInfo}
     });
-	
 	
 })();

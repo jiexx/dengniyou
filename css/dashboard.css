@@ -7,7 +7,7 @@
 .dashboard-page .sidebar{background: url(../img/dashboard-sidebar.png) no-repeat;}
 .dashboard-page .nav-sidebar{margin-top: 120px; padding-left: 15%;}
 .dashboard-page .nav-sidebar > li{height: 79px;}
-.dashboard-page .nav-sidebar > li > a{font-size: 14px; color: #333; background-color: rgba(255,255,255,0);}
+.dashboard-page .nav-sidebar > li > a{font-size: 14px; color: #333; font-weight: bold; background-color: rgba(255,255,255,0);}
 .dashboard-page .nav-sidebar > li > a:hover,
 .dashboard-page .nav-sidebar > li > a:focus{color: #ff6600; }
 .dashboard-page .mainbody{width: 70%; margin-left: 14%; background-color: #fff; padding: 20px; margin-top: 123px;}
