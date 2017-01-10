@@ -443,26 +443,28 @@
     };
 
     var initUserInfo = function (param) {
+        var info = $.rogerGetLoginUser();
+        console.log(info);
         return {
-            CityID:'',
-            CountryID:'',
-            Labels:[],
-            Sex:'',
-            TrueName:'',
-            UserID:'',
-            UserName:'',
+            CityID: info.HomeCityID,
+            CountryID:info.HomeCountryID,
+            Labels:[info.Labels],
+            Sex:info.Sex,
+            TrueName:info.TrueName,
+            UserID:info.UserID,
+            UserName:info.UserName,
+            AvatarPicURL:info.AvatarPicURL,
             ComLogo:'',
             ComAdv:''
         };
     };
-    var ctrlUserInfo = function(response, realView) {
-        var userInfo = $.rogerGetLoginUser();
-        console.log(userInfo);
-        var Avatar = "http://123.59.144.47/" + userInfo.AvatarPicURL;
+    var ctrlUserInfo = function(rep, realView) {
+        var Avatar = "http://123.59.144.47/" + rep.AvatarPicURL;
         $('.avatar img').attr('src', Avatar);
-        $('.personInfo>p>strong').text(userInfo.UserName);
-        $('#UserName').val(userInfo.UserName);
-        $('#TrueName').val(userInfo.TrueName);
+
+        Plan.createCity = function (rep, Spot) {
+            $.rogerTrigger('#modal', '#/citychooser', {Plan:rep, Spot:Spot});
+        };
         realView.rogerCropImages();
         frameCtrl();
     };

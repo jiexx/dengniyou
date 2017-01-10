@@ -1172,7 +1172,7 @@ $(function () {
             temp["noticeBean"]= temp["Policy"][3];
 
             var data = {
-                DetailMain:temp,
+                reqUploadService:temp,
                 // file:filedata,
                 // coverFile:coverFiledata,
                 IMGHOST:e.data.IMGHOST

@@ -184,10 +184,10 @@
 									</div>
 									<div id="policycontent4" class="col-md-10">
 										<h3>自定义的退订政策</h3>
-										<p>1、服务开始前<span></span>天(含)以上退订，退还服务费用的99%；</p>
-										<p>2、服务开始前<input type="text">天(含)以上退订，退还服务费用的50%；</p>
-										<p>3、服务开始前<input type="text">天(含)以上退订，退还服务费用的20%；</p>
-										<p>4、服务开始前<input type="text">天以内退订，不退还服务费用；</p>
+										<p>1、服务开始前<span>156</span>天(含)以上退订，退还服务费用的99%；</p>
+										<p>2、服务开始前<span>156</span>天(含)以上退订，退还服务费用的50%；</p>
+										<p>3、服务开始前<span>156</span>天(含)以上退订，退还服务费用的20%；</p>
+										<p>4、服务开始前<span>156</span>天以内退订，不退还服务费用；</p>
 										<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
 									</div>
 								</div>
@@ -233,13 +233,14 @@
 <script>
 	
 $(function(){
-	$('#policycontent4 span').on('click',function(){
+	$('#policycontent4').on('click','span',function(){
 		var val = $(this).text();
-		$(this).append('<input value="'+val+'" type="text">').remove();
+		$(this).after('<input value="'+val+'" type="text">').remove();
+		
 	});
-	$('#policycontent4 input').on('blur',function(){
+	$('#policycontent4').on('blur','input',function(){
 		var val = $(this).val();
-		$(this).append('<span>'+val+'</span>').remove();
+		$(this).after('<span>'+val+'</span>').remove();
 	});
 	var html;
 	$('#policydiv input[type=radio]').on('click',function(){
