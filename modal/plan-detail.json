@@ -1,6 +1,7 @@
 {
-	"PlanInfo": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE PlanID=?;",	"params":["PlanID"]}, 
-	"PlanCalender": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_plancalender`  WHERE PlanID=?;",	"params":["PlanID"]}, 
-	"PlanSchedule": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planschedule` WHERE PlanID=?;",			"params":["PlanID"], "orderby":"ScheduleID"},
-	"PlanComment": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_comments` WHERE RelativeID=?;",					"params":["PlanID"]}
+	"PlanInfo": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE PlanID=?;",	"params":["PlanID"]},
+	"PlanCalender": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_plancalender`  WHERE PlanID=?;", "params":["PlanID"]},
+	"PlanSchedule": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planschedule` WHERE PlanID=?;",	 "params":["PlanID"], "orderby":"ScheduleID"},
+	"PlanComment": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_comments` WHERE RelativeID=? ORDER BY CreateDate;", "params":["PlanID"]},
+	"PlanMore": {"sql": "SELECT PlanID,AdultPrice,PlanName,PicURL,CreateUserID FROM traveluserdb.tab_planinfo WHERE CreateUserID IN(SELECT CreateUserID FROM traveluserdb.tab_planinfo WHERE PlanID=?) AND PlanID<>? AND PlanType<>3 AND PlanStatus=4;", "params":["PlanID","PlanID"]}
 }

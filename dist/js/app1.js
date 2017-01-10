@@ -443,6 +443,7 @@
     };
 
     var initUserInfo = function (param) {
+        var userInfo = $.rogerGetLoginUser();
         return {
             CityID:'',
             CountryID:'',
@@ -450,7 +451,7 @@
             Sex:'',
             TrueName:'',
             UserID:'',
-            UserName:'',
+            UserName:userInfo.UserName,
             ComLogo:'',
             ComAdv:''
         };
