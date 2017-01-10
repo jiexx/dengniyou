@@ -109,21 +109,21 @@
         <div class="policy">
         {{each(i,p) Policy}}
           {{if p.PolicyType==1}}
-          <h2>退订政策</h2>
+          <h2>${p.PolicyName}</h2>
           <div class="des">
             <p>${p.Description}</p>
           </div>
           {{/if}}
           {{if p.PolicyType==2}}
-          <h2>费用包含</h2>
+          <h2>${p.PolicyName}</h2>
           <div class="des">
             <p>${p.CustomRatio}</p>
           </div>
           {{/if}}
           {{if p.PolicyType==3}}
-          <h2>${p.CustomRatio}</h2>
+          <h2>${p.PolicyName}</h2>
           <div class="des">
-            <p></p>
+            <p>${p.CustomRatio}</p>
           </div>
           {{/if}}
           {{if p.PolicyType==4}}
@@ -140,7 +140,12 @@
         <button id="delete" type="button" class="btn btn-default">删除</button>
         <button id="copy" type="button" class="btn">复制</button>
         <button id="edit" type="button" class="btn">编辑</button>
-        <button id="release" type="button" class="btn">发布</button>
+        {{if DetailMain[0].serviceStatus==3}}
+        <button id="publish" type="button" class="btn">发布</button>
+        {{/if}}
+        {{if DetailMain[0].serviceStatus==4}}
+        <button id="hide" type="button" class="btn">隐藏</button>
+        {{/if}}
       </div>
     </div><!-- end container-box -->
   </div> <!-- end container -->

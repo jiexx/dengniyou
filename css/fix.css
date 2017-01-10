@@ -94,7 +94,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .nav-buttons button{font-size: 16px; color: #fff; padding: 2px 15px;}
 .homepage .nav-buttons .btn-default{background-color: #ccc; }
 .homepage .nav-buttons .btn-warning{background-color: #FA713D;}
-.homepage .continent-tips span{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px;}
+.homepage .nav-buttons .btn-group ul{background-color: #ccc; min-width: 100px;}
+.homepage .nav-buttons .btn-group ul li{ padding-left: 10px; padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #fff; color: #FA713D; font-weight: bold;}
+.homepage .continent-tips{margin:10px 0;}
+.homepage .continent-tips li{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px;}
 .homepage .regular-grid div{padding: 0; margin: 0; }
 .homepage .regular-grid  .continent-box{ margin-bottom: 70px;}
 .homepage .hovereffect { width:100%; height:100%; float:left; overflow:hidden; position:relative; text-align:center; cursor:default;}
@@ -109,6 +112,23 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .index-searchbox .form-group .input-group #homeSearch{width: 80px; background-color: #F9703C; border-color: #F9703C;}
 .index-searchbox .form-group .input-group #homeSearch a{color: #fff;}
 	/* end 首页搜索框*/
+
+	/*跑马灯推荐区*/
+.solution{width:60%; max-width: 1000px; height: 106px; margin:0 auto 30px; padding-top:30px; overflow: hidden; position: relative; }
+/*.solution .box{width:600px; overflow: visible;}*/
+.solution .box ul{display: inline-block; width:3550px;}
+.solution li {display: inline-block; width:335px; margin-right: 10px;}
+.solution li .detail{width:335px; margin:0 auto; background-color: #FFF;}
+.solution li .img{width:115px; height: 80px; display: inline-block; vertical-align: top;}
+.solution li img{width:115px; height:80px;}
+.solution li .text{width:200px; padding-left:10px; height: 80px; display: inline-block; }
+.solution li .text *{margin:0;}
+.solution .text h4,.solution .text .textCon{text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
+.solution .text h4{height: 30px; line-height: 30px;}
+.solution .text .textCon{line-height: 20px; height: 20px;}
+.solution .text .price{color:#fa703e;}
+.solution .text .unit{padding-left: 30px;}
+/*跑马灯推荐区结束*/
 /*首页主要内容homepage*/
 /*end 网站首页*/
 

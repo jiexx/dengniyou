@@ -1,3 +1,17 @@
+<div class="fixedPos">
+  <ul>
+    <li id="backTop" ></li>
+    <li style="background-color: #667980"><a href="#EuropeImg">欧洲</a></li>
+    <li style="background-color: #99b0b9"><a href="#AsiaImg">亚洲</a></li>
+    <li ><a href="#NorthAmericaImg">北美</a></li>
+    <li style="background-color: #667980"><a href="#SouthAmericaImg">南美</a></li>
+    <li style="background-color: #99b0b9"><a href="#OceaniaImg">大洋洲</a></li>
+    <li ><a href="#Africa">非洲</a></li>
+    <li ><a href="#NSpoles">南北极</a></li>
+    <li class="kefu"> </li>
+  </ul>
+</div> <!-- end fixedPos -->
+
 <div class="index-searchbox">
   <div class="container">   
     <div class="form-group" style="display:inline;">
@@ -84,7 +98,30 @@
             </a-->
     </div><!-- end carousel -->
   </div> <!-- end carousel-container -->
-  <br>
+
+<div class="solution" id="solution">
+  <div class="box">
+    <ul id="RunTopic">
+    {{each(i,p) PlansByCountry['中国'].__values[0].Plans}}
+      <li>
+      <a href="#/plandetail?PlanID=${p.PlanID}">
+        <div class="detail">
+          <div class="img">
+          <img src="${ $data.IMGHOST }${p.PicURL}" alt="">
+        </div>
+        <div class="text">
+          <h4>${p.PlanName}</h4>
+          <p class="textCon">${p.RegionCnName}</p>
+          <p><span class="price">${p.PlanPriceBase}</span><span class="unit">元/人</span></p>
+        </div>
+        </div>
+      </a>
+      </li>
+    {{/each}} 
+    </ul>
+  </div>
+</div>    
+
     <div class="content">
       {{each(i,p) PlansByContinent}} 
       <div class="container">
@@ -96,19 +133,19 @@
             <img src="../img/home-banner6.jpg"></img>
             {{/if}}
             {{if PlansByContinent[i].Continent=='3'}}
-            <img src="../img/home-banner6.jpg" id="Europe"></img>
+            <img src="../img/home-banner6.jpg" id="EuropeImg"></img>
             {{/if}}
             {{if PlansByContinent[i].Continent=='4'}}
-            <img src="../img/home-banner1.jpg" id="qceania"></img>
+            <img src="../img/home-banner1.jpg" id="OceaniaImg"></img>
             {{/if}}
             {{if PlansByContinent[i].Continent=='5'}}
             <img src="../img/home-banner6.jpg"></img>
             {{/if}}
             {{if PlansByContinent[i].Continent=='6'}}
-            <img src="../img/home-banner5.jpg" id="Asia"></img>
+            <img src="../img/home-banner5.jpg" id="AsiaImg"></img>
             {{/if}}
             {{if PlansByContinent[i].Continent=='7'}}
-            <img src="../img/home-banner4.jpg" id="NorthAmerica"></img>
+            <img src="../img/home-banner4.jpg"  id="NorthAmericaImg"></img>
             {{/if}}
         </div><!-- end 大洲continent-tit -->
         <br>
@@ -144,14 +181,26 @@
             </ul>
           </div>
         </div>
-        <br>
         <div class="continent-tips">
             {{each(i,p) CountryByContinent[$data.PlansByContinent[i].Continent].__values[0].Country}}
-            <span class="label label-warning media-left">${p}</span>
+            <li class="label label-warning media-left">${p}</li>
             {{/each}}
         </div>
-        <br>
-        <div class="regular-grid">
+        {{if PlansByContinent[i].Continent=='1'}}
+        <div class="regular-grid" id="">
+        {{else PlansByContinent[i].Continent=='2'}}
+        <div class="regular-grid" id="">
+        {{else PlansByContinent[i].Continent=='3'}}
+        <div class="regular-grid" id="Europe">
+        {{else PlansByContinent[i].Continent=='4'}}
+        <div class="regular-grid" id="Oceania">
+        {{else PlansByContinent[i].Continent=='5'}}
+        <div class="regular-grid" id="">
+        {{else PlansByContinent[i].Continent=='6'}}
+        <div class="regular-grid" id="Asia">
+        {{else PlansByContinent[i].Continent=='7'}}
+        <div class="regular-grid" id="NorthAmerica">
+        {{/if}}
           <div class="row continent-box">
             <div class="col-md-2">
               <div class="row">

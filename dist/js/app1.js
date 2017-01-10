@@ -26,27 +26,14 @@
                 $.rogerShowLogin();
                 return;
             }
-
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
         });
     }
 
     var initHomeList = function (param) {
-        return {
-            Title: "Meet Joe Black",
-            Languages: [
-                { Name: "English" },
-                { Name: "French" }
-            ]
-        },
-        {
-            Title: "Eyes Wide Shut",
-            Languages: [
-                { Name: "French" },
-                { Name: "German" },
-                { Name: "Spanish" }
-            ]
-        };
+        param[0].IMGHOST = "http://123.59.144.47/";
+        console.log(param);
+        return param;
     };
     var ctrlHomeList = function(response, realView) {
 
@@ -62,24 +49,68 @@
         });
 
         var item = $.tmplItem($('.carousel-caption'));
-        console.log(item); 
     
-        $('.nav-buttons .theme').on('click','li',function(){
+        $('.nav-buttons .theme,.nav-buttons .country,.continent-tips').on('click','li',function(){
+          var changeData,desE;
           var text = $(this).text();
-          $(this).parent().prev().text(text);
-          var changeData = item.data.PlansByLabel[text].__values;
-          console.log(changeData);
           
+          if($(this).parent().hasClass('theme')){
+            $(this).parent().prev().text(text);
+            changeData = item.data.PlansByLabel[text].__values;
+            desE = $(this).parent().parent().parent().next().next().attr('id');
+          }else if($(this).parent().hasClass('country')){
+            $(this).parent().prev().text(text);
+            changeData = item.data.PlansByCountry[text].__values;
+            desE = $(this).parent().parent().parent().next().next().attr('id');
+          }else if($(this).parent().hasClass('continent-tips')){
+            changeData = item.data.PlansByCountry[text].__values;
+            desE = $(this).parent().next().attr('id');
+          }
+          desE = '#' + desE;
+          $.rogerTrigger(desE, '#/homelist', changeData);
         });
-        $('.nav-buttons .country').on('click','li',function(){
-          var text = $(this).text();
-          $(this).parent().prev().text(text);
-          var changeData = item.data.PlansByCountry[text].__values;
-          console.log(changeData);
-          
-        });
+        
+        //推荐区跑马灯效果
+        var marqueeE = document.getElementById("solution"); 
+        var marqueeE1 = document.getElementById("RunTopic");
+        // var demo2 = document.getElementById("RunTopic2"); 
+        var speed=200;    //数值越大滚动速度越慢 
+        // demo2.innerHTML = demo1.innerHTML 
+        function Marquee(){ 
+            //console.log(marqueeE.scrollLeft,marqueeE1.offsetWidth,marqueeE.offsetWidth,marqueeE.scrollLeft);
+            if(marqueeE1.offsetWidth<=marqueeE.scrollLeft+1100){               
+                marqueeE.scrollLeft=0
+            }
+            else{ 
+                marqueeE.scrollLeft+=2;    
+            } 
+        }  
+        var MyMar = setInterval(Marquee,speed); 
+        marqueeE.onmouseover = function(){clearInterval(MyMar)} 
+        marqueeE.onmouseout = function(){MyMar = setInterval(Marquee,speed)}
+        //跑马灯效果结束 
 
-        $.rogerTrigger('#movieList', '#/homelist', {Plan:1});
+        //左边栏工具条
+        var $btn=$(".fixedPos");
+        checkScrollT($(window).height());
+        $("#backTop").bind('click',moveTop);
+        $(window).on('scroll',function(){
+            checkScrollT($(window).height());
+        });
+        function moveTop(){
+            $("body,html").animate({scrollTop:0},200);
+        }
+        function checkScrollT (pos) {
+            if($(window).scrollTop()>pos){
+                $btn.fadeIn();
+            }else{
+                $btn.fadeOut();
+            }
+        } 
+        // 左边栏工具条结束
+
+
+        //$.rogerTrigger('#movieList', '#/homelist', {Plan:1});
 		
 		realView.rogerCropImages();
         frameCtrl();
@@ -269,7 +300,6 @@
                 })
             });
         })
-
     };
 
     var ctrlOrderlist = function (response, realView) {
@@ -288,7 +318,6 @@
             });
 
         });
-
 
         frameCtrl();
         $('#confirm').rogerOnceClick(null, function () {
@@ -348,7 +377,18 @@
         realView.rogerCropImages();
         frameCtrl();
     };
+
+    var initUserInfo = function (param) {
+        return param;
+    };
     var ctrlUserInfo = function(response, realView) {
+        var userInfo = $.rogerGetLoginUser();
+        console.log(userInfo);
+        var Avatar = "http://123.59.144.47/" + userInfo.AvatarPicURL;
+        $('.avatar img').attr('src', Avatar);
+        $('.personInfo>p>strong').text(userInfo.UserName);
+        $('#UserName').val(userInfo.UserName);
+        $('#TrueName').val(userInfo.TrueName);
         realView.rogerCropImages();
         frameCtrl();
     };

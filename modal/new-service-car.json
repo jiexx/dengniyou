@@ -1,6 +1,6 @@
 {
 	"DetailMain": {
-		"sql": "INSERT INTO travelorderdb.tab_services ( UserID, ServiceTypeID, ServiceName, PrimaryPrice, Unit, PriceType, ServiceTime, ServiceOutTimePrice, IncMileage, ExMileagePrice, FreeForDelay, WaitOutTimePrice, Description, ServiceStatus, ServiceMethod, UpdateDate, CreateDate ) VALUES ( ?,?,?,?,?,?,?,?,?,?, ?,?,?,?,?,NOW(),NOW() )",
+		"sql": "INSERT INTO traveluserdb.tab_services ( UserID, ServiceTypeID, ServiceName, PrimaryPrice, Unit, PriceType, ServiceTime, ServiceOutTimePrice, IncMileage, ExMileagePrice, FreeForDelay, WaitOutTimePrice, Description, ServiceStatus, ServiceMethod, UpdateDate, CreateDate ) VALUES ( ?,?,?,?,?,?,?,?,?,?, ?,?,?,3,?,NOW(),NOW() )",
 		"params": [
 			"userID",
 			"serviceTypeID",
@@ -13,12 +13,12 @@
 			"incMileage",
 			"exMileagePrice",
 			"freeForDelay",
+			"freeForDelay",
 			"waitOutTimePrice",
 			"description",
-			"serviceStatus",
 			"serviceMethod"
 		],
-		"Picture": {
+		"Pictures": {
 			"sql": "INSERT INTO traveluserdb.tab_facilitypictures ( PictureID, PicURL, IsCover, PicType ) VALUES (?,?,?,1)",
 			"params": [
 				"insertId",
