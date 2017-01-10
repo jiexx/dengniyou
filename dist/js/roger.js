@@ -394,7 +394,7 @@ $(function () {
 			$.rogerSetAppContainer( $(this) );
 			$('html')._RogerReloadRouters();
             var qs = $.rogerWindowURLParamsString();
-            if(qs.length > 1) {
+            if(qs.length > 2) {
                 $.rogerLocation(qs);
 			}else {
                 $.rogerRefresh();//$.rogerLocation($._rogerGetLocation());//'#/'+$.rogerWindowURLParamsString());

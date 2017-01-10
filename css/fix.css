@@ -174,15 +174,15 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .plandetail-main .main-right{padding-right: 0;}
 .plandetail-page .recommendBox, .scheduleBox { border: 1px solid #00b8ee; }
 .plandetail-page .recommendBox h2 { background-color: #00b8ee; font-size: 24px; color: #fff; line-height: 50px; text-indent: 10px; text-align: center; margin-top: 0; margin-bottom: 0;}
-.plandetail-page .recommendBox ul{padding-top: 15px;}
+/*.plandetail-page .recommendBox ul{padding-top: 15px;}
 .plandetail-page .recommendBox ul li { height: 82px; padding: 10px; border-bottom: 1px solid #F5F5F5; }
-.plandetail-page .recommendBox ul li img {float: left; height: 60px; width: 60px; }
+.plandetail-page .recommendBox ul li img {float: left;  }
 .plandetail-page .recommendBox ul li .btn-self { height: 16px; border-radius: 8px; font-size: 8px; padding: 0 6px; line-height: 10px; margin-bottom: 6px; }
 .plandetail-page .recommendBox ul li .text { float: left; margin-left: 10px;  }
 .plandetail-page .recommendBox ul li .text h6 { text-overflow: ellipsis; overflow: hidden; white-space: nowrap; margin-top: 0;}
 .plandetail-page .recommendBox ul li .text p { font-size: 10px; color: #fa703e; }
 .plandetail-page .recommendBox ul li .text strong { font-size: 14px; }
-.plandetail-page .recommendBox p.moreBtn { text-align: center; height: 40px; line-height: 40px; }
+.plandetail-page .recommendBox p.moreBtn { text-align: center; height: 40px; line-height: 40px; }*/
 /*更多推荐结束*/
 .plandetail-page .scheduleNav { height: 48px; color: #00b8ee; border-bottom: 2px solid #00b8ee; border-top: 1px solid #00b8ee; border-left: 1px solid #00b8ee; border-right: 1px solid #00b8ee; background-color: #fff; z-index: 10;}
 .plandetail-page .scheduleNav h2 { font-size: 18px; color: #00b8ee; font-weight: bold; line-height: 46px; text-indent: 20px; margin-top: 0;}
@@ -239,7 +239,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .commentOn li:last-child { border: none; vertical-align: middle; text-align: center; }
 .plandetail-page .commentOn li:last-child i { height: 80px; line-height: 80px; }
 /*企业信息部分*/
-.interpriseArea{width:100%; color: #FFF;}
+
 .interpriseArea .content{/*background-color: inherit;*/}
 .interpriseInfo {height: 94px; line-height: 94px; border-bottom: 1px dotted #b2b2b2; }
 .interpriseInfo img { height: 60px; width: 100px; }
