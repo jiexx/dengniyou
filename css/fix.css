@@ -695,7 +695,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*base controller*/
 .label-base input{outline: none;border: none;background: none;margin: 0;padding: 0;}
 .label-base{width:70%;}
-.label-base li{ display: inline-block; width:100px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0; position: relative; -webkit-border-radius: 15px; -moz-border-radius: 15px; -ms-border-radius: 15px; -o-border-radius: 15px; border-radius: 15px; }
+.label-base li{ display: inline-block; width:100px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0; position: relative;  }
 .label-base li:after{content:'/'; position: absolute; right:-10px; color:#000;}
 .label-base li:last-child:after{content:''; position: absolute; right:-10px; color:#000;}
 .label-base li input{text-align: center; width:70%;}

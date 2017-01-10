@@ -111,7 +111,12 @@
 				<h4 class="col-md-3">开始城市</h4>
 				<div class="col-md-3">
 					<ul class="label-base">
-						<li data-op="change" data-pointer="/PlanInfo/StartCityID" data-action="createCity"><a><input type="text" value="${$data.PlanInfo.StartCityID}" disabled></a></li>
+						{{if $data.PlanInfo.StartCityID }}
+						<li><input type="text" value="${$data.PlanInfo.StartCity}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/StartCityID" ></a></li>
+						{{/if}}
+						{{if !$data.PlanInfo.StartCityID }}
+						<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/StartCityID" data-action="createCity"> + </div></li>
+						{{/if}}
 					</ul>
 				</div>
 				<div class="col-md-6 pull-right">
