@@ -616,7 +616,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .notice #policydiv ul li .main .col-md-2 input{width: 16px;}
 .editPage .notice #policydiv ul li h3{margin-top: 0; font-size: 16px; font-weight: bold; color: #337AB7;}
 .editPage .notice #policydiv li .main .col-md-10 input{width: 35px; border: 1px solid #D4D4D4; padding: 2px 5px; margin-left: 5px; margin-right: 5px; font-size: 14px; color: #337AB7; font-weight: bold; text-align: center;}	
-	/*end 包车退订政策弹出框部分*/
+.editPage .notice #policydiv li .main .col-md-10 span{display:inline-block; width:35px; height:30px; border: 1px solid #D4D4D4; }
+/*end 包车退订政策弹出框部分*/
 /*接机编辑页*/
 .editPage .baseInfo form input[type="radio"]{width:40%;}
 /*景点编辑*/
