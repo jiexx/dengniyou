@@ -443,7 +443,17 @@
     };
 
     var initUserInfo = function (param) {
-        return param;
+        return {
+            CityID:'',
+            CountryID:'',
+            Labels:[],
+            Sex:'',
+            TrueName:'',
+            UserID:'',
+            UserName:'',
+            ComLogo:'',
+            ComAdv:''
+        };
     };
     var ctrlUserInfo = function(response, realView) {
         var userInfo = $.rogerGetLoginUser();
@@ -734,21 +744,21 @@
 	$.rogerRouter({
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
-		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			ctrl: ctrlPlandetail},
-        '#/homelist':                  {fragment: 'fragment/home-list.html',           init: initHomeList,                          ctrl: ctrlHomeList},
+		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			    ctrl: ctrlPlandetail},
+        '#/homelist':                 {fragment: 'fragment/home-list.html',                 init: initHomeList,                          ctrl: ctrlHomeList},
 
-        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                 ctrl: ctrlTemplateplanNew},
+        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                  ctrl: ctrlTemplateplanNew},
 
-        '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
-        '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
-        '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
+        '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                                                    ctrl: ctrlCityChooser},
+        '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
+        '#/airportchooser':           {fragment: 'fragment/dialog-airport-chooser.html', init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
 
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
-		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						ctrl: ctrlComment},
-        '#/orderdetail':            {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
-	    '#/plansearch':             {view:'planSearch.html',                                  rootrest:'/plan/plansearch',          ctrl: ctrlPlanSearch},
-        '#/userinfo':               {view:'userInfo.html',                                     rootrest:'/user/userinfo',           ctrl: ctrlUserInfo}
+		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
+        '#/orderdetail':              {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
+	    '#/plansearch':               {view:'planSearch.html',                                rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
+        '#/userinfo':                 {fragment:'fragment/userInfo.html',                   init: initUserInfo,	                        ctrl: ctrlUserInfo}
     });
 	
 })();

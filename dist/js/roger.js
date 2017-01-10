@@ -50,7 +50,10 @@ $(function () {
             return json;
         },
 		rogerWindowURLParamsString:function() {
-			var link = window.location.search;
+			var link = window.location.href.slice(window.location.href.indexOf('#'));//window.location.search;
+			if(link == '/') {
+				return '#/';
+			}
 			return link;
 		},
 		rogerGetUrlParam:function(key) {
@@ -119,7 +122,7 @@ $(function () {
 		},
 		_rogerGetLocation: function() {
 			if(!window.name) {
-				return '#/'+$.rogerWindowURLParamsString();
+				return $.rogerWindowURLParamsString();
 			}
 			return window.name;//window._rogerCurrLink;
 		},
@@ -390,7 +393,12 @@ $(function () {
 		rogerGo: function () {
 			$.rogerSetAppContainer( $(this) );
 			$('html')._RogerReloadRouters();
-			$.rogerRefresh();//$.rogerLocation($._rogerGetLocation());//'#/'+$.rogerWindowURLParamsString());
+            var qs = $.rogerWindowURLParamsString();
+            if(qs.length > 1) {
+                $.rogerLocation(qs);
+			}else {
+                $.rogerRefresh();//$.rogerLocation($._rogerGetLocation());//'#/'+$.rogerWindowURLParamsString());
+			}
 		},
 		rogerOnceClick: function (data, callback) {
 			var ev = $._data($(this), 'events');
