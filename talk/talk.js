@@ -194,7 +194,7 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", '$location', function
                     obj.onSuccess({id: uid, name: uname, portraitUri: picurl});
                 });*/
                 WebIMWidget.providerdata.currentUserInfo = {userId:uid, name:uname, portraitUri:picurl };
-                //console.log(1,WebIMWidget.providerdata.currentUserInfo);
+                console.log(1,WebIMWidget.providerdata.currentUserInfo);
                 WebIMWidget.setConversation(WebIMWidget.EnumConversationType.PRIVATE, tid, '对话中');
                 WebIMWidget.show();
             },
@@ -204,7 +204,7 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", '$location', function
         });
     WebIMWidget.onReceivedMessage = function(message) {
         //console.log(message);
-        //console.log(2,WebIMWidget.providerdata.currentUserInfo);
+        console.log(2,WebIMWidget.providerdata.currentUserInfo);
         if(message.content.user) {
             WebIMWidget.setUserInfoProvider(function (targetId, obj) {
                 obj.onSuccess({id: message.senderUserId, name: message.content.user.name, portraitUri: message.content.user.portraitUri});

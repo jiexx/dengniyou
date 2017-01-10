@@ -37,7 +37,7 @@
         return param;
     };
     var ctrlHomeList = function(response, realView) {
-         realView.rogerCropImages();
+        realView.rogerCropImages();
     };
 	
 	var ctrlHome = function(response, realView) {
@@ -84,8 +84,8 @@
         var MyMar = setInterval(Marquee,speed); 
         marqueeE.onmouseover = function(){clearInterval(MyMar)} 
         marqueeE.onmouseout = function(){MyMar = setInterval(Marquee,speed)}
-        //跑马灯效果结束 
 
+        //跑马灯效果结束
         //左边栏工具条
         var $btn=$(".fixedPos");
         checkScrollT($(window).height());
@@ -172,19 +172,20 @@
         }
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
 
-
-        $('#TALK').on('click',function () {
-            var usr = $.rogerGetLoginUser();
-            if(!usr) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-            $(this).attr("href","talk?uid="
-                +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
-        });
-
-
+        //$('#TALK').rogerOnceClick(null,function () {
+            //$('#TALK').each(function () {
+            $('#TALK').on('click',function () {
+                var usr = $.rogerGetLoginUser();
+                if(!usr) {
+                    $.rogerLogin('#homeLogin', '/login');
+                    $.rogerShowLogin();
+                    return;
+                }
+                $(this).attr("href","talk?uid="
+                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+            });
+        //});
+		
 		/*$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
 			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
 				console.log(respJSON);
@@ -303,11 +304,11 @@
 
         $('#BUY').rogerOnceClick(null,function (e) {
             var usr = $.rogerGetLoginUser();
-   //          if(!usr) {
-   //              $.rogerLogin('#homeLogin', '/login');
-   //          	$.rogerShowLogin();
-   //          	return;
-			// }
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+            	$.rogerShowLogin();
+            	return;
+			}
         	var buy = {visitid:usr.UserID,
                 servicetripid:response.PlanInfo[0].PlanID,
 				servicetripname:response.PlanInfo[0].PlanName,
@@ -384,19 +385,12 @@
 
         frameCtrl();
         $('#confirm').rogerOnceClick(null, function () {
-            var orderNo = $('#confirm').data('id');
+            var orderid = $('#confirm').data('id');
             var status = $('#confirm').data('status');
-            var name = $('#confirm').data('name');
-            
-            var buy = {
-                orderNo:orderNo,
-                ServiceTripName:name
-            };
-
             var user = $.rogerGetLoginUser();
             if ('1' == status) {
                 var newWin = window.open('about:blank');
-                $.rogerPost('/pay2', buy, function (respJSON) {
+                $.rogerPost('/pay', buy, function (respJSON) {
                     if (respJSON.ERR) {
                         $.rogerNotice({Message: '生成订单有错,错误码:' + respJSON.ERR});
                         newWin.close();
@@ -449,7 +443,17 @@
     };
 
     var initUserInfo = function (param) {
-        return param;
+        return {
+            CityID:'',
+            CountryID:'',
+            Labels:[],
+            Sex:'',
+            TrueName:'',
+            UserID:'',
+            UserName:'',
+            ComLogo:'',
+            ComAdv:''
+        };
     };
     var ctrlUserInfo = function(response, realView) {
         var userInfo = $.rogerGetLoginUser();
@@ -740,21 +744,21 @@
 	$.rogerRouter({
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
-		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			ctrl: ctrlPlandetail},
-        '#/homelist':                  {fragment: 'fragment/home-list.html',           init: initHomeList,                          ctrl: ctrlHomeList},
+		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			    ctrl: ctrlPlandetail},
+        '#/homelist':                 {fragment: 'fragment/home-list.html',                 init: initHomeList,                          ctrl: ctrlHomeList},
 
-        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                 ctrl: ctrlTemplateplanNew},
+        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                  ctrl: ctrlTemplateplanNew},
 
-        '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
-        '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
-        '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
+        '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                                                    ctrl: ctrlCityChooser},
+        '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
+        '#/airportchooser':           {fragment: 'fragment/dialog-airport-chooser.html', init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
 
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
-		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						ctrl: ctrlComment},
-        '#/orderdetail':            {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
-	    '#/plansearch':             {view:'planSearch.html',                                  rootrest:'/plan/plansearch',          ctrl: ctrlPlanSearch},
-        '#/userinfo':               {view:'userInfo.html',                                     rootrest:'/user/userinfo',           ctrl: ctrlUserInfo}
+		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
+        '#/orderdetail':              {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
+	    '#/plansearch':               {view:'planSearch.html',                                rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
+        '#/userinfo':                 {fragment:'fragment/userInfo.html',                   init: initUserInfo,	                        ctrl: ctrlUserInfo}
     });
 	
 })();

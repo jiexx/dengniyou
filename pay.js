@@ -35,6 +35,9 @@ function _buildSign(json) {
 exports.config = function (params) {
     _assignMe(_basicConfig, params);
 };
+exports.setConfig = function (key, val) {
+    return _basicConfig[key] = val;
+};
 
 exports.buildDirectPayURL = function (orderParams) {
     var json = {

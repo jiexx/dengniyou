@@ -249,7 +249,7 @@ app.get('/roles', upload.array(), function(req, res) {
 });
 
 app.get('/talk', function (req, res) {
-    var key = '4z3hlwrv4zzyt';
+    var key = '25wehl3u255yw';
     request.post(
         {
             url: 'http://api.cn.ronghub.com/user/getToken.json',
@@ -257,9 +257,9 @@ app.get('/talk', function (req, res) {
             body: 'userId='+req.query.uid +'&name='+req.query.uname+'&portraitUri='+req.query.picurl,
             headers: {'Content-Type': 'application/x-www-form-urlencoded',
                 'App-Key':key,
-                'Nonce': '1658717659',
-                'Timestamp':'1483791557',
-                'Signature': '8d23cb813948c1ff901391630ddc66bd2433bd38'
+                'Nonce': '265675769',
+                'Timestamp':'1484030896',
+                'Signature': '1e43156d36f53efa16c607e1b58f5be77ba6b158'
             },
         },
         function (error, response, body) {
