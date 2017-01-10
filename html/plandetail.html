@@ -71,7 +71,7 @@
 
 		<div class="row project">
 			<h1>${ $data.PlanInfo[0].PlanName} 
-				<a  class="btn btn-warning" href="#/templateplannew">定制</a>
+				<a  class="btn btn-warning" data-href="#/templateplannew" id="customize">定制</a>
 			</h1>
 			
 			<div class="project-main clearfix">
@@ -87,7 +87,7 @@
 				</div>
 				<div class="col-md-5">
 					<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].PlanPriceBase}</span>元</h4>
-					<a href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="BUYNOW"><button class="btn btn-primary">立即购买</button></a>
+					<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即购买</button></a>
 				</div>
 				<div class="col-md-2">
 					<p><i class="fa fa-heart-o"></i>添加收藏</p>

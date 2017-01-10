@@ -116,9 +116,9 @@
 					{{each(i,order) datas}}
 					<li>
 						<div class="row title">
-							<h5 class="col-md-7">${datas[i].username} <span class="glyphicon glyphicon-comment"></span></h5>
-							<span class="col-md-3 num">出行人数</span>
-							<span class="col-md-2 fr status">
+							<h5 class="col-md-9">${datas[i].username} <span class="glyphicon glyphicon-comment"></span></h5>
+							<span class="col-md-2 num">出行人数</span>
+							<span class="col-md-1 fr status">
 								{{if datas[i].status == 1}}待支付{{/if}}
 								{{if datas[i].status == 2}}待接单{{/if}}
 								{{if datas[i].status == 3}}待完成{{/if}}
@@ -129,24 +129,26 @@
 						</div>
 
 						<div class="content">
-							<ul class="productList">
+							<ul class="productList clearfix">
 								<li class="clearfix">
-									<div class="productPic">
-										<a href="#/orderdetail?OrderID=${datas[i].orderid}&UserType=1">
-											<img src="${ $data.IMGHOST + picurl}" alt="">
-										</a>
+									<div class="col-md-9">
+										<div class="productPic">
+											<a href="#/orderdetail?OrderID=${datas[i].orderid}&UserType=1">
+												<img src="${ $data.IMGHOST + picurl}" alt="">
+											</a>
+										</div>
+										<div class="productText">
+											<h4>${datas[i].ServiceTripName}</h4>
+											<p class="description">${datas[i].ServiceTripName}</p>
+											<p class="productLabel">${datas[i].ServiceTripTypeName}</p>
+											<p>${datas[i].starttime}-${datas[i].starttime}</p>
+										</div>
 									</div>
-									<div class="productText">
-										<h4>${datas[i].ServiceTripName}</h4>
-										<p class="description">${datas[i].ServiceTripName}</p>
-										<p class="productLabel">${datas[i].ServiceTripTypeName}</p>
-										<p>${datas[i].starttime}-${datas[i].starttime}</p>
-									</div>
-									<div class="nums">
+									<div class="col-md-2 nums">
 										<span class="productNum">${datas[i].traveldays}</span>
 									</div>
 									{{if (datas[i].status == 1 )}}
-									<div class="payBtn" id="payBtn" style="text-align: right">
+									<div class="col-md-1 payBtn" id="payBtn">
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span></p>
 										<button id="confirm" data-id="${datas[i].orderid}" data-status="${datas[i].status}" type="button" class="btn btn-warning btn-orange">
 											立即支付
@@ -154,7 +156,7 @@
 									</div>
 									{{/if}}
 									{{if (datas[i].status == 4 )}}
-									<div class="payBtn" id="payBtn" style="text-align: right">
+									<div class="col-md-1 payBtn" id="payBtn">
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span></p>
 										<button id="confirm" data-id="${datas[i].orderid}" data-status="${datas[i].status}" type="button" class="btn btn-warning btn-orange">
 											确认完成
@@ -162,7 +164,7 @@
 									</div>
 									{{/if}}
 									{{if (datas[i].status == 6 )}}
-									<div class="payBtn" id="payBtn" style="text-align: right">
+									<div class="col-md-1 payBtn" id="payBtn">
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span></p>
 										<button id="confirm" data-id="${datas[i].orderid}" data-status="${datas[i].status}" type="button" class="btn btn-warning btn-orange">
 											评价

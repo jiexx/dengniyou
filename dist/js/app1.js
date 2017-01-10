@@ -172,16 +172,19 @@
         }
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
 
-        $('#TALK').each(function () {
-            var usr = $.rogerGetLoginUser();
-            if(!usr) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-            $(this).attr("href","talk?uid="
-                +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
-        });
+        //$('#TALK').rogerOnceClick(null,function () {
+            //$('#TALK').each(function () {
+            $('#TALK').on('click',function () {
+                var usr = $.rogerGetLoginUser();
+                if(!usr) {
+                    $.rogerLogin('#homeLogin', '/login');
+                    $.rogerShowLogin();
+                    return;
+                }
+                $(this).attr("href","talk?uid="
+                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+            });
+        //});
 		
 		/*$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
 			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
@@ -189,15 +192,24 @@
                 window.open(respJSON.url, '_blank');
             })
         })*/
-        $('#BUYNOW').rogerOnceClick(null,function (e) {
+        $('#customize').on('click',function () {
             var usr = $.rogerGetLoginUser();
-            //var href = $(this).attr('data_href');
             if(!usr) {
                 $.rogerLogin('#homeLogin', '/login');
                 $.rogerShowLogin();
                 return;
             }
+            $.rogerLocation($(this).attr('data-href'));
+        });
 
+        $('#buyNow').on('click',function () {
+            var usr = $.rogerGetLoginUser();
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $.rogerLocation($(this).attr('data-href'));
         });
 
 	};
@@ -323,7 +335,10 @@
     };
 
     var ctrlOrderlist = function (response, realView) {
-
+        var userInfo = $.rogerGetLoginUser();
+        var Avatar = "http://123.59.144.47/" + userInfo.AvatarPicURL;
+        $('.avatar img').attr('src', Avatar);
+        
         $("#order-a_all").find("a").each(function () {
             var el = $(this);
             el.rogerOnceClick(null, function () {

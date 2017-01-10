@@ -1535,30 +1535,7 @@ $(function () {
                 praiseCount: '',
                 evaluateCount: '',
                 TravelogueDetail: [
-                    {
-                        articleID: 135,
-                        articleDetailID: 283,
-                        label: 'ssssssss',
-                        picURL: null,
-                        content: null,
-                        DAY: 1
-                    },
-                    {
-                        articleID: 135,
-                        articleDetailID: 283,
-                        label: null,
-                        picURL: "group1/M00/01/B6/CgkB6VhjMWmAGBzOAAECKGQnCKs190.jpg",
-                        content: null,
-                        DAY: null
-                    },
-                    {
-                        articleID: 135,
-                        articleDetailID: 284,
-                        label: null,
-                        picURL: null,
-                        content: "阿富汗伊斯兰共和国简称阿富汗，是一个位于亚洲中南部的内陆国家，坐落在亚洲的心脏地区。阿富汗的位置有不同的定义，有时候会被认为处在中亚或者南亚，甚至被归类于中东地区（西亚）。阿富汗与大部分比邻的国家有着宗教上、语言上、地理上相当程度的关联。阿富汗的北部和土库曼斯坦、乌兹别克斯坦以及塔吉克斯坦接壤，东部与中国以及部分巴基斯坦控制查谟-克什米尔地区（有争议）接壤，南部与巴基斯坦接壤，西部与伊朗接壤。\n阿富汗的名字在普什图语中的意思就是“普什图人的地方”，而普什图人亦是现时国内人口最多的族群。\n阿富汗领土中的五分之三交通不便。农业是主要的经济支柱，但可耕地还不足农用地的2/3。人口为3000多万，是世界上最贫穷的国家之一。阿富汗是个落后的农牧业国家，阿矿藏资源较为丰富，但未得到充分开发。阿富汗的河流大部分是内陆河，多注入沙漠和湖泊。主要河流有阿姆河、喀布尔河、赫尔曼德河和哈里鲁河等。",
-                        DAY: null
-                    },
+
                 ],
             },
 
