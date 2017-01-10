@@ -37,7 +37,7 @@
         return param;
     };
     var ctrlHomeList = function(response, realView) {
-         var i = 0;
+         realView.rogerCropImages();
     };
 	
 	var ctrlHome = function(response, realView) {
@@ -172,20 +172,19 @@
         }
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
 
-        //$('#TALK').rogerOnceClick(null,function () {
-            //$('#TALK').each(function () {
-            $('#TALK').on('click',function () {
-                var usr = $.rogerGetLoginUser();
-                if(!usr) {
-                    $.rogerLogin('#homeLogin', '/login');
-                    $.rogerShowLogin();
-                    return;
-                }
-                $(this).attr("href","talk?uid="
-                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
-            });
-        //});
-		
+
+        $('#TALK').on('click',function () {
+            var usr = $.rogerGetLoginUser();
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $(this).attr("href","talk?uid="
+                +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+        });
+
+
 		/*$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
 			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
 				console.log(respJSON);
@@ -304,11 +303,11 @@
 
         $('#BUY').rogerOnceClick(null,function (e) {
             var usr = $.rogerGetLoginUser();
-            if(!usr) {
-                $.rogerLogin('#homeLogin', '/login');
-            	$.rogerShowLogin();
-            	return;
-			}
+   //          if(!usr) {
+   //              $.rogerLogin('#homeLogin', '/login');
+   //          	$.rogerShowLogin();
+   //          	return;
+			// }
         	var buy = {visitid:usr.UserID,
                 servicetripid:response.PlanInfo[0].PlanID,
 				servicetripname:response.PlanInfo[0].PlanName,
@@ -385,12 +384,19 @@
 
         frameCtrl();
         $('#confirm').rogerOnceClick(null, function () {
-            var orderid = $('#confirm').data('id');
+            var orderNo = $('#confirm').data('id');
             var status = $('#confirm').data('status');
+            var name = $('#confirm').data('name');
+            
+            var buy = {
+                orderNo:orderNo,
+                ServiceTripName:name
+            };
+
             var user = $.rogerGetLoginUser();
             if ('1' == status) {
                 var newWin = window.open('about:blank');
-                $.rogerPost('/pay', buy, function (respJSON) {
+                $.rogerPost('/pay2', buy, function (respJSON) {
                     if (respJSON.ERR) {
                         $.rogerNotice({Message: '生成订单有错,错误码:' + respJSON.ERR});
                         newWin.close();

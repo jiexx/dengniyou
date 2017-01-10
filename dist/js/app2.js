@@ -494,9 +494,9 @@ $(function () {
 
         });
 
-        $('#confirm').rogerOnceClick(null, function () {
-            var orderid= $('#confirm').data('id');
-            var status= $('#confirm').data('status');
+        $('.confirm').on('click',function () {
+            var orderid= $(this).data('id');
+            var status= $(this).data('status');
             var user = $.rogerGetLoginUser();
             if('2'==status) {
                 $.rogerPost('/update/order',{OrderID:orderid,Status:3, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
@@ -1157,26 +1157,24 @@ $(function () {
             console.log('test');
             temp = e.data.DetailMain;
 
-            var picURLs = e.data.DetailMain.picURLs;
-            var coverURL = e.data.DetailMain.coverURL;
-            var Pictures =[];
-            for(key in picURLs){
-                Pictures.push({"picURL":picURLs[key],"cover":0});
-            }
+            var filedata = e.data.DetailMain.picURLs;
+            var coverFiledata = e.data.DetailMain.coverURL;
 
-            if (null != coverURL && coverURL!=''){
-                Pictures.push({"picURL":coverURL,"cover":1});
-            }
-
-            temp["Pictures"]=Pictures;
             temp["userID"]=usr.UserID;
             temp["serviceTypeID"]=1;
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
 
+            temp["policyBean"]= temp["Policy"][0];
+            temp["feeBean"]= temp["Policy"][1];
+            temp["feeNoBean"]= temp["Policy"][2];
+            temp["noticeBean"]= temp["Policy"][3];
+
             var data = {
                 DetailMain:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
                 IMGHOST:e.data.IMGHOST
             };
             $.rogerPost('/new/service/car', data, function(respJSON){
@@ -1559,7 +1557,20 @@ $(function () {
 
         $('#save').rogerOnceClick(TraveLogue, function(e){
             temp = e.data.Travelogue;
-            temp.STATUS=0;
+            temp["STATUS"]=0;
+
+            TravelogueDetail = temp.TravelogueDetail;
+            dayemp = '';
+            for(key in temp.TravelogueDetail){
+
+                if(TravelogueDetail[key]["DAY"]!=null && TravelogueDetail[key]["DAY"]!=''){
+                    dayemp = TravelogueDetail[key]["DAY"];
+                }else {
+                    TravelogueDetail[key]["DAY"] = dayemp;
+                }
+
+            }
+
             var data = {
                 Travelogue:temp,
                 IMGHOST:e.data.IMGHOST
@@ -1578,7 +1589,7 @@ $(function () {
                  IMGHOST:e.data.IMGHOST
              };
              $.rogerPost('/new/travellogue', data, function(respJSON){
-                 $.rogerNotice({Message:'保存攻略成功'});
+                 $.rogerNotice({Message:'发布攻略成功'});
 
              });
          });

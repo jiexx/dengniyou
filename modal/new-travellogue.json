@@ -1,5 +1,5 @@
 {
-	"DetailMain": {
+	"Travelogue": {
 		"sql": "INSERT INTO `traveluserdb`.`tab_travelarticle` ( `UserID`, `ArticlePicURL`, `Description`, `Title`, `Type`, `Status`, `EvaluateCount`, `PraiseCount`, `BrowseCount`, `CreateDate` ) VALUES ( ?, ?, ?, ?, '6', ?, 0, 0, 0, NOW() )",
 		"params": [
 			"userID",

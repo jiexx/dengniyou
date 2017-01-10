@@ -439,8 +439,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .orderAll .orderList>li .title h5{display: inline-block; font-size: 16px;}
 .orderAll .orderList>li .title h5 .contactMe{display: inline-block; width:32px; height: 32px; background-image: url(../../img/talking.png); float:right; margin-left: 10px;}
 .orderAll .orderList>li .title .status{margin-right: 30px;}
-.orderAll .productList>li{padding: 12px 20px 12px 0; background-color: #FFF;}
-.orderAll .productList>li .nums{margin-left: -25px;}
+.orderAll .productList>li{padding: 15px 20px 15px 0; background-color: #FFF;}
+.orderAll .productList>li .nums{padding-left: 40px; font-size: 14px;}
 .orderAll .productList>li input[type="checkbox"]{float:left; margin:36px 14px;}
 .orderAll .productList>li .productPic{ /*width:156px; height: 86px;*/ float: left; padding-left: 10px;}
 .orderAll .productList>li .productPic img{width:156px; height: 86px;}
@@ -449,9 +449,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .orderAll .productList>li .productText h4{margin-bottom: 4px; margin-top: 0;}
 .orderAll .productList>li .productText .description{margin-bottom: 12px;}
 .orderAll .productList>li .productText p{margin-bottom: 0;}
-/*.orderAll .productList>li .payBtn{float:right; height: 80px; }*/
+.orderAll .productList>li .payBtn{margin-left: -10px;}
 .orderAll .productList>li .payBtn p{color:#00B8EE; /*height: 50px; line-height: 50px;*/ font-size: 18px; margin-bottom: 10px; text-align: center;}
 .orderAll-guide .productList>li .payBtn p{color:#fa703e;}
+.orderAll-guide .orderList li h5 span{color: #FA703E;}
 /*.orderAll .productList>li .payBtn .btn-orange{background-color: #fa703e; border-radius: 0;}*/
 /*全部订单页结束*/
 /*个人中心全部结束*/
@@ -608,6 +609,14 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .baseInfo .carPrice li:before{content: ''; background: url(../img/containIcon.png) no-repeat; width: 20px; height: 70px; position: absolute; left: -20px;}
 .editPage .baseInfo .carPrice li:last-child:before{ width: 0;}
 .editPage .baseInfo .carPrice li>.addItemBtn{width:70%; height: 60px; background-color: #FFF; border-radius: 0; border:1px dotted #00b8ee; color:#00b8ee; cursor: pointer; text-align: center; line-height: 54px; font-size: 40px;}
+	/*包车退订政策弹出框部分*/
+.editPage .notice #policydiv ul li{background-color: #F2F2F2; margin: 10px 10px; padding: 10px 10px; font-size: 14px;}
+.editPage .notice #policydiv ul li .title{border-bottom: 1px solid #fff;}
+.editPage .notice #policydiv ul li .main{padding: 5px 0;}
+.editPage .notice #policydiv ul li .main .col-md-2 input{width: 16px;}
+.editPage .notice #policydiv ul li h3{margin-top: 0; font-size: 16px; font-weight: bold; color: #337AB7;}
+.editPage .notice #policydiv li .main .col-md-10 input{width: 35px; border: 1px solid #D4D4D4; padding: 2px 5px; margin-left: 5px; margin-right: 5px; font-size: 14px; color: #337AB7; font-weight: bold; text-align: center;}	
+	/*end 包车退订政策弹出框部分*/
 /*接机编辑页*/
 .editPage .baseInfo form input[type="radio"]{width:40%;}
 /*景点编辑*/
