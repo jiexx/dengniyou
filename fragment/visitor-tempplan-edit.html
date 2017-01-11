@@ -11,7 +11,7 @@
 				<div class="form-group">
 					<label   class="col-sm-2 col-md-1 control-label">方案名称</label>
 					<div class="col-sm-10 col-md-11">
-						<input type="text" class="form-control"  value="${$data.PlanInfo.PlanName}"  data-value="/PlanInfo/PlanName" placeholder="不能超过24个字符">
+						<input type="text" id="PlanTitle" class="form-control"  value="${$data.PlanInfo.PlanName}"  data-value="/PlanInfo/PlanName" placeholder="不能超过24个字符" disable>
 					</div>
 				</div>
 			</form>
@@ -53,7 +53,7 @@
 							<ul class="airports">
 								<li>
 									<div class="planeIcon">
-										<img src="../img/airPlaneIcon.png" alt="">
+										<img data-src="../img/airPlaneIcon.png" alt="">
 									</div>
 									<div class="planeText">
 										${AirportCode} ${AirportNameCn}<br>
@@ -75,7 +75,7 @@
 							<ul class="details" data-i="${$index}">
 								<li>
 									<div class="detailImg">
-										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+										<img data-src="${$data.IMGHOST}${SpotPicUrl}" alt="">
 									</div>
 									<div class="detailText">
 										<h5>${SpotName} ${SpotLocalName}</h5>
@@ -106,7 +106,7 @@
 							<ul class="details" data-i="${$index}">
 								<li>
 									<div class="detailImg">
-										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+										<img data-src="${$data.IMGHOST}${SpotPicUrl}" alt="">
 									</div>
 									<div class="detailText">
 										<h5>${SpotName} ${SpotLocalName}</h5>
@@ -137,7 +137,7 @@
 							<ul class="details" data-i="${$index}">
 								<li>
 									<div class="detailImg">
-										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+										<img data-src="${$data.IMGHOST}${SpotPicUrl}" alt="">
 									</div>
 									<div class="detailText">
 										<h5>${SpotName} ${SpotLocalName}</h5>
@@ -175,12 +175,9 @@
 		<div class="notice">
 			<div class="optionBtn">
 				<button id="save" class="btn btn-warning">保存</button>
-				<!--{{if  $data.PlanInfo.PlanStatus == 3}}
-                <button id="publish" class="btn btn-warning">发布 </button>
-                {{/if}}
-                {{if  $data.PlanInfo.PlanStatus == 1}}
-                <button id="publish" class="btn btn-warning">发布 </button>
-                {{/if}}-->
+
+                <button id="send" class="btn btn-warning invsible">发送 </button>
+
 			</div>
 		</div>
 		<!-- 须知信息结束 -->
