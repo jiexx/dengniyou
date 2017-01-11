@@ -266,7 +266,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homesearch-page .searchBox{position: absolute; top: 210px; background-color: #FFF; z-index: 888;padding-top: 24px; display: none}
 .homesearch-page .searchBox dl{height: 66px;border-bottom: 1px solid #f3f5f8;margin: 0 24px}
 .homesearch-page .searchBox dt, .searchBox dd, .searchBox dd ul, .searchBox dd ul li{display: inline-block;line-height: 66px}
-.homesearch-page .searchBox dt{width: 200px;vertical-align: middle ;font-size: 16px; color: #666;}
+.homesearch-page .searchBox dt{width: 80px;vertical-align: middle ;font-size: 16px; color: #666;}
 .homesearch-page .searchBox dt i{display: inline-block;width: 4px; height: 26px;background-color: #fa703e;margin: 0 10px;position: relative; top: 6px}
 .homesearch-page .searchBox dt span{float: right;margin: 17px 15px;width: 60px;height: 28px;line-height: 28px;text-align: center;background-color: #fa703e; color: #FFF}
 .homesearch-page .searchBox dd ul li{margin: 0 15px;font-size: 16px; color: #666;}
@@ -278,7 +278,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homesearch-page .searchArea #searchText1{width: 700px;}
 .homesearch-page .searchArea .search{width: 94px;left: 1px;top: -1px;}
 .homesearch-page .plannersearch-list{margin-top: 30px;}
-.homesearch-page .sortRule{height: 46px;border-bottom: 2px solid #f5f5f5;background-color: #fff;}
+.homesearch-page .sortRule{height: 46px;background-color: #fff;}
 .homesearch-page .sortRule li{display: inline-block;min-width: 90px;height: 46px;line-height: 46px;text-align: center;font-size: 16px;margin-right: 20px;}
 .homesearch-page .sortRule ul .default{font-size: 14px;color: #FD6F34;}
 .homesearch-page .searchlist-main{margin-top: 15px;}
@@ -309,6 +309,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homesearch-page .rightP .price .money span.unit { color: #fa703e; }
 .homesearch-page .rightP .price .btn-orange { background-color: #fa703e; margin-top: 16px; }
 .homesearch-page .pagination{width: 100%;padding: 20px 100px !important;margin: 0;}
+.homesearch-page #itemarea ul li{border-left: 0; border-right: 0; }
+.homesearch-page #itemarea ul li h3{margin-bottom: 20px; margin-top: 10px; font-size: 20px; font-weight: bold;}
+.homesearch-page #itemarea ul li .media-price button{background-color: #FA703E;}
+.homesearch-page #itemarea ul li .money{font-size: 16px; color: #999; margin-bottom: 20px;}
+.homesearch-page #itemarea ul li .money span{font-size: 36px; color: #fa703e;}
 /*方案列表及搜索页结束*/
 
 

@@ -1,0 +1,8 @@
+{
+  "User": {
+    "sql": "UPDATE traveldb.tab_userinfo SET CityID = ?, CountryID = ?, Labels = ?, Sex = ?, TrueName = ?, UserName = ?, ComLogo = ?, ComAdv = ?, AvatarPicURL = ? WHERE UserID = ?",
+    "params":["CityID","CountryID","Labels","Sex","TrueName","UserName","ComLogo","ComAdv","UserID", "AvatarPicURL"],
+    "files":["ComLogo","AvatarPicURL"]
+  }
+
+}

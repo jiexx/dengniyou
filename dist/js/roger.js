@@ -105,7 +105,7 @@ $(function () {
 				url: reqURL, type: 'post', dataType: 'json', data: reqJSON,
 				success: function(respJSON) {
 					if(callback) {
-						callback(respJSON);
+						callback(respJSON, reqJSON);
 					}
 				},
 				error: function (e) {
@@ -203,12 +203,26 @@ $(function () {
 								router.ctrl(respJSON, realView);
 							}
 						);
-					}else if(router.fragment){
+					}else if(router.fragment && (router.init)){
 						var parcel = {router:router, container:$(container), url:url, data:router.init(json)};
 						$._rogerLoadFragment(parcel, function(d, onFinish, parcel){
 							$._rogerLoadFragment(parcel, onFinish)
 						});
-					}
+					}else if(router.fragment && !router.init && router.rootrest && json) {
+                        $._RogerLoadView(
+                            router.fragment,
+                            $(container),
+                            router.rootrest,
+                            json,
+                            function(respJSON, realView) {
+                                realView._RogerReloadRouters();
+                                realView._rogerBindPointer(respJSON,function(d, onFinish){
+                                    $.rogerRefresh(d);
+                                });
+                                router.ctrl(respJSON, realView);
+                            }
+                        );
+                    }
                 }
             }
         },
@@ -402,10 +416,10 @@ $(function () {
 		},
 		rogerOnceClick: function (data, callback) {
 			var ev = $._data($(this), 'events');
-			if(!ev || !ev.click) {
-				$(this).click(data, function (e) {
+			if((!ev || !ev.click)  )  {
+				$(this).on('click', data, function (e) {
 					e.preventDefault();
-					callback(e);
+					callback(e.data);
 				});
 			}
 		},

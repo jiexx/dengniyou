@@ -53,7 +53,7 @@ exports.buildDirectPayURL = function (orderParams) {
     _assignMe(json, orderParams);
     json.sign = _buildSign(json);
     json.sign_type = _basicConfig.sign_type;
-    return _basicConfig.alipay_gateway + querystring.unescape(querystring.stringify(json));
+    return _basicConfig.alipay_gateway + querystring.stringify(json);//querystring.unescape(querystring.stringify(json));
 };
 
 exports.verify = function (params, callback) {

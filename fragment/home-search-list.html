@@ -1,0 +1,33 @@
+			<div class="itemArea" id="itemarea">
+				<div class="sortRule">
+					<ul>
+						<li class="default">综合</li>
+					</ul>
+				</div>
+				<ul class="itemList">
+				{{each Plans}}
+					<li class="list-group-item">
+						<div class="media">
+							<a href="#/plandetail?PlanID=${PlanID}" class="media-left" >
+								<img class="media-object" data-src="${ $data.IMGHOST }${PicURL}" style="width:280px;height:160px"></img>
+							</a>
+							<div class="media-body">
+								<div class="col-md-8">
+									<h3>${PlanName}</h3>
+									<p>出发地：${StartCity}</p>
+									<p>方案号：${PlanNumber}</p>
+									<p>行程天数：${PlanDays}天</p>
+								</div>
+								<div class="col-md-4 media-price">
+									<p class="money">￥<span>${AdultPrice}</span>起</p>
+									<button type="button" class="btn btn-lg btn-warning">马上预定</button>
+								</div>
+							</div>
+						</div>
+					</li>
+				{{/each}}
+				</ul>
+			</div> <!-- end itemArea -->
+			<!-- 页码 -->
+			<div class="pagination" id="pagination">				
+			</div> <!-- end pagination  -->

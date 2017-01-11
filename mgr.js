@@ -102,7 +102,8 @@ app.post('/pay', upload.array(), function(req, res) {
         },
 		function (error, response, body) {
 			if (!error && response.statusCode == 200 && body.datas) {
-			    pay.setConfig('return_url', 'http://123.59.144.169:8888/#/orderdetail?OrderID='+body.datas.orderId+'&UserType=1');
+			    var url = 'http://123.59.144.169:8888/#/orderdetail?UserType=1&OrderID='+body.datas.orderid;
+			    pay.setConfig('return_url', url);
                 var usr_redirect_url = pay.buildDirectPayURL({
                     out_trade_no: ''+body.datas.orderNo,
                     subject: 'dengniyou-order',// 'order-312412',//body.datas.orderId,
@@ -261,7 +262,7 @@ function registe(req,res) {
                             res.send(JSON.stringify({message:'注册成功请登录'}));
                         }
                     });
-                }else {是
+                }else {
                     res.send(JSON.stringify({message:'重复注册'}));
                 }
             }
