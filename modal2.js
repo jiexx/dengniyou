@@ -6,8 +6,8 @@ var fdfs = new FdfsClient({
     // tracker servers
     trackers: [
         {
-            host: '10.101.1.165',
-			// host: '172.16.36.1',//'172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
+            //host: '10.101.1.165',
+			host: '123.59.144.47',//'172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
             port: 22122
         }
     ],
@@ -500,7 +500,7 @@ var roger = {
                         argus.push(newArgu);
 					}
                     looper.expand(argus);
-                    var outkey = output[j] ? output[j][findkey] : null;
+                    var outkey = output[0] ? output[0][findkey] : null;
                     funcArgu.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, outkey);
                     funcArgu.item.__idx = 0;
                     funcArgu.params = funcArgu.item.params;

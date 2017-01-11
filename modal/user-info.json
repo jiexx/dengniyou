@@ -1,0 +1,6 @@
+{
+  "User": {
+    "sql": "SELECT * FROM traveldb.vw_userinfo WHERE UserID = ?",
+    "params":["UserID"] }
+
+}

@@ -1,0 +1,16 @@
+{
+  "PlanInfo": {
+	  "sql": "INSERT INTO traveluserdb.tab_planinfo(PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,4,0,3,0,null,null,1,?,'随时',?,?,CONCAT('PL-',DATE_FORMAT(NOW(),'%Y%m%d%H%i%S'),CAST(unix_timestamp()ASchar(4))),'','','','','',?,0,0,0,NOW(),NOW());",
+	  "params": ["PlanName","PlanDays","StartCity","StartCityID","CreateUserID"],
+	  "PlanSchedule": {
+		  "sql": "INSERT INTO traveluserdb.tab_planschedule(PlanID,DayName,TravelInstruction,CreateDate)VALUES(?,?,?,NOW());",
+		  "params": ["insertId","DayName","TravelInstruction"],
+		  "findkey": "insertId",
+		  "Spot": {
+			  "sql": "INSERT INTO traveluserdb.tab_planscheduleplace(ScheduleID,CountryID,CountryNameCn,CountryNameEn,CityID,CityNameCn,CityNameEn,AirportCode,AirportNameCn,AirportNameEn,SpotID,SpotName,SpotLocalName,SpotTravelTime,HotelStarLevel,ScheduleType,SpotPicUrl)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
+			  "params": ["insertId","CountryID ","CountryNameCn","CountryNameEn","CityID","CityNameCn","CityNameEn","AirportCode","AirportNameCn","AirportNameEn","SpotID","SpotName","SpotLocalName","SpotTravelTime","HotelStarLevel","ScheduleType","SpotPicUrl"],
+			  "findkey": "insertId"
+		  }
+	  }
+  }
+}

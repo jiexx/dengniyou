@@ -20,6 +20,10 @@
                 //$.rogerShowLogin();
             })
         }
+        $(".navBar a").on("click", function(){
+            $(".navBar").find(".active").removeClass("active");
+            $(this).parent().addClass("active");
+        });
         $('#usercenter').rogerOnceClick(null, function () {
             var user = $.rogerGetLoginUser();
             if(!user) {
@@ -44,7 +48,7 @@
 		$('#carousel-generic').carousel();
         $('#homeSearch').rogerOnceClick(null, function () {
             var k = $('#homeSearchKey').val();
-            $.rogerLocation('#/search?key='+k);
+            $.rogerLocation('#/search?key=%'+k+'%&begin=0&end=1000&label=%');
         });
 
         var item = $.tmplItem($('.carousel-caption'));
@@ -107,7 +111,64 @@
 		realView.rogerCropImages();
         frameCtrl();
     };
+    var ctrlHomeSearchList = function(response, realView) {
+        realView.rogerCropImages();
+        frameCtrl();
+    }
     var ctrlHomeSearch = function(response, realView) {
+
+        $('#homeSearch').rogerOnceClick(null, function () {
+            var k = $('#keySearch').val();
+            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:'%'+k+'%',begin:0,end:1000,label:'%'});
+        });
+
+        function filterUnlimit(elem){
+            if(elem.html()=='不限'){
+                return '%';
+            }
+            return '%'+elem.html()+'%';
+        }
+
+        $("#label div").on("click", function(){
+            var label = $("#label").find(".btn.btn-warning");
+            var country = $("#country").find(".btn.btn-warning");
+            var days = $("#days").find(".btn.btn-warning");
+            var a = filterUnlimit($(this));
+            var b = filterUnlimit(country);
+            var c = filterUnlimit(days);
+            var c =c.match(/\d/g);
+            c = !c ? [0,1000] : c;
+            $(this).addClass("btn btn-warning");
+            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            label.removeClass("btn btn-warning");
+        });
+        $("#country div").on("click", function(){
+            var label = $("#label").find(".btn.btn-warning");
+            var country = $("#country").find(".btn.btn-warning");
+            var days = $("#days").find(".btn.btn-warning");
+            var a = filterUnlimit(label);
+            var b = filterUnlimit($(this));
+            var c = filterUnlimit(days);
+            var c =c.match(/\d/g);
+            c = !c ? [0,1000] : c;
+            $(this).addClass("btn btn-warning");
+            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            country.removeClass("btn btn-warning");
+        });
+        $("#days div").on("click", function(){
+            var label = $("#label").find(".btn.btn-warning");
+            var country = $("#country").find(".btn.btn-warning");
+            var days = $("#days").find(".btn.btn-warning");
+            var a = filterUnlimit(label);
+            var b = filterUnlimit(country);
+            var c = filterUnlimit($(this));
+            var c =c.match(/\d/g);
+            c = !c ? [0,1000] : c;
+            $(this).addClass("btn btn-warning");
+            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            days.removeClass("btn btn-warning");
+        });
+
         realView.rogerCropImages();
         frameCtrl();
     };
@@ -172,18 +233,26 @@
         }
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
 
-
-        $('#TALK').on('click',function () {
-            var usr = $.rogerGetLoginUser();
-            if(!usr) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-            $(this).attr("href","talk?uid="
-                +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
-        });
-
+        //$('#TALK').rogerOnceClick(null,function () {
+            //$('#TALK').each(function () {
+            $('#TALK').on('click',function () {
+                var usr = $.rogerGetLoginUser();
+                if(!usr) {
+                    $.rogerLogin('#homeLogin', '/login');
+                    $.rogerShowLogin();
+                    return;
+                }
+                $(this).attr("href","talk?uid="
+                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+            });
+        //});
+		
+		/*$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
+			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
+				console.log(respJSON);
+                window.open(respJSON.url, '_blank');
+            })
+        })*/
         $('#customize').on('click',function () {
             var usr = $.rogerGetLoginUser();
             if(!usr) {
@@ -358,24 +427,17 @@
     };
 
     var ctrlOrderlist = function (response, realView) {
-        var userInfo = $.rogerGetLoginUser();
-        var Avatar = "http://123.59.144.47/" + userInfo.AvatarPicURL;
+        var usr = $.rogerGetLoginUser();
+        var Avatar = $.rogerImgHost() + usr.AvatarPicURL;
         $('.avatar img').attr('src', Avatar);
-        
-        $("#order-a_all").find("a").each(function () {
-            var el = $(this);
-            el.rogerOnceClick(null, function () {
-                var user = $.rogerGetLoginUser();
-                if(!user) {
-                    $.rogerShowLogin();
-                    return;
-                }
-                data_href = el.attr("data-value");
-                $.rogerLocation(data_href+'&userID='+user.UserID);
-            });
+
+        $('#personInfo').rogerOnceClick( null, function () {
+            $.rogerLocation('#/userinfo?UserID='+usr.UserID);
+        });
+        $('#orderList').rogerOnceClick( null, function () {
+            $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=1&status=0&page=1');
         });
 
-        frameCtrl();
         $('#confirm').rogerOnceClick(null, function () {
             var orderid = $('#confirm').data('id');
             var status = $('#confirm').data('status');
@@ -400,7 +462,7 @@
                 });
             }
         });
-
+        frameCtrl();
         realView.rogerCropImages();
     };
 
@@ -434,72 +496,66 @@
         frameCtrl();
     };
 
-    var initUserInfo = function (param) {
-        var info = $.rogerGetLoginUser();
+    var initCityChooser2 = function (PS) {
         return {
-            CityID:'',
-            CountryID:'',
-            Labels:[info.Labels],
-            Sex:info.Sex,
-            TrueName:info.TrueName,
-            UserID:'',
-            UserName:info.UserName,
-            AvatarPicURL:info.AvatarPicURL,
-            ComLogo:'',
-            ComAdv:'',
-            spot:'',
+            User:PS.User
+        };
+    };
+    var initUserInfo = function (param) {
+        var usr = $.rogerGetLoginUser();
+        return {
+            User: {
+                CityName:'',
+                CountryName:'',
+                CityID:usr.CityID,
+                CountryID:usr.CountryID,
+                Labels:usr.Labels.split(','),
+                Sex:usr.Sex,
+                TrueName:usr.TrueName,
+                UserID:usr.UserID,
+                UserName:usr.UserName,
+                ComLogo:usr.ComLogo,
+                ComAdv:usr.ComAdv,
+                AvatarPicURL:usr.AvatarPicURL
+            },
             IMGHOST:$.rogerImgHost()
         };
     };
+    var ctrlCityChooser2 = function (PS, realView) {
+        $('#cityChooser').modal('show');
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
+            //data.CityID = city[0];
+            //data.CountryID = country[0];
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data.User);
+        });
+    };
     var ctrlUserInfo = function(response, realView) {
-        var userInfo = $.rogerGetLoginUser();
-        var IMGHOST=$.rogerImgHost()
-        var Avatar = IMGHOST + userInfo.AvatarPicURL;
-        $('.avatar img').attr('src', Avatar);
-        
-        response.createCity = function (response, spot) {
-            $.rogerTrigger('#modal', '#/citychooser', {Plan:response, Spot:spot});
+
+        response.createCity = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/citychooser2', {User:response});
         };
 
-        response.createLabel = function(response, Labels){
-            Labels.push('');
-            $.rogerRefresh(response);
+        $('#userUpdate').rogerOnceClick(response, function (e) {
+            var data = e.data.User;
+            data.Labels = data.Labels.join();
+            $.rogerPost('/user/update', data, function (respJSON) {
+                $.rogerNotice({Message: '个人信息修改成功'});
+            });
+        });
+
+        response.createLabel = function (User) {
+            User.Labels.push('');
         };
+
         realView.rogerCropImages();
         frameCtrl();
     };
 
     //-------------------------------plan customize begin---------------------------------
-    var initTemplateplanNew = function(params){
-        var usr =$.rogerGetLoginUser();
-        var type = $.rogerGetUrlParam('type');
-        return {
-            PlanInfo:{
-                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:'',CostInclude:'',
-                CostExclude:'',VisaNotice:'',Notice:'',CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
-
-                Picture: {
-                    Pics: []
-                },
-                Summary:{
-                    PlanName:'',
-                    PlanFeature:'',
-                    PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
-                },
-                PlanSchedule: [{
-                    Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''},
-                        {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
-                        {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
-                        {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
-                        {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
-                    ],
-                    TravelInstruction:'',
-                    DayName:''
-                }]  //0 city, 1 airport, 2 attraction, 3 delicacy, 4 accommodation
-            },
-            IMGHOST:$.rogerImgHost()
-        };
-    };
     var initCityChooser = function (PS) {
         return {
             UserData:0,
@@ -546,19 +602,13 @@
     };
 
     var ctrlCityChooser = function (PS, realView) {
-
         $('#cityChooser').modal('show');
-        $('#cityChooserOK').rogerOnceClick(PS,function (e) { 
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
             var data = e.data;
             var country = $('#country option:selected').val().split(':');
             var city = $('#city option:selected').val().split(':');
-            if(data.Spot.push){
             data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
                 SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
-            }else{
-                data.Plan['CountryID'] = country;
-                data.Plan['CityID'] = city;
-            }
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.Plan);
         });
@@ -710,23 +760,14 @@
         $('#save').rogerOnceClick(Plan, function(e){
             var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
-                if (!Plan.PlanInfo.PlanID) {
+                $.rogerPost('/delete/plan', {PlanID: Plan.PlanInfo.PlanID}, function (respJSON) {
                     var data = {PlanInfo: e.data.PlanInfo};
                     data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
-                        $.rogerNotice({Message: '模板方案成功'});
+                        $.rogerNotice({Message: '模板方案保存成功'});
                     });
-                } else {
-                    $.rogerPost('/delete/plan', {PlanID: Plan.PlanInfo.PlanID}, function (respJSON) {
-                        var data = {PlanInfo: e.data.PlanInfo};
-                        data.PlanInfo.StartCityID = item.CityID;
-                        data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
-                        $.rogerPost('/new/tmpplan', data, function (respJSON) {
-                            $.rogerNotice({Message: '模板方案发布成功'});
-                        });
-                    });
-                }
+                });
             }else {
                 $.rogerNotice({Message: '请选择起始城市'});
             }
@@ -754,19 +795,22 @@
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			    ctrl: ctrlPlandetail},
         '#/homelist':                 {fragment: 'fragment/home-list.html',                 init: initHomeList,                          ctrl: ctrlHomeList},
+        '#/homesearchlist':          {fragment: 'fragment/home-search-list.html',         rootrest:'/home/search',                 ctrl: ctrlHomeSearchList},
 
-        '#/templateplannew':         {fragment: 'fragment/visitor-tempplan-edit.html',   init: initTemplateplanNew,                  ctrl: ctrlTemplateplanNew},
+        '#/templateplanedit':        {fragment: 'fragment/visitor-tempplan-edit.html',   rootrest:'/plan/detail/tmpl',           ctrl: ctrlTemplateplanNew},
 
-        '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                                                    ctrl: ctrlCityChooser},
-        '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
-        '#/airportchooser':           {fragment: 'fragment/dialog-airport-chooser.html', init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
+        '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                       ctrl: ctrlCityChooser},
+        '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                       ctrl: ctrlSpotChooser},
+        '#/airportchooser':           {fragment: 'fragment/dialog-airport-chooser.html', init: initAirportChooser,                    ctrl: ctrlAirportChooser},
 
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
         '#/orderdetail':              {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
 	    '#/plansearch':               {view:'planSearch.html',                                rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
-        '#/userinfo':                 {fragment:'fragment/userInfo.html',                   init: initUserInfo,	                        ctrl: ctrlUserInfo}
+        '#/userinfo':                 {view:'userInfo.html',                        rootrest: '/user/info',                 ctrl: ctrlUserInfo},
+
+        '#/citychooser2':             {fragment: 'fragment/dialog-city-chooser.html',    init: initCityChooser2,                     ctrl: ctrlCityChooser2}
     });
 	
 })();
