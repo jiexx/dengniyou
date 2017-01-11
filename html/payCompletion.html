@@ -65,7 +65,7 @@
           </div>
           <div class="scheduleOver fr">
             <h4>行程概览 
-              <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#previewdiv" style="margin-bottom: 8px; background-color: #FF6600; padding: 5px;">查看</button>
+              <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#previewdiv">查看</button>
             </h4>
             <!-- 行程预览弹出框 -->
             <div class="modal fade" id="previewdiv">
@@ -78,18 +78,18 @@
                   <div class="modal-body">
                     <ul>
                       <li class="row">
-                        <div class="col-md-2 preview-left" style="background:url(../img/previewdiv.png) no-repeat; height: 250px;"></div>
+                        <div class="col-md-2 preview-left"></div>
                         <div class="col-md-10 preview-right">
                         <h3>第一天</h3>
                         <p>机场：</p>
-                        <p>城市：</p>
-                        <p>景点：</p>
+                        <p>城市：${countryName} ${cityName}</p>
+                        <p>景点：${NameCh}</p>
                         <p>美食：</p>
                         <p>其他：</p>
                         </div>
                       </li>
                       <li class="row">
-                        <div class="col-md-2 preview-left" style="background:url(../img/previewdiv.png) no-repeat; height: 250px;"></div>
+                        <div class="col-md-2 preview-left"></div>
                         <div class="col-md-10 preview-right">
                         <h3>第二天</h3>
                         <p>机场：</p>
@@ -100,7 +100,7 @@
                         </div>
                       </li>
                       <li class="row">
-                        <div class="col-md-2 preview-left" style="background:url(../img/previewdiv.png) no-repeat; height: 250px;"></div>
+                        <div class="col-md-2 preview-left"></div>
                         <div class="col-md-10 preview-right">
                         <h3>第三天</h3>
                         <p>机场：</p>
@@ -113,9 +113,9 @@
                     </ul>
                   </div>
                 </div><!-- /.modal-content -->
-              </div><!-- /.modal-dialog -->
-            </div><!-- /.modal -->
-            <!--  end 行程预览弹出框 -->
+              </div><!-- .modal-dialog -->
+            </div><!-- end 行程预览弹出框 -->
+
             <div class="row">
               <div class="col-sm-8">
                 <p>出发 <span>${starttime}</span></p>
@@ -220,30 +220,30 @@
           {{if Status==2 || Status==3 || Status==4}}
           {{if UserType==1}}
           {{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}
-            <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#complainModal">投诉</button>
+            <button type="button" class="btn btn btn-warning com" data-toggle="modal" data-target="#complainModal">投诉</button>
           {{else}}
             <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#complainModal2">查看投诉</button>
           {{/if}}
           {{/if}}
           {{/if}}
           {{if Status==1}}
-          <button class="btn btn-warning" id="confirm">立即支付</button>
+          <button class="btn btn-warning con" id="confirm">立即支付</button>
           {{/if}}
           {{if Status==1 || Status==2}}
-          <button class="btn btn-warning">取消订单</button>
+          <button class="btn btn-warning com">取消订单</button>
           {{/if}}
           {{if Status==4 }}
           {{if UserType==1}}
-          <button class="btn btn-warning">确认完成</button>
+          <button class="btn btn-warning con">确认完成</button>
           {{/if}}
           {{/if}}
           {{if Status==3}}
           {{if UserType==2}}
-          <button class="btn btn-warning">完成</button>
+          <button class="btn btn-warning con">完成</button>
           {{/if}}
           {{/if}}
           {{if Status==6}}
-          <button class="btn btn-warning">评价</button>
+          <button class="btn btn-warning com">评价</button>
           {{/if}}
           <button class="btn btn-warning">联系导游</button>
         </div>

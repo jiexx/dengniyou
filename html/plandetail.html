@@ -1,4 +1,4 @@
-<!-- 企业信息 -->
+企业信息 -->
 <div class="interpriseArea">
 	<div class="container">
 		<div class="interpriseInfo">
@@ -49,21 +49,21 @@
 				<div class="carousel-container">
 					<div id="carousel-generic" class="carousel slide" data-ride="carousel">
 						<!-- Wrapper for slides -->
-						<div class="carousel-inner">
+						<div class="carousel-inner" role="listbox">
 							{{each $data.PlanInfo[0].PicURL}}
 							{{if $index == 0}}
 							<div class="item active">
 							{{else}}
 								<div class="item">
 							{{/if}}
-									<img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
-								</div>
+								<img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
+							</div>
 							{{/each}}
 							</div>
-							<a class="left carousel-control" href="#" data-slide="prev">
+							<a class="left carousel-control" href="#carousel-generic" data-slide="prev">
 								<span class="glyphicon glyphicon-chevron-left"></span>
 							</a>
-							<a class="right carousel-control" href="#" data-slide="next">
+							<a class="right carousel-control" href="#carousel-generic" data-slide="next">
 								<span class="glyphicon glyphicon-chevron-right"></span>
 								</a>
 						</div><!-- end carousel -->
@@ -130,9 +130,15 @@
 						<div class="navList pull-right">
 							<i class="glyphicon glyphicon-menu-left pull-left" id="preBtn"></i>
 							<ul class="pull-left">
-								{{for $data.PlanSchedule.__countPlanSchedule}}
-								<li><a href="#day01"><button type="button" class="btn btn-default">第${i}天</button></a></li>
-								{{/for}}
+								{{each(k,v) PlanSchedule}}
+								{{if  ("__countScheduleID" != k)  }}
+								<li>
+									<a href="#day01">
+										<button type="button" class="btn btn-default">第${v.__index}天</button>
+									</a>
+								</li>
+								{{/if}}
+								{{/each}}
 							</ul>
 							<i class="glyphicon glyphicon-menu-right pull-left" id="nextBtn"></i>
 						</div>
@@ -255,4 +261,4 @@
 		</div> <!-- end plandetail-main -->
 	</div>
 	</div> <!-- end plandetail-page -->
-</div> <!-- end container -->
+</div> <!-- end container

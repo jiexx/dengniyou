@@ -170,7 +170,6 @@ app.post('/new/service/car', upload.array(), function(req, res) {
      console.log();
      });*/
 
-
     request.post(
         {
             url: 'http://10.101.1.36:8080/travel/service/uploadServiceWeb',
