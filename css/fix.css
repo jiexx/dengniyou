@@ -584,7 +584,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .schedule .addDetails li .detailImg img{width:100%; height: 100%; }
 .editPage .schedule .addDetails li .detailText{width:70%; float: left;}
 .editPage .schedule .addDetails li .detailText h5{font-size: 16px; margin-bottom: 20px;}
-.editPage .schedule .addDetails li .detailText p{height: 30px; line-height: 30px;}
+/*.editPage .schedule .addDetails li .detailText p{height: 30px; line-height: 30px;}*/
 .editPage .schedule .addAirport li{padding: 10px 20px; height:60px;}
 .editPage .schedule .addAirport li .planeIcon{float: left; width:40px; height: 44px; }
 .editPage .schedule .addAirport li .planeIcon img{width:40px; height: 44px;}

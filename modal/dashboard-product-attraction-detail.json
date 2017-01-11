@@ -1,5 +1,6 @@
 {
   "SpotDetail": {"sql": "SELECT spot.*, country.RegionCnName as CountryName, city.RegionCnName as CityName FROM traveldb.tab_travelspots spot LEFT JOIN traveldb.tab_travelregion country ON ( spot.countryID = country.regionid) LEFT JOIN traveldb.tab_travelregion city ON( spot.cityID = city.regionid ) WHERE spotsID = ? ",	"params":["spotsID"]},
   "SpotPics": {"sql": "SELECT PicURL FROM traveldb.tab_travelspotsdetail WHERE spotsID = ?",	"params":["spotsID"]},
-  "SpotLabels": {"sql": "SELECT label.ClassifyLabel FROM traveldb.tab_travelspotslabel spotlabel LEFT JOIN traveldb.tab_classifylabel label on ( spotlabel.classifylabelid = label.classifylabelid ) WHERE spotsID = ?;",	"params":["spotsID"]}
+  "SpotLabels": {"sql": "SELECT label.ClassifyLabel,label.ClassifyLabelID FROM traveldb.tab_travelspotslabel spotlabel LEFT JOIN traveldb.tab_classifylabel label on ( spotlabel.classifylabelid = label.classifylabelid ) WHERE spotsID = ?;",	"params":["spotsID"]},
+  "ClassifyLabels": {"sql": "SELECT ClassifyLabelID AS LabelID, ClassifyLabel AS Label FROM traveldb.tab_classifylabel WHERE TypeID=1",	"params":[]}
 }
