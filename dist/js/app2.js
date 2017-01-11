@@ -1,4 +1,4 @@
-$(function () {
+$(function () { 
     var policy1 = '1  游客在行程开始日期前60天以上提出取消，扣除已产生的费用以外的全部费用；\r\n2  游客在行程开始日期前30天以上提出取消，退还总费用的50%；\r\n3  游客在行程开始日期前15天以上提出取消，退还总费用的20%；\r\n4  游客在行程开始日期前15天（含）以内提出取消，不退还服务费用。';
     var policy2 = '1  一辆如服务描述（或同级别）的车辆使用费（在限定时间和里程范围内）；\r\n2  服务发布者本人作为司机兼导游的服务费（限定时间内），含小费；\r\n3  燃油费\r\n4  停车费\r\n5  车载WiFi热点每天1GB流量\r\n6  高速，桥梁，隧道的过路费，进城费\r\n7  司机/导游的住宿费，空程费\r\n8  如下景点的门票费用：\r\n9  行程描述中酒店（或同等级别酒店）的双人标准间；\r\n10  酒店内自助式早餐；\r\n11  旅行医疗及意外保险；\r\n12  签证办理费用。';
     var policy3 = '1  景点游览和公务/商务活动期间的服务费用；\r\n2  超时等待的费用，资费参看服务描述；\r\n3  机场和送达目的地的停车费。';
@@ -567,10 +567,13 @@ $(function () {
             TravelTime:'' ,
             CountryName:'' ,
             CityName: '',
+            picURLs:[],
+            coverURL:'',
             SpotPics: [
                 {PicURL: ''},
                 {PicURL: ''}
-            ], 
+            ],
+            Labels:["场馆","建筑","历史"], 
             SpotLabels: [
                 {ClassifyLabel: "场馆"}, 
                 {ClassifyLabel: "建筑"}, 
@@ -583,7 +586,13 @@ $(function () {
         // Plan.createDay = function(Plan, PlanShort){ 
         //     PlanShort.push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
         //     $.rogerRefresh(Plan);
+        $('.addItemBtn').on('click',function(){
 
+        });
+        Plan.createDay = function(Plan, SpotDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            SpotDetail .push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
+            $.rogerRefresh(Plan);
+        };
         $('#save').rogerOnceClick(Plan, function(e){
 
             console.log('test');
@@ -1068,79 +1077,91 @@ $(function () {
                 Airports: [ ], 
                 Policy: [
                     {
-                      PolicyType: 1, 
-                      PolicyID: 26, 
-                      PolicyName: "退订政策", 
-                      ServiceTypeID: 1, 
-                      Day1: '', 
-                      Ratio1: '', 
-                      Day2: '', 
-                      Ratio2: '', 
-                      Day3: '', 
-                      Ratio3: '', 
-                      Day4: '', 
-                      Ratio4: '', 
-                      CustomRatio: '', 
-                      Caution: '', 
-                      Description: '', 
-                      Type: 1
-                    }, 
+                      policyType: 1,
+                      policyID: 26,
+                      policyname: "退订政策",
+                      serviceTypeID: 1,
+                      day1: '',
+                      ratio1: '',
+                      day2: '',
+                      ratio2: '',
+                      day3: '',
+                      ratio3: '',
+                      day4: '',
+                      ratio4: '',
+                      customRatio: '',
+                      caution: '',
+                      description: '',
+                      type: 1
+                    },
                     {
-                      PolicyType: 2, 
-                      PolicyID: 984, 
-                      PolicyName: '费用包含', 
-                      ServiceTypeID: 1, 
-                      Day1: '', 
-                      Ratio1: '', 
-                      Day2: '', 
-                      Ratio2: '', 
-                      Day3: '', 
-                      Ratio3: '', 
-                      Day4: '', 
-                      Ratio4: '', 
-                      CustomRatio: '', 
-                      Caution: '', 
-                      Description: '', 
-                      Type: 5
-                    }, 
+                      policyType: 2,
+                      policyID: 984,
+                      policyName: '费用包含',
+                      serviceTypeID: 1,
+                      day1: '',
+                      ratio1: '',
+                      day2: '',
+                      ratio2: '',
+                      day3: '',
+                      ratio3: '',
+                      day4: '',
+                      ratio4: '',
+                      customRatio: '',
+                      caution: '',
+                      description: '',
+                      type: 5
+                    },
                     {
-                      PolicyType: 3, 
-                      PolicyID: 985, 
-                      PolicyName: '费用不包含', 
-                      ServiceTypeID: 1, 
-                      Day1: '', 
-                      Ratio1: '', 
-                      Day2: '', 
-                      Ratio2: '', 
-                      Day3: '', 
-                      Ratio3: '', 
-                      Day4: '', 
-                      Ratio4: '', 
-                      CustomRatio: '', 
-                      Caution: '', 
-                      Description: '', 
-                      Type: 5
-                    }, 
+                      policyType: 3,
+                      policyID: 985,
+                      policyName: '费用不包含',
+                      serviceTypeID: 1,
+                      day1: '',
+                      ratio1: '',
+                      day2: '',
+                      ratio2: '',
+                      day3: '',
+                      ratio3: '',
+                      day4: '',
+                      ratio4: '',
+                      customRatio: '',
+                      caution: '',
+                      description: '',
+                      type: 5
+                    },
                     {
-                      PolicyType: 4, 
-                      PolicyID: 986, 
-                      PolicyName: '预订须知', 
-                      ServiceTypeID: 1, 
-                      Day1: '', 
-                      Ratio1: '', 
-                      Day2: '', 
-                      Ratio2: '', 
-                      Day3: '', 
-                      Ratio3: '', 
-                      Day4: '', 
-                      Ratio4: '', 
-                      CustomRatio: '', 
-                      Caution: '', 
-                      Description: '', 
-                      Type: 5
+                      policyType: 4,
+                      policyID: 986,
+                      policyName: '预订须知',
+                      serviceTypeID: 1,
+                      day1: '',
+                      ratio1: '',
+                      day2: '',
+                      ratio2: '',
+                      day3: '',
+                      ratio3: '',
+                      day4: '',
+                      ratio4: '',
+                      customRatio: '',
+                      caution: '',
+                      description: '',
+                      type: 5
                     }
                 ], 
-                VehicleInfo: [ ], 
+                VehicleInfo: [
+                {
+                    vehicleInfoID: '', 
+                    serviceID: '', 
+                    brand: '', 
+                    model: '', 
+                    produceYear: '', 
+                    seats: '', 
+                    person: '', 
+                    clazz: '', 
+                    insurance: '', 
+                    luggage: ''
+                }], 
                 VehicleCharges: [ ], 
                 VehicleAddress: [ ], 
                 VehicleSchedule: [ ], 
@@ -1156,9 +1177,16 @@ $(function () {
             var usr =$.rogerGetLoginUser();
             console.log('test');
             temp = e.data.DetailMain;
-
             var filedata = e.data.DetailMain.picURLs;
             var coverFiledata = e.data.DetailMain.coverURL;
+            // var filedata2=[];
+            // coverFiledata = coverFiledata.substr(coverFiledata.indexOf("base64,")+7,10);
+            // for(key in filedata){
+            //     itemtemp = filedata[key].substr(filedata[key].indexOf("base64,")+7,10);
+            //     filedata2.push(itemtemp);
+            // }
+            // filedata = null;
+            // filedata = filedata2;
 
             temp["userID"]=usr.UserID;
             temp["serviceTypeID"]=1;
@@ -1168,8 +1196,13 @@ $(function () {
 
             temp["policyBean"]= temp["Policy"][0];
             temp["feeBean"]= temp["Policy"][1];
+            temp["feeBean"]["type"]=5;
             temp["feeNoBean"]= temp["Policy"][2];
+            temp["feeNoBean"]["type"]=5;
             temp["noticeBean"]= temp["Policy"][3];
+            temp["noticeBean"]["type"]=5;
+            temp["coverFile"]=coverFiledata;
+            temp["files"]=filedata;
 
             var data = {
                 reqUploadService:temp,

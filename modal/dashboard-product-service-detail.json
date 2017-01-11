@@ -26,7 +26,7 @@
     ]
   },
   "Policy": {
-    "sql": "SELECT sepolicy.PolicyType, policy.PolicyID, policy.PolicyName, policy.ServiceTypeID, policy.Day1, policy.Ratio1, policy.Day2, policy.Ratio2, policy.Day3, policy.Ratio3, policy.Day4, policy.Ratio4, policy.CustomRatio, policy.Caution, policy.Description, policy.Type FROM traveluserdb.tab_servicepolicy sepolicy LEFT JOIN traveluserdb.tab_policy policy ON sepolicy.PolicyID = policy.PolicyID WHERE sepolicy.ServiceID = ? ORDER BY sepolicy.PolicyType",
+    "sql": "SELECT sepolicy.policyType, policy.policyID, policy.policyName, policy.serviceTypeID, policy.day1, policy.ratio1, policy.day2, policy.ratio2, policy.day3, policy.ratio3, policy.day4, policy.ratio4, policy.customRatio, policy.caution, policy.description, policy.type FROM traveluserdb.tab_servicepolicy sepolicy LEFT JOIN traveluserdb.tab_policy policy ON sepolicy.PolicyID = policy.PolicyID WHERE sepolicy.ServiceID = ? ORDER BY sepolicy.PolicyType",
     "params": [
       "ServiceID"
     ]

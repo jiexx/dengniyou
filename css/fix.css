@@ -51,7 +51,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .sidebar{top: 96px !important;}
 .indexpage nav{width:100%; /*height: 96px;*/ background-color: #00b8ee; padding-top: 10px; padding-bottom: 1px;}
 .indexpage .topWidth .navBar{margin-bottom: 10px; /*padding-top: 5px;*/}
-.indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:88px; height: 34px; line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
+.indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:80px; /*height: 34px; */line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
 .indexpage .topWidth .navBar li.active{background-color: #006583;}
 .indexpage .topWidth .navBar li a{color: #fff; font-weight: bold;}
 .indexpage footer{height: 366px; background-color: #4d4d4d; color: #FFF; padding-top: 20px}
@@ -94,8 +94,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .nav-buttons button{font-size: 16px; color: #fff; padding: 2px 15px;}
 .homepage .nav-buttons .btn-default{background-color: #ccc; }
 .homepage .nav-buttons .btn-warning{background-color: #FA713D;}
-.homepage .nav-buttons .btn-group ul{background-color: #ccc; min-width: 100px;}
-.homepage .nav-buttons .btn-group ul li{ padding-left: 10px; padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #fff; color: #FA713D; font-weight: bold;}
+.homepage .nav-buttons .btn-group ul{background-color: #EAEAEA; min-width: 100px;}
+.homepage .nav-buttons .btn-group ul li{ padding-left: 10px; padding-top: 5px; padding-bottom: 5px; border-bottom: 1px solid #fff; color: #FA713D; }
 .homepage .continent-tips{margin:10px 0;}
 .homepage .continent-tips li{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px;}
 .homepage .regular-grid div{padding: 0; margin: 0; }
@@ -109,7 +109,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .index-searchbox{background-color: #00B8EE; padding-bottom: 15px; padding-top: 5px;}
 .index-searchbox .container{margin-top: 0;}	
 .index-searchbox .form-group .input-group{-webkit-box-shadow: 2px 3px 3px #666; -moz-box-shadow: 2px 3px 3px #666; -ms-box-shadow: 2px 3px 3px #666; -o-box-shadow: 2px 3px 3px #666; box-shadow: 2px 3px 3px #666;}
-.index-searchbox .form-group .input-group #homeSearch{width: 80px; background-color: #F9703C; border-color: #F9703C;}
+.index-searchbox .form-group .input-group span button{font-size: 22px; color:#00B8EE; height: 40px;}
+.index-searchbox .form-group .input-group #homeSearch{width: 70px; background-color: #F9703C; border-color: #F9703C; height: 40px; color: #fff; font-size: 16px; font-weight: bold; }
 .index-searchbox .form-group .input-group #homeSearch a{color: #fff;}
 	/* end 首页搜索框*/
 
@@ -262,7 +263,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homesearch-page .searchText input{height: 40px;width: 91%;margin-left: -4px;border: none;background-color: #FFF;position: relative;top: -2px}
 .homesearch-page #searchText1{width: 48%}
 .homesearch-page #searchText2{width: 42%;position: relative;left: -5px}
-.homesearch-page .search{width: 9%; background-color: #FA703E; height: 40px; border: none;position: relative;left: -10px;border-radius: 0 3px 3px 0;color: #FFF;font-size: 16px}
+.homesearch-page .search{width: 9%; background-color: #FA703E; height: 40px; border: none;position: relative; border-radius: 0 3px 3px 0;color: #FFF;font-size: 16px}
 .homesearch-page .searchBox{position: absolute; top: 210px; background-color: #FFF; z-index: 888;padding-top: 24px; display: none}
 .homesearch-page .searchBox dl{height: 66px;border-bottom: 1px solid #f3f5f8;margin: 0 24px}
 .homesearch-page .searchBox dt, .searchBox dd, .searchBox dd ul, .searchBox dd ul li{display: inline-block;line-height: 66px}
@@ -616,7 +617,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .notice #policydiv ul li .main .col-md-2 input{width: 16px;}
 .editPage .notice #policydiv ul li h3{margin-top: 0; font-size: 16px; font-weight: bold; color: #337AB7;}
 .editPage .notice #policydiv li .main .col-md-10 input,.editPage .notice #policydiv li .main .col-md-10 span
-		{width: 35px; border: 1px solid #D4D4D4; padding: 2px 5px; margin-left: 5px; margin-right: 5px; font-size: 14px; color: #337AB7; font-weight: bold; text-align: center;}	
+		{display: inline-block; width: 35px; border: 1px solid #D4D4D4; padding: 2px 5px; margin-left: 5px; margin-right: 5px; font-size: 14px; color: #337AB7; font-weight: bold; text-align: center;}	
 /*end 包车退订政策弹出框部分*/
 /*接机编辑页*/
 .editPage .baseInfo form input[type="radio"]{width:40%;}
@@ -669,10 +670,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*支付完成部分*/
 #partThree .projectInfo .scheduleOver{width:416px; height: 150px; border-left:1px dashed #ccc; margin:-15px 0; padding:15px;}
 #partThree .projectInfo .scheduleOver h4 {margin-bottom: 20px; margin-top: 0;}
-#partThree .projectInfo .scheduleOver h4 a{color:#337ab7;}
+#partThree .projectInfo .scheduleOver h4 button{margin-bottom: 8px; margin-left: 5px; background-color: #FF6600; padding: 2px 5px;}
+#partThree .projectInfo .scheduleOver h4 button:active{outline: none;}
 #partThree .projectInfo .scheduleOver .col-sm-8 p{/*line-height: 40px;height: 40px;*/}
 #partThree .projectInfo .scheduleOver .col-sm-8 p span{display: inline-block; margin-left: 20px;}
-#partThree .projectInfo .scheduleOver .col-sm-4 div{ height: 78px; width:78px; border-radius: 39px; background-color: #00b8ee; line-height: 78px; text-align: center; font-size: 20px; color:#fff;}
+#partThree .projectInfo .scheduleOver .col-sm-4 div{ height: 70px; width:70px; border-radius: 50%; background-color: #00b8ee; line-height: 70px; text-align: center; font-size: 20px; color:#fff; margin-top: -20px;}
 #partThree .aboutPrice{padding:15px 20px; border:1px solid #00b8ee; margin:20px 0;}
 #partThree .aboutPrice li{height: 30px; line-height: 30px; font-size: 18px;}
 #partThree .aboutPrice li span{float: right; width:170px;}
@@ -689,8 +691,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 #partThree .aboutOrder dt{width:160px; }
 #partThree .aboutOrder dd{width:320px; }
 #partThree .btnList{text-align: right;}
-
-
+#partThree .projectInfo .scheduleOver #previewdiv ul li{margin-bottom: 20px;}
+#partThree .projectInfo .scheduleOver #previewdiv h4{margin-bottom: 0; text-align: center; font-size: 22px; font-weight: bold;}
+#partThree .projectInfo .scheduleOver #previewdiv .preview-left{background: url(../img/previewdiv.png) no-repeat; height: 230px; margin-top: -18px;}
+#partThree .projectInfo .scheduleOver #previewdiv .preview-right{background-color: #00B8EE; color: #fff; width: 80%; }
+#partThree .projectInfo .scheduleOver #previewdiv .preview-right p{font-size: 16px;}
 
 /*base controller*/
 .label-base input{outline: none;border: none;background: none;margin: 0;padding: 0;}

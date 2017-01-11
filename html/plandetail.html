@@ -49,21 +49,21 @@
 				<div class="carousel-container">
 					<div id="carousel-generic" class="carousel slide" data-ride="carousel">
 						<!-- Wrapper for slides -->
-						<div class="carousel-inner">
+						<div class="carousel-inner" role="listbox">
 							{{each $data.PlanInfo[0].PicURL}}
 							{{if $index == 0}}
 							<div class="item active">
 							{{else}}
 								<div class="item">
 							{{/if}}
-									<img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
-								</div>
+								<img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
+							</div>
 							{{/each}}
 							</div>
-							<a class="left carousel-control" href="#" data-slide="prev">
+							<a class="left carousel-control" href="#carousel-generic" data-slide="prev">
 								<span class="glyphicon glyphicon-chevron-left"></span>
 							</a>
-							<a class="right carousel-control" href="#" data-slide="next">
+							<a class="right carousel-control" href="#carousel-generic" data-slide="next">
 								<span class="glyphicon glyphicon-chevron-right"></span>
 								</a>
 						</div><!-- end carousel -->

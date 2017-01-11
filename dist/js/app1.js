@@ -172,26 +172,18 @@
         }
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
 
-        //$('#TALK').rogerOnceClick(null,function () {
-            //$('#TALK').each(function () {
-            $('#TALK').on('click',function () {
-                var usr = $.rogerGetLoginUser();
-                if(!usr) {
-                    $.rogerLogin('#homeLogin', '/login');
-                    $.rogerShowLogin();
-                    return;
-                }
-                $(this).attr("href","talk?uid="
-                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
-            });
-        //});
-		
-		/*$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
-			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
-				console.log(respJSON);
-                window.open(respJSON.url, '_blank');
-            })
-        })*/
+
+        $('#TALK').on('click',function () {
+            var usr = $.rogerGetLoginUser();
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $(this).attr("href","talk?uid="
+                +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+        });
+
         $('#customize').on('click',function () {
             var usr = $.rogerGetLoginUser();
             if(!usr) {
