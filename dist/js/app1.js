@@ -435,27 +435,36 @@
     };
 
     var initUserInfo = function (param) {
-        var userInfo = $.rogerGetLoginUser();
+        var info = $.rogerGetLoginUser();
         return {
             CityID:'',
             CountryID:'',
-            Labels:[],
-            Sex:'',
-            TrueName:'',
+            Labels:[info.Labels],
+            Sex:info.Sex,
+            TrueName:info.TrueName,
             UserID:'',
-            UserName:userInfo.UserName,
+            UserName:info.UserName,
+            AvatarPicURL:info.AvatarPicURL,
             ComLogo:'',
-            ComAdv:''
+            ComAdv:'',
+            spot:'',
+            IMGHOST:$.rogerImgHost()
         };
     };
     var ctrlUserInfo = function(response, realView) {
         var userInfo = $.rogerGetLoginUser();
-        console.log(userInfo);
-        var Avatar = "http://123.59.144.47/" + userInfo.AvatarPicURL;
+        var IMGHOST=$.rogerImgHost()
+        var Avatar = IMGHOST + userInfo.AvatarPicURL;
         $('.avatar img').attr('src', Avatar);
-        $('.personInfo>p>strong').text(userInfo.UserName);
-        $('#UserName').val(userInfo.UserName);
-        $('#TrueName').val(userInfo.TrueName);
+        
+        response.createCity = function (response, spot) {
+            $.rogerTrigger('#modal', '#/citychooser', {Plan:response, Spot:spot});
+        };
+
+        response.createLabel = function(response, Labels){
+            Labels.push('');
+            $.rogerRefresh(response);
+        };
         realView.rogerCropImages();
         frameCtrl();
     };
@@ -537,13 +546,19 @@
     };
 
     var ctrlCityChooser = function (PS, realView) {
+
         $('#cityChooser').modal('show');
-        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) { 
             var data = e.data;
             var country = $('#country option:selected').val().split(':');
             var city = $('#city option:selected').val().split(':');
+            if(data.Spot.push){
             data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
                 SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
+            }else{
+                data.Plan['CountryID'] = country;
+                data.Plan['CityID'] = city;
+            }
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.Plan);
         });

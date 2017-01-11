@@ -112,6 +112,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .index-searchbox .form-group .input-group span button{font-size: 22px; color:#00B8EE; height: 40px;}
 .index-searchbox .form-group .input-group #homeSearch{width: 70px; background-color: #F9703C; border-color: #F9703C; height: 40px; color: #fff; font-size: 16px; font-weight: bold; }
 .index-searchbox .form-group .input-group #homeSearch a{color: #fff;}
+.search2{background-color: #fff;} /*方案搜索页搜索框*/
 	/* end 首页搜索框*/
 
 	/*跑马灯推荐区*/
@@ -411,6 +412,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .personInfo input[type="text"]:focus{border:1px solid #00b8ee;}
 .personInfo select{width:120px; height: 30px; margin-right: 3%; border: 1px solid #ccc; border-radius: 0; box-shadow: none; padding: 0 6px;}
 .personInfo select:focus{border:1px solid #00b8ee; box-shadow: none; -webkit-box-shadow:none;}
+.personInfo .col-md-5{padding-left: 0;}
 /*个人信息页结束*/
 
 /*全部订单页*/
@@ -670,8 +672,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*支付完成部分*/
 #partThree .projectInfo .scheduleOver{width:416px; height: 150px; border-left:1px dashed #ccc; margin:-15px 0; padding:15px;}
 #partThree .projectInfo .scheduleOver h4 {margin-bottom: 20px; margin-top: 0;}
-#partThree .projectInfo .scheduleOver h4 button{margin-bottom: 8px; margin-left: 5px; background-color: #FF6600; padding: 2px 5px;}
-#partThree .projectInfo .scheduleOver h4 button:active{outline: none;}
+#partThree .projectInfo .scheduleOver h4 button{margin-bottom: 8px; margin-left: 5px; background-color: #eee; padding: 2px 5px; border-color: #eee; color: #333;}
+#partThree .projectInfo .scheduleOver h4 button:active,
+#partThree .projectInfo .scheduleOver h4 button:focus,
+#partThree .projectInfo .scheduleOver h4 button:visited,
+#partThree .projectInfo .scheduleOver h4 button:hover{border-color: #fff; outline: none;}
 #partThree .projectInfo .scheduleOver .col-sm-8 p{/*line-height: 40px;height: 40px;*/}
 #partThree .projectInfo .scheduleOver .col-sm-8 p span{display: inline-block; margin-left: 20px;}
 #partThree .projectInfo .scheduleOver .col-sm-4 div{ height: 70px; width:70px; border-radius: 50%; background-color: #00b8ee; line-height: 70px; text-align: center; font-size: 20px; color:#fff; margin-top: -20px;}
@@ -691,6 +696,9 @@ div.c-wrapper{ width: 100%; margin: auto;}
 #partThree .aboutOrder dt{width:160px; }
 #partThree .aboutOrder dd{width:320px; }
 #partThree .btnList{text-align: right;}
+#partThree .btnList button:active,#partThree .btnList button:focus,#partThree .btnList button:visited{border-color: #fff; outline: none;}
+#partThree .btnList .con{background-color: #F9703C; border-color: #F9703C;}
+#partThree .btnList .com{background-color: #A9B9CB; border-color: #A9B9CB;}
 #partThree .projectInfo .scheduleOver #previewdiv ul li{margin-bottom: 20px;}
 #partThree .projectInfo .scheduleOver #previewdiv h4{margin-bottom: 0; text-align: center; font-size: 22px; font-weight: bold;}
 #partThree .projectInfo .scheduleOver #previewdiv .preview-left{background: url(../img/previewdiv.png) no-repeat; height: 230px; margin-top: -18px;}
@@ -698,12 +706,12 @@ div.c-wrapper{ width: 100%; margin: auto;}
 #partThree .projectInfo .scheduleOver #previewdiv .preview-right p{font-size: 16px;}
 
 /*base controller*/
-.label-base input{outline: none;border: none;background: none;margin: 0;padding: 0;}
+.label-base input{outline: none;border: none!important;background: none;margin: 0;padding: 0;}
 .label-base{width:70%;}
-.label-base li{ display: inline-block; width:100px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0; position: relative;  }
+.label-base li{ display: inline-block; width:100px; height: 28px; background: #00b8ee; line-height: 28px;  color:#FFF; text-align: center; font-size: 14px; margin:10px 5px 0; position: relative; -webkit-border-radius: 15px; -moz-border-radius: 15px; -ms-border-radius: 15px; -o-border-radius: 15px; border-radius: 15px; }
 .label-base li:after{content:'/'; position: absolute; right:-10px; color:#000;}
 .label-base li:last-child:after{content:''; position: absolute; right:-10px; color:#000;}
-.label-base li input{text-align: center; width:70%;}
+.label-base li input{text-align: center; width:70%!important;}
 .label-base li input::-webkit-input-placeholder{color:#ddd;}
 .label-base li .glyphicon-remove-circle{float: right; font-size: 14px; color: #fff; margin-left: -6px;}
 .label-base li>.addItemBtn{width:100%; height: 100%; background-color: #FFF; border-radius: 0; border:1px dotted #00b8ee; color:#00b8ee; cursor: pointer; }

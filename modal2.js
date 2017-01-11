@@ -492,14 +492,16 @@ var roger = {
 					var argus = [];
 					for(var j = 1; j < output.length ; j ++ ) {
 						var copy = roger.shallow(funcArgu.item);
-                        copy.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[j][findkey]);
+						var outkey = output[j] ? output[j][findkey] : null;
+                        copy.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, outkey);
                         var newArgu = {sql:copy.sql, params:copy.params, item:copy, doing:null};
                         newArgu.item.__idx = j;
                         funcArgu.vector.push(copy);
                         argus.push(newArgu);
 					}
                     looper.expand(argus);
-                    funcArgu.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, output[0][findkey]);
+                    var outkey = output[j] ? output[j][findkey] : null;
+                    funcArgu.item.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, outkey);
                     funcArgu.item.__idx = 0;
                     funcArgu.params = funcArgu.item.params;
 

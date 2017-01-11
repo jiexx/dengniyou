@@ -3,28 +3,36 @@
   	<div class="container">  		
 	  	<div class="searchBox" id="searchBox">
 	  			<!-- 搜索框 -->
-				<div class="searchArea">
+				<!-- <div class="searchArea">
 					<div class="searchText" id="searchText1">
 						<label>查找：</label>
 						<input type="text" id="homeSearchKey" placeholder="酒店 /景点 /玩乐活动 ">
 					</div>
 					<button class="search"><span class="glyphicon glyphicon-search"></span> 搜索</button>
-				</div>  <!-- end 搜索框searchArea
+				</div> -->  <!-- end 搜索框searchArea-->
 
-				首页搜索框 -->
-				<!-- <div class="input-group" style="width: 70%; margin: 0 auto;">
-			        <span class="input-group-btn btn-block" >
-			          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-			            <span class="glyphicon glyphicon-search"></span>
-			          </button>
-					</span>       
-			        <div class="input-group col-lg-12 center-block">
-			          <input class="form-control" id="homeSearchKey" class="search-input" type="text" placeholder="酒店/景点/玩乐活动" style="height: 40px;">
-			        </div>
-			        <div class="input-group-btn navbar-btn">
-			          	<button id="homeSearch" class="btn btn-default btn-nav">搜索</button>
-			        </div>
-		      	</div> --><!-- end 首页搜索框input-group -->
+				<!-- 首页搜索框 -->
+				<div class="index-searchbox search2">
+				  <div class="container">   
+				    <div class="form-group" style="display:inline;">
+				      <div class="input-group" style="width: 70%; margin: 0 auto;">
+				        <span class="input-group-btn btn-block" >
+				          <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+				            <span class="glyphicon glyphicon-search"></span>
+				          </button>
+						</span>       
+				        <div class="input-group col-lg-12 center-block">
+				          <input class="form-control" id="homeSearchKey" class="search-input" type="text" placeholder="酒店/景点/玩乐活动" style="height: 40px;">
+				        </div>
+				        <div class="input-group-btn navbar-btn">
+				          <button id="homeSearch" class="btn btn-default btn-nav">
+				          搜索
+				          </button>
+				        </div>
+				      </div><!-- end input-group -->
+				    </div><!-- end form-group -->  
+				  </div><!-- end container -->
+				</div> <!-- end 首页搜索框index-searchbox -->
 
 				<dl>
 	  			<dt><i></i>国家：<span class="active">不限</span></dt>
@@ -88,7 +96,7 @@
 				<div class="sortRule">
 					<ul>
 						<li class="default">综合</li>
-						<li class="highToLow">价格高到低 <i class="fa fa-long-arrow-up"></i></li>
+						<li class="highToLow">价格高到低 <i class="fa fa-long-arrow-down"></i></li>
 						<li  class="lowToHigh">价格低到高 <i class="fa fa-long-arrow-up"></i></li>
 					</ul>
 				</div>				
@@ -105,8 +113,8 @@
 								<h3>${PlanName}</h3>
 								<div class="detail">
 									<dl><dt>出发地：</dt><dd>${StartCity}</dd></dl>
-                  <dl><dt>方案号：</dt><dd>${PlanNumber}</dd></dl>
-                  <dl><dt>行程天数：</dt><dd>${PlanDays}天</dd></dl>
+                  					<dl><dt>方案号：</dt><dd>${PlanNumber}</dd></dl>
+                  					<dl><dt>行程天数：</dt><dd>${PlanDays}天</dd></dl>
 								</div>
 								<p class="shop">淘淘客旅行旗舰店 <i class="fa fa-"></i></p>
 							</div>
