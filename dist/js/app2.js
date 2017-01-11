@@ -163,7 +163,7 @@ $(function () {
         var type = $.rogerGetUrlParam('type');
         return {
             PlanInfo:{
-                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:policy1,CostInclude:policy2,
+                PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:null,Policy:policy1,CostInclude:policy2,
                 CostExclude:policy3,VisaNotice:policy4,Notice:policy5,CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
 
                 Picture:{
@@ -207,6 +207,18 @@ $(function () {
             var city = $('#city option:selected').val().split(':');
             data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
                 SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data.Plan);
+        });
+    };
+    var ctrlCityChooser2 = function (PS, realView) {
+        $('#cityChooser').modal('show');
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
+            data.Plan.PlanInfo.StartCityID = city[0];
+            data.Plan.PlanInfo.StartCity = city[1];
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.Plan);
         });
@@ -356,7 +368,7 @@ $(function () {
         };
 
         $('#save').rogerOnceClick(Plan, function(e){
-            var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
+            var item = getItemWithStartCityID(Plan.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
                 if (!Plan.PlanInfo.PlanID) {
                     var data = {PlanInfo: e.data.PlanInfo};
@@ -413,6 +425,9 @@ $(function () {
         Plan.createContent = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanShort.push({Label:null, Day:null, Content:'desc', PicURL: null, PicEnable:false});
             $.rogerRefresh(Plan);
+        };
+        Plan.createCity = function (Plan, CityID) {
+            $.rogerTrigger('#modal', '#/citychooser2', {Plan:Plan, CityID:CityID});
         };
 
 
@@ -1693,6 +1708,7 @@ $(function () {
         '#/shortplanedit':               {fragment: 'fragment/product-shortplan-edit.html',        rootrest:'/plan/detail/short',                                         ctrl: ctrlShortplanNew},
         '#/templateplanedit':            {fragment: 'fragment/product-tempplan-edit.html',         rootrest:'/plan/detail/tmpl',                                         ctrl: ctrlTemplateplanNew},
 
+        '#/citychooser2':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser2},
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
         '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},

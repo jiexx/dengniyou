@@ -127,7 +127,7 @@
 						<ul class="label-base">
 							{{each(n,v) day.Spot}}
 							{{if (v.ScheduleType==0) }}
-							<li><input type="text" value="${CountryNameCn} ${CountryNameEn}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}" ></a></li>
+							<li><input type="text" value="${CountryNameCn} ${CityNameCn}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}" ></a></li>
 							{{/if}}
 							{{/each}}
 							<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createCity"> + </div></li>

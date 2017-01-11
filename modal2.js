@@ -6,8 +6,8 @@ var fdfs = new FdfsClient({
     // tracker servers
     trackers: [
         {
-            host: '10.101.1.165',
-			// host: '123.59.144.47',//'172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
+            //host: '10.101.1.165',
+			host: '172.16.36.1',//'172.16.36.1',//'10.101.1.165',//'123.59.144.47','10.101.1.165'
             port: 22122
         }
     ],
@@ -399,6 +399,7 @@ var roger = {
 				var origin= funcArgu.item.modal.params;
                 var params = funcArgu.item.params;
 				var files = [];
+				var left = [];
 				for(var i in tags) {
 					var d = data[tags[i]];
                     var pos = origin.indexOf(tags[i]);
@@ -407,12 +408,16 @@ var roger = {
                             for(var j in d) {
                             	if(d[j].indexOf('data:image')>-1){
                                     files.push({base64:d[j],index:pos, row:j});
+								}else {
+                            		left.push({fileid:d[j],index:pos, row:j});
 								}
                             }
                         }else if('string' == typeof d){
                             //files.push(d);
                             if(d.indexOf('data:image')>-1) {
                                 files.push({base64: d, index: pos, row: 0});
+                            }else {
+                                left.push({fileid:d[j],index:pos, row:0});
                             }
                         }
 					}/*else {
@@ -421,6 +426,7 @@ var roger = {
 				}
                 console.log('uploadimages num:'+files.length);
 				roger.uploadImages(files, function(fas){
+					fas = fas.concat(left);
 					var p = [];
 					for(var i in fas) {
 						if(fas[i].row == 0) {
