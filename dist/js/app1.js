@@ -770,7 +770,7 @@
         $('#save').rogerOnceClick(Plan, function(e){
             var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
-                $.rogerPost('/delete/plan', {PlanID: Plan.PlanInfo.PlanID}, function (respJSON) {
+                    Plan.PlanInfo.PlanID = 0;
                     var data = {PlanInfo: e.data.PlanInfo};
                     data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
@@ -779,7 +779,6 @@
                         $('#send').removeClass("btn btn-warning invisible");
                         $('#send').addClass("btn btn-warning");
                     });
-                });
             }else {
                 $.rogerNotice({Message: '请选择起始城市'});
             }
