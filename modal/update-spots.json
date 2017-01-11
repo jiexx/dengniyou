@@ -1,0 +1,57 @@
+{
+	"DeleteSpotsPics": {
+		"sql": "DELETE FROM traveldb.tab_travelspotsdetail WHERE SpotsID=?",
+		"params": [
+			"SpotsID"
+		]
+	},
+	"DeleteTravelSpotsLabel": {
+		"sql": "DELETE FROM traveldb.tab_travelspotslabel WHERE SpotsID=?",
+		"params": [
+			"SpotsID"
+		]
+	},
+	"SpotDetail": {
+		"sql": "UPDATE traveldb.tab_travelspots SET CountryID =? ,CityID = ? , CreateDate = NOW() ,NameEn = ? ,NameCh = ?,Status=? ,UpdateDate = NOW() , PicURL = ? ,Address = ? ,ZipCode = ? ,ZoneCode = ? ,Tel = ? ,Description = ? , Rank = ? ,Price =? ,Score = ? ,LocalName = ? ,Alias = ?,TravelTime = ? WHERE SpotsID = ?",
+		"params": [
+			"CountryID",
+			"CityID",
+			"NameEn",
+			"NameCh",
+			"Status",
+			"PicURL",
+			"Address",
+			"ZipCode",
+			"ZoneCode",
+			"Tel",
+			"Description",
+			"Rank",
+			"Price",
+			"Score",
+			"LocalName",
+			"Alias",
+			"TravelTime",
+			"SpotsID"
+		],
+		"files": [
+			"PicURL"
+		]
+	},
+	"picURLs": {
+		"sql": "INSERT INTO traveldb.tab_travelspotsdetail ( SpotsID,PicURL,Summary,CreateDate,UpdateDate ) VALUES ( ?, ?, '',NOW(),NOW())",
+		"params": [
+			"SpotsID",
+			"picURLs"
+		],
+		"files": [
+			"picURLs"
+		]
+	},
+	"SpotLabels": {
+		"sql": "INSERT INTO traveldb.tab_travelspotslabel ( ClassifyLabelID,SpotsID,UpdateTime) VALUES ( ?, ?,NOW())",
+		"params": [
+			"LabelID",
+			"SpotsID"
+		]
+	}
+}

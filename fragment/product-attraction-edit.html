@@ -36,9 +36,12 @@
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">所在城市</label>
 			    <div class="col-sm-10 col-md-11">
-			      <input type="text" class="form-control" value="${$data.SpotDetail.CountryName}" data-value="/SpotDetail/CountryName" placeholder="请输入">
+
+			      <input type="text" class="form-control" value="${$data.SpotDetail.CountryName}" data-value="/SpotDetail/CountryName" >
+				  <input type="text" class="form-control" value="${$data.SpotDetail.CityName}" data-value="/SpotDetail/CityName" >
 			    </div>
 			</div>
+			<button type="button" class="btn btn-default" data-op="change"  data-pointer="/SpotDetail" data-action="createCity">选择地区</button>
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编</label>
 			    <div class="col-sm-10 col-md-11">
@@ -104,16 +107,16 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传：</div>
 			<div class="col-md-11 row" >
-				{{each(i,itemtem) $data.SpotDetail.picURLs}}
+				{{each(i,itemtem) $data.SpotDetail.picURLs.picURLs}}
 				<div class="col-md-3">
 					<div class="imgBox">
 						<img src="${itemtem}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/picURLs/${i}"></a>
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/picURLs/picURLs/${i}"></a>
 					</div>
 				</div>
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/SpotDetail/picURLs" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/SpotDetail/picURLs/-" data-action="image">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/SpotDetail/picURLs/picURLs" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/SpotDetail/picURLs/picURLs/-" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -121,16 +124,16 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片：</div>
 			<div class="col-md-11 row" >
-				{{if $data.SpotDetail.coverURL}}
+				{{if $data.SpotDetail.PicURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.SpotDetail.coverURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/coverURL" ></a>
+						<img src="${$data.SpotDetail.PicURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/PicURL" ></a>
 					</div>
 				</div>
 				{{else}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/SpotDetail/coverURL" data-action="image" >+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/SpotDetail/PicURL" data-action="image" >+</div>
 				</div>
 				{{/if}}
 			</div>
