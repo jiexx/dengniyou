@@ -776,7 +776,7 @@
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
                         $.rogerNotice({Message: '模板方案保存成功'});
-                        $('#send').removeClass("btn btn-warning invsible");
+                        $('#send').removeClass("btn btn-warning invisible");
                         $('#send').addClass("btn btn-warning");
                     });
                 });
