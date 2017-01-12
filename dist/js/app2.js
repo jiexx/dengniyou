@@ -579,13 +579,13 @@ $(function () {
     };
 
     var initAttractionEdit=function(){
-
-
+        var SpotsID = $.rogerGetUrlParam('SpotsID');
+        var usr =$.rogerGetLoginUser();
         var returnvalue = {
         SpotDetail: 
         {
             SpotsID:'' ,
-            UserID:'' ,
+            UserID:usr.userID ,
             CountryID:'' ,
             CityID:'' ,
             SpotsTypeID:'1' ,
@@ -619,8 +619,7 @@ $(function () {
         },        
         IMGHOST: "http://123.59.144.47/" };
 
-        var usr =$.rogerGetLoginUser();
-        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": '', "userID": usr.userID}, function (respJSON, reqJSON) {
+        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": '24282', "userID": usr.userID}, function (respJSON, reqJSON) {
             if(respJSON){
                 console.log(JSON.stringify(respJSON));
                 if (null != respJSON["SpotDetail"] && respJSON["SpotDetail"].length > 0) {
@@ -682,7 +681,7 @@ $(function () {
         $('#save').rogerOnceClick(Spots, function(e){
             console.log('test');
 
-            temp = e.data.SpotDetail;
+            temp = e.SpotDetail;
 
             if(null != temp.SpotsID && '' != temp.SpotsID){
                 tempSpotLabels = []
@@ -692,7 +691,6 @@ $(function () {
                     }
                 }
 
-                tempSpotLabels = {LabelID:temp.SpotLabels.LabelIDs[0],SpotsID:temp.SpotsID};
 
                 var data = {
                     DeleteSpotsPics:temp,
@@ -702,7 +700,7 @@ $(function () {
                     SpotLabels:tempSpotLabels,
                     // file:filedata,
                     // coverFile:coverFiledata,
-                    IMGHOST:e.data.IMGHOST
+                    IMGHOST:e.IMGHOST
                 };
                 $.rogerPost('/update/spots', data, function(respJSON){
                     $.rogerNotice({Message:'景点修改成功'});
@@ -715,7 +713,7 @@ $(function () {
                     SpotDetail:temp,
                     // file:filedata,
                     // coverFile:coverFiledata,
-                    IMGHOST:e.data.IMGHOST
+                    IMGHOST:e.IMGHOST
                 };
                 $.rogerPost('/new/spots', data, function(respJSON){
                     $.rogerNotice({Message:'景点保存成功'});
@@ -732,7 +730,7 @@ $(function () {
         $('#publish').rogerOnceClick(Spots, function(e){
             console.log('publish');
 
-            temp = e.data.SpotDetail;
+            temp = e.SpotDetail;
 
             if(null != temp.SpotsID && '' != temp.SpotsID){
                 tempSpotLabels = []
@@ -742,7 +740,6 @@ $(function () {
                     }
                 }
 
-                tempSpotLabels = {LabelID:temp.SpotLabels.LabelIDs[0],SpotsID:temp.SpotsID};
 
                 var data = {
                     DeleteSpotsPics:temp,
@@ -752,13 +749,13 @@ $(function () {
                     SpotLabels:tempSpotLabels,
                     // file:filedata,
                     // coverFile:coverFiledata,
-                    IMGHOST:e.data.IMGHOST
+                    IMGHOST:e.IMGHOST
                 };
 
                 temp["Status"]=2;
 
                 $.rogerPost('/update/spots', data, function(respJSON){
-                    $.rogerNotice({Message:'景点修改成功'});
+                    $.rogerNotice({Message:'景点发布成功'});
 
                 });
             } else {
@@ -768,10 +765,10 @@ $(function () {
                     SpotDetail:temp,
                     // file:filedata,
                     // coverFile:coverFiledata,
-                    IMGHOST:e.data.IMGHOST
+                    IMGHOST:e.IMGHOST
                 };
                 $.rogerPost('/new/spots', data, function(respJSON){
-                    $.rogerNotice({Message:'景点保存成功'});
+                    $.rogerNotice({Message:'景点发布成功'});
 
                 });
             }
@@ -1410,7 +1407,11 @@ $(function () {
                          result["DetailMain"]["Airports"] = respJSON["Airports"]
                      }
                      if (null != respJSON["Policy"] && '' != respJSON["Policy"]) {
-                         result["DetailMain"]["Policy"] = respJSON["Policy"]
+                        while(respJSON["Policy"].length < 4)
+                            {
+                             respJSON["Policy"].push({policyType: '',policyID: '',policyName: '',serviceTypeID: '',day1: '',ratio1: '',day2: '',ratio2: '',day3: '',ratio3: '',day4: '',ratio4: '',customRatio: '',caution: '',description: '',type: 5});
+                            }
+                         result["DetailMain"]["Policy"] = respJSON["Policy"];
                      }
                      if (null != respJSON["VehicleInfo"] && '' != respJSON["VehicleInfo"]) {
                          result["DetailMain"]["VehicleInfo"] = respJSON["VehicleInfo"]
@@ -1430,12 +1431,14 @@ $(function () {
                      if (null != respJSON["ActivityPrice"] && '' != respJSON["ActivityPrice"]) {
                          result["DetailMain"]["ActivityPrice"] = respJSON["ActivityPrice"]
                      }
+                     if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
+                         result["DetailMain"]["HouseInfo"] = respJSON["HouseInfo"]
+                     }
                      
                     result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0]);
                      function deepCopy(des,source) {      
                         for (var key in source) {
                             if(key){
-                                console.log(source[key]);
                                 if(typeof source[key]==='object'){
                                    //deepCopy(des[key],source[key])
                                    des[key] = JSON.stringify(source[key]);
