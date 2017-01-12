@@ -98,7 +98,21 @@ $(function () {
     };
 
     var ctrlShortplanDetail = function(response, realView) {
-
+        if( response.PlanInfo[0].Policy ){
+            $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
+        }
+        if( response.PlanInfo[0].CostInclude ){
+            $('#costinc').html(response.PlanInfo[0].CostInclude.replace(/\r\n/g, '<br>'));
+        }
+        if( response.PlanInfo[0].CostExclude ){
+            $('#costexc').html(response.PlanInfo[0].CostExclude.replace(/\r\n/g, '<br>'));
+        }
+        if( response.PlanInfo[0].VisaNotice ){
+            $('#visa').html(response.PlanInfo[0].VisaNotice.replace(/\r\n/g, '<br>'));
+        }
+        if( response.PlanInfo[0].Notice ){
+            $('#warning').html(response.PlanInfo[0].Notice.replace(/\r\n/g, '<br>'));
+        }
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };

@@ -50,8 +50,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .topRight #user{padding: 0;width: 80px;border-radius: 0;background-color: #FFF; font-size: 13px; color:#333;}
 .indexpage .sidebar{top: 96px !important;}
 .indexpage nav{width:100%; /*height: 96px;*/ background-color: #00b8ee; padding-top: 10px; padding-bottom: 1px;}
-.indexpage .topWidth .navBar{margin-bottom: 10px; /*padding-top: 5px;*/}
-.indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:80px; /*height: 34px; */line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
+.indexpage .topWidth .navBar{margin-bottom: 10px; /*padding-top: 5px;*/ padding: 0 30px;}
+.indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:82px; /*height: 34px; */line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
 .indexpage .topWidth .navBar li.active{background-color: #006583;}
 .indexpage .topWidth .navBar li a{color: #fff; font-weight: bold;}
 .indexpage footer{height: 366px; background-color: #4d4d4d; color: #FFF; padding-top: 20px}
@@ -109,6 +109,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .index-searchbox{background-color: #00B8EE; padding-bottom: 15px; padding-top: 5px;}
 .index-searchbox .container{margin-top: 0;}	
 .index-searchbox .form-group .input-group{-webkit-box-shadow: 2px 3px 3px #666; -moz-box-shadow: 2px 3px 3px #666; -ms-box-shadow: 2px 3px 3px #666; -o-box-shadow: 2px 3px 3px #666; box-shadow: 2px 3px 3px #666;}
+.index-searchbox .form-group .input-group #homeSearchKey{height: 40px;}
 .index-searchbox .form-group .input-group span button{font-size: 22px; color:#00B8EE; height: 40px;}
 .index-searchbox .form-group .input-group #homeSearch{width: 70px; background-color: #F9703C; border-color: #F9703C; height: 40px; color: #fff; font-size: 16px; font-weight: bold; }
 .index-searchbox .form-group .input-group #homeSearch a{color: #fff;}
@@ -176,6 +177,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .plandetail-main .main-right{padding-right: 0;}
 .plandetail-page .recommendBox, .scheduleBox { border: 1px solid #00b8ee; }
 .plandetail-page .recommendBox h2 { background-color: #00b8ee; font-size: 24px; color: #fff; line-height: 50px; text-indent: 10px; text-align: center; margin-top: 0; margin-bottom: 0;}
+.plandetail-page .recommendBox .list-group{margin-bottom: 0;}
 /*.plandetail-page .recommendBox ul{padding-top: 15px;}
 .plandetail-page .recommendBox ul li { height: 82px; padding: 10px; border-bottom: 1px solid #F5F5F5; }
 .plandetail-page .recommendBox ul li img {float: left;  }
@@ -194,7 +196,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .scheduleNav .navList i { font-size: 30px; line-height: 46px; }
 .plandetail-page .address { border-bottom: 1px solid #00b8ee; text-align: left; padding-left: 45px;}
 .plandetail-page .address .starter{ position: relative; left: -44px;}
-.plandetail-page .address .starter, .address .pass { font-size: 14px; font-weight: bold; color: #333; padding: 5px; }
+.plandetail-page .address .starter, .address .pass { font-size: 14px; color: #333; padding: 5px; }
 .plandetail-page .address .starter i, .address .pass i { color: #00b8ee; }
 .plandetail-page .address .starter span, .address .pass span{ color: #666;}
 .plandetail-page .feature { padding: 10px 0; }
@@ -214,8 +216,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .scheduleDetails .footer, .comments .footer { height: 44px; background-color: #00b8ee; color: #fff; text-align: center; font-size: 16px; line-height: 46px; }
 /*行程概览结束*/
 /*上传图片功能自定义样式*/
-.plandetail-page .featureAlone { border: 1px solid #00b8ee; margin: 10px 0; height: 150px;}
-.plandetail-page #orderNotice li { line-height: 28px; height: 28px; }
+.plandetail-page .featureAlone { border: 1px solid #00b8ee; margin: 10px 0; }
+.plandetail-page #orderNotice li { line-height: 28px; font-size: 14px;}
 .plandetail-page .comments { border: 1px solid #00b8ee; }
 .plandetail-page .comments h4 { border-bottom: 2px solid #00b8ee; border-top: 1px solid #00b8ee; border-left: 1px solid #00b8ee; border-right: 1px solid #00b8ee; color: #00b8ee; line-height: 46px; margin-top: 0; margin-bottom: 0; padding: 0 20px;}
 .plandetail-page .comments h4 a { font-size: 14px; color: #00b8ee; float: right; }
