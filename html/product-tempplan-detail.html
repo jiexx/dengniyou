@@ -16,7 +16,7 @@
                     {{else}}
                     <div class="item">
                       {{/if}}
-                      <img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
+                      <img data-src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
                     </div>
                     {{/each}}
                   </div>
@@ -154,6 +154,46 @@
               <div class="col-md-10">
                 <ul class="text" id="orderNotice">
                   <li id="policy"></li>
+                </ul>
+              </div>
+            </div><!-- end 预定须知结束 -->
+            <div class="feature featureAlone clearfix" id="attention">
+              <div class="col-md-2">
+                <div class="tittle">费用包含</div>
+              </div>
+              <div class="col-md-10">
+                <ul class="text" id="orderNotice">
+                  <li id="costinc"></li>
+                </ul>
+              </div>
+            </div><!-- end 预定须知结束 -->
+            <div class="feature featureAlone clearfix" id="attention">
+              <div class="col-md-2">
+                <div class="tittle">费用自理</div>
+              </div>
+              <div class="col-md-10">
+                <ul class="text" id="orderNotice">
+                  <li id="costexc" class="clearfix"></li>
+                </ul>
+              </div>
+            </div><!-- end 预定须知结束 -->
+            <div class="feature featureAlone clearfix" id="attention">
+              <div class="col-md-2">
+                <div class="tittle">签证须知</div>
+              </div>
+              <div class="col-md-10">
+                <ul class="text" id="orderNotice">
+                  <li id="visa"></li>
+                </ul>
+              </div>
+            </div><!-- end 预定须知结束 -->
+            <div class="feature featureAlone clearfix" id="attention">
+              <div class="col-md-2">
+                <div class="tittle">注意事项</div>
+              </div>
+              <div class="col-md-10">
+                <ul class="text" id="orderNotice">
+                  <li id="warning"></li>
                 </ul>
               </div>
             </div><!-- end 预定须知结束 -->
