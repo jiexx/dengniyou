@@ -200,10 +200,8 @@
 				return;
 			}
 			var usr =$.rogerGetLoginUser();;
-			var data = {
-                Comment:e.Comment
-            }
-            data.UserID = usr.UserID;
+			var data = e.data;
+            data.Comment.UserID = usr.UserID;
 			//console.log(usr);
 			$.rogerPost('/comment/plan', data, function(respJSON){
 				$.rogerRefresh();
@@ -247,7 +245,8 @@
 
         //$('#TALK').rogerOnceClick(null,function () {
             //$('#TALK').each(function () {
-            $('#TALK').on('click',function () {
+            $('#TALK').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
+                var data = e.data;
                 var usr = $.rogerGetLoginUser();
                 if(!usr) {
                     $.rogerLogin('#homeLogin', '/login');
@@ -255,7 +254,7 @@
                     return;
                 }
                 $(this).attr("href","talk?uid="
-                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID+'&msg='+data);
             });
         //});
 		

@@ -198,7 +198,7 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", '$location', function
                 WebIMWidget.providerdata.currentUserInfo = {userId:uid, name:uname, portraitUri:picurl };
                 console.log(1,WebIMWidget.providerdata.currentUserInfo);
                 WebIMWidget.setConversation(WebIMWidget.EnumConversationType.PRIVATE, tid, '对话中');
-                if(msg && msg.trim()!=''){
+                if(msg && msg.trim()!='' && msg != undefined && msg != 'undefined'){
                     $scope.conversation.messageContent = '请帮忙定制方案 http://10.101.1.219:8888/#/templateplandetail?version=2&PlanID='+msg;
                 }
 
