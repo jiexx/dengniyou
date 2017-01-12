@@ -28,7 +28,6 @@
         <li class="active"><a href="">包车预览</a></li>
         <li class="active"><a href="">返回</a></li>
       </ol> <!-- end 面包屑导航breadcrumb -->
-
       <!--   banner -->
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
@@ -41,7 +40,7 @@
           <div class="item {{if i==1}}active{{/if}}">
             <img src="${$data.IMGHOST}${p}" alt="...">
           </div>
-          {{each}}
+          {{/each}}
         </div>
         <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" >
           <span class="glyphicon glyphicon-chevron-left"></span>
@@ -50,7 +49,6 @@
           <span class="glyphicon glyphicon-chevron-right"></span>
         </a>
       </div><!--  end  banner -->
-      
       <div class="detailpage-mainbody">
         <div class="cardetail-title">
           <div class="row">
@@ -65,17 +63,20 @@
               {{/each}}
               <p class="price pull-right">价格：¥ <span>${DetailMain[0].primaryPrice}</span>元/人起</p>
             </div>
-          </div> 
+          </div>
         </div> <!-- end 租车详情标题cardetail-title -->
 
         <div class="row product-detail price-detail">
           <h2>商品详情</h2>
           <div class="col-md-3">
             <p>包含里程：<span>${DetailMain[0].incMileage}km</span>/天</p>
-            <p>品 牌：<span>${Facility[0].brand}</span></p>
           </div>
+
+          {{if Facility.length!=0}}
+
           <div class="col-md-3">
             <!-- <p>服务时长：<span>10h</span>/天</p> -->
+            <p>品 牌：<span>${Facility[0].brand}</span></p>
             <p>车辆名称：<span>${Facility[0].facilityName}</span></p>
             <p>型号：<span>${Facility[0].model}</span></p>
           </div>
@@ -87,18 +88,23 @@
             <p>乘员险：<span>{{if Facility[0].insurance==1}}有{{else}}无{{/if}}</span></p>
             <p>行李空间：<span>${Facility[0].luggage}升</span></p>
           </div>
-        </div> <!-- end 商品详情product-detail -->
+          {{/if}}
+        </div>
+
+        <!-- end 商品详情product-detail -->
 
         <div class="vihicle-list">
           <div class="vihicle-listbody">
             <ul class="vmcarousel-centered-infitine vmc-centered">
+              {{if Facility.length!=0}}
               {{each(i,p) Facility[0].facilityPics}}
               <li style="width:250px"><img src="${$data.IMGHOST}${p}" alt=""></li>
               {{/each}}
+              {{/if}}
             </ul>
-          </div> 
+          </div>
         </div><!-- end 车辆轮播图vihicle-list -->
-        
+
         <div class="service-description">
           <h2>服务说明</h2>
           <div class="des">
@@ -124,6 +130,7 @@
             <p>5、${p.description}</p>
           </div>
           {{/if}}
+          {{/if}}
           {{if p.policyType==2}}
           <h2>${p.PolicyName}</h2>
           <div class="des">
@@ -147,32 +154,19 @@
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
       <div class="buttons">
-        <button id="delete" type="button" class="btn btn-default">删除</button>
-        <button id="copy" type="button" class="btn">复制</button>
-        <button id="edit" type="button" class="btn">编辑</button>
+        <button id="delete" type="button" class="btn btn-default btn-lg">删除</button>
+        <button id="copy" type="button" class="btn btn-lg">复制</button>
+        <button id="edit" type="button" class="btn btn-lg">编辑</button>
         {{if DetailMain[0].serviceStatus==3}}
-        <button id="publish" type="button" class="btn">发布</button>
+        <button id="release" type="button" data-status="4" class="btn btn-lg">发布</button>
         {{/if}}
         {{if DetailMain[0].serviceStatus==4}}
-        <button id="hide" type="button" class="btn">隐藏</button>
+        <button id="release" type="button" data-status="3" class="btn btn-lg">隐藏</button>
         {{/if}}
       </div>
+
     </div><!-- end container-box -->
   </div> <!-- end container -->
-
-    <script src="js/jquery-1.11.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
-  <!-- 车辆轮播图JS --> 
-    <script type="text/javascript" src="dist/js/detail/jquery.vm-carousel.js"></script> 
-    <script type="text/javascript">
-        $('.vmcarousel-centered-infitine').vmcarousel({
-           centered: true,
-           start_item: 1,
-           autoplay: false,
-           infinite: true
-        });
-    </script>
   </body>
  
 </html>

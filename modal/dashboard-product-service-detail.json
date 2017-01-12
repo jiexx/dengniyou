@@ -13,7 +13,7 @@
       "findkey": "serviceTypeID"
     },
     "Facility": {
-      "sql": "SELECT * FROM traveluserdb.`vw_/service/detail_facility` WHERE ServiceID=? LIMIT 1",
+      "sql": "SELECT * FROM (select 1 ) as temp left join traveluserdb.`vw_/service/detail_facility` ON(1=1) WHERE ServiceID =? LIMIT 1",
       "params": [
         "ServiceID"
       ]
