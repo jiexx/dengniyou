@@ -158,7 +158,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .carousel img { height: 370px; width: 100%;}
 .plandetail-page .owl-theme .owl-controls { position: relative; top: -40px; }
 .plandetail-page .project{ margin-top: 30px;}
-.plandetail-page .project h1 { font-size: 24px; font-weight: bold; color: #333;}
+.plandetail-page .project h1 { font-size: 24px; font-weight: bold; color: #333; padding-left: 20px; margin-bottom: 20px;}
 .plandetail-page .project h1 a{display: inline-block; margin-left: 15px; background-color: #00B8EE; color: #fff; border-color: #00B8EE;}
 .plandetail-page .project .project-main { border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; padding: 10px 0; }
 .plandetail-page .project .project-main .imgBox, .project .project-main .planner { float: left; }

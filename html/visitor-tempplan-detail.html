@@ -4,53 +4,6 @@
     <br>
     <div class="plandetail-page">
       <div>
-        <div class="row">
-          <div class="col-md-12 carousel">
-            <div class="carousel-container">
-              <div id="carousel-generic" class="carousel slide" data-ride="carousel">
-                <!-- Wrapper for slides -->
-                <div class="carousel-inner" role="listbox">
-                  {{each $data.PlanInfo[0].PicURL}}
-                  {{if $index == 0}}
-                  <div class="item active">
-                    {{else}}
-                    <div class="item">
-                      {{/if}}
-                      <img data-src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
-                    </div>
-                    {{/each}}
-                  </div>
-                  <a class="left carousel-control" href="#carousel-generic" data-slide="prev">
-                    <span class="glyphicon glyphicon-chevron-left"></span>
-                  </a>
-                  <a class="right carousel-control" href="#carousel-generic" data-slide="next">
-                    <span class="glyphicon glyphicon-chevron-right"></span>
-                  </a>
-                </div><!-- end carousel -->
-              </div> <!-- end carousel-container -->
-            </div> <!-- end carousel-container -->
-          </div><!-- end 日历和banner部分widget -->
-        </div>
-
-        <div class="row project">
-          <h1>${$data.PlanInfo[0].PlanName}</h1>
-          <div class="project-main clearfix">
-            <div class="col-md-5">
-              <div class="imgBox">
-                <img src="${ $data.IMGHOST }${$data.PlanInfo[0].AvatarPicURL}" alt="策划师头像" id="planerAvatar">
-              </div>
-              <div class="planner">
-                <h3>策划师:${$data.PlanInfo[0].UserName}<span class="vipIcon"></span></h3>
-                <span class="name" id="planerName">${$data.PlanInfo[0].UserMobile}</span>
-                <!--<a  class="btn btn-warning" id="TALK" target="_blank">咨询</a>-->
-              </div>
-            </div>
-            <div class="col-md-5">
-              <h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].AdultPrice}</span>元</h4>
-              <!--<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即购买</button></a>-->
-            </div>
-          </div><!-- end main -->
-        </div><!-- end 咨询师部分project -->
 
         <div class="row plandetail-main">
           <div class="col-md-12  ">
@@ -143,59 +96,17 @@
                 </ul>
               </div>
             </div><!-- end 预定须知 -->
-            <div class="feature featureAlone clearfix" id="attention">
-              <div class="col-md-2">
-                <div class="tittle">预订须知</div>
-              </div>
-              <div class="col-md-10">
-                <ul class="text" id="orderNotice">
-                  <li id="policy"></li>
-                </ul>
-              </div>
-            </div><!-- end 预定须知结束 -->
-            <div class="feature featureAlone clearfix" id="attention">
-              <div class="col-md-2">
-                <div class="tittle">费用包含</div>
-              </div>
-              <div class="col-md-10">
-                <ul class="text" id="orderNotice">
-                  <li id="costinc"></li>
-                </ul>
-              </div>
-            </div><!-- end 预定须知结束 -->
-            <div class="feature featureAlone clearfix" id="attention">
-              <div class="col-md-2">
-                <div class="tittle">费用自理</div>
-              </div>
-              <div class="col-md-10">
-                <ul class="text" id="orderNotice">
-                  <li id="costexc" class="clearfix"></li>
-                </ul>
-              </div>
-            </div><!-- end 预定须知结束 -->
-            <div class="feature featureAlone clearfix" id="attention">
-              <div class="col-md-2">
-                <div class="tittle">签证须知</div>
-              </div>
-              <div class="col-md-10">
-                <ul class="text" id="orderNotice">
-                  <li id="visa"></li>
-                </ul>
-              </div>
-            </div><!-- end 预定须知结束 -->
-            <div class="feature featureAlone clearfix" id="attention">
-              <div class="col-md-2">
-                <div class="tittle">注意事项</div>
-              </div>
-              <div class="col-md-10">
-                <ul class="text" id="orderNotice">
-                  <li id="warning"></li>
-                </ul>
-              </div>
-            </div><!-- end 预定须知结束 -->
+
+
           </div>
         </div> <!-- end plandetail-main -->
-        <a href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}"  class="btn  btn-warning">编辑</a>
+        <div class="notice">
+          <div class="optionBtn">
+            <a href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}"  class="btn btn-warning">编辑</a>
+            <button id="send" class="btn btn-warning">发送</button>
+          </div>
+        </div>
+
       </div>
     </div> <!-- end plandetail-page -->
   </div> <!-- end container

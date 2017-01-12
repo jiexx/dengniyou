@@ -772,10 +772,6 @@
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
         };
 
-        $('#send').rogerOnceClick(Plan, function(e){
-            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Spot:Spot});
-        });
-
         $('#save').rogerOnceClick(Plan, function(e){
             var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
@@ -783,6 +779,8 @@
                     var data = {PlanInfo: e.data.PlanInfo};
                     data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                    var usr = $.rogerGetLoginUser();
+                    data.PlanInfo.CreateUserID = usr.UserID;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
                         $.rogerNotice({Message: '定制方案保存成功'});
                         $('#send').removeClass("btn btn-warning invisible");
@@ -792,35 +790,49 @@
                 $.rogerNotice({Message: '请选择起始城市'});
             }
         });
-        /*$('#publish').rogerOnceClick(Plan, function(e){
-         $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
-         $.rogerNotice({Message:'模板方案待审核..'});
-         $.rogerRefresh(Plan);
-         });
-         });*/
-        $('#cancel').rogerOnceClick(Plan, function(e){
-            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
-                $.rogerNotice({Message:'模板方案已取消发布..'});
-                $.rogerRefresh(Plan);
-            });
-        });
+
         frameCtrl();
         realView.rogerCropImages();
+    };
+    var initGuideChooser = function (PS) {
+        return {
+            Plan:PS.Plan,
+        };
+    };
+    var ctrlGuideChooser = function (PS, realView) {
+        $('#guideChooser').modal('show');
+        $('#guidelist').html('').append('<li class="list-group-item">导游</li>');
+        $('#guidelist').rogerDialogTrigger('fragment/dialog-guidelist.html', '/dialog/guide', {}, function (data, realView) {
+            $('#searchlist').btsListFilter('#searchinput', {itemChild: '.list-group-item-text',initial:false});
+            $("#airportlist .list-group-item").click(function(e) {
+                $("#airportlist .list-group-item").removeClass("active");
+                $(this).addClass("active");
+            });
+        });
+        $('#guideChooserOK').rogerOnceClick(PS,function (e) {
+            var Plan = e.data;
+            var guide = $('#searchlist  .list-group-item.active').data('info').split(':');
+            if(guide[0] > 0) {
+                Plan.PlanInfo.PlanID = 0;
+                var data = {PlanInfo: Plan.PlanInfo};
+                data.PlanInfo.StartCityID = item.CityID;
+                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                var usr = $.rogerGetLoginUser();
+                data.PlanInfo.CreateUserID = guide[0];
+                $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                    var usr = $.rogerGetLoginUser();
+                    window.open('talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+guide[0], '_blank');
+                    $('#guideChooser').modal('hide');
+                });
+            }
+        });
     };
     var ctrlTemplateplanDetail = function(Plan, realView) {
 
         $('#send').rogerOnceClick(Plan, function(e){
+            var data = e.data;
+            $.rogerTrigger('#modal', '#/guidechooser', {Plan:data});
 
-           /* $('#TALK').on('click',function () {
-                var usr = $.rogerGetLoginUser();
-                if(!usr) {
-                    $.rogerLogin('#homeLogin', '/login');
-                    $.rogerShowLogin();
-                    return;
-                }
-                $(this).attr("href","talk?uid="
-                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
-            });*/
         });
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -840,6 +852,7 @@
         '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                       ctrl: ctrlCityChooser},
         '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                       ctrl: ctrlSpotChooser},
         '#/airportchooser':           {fragment: 'fragment/dialog-airport-chooser.html', init: initAirportChooser,                    ctrl: ctrlAirportChooser},
+        '#/guidechooser':              {fragment: 'fragment/dialog-guide-chooser.html',   init: initGuideChooser,                       ctrl: ctrlGuideChooser},
 
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
