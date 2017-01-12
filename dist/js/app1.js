@@ -870,6 +870,7 @@
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			    ctrl: ctrlPlandetail},
+        '#/plandetailshort':			{view:'plandetail-short.html',							rootrest:'/plan/detail2', 			    ctrl: ctrlPlandetail},
         '#/homelist':                 {fragment: 'fragment/home-list.html',                 init: initHomeList,                          ctrl: ctrlHomeList},
         '#/homesearchlist':          {fragment: 'fragment/home-search-list.html',         rootrest:'/home/search',                 ctrl: ctrlHomeSearchList},
 

@@ -5,14 +5,18 @@
         <div class="well mid">
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -29,14 +33,18 @@
           {{if Plans[1]}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[1].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[1].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[1].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[1].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[1].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[1].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[1].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -45,14 +53,18 @@
           {{else}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -66,14 +78,18 @@
           {{if Plans[2]}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[2].PicURL}" alt="">
+            {{if CreateType == 1}}
             <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[2].PlanID}">
+            {{else}}
+              <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[2].PlanID}">
+            {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[2].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[2].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[2].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -82,14 +98,18 @@
           {{else}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -103,14 +123,18 @@
           {{if Plans[3]}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[3].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[3].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[3].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[3].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[3].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[3].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[3].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -119,14 +143,19 @@
           {{else}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                  {{/if}}
+
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -140,14 +169,18 @@
           {{if Plans[4]}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[4].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[4].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[4].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[4].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[4].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[4].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[4].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -156,14 +189,18 @@
           {{else}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -181,14 +218,18 @@
           {{if Plans[5]}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[5].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[5].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[5].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[5].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[5].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[5].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[5].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -197,14 +238,18 @@
           {{else}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
-            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{if CreateType == 1}}
+              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+                {{else}}
+                <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                  {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -216,14 +261,18 @@
           {{if Plans[6]}}
           <div class="hovereffect">
               <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[6].PicURL}" alt="">
-              <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[6].PlanID}">
+            {{if CreateType == 1}}
+            <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[6].PlanID}">
+              {{else}}
+              <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[6].PlanID}">
+                {{/if}}
               <div class="overlay">
                 <ul class="head ">
                   <li>
                     ${ $data.Plans[6].PlanName}
                   </li>
                   <li>
-                    <p><span>${ $data.Plans[6].PlanPriceBase}</span>元/人</p>
+                    <p><span>${ $data.Plans[6].AdultPrice}</span>元/人</p>
                   </li>
                 </ul>
               </div>
@@ -232,14 +281,18 @@
           {{else}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
+            {{if CreateType == 1}}
             <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{else}}
+              <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -257,14 +310,18 @@
           {{if Plans[7]}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[7].PicURL}" alt="">
+            {{if CreateType == 1}}
             <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[7].PlanID}">
+              {{else}}
+              <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[7].PlanID}">
+                {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[7].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[7].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[7].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -273,14 +330,18 @@
           {{else}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
+            {{if CreateType == 1}}
             <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{else}}
+              <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -292,14 +353,18 @@
           {{if Plans[8]}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[8].PicURL}" alt="">
+            {{if CreateType == 1}}
             <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[8].PlanID}">
+              {{else}}
+              <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[8].PlanID}">
+                {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[8].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[8].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[8].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>
@@ -308,14 +373,18 @@
           {{else}}
           <div class="hovereffect">
             <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.Plans[0].PicURL}" alt="">
+            {{if CreateType == 1}}
             <a class="pull-left" href="#/plandetail?PlanID=${ $data.Plans[0].PlanID}">
+              {{else}}
+              <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.Plans[0].PlanID}">
+                {{/if}}
             <div class="overlay">
               <ul class="head ">
                 <li>
                   ${ $data.Plans[0].PlanName}
                 </li>
                 <li>
-                  <p><span>${ $data.Plans[0].PlanPriceBase}</span>元/人</p>
+                  <p><span>${ $data.Plans[0].AdultPrice}</span>元/人</p>
                 </li>
               </ul>
             </div>

@@ -14,11 +14,11 @@
 	  			<dt><i></i>国家：</dt>
 	  			<dd>
 	  				<ul id="country">
-						<li><div class="btn btn-warning unlimit">不限</div></li>
-	  					<li><div>德国</div></li>
-	  					<li><div>法国</div></li>
-	  					<li><div>芬兰</div></li>
-	  					<li><div>荷兰</div></li>
+						<li><div style="cursor:pointer"  class="btn btn-warning unlimit">不限</div></li>
+	  					<li><div style="cursor:pointer">德国</div></li>
+	  					<li><div style="cursor:pointer">法国</div></li>
+	  					<li><div style="cursor:pointer">芬兰</div></li>
+	  					<li><div style="cursor:pointer">荷兰</div></li>
 	  				</ul>
 	  			</dd>
 			</dl>
@@ -26,11 +26,11 @@
 	  			<dt><i></i>天数：</dt>
 	  			<dd>
 	  				<ul id="days">
-						<li><div class="btn btn-warning unlimit">不限</div></li>
-						<li><div>1-2天</div></li>
-						<li><div>3-5天</div></li>
-						<li><div>6-8天</div></li>
-						<li><div>11天以上</div></li>
+						<li><div style="cursor:pointer" class="btn btn-warning unlimit">不限</div></li>
+						<li><div style="cursor:pointer">1-2天</div></li>
+						<li><div style="cursor:pointer">3-5天</div></li>
+						<li><div style="cursor:pointer">6-8天</div></li>
+						<li><div style="cursor:pointer">11天以上</div></li>
 	  				</ul>
 	  			</dd>
 		  	</dl>
@@ -38,14 +38,14 @@
 				<dt><i></i>主题：</dt>
 				<dd>
 					<ul id="label">
-						<li><div class="btn btn-warning unlimit">不限</div></li>
-						<li><div>观光游览</div></li>
-						<li><div>艺术</div></li>
-						<li><div>轻探险</div></li>
-						<li><div>亲子</div></li>
-						<li><div>浪漫</div></li>
-						<li><div>游学</div></li>
-						<li><div>传统文化</div></li>
+						<li><div  style="cursor:pointer" class="btn btn-warning unlimit">不限</div></li>
+						<li><div style="cursor:pointer">观光游览</div></li>
+						<li><div style="cursor:pointer">艺术</div></li>
+						<li><div style="cursor:pointer" >轻探险</div></li>
+						<li><div style="cursor:pointer" >亲子</div></li>
+						<li><div style="cursor:pointer" >浪漫</div></li>
+						<li><div style="cursor:pointer" >游学</div></li>
+						<li><div style="cursor:pointer" >传统文化</div></li>
 					</ul>
 				</dd>
 			</dl>
@@ -63,9 +63,15 @@
 				{{each Plans}}
 				<li class="list-group-item">
 					<div class="media">
+						{{if CreateType == 1}}
 						<a href="#/plandetail?PlanID=${PlanID}" class="media-left" >
 							<img class="media-object" data-src="${ $data.IMGHOST }${PicURL}" style="width:280px;height:160px"></img>
 						</a>
+						{{else}}
+						<a href="#/plandetailshort?PlanID=${PlanID}" class="media-left" >
+							<img class="media-object" data-src="${ $data.IMGHOST }${PicURL}" style="width:280px;height:160px"></img>
+						</a>
+						{{/if}}
 						<div class="media-body">
 							<div class="col-md-8">
 								<h3>${PlanName}</h3>

@@ -1,0 +1,222 @@
+<!-- 企业信息 -->
+<div class="interpriseArea">
+	<div class="container">
+		<div class="interpriseInfo">
+			<div class="col-md-6">
+				{{if $data.PlanInfo[0].ComAdv}}
+				<div><img src="${ $data.IMGHOST }${$data.PlanInfo[0].ComLogo}"  ></div>
+				{{else}}
+				<div><img src="../img/LOGO-2.png"  ></div>
+				{{/if}}
+				<div class="ad">${$data.PlanInfo[0].ComAdv}</div>
+			</div>
+			<div class="col-md-6">
+				<!-- <div><img src="" alt="经理/客服头像"></div> -->
+				<div class="contact">
+					<p>企业联系方式：<span class="tel">${$data.PlanInfo[0].UserMobile}</span></p>
+					<!-- <p>企业联系邮箱：<span class="email">1234@134.com</span></p> -->
+				</div>
+			</div>
+		</div>
+  	<div class="nav">
+  		<ul>
+  			<li><a href="#">企业主页</a></li>
+  			<li><a href="#">方案</a></li>
+  			<li><a href="#">包车</a></li>
+  			<li><a href="#">导游</a></li>
+  			<li><a href="#">签证</a></li>
+  			<li><a href="#">住宿</a></li>
+  			<li><a href="#">保险</a></li>
+  			<li><a href="#">机票</a></li>
+  			<li><a href="#">活动</a></li>
+  			<li><a href="#">景点</a></li>
+  			<li><a href="#">美食</a></li>
+  		</ul>
+  	</div>
+</div>
+
+<!-- 企业信息结束 -->
+
+<div class="container">
+	<br>
+	<div class="plandetail-page">
+	<div>
+		<div class="row">
+			<div class="col-md-5 calender">
+				<div id="calendar"></div>
+			</div><!-- end calender -->
+			<div class="col-md-7 carousel">
+				<div class="carousel-container">
+					<div id="carousel-generic" class="carousel slide" data-ride="carousel">
+						<!-- Wrapper for slides -->
+						<div class="carousel-inner" role="listbox">
+							{{each $data.PlanInfo[0].PicURL}}
+							{{if $index == 0}}
+							<div class="item active">
+							{{else}}
+								<div class="item">
+							{{/if}}
+								<img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
+							</div>
+							{{/each}}
+							</div>
+							<a class="left carousel-control" href="#carousel-generic" data-slide="prev">
+								<span class="glyphicon glyphicon-chevron-left"></span>
+							</a>
+							<a class="right carousel-control" href="#carousel-generic" data-slide="next">
+								<span class="glyphicon glyphicon-chevron-right"></span>
+								</a>
+						</div><!-- end carousel -->
+					</div> <!-- end carousel-container -->
+				</div> <!-- end carousel-container -->
+			</div><!-- end 日历和banner部分widget -->
+		</div>
+
+		<div class="row project">
+			<h1>${ $data.PlanInfo[0].PlanName} 
+				<!--<a  class="btn btn-warning" data-href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}" id="customize">定制</a>
+-->			</h1>
+			
+			<div class="project-main clearfix">
+				<div class="col-md-5">
+					<div class="imgBox">
+						<img src="${ $data.IMGHOST }${$data.PlanInfo[0].AvatarPicURL}" alt="策划师头像" id="planerAvatar">
+					</div>
+					<div class="planner">
+						<h3>策划师:${$data.PlanInfo[0].UserName}<span class="vipIcon"></span></h3>
+						<span class="name" id="planerName">${$data.PlanInfo[0].UserMobile}</span> 
+						<a  class="btn btn-warning" id="TALK" target="_blank">咨询</a>						
+					</div>
+				</div>
+				<div class="col-md-5">
+					<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].AdultPrice}</span>元</h4>
+					<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即购买</button></a>
+				</div>
+				<div class="col-md-2">
+					<p><i class="fa fa-heart-o"></i>添加收藏</p>
+					<p><span id="playedNum">99</span>人玩过 | <span id="commetsNum">99</span>条评论</p>
+				</div>		
+			</div><!-- end main -->
+		</div><!-- end 咨询师部分project -->
+
+		<div class="row plandetail-main">
+			<div class="col-md-3 ">
+				<div class="recommendBox">
+					<h2>更多推荐</h2>
+					<div class="list-group">
+						{{each $data.PlanMore}}
+						<div class="list-group-item">
+							<div class="media">
+								<a href="#/plandetail?PlanID=${PlanID}" class="media-left" >
+									<img class="media-object" data-src="${ $data.IMGHOST }${PicURL}" style="width:60px;height:60px"></img>
+								</a>
+								<div class="media-body">
+									<p>${PlanName}</p>
+									<button class="btn btn-default btn-xs ">方案</button>
+									<p class="text-warning">￥<strong>${AdultPrice}</strong></p>
+								</div>
+							</div>
+						</div>
+						{{/each}}
+					</div>
+					<!--<p class="moreBtn"><a href="#">查看更多宝贝</a></p>-->
+				</div>
+			</div><!-- end 店铺内推荐列表 -->
+
+			<div class="col-md-9  ">
+				<div class="scheduleBox">
+					<div class="scheduleNav clearfix" id="scheduleNav">
+						<h2 class="pull-left">行程概览</h2>
+					</div>
+					<div class="address">
+						<div class="starter">
+							<i class="glyphicon glyphicon-map-marker"></i>
+							出发地：
+							<span id="starter">${$data.PlanInfo[0].StartCity}</span>
+						</div>
+					</div>
+					<div class="feature clearfix">
+						<div class="col-md-2">
+							<div class="tittle">方案特色</div>
+						</div>
+						<div class="col-md-10">
+							<p class="text">
+								${$data.PlanInfo[0].PlanFeature}
+							</p>
+						</div>
+					</div>
+					<div class="scheduleDetails">
+						<p>开始城市: <span>${$data.PlanInfo[0].StartCity}</span></p>
+						{{each $data.PlanShort}}
+						{{if Day}}
+						<div class="day-edit">
+							<p>第${Day}天 <span>${Label}</span></p>
+						</div>
+						{{/if}}
+
+						{{if PicURL}}
+						<div class="col-md-5 picture-edit">
+							<div class="imgBox">
+								<img name="needPrefix" src="${ $data.IMGHOST }${PicURL}">
+							</div>
+						</div>
+						{{/if}}
+
+						{{if Content}}
+						<div class="col-md-5 introduction">
+							${ Content}
+						</div>
+						{{/if}}
+						{{/each}}
+						<div class="clearfix"></div>
+					</div><!-- end scheduleDetails -->
+				</div><!-- end 预定须知 -->
+				<div class="feature featureAlone clearfix" id="attention">
+					<div class="col-md-2">
+						<div class="tittle">预订须知</div>
+					</div>
+					<div class="col-md-10">
+				    <ul class="text" id="orderNotice">
+				    	<li id="policy"></li>
+				    </ul>
+					</div>
+				</div><!-- end 预定须知结束 -->
+				<!-- 评论列表 -->
+				<div class="comments">
+					<h4>游客评论 <a href="#commentOn" class="makeComments">我要点评 <i class="glyphicon glyphicon-edit"></i></a></h4>
+					<ul class="commentList clearfix" id="commentList">
+						{{each PlanComment}}
+						<li>
+							<div class="row">
+								<div class="col-md-2">
+									<img src="${ $data.IMGHOST }${AvatarPicURL}">
+								</div>
+								<div class="col-md-10">
+									<p class="userId">${UserName}</p>
+									<div class="commentText">${Remark}</div>
+									<ul class="comment-pic">
+									{{each(k,v) PicURLs}}
+										<li>
+											<img data-src="${ $data.IMGHOST }${v}">
+										</li>
+									{{/each}}
+									</ul>
+								</div>
+							</div>
+							<<div class="reply col-md-offset-2">
+								<div class="triangle"></div>
+								<!--导游回复：<span class="replyText">导游回复内容</span>-->
+							</div>
+						</li>
+						{{/each}}
+					</ul>
+				</div><!-- end 评论列表 -->
+				<!-- 评论区 -->
+			  <div class="commentOn" id="plan-comment">
+
+			  </div><!--end  评论区 -->
+			</div>
+		</div> <!-- end plandetail-main -->
+	</div>
+	</div> <!-- end plandetail-page -->
+</div> <!-- end container

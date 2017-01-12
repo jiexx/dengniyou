@@ -8,9 +8,15 @@
 				{{each Plans}}
 					<li class="list-group-item">
 						<div class="media">
+							{{if CreateType == 1}}
 							<a href="#/plandetail?PlanID=${PlanID}" class="media-left" >
 								<img class="media-object" data-src="${ $data.IMGHOST }${PicURL}" style="width:280px;height:160px"></img>
 							</a>
+							{{else}}
+							<a href="#/plandetailshort?PlanID=${PlanID}" class="media-left" >
+								<img class="media-object" data-src="${ $data.IMGHOST }${PicURL}" style="width:280px;height:160px"></img>
+							</a>
+							{{/if}}
 							<div class="media-body">
 								<div class="col-md-8">
 									<h3>${PlanName}</h3>
