@@ -190,10 +190,13 @@
 				$.rogerShowLogin();
 				return;
 			}
-			var usr =$.rogerGetLoginUser();
-			e.data.Comment.UserID = usr.UserID;
+			var usr =$.rogerGetLoginUser();;
+			var data = {
+                Comment:e.Comment
+            }
+            data.UserID = usr.UserID;
 			//console.log(usr);
-			$.rogerPost('/comment/plan', e.data, function(respJSON){
+			$.rogerPost('/comment/plan', data, function(respJSON){
 				$.rogerRefresh();
 			});
 		});
@@ -714,6 +717,9 @@
                 $(this).attr('src',Plan.IMGHOST+src);
             }
         })
+        var usr = $.rogerGetLoginUser();
+        Plan.PlanInfo.PlanName = usr.UserName+'的私人定制方案'+Plan.PlanInfo.PlanName;
+        $('#PlanTitle').attr('value', Plan.PlanInfo.PlanName);
         Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanSchedule.push({
                 Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
@@ -757,17 +763,22 @@
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
         };
 
+        $('#send').rogerOnceClick(Plan, function(e){
+            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Spot:Spot});
+        });
+
         $('#save').rogerOnceClick(Plan, function(e){
             var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
-                $.rogerPost('/delete/plan', {PlanID: Plan.PlanInfo.PlanID}, function (respJSON) {
+                    Plan.PlanInfo.PlanID = 0;
                     var data = {PlanInfo: e.data.PlanInfo};
                     data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
                         $.rogerNotice({Message: '模板方案保存成功'});
+                        $('#send').removeClass("btn btn-warning invisible");
+                        $('#send').addClass("btn btn-warning");
                     });
-                });
             }else {
                 $.rogerNotice({Message: '请选择起始城市'});
             }
@@ -784,8 +795,7 @@
                 $.rogerRefresh(Plan);
             });
         });
-
-        bindRidoesForSwitch();
+        frameCtrl();
         realView.rogerCropImages();
     };
     //-------------------------------plan customize end---------------------------------
