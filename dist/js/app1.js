@@ -529,7 +529,7 @@
                 ComLogo:usr.ComLogo,
                 ComAdv:usr.ComAdv,
                 AvatarPicURL:usr.AvatarPicURL
-            }],
+            },
             IMGHOST:$.rogerImgHost()
         };
     };
@@ -569,7 +569,6 @@
         };
 
         response.createCity = function (result, Spot) {
-            console.log(result,Spot);
             $.rogerTrigger('#modal', '#/citychooser2', {User:result});
         };
 
