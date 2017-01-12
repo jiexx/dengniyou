@@ -509,7 +509,7 @@ $(function () {
                         var _this = $(this);
                         var ptr = _this.data('value');
                         var val = _this.val();
-                        val = val.replace(/\"/g,"");
+                        val.replace(/\"/g,"");
 						$.roger_pointer_set(data, ptr, val);
 						/*data.__focus = ptr;
                         $.rogerRefresh(data);*/

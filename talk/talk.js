@@ -150,8 +150,10 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", '$location', function
           picurl = getURLParameter('picurl') ,
           tid=getURLParameter('tid'),
           no=getURLParameter('no'),
+          msg=getURLParameter('msg'),
           token=Base64.decode(getURLParameter('token'));
-
+      console.log(decodeURIComponent(decodeURIComponent(location.search)));
+    console.log(msg);
      /* $http({
         url: 'http://api.cn.ronghub.com/user/getToken.json',
         method: "POST",
@@ -196,6 +198,10 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", '$location', function
                 WebIMWidget.providerdata.currentUserInfo = {userId:uid, name:uname, portraitUri:picurl };
                 console.log(1,WebIMWidget.providerdata.currentUserInfo);
                 WebIMWidget.setConversation(WebIMWidget.EnumConversationType.PRIVATE, tid, '对话中');
+                if(msg && msg.trim()!=''){
+                    $scope.conversation.messageContent = '请帮忙定制方案 http://10.101.1.219:8888/#/templateplandetail?version=2&PlanID='+msg;
+                }
+
                 WebIMWidget.show();
             },
             onError: function (error) {
