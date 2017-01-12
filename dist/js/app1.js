@@ -168,6 +168,15 @@
             $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
             days.removeClass("btn btn-warning");
         });
+        $('#buyNow').on('click',function () {
+            var usr = $.rogerGetLoginUser();
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $.rogerLocation($(this).attr('data-href'));
+        });
 
         realView.rogerCropImages();
         frameCtrl();
@@ -506,9 +515,8 @@
     };
     var initUserInfo = function (param) {
         var usr = $.rogerGetLoginUser();
-        console.log(usr,usr.Labels.split(','));
         return {
-            User: [{
+            User: {
                 CityName:'',
                 CountryName:'',
                 CityID:usr.CityID,
@@ -528,7 +536,7 @@
     var ctrlCityChooser2 = function (PS, realView) {
         $('#cityChooser').modal('show');
         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
-            var data = e.User;
+            var data = e.data;
             var country = $('#country option:selected').val().split(':');
             var city = $('#city option:selected').val().split(':');
             data.User[0].CityID = city[0];
@@ -746,11 +754,11 @@
         $('#PlanTitle').attr('value', Plan.PlanInfo.PlanName);
         Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanSchedule.push({
-                Spot:[{CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'test',CountryNameEn:'test',CityID:'',CityNameCn:'test',CityNameEn:'test',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
+                Spot:[{CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
                 ],
                 TravelInstruction:'',
                 DayName:''
@@ -787,10 +795,6 @@
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
         };
 
-        $('#send').rogerOnceClick(Plan, function(e){
-            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Spot:Spot});
-        });
-
         $('#save').rogerOnceClick(Plan, function(e){
             var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
@@ -798,8 +802,10 @@
                     var data = {PlanInfo: e.data.PlanInfo};
                     data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                    var usr = $.rogerGetLoginUser();
+                    data.PlanInfo.CreateUserID = usr.UserID;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
-                        $.rogerNotice({Message: '模板方案保存成功'});
+                        $.rogerNotice({Message: '定制方案保存成功'});
                         $('#send').removeClass("btn btn-warning invisible");
                         $('#send').addClass("btn btn-warning");
                     });
@@ -807,19 +813,51 @@
                 $.rogerNotice({Message: '请选择起始城市'});
             }
         });
-        /*$('#publish').rogerOnceClick(Plan, function(e){
-         $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
-         $.rogerNotice({Message:'模板方案待审核..'});
-         $.rogerRefresh(Plan);
-         });
-         });*/
-        $('#cancel').rogerOnceClick(Plan, function(e){
-            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
-                $.rogerNotice({Message:'模板方案已取消发布..'});
-                $.rogerRefresh(Plan);
+
+        frameCtrl();
+        realView.rogerCropImages();
+    };
+    var initGuideChooser = function (PS) {
+        return {
+            Plan:PS.Plan,
+        };
+    };
+    var ctrlGuideChooser = function (PS, realView) {
+        $('#guideChooser').modal('show');
+        $('#guidelist').html('').append('<li class="list-group-item">导游</li>');
+        $('#guidelist').rogerDialogTrigger('fragment/dialog-guidelist.html', '/dialog/guide', {}, function (data, realView) {
+            $('#searchlist').btsListFilter('#searchinput', {itemChild: '.list-group-item-text',initial:false});
+            $("#airportlist .list-group-item").click(function(e) {
+                $("#airportlist .list-group-item").removeClass("active");
+                $(this).addClass("active");
             });
         });
-        frameCtrl();
+        $('#guideChooserOK').rogerOnceClick(PS,function (e) {
+            var Plan = e.data;
+            var guide = $('#searchlist  .list-group-item.active').data('info').split(':');
+            if(guide[0] > 0) {
+                Plan.PlanInfo.PlanID = 0;
+                var data = {PlanInfo: Plan.PlanInfo};
+                data.PlanInfo.StartCityID = item.CityID;
+                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                var usr = $.rogerGetLoginUser();
+                data.PlanInfo.CreateUserID = guide[0];
+                $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                    var usr = $.rogerGetLoginUser();
+                    window.open('talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+guide[0], '_blank');
+                    $('#guideChooser').modal('hide');
+                });
+            }
+        });
+    };
+    var ctrlTemplateplanDetail = function(Plan, realView) {
+
+        $('#send').rogerOnceClick(Plan, function(e){
+            var data = e.data;
+            $.rogerTrigger('#modal', '#/guidechooser', {Plan:data});
+
+        });
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     //-------------------------------plan customize end---------------------------------
@@ -832,6 +870,7 @@
         '#/homesearchlist':          {fragment: 'fragment/home-search-list.html',         rootrest:'/home/search',                 ctrl: ctrlHomeSearchList},
 
         '#/templateplanedit':        {fragment: 'fragment/visitor-tempplan-edit.html',   rootrest:'/plan/detail/tmpl',           ctrl: ctrlTemplateplanNew},
+        '#/templateplandetail':      {view: 'visitor-tempplan-detail.html',                rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
 
         '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                       ctrl: ctrlCityChooser},
         '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                       ctrl: ctrlSpotChooser},

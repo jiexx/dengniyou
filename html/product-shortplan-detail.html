@@ -1,157 +1,196 @@
-  <div class="container">
-    <div class="">
-       <ol class="col-md-4 breadcrumb pull-right">
-      <li><a href="">产品管理</a></li>
-      <li><a href="">经典方案</a></li>
-      <li class="active"><a href="">方案预览</a></li>
-      <li class="active"><a href="">返回</a></li>
-      </ol> <!-- end 面包屑导航breadcrumb -->
 
-      <!--   banner -->
-      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-      <ol class="carousel-indicators">
-        <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-        <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-      </ol>
-      <div class="carousel-inner" role="listbox">
-        <div class="item active">
-          <img src="img/Guide/ClassicSchemePre1.png" alt="...">
-        </div>
-        <div class="item">
-          <img src="img/Guide/ClassicSchemePre1.png" alt="...">
-        </div>
-        {{each(k,v) PicURL}}
-          {{if $index == 0}}
-          <div class="item active">
-          {{else}}
-          <div class="item">
-            {{/if}}
-            <img src="${ $data.IMGHOST }${v}" alt="Chania">
-          </div>
-        {{/each}}
-      </div>
-      <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-        <span class="glyphicon glyphicon-chevron-left"></span>
-      </a>
-      <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-      </a>
-      </div><!--  end  banner -->
 
-      <div class="detailpage-mainbody">
-      <div class="detailpage-title">
-        <h1>${PlanName}</h1>
-        {{each(k,v) PlanLabels}}
-        <span>${v}</span>
-        {{/each}}
-        <div class="row price-detail">
-          <div class="col-md-6">
-            <p class="price">价格：¥<span>${PlanPriceBase}</span>元/人</p>
-            <p>成人价：¥<span>${AdultPrice}</span>元/人</p>
-            <p>儿童价：¥<span>${KidPrice}</span>元/人</p>
-          </div>
-          <div class="col-md-6 plan-description">
-            <h3>方案描述</h3>
-            <p>
-              ${PlanFeature}
-            </p>
-          </div>
-        </div> <!-- end price-detail -->
+<div class="container">
+  <br>
+  <div class="plandetail-page">
+    <div>
+      <div class="row">
+        <div class="col-md-12 carousel">
+          <div class="carousel-container">
+            <div id="carousel-generic" class="carousel slide" data-ride="carousel">
+              <!-- Wrapper for slides -->
+              <div class="carousel-inner" role="listbox">
+                {{each $data.PlanInfo[0].PicURL}}
+                {{if $index == 0}}
+                <div class="item active">
+                  {{else}}
+                  <div class="item">
+                    {{/if}}
+                    <img data-src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
+                  </div>
+                  {{/each}}
+                </div>
+                <a class="left carousel-control" href="#carousel-generic" data-slide="prev">
+                  <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-generic" data-slide="next">
+                  <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
+              </div><!-- end carousel -->
+            </div> <!-- end carousel-container -->
+          </div> <!-- end carousel-container -->
+        </div><!-- end banner部分carousel -->
       </div>
-      <div class="place-description">
-        <h2>巴黎简介</h2>
-        <ul class="clearfix">
-          <li>
-            <img src="img/Guide/product-classicplan-detail1.png" alt="">
-            <div class="placedes">
-              <h3>巴黎圣母院 （法国巴黎教堂）</h3>
-              <p>
-                巴黎圣母院大教堂（Cathédrale Notre Dame de Paris）是一座位于法国巴黎市中心、西堤岛上的教堂建筑，也是天主教巴黎总教区的主教座堂。圣母院约建造于1163年到1250年间，属哥特式建筑形式，是法兰西岛地区的哥特式教堂群里面，非常具有关键代表意义的一座。始建于1163年，是巴黎大主教莫里斯·德·苏利决定兴建的，整座教堂在1345年全部建成，历时180多年。
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="placedes">
-              <h3>凯旋门 （法国巴黎著名建筑）</h3>
-              <p>
-                巴黎圣母院大教堂（Cathédrale Notre Dame de Paris）是一座位于法国巴黎市中心、西堤岛上的教堂建筑，也是天主教巴黎总教区的主教座堂。圣母院约建造于1163年到1250年间，属哥特式建筑形式，是法兰西岛地区的哥特式教堂群里面，非常具有关键代表意义的一座。始建于1163年，是巴黎大主教莫里斯·德·苏利决定兴建的，整座教堂在1345年全部建成，历时180多年。
-              </p>
-            </div>
-            <img src="img/Guide/product-classicplan-detail2.png" alt="">
-          </li>
-          <li>
-            <img src="img/Guide/product-classicplan-detail3.png" alt="">
-            <div class="placedes">
-              <h3>塞纳河畔</h3>
-              <p>
-                塞纳河畔项目位于武汉中央活动区稀缺滨水居住带，新的汉江旅游发展规划中已明确提出将汉江两岸打造成汉版“塞纳河”。与王家墩CBD一桥之隔，武广、钟家村、王家湾等核心商圈环伺四周。项目北傍即将全面拓宽的月湖大道，南临武汉首条森林景观大道—琴台大道，西接城市干道赫山路，三面临路，路网通畅。575，708，711，808，79等多路公汽停靠社区门口，项目距地铁3、4号线王家湾换乘站相隔千米。项目由3栋高层临汉江一字布局，其中两栋24层，一栋18层，均为一线临江景观豪宅，共334套，面积从50平米-135平米。
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="policy">
-        <h2>退订政策</h2>
-        <div class="des">
-          <p>
-            1. {退订政策} <br>
-            2. {退订政策} <br>
-            3. {退订政策} <br>
-            4. {退订政策} <br>
-            5. {退订政策} <br>
-            6. {退订政策} <br>
-          </p>
-        </div>
-      </div>
-      <div class="cost-include">
-        <h2>费用包含</h2>
-        <div class="des">
-          <p>
-            1. 一个中文导游兼司机 <br>
-            2. 行程所列酒店住宿费用（或同级别酒店） <br>
-            3. 酒店标准2人间（或大床间） <br>
-            4. 商务旅行车（参考选择的包车服务），含停车费，高速费，燃油费，过路费 <br>
-            5. 部分景点门票，参看景点列表  <br>
-            6. ...... <br>
-          </p>
-        </div>
-      </div>
-      <div class="cost-oneself">
-        <h2>费用自理</h2>
-        <div class="des">
-          <p>
-            1. 个人物品海关征税，超重行李的托运费、保管费。
-            2. 因交通延阻、罢工、天气、飞机、机器故障、航班取消或更改时间等不可抗力原因导致的额外费用。
-            3. 酒店内洗衣、理发、电话、传真、收费电视、饮品、烟酒等个人消费。
-            4. 正餐费用，原则上导游与客人一同用餐，餐费由客人支付。
-          </p>
-        </div>
-      </div>
-      <div class="sign-notes">
-        <h2>签证须知</h2>
-        <div class="des">
-          <p>
-            1. 一经预定，不得退改。
-            2. 客人享受提前62天报名的特惠价格须满足：距出发62天前与我司签订合同并且开出机票。
-          </p>
-        </div>
-      </div>
-      <div class="attention">
-        <h2>注意事项</h2>
-        <div class="des">
-          <p>
-            本商品为特价商品，在订单确认后，不得做任何更改，也不予退款，请您认真阅读商品详情后下单。
-          </p>
-        </div>
-      </div>
-      </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
-      <div class="buttons">
-      <button id="delete" type="button" class="btn btn-default btn-lg">删除</button>
-      <button id="copy" type="button" class="btn btn-lg">复制</button>
-      <button id="edit" type="button" class="btn btn-lg">编辑</button>
-      <button id="release" type="button" class="btn btn-lg">发布</button>
-      </div>
+      <div class="row project">
+        <h1>${$data.PlanInfo[0].PlanName}</h1>
+        <div class="project-main clearfix">
+          <div class="col-md-5">
+            <div class="imgBox">
+              <img src="${ $data.IMGHOST }${$data.PlanInfo[0].AvatarPicURL}" alt="策划师头像" id="planerAvatar">
+            </div>
+            <div class="planner">
+              <h3>策划师:${$data.PlanInfo[0].UserName}<span class="vipIcon"></span></h3>
+              <span class="name" id="planerName">${$data.PlanInfo[0].UserMobile}</span>
+              <!--<a  class="btn btn-warning" id="TALK" target="_blank">咨询</a>-->
+            </div>
+          </div>
+          <div class="col-md-5">
+            <h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].AdultPrice}</span>元</h4>
+            <!--<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即购买</button></a>-->
+          </div>
+          <div class="col-md-2">
+            <p><i class="fa fa-heart-o"></i>添加收藏</p>
+            <p><span id="playedNum">99</span>人玩过 | <span id="commetsNum">99</span>条评论</p>
+          </div>
+        </div><!-- end main -->
+      </div><!-- end 咨询师部分project -->
+
+      <div class="row plandetail-main">
+        <div class="col-md-12  ">
+          <div class="scheduleBox">
+            <div class="scheduleNav clearfix" id="scheduleNav">
+              <h2 class="pull-left">行程概览</h2>
+              <div class="navList pull-right">
+                <i class="glyphicon glyphicon-menu-left pull-left" id="preBtn"></i>
+                <ul class="pull-left">
+                  {{each(k,v) PlanSchedule}}
+                  {{if  ("__countScheduleID" != k)  }}
+                  <li>
+                    <a href="#day01">
+                      <button type="button" class="btn btn-default">第${v.__index}天</button>
+                    </a>
+                  </li>
+                  {{/if}}
+                  {{/each}}
+                </ul>
+                <i class="glyphicon glyphicon-menu-right pull-left" id="nextBtn"></i>
+              </div>
+            </div>
+            <div class="address">
+              <div class="starter">
+                <i class="glyphicon glyphicon-map-marker"></i>
+                出发地：
+                <span id="starter">${$data.PlanInfo[0].StartCity}</span>
+              </div>
+            </div>
+            <div class="feature clearfix">
+              <div class="col-md-2">
+                <div class="tittle">方案特色</div>
+              </div>
+              <div class="col-md-10">
+                <p class="text">
+                  ${$data.PlanInfo[0].PlanFeature}
+                </p>
+              </div>
+            </div>
+            <div class="scheduleDetails">
+              <div class="schedule clearfix">
+                <div class="row">
+                  <h4 class="col-md-3">开始城市</h4>
+                  <div class="col-md-3">
+                    <ul class="label-base">
+                      {{if $data.PlanInfo.StartCityID }}
+                      <li>${$data.PlanInfo.StartCity}</li>
+                      {{/if}}
+                    </ul>
+                  </div>
+                </div>
+                {{each $data.PlanShort}}
+                {{if Day}}
+                <div class="row day-edit">
+                  <div class="col-md-3">
+                    <label>第</label>
+                    ${Day}
+                    <label>天</label>
+                  </div>
+                  <div class="col-md-5">
+                    ${Label}
+                  </div>
+                </div>
+                {{/if}}
+
+                {{if PicURL}}
+                <div class="col-md-5 picture-edit">
+                  <div class="imgBox">
+                    <img name="needPrefix" src="${ $data.IMGHOST }${PicURL}">
+                  </div>
+                </div>
+                {{/if}}
+
+                {{if Content}}
+                <div class="col-md-5 introduction">
+                  ${ Content}
+                </div>
+                {{/if}}
+                {{/each}}
+              </div>
+            </div>
+          </div><!-- end 预定须知 -->
+          <div class="feature featureAlone clearfix" id="attention">
+            <div class="col-md-2">
+              <div class="tittle">预订须知</div>
+            </div>
+            <div class="col-md-10">
+              <ul class="text" id="orderNotice">
+                <li id="policy"></li>
+              </ul>
+            </div>
+          </div><!-- end 预定须知结束 -->
+          <div class="feature featureAlone clearfix" id="attention">
+            <div class="col-md-2">
+              <div class="tittle">费用包含</div>
+            </div>
+            <div class="col-md-10">
+              <ul class="text" id="orderNotice">
+                <li id="costinc"></li>
+              </ul>
+            </div>
+          </div><!-- end 预定须知结束 -->
+          <div class="feature featureAlone clearfix" id="attention">
+            <div class="col-md-2">
+              <div class="tittle">费用自理</div>
+            </div>
+            <div class="col-md-10">
+              <ul class="text" id="orderNotice">
+                <li id="costexc" class="clearfix"></li>
+              </ul>
+            </div>
+          </div><!-- end 预定须知结束 -->
+          <div class="feature featureAlone clearfix" id="attention">
+            <div class="col-md-2">
+              <div class="tittle">签证须知</div>
+            </div>
+            <div class="col-md-10">
+              <ul class="text" id="orderNotice">
+                <li id="visa"></li>
+              </ul>
+            </div>
+          </div><!-- end 预定须知结束 -->
+          <div class="feature featureAlone clearfix" id="attention">
+            <div class="col-md-2">
+              <div class="tittle">注意事项</div>
+            </div>
+            <div class="col-md-10">
+              <ul class="text" id="orderNotice">
+                <li id="warning"></li>
+              </ul>
+            </div>
+          </div><!-- end 预定须知结束 -->
+
+        </div>
+      </div> <!-- end plandetail-main -->
+      <a href="#/shortplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}"  class="btn  btn-warning">编辑</a>
     </div>
-  </div> <!-- end container -->
+  </div> <!-- end plandetail-page -->
+</div> <!-- end container

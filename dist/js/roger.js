@@ -417,9 +417,9 @@ $(function () {
 		rogerOnceClick: function (data, callback) {
 			var ev = $._data($(this), 'events');
 			if((!ev || !ev.click)  )  {
-				$(this).on('click', data, function (e) {
+				$(this).click(data, function (e) {
 					e.preventDefault();
-					callback(e.data);
+					callback(e);
 				});
 			}
 		},
@@ -509,6 +509,7 @@ $(function () {
                         var _this = $(this);
                         var ptr = _this.data('value');
                         var val = _this.val();
+                        val = val.replace(/\"/g,"");
 						$.roger_pointer_set(data, ptr, val);
 						/*data.__focus = ptr;
                         $.rogerRefresh(data);*/

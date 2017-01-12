@@ -14,32 +14,19 @@
 	  			<dt><i></i>国家：</dt>
 	  			<dd>
 	  				<ul id="country">
-						<li><div class="btn btn-warning">不限</div></li>
+						<li><div class="btn btn-warning unlimit">不限</div></li>
 	  					<li><div>德国</div></li>
 	  					<li><div>法国</div></li>
 	  					<li><div>芬兰</div></li>
 	  					<li><div>荷兰</div></li>
-	  					<!-- <li class="more">更多<i class="fa fa-caret-down"></i></li> -->
 	  				</ul>
-	  				<!-- <ul class="moreChoice" id="countryMore">
-	  					<li>西班牙</li>
-	  					<li>意大利</li>
-	  					<li>瑞士</li>
-	  					<li>奥地利</li>
-	  					<li>立陶宛</li>
-	  					<li>澳大利亚</li>
-	  					<li>新西兰</li>
-	  					<li>中国</li>
-	  					<li>泰国</li>
-	  					<li>日本</li>
-	  				</ul> -->
 	  			</dd>
 			</dl>
 			<dl>
 	  			<dt><i></i>天数：</dt>
 	  			<dd>
 	  				<ul id="days">
-						<li><div class="btn btn-warning">不限</div></li>
+						<li><div class="btn btn-warning unlimit">不限</div></li>
 						<li><div>1-2天</div></li>
 						<li><div>3-5天</div></li>
 						<li><div>6-8天</div></li>
@@ -51,7 +38,7 @@
 				<dt><i></i>主题：</dt>
 				<dd>
 					<ul id="label">
-						<li><div class="btn btn-warning">不限</div></li>
+						<li><div class="btn btn-warning unlimit">不限</div></li>
 						<li><div>观光游览</div></li>
 						<li><div>艺术</div></li>
 						<li><div>轻探险</div></li>
@@ -88,7 +75,7 @@
 							</div>
 							<div class="col-md-4 media-price">
 								<p class="money">￥<span>${AdultPrice}</span>起</p>
-								<button type="button" class="btn btn-lg btn-warning">马上预定</button>
+								<a data-href="#/planpay1?PlanID=${$data.Plans[$index].PlanID}" id="buyNow"><button class="btn btn-primary">马上预订</button></a>
 							</div>
 						</div>
 					</div>

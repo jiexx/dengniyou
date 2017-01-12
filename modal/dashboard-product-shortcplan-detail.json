@@ -1,3 +1,0 @@
-{
-	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanID=?;",	"params":["PlanID"]}
-}
