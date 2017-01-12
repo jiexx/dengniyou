@@ -2055,14 +2055,14 @@ $(function () {
         '#/activityedit':                 {fragment: 'fragment/product-activity-edit.html',          init: initActivityEdit,                                                   ctrl: ctrlActivityEdit},
         '#/delicacyedit':                 {fragment: 'fragment/product-delicacy-edit.html',          init: initDelicacyEdit,                                                   ctrl: ctrlDelicacyEdit},
         '#/caredit':                       {fragment: 'fragment/product-car-edit.html',                init: initCarEdit,                                                        ctrl: ctrlCarEdit},
-        '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',       init:initServiceEdit,                                               ctrl: ctrlServiceCarEdit},
-        '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServiceEdit,                                              ctrl: ctrlServicePickupEdit},
-        '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceEdit,                                               ctrl: ctrlServiceOtherEdit},
+        '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',       init:initServiceEdit,                                                    ctrl: ctrlServiceCarEdit},
+        '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServiceEdit,                                                   ctrl: ctrlServicePickupEdit},
+        '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceEdit,                                                    ctrl: ctrlServiceOtherEdit},
         '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',                 init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},
-        '#/equipedit':      {fragment: 'fragment/product-equip-edit.html',     init: initEquipEdit,   ctrl: ctrlEquipEdit},
-        '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
-        '#/orderdetail':            {view:'payCompletion.html',	                  rootrest:'/order/detail',                      ctrl: ctrlOrderdetail},
-        '#/citychooser3':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser3,                                                    ctrl: ctrlCityChooser3},
+        '#/equipedit':                     {fragment: 'fragment/product-equip-edit.html',              init: initEquipEdit,                                                      ctrl: ctrlEquipEdit},
+        '#/servicecardetail':            {view:'product-service-car-detail.html',	                    rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
+        '#/orderdetail':                  {view:'payCompletion.html',	                                    rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
+        '#/citychooser3':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser3},
     });
 
 

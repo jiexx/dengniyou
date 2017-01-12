@@ -168,6 +168,15 @@
             $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
             days.removeClass("btn btn-warning");
         });
+        $('#buyNow').on('click',function () {
+            var usr = $.rogerGetLoginUser();
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $.rogerLocation($(this).attr('data-href'));
+        });
 
         realView.rogerCropImages();
         frameCtrl();
@@ -775,7 +784,7 @@
                     data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
-                        $.rogerNotice({Message: '模板方案保存成功'});
+                        $.rogerNotice({Message: '定制方案保存成功'});
                         $('#send').removeClass("btn btn-warning invisible");
                         $('#send').addClass("btn btn-warning");
                     });
@@ -798,6 +807,24 @@
         frameCtrl();
         realView.rogerCropImages();
     };
+    var ctrlTemplateplanDetail = function(Plan, realView) {
+
+        $('#send').rogerOnceClick(Plan, function(e){
+
+           /* $('#TALK').on('click',function () {
+                var usr = $.rogerGetLoginUser();
+                if(!usr) {
+                    $.rogerLogin('#homeLogin', '/login');
+                    $.rogerShowLogin();
+                    return;
+                }
+                $(this).attr("href","talk?uid="
+                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+            });*/
+        });
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
+    };
     //-------------------------------plan customize end---------------------------------
 
 	$.rogerRouter({
@@ -808,6 +835,7 @@
         '#/homesearchlist':          {fragment: 'fragment/home-search-list.html',         rootrest:'/home/search',                 ctrl: ctrlHomeSearchList},
 
         '#/templateplanedit':        {fragment: 'fragment/visitor-tempplan-edit.html',   rootrest:'/plan/detail/tmpl',           ctrl: ctrlTemplateplanNew},
+        '#/templateplandetail':      {view: 'visitor-tempplan-detail.html',                rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
 
         '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                       ctrl: ctrlCityChooser},
         '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                       ctrl: ctrlSpotChooser},
@@ -818,9 +846,9 @@
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
         '#/orderdetail':              {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
 	    '#/plansearch':               {view:'planSearch.html',                                rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
-        '#/userinfo':                 {view:'userInfo.html',                        rootrest: '/user/info',                 ctrl: ctrlUserInfo},
+        '#/userinfo':                 {view:'userInfo.html',                                   rootrest: '/user/info',                  ctrl: ctrlUserInfo},
 
-        '#/citychooser2':             {fragment: 'fragment/dialog-city-chooser.html',    init: initCityChooser2,                     ctrl: ctrlCityChooser2}
+        '#/citychooser2':             {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser2,                     ctrl: ctrlCityChooser2}
     });
 	
 })();
