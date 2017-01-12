@@ -7,24 +7,23 @@ $(function () {
     function bindRidoesForSwitch (){
         var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
         if(!ev || !ev.change) {
-            $('#menu input[type=radio][name="optradio"]').change(function(e){
+            $('#menu input[type=radio][name="optradio"]').unbind().change(function(e){
                 var usr = $.rogerGetLoginUser();
                 if(!usr) {
                     $.rogerShowLogin();
                     return;
                 }
-                var url = $(this).next('a').attr('href');
+                var url = $(this).next('div').data('href');
                 $.rogerTrigger('#app',url, {UserID:usr.UserID});
             });
         }
-        $('#usercenter').on('click', function () {
+        $('#usercenter').rogerOnceClick2(null, function () {
             var user = $.rogerGetLoginUser();
             if(!user) {
                 $.rogerLogin('#homeLogin', '/login');
                 $.rogerShowLogin();
                 return;
             }
-
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
         });
     }
@@ -540,7 +539,16 @@ $(function () {
     };
 
     var ctrlOrderlist = function(response, realView) {
+        var usr = $.rogerGetLoginUser();
+        var Avatar = $.rogerImgHost() + usr.AvatarPicURL;
+        $('.avatar img').attr('src', Avatar);
 
+        $('#personInfo').rogerOnceClick( null, function () {
+            $.rogerLocation('#/userinfo?UserID='+usr.UserID);
+        });
+        $('#orderList').rogerOnceClick( null, function () {
+            $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=1&status=0&page=1');
+        });
         $("#order-a_all").find("a").each(function () {
             var el = $(this);
             el.rogerOnceClick(null, function () {
@@ -576,6 +584,47 @@ $(function () {
         bindRidoesForSwitch();
         realView.rogerCropImages();
 
+    };
+    var ctrlUserInfo = function(response, realView) {
+        var usr = $.rogerGetLoginUser();
+        console.log(usr,usr.Labels.split(','));
+        result = {
+            User: [{
+                CityName:'',
+                CountryName:'',
+                CityID:usr.CityID,
+                CountryID:usr.CountryID,
+                Labels:usr.Labels.split(','),
+                Sex:usr.Sex,
+                TrueName:usr.TrueName,
+                UserID:usr.UserID,
+                UserName:usr.UserName,
+                ComLogo:usr.ComLogo,
+                ComAdv:usr.ComAdv,
+                AvatarPicURL:usr.AvatarPicURL
+            }],
+            IMGHOST:$.rogerImgHost()
+        };
+
+        response.createCity = function (result, Spot) {
+            $.rogerTrigger('#modal', '#/citychooser2', {User:result});
+        };
+
+        $('#userUpdate').rogerOnceClick(response, function (e) {
+            var data = e.User;
+            console.log(e.User);
+            //data.Labels = data.Labels.join();
+            $.rogerPost('/user/update', data, function (respJSON) {
+                $.rogerNotice({Message: '个人信息修改成功'});
+            });
+        });
+
+        response.createLabel = function (User) {
+            User.Labels.push('');
+        };
+
+        realView.rogerCropImages();
+        bindRidoesForSwitch();
     };
 
     var ctrlServicedetail = function (response, realView) {
@@ -2076,7 +2125,7 @@ $(function () {
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
         '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
-
+        '#/userinfo':                     {fragment:'fragment/userInfo.html',                          rootrest: '/user/info',                                                ctrl: ctrlUserInfo},
         '#/servicecardetail':             {view:'product-service-car-detail.html',                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',                             rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/serviceactivitydetail':       {view:'product-activity-detail.html',                      rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},

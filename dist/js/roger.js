@@ -423,6 +423,16 @@ $(function () {
 				});
 			}
 		},
+        rogerOnceClick2: function (data, callback) {
+            var ev = $._data($(this), 'events');
+            if((!ev || !ev.click)  )  {
+                $(this).unbind().click(data, function (e) {
+                	console.log(JSON.stringify(e.data));
+                    e.preventDefault();
+                    callback(e);
+                });
+            }
+        },
 		rogerOnClickRouter: function(container, viewReqURL, viewReqJSON, callback ) {
 			$(this).click(function (e) {
 				e.preventDefault();

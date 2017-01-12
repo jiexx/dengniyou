@@ -24,7 +24,7 @@
             $(".navBar").find(".active").removeClass("active");
             $(this).parent().addClass("active");
         });
-        $('#usercenter').rogerOnceClick(null, function () {
+        $('#usercenter').rogerOnceClick2(null, function () {
             var user = $.rogerGetLoginUser();
             if(!user) {
                 $.rogerLogin('#homeLogin', '/login');
