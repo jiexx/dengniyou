@@ -506,8 +506,9 @@
     };
     var initUserInfo = function (param) {
         var usr = $.rogerGetLoginUser();
+        console.log(usr,usr.Labels.split(','));
         return {
-            User: {
+            User: [{
                 CityName:'',
                 CountryName:'',
                 CityID:usr.CityID,
@@ -520,31 +521,54 @@
                 ComLogo:usr.ComLogo,
                 ComAdv:usr.ComAdv,
                 AvatarPicURL:usr.AvatarPicURL
-            },
+            }],
             IMGHOST:$.rogerImgHost()
         };
     };
     var ctrlCityChooser2 = function (PS, realView) {
         $('#cityChooser').modal('show');
         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
-            var data = e.data;
+            var data = e.User;
             var country = $('#country option:selected').val().split(':');
             var city = $('#city option:selected').val().split(':');
-            //data.CityID = city[0];
-            //data.CountryID = country[0];
+            data.User[0].CityID = city[0];
+            data.User[0].CityName = city[1];
+            data.User[0].CountryID = country[0];
+            data.User[0].CountryName = country[1];
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.User);
         });
     };
     var ctrlUserInfo = function(response, realView) {
+        var usr = $.rogerGetLoginUser();
+        console.log(usr,usr.Labels.split(','));
+        result = {
+            User: [{
+                CityName:'',
+                CountryName:'',
+                CityID:usr.CityID,
+                CountryID:usr.CountryID,
+                Labels:usr.Labels.split(','),
+                Sex:usr.Sex,
+                TrueName:usr.TrueName,
+                UserID:usr.UserID,
+                UserName:usr.UserName,
+                ComLogo:usr.ComLogo,
+                ComAdv:usr.ComAdv,
+                AvatarPicURL:usr.AvatarPicURL
+            }],
+            IMGHOST:$.rogerImgHost()
+        };
 
-        response.createCity = function (Plan, Spot) {
-            $.rogerTrigger('#modal', '#/citychooser2', {User:response});
+        response.createCity = function (result, Spot) {
+            console.log(result,Spot);
+            $.rogerTrigger('#modal', '#/citychooser2', {User:result});
         };
 
         $('#userUpdate').rogerOnceClick(response, function (e) {
-            var data = e.data.User;
-            data.Labels = data.Labels.join();
+            var data = e.User;
+            console.log(e.User);
+            //data.Labels = data.Labels.join();
             $.rogerPost('/user/update', data, function (respJSON) {
                 $.rogerNotice({Message: '个人信息修改成功'});
             });
@@ -818,9 +842,10 @@
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
         '#/orderdetail':              {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
 	    '#/plansearch':               {view:'planSearch.html',                                rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
-        '#/userinfo':                 {view:'userInfo.html',                        rootrest: '/user/info',                 ctrl: ctrlUserInfo},
-
+        '#/userinfo':                 {fragment:'fragment/userInfo.html',                      rootrest: '/user/info',                    ctrl: ctrlUserInfo},
         '#/citychooser2':             {fragment: 'fragment/dialog-city-chooser.html',    init: initCityChooser2,                     ctrl: ctrlCityChooser2}
     });
 	
 })();
+
+// init: initUserInfo,

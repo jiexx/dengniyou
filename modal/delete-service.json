@@ -1,4 +1,69 @@
 {
-	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?  LIMIT 0, 8;",	"params":["UserID"]},
-	"CountOFPlans": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?;",	"params":["UserID"]}
+	"DeleteService": {
+		"sql": "delete from tab_services where serviceId=?",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeletePicture": {
+		"sql": "delete from tab_facilitypictures where pictureID=? and PicType = 1",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServiceFacility": {
+		"sql": "delete from tab_servicefacility where ServiceID=?",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServiceAirports": {
+		"sql": "delete from tab_serviceairports where ServiceID=?",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServicePolicy": {
+		"sql": "delete from tab_servicepolicy where ServiceID=?",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServiceVehiclecharge": {
+		"sql": "delete from tab_servicevehiclecharge where ServiceID=?",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServiceVehicleaddress": {
+		"sql": "delete from tab_servicevehicleaddress where ServiceID=? and AddressType=1",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServiceVehicleaddress2": {
+		"sql": "delete from tab_servicevehicleaddress where ServiceID=? and AddressType=2",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServiceActivityprice": {
+		"sql": "delete from tab_serviceactivityprice where ServiceID=?",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServiceLabel": {
+		"sql": "delete from tab_servicelabel where ServiceID=?",
+		"params": [
+			"ServiceId"
+		]
+	},
+	"DeleteServiceCollect": {
+		"sql": "delete from traveldb.tab_servicescollect where ServicesID=?",
+		"params": [
+			"ServiceId"
+		]
+	}
+
 }

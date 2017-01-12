@@ -1,0 +1,9 @@
+{
+	"ServiceStatus": {
+		"sql": "update traveluserdb.tab_services set ServiceStatus=?,UpdateDate=NOW() where ServiceID=?",
+		"params": [
+			"Status",
+			"ServiceId"
+		]
+	}
+}
