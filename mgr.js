@@ -172,7 +172,7 @@ app.post('/new/service/car', upload.array(), function(req, res) {
 
     request.post(
         {
-            url: 'http://10.101.1.36:8080/travel/service/uploadServiceWeb',
+            url: 'http://123.59.144.44/travel/service/uploadServiceWeb',
             method: "POST",
             json: req.body.reqUploadService
         }

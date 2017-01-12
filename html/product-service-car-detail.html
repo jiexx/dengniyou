@@ -108,25 +108,35 @@
 
         <div class="policy">
         {{each(i,p) Policy}}
-          {{if p.PolicyType==1}}
+          {{if p.policyType==1}}
+          {{if p.type==4}}
           <h2>${p.PolicyName}</h2>
           <div class="des">
-            <p>${p.Description}</p>
+          <p>${p.description}</p>
+          </div>
+          {{else}}
+          <h2>${p.PolicyName}</h2>
+          <div class="des">
+            <p>1、服务开始前${p.day1}天(含)以上退订，退还服务费用的${p.ratio1*100}%；</p>
+            <p>2、服务开始前${p.day2}天(含)至${p.day1}天退订，退还服务费用的${p.ratio2*100}%；</p>
+            <p>3、服务开始前${p.day3}天(含)至${p.day2}天退订，退还服务费用的${p.ratio3*100}%；</p>
+            <p>4、服务开始前${p.day3}天以内退订，不退还服务费用；</p>
+            <p>5、${p.description}</p>
           </div>
           {{/if}}
-          {{if p.PolicyType==2}}
+          {{if p.policyType==2}}
           <h2>${p.PolicyName}</h2>
           <div class="des">
             <p>${p.CustomRatio}</p>
           </div>
           {{/if}}
-          {{if p.PolicyType==3}}
+          {{if p.policyType==3}}
           <h2>${p.PolicyName}</h2>
           <div class="des">
             <p>${p.CustomRatio}</p>
           </div>
           {{/if}}
-          {{if p.PolicyType==4}}
+          {{if p.policyType==4}}
           <h2>预订须知</h2>
           <div class="des">
             <p>${p.Caution}</p>

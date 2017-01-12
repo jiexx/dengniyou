@@ -62,7 +62,7 @@
 	</div>
 	<!-- 方案基本信息结束 -->
 
-	<!-- 住宿信息 -->
+	<!-- 民宿信息 -->
 	<div class="carInfo" id="minsuInfo" style="display: none;">
 		<h4>住宿信息</h4>
 		<div class="row">
@@ -140,7 +140,7 @@
 			</div>
 		</div>
 	</div>
-	<!-- 住宿信息结束 -->
+	<!-- 民宿信息结束 -->
 
 	<!-- 相册上传 -->
 	<div class="photoInfo">
@@ -151,7 +151,7 @@
 				{{each $data.DetailMain.picURLs}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain.picURLs[$index]}">
+						<img data-src="${$data.IMGHOST}${$data.DetailMain.picURLs[$index]}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/picURLs/${$index}"></a>
 					</div>
 				</div>
@@ -165,16 +165,16 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{if $data.DetailMain.covers}}
+				{{if $data.DetailMain.coverURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain.covers}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/covers" ></a>
+						<img data-src="${$data.IMGHOST}${$data.DetailMain.coverURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/coverURL" ></a>
 					</div>
 				</div>
 				{{else}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/covers" data-action="image" >+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/coverURL" data-action="image" >+</div>
 				</div>
 				{{/if}}
 			</div>
@@ -190,13 +190,20 @@
 		    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
 		    <div class="col-sm-10 col-md-11">
 		      <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#policydiv" style="margin-bottom: 8px; background-color: #FF6600; padding: 5px;">请选择退订政策</button>
-		    <div id="policyView">
-				
+			    <div id="policyView">
+					{{if $data.DetailMain.Policy[0].type == '4'}}
+						<h3>${$data.DetailMain.Policy[0].policyName}</h3>
+						<p>${$data.DetailMain.Policy[0].description}</p>
+				    {{else}}
+				    	<h3>${$data.DetailMain.Policy[0].policyName}</h3>
+						<p>1、服务开始前${$data.DetailMain.Policy[0].day1}天(含)以上退订，退还服务费用的99%；</p>
+						<p>2、服务开始前${$data.DetailMain.Policy[0].day2}天(含)以上退订，退还服务费用的50%；</p>
+						<p>3、服务开始前${$data.DetailMain.Policy[0].day3}天(含)以上退订，退还服务费用的20%；</p>
+						<p>4、服务开始前${$data.DetailMain.Policy[0].day4}天以内退订，不退还服务费用；</p>
+						<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
+					{{/if}}	
+			    </div>
 		    </div>
-			  
-		    </div>
-			  
-
 			<!-- 退订政策弹出框 -->
 			<div id="policydiv" class="modal fade">
 		    <div class="modal-dialog">
@@ -327,6 +334,11 @@
 
 <script>
 	$(function(){
+		if ($('#ServiceTypeName').val() == '民宿') {
+				$('#minsuInfo').show();
+			}else {
+				$('#minsuInfo').hide();
+			}
 		$('#ServiceTypeChoice').on('click','input',function(){
 			var ServiceTypeId = $(this).val();
 			var ServiceTypeName = $(this).next().text();
