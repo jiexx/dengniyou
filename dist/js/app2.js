@@ -104,6 +104,10 @@ $(function () {
     };
     var ctrlTemplateplanDetail = function(response, realView) {
 
+        if( response.PlanInfo[0].Policy ){
+            $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
+        }
+
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };

@@ -1,5 +1,4 @@
 {
-	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanID=?;",	"params":["PlanID"]},
-    "PlanSchedule": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planschedule` WHERE PlanID=?;",			"params":["PlanID"], "orderby":"ScheduleID"},
-    "PlanJoiner": {"sql":"select * from traveluserdb.`vw_/plan/detail_joiner` WHERE PlanID=?", "params":["PlanID"]}
+  "PlanInfo": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE PlanID=?;",	"params":["PlanID"]},
+  "PlanSchedule": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planschedule` WHERE PlanID=?;",	 "params":["PlanID"], "orderby":"ScheduleID"}
 }
