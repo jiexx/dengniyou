@@ -40,16 +40,29 @@
 				    </div> 
 				  </div>
 				  <div class="form-group">
+
 				    <label for="" class="col-sm-4 col-md-3 control-label">车辆级别</label>
 				    <div class="col-sm-8 col-md-9">
 				        <label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio1" value="option1" {{if Facility.clazz=='1'}}checked{{/if}}> 经济
+							{{if Facility.clazz == '1' }}
+						  <input type="radio" name="carLevel" id="Radio1" value="option1" checked> 经济
+							{{else}}
+							<input type="radio" name="carLevel" id="Radio1" value="option1" > 经济
+							{{/if}}
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio2" value="option2" {{if Facility.clazz=='2'}}checked{{/if}}> 舒适
+							{{if Facility.clazz == '2' }}
+							<input type="radio" name="carLevel" id="Radio2" value="option1" checked> 舒适
+							{{else}}
+							<input type="radio" name="carLevel" id="Radio2" value="option1" > 舒适
+							{{/if}}
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio3" value="option4" {{if Facility.clazz=='3'}}checked{{/if}}> 豪华
+							{{if Facility.clazz == '3' }}
+							<input type="radio" name="carLevel" id="Radio3" value="option1" checked> 豪华
+							{{else}}
+							<input type="radio" name="carLevel" id="Radio3" value="option1"> 豪华
+							{{/if}}
 						</label>
 				    </div>
 				  </div>
@@ -73,10 +86,18 @@
 				    <label for="" class="col-sm-4 col-md-3 control-label">成员保险</label>
 				    <div class="col-sm-8 col-md-9">
 				        <label class="radio-inline">
-						  <input type="radio" name="carLevel" id="" value="option1" {{if Facility.insurance=='1'}}checked{{/if}}> 有
+							{{if Facility.insurance == '1' }}
+							<input type="radio" name="insurance" id="" value="option1" checked > 有
+							{{else}}
+							<input type="radio" name="insurance" id="" value="option1"> 有
+							{{/if}}
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="" value="option2" {{if Facility.insurance=='1'}}checked{{/if}}> 无
+							{{if Facility.insurance != '1' }}
+							<input type="radio" name="insurance" id="" value="option1" checked > 无
+							{{else}}
+							<input type="radio" name="insurance" id="" value="option1"> 无
+							{{/if}}
 						</label>
 				    </div>
 				  </div>

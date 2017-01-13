@@ -1661,7 +1661,25 @@ $(function () {
                      insurance: '',
                      luggage: ''
                  }],
-                 vehicleCharges: [ ],
+                 vehicleCharges: [
+                 {
+                     chargeID:100674,
+                     chargePrice:5,
+                     chargeType:1,
+                     serviceID:100388
+                 },
+                 {
+                     chargeID:100675,
+                     chargePrice:3,
+                     chargeType:2,
+                     serviceID:100388
+                 },
+                 {
+                     chargeID:100676,
+                     chargePrice:3,
+                     chargeType:3,
+                     serviceID:100388
+                 }],
                  vehicleAddress: [ ],
                  vehicleSchedule: [ ],
                  labels: ["咖啡简餐"],
@@ -1820,7 +1838,7 @@ $(function () {
             $('#facilityconfirm').on('click',function(){
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                $.rogerRefresh(tmplItem);
+                //$.rogerRefresh(tmplItem);
             });    
 
         });
