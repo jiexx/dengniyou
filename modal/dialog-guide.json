@@ -1,6 +1,6 @@
 {
   "User": {
-    "sql": "SELECT * FROM traveldb.vw_userinfo",
+    "sql": "SELECT UserID, UserName, PersonIntroduct, CountryName,AvatarPicURL FROM traveldb.vw_userinfo",
     "params":[] }
 
 }

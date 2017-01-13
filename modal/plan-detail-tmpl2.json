@@ -1,0 +1,16 @@
+{
+	"PlanInfo": {
+		"sql": "SELECT PlanID,PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,IMUserID,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate FROM traveluserdb.tab_planinfo WHERE PlanID=?;",
+		"params":["PlanID"],
+		"stoa":["PicURL","CarURL"],
+		"PlanSchedule":{
+			"sql":"SELECT ScheduleID, DayName,TravelInstruction,CreateDate FROM traveluserdb.tab_planschedule WHERE PlanID=?;",
+			"params":["PlanID"],"findkey":"PlanID",
+			"Spot":{
+				"sql": "SELECT ScheduleID,CountryID,CountryNameCn,CountryNameEn,CityID,CityNameCn,CityNameEn,AirportCode,AirportNameCn,AirportNameEn,SpotID,SpotName,SpotLocalName,SpotTravelTime,HotelStarLevel,ScheduleType,SpotPicUrl FROM traveluserdb.tab_planscheduleplace WHERE ScheduleID =?",
+				"params":["ScheduleID"], "findkey":"ScheduleID"
+			},
+			"isarray": true
+		}
+	}
+}

@@ -90,16 +90,20 @@
               </div>
               <div class="col-md-10">
                 <div class="scheduleDetails">
-                    <p>开始城市: <span>${$data.PlanInfo[0].StartCity}</span></p>
+                  <p class="text">
+                    ${$data.PlanInfo[0].PlanFeature}
+                  </p>
+                  <div class="scheduleDetails" style="padding-left: 15px; font-size: 14px; margin-top: 35px;">
+                    <p style="color: #F9703C; font-weight: bold;">开始城市: <span>${$data.PlanInfo[0].StartCity}</span></p>
                     {{each $data.PlanShort}}
                     {{if Day}}
-                    <div class="day-edit">
+                    <div class="row day-edit">
                       <p>第${Day}天 <span>${Label}</span></p>
                     </div>
                     {{/if}}
 
                     {{if PicURL}}
-                    <div class="col-md-5 picture-edit">
+                    <div class="row picture-edit" style="margin-bottom: 15px;">
                       <div class="imgBox">
                         <img name="needPrefix" src="${ $data.IMGHOST }${PicURL}">
                       </div>
@@ -107,11 +111,12 @@
                     {{/if}}
 
                     {{if Content}}
-                    <div class="col-md-5 introduction">
+                    <div class="row introduction" style="margin-bottom: 15px;">
                       ${ Content}
                     </div>
                     {{/if}}
                     {{/each}}
+                  </div><!-- end scheduleDetails -->
                 </div><!-- end scheduleDetails -->
               </div><!-- col-md-10 -->
             </div> <!-- end feature -->
