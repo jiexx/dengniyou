@@ -14,7 +14,7 @@
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">服务名称</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.BaseInfo.ServiceName}" data-value="/BaseInfo/ServiceName" placeholder="不能超过24个字符">
+		      <input type="text" class="form-control" value="${$data.Facility.facilityName}" data-value="/Facility/facilityName" placeholder="不能超过24个字符">
 		    </div>
 		  </div>
 		</form>
@@ -30,29 +30,26 @@
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">车辆品牌</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.BaseInfo.brand}" data-value="/BaseInfo/brand" placeholder="请输入">
+				      <input type="text" class="form-control" value="${$data.Facility.brand}" data-value="/Facility/brand" placeholder="请输入">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">舒适乘坐</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.BaseInfo.seats}" data-value="/BaseInfo/seats" placeholder="请输入"> 人
+				      <input type="text" class="form-control" value="${$data.Facility.person}" data-value="/BaseInfo/seats" placeholder="请输入"> 人
 				    </div> 
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">车辆级别</label>
 				    <div class="col-sm-8 col-md-9">
 				        <label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio1" value="option1" checked> 经济
+						  <input type="radio" name="carLevel" id="Radio1" value="option1" {{if Facility.clazz=='1'}}checked{{/if}}> 经济
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio2" value="option2"> 舒适
+						  <input type="radio" name="carLevel" id="Radio2" value="option2" {{if Facility.clazz=='2'}}checked{{/if}}> 舒适
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio3" value="option3"> 商务
-						</label>
-						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio4" value="option4"> 豪华
+						  <input type="radio" name="carLevel" id="Radio3" value="option4" {{if Facility.clazz=='3'}}checked{{/if}}> 豪华
 						</label>
 				    </div>
 				  </div>
@@ -63,23 +60,23 @@
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">车辆型号</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.BaseInfo.model}" data-value="/BaseInfo/model" placeholder="请输入">
+				      <input type="text" class="form-control" value="${$data.Facility.model}" data-value="/Facility/model" placeholder="请输入">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">行李空间</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.BaseInfo.luggage}" data-value="/BaseInfo/luggage" placeholder="请输入">
+				      <input type="text" class="form-control" value="${$data.Facility.luggage}" data-value="/Facility/luggage" placeholder="请输入">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">成员保险</label>
 				    <div class="col-sm-8 col-md-9">
 				        <label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio1" value="option1" checked> 有
+						  <input type="radio" name="carLevel" id="" value="option1" {{if Facility.insurance=='1'}}checked{{/if}}> 有
 						</label>
 						<label class="radio-inline">
-						  <input type="radio" name="carLevel" id="Radio2" value="option2"> 无
+						  <input type="radio" name="carLevel" id="" value="option2" {{if Facility.insurance=='1'}}checked{{/if}}> 无
 						</label>
 				    </div>
 				  </div>
@@ -95,16 +92,16 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
 			<div class="col-md-11 row" >
-				{{each $data.BaseInfo.PicURL}}
+				{{each(i,pic) $data.Facility.pics}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.BaseInfo.PicURL[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/PicURL/${$index}"></a>
+						<img src="${pic}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/Facility/pics/${i}"></a>
 					</div>
 				</div>
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/BaseInfo/PicURL" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/BaseInfo/PicURL/-" data-action="image">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/Facility/pics" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/Facility/pics/-" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -112,16 +109,16 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{if $data.BaseInfo.CoverPicURL}}
+				{{if $data.Facility.coverURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.BaseInfo.CoverPicURL}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/BaseInfo/CoverPicURL" ></a>
+						<img src="${$data.Facility.coverURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/Facility/coverURL" ></a>
 					</div>
 				</div>
 				{{else}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/BaseInfo/CoverPicURL" data-action="image" >+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/Facility/coverURL" data-action="image" >+</div>
 				</div>
 				{{/if}}
 			</div>
@@ -132,7 +129,7 @@
 	<!-- 须知信息 -->
 	<div class="notice spotDescription">
 		<h4>装备描述</h4>
-		<textarea name="" data-value="/BaseInfo/description" placeholder="可输入1200字">${$data.BaseInfo.description}</textarea>
+		<textarea name="" data-value="/BaseInfo/description" placeholder="可输入1200字">${$data.Facility.description}</textarea>
 		<div class="optionBtn">
 			<a id="save" class="btn btn-warning">保存</a>
 			<a id="publish" class="btn btn-warning">发布 </a>
