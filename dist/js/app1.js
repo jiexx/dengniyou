@@ -529,7 +529,7 @@
                 ComLogo:usr.ComLogo,
                 ComAdv:usr.ComAdv,
                 AvatarPicURL:usr.AvatarPicURL
-            },
+            }],
             IMGHOST:$.rogerImgHost()
         };
     };
