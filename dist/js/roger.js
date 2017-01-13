@@ -512,6 +512,12 @@ $(function () {
 					$(this).focus();
 				})
 			}*/
+            var prefix = fragment.find('img[name="autoPrefix"]').each(function () {
+                var src = $(this).attr('src');
+                if(src.indexOf('group1') > -1) {
+                    $(this).attr('src',$.rogerImgHost()+src);
+                }
+            });
             elems.each(function(){
                 var ev = $._data($(this), 'events');
                 if(!ev || !ev.change) {
