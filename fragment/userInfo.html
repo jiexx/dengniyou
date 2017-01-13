@@ -69,18 +69,14 @@
           <div class="form-group">
             <label  class="col-sm-2 control-label">居住地：</label>
             <div class="col-sm-10">
-            <div class="col-md-5"><input type="text" value="${$data.User[0].CountryName} ${$data.User[0].CityName}" disabled></div>
-            <div class="col-md-2">
-              <button type="button" class="btn btn-default" data-op="change" data-pointer="/User/0/CityID" data-action="createCity">选择国家城市</button>
-            </div>
-              <!-- <ul class="label-base">
+              <ul class="label-base">
                 {{if $data.CityID }}
                 <li><input type="text" value="${$data.User[0].CountryName} ${$data.User[0].CityName}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/User/0/CityID" ></a></li>
                 {{/if}}
                 {{if !$data.CityID }}
                 <li><div class="addItemBtn" data-op="change" data-pointer="/User/0/CityID" data-action="createCity"> + </div></li>
                 {{/if}}
-              </ul> -->
+              </ul>
             </div>
           </div>
 
@@ -113,9 +109,9 @@
             <div class="col-sm-10">
               <ul class="label-base">
                 {{each $data.User[0].Labels}}
-                  <li><input type="text" value="${$data.User[0].Labels[$index]}" data-value="/User/0/Labels/${$index}" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/User/0/Labels/${$index}"></a></li>
+                  <li><input type="text" value="${$data.User[0].Labels[$index]}" data-value="/User/0/Labels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/User/0/Labels/${$index}"></a></li>
                 {{/each}}
-                <li><div class="addItemBtn" data-op="change" data-pointer="/User/0/Labels/-" data-action="createLabel"> + </div></li>
+                <li><div class="addItemBtn" data-op="change" data-pointer="/User/0/Labels-" data-action="createLabel"> + </div></li>
               </ul>
             </div>
           </div>    

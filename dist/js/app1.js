@@ -24,7 +24,7 @@
             $(".navBar").find(".active").removeClass("active");
             $(this).parent().addClass("active");
         });
-        $('#usercenter').rogerOnceClick(null, function () {
+        $('#usercenter').rogerOnceClick2(null, function () {
             var user = $.rogerGetLoginUser();
             if(!user) {
                 $.rogerLogin('#homeLogin', '/login');
@@ -200,10 +200,8 @@
 				return;
 			}
 			var usr =$.rogerGetLoginUser();;
-			var data = {
-                Comment:e.Comment
-            }
-            data.UserID = usr.UserID;
+			var data = e.data;
+            data.Comment.UserID = usr.UserID;
 			//console.log(usr);
 			$.rogerPost('/comment/plan', data, function(respJSON){
 				$.rogerRefresh();
@@ -247,7 +245,8 @@
 
         //$('#TALK').rogerOnceClick(null,function () {
             //$('#TALK').each(function () {
-            $('#TALK').on('click',function () {
+            $('#TALK').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
+                var data = e.data;
                 var usr = $.rogerGetLoginUser();
                 if(!usr) {
                     $.rogerLogin('#homeLogin', '/login');
@@ -255,7 +254,7 @@
                     return;
                 }
                 $(this).attr("href","talk?uid="
-                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID);
+                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID+'&msg='+data);
             });
         //});
 		
@@ -529,7 +528,7 @@
                 ComLogo:usr.ComLogo,
                 ComAdv:usr.ComAdv,
                 AvatarPicURL:usr.AvatarPicURL
-            }],
+            },
             IMGHOST:$.rogerImgHost()
         };
     };
@@ -569,7 +568,6 @@
         };
 
         response.createCity = function (result, Spot) {
-            console.log(result,Spot);
             $.rogerTrigger('#modal', '#/citychooser2', {User:result});
         };
 
@@ -751,7 +749,9 @@
             }
         })
         var usr = $.rogerGetLoginUser();
-        Plan.PlanInfo.PlanName = usr.UserName+'的私人定制方案'+Plan.PlanInfo.PlanName;
+        if(Plan.PlanInfo.PlanName.indexOf('的私人定制方案')<0) {
+            Plan.PlanInfo.PlanName = usr.UserName+'的私人定制方案'+Plan.PlanInfo.PlanName;
+        }
         $('#PlanTitle').attr('value', Plan.PlanInfo.PlanName);
         Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanSchedule.push({
@@ -797,6 +797,7 @@
         };
 
         $('#save').rogerOnceClick(Plan, function(e){
+            var data = e.data;
             var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
                     Plan.PlanInfo.PlanID = 0;
@@ -806,9 +807,12 @@
                     var usr = $.rogerGetLoginUser();
                     data.PlanInfo.CreateUserID = usr.UserID;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
-                        $.rogerNotice({Message: '定制方案保存成功'});
-                        $('#send').removeClass("btn btn-warning invisible");
-                        $('#send').addClass("btn btn-warning");
+                        if(respJSON.PlanInfo.insertId > 0 ) {
+                            $.rogerNotice({Message: '定制方案保存成功'});
+                            $('#show').removeClass("btn btn-warning invisible");
+                            $('#show').addClass("btn btn-warning");
+                            $('#show').attr('href','#/templateplandetail?version=2&PlanID='+respJSON.PlanInfo.insertId );
+                        }
                     });
             }else {
                 $.rogerNotice({Message: '请选择起始城市'});
@@ -824,28 +828,29 @@
         };
     };
     var ctrlGuideChooser = function (PS, realView) {
+        realView.rogerCropImages();
         $('#guideChooser').modal('show');
         $('#guidelist').html('').append('<li class="list-group-item">导游</li>');
         $('#guidelist').rogerDialogTrigger('fragment/dialog-guidelist.html', '/dialog/guide', {}, function (data, realView) {
-            $('#searchlist').btsListFilter('#searchinput', {itemChild: '.list-group-item-text',initial:false});
-            $("#airportlist .list-group-item").click(function(e) {
-                $("#airportlist .list-group-item").removeClass("active");
+            $("#guidelist .list-group-item").click(function(e) {
+                $("#guidelist .list-group-item").removeClass("active");
                 $(this).addClass("active");
             });
         });
         $('#guideChooserOK').rogerOnceClick(PS,function (e) {
-            var Plan = e.data;
+            var PS = e.data;
             var guide = $('#searchlist  .list-group-item.active').data('info').split(':');
             if(guide[0] > 0) {
-                Plan.PlanInfo.PlanID = 0;
-                var data = {PlanInfo: Plan.PlanInfo};
-                data.PlanInfo.StartCityID = item.CityID;
-                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                PS.Plan.PlanInfo.PlanID = 0;
+                var data = {PlanInfo: PS.Plan.PlanInfo};
                 var usr = $.rogerGetLoginUser();
                 data.PlanInfo.CreateUserID = guide[0];
                 $.rogerPost('/new/tmpplan', data, function (respJSON) {
                     var usr = $.rogerGetLoginUser();
-                    window.open('talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+guide[0], '_blank');
+                    var newWin = window.open('about:blank');
+                    newWin.location.href = 'http://'+window.location.host
+                        +'/talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+guide[0]
+                        +'&msg='+respJSON.PlanInfo[0].insertId;
                     $('#guideChooser').modal('hide');
                 });
             }
@@ -858,7 +863,6 @@
             $.rogerTrigger('#modal', '#/guidechooser', {Plan:data});
 
         });
-        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     //-------------------------------plan customize end---------------------------------
@@ -867,6 +871,7 @@
 		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
         '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
 		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			    ctrl: ctrlPlandetail},
+        '#/plandetailshort':			{view:'plandetail-short.html',							rootrest:'/plan/detail2', 			    ctrl: ctrlPlandetail},
         '#/homelist':                 {fragment: 'fragment/home-list.html',                 init: initHomeList,                          ctrl: ctrlHomeList},
         '#/homesearchlist':          {fragment: 'fragment/home-search-list.html',         rootrest:'/home/search',                 ctrl: ctrlHomeSearchList},
 
@@ -876,6 +881,7 @@
         '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                       ctrl: ctrlCityChooser},
         '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                       ctrl: ctrlSpotChooser},
         '#/airportchooser':           {fragment: 'fragment/dialog-airport-chooser.html', init: initAirportChooser,                    ctrl: ctrlAirportChooser},
+        '#/guidechooser':             {fragment: 'fragment/dialog-guide-chooser.html',   init: initGuideChooser,                       ctrl: ctrlGuideChooser},
 
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},

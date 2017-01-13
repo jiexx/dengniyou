@@ -8,7 +8,7 @@
         </div>
         <h3>账号管理</h3>
         <ul class="menu" id="menuLeftList">
-			<li><a data-href="#/userinfo" id="personInfo"><span></span>个人信息</a></li>
+			<li><a href="javascript:void(0)" id="personInfo"><span></span>个人信息</a></li>
 			<li><a href="javascript:void(0)" id="orderList" ><span></span>我的订单</a></li>
           <!-- <li><a href="#" ui-sref="shoppingCart"><span></span>购物车</a></li>
           <li><a href="#" ><span></span>我的收藏</a></li>id="personInfo
@@ -64,7 +64,7 @@
 					<li>
 						<div class="row title">
 							<h5 class="col-md-8">${datas[i].username} <span class="glyphicon glyphicon-comment"></span></h5>
-							<span class="col-md-2 num">出行人数</span>
+							<span class="col-md-2 num">出行天数</span>
 							<span class="col-md-1 fr status">
 								{{if datas[i].status == 1}}待支付{{/if}}
 								{{if datas[i].status == 2}}待接单{{/if}}
@@ -110,14 +110,14 @@
 										</button>
 									</div>
 									{{/if}}
-									{{if (datas[i].status == 6 )}}
+									<!--{{if (datas[i].status == 6 )}}
 									<div class="col-md-1 payBtn" id="payBtn">
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span></p>
 										<button id="confirm" data-id="${datas[i].orderid}" data-status="${datas[i].status}" type="button" class="btn btn-warning btn-orange">
 											评价
 										</button>
 									</div>
-									{{/if}}
+									{{/if}}-->
 								</li>
 							</ul>
 						</div>

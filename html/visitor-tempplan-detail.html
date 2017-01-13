@@ -30,7 +30,7 @@
                 <div class="starter">
                   <i class="glyphicon glyphicon-map-marker"></i>
                   出发地：
-                  <span id="starter">${$data.PlanInfo[0].StartCity}</span>
+                  <span id="starter">${$data.PlanInfo.StartCity}</span>
                 </div>
                 <div class="pass">
                   <i class="glyphicon glyphicon-map-marker"></i>
@@ -45,7 +45,7 @@
                 </div>
                 <div class="col-md-10">
                   <p class="text">
-                    ${$data.PlanInfo[0].PlanFeature}
+                    ${$data.PlanInfo.PlanFeature}
                   </p>
                 </div>
               </div>
@@ -102,7 +102,7 @@
         </div> <!-- end plandetail-main -->
         <div class="notice">
           <div class="optionBtn">
-            <a href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}"  class="btn btn-warning">编辑</a>
+            <a href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo.PlanID}"  class="btn btn-warning">编辑</a>
             <button id="send" class="btn btn-warning">发送</button>
           </div>
         </div>

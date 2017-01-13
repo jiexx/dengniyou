@@ -74,8 +74,8 @@
 
 		<div class="row project">
 			<h1>${ $data.PlanInfo[0].PlanName} 
-				<a  class="btn btn-warning" data-href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}" id="customize">定制</a>
-			</h1>
+				<!--<a  class="btn btn-warning" data-href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}" id="customize">定制</a>
+-->			</h1>
 			
 			<div class="project-main clearfix">
 				<div class="col-md-5">
@@ -127,33 +127,12 @@
 				<div class="scheduleBox">
 					<div class="scheduleNav clearfix" id="scheduleNav">
 						<h2 class="pull-left">行程概览</h2>
-						<div class="navList pull-right">
-							<i class="glyphicon glyphicon-menu-left pull-left" id="preBtn"></i>
-							<ul class="pull-left">
-								{{each(k,v) PlanSchedule}}
-								{{if  ("__countScheduleID" != k)  }}
-								<li>
-									<a href="#day01">
-										<button type="button" class="btn btn-default">第${v.__index}天</button>
-									</a>
-								</li>
-								{{/if}}
-								{{/each}}
-							</ul>
-							<i class="glyphicon glyphicon-menu-right pull-left" id="nextBtn"></i>
-						</div>
 					</div>
 					<div class="address">
 						<div class="starter">
 							<i class="glyphicon glyphicon-map-marker"></i>
 							出发地：
 							<span id="starter">${$data.PlanInfo[0].StartCity}</span>
-						</div>
-						<div class="pass">
-							<i class="glyphicon glyphicon-map-marker"></i>
-							经过：
-							<span id="passing">{{each(k, v) PlanSchedule}}{{if  ("__countScheduleID" != k)  }} ${v.__values[0].CountryNameCn}${v.__values[0].CityNameCn}${v.__values[0].CountryNameCn}${v.__values[0].CityNameCn}{{/if}}{{/each}}
-							</span>
 						</div>
 					</div>
 					<div class="feature clearfix">
@@ -167,51 +146,30 @@
 						</div>
 					</div>
 					<div class="scheduleDetails">
-						<ul>
-							{{each(k,v) PlanSchedule}}
-							{{if  ("__countScheduleID" != k)  }}
-							<li id="day01">
-								<h3 class="day">第${v.__index}天</h3>
-								<div class="content">
-									<ul class="clearfix">
-										{{each  v.__values}}
-										<li>
-											<div class="picText">
-												{{if ScheduleType == 0  }}
-													{{if PicURL == null }}<img src="../img/CityIcon.png" alt="">{{/if}}
-													{{if PicURL != null }}<img src="${ $data.IMGHOST }${PicURL}" alt="">{{/if}}
-												{{/if}}
-												{{if ScheduleType == 1 }}
-												<img src="../img/airPlaneIcon.png" alt="">
-												{{/if}}
-												{{if (ScheduleType == 2 ||ScheduleType == 3 ||ScheduleType == 4 ||ScheduleType == 5) }}
-												<img data-src="${ $data.IMGHOST }${PicURL}">
-												{{/if}}
-												<div class="text media-body">
-													<div class="media-heading">${NameCh}</div>
-													<div>${PlanNumber}</div>
-													<div>${StartCity}</div>
-													{{if  ScheduleType == 0  }}
-													<span>${CountryNameCn}${CountryNameEn}&nbsp;&nbsp;</span>
-													<span>${CityNameCn}${CityNameEn}</span>
-													{{/if}}
-													{{if  ScheduleType == 1  }}
-													<div>${AirportNameCn}${AirportNameEn}${AirportCode}</div>
-													{{/if}}
-												</div>
-											</div><!-- end picText -->
-											<div class="nextBtn">
-												<span class="glyphicon glyphicon-menu-right"></span>
-											</div>
-										</li>
-										{{/each}}
-									</ul>
-								</div>
-							</li>
-							{{/if}}
-							{{/each}}
-						</ul>
-					</div>
+						<p>开始城市: <span>${$data.PlanInfo[0].StartCity}</span></p>
+						{{each $data.PlanShort}}
+						{{if Day}}
+						<div class="day-edit">
+							<p>第${Day}天 <span>${Label}</span></p>
+						</div>
+						{{/if}}
+
+						{{if PicURL}}
+						<div class="col-md-5 picture-edit">
+							<div class="imgBox">
+								<img name="needPrefix" src="${ $data.IMGHOST }${PicURL}">
+							</div>
+						</div>
+						{{/if}}
+
+						{{if Content}}
+						<div class="col-md-5 introduction">
+							${ Content}
+						</div>
+						{{/if}}
+						{{/each}}
+						<div class="clearfix"></div>
+					</div><!-- end scheduleDetails -->
 				</div><!-- end 预定须知 -->
 				<div class="feature featureAlone clearfix" id="attention">
 					<div class="col-md-2">

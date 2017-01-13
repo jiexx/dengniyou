@@ -16,7 +16,7 @@
                   {{else}}
                   <div class="item">
                     {{/if}}
-                    <img data-src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
+                    <img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
                   </div>
                   {{/each}}
                 </div>
@@ -64,16 +64,16 @@
               <div class="navList pull-right">
                 <i class="glyphicon glyphicon-menu-left pull-left" id="preBtn"></i>
                 <ul class="pull-left">
-                  {{each(k,v) PlanSchedule}}
-                  {{if  ("__countScheduleID" != k)  }}
-                  <li>
-                    <a href="#day01">
-                      <button type="button" class="btn btn-default">第${v.__index}天</button>
-                    </a>
-                  </li>
-                  {{/if}}
-                  {{/each}}
-                </ul>
+                    {{each(k,v) PlanSchedule}}
+                    {{if  ("__countScheduleID" != k)  }}
+                    <li>
+                      <a href="#day01">
+                        <button type="button" class="btn btn-default">第${v.__index}天</button>
+                      </a>
+                    </li>
+                    {{/if}}
+                    {{/each}}
+                  </ul>
                 <i class="glyphicon glyphicon-menu-right pull-left" id="nextBtn"></i>
               </div>
             </div>
@@ -89,53 +89,32 @@
                 <div class="tittle">方案特色</div>
               </div>
               <div class="col-md-10">
-                <p class="text">
-                  ${$data.PlanInfo[0].PlanFeature}
-                </p>
-              </div>
-            </div>
-            <div class="scheduleDetails">
-              <div class="schedule clearfix">
-                <div class="row">
-                  <h4 class="col-md-3">开始城市</h4>
-                  <div class="col-md-3">
-                    <ul class="label-base">
-                      {{if $data.PlanInfo.StartCityID }}
-                      <li>${$data.PlanInfo.StartCity}</li>
-                      {{/if}}
-                    </ul>
-                  </div>
-                </div>
-                {{each $data.PlanShort}}
-                {{if Day}}
-                <div class="row day-edit">
-                  <div class="col-md-3">
-                    <label>第</label>
-                    ${Day}
-                    <label>天</label>
-                  </div>
-                  <div class="col-md-5">
-                    ${Label}
-                  </div>
-                </div>
-                {{/if}}
+                <div class="scheduleDetails">
+                    <p>开始城市: <span>${$data.PlanInfo[0].StartCity}</span></p>
+                    {{each $data.PlanShort}}
+                    {{if Day}}
+                    <div class="day-edit">
+                      <p>第${Day}天 <span>${Label}</span></p>
+                    </div>
+                    {{/if}}
 
-                {{if PicURL}}
-                <div class="col-md-5 picture-edit">
-                  <div class="imgBox">
-                    <img name="needPrefix" src="${ $data.IMGHOST }${PicURL}">
-                  </div>
-                </div>
-                {{/if}}
+                    {{if PicURL}}
+                    <div class="col-md-5 picture-edit">
+                      <div class="imgBox">
+                        <img name="needPrefix" src="${ $data.IMGHOST }${PicURL}">
+                      </div>
+                    </div>
+                    {{/if}}
 
-                {{if Content}}
-                <div class="col-md-5 introduction">
-                  ${ Content}
-                </div>
-                {{/if}}
-                {{/each}}
-              </div>
-            </div>
+                    {{if Content}}
+                    <div class="col-md-5 introduction">
+                      ${ Content}
+                    </div>
+                    {{/if}}
+                    {{/each}}
+                </div><!-- end scheduleDetails -->
+              </div><!-- col-md-10 -->
+            </div> <!-- end feature -->
           </div><!-- end 预定须知 -->
           <div class="feature featureAlone clearfix" id="attention">
             <div class="col-md-2">

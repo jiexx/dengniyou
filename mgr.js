@@ -326,7 +326,7 @@ app.get('/talk', function (req, res) {
             if (!error && response.statusCode == 200 && data.code == 200) {
                 console.log(data.token);
                 var token = new Buffer(data.token).toString('base64');
-                var url = encodeURIComponent('uid='+req.query.uid+'&uname='+req.query.uname+'&picurl='+req.query.picurl+'&tid='+req.query.tid+'&no='+key+'&token='+token);
+                var url = encodeURIComponent('uid='+req.query.uid+'&uname='+req.query.uname+'&picurl='+req.query.picurl+'&tid='+req.query.tid+'&no='+key+'&token='+token+'&msg='+req.query.msg);
                 res.redirect('/talk/talk.html?'+encodeURIComponent(url));
             }
         }
