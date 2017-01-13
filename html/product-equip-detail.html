@@ -30,7 +30,7 @@
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
         <ol class="carousel-indicators">
           {{each(i,p) Facility[0].pics}}
-          <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==1}}active{{/if}}"></li>
+          <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==0}}active{{/if}}"></li>
           {{/each}}
         </ol>
         <div class="carousel-inner" role="listbox">
@@ -86,9 +86,6 @@
       </div>
     </div> <!-- end container-box -->
   </div> <!-- end container -->
-
-    <script src="js/jquery-1.11.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
 
   </body>
  
