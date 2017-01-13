@@ -70,11 +70,10 @@
                             <img data-src="${ $data.IMGHOST }${SpotPicUrl}">
                             {{/if}}
                             <div class="text media-body">
-                              <div class="media-heading">${NameCh}</div>
-                              <div>${PlanNumber}</div>
-                              <div>${StartCity}</div>
+                              <div class="media-heading">${SpotName}</div>
+                              <div>${SpotLocalName}</div>
                               {{if  ScheduleType == 0  }}
-                              <span>${CountryNameCn}${CountryNameEn}&nbsp;&nbsp;</span>
+                              <span>${CountryNameCn}${CountryNameEn}</span>
                               <span>${CityNameCn}${CityNameEn}</span>
                               {{/if}}
                               {{if  ScheduleType == 1  }}

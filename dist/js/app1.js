@@ -45,6 +45,8 @@
     };
 	
 	var ctrlHome = function(response, realView) {
+        var usr = $.rogerGetLoginUser();
+	    $('#kefu').attr('href','talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid=10000005');
 		$('#carousel-generic').carousel();
         $('#homeSearch').rogerOnceClick(null, function () {
             var k = $('#homeSearchKey').val();

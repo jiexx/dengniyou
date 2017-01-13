@@ -108,7 +108,7 @@ app.post('/pay', upload.array(), function(req, res) {
                     out_trade_no: ''+body.datas.orderNo,
                     subject: 'dengniyou-order',// 'order-312412',//body.datas.orderId,
                     body:  'dengniyou-order',//body.datas.orderId,
-                    total_fee:  '0.01',//body.datas.costMoney
+                    total_fee:  body.datas.costMoney
                 });
                 res.send(JSON.stringify({url:usr_redirect_url}));
 			}else {
