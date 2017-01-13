@@ -633,6 +633,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .notice #policydiv ul li h3{margin-top: 0; font-size: 16px; font-weight: bold; color: #337AB7;}
 .editPage .notice #policydiv li .main .col-md-10 input,.editPage .notice #policydiv li .main .col-md-10 span
 		{display: inline-block; width: 35px; border: 1px solid #D4D4D4; padding: 2px 5px; margin-left: 5px; margin-right: 5px; font-size: 14px; color: #337AB7; font-weight: bold; text-align: center;}	
+.editPage #carList li.row{border-bottom: 1px solid #ccc; margin-bottom: 5px;padding-bottom: 8px;}
+.editPage #carList li.row:last-child{border-bottom: 0;}
+.editPage #carList li h4{margin-top: 0;}
+.editPage #carList li img{width:100%;}
 /*end 包车退订政策弹出框部分*/
 /*接机编辑页*/
 .editPage .baseInfo form input[type="radio"]{width:40%;}

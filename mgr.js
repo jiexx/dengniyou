@@ -180,7 +180,7 @@ app.post('/new/service/car', upload.array(), function(req, res) {
         function (error, response, body) {
             if (!error && response.statusCode == 200 && body.datas) {
 
-                res.send(JSON.stringify({url:+false}));
+                res.send(JSON.stringify({url:+false,"ServiceID":body.datas.serviceId}));
             }else {
                 res.send(JSON.stringify({ERR:+body.errcode}));
             }

@@ -12,31 +12,31 @@
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">活动名称</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.DetailMain[0].serviceName}"  data-value="/DetailMain/${0}/serviceName" placeholder="不能超过24个字符">
+		      <input type="text" class="form-control" value="${$data.DetailMain.serviceName}"  data-value="/DetailMain/serviceName" placeholder="不能超过24个字符">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">成人价格</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.ActivityPrice[0].adultPrice}"  data-value="/ActivityPrice/${0}/adultPrice" placeholder="请输入数字"> 元/人
+		      <input type="text" class="form-control" value="${$data.DetailMain.ActivityPrice[0].adultPrice}"  data-value="/DetailMain/ActivityPrice/${0}/adultPrice" placeholder="请输入数字"> 元/人
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">儿童价格</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.ActivityPrice[0].kidPrice}" data-value="/ActivityPrice/${0}/kidPrice" placeholder="请输入数字"> 元/人
+		      <input type="text" class="form-control" value="${$data.DetailMain.ActivityPrice[0].kidPrice}" data-value="/DetailMain/ActivityPrice/${0}/kidPrice" placeholder="请输入数字"> 元/人
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">活动时长</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.DetailMain[0].serviceTime}" data-value="/DetailMain/${0}/serviceTime" placeholder="请输入数字"> 小时
+		      <input type="text" class="form-control" value="${$data.DetailMain.serviceTime}" data-value="/DetailMain/serviceTime" placeholder="请输入数字"> 小时
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">活动行程描述</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/${0}/description"  class="form-control" rows="5" placeholder="请输入不少于300字描述">${$data.DetailMain[0].description}</textarea>
+		      <textarea name="" data-value="/DetailMain/description"  class="form-control" rows="5" placeholder="请输入不少于300字描述">${$data.DetailMain.description}</textarea>
 		    </div>
 		  </div>
 		</form>
@@ -51,16 +51,16 @@
 		<div class="row">
 			<div class="col-md-1 ">相册上传:</div>
 			<div class="col-md-11 row" >
-				{{each $data.DetailMain[0].picURLs}}
+				{{each $data.DetailMain.picURLs}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain[0].picURLs[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/picURLs/${$index}"></a>
+						<img src="${$data.DetailMain.picURLs[$index]}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/picURLs/${$index}"></a>
 					</div>
 				</div>
 				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/${0}/picURLs" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/${0}/picURLs/-" data-action="image">+</div>
+				<div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/picURLs" data-limit="8">
+					<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/picURLs/-" data-action="image">+</div>
 				</div>
 			</div>
 		</div>
@@ -68,16 +68,16 @@
 		<div class="row">
 			<div class="col-md-1 ">封面照片:</div>
 			<div class="col-md-11 row" >
-				{{if $data.DetailMain[0].covers}}
+				{{if $data.DetailMain.coverURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain[0].covers}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/${0}/covers" ></a>
+						<img src="${$data.DetailMain.coverURL}">
+						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/coverURL" ></a>
 					</div>
 				</div>
 				{{else}}
 				<div class="col-md-3">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/${0}/covers" data-action="image" >+</div>
+					<div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/coverURL" data-action="image" >+</div>
 				</div>
 				{{/if}}
 			</div>

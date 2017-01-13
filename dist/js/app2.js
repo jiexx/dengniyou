@@ -533,6 +533,34 @@ $(function () {
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
+
+        $('#release').rogerOnceClick(response, function (e) {
+                temp = e.data.SpotDetail[0];
+                var status = $('#release').data("status")
+                //3,隐藏，4发布
+                $.rogerPost('/update/service/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
+                    $.rogerNotice({Message: '发布成功'});
+
+                });
+            }
+        );
+
+        $('#edit').rogerOnceClick(response, function (e) {
+                temp = e.data.DetailMain[0];
+                $.rogerLocation('#/attractionedit?SpotsID='+temp.SpotsID);
+            }
+        );
+
+        // $('#delete').rogerOnceClick(response, function (e) {
+        //         temp = e.data.DetailMain[0];
+        //         $.rogerPost('/delete/service', {ServiceId:temp.serviceID}, function (respJSON) {
+        //             $.rogerNotice({Message: '删除成功'});
+        //             $.rogerLocation('#/service'+"?UserID="+usr.UserID);
+        //         });
+        //     }
+        // );
+
+
     };
 
     var ctrlOrderlist = function(response, realView) {
@@ -577,7 +605,7 @@ $(function () {
     var ctrlServicedetail = function (response, realView) {
         var usr = $.rogerGetLoginUser();
 
-        $('#release').rogerOnceClick(Service, function (e) {
+        $('#release').rogerOnceClick(response, function (e) {
                 temp = e.data.DetailMain[0];
                 var status = $('#release').data("status")
             //3,隐藏，4发布
@@ -588,13 +616,13 @@ $(function () {
             }
         );
 
-        $('#edit').rogerOnceClick(Service, function (e) {
+        $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.DetailMain[0];
                 $.rogerLocation('#/servicecaredit?ServiceID='+temp.serviceID);
             }
         );
 
-        $('#delete').rogerOnceClick(Service, function (e) {
+        $('#delete').rogerOnceClick(response, function (e) {
                 temp = e.data.DetailMain[0];
                 $.rogerPost('/delete/service', {ServiceId:temp.serviceID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
@@ -683,7 +711,7 @@ $(function () {
         },        
         IMGHOST: "http://123.59.144.47/" };
 
-        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": '24282', "userID": usr.userID}, function (respJSON, reqJSON) {
+        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": SpotsID, "userID": usr.userID}, function (respJSON, reqJSON) {
             if(respJSON){
                 console.log(JSON.stringify(respJSON));
                 if (null != respJSON["SpotDetail"] && respJSON["SpotDetail"].length > 0) {
@@ -784,62 +812,59 @@ $(function () {
                 });
             }
 
-
-
-
         });
 
 
-        $('#publish').rogerOnceClick(Spots, function(e){
-            console.data.log('publish');
-
-            temp = e.data.SpotDetail;
-
-            if(null != temp.SpotsID && '' != temp.SpotsID){
-                tempSpotLabels = []
-                if(null != temp.SpotLabels.LabelIDs && 0< temp.SpotLabels.LabelIDs.length){
-                    for(key in temp.SpotLabels.LabelIDs){
-                        tempSpotLabels.push({LabelID:temp.SpotLabels.LabelIDs[0],SpotsID:temp.SpotsID})
-                    }
-                }
-
-
-                var data = {
-                    DeleteSpotsPics:temp,
-                    DeleteTravelSpotsLabel:temp,
-                    SpotDetail:temp,
-                    picURLs:{picURLs:temp.picURLs.picURLs,SpotsID:temp.SpotsID},
-                    SpotLabels:tempSpotLabels,
-                    // file:filedata,
-                    // coverFile:coverFiledata,
-                    IMGHOST:e.data.IMGHOST
-                };
-
-                temp["Status"]=2;
-
-                $.rogerPost('/update/spots', data, function(respJSON){
-                    $.rogerNotice({Message:'景点发布成功'});
-
-                });
-            } else {
-
-                temp["Status"]=2;
-                var data = {
-                    SpotDetail:temp,
-                    // file:filedata,
-                    // coverFile:coverFiledata,
-                    IMGHOST:e.data.IMGHOST
-                };
-                $.rogerPost('/new/spots', data, function(respJSON){
-                    $.rogerNotice({Message:'景点发布成功'});
-
-                });
-            }
-
-
-
-
-        });
+        // $('#publish').rogerOnceClick(Spots, function(e){
+        //     console.data.log('publish');
+        //
+        //     temp = e.data.SpotDetail;
+        //
+        //     if(null != temp.SpotsID && '' != temp.SpotsID){
+        //         tempSpotLabels = []
+        //         if(null != temp.SpotLabels.LabelIDs && 0< temp.SpotLabels.LabelIDs.length){
+        //             for(key in temp.SpotLabels.LabelIDs){
+        //                 tempSpotLabels.push({LabelID:temp.SpotLabels.LabelIDs[0],SpotsID:temp.SpotsID})
+        //             }
+        //         }
+        //
+        //
+        //         var data = {
+        //             DeleteSpotsPics:temp,
+        //             DeleteTravelSpotsLabel:temp,
+        //             SpotDetail:temp,
+        //             picURLs:{picURLs:temp.picURLs.picURLs,SpotsID:temp.SpotsID},
+        //             SpotLabels:tempSpotLabels,
+        //             // file:filedata,
+        //             // coverFile:coverFiledata,
+        //             IMGHOST:e.data.IMGHOST
+        //         };
+        //
+        //         temp["Status"]=2;
+        //
+        //         $.rogerPost('/update/spots', data, function(respJSON){
+        //             $.rogerNotice({Message:'景点发布成功'});
+        //
+        //         });
+        //     } else {
+        //
+        //         temp["Status"]=2;
+        //         var data = {
+        //             SpotDetail:temp,
+        //             // file:filedata,
+        //             // coverFile:coverFiledata,
+        //             IMGHOST:e.data.IMGHOST
+        //         };
+        //         $.rogerPost('/new/spots', data, function(respJSON){
+        //             $.rogerNotice({Message:'景点发布成功'});
+        //
+        //         });
+        //     }
+        //
+        //
+        //
+        //
+        // });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -929,6 +954,7 @@ $(function () {
                 serviceMethod: '',
                 pictureIDs: {},
                 picURLs: [],
+                coverURL:'',
                 covers: '',
                 DetailServiceMethod: [],
                 Facility: [
@@ -1289,7 +1315,6 @@ $(function () {
 
      var initServiceEdit=function(){
          var ServiceID = $.rogerGetUrlParam('ServiceID');
-         console.log(ServiceID);
          var usr = $.rogerGetLoginUser();
          result = {
              DetailMain:
@@ -1340,7 +1365,7 @@ $(function () {
                      {
                        policyType: 1,
                        policyID: 26,
-                       policyname: "退订政策2",
+                       policyname: "退订政策",
                        serviceTypeID: 1,
                        day1: '',
                        ratio1: '',
@@ -1428,7 +1453,8 @@ $(function () {
                  VehicleSchedule: [ ],
                  Labels: ["咖啡简餐"],
                  ActivityPrice: [ ],
-                 HouseInfo: [{
+                 HouseInfo: [
+                 {
                     houseID: '',
                     serviceID: '',
                     person: '',
@@ -1451,7 +1477,7 @@ $(function () {
              },
              IMGHOST: "http://123.59.144.47/"
          };
-         $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.userID}, function (respJSON, reqJSON) {
+         $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.UserID}, function (respJSON, reqJSON) {
              if(respJSON){
 
                  if (null != respJSON["DetailMain"] && respJSON["DetailMain"].length > 0) {
@@ -1571,25 +1597,22 @@ $(function () {
                 temp["policyBean"]["ratio3"]=0.82;
                 temp["policyBean"]["ratio4"]=0.75;
             }
-
+            console.log('test');
             var data = {
                 reqUploadService:temp,
                 // file:filedata,
                 // coverFile:coverFiledata,
                 IMGHOST:e.data.IMGHOST
             };
-            $.rogerPost('/new/service/car', data, function(respJSON){
-                $.rogerNotice({Message:'保存包车成功'});
+            // $.rogerPost('/new/service/car', data, function(respJSON){
+            //     $.rogerNotice({Message:'保存包车成功'});
 
-                if(respJSON){
+            //     if(respJSON){
+            //         //跳转到详情页面
+            //         $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+            //     }
 
-                }
-                temp = e.data.DetailMain[0];
-
-                //跳转到详情页面
-                $.rogerLocation('#/servicecardetail?ServiceID='+temp.serviceID);
-
-            });
+            // });
 
         });
 
@@ -1773,8 +1796,62 @@ $(function () {
         Plan.createAirport = function (Plan, Spot) {
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Airports:Spot});
         };
-        $('#save').rogerOnceClick(Plan, function(e){
-            console.log('text')
+
+        $('#save').rogerOnceClick(DetailMain, function(e){
+            var usr =$.rogerGetLoginUser();
+            console.log('test');
+            temp = e.data.DetailMain;
+            var filedata = e.data.DetailMain.picURLs;
+            var coverFiledata = e.data.DetailMain.coverURL;
+
+            temp["userID"]=usr.UserID;
+            temp["serviceTypeID"]=4;
+
+            temp["unit"]='天';
+            temp["priceType"]='1';
+            temp["serviceStatus"]='3';
+
+            temp["policyBean"]= temp["Policy"][0];
+            temp["feeBean"]= temp["Policy"][1];
+            temp["feeBean"]["type"]=5;
+            temp["feeNoBean"]= temp["Policy"][2];
+            temp["feeNoBean"]["type"]=5;
+            temp["noticeBean"]= temp["Policy"][3];
+            temp["noticeBean"]["type"]=5;
+            temp["coverFile"]=coverFiledata;
+            temp["files"]=filedata;
+
+            if(4 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 29;
+            }else if(3 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 28;
+            }else if(2 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 27;
+            }else if(1 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 26;
+            } else {
+                temp["policyBean"]["ratio1"]=0.89;
+                temp["policyBean"]["ratio2"]=0.85;
+                temp["policyBean"]["ratio3"]=0.82;
+                temp["policyBean"]["ratio4"]=0.75;
+            }
+
+            var data = {
+                reqUploadService:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
+                IMGHOST:e.data.IMGHOST
+            };
+            // $.rogerPost('/new/service/car', data, function(respJSON){
+            //     $.rogerNotice({Message:'接送机服务保存成功'});
+
+            //     if(respJSON){
+            //         //跳转到详情页面
+            //         $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+            //     }
+
+            // });
+
         });
 
         bindRidoesForSwitch();
@@ -1912,8 +1989,61 @@ $(function () {
             IMGHOST: 'http://123.59.144.47/'
         };
     },ctrlServiceOtherEdit=function(Plan, realView){
-        $('#save').rogerOnceClick(Plan, function(e){
-            console.log('text');
+        $('#save').rogerOnceClick(DetailMain, function(e){
+            var usr =$.rogerGetLoginUser();
+            console.log('test');
+            temp = e.data.DetailMain;
+            var filedata = e.data.DetailMain.picURLs;
+            var coverFiledata = e.data.DetailMain.coverURL;
+
+            temp["userID"]=usr.UserID;
+            temp["serviceTypeID"]=4;
+
+            temp["unit"]='天';
+            temp["priceType"]='1';
+            temp["serviceStatus"]='3';
+
+            temp["policyBean"]= temp["Policy"][0];
+            temp["feeBean"]= temp["Policy"][1];
+            temp["feeBean"]["type"]=5;
+            temp["feeNoBean"]= temp["Policy"][2];
+            temp["feeNoBean"]["type"]=5;
+            temp["noticeBean"]= temp["Policy"][3];
+            temp["noticeBean"]["type"]=5;
+            temp["coverFile"]=coverFiledata;
+            temp["files"]=filedata;
+
+            if(4 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 29;
+            }else if(3 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 28;
+            }else if(2 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 27;
+            }else if(1 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 26;
+            } else {
+                temp["policyBean"]["ratio1"]=0.89;
+                temp["policyBean"]["ratio2"]=0.85;
+                temp["policyBean"]["ratio3"]=0.82;
+                temp["policyBean"]["ratio4"]=0.75;
+            }
+            console.log('test');
+            var data = {
+                reqUploadService:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
+                IMGHOST:e.data.IMGHOST
+            };
+            // $.rogerPost('/new/service/car', data, function(respJSON){
+            //     $.rogerNotice({Message:'服务保存成功'});
+
+            //     if(respJSON){
+            //         //跳转到详情页面
+            //         $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+            //     }
+
+            // });
+
         });
 
         bindRidoesForSwitch();
