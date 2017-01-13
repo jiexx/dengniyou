@@ -67,10 +67,10 @@
 			    <label for="" class="col-sm-2 col-md-1 control-label">景点分类</label>
 			    <div class="col-sm-10 col-md-11">
 			        <ul class="label-base">
-			        	{{each $data.SpotDetail.Labels}}
-						<li><input type="text" value="${$data.SpotDetail.Labels[$index]}" data-value="/SpotDetail/Labels/${$index}" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/Labels/${$index}"></a></li>
+			        	{{each $data.SpotDetail.SpotLabels.Labels}}
+						<li><input type="text" value="${$data.SpotDetail.SpotLabels.Labels[$index]}" data-value="/SpotDetail/SpotLabels/Labels/${$index}" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotLabels/Labels/${$index}"></a></li>
 						{{/each}}
-						<li><div class="addItemBtn" data-op="change" data-pointer="/SpotDetail/Labels/${$index}-" data-action="createLabel"> + </div></li>
+						<li><div class="addItemBtn" data-toggle="modal" data-target="#attrLabelList"> + </div></li>
 
 			        	<!-- {{each $data.SpotDetail.SpotLabels}}
 						<li><input type="text" value="${$data.SpotDetail.SpotLabels[$index].ClassifyLabel}" data-value="/SpotDetail/SpotLabels/${$index}/ClassifyLabel" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotLabels/${$index}/ClassifyLabel"></a></li>
@@ -151,5 +151,41 @@
 		</div>
 	</div>
 	<!-- 须知信息结束 -->
+
+	<!-- 标签列表弹出框 -->
+	<div id="attrLabelList" class="modal fade">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <button type="button" class="close" data-dismiss="modal">
+		      	<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		      </button>
+		      <h4 class="modal-title clearfix">选择标签</h4>
+		    </div>
+		    <div class="modal-body">
+		    	<ul id="attrLabel" class="row">
+		    		{{each(i,p) SpotDetail.ClassifyLabels}}
+		        	<li class="col-md-3">
+		        	<input type="checkBox" name="carRadios" value="${p.LabelID}"> <span>${p.Label}</span>
+			        </li>
+			        {{/each}}				        
+				</ul>
+		    </div> <!-- end modal-body -->
+		    <div class="modal-footer">
+		      <button type="button" id="labelConfirm" class="btn btn-primary" data-op="change" data-pointer="/SpotDetail/SpotLabels/Labels/${$index}-" data-action="createLabel">确定</button>
+		    </div>
+		  </div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 标签列表弹出框结束 -->
 </div>
+
+<script>
+	$(function(){
+		$('#labelConfirm').on('click',function(){
+			$('body').removeClass('modal-open');
+			$('.modal-backdrop').remove();
+		});
+	});
+</script>
 

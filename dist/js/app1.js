@@ -516,7 +516,7 @@
     var initUserInfo = function (param) {
         var usr = $.rogerGetLoginUser();
         return {
-            User: {
+            User: [{
                 CityName:'',
                 CountryName:'',
                 CityID:usr.CityID,
@@ -536,7 +536,7 @@
     var ctrlCityChooser2 = function (PS, realView) {
         $('#cityChooser').modal('show');
         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
-            var data = e.data;
+            var data = e.data.User;
             var country = $('#country option:selected').val().split(':');
             var city = $('#city option:selected').val().split(':');
             data.User[0].CityID = city[0];
@@ -544,7 +544,7 @@
             data.User[0].CountryID = country[0];
             data.User[0].CountryName = country[1];
             $('#cityChooser').modal('hide');
-            $.rogerRefresh(data.User);
+            $.rogerRefresh(data);
         });
     };
     var ctrlUserInfo = function(response, realView) {
@@ -573,8 +573,8 @@
         };
 
         $('#userUpdate').rogerOnceClick(response, function (e) {
-            var data = e.User;
-            console.log(e.User);
+            var data = e.data.User;
+            console.log(e.data.User);
             //data.Labels = data.Labels.join();
             $.rogerPost('/user/update', data, function (respJSON) {
                 $.rogerNotice({Message: '个人信息修改成功'});
@@ -582,7 +582,8 @@
         });
 
         response.createLabel = function (User) {
-            User.Labels.push('');
+            User.User[0].Labels.push('');
+            $.rogerRefresh(User);
         };
 
         realView.rogerCropImages();

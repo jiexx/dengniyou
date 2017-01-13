@@ -65,22 +65,36 @@
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">服务方式</label>
 		    <div class="col-sm-10 col-md-11" id="serviceType">
-			    <div id="pickupService">
-			    	{{if}}
+			    <div id="pickupService">			    	
 			    	<label class="radio-inline">
+			    	  {{if DetailMain.serviceMethod == 2}}
+					  <input type="radio" name="serviceType" id="" value="举牌等候" checked> 举牌等候
+					  {{else}}
 					  <input type="radio" name="serviceType" id="" value="举牌等候" > 举牌等候
-					</label>
-					{{/if}}
-					<label class="radio-inline"> 
+					  {{/if}}
+					</label>					
+					<label class="radio-inline">
+			    	  {{if DetailMain.serviceMethod == 2}} 
 					  <input type="radio" name="serviceType" id="" value="即停即走" checked> 即停即走
+					  {{else}}
+					  <input type="radio" name="serviceType" id="" value="即停即走"> 即停即走
+					  {{/if}}
 					</label>
 			    </div>
 			    <div id="dropoffService">
 			    	<label class="radio-inline">
-					  <input type="radio" name="serviceType2" id="" value="无忧模式" > 无忧模式
+			          {{if DetailMain.serviceMethod == 2}}
+					  <input type="radio" name="serviceType2" id="" value="2" checked> 无忧模式
+					  {{else}}
+					  <input type="radio" name="serviceType2" id="" value="2" > 无忧模式
+					  {{/if}}
 					</label>
 					<label class="radio-inline">
-					  <input type="radio" name="serviceType2" id="" value="即停即走" checked> 即停即走
+					  {{if DetailMain.serviceMethod == 4}}
+					  <input type="radio" name="serviceType2" id="" value="4" checked> 即停即走
+					  {{else}}
+					  <input type="radio" name="serviceType2" id="" value="4"> 即停即走
+					  {{/if}}
 					</label>
 			    </div>		        
 		    </div>
