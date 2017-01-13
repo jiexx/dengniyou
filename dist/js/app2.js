@@ -7,24 +7,23 @@ $(function () {
     function bindRidoesForSwitch (){
         var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
         if(!ev || !ev.change) {
-            $('#menu input[type=radio][name="optradio"]').change(function(e){
+            $('#menu input[type=radio][name="optradio"]').unbind().change(function(e){
                 var usr = $.rogerGetLoginUser();
                 if(!usr) {
                     $.rogerShowLogin();
                     return;
                 }
-                var url = $(this).next('a').attr('href');
+                var url = $(this).next('div').data('href');
                 $.rogerTrigger('#app',url, {UserID:usr.UserID});
             });
         }
-        $('#usercenter').on('click', function () {
+        $('#usercenter').rogerOnceClick2(null, function () {
             var user = $.rogerGetLoginUser();
             if(!user) {
                 $.rogerLogin('#homeLogin', '/login');
                 $.rogerShowLogin();
                 return;
             }
-
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
         });
     }
@@ -46,7 +45,7 @@ $(function () {
                 $.rogerLocation('#/?UserID='+usr.UserID)
             }
         }
-
+        
         bindRidoesForSwitch();
         realView.rogerCropImages();
 	};
@@ -297,9 +296,9 @@ $(function () {
                 ok:
                 for(var i = 0 ; i < data.Plan.PlanInfo.PlanSchedule.length ; i ++ ){
                     var ps = data.Plan.PlanInfo.PlanSchedule[i];
-                    for ( var j = 0; j < ps.Spot.length ; i ++ ) {
-                        if(ps.Spot[i] === data.SpotItem) {
-                            ps.Spot[i]= {CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                    for ( var j = 0; j < ps.Spot.length ; j ++ ) {
+                        if(ps.Spot[j] === data.SpotItem) {
+                            ps.Spot[j]= {CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
                                 SpotID:spot[0],SpotName:spot[1],SpotLocalName:spot[2],SpotTravelTime:spot[5],HotelStarLevel:spot[4],ScheduleType:parseInt(spot[6])+1,SpotPicUrl:spot[3]};
                             break ok;
                         }
@@ -540,7 +539,16 @@ $(function () {
     };
 
     var ctrlOrderlist = function(response, realView) {
+        var usr = $.rogerGetLoginUser();
+        var Avatar = $.rogerImgHost() + usr.AvatarPicURL;
+        $('.avatar img').attr('src', Avatar);
 
+        $('#personInfo').rogerOnceClick( null, function () {
+            $.rogerLocation('#/userinfo?UserID='+usr.UserID);
+        });
+        $('#orderList').rogerOnceClick( null, function () {
+            $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=1&status=0&page=1');
+        });
         $("#order-a_all").find("a").each(function () {
             var el = $(this);
             el.rogerOnceClick(null, function () {
@@ -576,6 +584,47 @@ $(function () {
         bindRidoesForSwitch();
         realView.rogerCropImages();
 
+    };
+    var ctrlUserInfo = function(response, realView) {
+        var usr = $.rogerGetLoginUser();
+        console.log(usr,usr.Labels.split(','));
+        result = {
+            User: [{
+                CityName:'',
+                CountryName:'',
+                CityID:usr.CityID,
+                CountryID:usr.CountryID,
+                Labels:usr.Labels.split(','),
+                Sex:usr.Sex,
+                TrueName:usr.TrueName,
+                UserID:usr.UserID,
+                UserName:usr.UserName,
+                ComLogo:usr.ComLogo,
+                ComAdv:usr.ComAdv,
+                AvatarPicURL:usr.AvatarPicURL
+            }],
+            IMGHOST:$.rogerImgHost()
+        };
+
+        response.createCity = function (result, Spot) {
+            $.rogerTrigger('#modal', '#/citychooser2', {User:result});
+        };
+
+        $('#userUpdate').rogerOnceClick(response, function (e) {
+            var data = e.User;
+            console.log(e.User);
+            //data.Labels = data.Labels.join();
+            $.rogerPost('/user/update', data, function (respJSON) {
+                $.rogerNotice({Message: '个人信息修改成功'});
+            });
+        });
+
+        response.createLabel = function (User) {
+            User.Labels.push('');
+        };
+
+        realView.rogerCropImages();
+        bindRidoesForSwitch();
     };
 
     var ctrlServicedetail = function (response, realView) {
@@ -650,7 +699,7 @@ $(function () {
         var SpotsID = $.rogerGetUrlParam('SpotsID');
         var usr =$.rogerGetLoginUser();
         var returnvalue = {
-        SpotDetail:
+        SpotDetail: 
         {
             SpotsID:'' ,
             UserID:usr.UserID ,
@@ -684,7 +733,7 @@ $(function () {
             SpotLabels: {
                 LabelIDs:['318']
             },
-        },
+        },        
         IMGHOST: "http://123.59.144.47/" };
 
         $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": '24282', "userID": usr.userID}, function (respJSON, reqJSON) {
@@ -1501,9 +1550,9 @@ $(function () {
                      if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
                          result["DetailMain"]["HouseInfo"] = respJSON["HouseInfo"]
                      }
-
+                     
                     result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0]);
-                     function deepCopy(des,source) {
+                     function deepCopy(des,source) {      
                         for (var key in source) {
                             if(key){
                                 if(typeof source[key]==='object'){
@@ -1516,8 +1565,8 @@ $(function () {
                               //des[key] = typeof source[key]==='object'? deepCopy(des[key],source[key]): source[key];
                               //des[key] = source[key];
                             }
-                           }
-                        return des;
+                           } 
+                        return des; 
                     }
                      console.log(result["DetailMain"]);
 
@@ -2076,7 +2125,7 @@ $(function () {
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
         '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
-
+        '#/userinfo':                     {fragment:'fragment/userInfo.html',                          rootrest: '/user/info',                                                ctrl: ctrlUserInfo},
         '#/servicecardetail':             {view:'product-service-car-detail.html',                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',                             rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/serviceactivitydetail':       {view:'product-activity-detail.html',                      rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
