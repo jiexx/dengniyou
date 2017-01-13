@@ -718,7 +718,7 @@
             if(data.Replace) {
                 ok:
                     for(var i = 0 ; i < data.Plan.PlanInfo.PlanSchedule.length ; i ++ ){
-                        var ps = data.Plan.PlanInfo.PlanSchedule[j];
+                        var ps = data.Plan.PlanInfo.PlanSchedule[i];
                         for ( var j = 0; j < ps.Spot.length ; j ++ ) {
                             if(ps.Spot[j] === data.SpotItem) {
                                 ps.Spot[j]= {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
@@ -807,7 +807,7 @@
                 if(data.PlanInfo.CreateUserID == usr.UserID) {
                     $.rogerPost('/delete/plan', {PlanID: data.PlanInfo.PlanID}, function (respJSON) {
                         data.PlanInfo.CreateUserID = usr.UserID;
-                        $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                        $.rogerPost('/new/tmpplan/visitor', data, function (respJSON) {
                             if(respJSON.PlanInfo.insertId > 0 ) {
                                 data.PlanInfo.PlanID = respJSON.PlanInfo.insertId;
                                 $.rogerNotice({Message: '定制方案保存成功'});
@@ -819,7 +819,7 @@
                     });
                 }else {
                     data.PlanInfo.CreateUserID = usr.UserID;
-                    $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                    $.rogerPost('/new/tmpplan/visitor', data, function (respJSON) {
                         if(respJSON.PlanInfo.insertId > 0 ) {
                             data.PlanInfo.PlanID = respJSON.PlanInfo.insertId;
                             $.rogerNotice({Message: '定制方案保存成功'});
@@ -860,7 +860,7 @@
                 var data = {PlanInfo: PS.Plan.PlanInfo};
                 var usr = $.rogerGetLoginUser();
                 PS.Plan.PlanInfo.CreateUserID = guide[0];
-                $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                $.rogerPost('/new/tmpplan/visitor', data, function (respJSON) {
                     var usr = $.rogerGetLoginUser();
                     var newWin = window.open('about:blank');
                     newWin.location.href = 'http://'+window.location.host
