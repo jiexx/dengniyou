@@ -126,13 +126,13 @@
 			<div class="col-md-11 row" >
 				{{if $data.SpotDetail.PicURL}}
 				<div class="col-md-3">
-					<div class="imgBox">
+					<div class="imgBox" name="autoPrefix">
 						<img src="${$data.SpotDetail.PicURL}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/PicURL" ></a>
 					</div>
 				</div>
 				{{else}}
-				<div class="col-md-3">
+				<div class="col-md-3" name="autoPrefix">
 					<div class="imgBox addImg"  data-op="change" data-pointer="/SpotDetail/PicURL" data-action="image" >+</div>
 				</div>
 				{{/if}}

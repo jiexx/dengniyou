@@ -37,7 +37,7 @@
       ]
     },
     "VehicleCharges": {
-      "sql": "select chargeID as chargeID, serviceID as serviceID, chargeType as chargeType, chargePrice as chargePrice from traveluserdb.tab_servicevehiclecharge where ServiceID=?",
+      "sql": "select chargeID as chargeID, serviceID as serviceID, chargeType as chargeType, chargePrice as chargePrice from traveluserdb.tab_servicevehiclecharge where ServiceID=? order by chargeType",
       "params": [
         "ServiceID"
       ]

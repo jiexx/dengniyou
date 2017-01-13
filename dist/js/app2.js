@@ -1661,7 +1661,25 @@ $(function () {
                      insurance: '',
                      luggage: ''
                  }],
-                 vehicleCharges: [ ],
+                 vehicleCharges: [
+                 {
+                     chargeID:100674,
+                     chargePrice:5,
+                     chargeType:1,
+                     serviceID:100388
+                 },
+                 {
+                     chargeID:100675,
+                     chargePrice:3,
+                     chargeType:2,
+                     serviceID:100388
+                 },
+                 {
+                     chargeID:100676,
+                     chargePrice:3,
+                     chargeType:3,
+                     serviceID:100388
+                 }],
                  vehicleAddress: [ ],
                  vehicleSchedule: [ ],
                  labels: ["咖啡简餐"],
@@ -1743,14 +1761,15 @@ $(function () {
                             if(key){
                                 if(typeof source[key]==='object'){
                                    //deepCopy(des[key],source[key])
-                                   if(key == 'picURLs'){
-                                        for(var i = 0; i < source[key].length ; i++){
-                                            des[key][i] = img + source[key][i];
-                                        }
-                                    }else{
-                                        des[key] = JSON.stringify(source[key]);
-                                        des[key] = JSON.parse(des[key]);
-                                    }                                   
+                                   des[key] = JSON.stringify(source[key]);
+                                   des[key] = JSON.parse(des[key]);
+                                   // if(key == 'picURLs'){
+                                   //      for(var i = 0; i < source[key].length ; i++){
+                                   //          des[key][i] = img + source[key][i];
+                                   //      }
+                                   //  }else{
+                                        
+                                   //  }                                   
                                 }else{
                                         des[key] = source[key];
                                                                    
@@ -1820,7 +1839,7 @@ $(function () {
             $('#facilityconfirm').on('click',function(){
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                $.rogerRefresh(tmplItem);
+                //$.rogerRefresh(tmplItem);
             });    
 
         });
@@ -2438,10 +2457,33 @@ $(function () {
             },
             IMGHOST : $.rogerImgHost()
         };
-    },ctrlEquipEdit=function(Plan, realView){
-        $('#save').rogerOnceClick(Plan, function(e){
+    },ctrlEquipEdit=function(Facility, realView){
+
+        $('#save').rogerOnceClick(Facility, function(e){
+            var usr =$.rogerGetLoginUser();
+            console.log('ctrlEquipEdit');
+            console.log(JSON.stringify(e.data.Facility));
+
+            temp = e.data.Facility;
+
+            // var data = {
+            //     reqUploadService:temp,
+            //     // file:filedata,
+            //     // coverFile:coverFiledata,
+            //     IMGHOST:e.data.IMGHOST
+            // };
+            // $.rogerPost('/new/service/car', data, function(respJSON){
+            //     $.rogerNotice({Message:'保存包车成功'});
+            //
+            //     if(respJSON){
+            //         //跳转到详情页面
+            //         $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+            //     }
+            //
+            // });
 
         });
+
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
