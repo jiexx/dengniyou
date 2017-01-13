@@ -116,7 +116,7 @@
 				{{each(i,pic) $data.Facility.pics}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${pic}">
+						<img name="autoPrefix" src="${pic}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/Facility/pics/${i}"></a>
 					</div>
 				</div>
@@ -133,7 +133,7 @@
 				{{if $data.Facility.coverURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.Facility.coverURL}">
+						<img name="autoPrefix" src="${$data.Facility.coverURL}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/Facility/coverURL" ></a>
 					</div>
 				</div>
