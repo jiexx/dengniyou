@@ -761,10 +761,11 @@ $(function () {
             SpotLabels: {
                 LabelIDs:['318']
             },
+            ClassifyLabels:[]
         },        
         IMGHOST: "http://123.59.144.47/" };
 
-        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": SpotsID, "userID": usr.userID}, function (respJSON, reqJSON) {
+        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
             if(respJSON){
                 console.log(JSON.stringify(respJSON));
                 if (null != respJSON["SpotDetail"] && respJSON["SpotDetail"].length > 0) {
@@ -804,6 +805,9 @@ $(function () {
                     console.log(returnvalue["SpotDetail"])
 
                 }
+                if (null != respJSON["ClassifyLabels"] && '' != respJSON["ClassifyLabels"]) {
+                     returnvalue['SpotDetail']["ClassifyLabels"] = respJSON["ClassifyLabels"];
+                 }
             }
 
             $.rogerRefresh(returnvalue);
@@ -813,7 +817,17 @@ $(function () {
     },ctrlAttractionEdit=function(Spots, realView){
 
         Spots.createLabel = function(Spots, Labels){
-            Labels .push('');
+            var newLabel = [];
+            $('#attrLabel li input').each(function(){
+                if ($(this).prop('checked')) {
+                    var temp = $(this).next().text();
+                    newLabel.push(temp);
+                }
+            })
+            //$('#attrLabelLis').modal('hide');
+
+            Spots.SpotDetail.Labels = newLabel;
+            console.log(Spots);
             $.rogerRefresh(Spots);
         };
 
@@ -1577,16 +1591,23 @@ $(function () {
                          result["DetailMain"]["HouseInfo"] = respJSON["HouseInfo"]
                      }
                      
-                    result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0]);
-                     function deepCopy(des,source) {      
+                    result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0],respJSON.IMGHOST);
+                     function deepCopy(des,source,img) {      
                         for (var key in source) {
                             if(key){
                                 if(typeof source[key]==='object'){
                                    //deepCopy(des[key],source[key])
-                                   des[key] = JSON.stringify(source[key]);
-                                   des[key] = JSON.parse(des[key]);
+                                   if(key == 'picURLs'){
+                                        for(var i = 0; i < source[key].length ; i++){
+                                            des[key][i] = img + source[key][i];
+                                        }
+                                    }else{
+                                        des[key] = JSON.stringify(source[key]);
+                                        des[key] = JSON.parse(des[key]);
+                                    }                                   
                                 }else{
-                                   des[key] = source[key];
+                                        des[key] = source[key];
+                                                                   
                                 }
                               //des[key] = typeof source[key]==='object'? deepCopy(des[key],source[key]): source[key];
                               //des[key] = source[key];
@@ -1657,15 +1678,15 @@ $(function () {
                 // coverFile:coverFiledata,
                 IMGHOST:e.data.IMGHOST
             };
-            // $.rogerPost('/new/service/car', data, function(respJSON){
-            //     $.rogerNotice({Message:'保存包车成功'});
+            $.rogerPost('/new/service/car', data, function(respJSON){
+                $.rogerNotice({Message:'保存包车成功'});
 
-            //     if(respJSON){
-            //         //跳转到详情页面
-            //         $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
-            //     }
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+                }
 
-            // });
+            });
 
         });
 
