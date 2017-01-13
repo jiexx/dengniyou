@@ -13,14 +13,12 @@
                 <div class="navList pull-right">
                   <i class="glyphicon glyphicon-menu-left pull-left" id="preBtn"></i>
                   <ul class="pull-left">
-                    {{each(k,v) PlanSchedule}}
-                    {{if  ("__countScheduleID" != k)  }}
+                    {{each  $data.PlanInfo.PlanSchedule}}
                     <li>
-                      <a href="#day01">
-                        <button type="button" class="btn btn-default">第${v.__index}天</button>
+                      <a href="#day${$index+1}">
+                        <button type="button" class="btn btn-default">第${$index+1}天</button>
                       </a>
                     </li>
-                    {{/if}}
                     {{/each}}
                   </ul>
                   <i class="glyphicon glyphicon-menu-right pull-left" id="nextBtn"></i>
@@ -35,7 +33,9 @@
                 <div class="pass">
                   <i class="glyphicon glyphicon-map-marker"></i>
                   经过：
-                  <span id="passing">{{each(k, v) PlanSchedule}}{{if  ("__countScheduleID" != k)  }} ${v.__values[0].CountryNameCn}${v.__values[0].CityNameCn}${v.__values[0].CountryNameCn}${v.__values[0].CityNameCn}{{/if}}{{/each}}
+                  <span id="passing">{{each(k, v) $data.PlanInfo.PlanSchedule}}
+                    ${v.CountryNameCn}${v.CityNameCn}${v.CountryNameCn}${v.CityNameCn}
+                    {{/each}}
 							</span>
                 </div>
               </div>
@@ -51,24 +51,23 @@
               </div>
               <div class="scheduleDetails">
                 <ul>
-                  {{each(k,v) PlanSchedule}}
-                  {{if  ("__countScheduleID" != k)  }}
+                  {{each(k,day) $data.PlanInfo.PlanSchedule}}
                   <li id="day01">
-                    <h3 class="day">第${v.__index}天</h3>
+                    <h3 class="day">第${k}天</h3>
                     <div class="content">
                       <ul class="clearfix">
-                        {{each  v.__values}}
+                        {{each  day.Spot}}
                         <li style="width:350px">
                           <div class="picText">
                             {{if ScheduleType == 0  }}
-                            {{if PicURL == null }}<img src="../img/CityIcon.png" alt="">{{/if}}
-                            {{if PicURL != null }}<img src="${ $data.IMGHOST }${PicURL}" alt="">{{/if}}
+                            {{if SpotPicUrl == null }}<img src="../img/CityIcon.png" alt="">{{/if}}
+                            {{if SpotPicUrl != null }}<img src="${ $data.IMGHOST }${SpotPicUrl}" alt="">{{/if}}
                             {{/if}}
                             {{if ScheduleType == 1 }}
                             <img src="../img/airPlaneIcon.png" alt="">
                             {{/if}}
                             {{if (ScheduleType == 2 ||ScheduleType == 3 ||ScheduleType == 4 ||ScheduleType == 5) }}
-                            <img data-src="${ $data.IMGHOST }${PicURL}">
+                            <img data-src="${ $data.IMGHOST }${SpotPicUrl}">
                             {{/if}}
                             <div class="text media-body">
                               <div class="media-heading">${NameCh}</div>
@@ -91,7 +90,6 @@
                       </ul>
                     </div>
                   </li>
-                  {{/if}}
                   {{/each}}
                 </ul>
               </div>

@@ -253,8 +253,9 @@
                     $.rogerShowLogin();
                     return;
                 }
-                $(this).attr("href","talk?uid="
-                    +usr.UserID+'&uname='+usr.UserName+'&picurl='+response.IMGHOST+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID+'&msg='+data);
+                var newWin = window.open('about:blank');
+                newWin.location.href = 'http://'+window.location.host
+                    +'/talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID+'&msg=D'+data;
             });
         //});
 		
@@ -685,9 +686,9 @@
                 ok:
                     for(var i = 0 ; i < data.Plan.PlanInfo.PlanSchedule.length ; i ++ ){
                         var ps = data.Plan.PlanInfo.PlanSchedule[i];
-                        for ( var j = 0; j < ps.Spot.length ; i ++ ) {
-                            if(ps.Spot[i] === data.SpotItem) {
-                                ps.Spot[i]= {CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                        for ( var j = 0; j < ps.Spot.length ; j ++ ) {
+                            if(ps.Spot[j] === data.SpotItem) {
+                                ps.Spot[j]= {CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
                                     SpotID:spot[0],SpotName:spot[1],SpotLocalName:spot[2],SpotTravelTime:spot[5],HotelStarLevel:spot[4],ScheduleType:parseInt(spot[6])+1,SpotPicUrl:spot[3]};
                                 break ok;
                             }
@@ -718,10 +719,10 @@
             if(data.Replace) {
                 ok:
                     for(var i = 0 ; i < data.Plan.PlanInfo.PlanSchedule.length ; i ++ ){
-                        var ps = data.Plan.PlanInfo.PlanSchedule[i];
-                        for ( var j = 0; j < ps.Spot.length ; i ++ ) {
-                            if(ps.Spot[i] === data.SpotItem) {
-                                ps.Spot[i]= {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
+                        var ps = data.Plan.PlanInfo.PlanSchedule[j];
+                        for ( var j = 0; j < ps.Spot.length ; j ++ ) {
+                            if(ps.Spot[j] === data.SpotItem) {
+                                ps.Spot[j]= {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
                                     SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''}
                                 break ok;
                             }
@@ -800,20 +801,35 @@
             var data = e.data;
             var item = getItemWithStartCityID(data.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
-                    Plan.PlanInfo.PlanID = 0;
-                    var data = {PlanInfo: e.data.PlanInfo};
-                    data.PlanInfo.StartCityID = item.CityID;
-                    data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
-                    var usr = $.rogerGetLoginUser();
+                var data = {PlanInfo: e.data.PlanInfo};
+                data.PlanInfo.StartCityID = item.CityID;
+                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                var usr = $.rogerGetLoginUser();
+                if(data.PlanInfo.CreateUserID == usr.UserID) {
+                    $.rogerPost('/delete/plan', {PlanID: data.PlanInfo.PlanID}, function (respJSON) {
+                        data.PlanInfo.CreateUserID = usr.UserID;
+                        $.rogerPost('/new/tmpplan', data, function (respJSON) {
+                            if(respJSON.PlanInfo.insertId > 0 ) {
+                                data.PlanInfo.PlanID = respJSON.PlanInfo.insertId;
+                                $.rogerNotice({Message: '定制方案保存成功'});
+                                $('#show').removeClass("btn btn-warning invisible");
+                                $('#show').addClass("btn btn-warning");
+                                $('#show').attr('href','#/templateplandetail?version=2&PlanID='+respJSON.PlanInfo.insertId );
+                            }
+                        });
+                    });
+                }else {
                     data.PlanInfo.CreateUserID = usr.UserID;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
                         if(respJSON.PlanInfo.insertId > 0 ) {
+                            data.PlanInfo.PlanID = respJSON.PlanInfo.insertId;
                             $.rogerNotice({Message: '定制方案保存成功'});
                             $('#show').removeClass("btn btn-warning invisible");
                             $('#show').addClass("btn btn-warning");
                             $('#show').attr('href','#/templateplandetail?version=2&PlanID='+respJSON.PlanInfo.insertId );
                         }
                     });
+                }
             }else {
                 $.rogerNotice({Message: '请选择起始城市'});
             }
@@ -828,10 +844,10 @@
         };
     };
     var ctrlGuideChooser = function (PS, realView) {
-        realView.rogerCropImages();
         $('#guideChooser').modal('show');
         $('#guidelist').html('').append('<li class="list-group-item">导游</li>');
         $('#guidelist').rogerDialogTrigger('fragment/dialog-guidelist.html', '/dialog/guide', {}, function (data, realView) {
+            realView.rogerCropImages();
             $("#guidelist .list-group-item").click(function(e) {
                 $("#guidelist .list-group-item").removeClass("active");
                 $(this).addClass("active");
@@ -844,13 +860,13 @@
                 PS.Plan.PlanInfo.PlanID = 0;
                 var data = {PlanInfo: PS.Plan.PlanInfo};
                 var usr = $.rogerGetLoginUser();
-                data.PlanInfo.CreateUserID = guide[0];
+                PS.Plan.PlanInfo.CreateUserID = guide[0];
                 $.rogerPost('/new/tmpplan', data, function (respJSON) {
                     var usr = $.rogerGetLoginUser();
                     var newWin = window.open('about:blank');
                     newWin.location.href = 'http://'+window.location.host
                         +'/talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+guide[0]
-                        +'&msg='+respJSON.PlanInfo[0].insertId;
+                        +'&msg='+respJSON.PlanInfo.insertId;
                     $('#guideChooser').modal('hide');
                 });
             }
@@ -876,7 +892,7 @@
         '#/homesearchlist':          {fragment: 'fragment/home-search-list.html',         rootrest:'/home/search',                 ctrl: ctrlHomeSearchList},
 
         '#/templateplanedit':        {fragment: 'fragment/visitor-tempplan-edit.html',   rootrest:'/plan/detail/tmpl',           ctrl: ctrlTemplateplanNew},
-        '#/templateplandetail':      {view: 'visitor-tempplan-detail.html',                rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
+        '#/templateplandetail':      {view: 'visitor-tempplan-detail.html',                rootrest: '/plan/detail/tmpl2',        ctrl: ctrlTemplateplanDetail},
 
         '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                       ctrl: ctrlCityChooser},
         '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                       ctrl: ctrlSpotChooser},

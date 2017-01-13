@@ -199,7 +199,11 @@ demo.controller("main", ["$scope", "WebIMWidget", "$http", '$location', function
                 console.log(1,WebIMWidget.providerdata.currentUserInfo);
                 WebIMWidget.setConversation(WebIMWidget.EnumConversationType.PRIVATE, tid, '对话中');
                 if(msg && msg.trim()!='' && msg != undefined && msg != 'undefined'){
-                    $scope.conversation.messageContent = '请帮忙定制方案 http://10.101.1.219:8888/#/templateplandetail?version=2&PlanID='+msg;
+                    if(msg.indexOf('D') > -1) {
+                        $scope.conversation.messageContent = '咨询方案 http://10.101.1.219:8888/#/plandetail?PlanID='+msg.substring(1);
+                    }else {
+                        $scope.conversation.messageContent = '请帮忙定制方案 http://10.101.1.219:8888/#/templateplandetail?version=2&PlanID='+msg;
+                    }
                 }
 
                 WebIMWidget.show();

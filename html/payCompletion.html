@@ -46,9 +46,9 @@
   <div class="stepPart active" id="partThree">
       <h3 class="partTitle">订单信息 
       {{if Status==1}}<small class="fr">订单状态：未支付</small>
-      {{else Status==2}}<small class="fr">订单状态：待接单</small>
-      {{else Status==3}}<small class="fr">订单状态：待完成</small>
-      {{else Status==4}}<small class="fr">订单状态：待评价</small>
+      {{else Status==2}}<small class="fr">订单状态：已支付，待接单</small>
+      {{else Status==3}}<small class="fr">订单状态：已接单，待完成</small>
+      {{else Status==4}}<small class="fr">订单状态：已完成，待评价</small>
       {{else Status==5}}<small class="fr">订单状态：已关闭</small>
       {{else Status==6}}<small class="fr">订单状态：已结算</small>
       {{/if}}
@@ -126,14 +126,14 @@
               </div>
             </div>
           </div>
-        </div>
+        </div><!-- end projectInfo -->
         <div class="aboutPrice">
           <ul>
             <li>价格：<span>￥${costmoney}</span></li>
             <li>优惠券：<span>-￥0</span></li>
             <li>实付款：<span class="priceAct">￥${costmoney}</span></li>
           </ul>
-        </div>
+        </div> <!-- end aboutPrice -->
         <div class="detailInfo">
           <div class="row">
             <div class="col-md-2">
@@ -178,7 +178,7 @@
               </div>
             </div>
           </div>
-        </div>
+        </div> <!-- end detailInfo -->
         <div class="aboutOrder">
           <div class="row">
             <div class="col-md-6">
@@ -213,7 +213,7 @@
               </dl>
             </div>
           </div>
-        </div>
+        </div><!-- end aboutOrder -->
         
 
         <div class="btnList">

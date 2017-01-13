@@ -1,18 +1,18 @@
-<div class="form-group">
+<!--<div class="form-group">
 	<input class="form-control" id="searchinput" type="search" placeholder="..." />
-</div>
+</div>-->
 <div id="searchlist" class="list-group" style="max-height:302px;overflow-y: scroll;">
 	{{if $data.User.length}}
 	{{each $data.User}}
 	<a href="javascript:void(0)" class="list-group-item" data-info="${UserID}:${UserName}">
 		<div class="media">
-			<div class="media-left">
-				<img class="media-object" data-src="${ $data.IMGHOST }${AvatarPicURL}" style="width:100px"></img>
+			<div class="media-left" style="width:50px;height:50px">
+				<img class="media-object" data-src="${ $data.IMGHOST }${AvatarPicURL}" ></img>
 			</div>
 			<div class="media-body">
-				<h5 class="media-heading">${UserName}${AreaCode} </h5>
-				<p class="list-group-item-text">${UserMobile}</p>
-				<p class="list-group-item-text">${PersonIntroduct}</p>
+				<h5 class="media-heading">${UserName} </h5>
+				<!--<p class="list-group-item-text">${AreaCode}${UserMobile}</p>-->
+				<p class="list-group-item-text" style="width:200px;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">${PersonIntroduct}</p>
 				<p class="list-group-item-text">${CountryName}${CityName}</p>
 			</div>
 		</div>

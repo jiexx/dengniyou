@@ -69,7 +69,11 @@
     <ul id="RunTopic">
     {{each(i,p) PlansByCountry['中国'].__values[0].Plans}}
       <li>
-      <a href="#/plandetail?PlanID=${p.PlanID}">
+        {{if p.CreateType == 1}}
+        <a class="pull-left" href="#/plandetail?PlanID=${p.PlanID}">
+          {{else}}
+          <a class="pull-left" href="#/plandetailshort?PlanID=${ p.PlanID}">
+            {{/if}}
         <div class="detail">
           <div class="img">
           <img data-src="${ $data.IMGHOST }${p.PicURL}" alt="">
@@ -173,7 +177,11 @@
                   <div class="well mid">
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
-                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
+                        <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{else}}
+                            <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                            {{/if}}
                       <div class="overlay">
                         <ul class="head">
       										<li>
@@ -197,7 +205,11 @@
                     {{if PlansByContinent[i].Plans[1]}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[1].PicURL}" alt="">
-                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[1].PlanID}">
+                        {{if $data.PlansByContinent[i].Plans[1].CreateType == 1}}
+                        <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[1].PlanID}">
+                          {{else}}
+                          <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[1].PlanID}">
+                            {{/if}}
                       <div class="overlay">
                         <ul class="head ">
       										<li>
@@ -213,7 +225,11 @@
                     {{else}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
-                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
+                        <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{else}}
+                          <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                            {{/if}}
                       <div class="overlay">
                         <ul class="head ">
                           <li>
@@ -234,7 +250,11 @@
                     {{if PlansByContinent[i].Plans[2]}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[2].PicURL}" alt="">
-                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[2].PlanID}">
+                        {{if $data.PlansByContinent[i].Plans[2].CreateType == 1}}
+                        <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[2].PlanID}">
+                          {{else}}
+                          <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[2].PlanID}">
+                            {{/if}}
                       <div class="overlay">
                         <ul class="head ">
       										<li>
@@ -250,7 +270,11 @@
                     {{else}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
-                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
+                        <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{else}}
+                          <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                            {{/if}}
                       <div class="overlay">
                         <ul class="head ">
                           <li>
@@ -271,7 +295,11 @@
                     {{if PlansByContinent[i].Plans[3]}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[3].PicURL}" alt="">
-      								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[3].PlanID}">
+                        {{if $data.PlansByContinent[i].Plans[3].CreateType == 1}}
+                        <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[3].PlanID}">
+                          {{else}}
+                          <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[3].PlanID}">
+                            {{/if}}
                       <div class="overlay">
                         <ul class="head ">
       										<li>
@@ -287,7 +315,11 @@
                     {{else}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
-                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
+                        <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{else}}
+                          <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                            {{/if}}
                       <div class="overlay">
                         <ul class="head ">
                           <li>
@@ -308,7 +340,11 @@
                     {{if PlansByContinent[i].Plans[4]}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[4].PicURL}" alt="">
-      								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[4].PlanID}">
+                      {{if $data.PlansByContinent[i].Plans[4].CreateType == 1}}
+                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[4].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[4].PlanID}">
+                          {{/if}}
                       <div class="overlay">
                         <ul class="head ">
       										<li>
@@ -324,7 +360,11 @@
                     {{else}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
-                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
+                        <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{else}}
+                          <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                            {{/if}}
                       <div class="overlay">
                         <ul class="head ">
                           <li>
@@ -349,7 +389,11 @@
                     {{if PlansByContinent[i].Plans[5]}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[5].PicURL}" alt="">
-      								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[5].PlanID}">
+                      {{if $data.PlansByContinent[i].Plans[5].CreateType == 1}}
+                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[5].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[5].PlanID}">
+                          {{/if}}
                       <div class="overlay">
                         <ul class="head ">
       										<li>
@@ -365,7 +409,11 @@
                     {{else}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{/if}}
                       <div class="overlay">
                         <ul class="head ">
                           <li>
@@ -384,7 +432,11 @@
                     {{if PlansByContinent[i].Plans[6]}}
                     <div class="hovereffect">
                         <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[6].PicURL}" alt="">
-        								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[6].PlanID}">
+                      {{if $data.PlansByContinent[i].Plans[6].CreateType == 1}}
+                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[6].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[6].PlanID}">
+                          {{/if}}
                         <div class="overlay">
                           <ul class="head ">
         										<li>
@@ -400,7 +452,11 @@
                     {{else}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{/if}}
                       <div class="overlay">
                         <ul class="head ">
                           <li>
@@ -425,7 +481,11 @@
                     {{if PlansByContinent[i].Plans[7]}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[7].PicURL}" alt="">
-      								<a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[7].PlanID}">
+                      {{if $data.PlansByContinent[i].Plans[7].CreateType == 1}}
+                      <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[7].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[7].PlanID}">
+                          {{/if}}
                       <div class="overlay">
                         <ul class="head ">
       										<li>
@@ -441,7 +501,11 @@
                     {{else}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{/if}}
                       <div class="overlay">
                         <ul class="head ">
                           <li>
@@ -460,7 +524,11 @@
                     {{if PlansByContinent[i].Plans[8]}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[8].PicURL}" alt="">
+                      {{if $data.PlansByContinent[i].Plans[8].CreateType == 1}}
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[8].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[8].PlanID}">
+                          {{/if}}
                       <div class="overlay">
                         <ul class="head ">
       										<li>
@@ -476,7 +544,11 @@
                     {{else}}
                     <div class="hovereffect">
                       <img class="img-responsive" data-src="${ $data.IMGHOST }${ $data.PlansByContinent[i].Plans[0].PicURL}" alt="">
+                      {{if $data.PlansByContinent[i].Plans[0].CreateType == 1}}
                       <a class="pull-left" href="#/plandetail?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                        {{else}}
+                        <a class="pull-left" href="#/plandetailshort?PlanID=${ $data.PlansByContinent[i].Plans[0].PlanID}">
+                          {{/if}}
                       <div class="overlay">
                         <ul class="head ">
                           <li>
