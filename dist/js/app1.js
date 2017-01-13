@@ -685,9 +685,9 @@
                 ok:
                     for(var i = 0 ; i < data.Plan.PlanInfo.PlanSchedule.length ; i ++ ){
                         var ps = data.Plan.PlanInfo.PlanSchedule[i];
-                        for ( var j = 0; j < ps.Spot.length ; i ++ ) {
-                            if(ps.Spot[i] === data.SpotItem) {
-                                ps.Spot[i]= {CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                        for ( var j = 0; j < ps.Spot.length ; j ++ ) {
+                            if(ps.Spot[j] === data.SpotItem) {
+                                ps.Spot[j]= {CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
                                     SpotID:spot[0],SpotName:spot[1],SpotLocalName:spot[2],SpotTravelTime:spot[5],HotelStarLevel:spot[4],ScheduleType:parseInt(spot[6])+1,SpotPicUrl:spot[3]};
                                 break ok;
                             }
@@ -718,10 +718,10 @@
             if(data.Replace) {
                 ok:
                     for(var i = 0 ; i < data.Plan.PlanInfo.PlanSchedule.length ; i ++ ){
-                        var ps = data.Plan.PlanInfo.PlanSchedule[i];
-                        for ( var j = 0; j < ps.Spot.length ; i ++ ) {
-                            if(ps.Spot[i] === data.SpotItem) {
-                                ps.Spot[i]= {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
+                        var ps = data.Plan.PlanInfo.PlanSchedule[j];
+                        for ( var j = 0; j < ps.Spot.length ; j ++ ) {
+                            if(ps.Spot[j] === data.SpotItem) {
+                                ps.Spot[j]= {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
                                     SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''}
                                 break ok;
                             }
