@@ -6,6 +6,13 @@ $(function () {
 	$.ajaxPrefilter(function( options, original_Options, jqXHR ) {
 		options.async = true;
 	});
+    $(window).on("popstate", function(e) {
+        if(e.originalEvent.state === null) {
+            $.rogerLocation('#/');
+        } else {
+            $.rogerLocation(e.originalEvent.state.url);
+        }
+    });
 });
 (function( $, undefined ){
 	$.extend({
@@ -118,6 +125,7 @@ $(function () {
 		},
 		_rogerSetLocation: function(loc) {
 			//window._rogerCurrLink = loc;
+            history.pushState({ url: loc }, "", loc);
 			window.name = loc;
 		},
 		_rogerGetLocation: function() {
