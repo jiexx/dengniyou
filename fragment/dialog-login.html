@@ -1,167 +1,109 @@
-<!-- <script type="text/javascript">
-$('#login-form').rogerSubmit('/login', function(respJSON){
-	if(respJSON[0] && respJSON[0].UserID > 0) {
-		if(respJSON[0].UserType == 2) {
-			console.log('/dashboard.html?UserID='+respJSON[0].UserID);
-			window.location = '/dashboard.html?UserID='+respJSON[0].UserID;
-		}else if(respJSON[0].Auth == 8) {
-			window.location = '/dashboard-manager.html';
-		}else {
-			window.location = '/';
-		}
-		$.removeCookie("dnyuser");
-		$.cookie("dnyuser", respJSON[0], { expires : 10 });
-	}
-});
-</script> -->
-
 <style>
-	#homeLogin .modal-dialog{margin-top: 200px;}
-	/*loginBox Start*/
-	.loginBox { height: 420px; background-color: #fff; position: relative; border-radius: 5px; overflow: hidden; }
-	.loginBox .content{background-color: #fff;}
-	.loginBox .nav-tabs li { float: left; width: 50%; height: 76px; text-align: center; line-height: 76px; background-color: #f9f9f9; font-size: 28px;  }
-	.loginBox .nav-tabs li a{float:left; width:100%; height: 100%; line-height: 50px; border-radius: 0;}
-	.loginBox .nav-tabs li a:hover {border-color: #fff;}
-	.loginBox .nav-tabs li:first-child { font-size: 32px; }
-	.loginBox .nav-tabs li.active { background-color: #fff; }
-	.loginBox .nav-tabs li.active a{border:0;}
-	.loginBox .tab-content{width:500px; margin:0 auto;}
-	.loginBox .tab-content > div { display: none; }
-	.loginBox .tab-content > div.active { display: block; }
-	.loginBox .tab-content .form { padding-top: 20px; }
-	.loginBox .form .form-group input + label { color: #fa703e; font-weight: normal; font-size: 12px; }
-	.loginBox #logLeftTab .form .form-group { height: 75px; }
-	.loginBox #logRightTab .form .form-group { height: 55px; }
-	.loginBox #logRightTab .form .form-group > .inputBox input { width: 80%; }
-	.loginBox #logRightTab .form { padding-top: 30px; }
-	.loginBox .footer { padding-top: 20px; position: absolute; bottom: 0; left: 0; right: 0; width:500px; margin:0 auto;}
-	.loginBox .footer .btn-warning { background-color: #fa703e; }
-	.loginBox .footer p { margin-top: 12px; margin-bottom: 8px; text-align: center; }
-	.loginBox #login_lost_btn { float: right; color: #ff4800; text-decoration: underline; }
-	.loginBox .has-feedback span { color: #c8c8c8; }
-	.loginBox #logRightTab .row { margin-top: 20px; }
-	.loginBox .form-control { height: 40px; }
-	.loginBox .inputBox { height: 40px; border: 1px solid #c2c2c2; border-radius: 5px; }
-	.loginBox .inputBox input, .inputBox input:focus { border: none; outline: none; margin-left: 6px; }
-	.loginBox .inputBox i { font-size: 16px; color: #c8c8c8; line-height: 38px; height: 38px; margin-left: 12px; }
-	.loginBox .inputBox span { width: 1px; height: 24px; background-color: #c2c2c2; }
-	.loginBox #phoneCode { width: 130px; }
-	.loginBox #phoneCodeBtn { height: 40px; }
-	.loginBox img { height: 40px; width: 120px; }
-	.loginBox input[type='checkbox']{height: 16px; width: 16px; margin-top: 1px;}
-	/*loginBox End*/
-	/*register Start*/
-	.register-header{height: 60px; width:90%; margin:0 auto; margin-bottom: 20px}
-	.register-header img{height: 60px; vertical-align: bottom;}
-	.register-header h3{display: inline-block;}
-	.register-header span{float:right; height: 6px; line-height: 60px;}
-	.register-form{padding:10px 0 20px;}
-	.register-form label>i{color:#fa703e;display: inline-block; margin-right: 10px; font-size: 22px; line-height: 10px; vertical-align: bottom;}
-	.register-form p.passwordLeval{text-align: right; line-height: 16px; height: 16px; margin:10px 0 0;}
-	.register-form p.passwordLeval span{display: inline-block; width:30px; height: 16px; background-color: #CCC; text-align: center;}
-	.register-form p.passwordLeval span.active{background-color: #ffa63c;}
-	.register-form #verifyCode{width:100px; height: 34px;}
-	/*register End*/
+    .btn-warning{
+        background-color: #fa703e;
+    }
 </style>
-
-<form class="modal fade" id="homeLogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;" novalidate>
-	<div class="modal-dialog">
-		<div class="modal-content">
-	
-            <!-- Begin # DIV Form -->
-            <div id="div-forms">
-                <!-- Begin # Login Form -->
-                <div id="login-form"  >
-					<div class="loginBox">
-						<div class="content ">
-						  <!-- Tab nav -->
-						  <ul class="nav nav-tabs" id="myTabs"> 
-						    <li role="presentation" class="active" ><a href="#logLeftTab" role="tab" data-toggle="tab">登录</a></li>
-						    <li role="presentation" ><a href="#logRightTab" role="tab" data-toggle="tab">手机注册</a></li>
-						  </ul>
-						  <!-- Tab panes -->
-						  <div class="tab-content">
-						  	<!-- 账号密码登录 -->
-						    <div  role="tabpanel" class="tab-pane active" id="logLeftTab">
-								<div class="form">
-								  <div class="form-group">
-								    <label for="userName">用户名</label>
-								    <input type="text" class="form-control" id="loginName" name="loginName" placeholder="请输入用户名/手机号" required>
-								  </div>
-								  <div class="form-group has-feedback">
-								    <label for="password">密码</label>
-								    <input type="password" class="form-control" id="loginPass" name="loginPass" placeholder="请输入密码" required>
-								    <span class="glyphicon glyphicon-eye-open form-control-feedback " aria-hidden="true"></span>
-								  </div>
-								  <!--<div class="checkbox">
-								    <label><input type="checkbox"> 记住账户</label>
-								    <label><input type="checkbox"> 记住密码</label>
-									<a href="javascript:void(0);" id="login_lost_btn" >忘记密码</a>
-								  </div>-->
-								  <div class="footer">
-									<button type="submit" class="btn btn-block btn-warning btn-lg">登 录</button>
-									<p id="result" class="text-danger"></p>
-
-								  </div>
-								</div>
-						    </div>
-						    <!-- 账号密码登录结束 -->
-
-						    <!-- 电话登录 -->
-						    <div role="tabpanel" class="tab-pane" id="logRightTab">
-								<div class="form">
-								    <div class="form-group">
-								    	<div class="inputBox">
-								    		<i class="glyphicon glyphicon-user"></i>
-								    		<span class="line"></span> 
-								    		<input type="text" placeholder="手机号" id="loginNameCaptcha" name="loginName" required>
-								    	</div>
-							    	</div>
-
-									<div class="form-group">
-										<div class="row">
-											<div class="col-xs-12">
-												<input type="text" id="code" class="form-control input-short requir" id="loginPass2" name="loginPass" placeholder="密码" maxlength="6" required tabindex="3" autocomplete="off" />
-											</div>
-											<!-- <div class="col-sm-1">
-												<span class="icon-refresh" id="captchaRefresh">换一张</span>
-											</div> -->
-										</div>
-									</div>
-								  	<div class="form-group">
-								  		<div class="row">
-								  			<div class="col-xs-6">
-								  				<div class="inputBox">
-										    		<i class="glyphicon glyphicon-lock"></i>
-										    		<span class="line"></span> 
-										    		<input type="text" id="captcha"  name="captcha" placeholder="验证码" required>
-										    	</div>
-								  			</div>
-								  			<div class="col-xs-6">
-								  				<button type="button" class="btn btn-default " id="getCaptcha">获取手机动态密码</button>
-								  			</div>
-								  		</div>
-								    
-								  	</div>
-
-								  	<div class="footer">
-										<button type="submit" class="btn btn-block btn-warning btn-lg">注 册</button>
-										<p id="message" class="text-danger"></p>
-									</div>
-								</div>
-						    </div>
-							<!-- 电话登录结束 -->
-						  </div>
-						</div>
-				    </div>
-                </div>
-                <!-- End # Login Form -->
-                
+<form class="modal fade" id="homeLogin" tabindex="-1" novalidate>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="panel-body">
+                <!-- Tab nav -->
+                <ul class="nav nav-justified">
+                    <li><a href="#tab1" role="tab" data-toggle="tab" class="h2 active">登录</a></li>
+                    <li><a href="#tab2" role="tab" data-toggle="tab" class="h2">手机注册</a></li>
+                </ul>
             </div>
-            <!-- End # DIV Form -->
-            
-		</div>
-	</div>
+            <!-- Begin # Login Form -->
+            <div class="panel-body" id="login-form">
+                <div class="panel-body">
+                    <p id="message" class="h5 text-danger">&nbsp;</p>
+                </div>
+                <!-- Tab panes -->
+                <div class="tab-content">
+                    <!-- 账号密码登录 -->
+                    <div class="tab-pane active" id="tab1">
+                        <div class="form ">
+                            <div class="panel-body">
+                                <div class="form-group has-feedback">
+                                    <input type="text" class="form-control" name="loginName" placeholder="请输入手机号" required>
+                                    <span class="glyphicon glyphicon-user form-control-feedback " aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group has-feedback">
+                                    <input type="password" class="form-control" name="loginPass" placeholder="请输入密码" required>
+                                    <span class="glyphicon glyphicon-lock form-control-feedback " aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <!--<div class="checkbox">
+                            <label><input type="checkbox"> 记住账户</label>
+                            <label><input type="checkbox"> 记住密码</label>
+                            <a href="javascript:void(0);" id="login_lost_btn" >忘记密码</a>
+                            </div>-->
+                            <div class="footer panel-body">
+                                <button type="submit" class="btn btn-block btn-warning btn-lg">登 录</button>
+                            </div>
+                            <!--<div class="footer panel-body">
+                                <a href="#tab3" role="tab" data-toggle="tab" class="btn btn-link">忘记密码？</a>
+                            </div>-->
+                        </div>
+                    </div>
+                    <!-- 账号密码登录结束 -->
+
+                    <!-- 电话登录 -->
+                    <div class="tab-pane" id="tab2">
+                        <div class="form">
+                            <div class="panel-body">
+                                <div class="form-group has-feedback">
+                                    <input type="text" class="form-control" name="loginName" placeholder="请输入手机号" required>
+                                    <span class="glyphicon glyphicon-user form-control-feedback " aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="form-group has-feedback">
+                                    <input type="password" class="form-control" name="loginPass" placeholder="请输入密码" required>
+                                    <span class="glyphicon glyphicon-lock form-control-feedback " aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="input-group">
+                                    <input type="text" name="captcha" class="form-control" placeholder="请输入验证码" required>
+                                    <div class="input-group-btn getCaptcha"><span class="btn btn-default glyphicon glyphicon-refresh"></span></div>
+                                </div>
+                            </div>
+                            <div class="footer panel-body">
+                                <button type="submit" class="btn btn-block btn-warning btn-lg">注 册</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 电话登录结束 -->
+                    <!-- 电话登录 -->
+                    <div role="tabpanel" class="tab-pane" id="tab3">
+                        <div class="form">
+                            <div class="panel-body">
+                                <div class="form-group has-feedback">
+                                    <input type="text" class="form-control" name="loginName" placeholder="请输入手机号" required>
+                                    <span class="glyphicon glyphicon-user form-control-feedback " aria-hidden="true"></span>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="input-group">
+                                    <input type="text" name="captcha" class="form-control" placeholder="请输入验证码" required>
+                                    <div class="input-group-btn getCaptcha" ><i class="btn btn-default  glyphicon glyphicon-refresh"></i></div>
+                                </div>
+                            </div>
+                            <div class="footer panel-body">
+                                <button type="submit" class="btn btn-block btn-warning btn-lg">登 录</button>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 电话登录结束 -->
+                </div>
+
+            </div>
+            <!-- End # Login Form -->
+
+        </div>
+    </div>
 </form>
-    <!-- END # MODAL LOGIN-->
+<!-- END # MODAL LOGIN-->

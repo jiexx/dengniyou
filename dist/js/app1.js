@@ -203,6 +203,7 @@
 		$('.commit').rogerOnceClick(Comment, function(e){
 			var user = $.rogerGetLoginUser()
 			if(!user) {
+                $.rogerLogin('#homeLogin', '/login');
 				$.rogerShowLogin();
 				return;
 			}

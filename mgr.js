@@ -7,6 +7,7 @@ var app = express();
 var router = express.Router();
 var fs = require("fs");
 var request = require('request');
+var user = require("./user");
 var db = require("./db");
 var modal = require("./modal2");
 var FdfsClient = require('fdfs');
@@ -232,71 +233,26 @@ app.post('/new/service/car', upload.array(), function(req, res) {
     //     }
     // );
 });
-var usr = [];
-function registe(req,res) {
-    var i = 0;
-    var now = new Date().getTime();
-    for(i in usr) {
-        if(usr[i].loginName == req.body.loginName) {
-            break;
-        }
-    }
-    if(i >= usr.length) {
-        res.send(JSON.stringify({message:'请先获取验证码'}));
-        return;
-    }
-    var milisec_diff = usr[i].time < now  ? now - usr[i].time :usr[i].time - now;
-    if(milisec_diff > 600000) {
-        res.send(JSON.stringify({message:'验证码超时'}));
-        usr.splice(i,1);
-        return;
-    }
-    if(usr[i].captcha == req.body.captcha) {
-        db.getUser(req.body, function(error, results){
-            if(!error) {
-                if((result && results.length == 0) || !results) {
-                    db.registe(req.body, function(error, results){
-                        if(!error) {
-                            console.log(JSON.stringify(results));
-                            res.send(JSON.stringify({message:'注册成功请登录'}));
-                        }
-                    });
-                }else {
-                    res.send(JSON.stringify({message:'重复注册'}));
-                }
-            }
-        });
-        usr.splice(i,1);
-    }else {
-        res.send(JSON.stringify({message:'验证码错误'}));
-    }
-}
-app.post('/login', upload.array(), function(req, res) {
-    if( req.body.loginName[1] && req.body.loginPass[1] && req.body.loginName[1].length > 0) {
-        if(req.body.captcha && req.body.captcha.length > 0) {
-            req.body.loginName = req.body.loginName[1];
-            req.body.loginPass = req.body.loginPass[1];
-            registe(req,res);
-            return;
-        }else {
-            res.send(JSON.stringify({message:'验证码不能为空'}));
-        }
-    }
-    if(req.body.loginName[0] && req.body.loginPass[0] && req.body.loginName[0].length > 0){
-        req.body.loginName = req.body.loginName[0];
-        req.body.loginPass = req.body.loginPass[0];
-        db.login(req.body, function(error, results){
-            if(!error) {
-                ////console.log(JSON.stringify(results));
-                res.send(JSON.stringify(results));
-            }else {
-                res.send(JSON.stringify({message:'用户名密码错误'}));
-            }
-        });
-    }else {
-        res.send(JSON.stringify({message:'用户名密码不能为空'}));
-    }
 
+app.post('/login', upload.array(), function(req, res) {
+    if( req.body.loginName[0] && req.body.loginName[0].length > 0) {
+        user.login(req.body.loginName[0], req.body.loginPass[0], function (err, msg) {
+            res.send(JSON.stringify({error:err,message:msg}));
+        })
+    }
+    else if(req.body.loginName[1] && req.body.loginName[1].length > 0){
+        user.registe(req.body.loginName[1], req.body.loginPass[1], req.body.captcha, function (err, msg) {
+            res.send(JSON.stringify({error:err,message:msg}));
+        })
+    }
+    else if(req.body.loginName[2] && req.body.loginName[2].length > 0){
+        user.captchaLogin(req.body.loginName[2], req.body.captcha, function (err, msg) {
+            res.send(JSON.stringify({error:err,message:msg}));
+        })
+    }
+    else{
+        res.send(JSON.stringify({error:true,message:'用户名不能为空'}));
+    }
 });
 app.get('/roles', upload.array(), function(req, res) {
 	db.getRoles(req.body, function(error, results){
@@ -306,7 +262,6 @@ app.get('/roles', upload.array(), function(req, res) {
 		}
 	});
 });
-
 app.get('/talk', function (req, res) {
     var key = '25wehl3u255yw';
     request.post(
@@ -333,58 +288,11 @@ app.get('/talk', function (req, res) {
     );
 });
 
-
-
 app.post('/sms/get', function (req, res) {
-    if(!req.body.mobile) {
-        res.send(JSON.stringify({message:'请输入手机号'}));
-        return;
-    }
-    var ip = req.headers['x-forwarded-for'] || req.connection.remoteAddress;
-    var now = new Date().getTime();
-    for(var i in usr) {
-        if(usr[i].ip == ip) {
-            var milisec_diff = usr[i].time < now  ? now - usr[i].time :usr[i].time - now;
-            if(milisec_diff < 120000) {
-                res.send(JSON.stringify({message:'请不要频繁获取验证码'}));
-                return;
-            }
-        }
-    }
-    var key = '9cb31422e774d4fef8a8b767a7862646';
-    var captcha = Math.floor(Math.random()*10000);
-    var text = '【等你游】您的验证码是'+captcha;
-    request.post(
-        {
-            url: 'https://sms.yunpian.com/v2/sms/single_send.json',
-            method: "POST",
-            body: 'apikey='+key +'&mobile='+req.body.mobile+'&text='+text,
-        },
-        function (error, response, body) {
-            var data = JSON.parse(body);
-            console.log(body);
-            if(!data.code) {
-                var index = req.body.mobile+captcha;
-                usr.push({loginName:req.body.mobile, captcha:captcha, time:now });
-                console.log(req.body.mobile+' '+captcha);
-                for(var i in usr) {
-                    var milisec_diff = usr[i].time < now  ? now - usr[i].time :usr[i].time - now;
-                    if(milisec_diff > 600000) {
-                        usr.splice(i,1);
-                    }
-                }
-                res.send(JSON.stringify({message:'请输入手机验证码'}));
-            }
-            res.send(JSON.stringify({message:body}));
-        }
-    );
+    user.getCaptcha(req.body.mobile, function (err, msg) {
+        res.send(JSON.stringify({error:err, message:msg}));
+    });
 });
-
-/*app.post('/home', upload.array(), function(req, res) {
-	db.rogerSmartSql('./modal/home.json', function(error, results){
-		res.send(results);
-	});
-});*/
 
 app.post('/photo/insert', upload.array(), function(req, res) {
 	var data = req.body;
