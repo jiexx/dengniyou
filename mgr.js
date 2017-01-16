@@ -241,12 +241,12 @@ app.post('/login', upload.array(), function(req, res) {
         })
     }
     else if(req.body.loginName[1] && req.body.loginName[1].length > 0){
-        user.registe(req.body.loginName[1], req.body.loginPass[1], req.body.captcha, function (err, msg) {
+        user.registe(req.body.loginName[1], req.body.loginPass[1], req.body.captcha[0], function (err, msg) {
             res.send(JSON.stringify({error:err,message:msg}));
         })
     }
     else if(req.body.loginName[2] && req.body.loginName[2].length > 0){
-        user.captchaLogin(req.body.loginName[2], req.body.captcha, function (err, msg) {
+        user.captchaLogin(req.body.loginName[2], req.body.captcha[1], function (err, msg) {
             res.send(JSON.stringify({error:err,message:msg}));
         })
     }

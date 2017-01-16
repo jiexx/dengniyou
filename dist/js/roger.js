@@ -309,7 +309,7 @@ $(function () {
                     var counter = 60;
                     var inter = setInterval(function() {
                         if (counter == 60) {
-                            var phone = $('#tab2 input[name="loginName"]')[0].value;
+                            var phone = $('#tab3 input[name="loginName"]')[0].value || $('#tab2 input[name="loginName"]')[0].value;
                             $.rogerPost('/sms/get', {mobile: phone}, function (respJSON) {
                                 $('#message').html(respJSON.message);
                             });

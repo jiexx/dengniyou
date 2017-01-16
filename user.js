@@ -23,19 +23,24 @@ var _filter = {
             callback(false);
         }
     },
-    errCacheUsrNotMatchCaptcha: function (name, pwd, captcha, callback) {
-        if (_users[name] && _users[name].captcha == captcha) {
-            callback(true, '用户名验证码错误');
-            return;
-        }else {
-            callback(false);
-        }
-    },
-    errDBUsrNotExist: function (name, pwd, captcha, callback) {
+    errDBUsrExist: function (name, pwd, captcha, callback) {
         db.getUser({loginName: name}, function (error, results) {
             if (!error) {
                 if (results && results.length > 0) {
-                    callback(true, '用户存在请登录');
+                    callback(true, '用户已存在请登录');
+                } else {
+                    callback(false);
+                }
+            } else {
+                callback(true, 'DB错误');
+            }
+        });
+    },
+    errDBUsrForCaptcha: function (name, pwd, captcha, callback) {
+        db.getUser({loginName: name}, function (error, results) {
+            if (!error) {
+                if (results && results.length > 0) {
+                    callback(false, JSON.stringify(results[0]));
                 } else {
                     callback(true, '用户不存在,请先注册');
                 }
@@ -66,7 +71,7 @@ var _filter = {
         }
     },
     errCaptchaNotMatch: function (name, pwd, captcha, callback) {
-        if (_users[name] && _users[name].captcha == captcha) {
+        if (_users[name] && _users[name].captcha != captcha) {
             callback(true, '验证码错误');
         }else {
             callback(false);
@@ -136,8 +141,8 @@ var _filter = {
     },
 };
 var _loginProcess = [_filter.errNameEmpty, _filter.errPwdEmpty,_filter.errCacheUsrNotMatchPwd,_filter.errDBUsrNotMatchPwd];
-var _regProcess = [_filter.errNameEmpty, _filter.errPwdEmpty,_filter.errCaptchaEmpty,_filter.errCaptchaTimeout,_filter.errDBUsrNotExist,_filter.errRegiste,_filter.errDBUsrNotMatchPwd];
-var _captchaloginProcess = [_filter.errNameEmpty,_filter.errDBUsrNotExist,_filter.errCaptchaEmpty,_filter.errCaptchaTimeout,_filter.errCacheUsrNotMatchCaptcha];
+var _regProcess = [_filter.errNameEmpty, _filter.errPwdEmpty,_filter.errCaptchaEmpty,_filter.errCaptchaTimeout,_filter.errDBUsrExist,_filter.errRegiste,_filter.errDBUsrNotMatchPwd];
+var _captchaloginProcess = [_filter.errNameEmpty,_filter.errCaptchaEmpty,_filter.errCaptchaTimeout,_filter.errCaptchaNotMatch,_filter.errDBUsrForCaptcha];
 var _captchaGetProcess = [_filter.errNameEmpty,_filter.errCaptchaTooMany,_filter.errSendCaptcha];
 
 var looper = function (count, processor, name, pwd, captcha, onFinish) {
