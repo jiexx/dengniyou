@@ -338,7 +338,7 @@ $(function () {
                 }
             }else {
                 if(data.Plan.DetailMain.airports){
-                    data.Plan.DetailMain.airports.push({AirportCode:airport[0],NameCh:airport[1],NameEn:airport[2]});
+                    data.Plan.DetailMain.airports.push({AirportCode:airport[0],NameCh:airport[1],NameEn:airport[2],CreateDate:'',ServiceID:''}); 
                 }else{
                 data.Spot.push({CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
                     SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''});
@@ -545,7 +545,7 @@ $(function () {
 
         $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
-                $.rogerLocation('#/attractionedit?SpotsID='+temp.SpotsID);
+                $.rogerLocation('#/attractionedit?SpotsID='+temp.SpotsID+"&spotType=1");
             }
         );
 
@@ -607,6 +607,7 @@ $(function () {
         realView.rogerCropImages();
 
     };
+    
     var ctrlUserInfo = function(response, realView) {
         var usr = $.rogerGetLoginUser();
         console.log(usr,usr.Labels.split(','));
@@ -665,7 +666,23 @@ $(function () {
 
         $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.DetailMain[0];
-                $.rogerLocation('#/servicecaredit?ServiceID='+temp.serviceID);
+                if (temp.serviceTypeID == 1) {
+                    //包车
+                    $.rogerLocation('#/servicecaredit?ServiceID=' + temp.serviceID);
+                } else if (temp.serviceTypeID == 3 || temp.serviceTypeID == 4) {
+                    //接机送机
+                    $.rogerLocation('#/servicepickupedit?ServiceID=' + temp.serviceID);
+                } else if (temp.serviceTypeID == 5) {
+                    //租车
+                    $.rogerLocation('#/caredit?ServiceID=' + temp.serviceID);
+                } else if (temp.serviceTypeID == 6) {
+                    //活动
+                    $.rogerLocation('#/activityedit?ServiceID=' + temp.serviceID);
+                    //其他
+                } else {
+                    $.rogerLocation('#/serviceotheredit?ServiceID=' + temp.serviceID);
+                }
+
             }
         );
         //租车
@@ -754,6 +771,7 @@ $(function () {
 
     var initAttractionEdit=function(){
         var SpotsID = $.rogerGetUrlParam('SpotsID');
+        spotType = $.rogerGetUrlParam('spotType');
         var usr =$.rogerGetLoginUser();
         var returnvalue = {
         SpotDetail: 
@@ -762,7 +780,7 @@ $(function () {
             UserID:usr.UserID ,
             CountryID:'' ,
             CityID:'' ,
-            SpotsTypeID:'1' ,
+            SpotsTypeID:spotType ,
             CommondReason: '' ,
             CreateDate:'' ,
             SpotsType:'' ,
@@ -794,7 +812,7 @@ $(function () {
         },        
         IMGHOST: "http://123.59.144.47/" };
 
-        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
+        $.rogerPost('/dashboard/product/attraction/detail', {"spotType":spotType,"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
             if(respJSON){
                 console.log(JSON.stringify(respJSON));
                 if (null != respJSON["SpotDetail"] && respJSON["SpotDetail"].length > 0) {
@@ -1180,55 +1198,115 @@ $(function () {
     } ;
 
      var initDelicacyEdit=function(){
-        return {
-        SpotDetail:
+        var SpotsID = $.rogerGetUrlParam('SpotsID');
+        var usr =$.rogerGetLoginUser();
+        var returnvalue = {
+        SpotDetail: 
         {
-            SpotsID: '',
-            UserID:'' ,
-            CountryID:'',
-            CityID: '',
-            SpotsTypeID: '',
-            CommondReason: '',
-            CreateDate: '',
-            SpotsType: '',
-            NameEn: '',
-            NameCh: '',
-            Status: '',
-            UpdateDate: '',
-            Flavor: '',
-            PicURL: '',
-            Address: '',
-            ZipCode: '',
-            ZoneCode: '',
-            Tel: '',
-            Description: '',
+            SpotsID:'' ,
+            UserID:usr.UserID ,
+            CountryID:'' ,
+            CityID:'' ,
+            SpotsTypeID: 107,
+            CommondReason: '' ,
+            CreateDate:'' ,
+            SpotsType:'' ,
+            NameEn:'' ,
+            NameCh:'',
+            Status:'',
+            UpdateDate: '' ,
+            Flavor:'' ,
+            PicURL:''  ,
+            Address:'' ,
+            ZipCode:'' ,
+            ZoneCode:'' ,
+            Tel:'' ,
+            Description:'' ,
             Rank: '',
-            Price: '',
-            Score: '',
-            LocalName:'' ,
+            Price:''  ,
+            Score: '' ,
+            LocalName: '',
             Alias:'' ,
-            comment:'' ,
-            TravelTime:'',
-            CountryName: '',
+            comment: '' ,
+            TravelTime:'' ,
+            CountryName:'' ,
             CityName: '',
-            picURLs:[],
-            coverURL:'',
-            SpotPics: [
-                {PicURL: ""},
-                {PicURL: ""},
-                {PicURL: ""},
-                {PicURL: ""},
-                {PicURL: ""},
-                {PicURL: ""}
-            ],
-            Labels:[],
-            SpotLabels: [
-                {ClassifyLabel: "咖啡简餐"},
-                {ClassifyLabel: "甜点"}
-            ],
-        },
-        IMGHOST: "http://123.59.144.47/"
-     };
+            picURLs:{picURLs:[]},
+            SpotLabels: {
+                LabelIDs:[],                
+                Labels:[],
+            },
+
+            // picURLs:[],
+            // coverURL:'',
+            // SpotPics: [
+            //     {PicURL: ""},
+            //     {PicURL: ""},
+            //     {PicURL: ""},
+            //     {PicURL: ""},
+            //     {PicURL: ""},
+            //     {PicURL: ""}
+            // ],
+            // Labels:[],
+            // SpotLabels: [
+            //     {ClassifyLabel: "咖啡简餐"},
+            //     {ClassifyLabel: "甜点"}
+            // ],
+
+            ClassifyLabels:[]
+        },        
+        IMGHOST: "http://123.59.144.47/" };
+
+        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
+            if(respJSON){
+                console.log(JSON.stringify(respJSON));
+                if (null != respJSON["SpotDetail"] && respJSON["SpotDetail"].length > 0) {
+                    var spotdetail = respJSON["SpotDetail"][0];
+
+                    if (null == respJSON["SpotPics"] || '' == respJSON["SpotPics"] || respJSON["SpotPics"].length==0) {
+                        spotdetail["picURLs"]=returnvalue["SpotDetail"]["picURLs"]
+
+                    }else {
+
+                        picURLs = [];
+                        for( key in respJSON["SpotPics"]){
+                            picURLs.push(respJSON["SpotPics"][key].PicURL);
+                            // spotdetail["picURLs"]["picURLs"][key]=respJSON["SpotPics"][key].PicURL
+
+                        }
+                        spotdetail["picURLs"]={"picURLs":picURLs};
+                    }
+
+                    if (null == respJSON["SpotLabels"] || '' == respJSON["SpotLabels"] || respJSON["SpotLabels"].length==0) {
+                        spotdetail["SpotLabels"]=returnvalue["SpotDetail"]["SpotLabels"]
+
+                    }else {
+
+                        LabelIDs = [];
+                        Labels=[];
+                        for( key in respJSON["SpotLabels"]){
+                            LabelIDs.push(respJSON["SpotLabels"][key]["ClassifyLabelID"]);
+                            Labels.push(respJSON["SpotLabels"][key]["ClassifyLabel"])
+                        }
+                        spotdetail["SpotLabels"]={"LabelIDs":LabelIDs};
+                        spotdetail["SpotLabels"]={"Labels":Labels};
+                    }
+
+                    returnvalue = {"SpotDetail":spotdetail}
+
+                    console.log(returnvalue["SpotDetail"])
+
+                }
+                if (null != respJSON["ClassifyLabels"] && '' != respJSON["ClassifyLabels"]) {
+                     returnvalue['SpotDetail']["ClassifyLabels"] = respJSON["ClassifyLabels"];
+                 }
+            }
+
+            $.rogerRefresh(returnvalue);
+        });
+
+        return returnvalue;
+        
     },ctrlDelicacyEdit=function(Plan, realView){
 
         Plan.createLabel = function(Plan, Labels){
@@ -1439,8 +1517,25 @@ $(function () {
          };
          $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.UserID}, function (respJSON, reqJSON) {
              if(respJSON){
-
+                 console.log(JSON.stringify(respJSON));
                  if (null != respJSON["DetailMain"] && respJSON["DetailMain"].length > 0) {
+
+                     picURLs = respJSON["DetailMain"][0]["picURLs"];
+                     covers = respJSON["DetailMain"][0]["covers"];
+                     coverURL="";
+                     picURLs2 =[];
+
+                     for(key in picURLs){
+
+                         if(1 == covers[key]){
+                             coverURL = picURLs[key];
+                             delete picURLs[key];
+                             respJSON["DetailMain"][0]["coverURL"] = coverURL;
+                         } else{
+                             picURLs2.push(picURLs[key]);
+                         }
+                     }
+                     respJSON["DetailMain"][0]["picURLs"] = picURLs2;
 
 
                      if (null != respJSON["DetailServiceMethod"] && '' != respJSON["DetailServiceMethod"]) {
@@ -1497,6 +1592,9 @@ $(function () {
                      }
                      if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
                          result["DetailMain"]["houseInfo"] = respJSON["HouseInfo"][0]
+                     }
+                     if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
+                         result["DetailMain"]["carBrand"] = respJSON["CarBrand"]
                      }
                      
                     result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0],respJSON.IMGHOST);
@@ -1585,7 +1683,24 @@ $(function () {
                 $.rogerRefresh(tmplItem);
             });    
 
-        });       
+        });   
+
+
+        //选择汽车品牌
+        $('#carBrand').on('focus',function(){
+            $('#carBrandList').modal('show');
+            $('#carBrandList  input[type=radio]').on('click',function(){
+                var val = $(this).next().text();
+                tmplItem.DetailMain.vehicleInfo.brand = val;
+
+            });
+            $('#carBrandconfirm').on('click',function(){
+                $('#carBrandList').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                $.rogerRefresh(tmplItem);
+            });  
+        });    
         
 
 
@@ -1617,8 +1732,8 @@ $(function () {
             temp["feeNoBean"]["type"]=5;
             temp["noticeBean"]= temp["policy"][3];
             temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
 
             if(4 == temp["policyBean"]["type"]){
                 temp["policyBean"]["policyID"] = 29;
@@ -1686,8 +1801,8 @@ $(function () {
             temp["feeNoBean"]["type"]=5;
             temp["noticeBean"]= temp["policy"][3];
             temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
 
             if(4 == temp["policyBean"]["type"]){
                 temp["policyBean"]["policyID"] = 29;
@@ -1747,23 +1862,25 @@ $(function () {
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
 
-            // temp["serviceAirports"]=temp["airports"];
-            // AirportCode:'',
-            //         AirportID:'',
-            //         CreateDate:'',
-            //         NameCh:'',
-            //         NameEn:'',
-            //         ServiceID:''
-            temp["serviceAirports"] = [{}];
+            var serviceAirportsItem = {};
+            var serviceAirports = [];
+            temp.serviceAirports = [];
             for(var i=0; i<temp["airports"].length; i++){
-                for(var akey in temp["airports"][i]) {
-                var akeyNew = akey.replace(/\b\w+\b/g, function(word){
-                return word.substring(0,1).toLowerCase()+word.substring(1);}
-                );
-                console.log(akeyNew,akey);
-                temp["serviceAirports"][i][akeyNew] = temp["airports"][i][akey]; 
-            }    
+                serviceAirportsItem = {};
+                !function(){
+                    for(var akey in temp["airports"][i]) {
+                    var akeyNew = akey.replace(/\b\w+\b/g, function(word){
+                    return word.substring(0,1).toLowerCase()+word.substring(1);}
+                    );
+                    console.log(akeyNew,akey);
+                    serviceAirportsItem[akeyNew] = temp["airports"][i][akey]; 
+                    }
+                }(i) 
+
+                serviceAirports[i]=serviceAirportsItem;                
             }
+            temp.serviceAirports=serviceAirports;   
+            console.log(temp.serviceAirports);
                
 
             temp["policyBean"]= temp["policy"][0];
@@ -1773,8 +1890,8 @@ $(function () {
             temp["feeNoBean"]["type"]=5;
             temp["noticeBean"]= temp["policy"][3];
             temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
 
             if(4 == temp["policyBean"]["type"]){
                 temp["policyBean"]["policyID"] = 29;
@@ -1828,8 +1945,8 @@ $(function () {
             temp["feeNoBean"]["type"]=5;
             temp["noticeBean"]= temp["policy"][3];
             temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
 
             if(4 == temp["policyBean"]["type"]){
                 temp["policyBean"]["policyID"] = 29;
@@ -2022,6 +2139,9 @@ $(function () {
                 if (null != respJSON["Facility"] && respJSON["Facility"].length > 0) {
                     returnvalue["Facility"]=respJSON["Facility"][0];
                 }
+                if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
+                    returnvalue["carBrand"] = respJSON["CarBrand"]
+                }
 
                 $.rogerRefresh(returnvalue);
 
@@ -2031,6 +2151,22 @@ $(function () {
         return returnvalue;
 
     },ctrlEquipEdit=function(Facility, realView){
+
+        //选择汽车品牌
+        $('#carBrand').on('focus',function(){
+            $('#carBrandList').modal('show');
+            $('#carBrandList  input[type=radio]').on('click',function(){
+                var val = $(this).next().text();
+                Facility.Facility.brand = val;
+
+            });
+            $('#carBrandconfirm').on('click',function(){
+                $('#carBrandList').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                $.rogerRefresh(Facility);
+            });  
+        });    
 
         $('#save').rogerOnceClick(Facility, function(e){
             var usr =$.rogerGetLoginUser();
@@ -2136,9 +2272,9 @@ $(function () {
         '#/servicepickupdetail':         {view:'product-service-pickup-detail.html',	              rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/traveloguedetail':            {view:'travelogue-detail.html',	                           rootrest:'/travelogue/detail',                                       ctrl: ctrlTravelogueDetail},
         '#/attractionedit':               {fragment: 'fragment/product-attraction-edit.html',       init: initAttractionEdit,                                                 ctrl: ctrlAttractionEdit},
-        '#/accommodationedit':            {fragment: 'fragment/product-accommodation-edit.html',   init: initAccommodationEdit,                                              ctrl: ctrlAccommodationEdit},
+        '#/accommodationedit':            {fragment: 'fragment/product-accommodation-edit.html',   init: initAttractionEdit,                                              ctrl: ctrlAccommodationEdit},
         '#/activityedit':                 {fragment: 'fragment/product-activity-edit.html',          init: initActivityEdit,                                                   ctrl: ctrlActivityEdit},
-        '#/delicacyedit':                 {fragment: 'fragment/product-delicacy-edit.html',          init: initDelicacyEdit,                                                   ctrl: ctrlDelicacyEdit},
+        '#/delicacyedit':                 {fragment: 'fragment/product-delicacy-edit.html',          init: initAttractionEdit,                                                   ctrl: ctrlDelicacyEdit},
         '#/caredit':                       {fragment: 'fragment/product-car-edit.html',                init: initServiceEdit,                                                        ctrl: ctrlServiceEdit},
         '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',       init:initServiceEdit,                                               ctrl: ctrlServiceEdit},
         '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServiceEdit,                                              ctrl: ctrlServiceEdit},

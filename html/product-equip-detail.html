@@ -51,8 +51,10 @@
       <div class="detailpage-mainbody">
         <div class="attraction detailpage-title">
           <h1>${Facility[0].facilityName}</h1>
-        </div> 
+        </div>
+
         <div class="row product-detail price-detail">
+          {{if Facility[0].facilityType==1}}
           <div class="col-md-3">
             <p>品牌：<span>${Facility[0].brand}</span></p>
             <p>座位数：<span>2位</span></p>
@@ -69,9 +71,15 @@
             <p>出厂年份：<span>${Facility[0].produceYear}</span></p>
             <p>乘员险：<span>{{if Facility[0].insurance==1}}有{{else}}无{{/if}}</span></p>
           </div>
+          {{else}}
+          <div class="col-md-3">
+            <p>品牌：<span>${Facility[0].brand}</span></p>
+            <p>型号：<span>${Facility[0].model}</span></p>
+          </div>
+          {{/if}}
         </div> <!-- end 商品详情product-detail -->
         <div class="service-description">
-          <h2>服务说明</h2>
+          <h2>装备说明</h2>
           <div class="des">
             <p>${Facility[0].description}</p>
           </div>

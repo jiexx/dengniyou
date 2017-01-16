@@ -51,11 +51,17 @@
 
   <body>
   <div class="dashboard-page">
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-inverse navbar-fixed-top" id="dashboard-top">
       <div class="container-fluid">
         <div class="container navbar-header">
           <div class="logo "><img src="img/logo.png" height="70px"/></div>
-          <a class="navbar-brand" href="#">等你旅游管理中心</a>
+          <div class="navbar-brand"><a href="#">等你旅游管理中心</a></div>
+          <!-- <div class="dashboard-login">
+            <i class="head-icon"></i>
+            <p>15001899199</p>
+            <p>当前余额：<span>¥76,543.76</span></p>
+            <span>登出</span>
+          </div> -->
         </div>
       </div>
     </nav> <!-- end navbar -->
@@ -63,13 +69,13 @@
       <div class="row">
         <div class="col-sm-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a  href="#/"><i class="product-icon"></i>产品管理 <span class="sr-only">(current)</span></a></li>
-            <li><a  href="#/travelogue?UserID=64"><i class="travelogue-icon"></i>攻略管理</a></li>
-            <li><a href=""><i></i>订单管理</a></li>
-            <li><a href=""><i></i>营销管理</a></li>
-            <li><a href=""><i></i>结算管理</a></li>
-            <li><a href=""><i></i>资料管理</a></li>
-            <li><a  href="javascript:void(0)"id="usercenter"><i></i>订单列表</a></li>
+            <li><a  href="#/"><i class="product-icon"></i><span>产品管理</span> <span class="sr-only">(current)</span></a></li>
+            <li><a  href="#/travelogue?UserID=64"><i class="travelogue-icon"></i><span>攻略管理</span></a></li>
+            <!-- <li><a href=""><i class="order-icon"></i><span>订单管理</span></a></li>
+            <li><a href=""><i class="market-icon"></i><span>营销管理</span></a></li>
+            <li><a href=""><i class="settle-icon"></i><span>结算管理</span></a></li>
+            <li><a href=""><i class="data-icon"></i><span>资料管理</span></a></li> -->
+            <li><a  href="javascript:void(0)"id="usercenter">订单列表</a></li>
           </ul>
           <!--ul class="nav nav-sidebar">
             <li><a href="">Nav item</a></li>
@@ -109,9 +115,9 @@
             <div id="menu2" class="list-group">
                 <span class="text-warning">临时编辑 <i>|</i></span>
                 <!--#/attractionedit?SpotsID=24283-->
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/attractionedit" >景点编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/delicacyedit" >美食编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/accommodationedit" >住宿编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/attractionedit?spotType=1" >景点编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/delicacyedit?spotType=2" >美食编辑</a></label>
+                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/accommodationedit?spotType=3" >住宿编辑</a></label>
                 <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/caredit?ServiceID=100388" >租车编辑</a></label>
                 <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/servicecaredit?ServiceID=100263" >包车编辑</a></label>
                 <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/activityedit" >活动编辑</a></label>

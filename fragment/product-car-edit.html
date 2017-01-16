@@ -370,6 +370,34 @@
 	<input type="hidden" id="type" data-value="/DetailMain/Policy/0/type"/>
 	<!-- 须知信息结束 -->
 
+
+	<!-- 汽车品牌弹出框 -->
+	<div id="carBrandList" class="modal fade">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <button type="button" class="close" data-dismiss="modal">
+		      	<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		      </button>
+		      <h4 class="modal-title clearfix">选择品牌</h4>
+		    </div>
+		    <div class="modal-body">
+		    	<ul id="attrLabel" class="row">
+		    		{{each(i,p) DetailMain.carBrand}}
+		        	<li class="col-md-3">
+		        	<input type="radio" name="carRadios" value="${p.vehicleID}"> <span>${p.brand}</span>
+			        </li>
+			        {{/each}}				        
+				</ul>
+		    </div> <!-- end modal-body -->
+		    <div class="modal-footer">
+		      <button type="button" id="carBrandconfirm" class="btn btn-primary" data-op="change" data-pointer="/SpotDetail/SpotLabels/Labels/${$index}-" data-action="createLabel">确定</button>
+		    </div>
+		  </div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 汽车品牌弹出框结束 -->
+
 </div>
 
 <script>
@@ -378,6 +406,8 @@
 			var ServiceMethodName = $(this).val();
 			$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
 		});
+
+		
 	});
 </script>
 

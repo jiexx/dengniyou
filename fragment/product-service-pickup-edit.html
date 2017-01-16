@@ -155,7 +155,7 @@
 				{{each $data.DetailMain.picURLs}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.IMGHOST}${$data.DetailMain.picURLs[$index]}">
+						<img name="autoPrefix" src="${$data.DetailMain.picURLs[$index]}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/picURLs/${$index}"></a>
 					</div>
 				</div>
@@ -172,7 +172,7 @@
 				{{if $data.DetailMain.coverURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${$data.DetailMain.coverURL}">
+						<img name="autoPrefix" src="${$data.DetailMain.coverURL}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/coverURL" ></a>
 					</div>
 				</div>

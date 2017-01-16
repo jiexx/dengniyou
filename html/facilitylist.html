@@ -1,29 +1,39 @@
 <div class="container">
 	<div class="list-group service-list">
-		{{each Facilities}}
 	  	<div class="list-group-item clearfix disabled">
 		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
 		  	<div class="col-md-8 service-name">装备</div>
 		  	<div class="col-md-2">装备类型</div>
 		  	<div class="col-md-1 ">编辑</div>
 	  	</div>
+		{{each Facilities}}
 	  	<div class="list-group-item clearfix btn-group">
 		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
 		  	<div class="col-md-8 ">
 		    	<div class="media">
 				    <div class="media-left media-top">
 					   <a href="#/equipdetail?facilityID=${facilityID}">
-						  <img src="${ $data.IMGHOST + Facilities[$index].coverURL}" class="media-object" style="width:160px;height:160px">
+						  <img src="${ $data.IMGHOST + coverURL}" class="media-object" style="width:160px;height:160px">
 					   </a>
 				    </div>
 			   		<div class="media-body">
-						<div class="media-heading">${ Facilities[$index].facilityType}：${ Facilities[$index].brand}：${ Facilities[$index].model}</div>
+						<div class="media-heading">${ facilityName}</div>
 			   		</div>
 				</div> <!-- end media -->
 			</div>
-			<div class="col-md-2 margin-top">${ Facilities[$index].facilityName}</div>	
+			<div class="col-md-2 margin-top">
+				{{if facilityType==1}}小型客车{{/if}}
+				{{if facilityType==2}}WIFI设备{{/if}}
+				{{if facilityType==3}}转换插座{{/if}}
+				{{if facilityType==4}}摄影摄像{{/if}}
+				{{if facilityType==5}}体育运动{{/if}}
+				{{if facilityType==6}}船舶{{/if}}
+				{{if facilityType==7}}其他{{/if}}
+			</div>
 			<div class="col-md-1 service-edit">
-		   		<span class="btn  glyphicon glyphicon-edit"></span>
+				<a href="#/equipedit?facilityID=${ facilityID}">
+					<span class="btn  glyphicon glyphicon-edit"></span>
+				</a>
 			</div>
 		</div>
 		{{/each}}
