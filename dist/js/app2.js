@@ -1648,10 +1648,10 @@ $(function () {
                        type: 5
                      }
                  ],
-                 vehicleInfo: [
+                 vehicleInfo:
                  {
                      vehicleInfoID: '',
-                     serviceID: '',
+                     serviceID: '100388',
                      brand: '',
                      model: '',
                      produceYear: '',
@@ -1660,31 +1660,36 @@ $(function () {
                      clazz: '',
                      insurance: '',
                      luggage: ''
-                 }],
+                 },
                  vehicleCharges: [
                  {
-                     chargeID:100674,
-                     chargePrice:5,
-                     chargeType:1,
-                     serviceID:100388
+                     chargeID:'',
+                     chargePrice:'',
+                     chargeType:'',
+                     serviceID:''
                  },
                  {
-                     chargeID:100675,
-                     chargePrice:3,
-                     chargeType:2,
-                     serviceID:100388
+                     chargeID:'',
+                     chargePrice:'',
+                     chargeType:'',
+                     serviceID:''
                  },
                  {
-                     chargeID:100676,
-                     chargePrice:3,
-                     chargeType:3,
-                     serviceID:100388
+                     chargeID:'',
+                     chargePrice:'',
+                     chargeType:'',
+                     serviceID:''
                  }],
-                 vehicleAddress: [ ],
+                 vehicleAddress: [{
+                    addressID: '', 
+                    serviceID: '', 
+                    addressType: '', 
+                    address: ''
+                 }],
                  vehicleSchedule: [ ],
                  labels: ["咖啡简餐"],
                  activityPrice: [ ],
-                 houseInfo: [
+                 houseInfo:
                  {
                     houseID: '',
                     serviceID: '',
@@ -1704,7 +1709,7 @@ $(function () {
                     cityID: '',
                     cityNameCn: '',
                     cityNameEn: ''
-                 }]
+                 }
              },
              IMGHOST: "http://123.59.144.47/"
          };
@@ -1734,7 +1739,7 @@ $(function () {
                          result["DetailMain"]["policy"] = respJSON["Policy"];
                      }
                      if (null != respJSON["VehicleInfo"] && '' != respJSON["VehicleInfo"]) {
-                         result["DetailMain"]["vehicleInfo"] = respJSON["VehicleInfo"]
+                         result["DetailMain"]["vehicleInfo"] = respJSON["VehicleInfo"][0]
                      }
                      if (null != respJSON["VehicleCharges"] && '' != respJSON["VehicleCharges"]) {
                          result["DetailMain"]["vehicleCharges"] = respJSON["VehicleCharges"]
@@ -1844,6 +1849,10 @@ $(function () {
 
         });
 
+        // DetailMain.createLabel = function (User) {
+        //     User.Labels.push('');
+        // };
+
 
 
 
@@ -1868,12 +1877,12 @@ $(function () {
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
 
-            temp["policyBean"]= temp["Policy"][0];
-            temp["feeBean"]= temp["Policy"][1];
+            temp["policyBean"]= temp["policy"][0];
+            temp["feeBean"]= temp["policy"][1];
             temp["feeBean"]["type"]=5;
-            temp["feeNoBean"]= temp["Policy"][2];
+            temp["feeNoBean"]= temp["policy"][2];
             temp["feeNoBean"]["type"]=5;
-            temp["noticeBean"]= temp["Policy"][3];
+            temp["noticeBean"]= temp["policy"][3];
             temp["noticeBean"]["type"]=5;
             temp["coverFile"]=coverFiledata;
             temp["files"]=filedata;
@@ -1892,6 +1901,88 @@ $(function () {
                 temp["policyBean"]["ratio3"]=0.82;
                 temp["policyBean"]["ratio4"]=0.75;
             }
+
+            temp["imghost"]=e.data.IMGHOST;
+            console.log('test');
+            var data = {
+                reqUploadService:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('/new/service/car', data, function(respJSON){
+                $.rogerNotice({Message:'保存包车成功'});
+
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+                }
+
+            });
+
+        });
+
+        $('#saveCar').rogerOnceClick(DetailMain, function(e){
+            var usr =$.rogerGetLoginUser();
+            console.log('test');
+            temp = e.data.DetailMain;
+            var filedata = e.data.DetailMain.picURLs;
+            var coverFiledata = e.data.DetailMain.coverURL;
+            // var filedata2=[];
+            // coverFiledata = coverFiledata.substr(coverFiledata.indexOf("base64,")+7,10);
+            // for(key in filedata){
+            //     itemtemp = filedata[key].substr(filedata[key].indexOf("base64,")+7,10);
+            //     filedata2.push(itemtemp);
+            // }
+            // filedata = null;
+            // filedata = filedata2;
+
+            temp["userID"]=usr.UserID;
+            temp["serviceTypeID"]=5;
+            temp["unit"]='天';
+            temp["priceType"]='1';
+            temp["serviceStatus"]='3';
+
+            temp["policyBean"]= temp["policy"][0];
+            temp["feeBean"]= temp["policy"][1];
+            temp["feeBean"]["type"]=5;
+            temp["feeNoBean"]= temp["policy"][2];
+            temp["feeNoBean"]["type"]=5;
+            temp["noticeBean"]= temp["policy"][3];
+            temp["noticeBean"]["type"]=5;
+            temp["coverFile"]=coverFiledata;
+            temp["files"]=filedata;
+
+            if(4 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 29;
+            }else if(3 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 28;
+            }else if(2 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 27;
+            }else if(1 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 26;
+            } else {
+                temp["policyBean"]["ratio1"]=0.89;
+                temp["policyBean"]["ratio2"]=0.85;
+                temp["policyBean"]["ratio3"]=0.82;
+                temp["policyBean"]["ratio4"]=0.75;
+            }
+
+
+            //提车地址
+            lendAddresses = [];
+            //repayAddresses
+            repayAddresses = [];
+            for(key in temp["vehicleAddress"]){
+                if(1 == temp["vehicleAddress"][key]["addressType"]){
+                    lendAddresses.push(temp["vehicleAddress"][key])
+                }else{
+                    repayAddresses.push(temp["vehicleAddress"][key])
+                }
+
+            }
+            temp["lendAddresses"]=lendAddresses;
+            temp["repayAddresses"]=repayAddresses;
 
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');
@@ -2450,13 +2541,14 @@ $(function () {
                 description : null,
                 luggage : 5,
                 coverURL : "group1/M00/00/03/CgkB6VfrqGuAUSqlAAFKSs7UdPc666.jpg",
-                UpdateDate : "2016-09-28T11:24:28.000Z",
                 pics : [
                     "group1/M00/00/03/CgkB6VfrqGuAQP3IAAFKSs7UdPc307.jpg"
                 ]
             },
             IMGHOST : $.rogerImgHost()
         };
+
+
     },ctrlEquipEdit=function(Facility, realView){
 
         $('#save').rogerOnceClick(Facility, function(e){
@@ -2466,21 +2558,28 @@ $(function () {
 
             temp = e.data.Facility;
 
-            // var data = {
-            //     reqUploadService:temp,
-            //     // file:filedata,
-            //     // coverFile:coverFiledata,
-            //     IMGHOST:e.data.IMGHOST
-            // };
-            // $.rogerPost('/new/service/car', data, function(respJSON){
-            //     $.rogerNotice({Message:'保存包车成功'});
-            //
-            //     if(respJSON){
-            //         //跳转到详情页面
-            //         $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
-            //     }
-            //
-            // });
+            picURLs=[];
+            for(key in temp.pics) {
+                picURLs.push({isCover:0,picUrl:temp.pics[0]});
+            }
+            picURLs.push({isCover:1,picUrl:coverURL});
+            temp["picURLs"] = picURLs;
+
+            var data = {
+                Facility:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('/new/facility', data, function(respJSON){
+                $.rogerNotice({Message:'保存装备成功'});
+
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/equipdetail?facilityID='+respJSON.insertId);
+                }
+
+            });
 
         });
 

@@ -36,20 +36,21 @@
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">提车地址</label>
 		    <div class="col-sm-10 col-md-11">
-		    	{{each(i,p) vehicleAddress}}
+		    	{{each(i,p) DetailMain.vehicleAddress}}
 		    	{{if p.addressType ==1 }}
 				<input type="text" class="form-control" value="${p.address}" data-value="/DetailMain/vehicleAddress/{i}/address"> 
 				{{/if}}
 		    	{{/each}}
+		    	<!-- <button type="button" class="btn btn-default btn-sm" data-action="addAddress">增加</button> -->
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">还车地址</label>
 		    <div class="col-sm-10 col-md-11">
-				{{each(i,p) vehicleAddress}}
-		    	<!-- {{if addressType ==2 }} -->
+				{{each(i,p) DetailMain.vehicleAddress}}
+		    	{{if addressType ==2 }} 
 				<input type="text" class="form-control" value="${p.address}" data-value="/DetailMain/vehicleAddress/{i}/address"> 
-				<!-- {{/if}} -->
+				{{/if}}
 		    	{{/each}}
 		    </div>
 		  </div>
@@ -72,44 +73,44 @@
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">车辆品牌</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.DetailMain.vehicleInfo[0].brand}" data-value="/DetailMain/vehicleInfo/${0}/brand" id="carBrand">
+				      <input type="text" class="form-control" value="${$data.DetailMain.vehicleInfo.brand}" data-value="/DetailMain/vehicleInfo/brand" id="carBrand">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">舒适乘坐</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.DetailMain.vehicleInfo[0].person}" data-value="/DetailMain/vehicleInfo/${0}/person" id="carPerson"> 人
+				      <input type="text" class="form-control" value="${$data.DetailMain.vehicleInfo.person}" data-value="/DetailMain/vehicleInfo/person" id="carPerson"> 人
 				    </div> 
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">车辆级别</label>
 				    <div class="col-sm-8 col-md-9" id="carClazz">
 				        <label class="radio-inline">
-				        {{if DetailMain.vehicleInfo[0].clazz == '1'}}
-						  <input type="radio" name="clazzType" id="clazzRadio1" value="经济" checked disabled> 经济
+				        {{if DetailMain.vehicleInfo.clazz == '1'}}
+						  <input type="radio" name="clazzType" id="clazzRadio1" value="经济" checked > 经济
 				        {{else}}
-				          <input type="radio" name="clazzType" id="clazzRadio1" value="经济" disabled> 经济
+				          <input type="radio" name="clazzType" id="clazzRadio1" value="经济" > 经济
 				        {{/if}}
 						</label>
 						<label class="radio-inline">
-						{{if DetailMain.vehicleInfo[0].clazz == '2'}}
-						  <input type="radio" name="clazzType" id="clazzRadio2" value="舒适" checked disabled> 舒适
+						{{if DetailMain.vehicleInfo.clazz == '2'}}
+						  <input type="radio" name="clazzType" id="clazzRadio2" value="舒适" checked > 舒适
 						{{else}}
-						  <input type="radio" name="clazzType" id="clazzRadio2" value="舒适" disabled> 舒适
+						  <input type="radio" name="clazzType" id="clazzRadio2" value="舒适" > 舒适
 						{{/if}}
 						</label>
 						<label class="radio-inline">
-						{{if DetailMain.vehicleInfo[0].clazz == '3'}}
-						  <input type="radio" name="clazzType" id="clazzRadio3" value="豪华" checked disabled> 豪华
+						{{if DetailMain.vehicleInfo.clazz == '3'}}
+						  <input type="radio" name="clazzType" id="clazzRadio3" value="豪华" checked > 豪华
 						{{else}}
-						  <input type="radio" name="clazzType" id="clazzRadio3" value="豪华" disabled> 豪华
+						  <input type="radio" name="clazzType" id="clazzRadio3" value="豪华" > 豪华
 						{{/if}}
 						</label>
 						<label class="radio-inline">
-						{{if DetailMain.vehicleInfo[0].clazz == '4'}}
-						  <input type="radio" name="clazzType" id="clazzRadio3" value="商务" checked disabled> 商务
+						{{if DetailMain.vehicleInfo.clazz == '4'}}
+						  <input type="radio" name="clazzType" id="clazzRadio3" value="商务" checked > 商务
 						{{else}}
-						  <input type="radio" name="clazzType" id="clazzRadio3" value="商务" disabled> 商务
+						  <input type="radio" name="clazzType" id="clazzRadio3" value="商务" > 商务
 						{{/if}}
 						</label>
 				    </div>
@@ -121,34 +122,34 @@
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">车辆型号</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.DetailMain.vehicleInfo[0].model}" data-value="/DetailMain/vehicleInfo/${0}/model" id="carModel">
+				      <input type="text" class="form-control" value="${$data.DetailMain.vehicleInfo.model}" data-value="/DetailMain/vehicleInfo/model" id="carModel">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">行李空间</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.DetailMain.vehicleInfo[0].luggage}" data-value="/DetailMain/vehicleInfo/${0}/luggage" id="carLuggage">
+				      <input type="text" class="form-control" value="${$data.DetailMain.vehicleInfo.luggage}" data-value="/DetailMain/vehicleInfo/luggage" id="carLuggage">
 				    </div>
 				  </div>
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">成员保险</label>
 				    <div class="col-sm-8 col-md-9" id="carInsurance">
 				        <label class="radio-inline">
-				        {{if DetailMain.vehicleInfo[0].insurance == '1'}}
-						  <input type="radio" name="insuranceType" id="insuranceRadio1" value="有" checked disabled> 有
+				        {{if DetailMain.vehicleInfo.insurance == '1'}}
+						  <input type="radio" name="insuranceType" id="insuranceRadio1" value="有" checked > 有
 				        {{else}}
-				          <input type="radio" name="insuranceType" id="insuranceRadio1" value="有" disabled> 有
+				          <input type="radio" name="insuranceType" id="insuranceRadio1" value="有" > 有
 				        {{/if}}
 						</label>
 						<label class="radio-inline">
-						{{if DetailMain.vehicleInfo[0].insurance == '0'}}
-						  <input type="radio" name="insuranceType" id="insuranceRadio2" value="无" checked disabled> 无
+						{{if DetailMain.vehicleInfo.insurance == '0'}}
+						  <input type="radio" name="insuranceType" id="insuranceRadio2" value="无" checked > 无
 						{{else}}
-				          <input type="radio" name="insuranceType" id="insuranceRadio2" value="无" disabled> 无
+				          <input type="radio" name="insuranceType" id="insuranceRadio2" value="无" > 无
 				        {{/if}}
 						</label>
 				    </div>
-				    <input type="hidden" class="form-control" id="vehicleInfoID" value="${$data.DetailMain.vehicleInfo[0].vehicleInfoID}"  data-value="/DetailMain/vehicleInfo/${0}/vehicleInfoID">
+				    <input type="hidden" class="form-control" id="vehicleInfoID" value="${$data.DetailMain.vehicleInfo.vehicleInfoID}"  data-value="/DetailMain/vehicleInfo/vehicleInfoID">
 				  </div>
 				</form>
 			</div>
@@ -361,7 +362,7 @@
 		  </div>
 		</form>
 		<div class="optionBtn">
-			<button id="save" class="btn btn-warning">保存</button>
+			<button id="saveCar" class="btn btn-warning">保存</button>
 			<!--<button id="publish" class="btn btn-warning">发布 </button>-->
 		</div>
 	</div>

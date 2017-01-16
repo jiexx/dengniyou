@@ -1,50 +1,29 @@
 {
-	"SpotDetail": {
-		"sql": "INSERT INTO traveldb.tab_travelspots ( UserID, CountryID, CityID, SpotsTypeID, CommondReason, CreateDate, SpotsType, NameEn, NameCh, Status, UpdateDate, Flavor, PicURL, Address, ZipCode, ZoneCode, Tel, Description, Rank, Price, Score, LocalName, Alias,TravelTime) VALUES ( ?, ?,?, ?, ?, NOW(), ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )",
+	"Facility": {
+		"sql": "insert into tab_facilities (UserID,FacilityType,FacilityName, Brand,Model,ProduceYear,Seats,Person, Clazz,Insurance,Description,Luggage) values(?,?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?))",
 		"params": [
-			"UserID",
-			"CountryID",
-			"CityID",
-			"SpotsTypeID",
-			"CommondReason",
-			"SpotsType",
-			"NameEn",
-			"NameCh",
-			"Status",
-			"Flavor",
-			"PicURL",
-			"Address",
-			"ZipCode",
-			"ZoneCode",
-			"Tel",
-			"Description",
-			"Rank",
-			"Price",
-			"Score",
-			"LocalName",
-			"Alias",
-			"TravelTime"
-		],
-		"files": [
-			"PicURL"
+			"userID",
+			"facilityType",
+			"facilityName",
+			"brand",
+			"model",
+			"produceYear",
+			"seats",
+			"person",
+			"clazz",
+			"insurance",
+			"description",
+			"luggage"
 		],
 		"picURLs": {
-			"sql": "INSERT INTO traveldb.tab_travelspotsdetail ( SpotsID,PicURL,Summary,CreateDate,UpdateDate ) VALUES ( ?, ?, '',NOW(),NOW())",
+			"sql": "INSERT INTO tab_facilitypictures (PictureID,PicURL,IsCover,PicType ) VALUES( ?,?,?,2)",
 			"params": [
 				"insertId",
-				"picURLs"
-
+				"picUrl",
+				"isCover"
 			],
 			"files": [
-				"picURLs"
-			],
-			"findkey": "insertId"
-		},
-		"SpotLabels": {
-			"sql": "INSERT INTO traveldb.tab_travelspotslabel ( ClassifyLabelID,SpotsID,UpdateTime) VALUES ( ?, ?,NOW())",
-			"params": [
-				"LabelIDs",
-				"insertId"
+				"picUrl"
 			],
 			"findkey": "insertId"
 		}
