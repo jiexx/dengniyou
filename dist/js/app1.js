@@ -45,6 +45,13 @@
     };
 	
 	var ctrlHome = function(response, realView) {
+        var usr = $.rogerGetLoginUser();
+        if(usr){
+            $('#kefu').attr('href','talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid=10000005');
+        }else {
+            $('#kefu').attr('href','javascript:void(0)');
+        }
+
 		$('#carousel-generic').carousel();
         $('#homeSearch').rogerOnceClick(null, function () {
             var k = $('#homeSearchKey').val();
@@ -196,6 +203,7 @@
 		$('.commit').rogerOnceClick(Comment, function(e){
 			var user = $.rogerGetLoginUser()
 			if(!user) {
+                $.rogerLogin('#homeLogin', '/login');
 				$.rogerShowLogin();
 				return;
 			}
@@ -750,8 +758,8 @@
             }
         })
         var usr = $.rogerGetLoginUser();
-        if(Plan.PlanInfo.PlanName.indexOf('的私人定制方案')<0) {
-            Plan.PlanInfo.PlanName = usr.UserName+'的私人定制方案'+Plan.PlanInfo.PlanName;
+        if(Plan.PlanInfo.PlanName.indexOf("的私人定制方案")<0) {
+            Plan.PlanInfo.PlanName = usr.UserName+"的私人定制方案"+Plan.PlanInfo.PlanName;
         }
         $('#PlanTitle').attr('value', Plan.PlanInfo.PlanName);
         Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"

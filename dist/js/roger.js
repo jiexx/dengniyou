@@ -6,6 +6,17 @@ $(function () {
 	$.ajaxPrefilter(function( options, original_Options, jqXHR ) {
 		options.async = true;
 	});
+    $(window).on("popstate", function(e) {
+        if(e.originalEvent.state === null) {
+            $.rogerLocation('#/');
+        } else {
+            $.rogerLocation(e.originalEvent.state.url);
+        }
+    });
+    $("img").error(function () {
+        $(this).hide();
+        // or $(this).css({visibility:"hidden"});
+    });
 });
 (function( $, undefined ){
 	$.extend({
@@ -118,6 +129,7 @@ $(function () {
 		},
 		_rogerSetLocation: function(loc) {
 			//window._rogerCurrLink = loc;
+            history.pushState({ url: loc }, "", loc);
 			window.name = loc;
 		},
 		_rogerGetLocation: function() {
@@ -275,22 +287,43 @@ $(function () {
         	var user = $.rogerGetLoginUser();
         	if( !user || !user.UserID ) {
                 $(loginFormID).rogerSubmit(reqURL, function (respJSON) {
-                    if (respJSON[0] && respJSON[0].UserID > 0) {
+                	if (!respJSON.error) {
                         //window.open(redirectURL,'_blank');
                         //window.location = '/dashboard.html?UserID='+respJSON[0].UserID;
-                        $.removeCookie("roger");
-                        $.cookie("roger", JSON.stringify(respJSON[0]), {expires: 10});
-                        $.rogerRefresh();
-                    }else if(respJSON.message) {
-                    	$('#result').html(respJSON.message);
-                        $('#message').html(respJSON.message);
+                        respJSON.message = JSON.parse(respJSON.message);
+                        if(respJSON.message && respJSON.message.UserID > 0) {
+                            $.removeCookie("roger");
+                            $.cookie("roger", JSON.stringify(respJSON.message), {expires: 10});
+                            $.rogerRefresh();
+                        }
+                    }else {
+                    	$('#message').html(respJSON.message);
 					}
                 });
-                $('#getCaptcha').rogerOnceClick(null, function () {
-                    var phone = $('#loginNameCaptcha').val();
-                    $.rogerPost('/sms/get', {mobile:phone}, function (respJSON) {
-                        $('#message').html(respJSON.message);
-                    })
+                $('.getCaptcha').rogerOnceClick(null, function () {
+                	var i = parseInt($('.getCaptcha span')[0].innerHTML);
+                	if(i>0) {
+                        $('#message').html("请等待"+(i)+"秒再获取验证码");
+                		return;
+					}
+                    var counter = 60;
+                    var inter = setInterval(function() {
+                        if (counter == 60) {
+                            var phone = $('#tab2 input[name="loginName"]')[0].value;
+                            $.rogerPost('/sms/get', {mobile: phone}, function (respJSON) {
+                                $('#message').html(respJSON.message);
+                            });
+                            $('.getCaptcha').html('').html('<span class="btn btn-default disabled">60</span>');
+                        }
+                        counter--;
+                        if (counter >= 0) {
+                            $('.getCaptcha').html('').html('<span class="btn btn-default disabled">'+counter+'</span>');
+                        }
+                        if (counter <= 0) {
+                            $('.getCaptcha').html('').html('<span class="btn btn-default glyphicon glyphicon-refresh"></span>');
+                            clearInterval(inter);
+                        }
+                    }, 1000);
                 })
             }
 			window._rogerLoginForm = loginFormID;

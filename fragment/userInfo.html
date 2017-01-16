@@ -4,7 +4,11 @@
   <!-- 左侧固定菜单 -->
   <div class="menuLeft fl">
     <div class="avatar">
+      {{if $data.User[0] }}
+      {{if $data.User[0].AvatarPicURL}}
       <img src="${$data.IMGHOST}${$data.User[0].AvatarPicURL}" alt="个人头像">
+      {{/if}}
+      {{/if}}
     </div>
     <h3>账号管理</h3>
     <ul class="menu" id="menuLeftList">
@@ -30,6 +34,7 @@
           <div class="form-group">
             <label for="" class="col-sm-2 control-label">当前头像：</label>
             <div class="col-sm-10" >
+              {{if $data.User[0] }}
               {{if $data.User[0].AvatarPicURL}}
               <div class="col-md-5">
                 <div class="imgBox">
@@ -41,6 +46,7 @@
               <div class="col-md-5">
                 <div class="imgBox addImg"  data-op="change" data-pointer="/User/0/AvatarPicURL" data-action="image" >+</div>
               </div>
+              {{/if}}
               {{/if}}
             </div>
           </div>
@@ -65,7 +71,7 @@
               </div>
             </div>
           </div>
-          
+          {{if 0}}
           <div class="form-group">
             <label  class="col-sm-2 control-label">居住地：</label>
             <div class="col-sm-10">
@@ -122,6 +128,7 @@
               <button id="userUpdate" type="submit" class="btn btn-warning">保存</button>
             </div>
           </div>
+          {{/if}}
         </form>
       </div>
     </div>
