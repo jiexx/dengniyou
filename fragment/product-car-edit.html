@@ -36,22 +36,23 @@
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">提车地址</label>
 		    <div class="col-sm-10 col-md-11">
-		    	{{each(i,p) DetailMain.vehicleAddress}}
-		    	{{if p.addressType ==1 }}
-				<input type="text" class="form-control" value="${p.address}" data-value="/DetailMain/vehicleAddress/{i}/address"> 
-				{{/if}}
-		    	{{/each}}
-		    	<!-- <button type="button" class="btn btn-default btn-sm" data-action="addAddress">增加</button> -->
+		      <ul class="label-base">
+				  {{each DetailMain.lendAddresses}}
+				    <li style="width:100%;"><input type="text" value="${address}" data-value="/DetailMain/lendAddresses/${$index}/address" style="width:96%!important" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/lendAddresses/${$index}"></a></li>
+				  {{/each}}
+				  <li style="float: right;"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/lendAddresses/-" data-action="createLendAddress"> 增加 </div></li>
+			  </ul>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">还车地址</label>
 		    <div class="col-sm-10 col-md-11">
-				{{each(i,p) DetailMain.vehicleAddress}}
-		    	{{if addressType ==2 }} 
-				<input type="text" class="form-control" value="${p.address}" data-value="/DetailMain/vehicleAddress/{i}/address"> 
-				{{/if}}
-		    	{{/each}}
+				<ul class="label-base">
+				  {{each DetailMain.repayAddresses}}
+				    <li style="width:100%;"><input type="text" value="${address}" data-value="/DetailMain/repayAddresses/${$index}/address" style="width:96%!important" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/repayAddresses/${$index}"></a></li>
+				  {{/each}}
+				  <li style="float: right;"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/repayAddresses/-" data-action="createRepayAddress"> 增加 </div></li>
+			  </ul>
 		    </div>
 		  </div>
 		  <div class="form-group">

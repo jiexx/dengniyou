@@ -12,13 +12,9 @@
 		  	<div class="col-md-8 ">
 		    	<div class="media">
 				    <div class="media-left media-top">
-					   {{each(i,pic) Facilities[$index].pics}}
-					   {{if i==0}}
 					   <a href="#/equipdetail?facilityID=${facilityID}">
-						  <img src="${ $data.IMGHOST + pic}" class="media-object" style="width:160px;height:160px">
+						  <img src="${ $data.IMGHOST + Facilities[$index].coverURL}" class="media-object" style="width:160px;height:160px">
 					   </a>
-					   {{/if}}
-					   {{/each}}
 				    </div>
 			   		<div class="media-body">
 						<div class="media-heading">${ Facilities[$index].facilityType}：${ Facilities[$index].brand}：${ Facilities[$index].model}</div>

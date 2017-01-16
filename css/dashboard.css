@@ -3,10 +3,10 @@
 .dashboard-page .navbar-header .navbar-brand{font-size: 20px; font-weight: bold; color: #fff; line-height: 50px; margin-left: 20%; margin-top: -80px;}
 .dashboard-page .sub-header{padding-bottom: 10px; border-bottom: 1px solid #eee;}
 .dashboard-page .navbar-fixed-top{border: 0; height: 79px; line-height: 79px;}
-.dashboard-page .sidebar{position: fixed; top: 60px; bottom: 0; left: 0; z-index: 1000; display: block; padding: 20px; overflow-x: hidden; overflow-y: auto; background-color: #f5f5f5;}
+.dashboard-page .sidebar{position: fixed; top: 25px; bottom: 0; left: 0; z-index: 1000; display: block; padding: 20px; overflow-x: hidden; overflow-y: auto; background-color: #f5f5f5;}
 .dashboard-page .sidebar{background: url(../img/dashboard-sidebar.png) no-repeat;}
 .dashboard-page .nav-sidebar{margin-top: 120px; padding-left: 15%;}
-.dashboard-page .nav-sidebar > li{height: 79px;}
+.dashboard-page .nav-sidebar > li{height: 79px; margin-top: -8px;}
 .dashboard-page .nav-sidebar > li > a{font-size: 14px; color: #333; font-weight: bold; background-color: rgba(255,255,255,0);}
 .dashboard-page .nav-sidebar > li > a:hover,
 .dashboard-page .nav-sidebar > li > a:focus{color: #ff6600; }

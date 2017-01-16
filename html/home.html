@@ -64,34 +64,36 @@
     </div><!-- end carousel -->
   </div> <!-- end carousel-container -->
 
-<div class="solution" id="solution">
-  <div class="box">
-    <ul id="RunTopic">
-    {{each(i,p) PlansByCountry['中国'].__values[0].Plans}}
-      <li>
-        {{if p.CreateType == 1}}
-        <a class="pull-left" href="#/plandetail?PlanID=${p.PlanID}">
-          {{else}}
-          <a class="pull-left" href="#/plandetailshort?PlanID=${ p.PlanID}">
-            {{/if}}
-        <div class="detail">
-          <div class="img">
-          <img data-src="${ $data.IMGHOST }${p.PicURL}" alt="">
-        </div>
-        <div class="text">
-          <h4>${p.PlanName}</h4>
-          <p class="textCon">${p.RegionCnName}</p>
-          <p><span class="price">${p.PlanPriceBase}</span><span class="unit">元/人</span></p>
-        </div>
-        </div>
-      </a>
-      </li>
-    {{/each}}
-    </ul>
-  </div>
-</div>
-
     <div class="content">
+      <div class="container">
+        <div class="solution" id="solution">
+          <div class="box">
+            <ul id="RunTopic">
+            {{each(i,p) PlansByCountry['中国'].__values[0].Plans}}
+              <li>
+                {{if p.CreateType == 1}}
+                <a class="pull-left" href="#/plandetail?PlanID=${p.PlanID}">
+                  {{else}}
+                  <a class="pull-left" href="#/plandetailshort?PlanID=${ p.PlanID}">
+                    {{/if}}
+                <div class="detail">
+                  <div class="img">
+                  <img data-src="${ $data.IMGHOST }${p.PicURL}" alt="">
+                </div>
+                <div class="text">
+                  <h4>${p.PlanName}</h4>
+                  <p class="textCon">${p.RegionCnName}</p>
+                  <p><span class="price">${p.PlanPriceBase}</span><span class="unit">元/人</span></p>
+                </div>
+                </div>
+              </a>
+              </li>
+            {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {{each(i,p) PlansByContinent}}
       <div class="container">
         <div class="continent-tit">

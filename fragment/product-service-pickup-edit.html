@@ -115,29 +115,32 @@
 	<div class="baseInfo airportInfo">
 		<h4>机场信息</h4>
 		<form class="form-horizontal">
+		{{each DetailMain.airports}}
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">机场代码</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.DetailMain.Airports[0].AirportCode}" data-value="/DetailMain/Airports/0/AirportCode" placeholder="请输入">
+		      <input type="text" class="form-control" value="${$data.DetailMain.airports[$index].AirportCode}" data-value="/DetailMain/airports/${$index}/AirportCode" placeholder="请输入">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">机场名称</label>
 		    <div class="col-sm-10 col-md-11">
-		        <input type="text" class="form-control" value="${$data.DetailMain.Airports[0].NameCh}" data-value="/DetailMain/Airports/0/NameCh" placeholder="请输入">
+		        <input type="text" class="form-control" value="${$data.DetailMain.airports[$index].NameCh}" data-value="/DetailMain/airports/${$index}/NameCh" placeholder="请输入">
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">英文名称</label>
 		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.DetailMain.Airports[0].NameEn}" data-value="/DetailMain/Airports/0/NameEn" placeholder="请输入">
+		      <input type="text" class="form-control" value="${$data.DetailMain.airports[$index].NameEn}" data-value="/DetailMain/airports/${$index}/NameEn" placeholder="请输入">
 		    </div> 
 		  </div>
+		  <hr>
+		{{/each}}
 		</form>			
 		<div class="row textRight">
 			<div class="col-sm-10 col-md-8">
 			<!-- <button class="btn btn-warning">关联车辆</button> -->
-			<button class="btn btn-warning" data-op="change" data-pointer="/Airports" data-action="createAirport">选择</button>
+			<button class="btn btn-warning" data-op="change" data-pointer="/DetailMain/airports" data-action="createAirport">选择</button>
 			</div>
 		</div>
 	</div>
@@ -192,15 +195,15 @@
 		    <div class="col-sm-10 col-md-11">
 		      <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#policydiv" style="margin-bottom: 8px; background-color: #FF6600; padding: 5px;">请选择退订政策</button>
 			    <div id="policyView">
-			    {{if $data.DetailMain.Policy[0].type == '4'}}
-					<h3>${$data.DetailMain.Policy[0].policyName}</h3>
-					<p>${$data.DetailMain.Policy[0].description}</p>
+			    {{if $data.DetailMain.policy[0].type == '4'}}
+					<h3>${$data.DetailMain.policy[0].policyName}</h3>
+					<p>${$data.DetailMain.policy[0].description}</p>
 			    {{else}}
-			    	<h3>${$data.DetailMain.Policy[0].policyName}</h3>
-					<p>1、服务开始前${$data.DetailMain.Policy[0].day1}天(含)以上退订，退还服务费用的99%；</p>
-					<p>2、服务开始前${$data.DetailMain.Policy[0].day2}天(含)以上退订，退还服务费用的50%；</p>
-					<p>3、服务开始前${$data.DetailMain.Policy[0].day3}天(含)以上退订，退还服务费用的20%；</p>
-					<p>4、服务开始前${$data.DetailMain.Policy[0].day4}天以内退订，不退还服务费用；</p>
+			    	<h3>${$data.DetailMain.policy[0].policyName}</h3>
+					<p>1、服务开始前${$data.DetailMain.policy[0].day1}天(含)以上退订，退还服务费用的99%；</p>
+					<p>2、服务开始前${$data.DetailMain.policy[0].day2}天(含)以上退订，退还服务费用的50%；</p>
+					<p>3、服务开始前${$data.DetailMain.policy[0].day3}天(含)以上退订，退还服务费用的20%；</p>
+					<p>4、服务开始前${$data.DetailMain.policy[0].day4}天以内退订，不退还服务费用；</p>
 					<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
 				{{/if}}				
 			    </div>
@@ -285,10 +288,10 @@
 								</div>
 								<div id="policycontent4" class="col-md-10">
 									<h3>自定义的退订政策</h3>
-									<p>1、服务开始前<input type="text" value="${$data.DetailMain.Policy[0].day1}" data-value="/DetailMain/Policy/${0}/day1">天(含)以上退订，退还服务费用的99%；</p>
-									<p>2、服务开始前<input type="text" value="${$data.DetailMain.Policy[0].day2}" data-value="/DetailMain/Policy/${0}/day2">天(含)以上退订，退还服务费用的50%；</p>
-									<p>3、服务开始前<input type="text" value="${$data.DetailMain.Policy[0].day3}" data-value="/DetailMain/Policy/${0}/day3">天(含)以上退订，退还服务费用的20%；</p>
-									<p>4、服务开始前<input type="text" value="${$data.DetailMain.Policy[0].day4}" data-value="/DetailMain/Policy/${0}/day4">天以内退订，不退还服务费用；</p>
+									<p>1、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day1}" data-value="/DetailMain/policy/${0}/day1">天(含)以上退订，退还服务费用的99%；</p>
+									<p>2、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day2}" data-value="/DetailMain/policy/${0}/day2">天(含)以上退订，退还服务费用的50%；</p>
+									<p>3、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day3}" data-value="/DetailMain/policy/${0}/day3">天(含)以上退订，退还服务费用的20%；</p>
+									<p>4、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day4}" data-value="/DetailMain/policy/${0}/day4">天以内退订，不退还服务费用；</p>
 									<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
 								</div>
 							</div>
@@ -306,24 +309,24 @@
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/1/customRatio" class="form-control">${$data.DetailMain.Policy[1].customRatio}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/1/customRatio" class="form-control">${$data.DetailMain.policy[1].customRatio}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/2/customRatio" class="form-control">${$data.DetailMain.Policy[2].customRatio}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/2/customRatio" class="form-control">${$data.DetailMain.policy[2].customRatio}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">预订须知：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/3/caution" class="form-control">${$data.DetailMain.Policy[3].caution}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/3/caution" class="form-control">${$data.DetailMain.policy[3].caution}</textarea>
 		    </div>
 		  </div>
 		</form>
 		<div class="optionBtn">
-			<button id="save" class="btn btn-warning">保存</button>
+			<button id="savePickup" class="btn btn-warning">保存</button>
 			<button id="publish" class="btn btn-warning">发布 </button>
 		</div>
 	</div>

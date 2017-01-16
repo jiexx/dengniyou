@@ -66,7 +66,7 @@
             <p>行李空间：<span>${Facility[0].luggage}升</span></p>
           </div>
           <div class="col-md-3">
-            <p>出厂年份：<span>${Facility[0].UpdateDate}</span></p>
+            <p>出厂年份：<span>${Facility[0].produceYear}</span></p>
             <p>乘员险：<span>{{if Facility[0].insurance==1}}有{{else}}无{{/if}}</span></p>
           </div>
         </div> <!-- end 商品详情product-detail -->
@@ -80,9 +80,7 @@
 
       <div class="buttons">
         <button id="delete" type="button" class="btn btn-default">删除</button>
-        <button id="copy" type="button" class="btn">复制</button>
         <button id="edit" type="button" class="btn">编辑</button>
-        <button id="release" type="button" class="btn">发布</button>
       </div>
     </div> <!-- end container-box -->
   </div> <!-- end container -->

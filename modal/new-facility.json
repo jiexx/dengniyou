@@ -1,6 +1,6 @@
 {
 	"Facility": {
-		"sql": "insert into tab_facilities (UserID,FacilityType,FacilityName, Brand,Model,ProduceYear,Seats,Person, Clazz,Insurance,Description,Luggage) values(?,?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?))",
+		"sql": "insert into traveluserdb.tab_facilities (UserID,FacilityType,FacilityName, Brand,Model,ProduceYear,Seats,Person, Clazz,Insurance,Description,UpdateDate,CreateDate,Luggage) values(?,?,?,?,?,?,?,?,?,?,?,NOW(),NOW(),?)",
 		"params": [
 			"userID",
 			"facilityType",
@@ -15,12 +15,14 @@
 			"description",
 			"luggage"
 		],
+
 		"picURLs": {
-			"sql": "INSERT INTO tab_facilitypictures (PictureID,PicURL,IsCover,PicType ) VALUES( ?,?,?,2)",
+			"sql": "INSERT INTO traveluserdb.tab_facilitypictures (PictureID,PicURL,IsCover,PicType ) VALUES( ?,?,?,2)",
 			"params": [
 				"insertId",
 				"picUrl",
 				"isCover"
+
 			],
 			"files": [
 				"picUrl"
