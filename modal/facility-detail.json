@@ -1,3 +1,4 @@
 {
-  "Facility": {"sql": "SELECT * FROM traveluserdb.`vw_/facility/list` WHERE facilityID = ? order by updateDate desc",	"params":["facilityID"]}
+  "Facility": {"sql": "SELECT * FROM traveluserdb.`vw_/facility/list` WHERE facilityID = ? order by updateDate desc",	"params":["facilityID"]},
+  "CarBrand": {"sql": "select VehicleID as vehicleID,Brand as brand,Classify as classify from traveluserdb.tab_vehicle order by VehicleID asc",	"params":["facilityID"]}
 }

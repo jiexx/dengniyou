@@ -30,7 +30,7 @@
         "ServiceID"
       ]
     },
-      "VehicleInfo": {
+    "VehicleInfo": {
       "sql": "SELECT vehicleInfoID, serviceID, brand, model, produceYear, seats, person, clazz, insurance, luggage FROM traveluserdb.tab_servicevehicleinfo WHERE serviceID = ? LIMIT 1",
       "params": [
         "ServiceID"
@@ -77,6 +77,12 @@
     "sql": "SELECT * FROM traveluserdb.`vw_/facility/list` WHERE userID = ? order by updateDate desc",
     "params": [
       "userID"
+    ]
+  },
+  "CarBrand": {
+    "sql": "select VehicleID as vehicleID,Brand as brand,Classify as classify from traveluserdb.tab_vehicle order by VehicleID asc",
+    "params": [
+      "facilityID"
     ]
   }
 }

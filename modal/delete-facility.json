@@ -1,0 +1,14 @@
+{
+	"deleteFacility": {
+		"sql": "delete from traveluserdb.tab_facilities where facilityId=?",
+		"params": [
+			"facilityID"
+		]
+	},
+	"deletePicURLs": {
+		"sql": "delete from traveluserdb.tab_facilitypictures where pictureID=? and PicType = 2",
+		"params": [
+			"facilityID"
+		]
+	}
+}

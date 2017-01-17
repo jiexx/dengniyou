@@ -1,9 +1,20 @@
 <div class="container">
+	<div class="row service-dropdown">
+		<div class="col-md-10"></div>
+		<div class="col-md-2 service-release">
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+					<a href="#/delicacyedit?spotType=2">发布美食</a>
+				</button>
+			</div>
+		</div><!-- end 下拉菜单部分 -->
+	</div> <!-- end  美食列表页头部row -->
+	<!-- 美食列表开始 -->
 	<div class="list-group service-list">
 		{{each Attraction}}
 		<div class="list-group-item clearfix disabled">
-			<div class="col-md-1"><input type="radio" name="optradio"></div>
-			<div class="col-md-5 service-name">方案</div>
+			<div class="col-md-1"></div>
+			<div class="col-md-5 service-name">我的美食方案</div>
 			<div class="col-md-1">价格</div>
 			<div class="col-md-2">行程天数</div>
 			<div class="col-md-2 ">发布状态</div>
@@ -31,7 +42,9 @@
 				{{if Status ==1}}待审核 {{/if}}{{if Status ==2}}审核通过 {{/if}}{{if Status ==3}}导游隐藏 {{/if}}{{if Status ==4}}导游发布 {{/if}}{{if Status ==5}}导游定制 {{/if}}{{if Status ==6}}未加入 {{/if}}{{if Status ==7}}已加入 {{/if}}
 			</div>
 			<div class="col-md-1 service-edit">
+				<a href="#/delicacyedit?SpotsID=${ SpotsID}&spotType=2">
 				<span class="btn  glyphicon glyphicon-edit"></span>
+				</a>
 			</div>
 		</div>
 		{{/each}}

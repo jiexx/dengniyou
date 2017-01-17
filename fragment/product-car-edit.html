@@ -36,22 +36,31 @@
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">提车地址</label>
 		    <div class="col-sm-10 col-md-11">
-		    	{{each(i,p) DetailMain.vehicleAddress}}
-		    	{{if p.addressType ==1 }}
-				<input type="text" class="form-control" value="${p.address}" data-value="/DetailMain/vehicleAddress/{i}/address"> 
-				{{/if}}
-		    	{{/each}}
-		    	<!-- <button type="button" class="btn btn-default btn-sm" data-action="addAddress">增加</button> -->
+		      <ul class="label-base">
+				  {{each DetailMain.lendAddresses}}
+				    <li style="width:100%;"><input type="text" value="${address}" data-value="/DetailMain/lendAddresses/${$index}/address" style="width:96%!important" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/lendAddresses/${$index}"></a></li>
+				  {{/each}}
+				  <li style="float: right;"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/lendAddresses/-" data-action="createLendAddress"> 增加 </div></li>
+			  </ul>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">还车地址</label>
 		    <div class="col-sm-10 col-md-11">
-				{{each(i,p) DetailMain.vehicleAddress}}
-		    	{{if addressType ==2 }} 
-				<input type="text" class="form-control" value="${p.address}" data-value="/DetailMain/vehicleAddress/{i}/address"> 
-				{{/if}}
-		    	{{/each}}
+				<ul class="label-base">
+				  {{each DetailMain.repayAddresses}}
+				    <li style="width:100%;"><input type="text" value="${address}" data-value="/DetailMain/repayAddresses/${$index}/address" style="width:96%!important" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/repayAddresses/${$index}"></a></li>
+				  {{/each}}
+				  <li style="float: right;"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/repayAddresses/-" data-action="createRepayAddress"> 增加 </div></li>
+			  </ul>
+		    </div>
+		  </div>
+		  <div class="form-group">
+		    <label for="name" class="col-sm-2 col-md-1 control-label">设置屏蔽日期</label>
+		    <div class="col-sm-10 col-md-11">
+		      <div class="col-md-5 calender">
+				<div id="calendar"></div>
+			</div><!-- end calender -->
 		    </div>
 		  </div>
 		  <div class="form-group">
@@ -369,6 +378,34 @@
 	<input type="hidden" id="type" data-value="/DetailMain/Policy/0/type"/>
 	<!-- 须知信息结束 -->
 
+
+	<!-- 汽车品牌弹出框 -->
+	<div id="carBrandList" class="modal fade">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <button type="button" class="close" data-dismiss="modal">
+		      	<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		      </button>
+		      <h4 class="modal-title clearfix">选择品牌</h4>
+		    </div>
+		    <div class="modal-body">
+		    	<ul id="attrLabel" class="row">
+		    		{{each(i,p) DetailMain.carBrand}}
+		        	<li class="col-md-3">
+		        	<input type="radio" name="carRadios" value="${p.vehicleID}"> <span>${p.brand}</span>
+			        </li>
+			        {{/each}}				        
+				</ul>
+		    </div> <!-- end modal-body -->
+		    <div class="modal-footer">
+		      <button type="button" id="carBrandconfirm" class="btn btn-primary" data-op="change" data-pointer="/SpotDetail/SpotLabels/Labels/${$index}-" data-action="createLabel">确定</button>
+		    </div>
+		  </div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 汽车品牌弹出框结束 -->
+
 </div>
 
 <script>
@@ -377,6 +414,8 @@
 			var ServiceMethodName = $(this).val();
 			$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
 		});
+
+		
 	});
 </script>
 

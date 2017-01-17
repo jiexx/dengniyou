@@ -1,4 +1,4 @@
 {
-	"Service": {"sql": "SELECT * FROM traveluserdb.`vw_/dashboard/product/service` WHERE UserID=?  ORDER BY UpdateDate desc LIMIT 0, 8;",	"params":["UserID"]},
+	"Service": {"sql": "SELECT * FROM traveluserdb.`vw_/dashboard/product/service` WHERE UserID=? AND ServiceTypeID not in(5,6) ORDER BY UpdateDate desc LIMIT 0, 8;",	"params":["UserID"]},
 	"Counts": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/dashboard/product/service` WHERE UserID=?",	"params":["UserID"]}
 }

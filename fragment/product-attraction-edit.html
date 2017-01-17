@@ -36,12 +36,12 @@
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">所在城市</label>
 			    <div class="col-sm-10 col-md-11">
-
-			      <input type="text" class="form-control" value="${$data.SpotDetail.CountryName}" data-value="/SpotDetail/CountryName" >
-				  <input type="text" class="form-control" value="${$data.SpotDetail.CityName}" data-value="/SpotDetail/CityName" >
+				  <div class="col-sm-4" style="padding-left: 0"><input type="text" class="form-control" value="${$data.SpotDetail.CountryName}" data-value="/SpotDetail/CountryName" style="width: 100%;"></div>
+			      <div class="col-sm-4" style="padding-left: 0"><input type="text" class="form-control" value="${$data.SpotDetail.CityName}" data-value="/SpotDetail/CityName" style="width: 100%;"></div>
+			      <div class="col-sm-2"><button type="button" class="btn btn-default btn-sm" data-op="change"  data-pointer="/SpotDetail" data-action="createCity">选择地区</button></div>			  
 			    </div>
 			</div>
-			<button type="button" class="btn btn-default" data-op="change"  data-pointer="/SpotDetail" data-action="createCity">选择地区</button>
+			
 			<div class="form-group">
 			    <label for="" class="col-sm-2 col-md-1 control-label">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;编</label>
 			    <div class="col-sm-10 col-md-11">
@@ -110,7 +110,7 @@
 				{{each(i,itemtem) $data.SpotDetail.picURLs.picURLs}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img src="${itemtem}">
+						<img name="autoPrefix" src="${itemtem}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/picURLs/picURLs/${i}"></a>
 					</div>
 				</div>
@@ -126,8 +126,8 @@
 			<div class="col-md-11 row" >
 				{{if $data.SpotDetail.PicURL}}
 				<div class="col-md-3">
-					<div class="imgBox" name="autoPrefix">
-						<img src="${$data.SpotDetail.PicURL}">
+					<div class="imgBox" >
+						<img name="autoPrefix" src="${$data.SpotDetail.PicURL}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/PicURL" ></a>
 					</div>
 				</div>
@@ -182,10 +182,7 @@
 
 <script>
 	$(function(){
-		$('#labelConfirm').on('click',function(){
-			$('body').removeClass('modal-open');
-			$('.modal-backdrop').remove();
-		});
+		
 	});
 </script>
 

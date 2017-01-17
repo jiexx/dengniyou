@@ -1,13 +1,30 @@
 <div class="container">
+	<div class="row service-dropdown">
+		<div class="col-md-10"></div>
+		<div class="col-md-2 service-release">
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+					发布服务
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li><a href="#/servicecaredit">发布包车服务</a></li>
+					<li><a href="#/servicepickupedit">发布接送机服务</a></li>
+					<li><a href="#/serviceotheredit">发布其他服务</a></li>
+				</ul>
+			</div>
+		</div><!-- end 下拉菜单部分 -->
+	</div> <!-- end  服务列表页头部row -->
+	<!-- 服务列表开始 -->
 	<div class="list-group service-list">
-		{{each Service}}
 	  	<div class="list-group-item clearfix disabled">
-		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
-		  	<div class="col-md-6 service-name">服务</div>
+		  	<div class="col-md-1"></div>
+		  	<div class="col-md-6 service-name">我的服务</div>
 		  	<div class="col-md-2">服务类型</div>
 	      	<div class="col-md-2 ">发布状态</div>
 		  	<div class="col-md-1 ">编辑</div>
 	  	</div>
+		{{each Service}}
 	  	<div class="list-group-item clearfix btn-group">
 		  	<div class="col-md-1">
 		  		<input type="radio" name="optradio">
@@ -20,6 +37,10 @@
 					<a href="#/servicepickupdetail?ServiceID=${ServiceID}">
 					{{else ServiceTypeID==4}}
 					<a href="#/servicepickupdetail?ServiceID=${ServiceID}">
+					{{else ServiceTypeID==5}}
+					<a href="#/cardetail?ServiceID=${ServiceID}">
+					{{else ServiceTypeID==6}}
+					<a href="#/serviceactivitydetail?ServiceID=${ServiceID}">
 					{{else}}
 					<a href="#/serviceotherdetail?ServiceID=${ServiceID}">
 					{{/if}}
@@ -36,7 +57,21 @@
 				{{if ServiceStatus ==1}}待审核 {{/if}}{{if ServiceStatus ==2}}审核通过 {{/if}}{{if ServiceStatus ==3}}导游隐藏 {{/if}}{{if ServiceStatus ==4}}导游发布 {{/if}}{{if ServiceStatus ==5}}导游定制 {{/if}}{{if ServiceStatus ==6}}未加入 {{/if}}{{if ServiceStatus ==7}}已加入 {{/if}}
 			</div>
 			<div class="col-md-1 service-edit">
-		   	<span class="btn  glyphicon glyphicon-edit "></span>
+				{{if ServiceTypeID==1}}
+				<a href="#/servicecaredit?ServiceID=${ServiceID}">
+				{{else ServiceTypeID==3}}
+				<a href="#/servicepickupedit?ServiceID=${ServiceID}">
+				{{else ServiceTypeID==4}}
+				<a href="#/servicepickupedit?ServiceID=${ServiceID}">
+				{{else ServiceTypeID==5}}
+				<a href="#/caredit?ServiceID=${ServiceID}">
+				{{else ServiceTypeID==6}}
+				<a href="#/activityedit?ServiceID=${ServiceID}">
+				{{else}}
+				<a href="#/serviceotheredit?ServiceID=${ServiceID}">
+				{{/if}}
+				<span class="btn  glyphicon glyphicon-edit"></span>
+				</a>
 			</div>
 		</div>
 		{{/each}}

@@ -28,14 +28,16 @@
 
       <!--   banner -->
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
         <ol class="carousel-indicators">
           {{each(i,p) Facility[0].pics}}
           <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==0}}active{{/if}}"></li>
+
           {{/each}}
         </ol>
         <div class="carousel-inner" role="listbox">
           {{each(i,p) Facility[0].pics}}
-          <div class="item {{if i==1}}active{{/if}}">
+          <div class="item {{if i==0}}active{{/if}}">
             <img src="${$data.IMGHOST}${p}" alt="...">
           </div>
           {{/each}}
@@ -51,8 +53,10 @@
       <div class="detailpage-mainbody">
         <div class="attraction detailpage-title">
           <h1>${Facility[0].facilityName}</h1>
-        </div> 
+        </div>
+
         <div class="row product-detail price-detail">
+          {{if Facility[0].facilityType==1}}
           <div class="col-md-3">
             <p>品牌：<span>${Facility[0].brand}</span></p>
             <p>座位数：<span>2位</span></p>
@@ -66,12 +70,18 @@
             <p>行李空间：<span>${Facility[0].luggage}升</span></p>
           </div>
           <div class="col-md-3">
-            <p>出厂年份：<span>${Facility[0].UpdateDate}</span></p>
+            <p>出厂年份：<span>${Facility[0].produceYear}</span></p>
             <p>乘员险：<span>{{if Facility[0].insurance==1}}有{{else}}无{{/if}}</span></p>
           </div>
+          {{else}}
+          <div class="col-md-3">
+            <p>品牌：<span>${Facility[0].brand}</span></p>
+            <p>型号：<span>${Facility[0].model}</span></p>
+          </div>
+          {{/if}}
         </div> <!-- end 商品详情product-detail -->
         <div class="service-description">
-          <h2>服务说明</h2>
+          <h2>装备说明</h2>
           <div class="des">
             <p>${Facility[0].description}</p>
           </div>
@@ -80,9 +90,7 @@
 
       <div class="buttons">
         <button id="delete" type="button" class="btn btn-default">删除</button>
-        <button id="copy" type="button" class="btn">复制</button>
         <button id="edit" type="button" class="btn">编辑</button>
-        <button id="release" type="button" class="btn">发布</button>
       </div>
     </div> <!-- end container-box -->
   </div> <!-- end container -->

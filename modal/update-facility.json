@@ -1,0 +1,41 @@
+{
+	"Facility": {
+		"sql": "update traveluserdb.tab_facilities set FacilityType=?,FacilityName=?, Brand=?,Model=?,ProduceYear=?, Seats=?,Person=?, Clazz=?,Insurance=?,Description=?,Luggage=?,UpdateDate=NOW() where FacilityID=?",
+		"params": [
+			"facilityType",
+			"facilityName",
+			"brand",
+			"model",
+			"produceYear",
+			"seats",
+			"person",
+			"clazz",
+			"insurance",
+			"description",
+			"luggage",
+			"facilityID"
+		],
+
+		"deletePicURLs": {
+			"sql": "delete from traveluserdb.tab_facilitypictures where pictureID=? and PicType = 2",
+			"params": [
+				"facilityID"
+			]
+
+		},
+
+		"picURLs": {
+			"sql": "INSERT INTO traveluserdb.tab_facilitypictures (PictureID,PicURL,IsCover,PicType ) VALUES( ?,?,?,2)",
+			"params": [
+				"facilityID",
+				"picUrl",
+				"isCover"
+
+			],
+			"files": [
+				"picUrl"
+			]
+
+		}
+	}
+}

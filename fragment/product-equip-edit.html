@@ -1,6 +1,4 @@
 
-<link rel="stylesheet" href="../css/editPage.css">
-
 <div class="container editPage">
 	<!-- 方案基本信息 -->
 	<div class="baseInfo">
@@ -9,10 +7,17 @@
 		  <li class="active">装备编辑</li>
 		</ul>
 
-		<h4>基本信息</h4>
+		<h4>{{if Facility.facilityType==1}}小型客车{{/if}}
+			{{if Facility.facilityType==2}}WIFI设备{{/if}}
+			{{if Facility.facilityType==3}}转换插座{{/if}}
+			{{if Facility.facilityType==4}}摄影摄像{{/if}}
+			{{if Facility.facilityType==5}}体育运动{{/if}}
+			{{if Facility.facilityType==6}}船舶{{/if}}
+			{{if Facility.facilityType==7}}其他装备{{/if}}
+			基本信息</h4>
 		<form class="form-horizontal">
 		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">服务名称</label>
+		    <label for="name" class="col-sm-2 col-md-1 control-label">装备名称</label>
 		    <div class="col-sm-10 col-md-11">
 		      <input type="text" class="form-control" value="${$data.Facility.facilityName}" data-value="/Facility/facilityName" placeholder="不能超过24个字符">
 		    </div>
@@ -23,60 +28,64 @@
 
 	<!-- 车辆信息 -->
 	<div class="carInfo">
-		<h4>车辆信息</h4>
+		<h4>{{if Facility.facilityType==1}}车辆信息{{else}}装备信息{{/if}}</h4>
 		<div class="row">
 			<div class="col-md-6">
 				<form class="form-horizontal">
 				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-3 control-label">车辆品牌</label>
+				    <label for="" class="col-sm-4 col-md-3 control-label">{{if Facility.facilityType==1}}车辆品牌{{else}}装备品牌{{/if}}</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.Facility.brand}" data-value="/Facility/brand" placeholder="请输入">
+				      <input type="text" class="form-control" value="${$data.Facility.brand}" data-value="/Facility/brand" placeholder="请输入" id="{{if Facility.facilityType==1}}carBrand{{else}}other{{/if}}">
 				    </div>
 				  </div>
+				  {{if Facility.facilityType==1}}
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">舒适乘坐</label>
 				    <div class="col-sm-8 col-md-9">
 				      <input type="text" class="form-control" value="${$data.Facility.person}" data-value="/BaseInfo/seats" placeholder="请输入"> 人
 				    </div> 
 				  </div>
-				  <div class="form-group">
-
+					<div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">车辆级别</label>
 				    <div class="col-sm-8 col-md-9">
+						<input type="hidden" name="clazzhidden" id="clazz" value="${$data.Facility.clazz}" data-value="/Facility/clazz" />
 				        <label class="radio-inline">
 							{{if Facility.clazz == '1' }}
-						  <input type="radio" name="carLevel" id="Radio1" value="option1" checked> 经济
+						  <input type="radio" name="carLevel"  value="1" checked> 经济
 							{{else}}
-							<input type="radio" name="carLevel" id="Radio1" value="option1" > 经济
+							<input type="radio" name="carLevel"  value="1" > 经济
 							{{/if}}
 						</label>
 						<label class="radio-inline">
 							{{if Facility.clazz == '2' }}
-							<input type="radio" name="carLevel" id="Radio2" value="option1" checked> 舒适
+							<input type="radio" name="carLevel"  value="2" checked> 舒适
 							{{else}}
-							<input type="radio" name="carLevel" id="Radio2" value="option1" > 舒适
+							<input type="radio" name="carLevel"  value="2" > 舒适
 							{{/if}}
 						</label>
 						<label class="radio-inline">
 							{{if Facility.clazz == '3' }}
-							<input type="radio" name="carLevel" id="Radio3" value="option1" checked> 豪华
+							<input type="radio" name="carLevel"  value="3" checked> 豪华
 							{{else}}
-							<input type="radio" name="carLevel" id="Radio3" value="option1"> 豪华
+							<input type="radio" name="carLevel"  value="3"> 豪华
 							{{/if}}
 						</label>
 				    </div>
-				  </div>
+					</div>
+					{{/if}}
+
 				</form>
 			</div>
 			<div class="col-md-6">
 				<form class="form-horizontal">
 				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-3 control-label">车辆型号</label>
+				    <label for="" class="col-sm-4 col-md-3 control-label">{{if Facility.facilityType==1}}车辆型号{{else}}装备型号{{/if}}</label>
 				    <div class="col-sm-8 col-md-9">
 				      <input type="text" class="form-control" value="${$data.Facility.model}" data-value="/Facility/model" placeholder="请输入">
 				    </div>
 				  </div>
-				  <div class="form-group">
+					{{if Facility.facilityType==1}}
+					<div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">行李空间</label>
 				    <div class="col-sm-8 col-md-9">
 				      <input type="text" class="form-control" value="${$data.Facility.luggage}" data-value="/Facility/luggage" placeholder="请输入">
@@ -86,21 +95,24 @@
 				    <label for="" class="col-sm-4 col-md-3 control-label">成员保险</label>
 				    <div class="col-sm-8 col-md-9">
 				        <label class="radio-inline">
+							<input type="hidden" name="insurancehidden" id="insurance" value="${$data.Facility.insurance}" data-value="/Facility/insurance" />
 							{{if Facility.insurance == '1' }}
-							<input type="radio" name="insurance" id="" value="option1" checked > 有
+
+							<input type="radio" name="insurancecheck" id="" value="1" checked > 有
 							{{else}}
-							<input type="radio" name="insurance" id="" value="option1"> 有
+							<input type="radio" name="insurancecheck" id="" value="1"> 有
 							{{/if}}
 						</label>
 						<label class="radio-inline">
 							{{if Facility.insurance != '1' }}
-							<input type="radio" name="insurance" id="" value="option1" checked > 无
+							<input type="radio" name="insurancecheck" id="" value="0" checked > 无
 							{{else}}
-							<input type="radio" name="insurance" id="" value="option1"> 无
+							<input type="radio" name="insurancecheck" id="" value="0"> 无
 							{{/if}}
 						</label>
 				    </div>
 				  </div>
+					{{/if}}
 				</form>
 			</div>
 		</div>
@@ -150,29 +162,53 @@
 	<!-- 须知信息 -->
 	<div class="notice spotDescription">
 		<h4>装备描述</h4>
-		<textarea name="" data-value="/BaseInfo/description" placeholder="可输入1200字">${$data.Facility.description}</textarea>
+		<textarea name="" data-value="/Facility/description" placeholder="可输入1200字">${$data.Facility.description}</textarea>
 		<div class="optionBtn">
 			<a id="save" class="btn btn-warning">保存</a>
-			<a id="publish" class="btn btn-warning">发布 </a>
 		</div>
 	</div>
 	<!-- 须知信息结束 -->
+
+
+	<!-- 汽车品牌弹出框 -->
+	<div id="carBrandList" class="modal fade">
+		<div class="modal-dialog">
+		  <div class="modal-content">
+		    <div class="modal-header">
+		      <button type="button" class="close" data-dismiss="modal">
+		      	<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+		      </button>
+		      <h4 class="modal-title clearfix">选择品牌</h4>
+		    </div>
+		    <div class="modal-body">
+		    	<ul id="attrLabel" class="row">
+		    		{{each(i,p) carBrand}}
+		        	<li class="col-md-3">
+		        	<input type="radio" name="carRadios" value="${p.vehicleID}"> <span>${p.brand}</span>
+			        </li>
+			        {{/each}}				        
+				</ul>
+		    </div> <!-- end modal-body -->
+		    <div class="modal-footer">
+		      <button type="button" id="carBrandconfirm" class="btn btn-primary" data-op="change" data-pointer="/SpotDetail/SpotLabels/Labels/${$index}-" data-action="createLabel">确定</button>
+		    </div>
+		  </div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 汽车品牌弹出框结束 -->
 </div>
 
-// <script>
-// 	initDelicacyEdit = function(){
-//         return {
-//             BaseInfo:{
-//                 ServiceName:'',
-//                 description:'',
-//                	brand:'',
-//                	seats:'',
-//                	model:'',
-//                	luggage:'',
-//                	CoverPicURL:'',
-//                 CarPicURL:[],
-//                 PicURL:[],
-//             }
-//         };
-//     }
-// </script>
+ <script>
+     $(function() {
+         $("input[name='insurancecheck']").click(function() {
+             $("#insurance").val(this.value).trigger('keyup');
+         });
+
+         $("input[name='carLevel']").click(function() {
+             $("#clazz").val(this.value).trigger('keyup');
+         });
+
+     });
+
+
+</script>

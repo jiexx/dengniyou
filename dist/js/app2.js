@@ -1,4 +1,4 @@
-$(function () { 
+ $(function () { 
     var policy1 = '1  游客在行程开始日期前60天以上提出取消，扣除已产生的费用以外的全部费用；\r\n2  游客在行程开始日期前30天以上提出取消，退还总费用的50%；\r\n3  游客在行程开始日期前15天以上提出取消，退还总费用的20%；\r\n4  游客在行程开始日期前15天（含）以内提出取消，不退还服务费用。';
     var policy2 = '1  一辆如服务描述（或同级别）的车辆使用费（在限定时间和里程范围内）；\r\n2  服务发布者本人作为司机兼导游的服务费（限定时间内），含小费；\r\n3  燃油费\r\n4  停车费\r\n5  车载WiFi热点每天1GB流量\r\n6  高速，桥梁，隧道的过路费，进城费\r\n7  司机/导游的住宿费，空程费\r\n8  如下景点的门票费用：\r\n9  行程描述中酒店（或同等级别酒店）的双人标准间；\r\n10  酒店内自助式早餐；\r\n11  旅行医疗及意外保险；\r\n12  签证办理费用。';
     var policy3 = '1  景点游览和公务/商务活动期间的服务费用；\r\n2  超时等待的费用，资费参看服务描述；\r\n3  机场和送达目的地的停车费。';
@@ -337,10 +337,8 @@ $(function () {
                     }
                 }
             }else {
-                if(data.Plan.Airports){
-                    data.Plan.Airports.AirportCode = airport[0];
-                    data.Plan.Airports.NameCh = airport[1];
-                    data.Plan.Airports.NameEn = airport[2];
+                if(data.Plan.DetailMain.airports){
+                    data.Plan.DetailMain.airports.push({AirportCode:airport[0],NameCh:airport[1],NameEn:airport[2],CreateDate:'',ServiceID:''}); 
                 }else{
                 data.Spot.push({CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
                     SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''});
@@ -519,20 +517,47 @@ $(function () {
 
     var ctrlDelicacyDetail = function(response, realView) {
 
+        $('#release').rogerOnceClick(response, function (e) {
+                temp = e.data.SpotDetail[0];
+                var status = $('#release').data("status")
+                //3,隐藏，4发布
+                $.rogerPost('/update/service/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
+                    $.rogerNotice({Message: '发布成功'});
+
+                });
+            }
+        );
+
+        $('#edit').rogerOnceClick(response, function (e) {
+                temp = e.data.SpotDetail[0];
+                $.rogerLocation('#/delicacyedit?SpotsID='+temp.SpotsID+"&spotType=1");
+            }
+        );
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
 
     var ctrlAccommodationDetail = function(response, realView) {
+        $('#release').rogerOnceClick(response, function (e) {
+            temp = e.data.SpotDetail[0];
+            var status = $('#release').data("status")
+            //3,隐藏，4发布
+            $.rogerPost('/update/service/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
+                $.rogerNotice({Message: '发布成功'});
 
+            });
+        });
+
+        $('#edit').rogerOnceClick(response, function (e) {
+                temp = e.data.SpotDetail[0];
+                $.rogerLocation('#/accommodationedit?SpotsID='+temp.SpotsID+"&spotType=1");
+            }
+        );
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
 
     var ctrlAttractionDetail = function(response, realView) {
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
 
         $('#release').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
@@ -547,7 +572,7 @@ $(function () {
 
         $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
-                $.rogerLocation('#/attractionedit?SpotsID='+temp.SpotsID);
+                $.rogerLocation('#/attractionedit?SpotsID='+temp.SpotsID+"&spotType=1");
             }
         );
 
@@ -560,6 +585,8 @@ $(function () {
         //     }
         // );
 
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
     };
 
     var ctrlOrderlist = function(response, realView) {
@@ -609,6 +636,7 @@ $(function () {
         realView.rogerCropImages();
 
     };
+    
     var ctrlUserInfo = function(response, realView) {
         var usr = $.rogerGetLoginUser();
         console.log(usr,usr.Labels.split(','));
@@ -667,15 +695,43 @@ $(function () {
 
         $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.DetailMain[0];
-                $.rogerLocation('#/servicecaredit?ServiceID='+temp.serviceID);
+                if (temp.serviceTypeID == 1) {
+                    //包车
+                    $.rogerLocation('#/servicecaredit?ServiceID=' + temp.serviceID);
+                } else if (temp.serviceTypeID == 3 || temp.serviceTypeID == 4) {
+                    //接机送机
+                    $.rogerLocation('#/servicepickupedit?ServiceID=' + temp.serviceID);
+                } else if (temp.serviceTypeID == 5) {
+                    //租车
+                    $.rogerLocation('#/caredit?ServiceID=' + temp.serviceID);
+                } else if (temp.serviceTypeID == 6) {
+                    //活动
+                    $.rogerLocation('#/activityedit?ServiceID=' + temp.serviceID);
+                    //其他
+                } else {
+                    $.rogerLocation('#/serviceotheredit?ServiceID=' + temp.serviceID);
+                }
+
             }
         );
-        //租车
-        $('#editCar').rogerOnceClick(response, function (e) {
-                temp = e.data.DetailMain[0];
-                $.rogerLocation('#/caredit?ServiceID='+temp.serviceID);
-            }
-        );
+        // //租车
+        // $('#editCar').rogerOnceClick(response, function (e) {
+        //         temp = e.data.DetailMain[0];
+        //         $.rogerLocation('#/caredit?ServiceID='+temp.serviceID);
+        //     }
+        // );
+        // //接送机
+        // $('#editPickup').rogerOnceClick(response, function (e) {
+        //         temp = e.data.DetailMain[0];
+        //         $.rogerLocation('#/servicepickupedit?ServiceID='+temp.serviceID);
+        //     }
+        // );
+        // //其他服务类
+        // $('#editOther').rogerOnceClick(response, function (e) {
+        //         temp = e.data.DetailMain[0];
+        //         $.rogerLocation('#/serviceotheredit?ServiceID='+temp.serviceID);
+        //     }
+        // );
 
         $('#delete').rogerOnceClick(response, function (e) {
                 temp = e.data.DetailMain[0];
@@ -693,16 +749,6 @@ $(function () {
     var ctrlFacilityDetail = function(response, realView) {
 
         console.log(JSON.stringify(response));
-        $('#release').rogerOnceClick(response, function (e) {
-                temp = e.data.DetailMain[0];
-                var status = $('#release').data("status")
-                //3,隐藏，4发布
-                $.rogerPost('/update/service/status', {Status: status, ServiceId: temp.serviceID}, function (respJSON) {
-                    $.rogerNotice({Message: '发布成功'});
-
-                });
-            }
-        );
 
         $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.Facility[0];
@@ -711,10 +757,11 @@ $(function () {
         );
 
         $('#delete').rogerOnceClick(response, function (e) {
-                temp = e.data.DetailMain[0];
-                $.rogerPost('/delete/service', {ServiceId:temp.serviceID}, function (respJSON) {
+                temp = e.data.Facility[0];
+                var usr =$.rogerGetLoginUser();
+                $.rogerPost('/delete/facility', {facilityID:temp.facilityID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
-                    $.rogerLocation('#/service'+"?UserID="+usr.UserID);
+                    $.rogerLocation('#/facilitylist'+"?UserID="+usr.UserID);
                 });
             }
         );
@@ -753,49 +800,50 @@ $(function () {
 
     var initAttractionEdit=function(){
         var SpotsID = $.rogerGetUrlParam('SpotsID');
+        spotType = $.rogerGetUrlParam('spotType');
         var usr =$.rogerGetLoginUser();
         var returnvalue = {
-        SpotDetail: 
-        {
-            SpotsID:'' ,
-            UserID:usr.UserID ,
-            CountryID:'' ,
-            CityID:'' ,
-            SpotsTypeID:'1' ,
-            CommondReason: '' ,
-            CreateDate:'' ,
-            SpotsType:'' ,
-            NameEn:'' ,
-            NameCh:'',
-            Status:'',
-            UpdateDate: '' ,
-            Flavor:'' ,
-            PicURL:''  ,
-            Address:'' ,
-            ZipCode:'' ,
-            ZoneCode:'' ,
-            Tel:'' ,
-            Description:'' ,
-            Price:''  ,
-            Score: '' ,
-            LocalName: '',
-            Alias:'' ,
-            comment: '' ,
-            TravelTime:'' ,
-            CountryName:'' ,
-            CityName: '',
-            picURLs:{picURLs:[]},
-            SpotLabels: {
-                LabelIDs:[],                
-                Labels:[],
-            },
-            ClassifyLabels:[]
-        },        
-        IMGHOST: "http://123.59.144.47/" };
+            SpotDetail: 
+            {
+                SpotsID:'' ,
+                UserID:usr.UserID ,
+                CountryID:'' ,
+                CityID:'' ,
+                SpotsTypeID:spotType ,
+                CommondReason: '' ,
+                CreateDate:'' ,
+                SpotsType:'' ,
+                NameEn:'' ,
+                NameCh:'',
+                Status:'',
+                UpdateDate: '' ,
+                Flavor:'' ,
+                PicURL:''  ,
+                Address:'' ,
+                ZipCode:'' ,
+                ZoneCode:'' ,
+                Tel:'' ,
+                Description:'' ,
+                Price:''  ,
+                Score: '' ,
+                LocalName: '',
+                Alias:'' ,
+                comment: '' ,
+                TravelTime:'' ,
+                CountryName:'' ,
+                CityName: '',
+                picURLs:{picURLs:[]},
+                SpotLabels: {
+                    LabelIDs:[],                
+                    Labels:[],
+                },
+                ClassifyLabels:[]
+            },        
+            IMGHOST: "http://123.59.144.47/" 
+        };
 
-        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
+        $.rogerPost('/dashboard/product/attraction/detail', {"spotType":spotType,"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
             if(respJSON){
-                console.log(JSON.stringify(respJSON));
                 if (null != respJSON["SpotDetail"] && respJSON["SpotDetail"].length > 0) {
                     var spotdetail = respJSON["SpotDetail"][0];
 
@@ -861,6 +909,11 @@ $(function () {
             console.log(Spots);
             $.rogerRefresh(Spots);
         };
+        $('#labelConfirm').on('click',function(){
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+
 
         Spots.createCity = function (Spots) {
             $.rogerTrigger('#modal', '#/citychooser3', {Spots:Spots});
@@ -878,7 +931,6 @@ $(function () {
                     }
                 }
 
-
                 var data = {
                     DeleteSpotsPics:temp,
                     DeleteTravelSpotsLabel:temp,
@@ -890,7 +942,7 @@ $(function () {
                     IMGHOST:e.data.IMGHOST
                 };
                 $.rogerPost('/update/spots', data, function(respJSON){
-                    $.rogerNotice({Message:'景点修改成功'});
+                    $.rogerNotice({Message:'修改成功'});
 
                 });
             } else {
@@ -903,13 +955,17 @@ $(function () {
                     IMGHOST:e.data.IMGHOST
                 };
                 $.rogerPost('/new/spots', data, function(respJSON){
-                    $.rogerNotice({Message:'景点保存成功'});
+                    $.rogerNotice({Message:'保存成功'});
+
+                    if(respJSON){
+                        //跳转到详情页面
+                        $.rogerLocation('#/attractiondetail?ServiceID='+respJSON.ServiceID);
+                    }
 
                 });
             }
 
         });
-
 
         // $('#publish').rogerOnceClick(Spots, function(e){
         //     console.data.log('publish');
@@ -966,443 +1022,328 @@ $(function () {
         realView.rogerCropImages();
     } ;
 
-     var initAccommodationEdit=function(){
-        return {
-        SpotDetail:
-        {
-            SpotsID: '',
-            UserID: '',
-            CountryID: '',
-            CityID: '',
-            SpotsTypeID:'',
-            CommondReason: '',
-            CreateDate: '',
-            SpotsType: '',
-            NameEn: '',
-            NameCh: '',
-            Status: '',
-            UpdateDate: '',
-            Flavor: '',
-            PicURL: '',
-            Address: '',
-            ZipCode: '',
-            ZoneCode: '',
-            Tel: '',
-            Description:'',
-            Rank: '',
-            Price: '',
-            Score: '',
-            LocalName: '',
-            Alias: '',
-            comment:'',
-            TravelTime: '',
-            CountryName: '',
-            CityName: '',
-            picURLs:[],
-            coverURL:'',
-            SpotPics: [
-                {PicURL: ''},
-                {PicURL: ''}
-            ],
-            Labels:["场馆","建筑","历史"],
-            SpotLabels: [
-                {ClassifyLabel: "民宿"},
-                {ClassifyLabel: "人文"},
-                {ClassifyLabel: "历史"}
-            ],
-        },
-        IMGHOST: "http://123.59.144.47/"
-    };
-    },ctrlAccommodationEdit=function(Plan, realView){
-        Plan.createLabel = function(Plan, Labels){
-            Labels .push('');
-            $.rogerRefresh(Plan);
-        };
-        $('#save').rogerOnceClick(Plan, function(e){
-
-            console.log('');
-        });
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
-    var initActivityEdit=function(){
-        return {
-            DetailMain:
-            {
-                serviceID: '',
-                userID: '',
-                serviceName: '',
-                serviceTypeID: '',
-                serviceTypeName: '',
-                primaryPrice: '',
-                unit: '',
-                priceType: '',
-                serviceTime: '',
-                serviceOutTimePrice:'',
-                incMileage: '',
-                exMileagePrice: '',
-                freeForDelay: '',
-                waitOutTimePrice:'',
-                description:'',
-                serviceStatus: '',
-                serviceMethod: '',
-                pictureIDs: {},
-                picURLs: [],
-                coverURL:'',
-                covers: '',
-                DetailServiceMethod: [],
-                Facility: [
-                    {
-                        serviceID:'',
-                        facilityID:'',
-                        userID: '',
-                        facilityType: '',
-                        facilityName: '',
-                        brand: '',
-                        model: '',
-                        produceYear:'',
-                        seats: '',
-                        person: '',
-                        clazz: '',
-                        insurance: '',
-                        description: '',
-                        luggage: '',
-                        facilityPics: []
-                    }
-                ],
-                Airports: [],
-                Policy: [
-                {
-                    PolicyType: 1,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 2,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 3,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 4,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
+     var initServiceEdit=function(){
+         var ServiceID = $.rogerGetUrlParam('ServiceID');
+         var usr = $.rogerGetLoginUser();
+         result = {
+             DetailMain:
+             {
+                 serviceID: '',
+                 userID: '',
+                 serviceName: '',
+                 serviceTypeID: '',
+                 serviceTypeName: '',
+                 primaryPrice: '',
+                 unit: '',
+                 priceType: '',
+                 serviceTime: '',
+                 serviceOutTimePrice: '',
+                 incMileage: '',
+                 exMileagePrice: '',
+                 freeForDelay: '',
+                 waitOutTimePrice: '',
+                 description: '',
+                 serviceStatus: '',
+                 serviceMethod: '',
+                 picURLs:[],
+                 coverURL:'',
+                 detailServiceMethod: [],
+                 facility: [
+                     {
+                         serviceID: '',
+                         facilityID: '',
+                         userID: '',
+                         facilityType: '',
+                         facilityName: '',
+                         brand: '',
+                         model: '',
+                         produceYear: '',
+                         seats: '',
+                         person: '',
+                         clazz: '',
+                         insurance: '',
+                         description: '',
+                         luggage: '',
+                         facilityPics: [
+                             // "group1/M00/00/00/CgkB6Vfo4B-AIZdyAAFCQ2cYzZ8551.jpg"
+                         ]
+                     }
+                 ],
+                 airports: [{
+                    AirportCode:'',
+                    AirportID:'',
+                    CreateDate:'',
+                    NameCh:'',
+                    NameEn:'',
+                    ServiceID:''
                 }],
-                VehicleInfo: [],
-                VehicleCharges: [],
-                VehicleAddress: [],
-                VehicleSchedule: [],
-                Labels: [],
-                ActivityPrice: [
-                    {
-                        activityID: '',
-                        serviceID: '',
-                        adultPrice: '',
-                        kidPrice: '',
-                        duration: ''
-                    }
-                ],
-                HouseInfo: [],
-            },
-            IMGHOST:$.rogerImgHost()
-        };
-    },ctrlActivityEdit=function(Plan, realView){
-        $('#save').rogerOnceClick(Plan, function(e){
-            console.log('text');
-        });
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
-     var initDelicacyEdit=function(){
-        return {
-        SpotDetail:
-        {
-            SpotsID: '',
-            UserID:'' ,
-            CountryID:'',
-            CityID: '',
-            SpotsTypeID: '',
-            CommondReason: '',
-            CreateDate: '',
-            SpotsType: '',
-            NameEn: '',
-            NameCh: '',
-            Status: '',
-            UpdateDate: '',
-            Flavor: '',
-            PicURL: '',
-            Address: '',
-            ZipCode: '',
-            ZoneCode: '',
-            Tel: '',
-            Description: '',
-            Rank: '',
-            Price: '',
-            Score: '',
-            LocalName:'' ,
-            Alias:'' ,
-            comment:'' ,
-            TravelTime:'',
-            CountryName: '',
-            CityName: '',
-            picURLs:[],
-            coverURL:'',
-            SpotPics: [
-                {PicURL: ""},
-                {PicURL: ""},
-                {PicURL: ""},
-                {PicURL: ""},
-                {PicURL: ""},
-                {PicURL: ""}
-            ],
-            Labels:[],
-            SpotLabels: [
-                {ClassifyLabel: "咖啡简餐"},
-                {ClassifyLabel: "甜点"}
-            ],
-        },
-        IMGHOST: "http://123.59.144.47/"
-     };
-    },ctrlDelicacyEdit=function(Plan, realView){
-
-        Plan.createLabel = function(Plan, Labels){
-            Labels .push('');
-            $.rogerRefresh(Plan);
-        };
-
-        $('#save').rogerOnceClick(Plan, function(e){
-
-        });
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
-     var initCarEdit=function(){
-        return {
-            DetailMain:
-            {
-                serviceID:'',
-                userID: '',
-                serviceName:'',
-                serviceTypeID: '',
-                serviceTypeName: '',
-                primaryPrice: '',
-                unit: '',
-                priceType: '',
-                serviceTime: '',
-                serviceOutTimePrice: '',
-                incMileage: '',
-                exMileagePrice: '',
-                freeForDelay: '',
-                waitOutTimePrice: '',
-                description: '',
-                serviceStatus: '',
-                serviceMethod: '',
-                pictureIDs: {
-                            type: '',
-                            data: []
-                            },
-                Picture: [
-                    {picURL: '', cover: ''},
-                    {picURL: '', cover: ''},
-                    {picURL: '', cover: ''}
-                ],
-                DetailServiceMethod: [ ],
-                Facility: [ ],
-                Airports: [ ],
-                Policy: [
-                {
-                    PolicyType: 1,
-                    PolicyID: 2167,
-                    PolicyName: '退订政策',
-                    ServiceTypeID: 5,
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2: '',
-                    Day3: '',
-                    Ratio3: '',
-                    Day4: '',
-                    Ratio4: '',
-                    CustomRatio: '',
-                    Caution: '',
-                    Description: '',
-                    Type: 2
+                 policy: [
+                     {
+                       policyType: 1,
+                       policyID: '',
+                       policyname: "退订政策",
+                       serviceTypeID: '',
+                       day1: '',
+                       ratio1: '',
+                       day2: '',
+                       ratio2: '',
+                       day3: '',
+                       ratio3: '',
+                       day4: '',
+                       ratio4: '',
+                       customRatio: '',
+                       caution: '',
+                       description: '',
+                       type: 1
+                     },
+                     {
+                       policyType: 2,
+                       policyID: '',
+                       policyName: '费用包含',
+                       serviceTypeID: '',
+                       day1: '',
+                       ratio1: '',
+                       day2: '',
+                       ratio2: '',
+                       day3: '',
+                       ratio3: '',
+                       day4: '',
+                       ratio4: '',
+                       customRatio: '',
+                       caution: '',
+                       description: '',
+                       type: 5
+                     },
+                     {
+                       policyType: 3,
+                       policyID: '',
+                       policyName: '费用不包含9999',
+                       serviceTypeID: '',
+                       day1: '',
+                       ratio1: '',
+                       day2: '',
+                       ratio2: '',
+                       day3: '',
+                       ratio3: '',
+                       day4: '',
+                       ratio4: '',
+                       customRatio: '',
+                       caution: '',
+                       description: '',
+                       type: 5
+                     },
+                     {
+                       policyType: 4,
+                       policyID: '',
+                       policyName: '预订须知',
+                       serviceTypeID: '',
+                       day1: '',
+                       ratio1: '',
+                       day2: '',
+                       ratio2: '',
+                       day3: '',
+                       ratio3: '',
+                       day4: '',
+                       ratio4: '',
+                       customRatio: '',
+                       caution: '',
+                       description: '',
+                       type: 5
+                     }
+                 ],
+                 vehicleInfo:
+                 {
+                     vehicleInfoID: '',
+                     serviceID: '',
+                     brand: '',
+                     model: '',
+                     produceYear: '',
+                     seats: '',
+                     person: '',
+                     clazz: '',
+                     insurance: '',
+                     luggage: ''
+                 },
+                 vehicleCharges: [
+                     {
+                         chargeID:'',
+                         chargePrice:'',
+                         chargeType:'',
+                         serviceID:''
+                     },
+                     {
+                         chargeID:'',
+                         chargePrice:'',
+                         chargeType:'',
+                         serviceID:''
+                     },
+                     {
+                         chargeID:'',
+                         chargePrice:'',
+                         chargeType:'',
+                         serviceID:''
+                     }],
+                 vehicleAddress: [{
+                    addressID: '', 
+                    serviceID: '', 
+                    addressType: '', 
+                    address: ''
+                 }],
+                 lendAddresses:[""],
+                 repayAddresses:[""],
+                 vehicleSchedule: [
+                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-20'},
+                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-21'},
+                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-22'}
+                 ],
+                 labels: [],
+                 activityPrice: {
+                    activityID: '', 
+                    serviceID: '', 
+                    adultPrice: '', 
+                    kidPrice: '', 
+                    duration: ''
                 },
-                {
-                    PolicyType: 2,
-                    PolicyID: 2174,
-                    PolicyName: '费用包含',
-                    ServiceTypeID:5,
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2: '',
-                    Day3: '',
-                    Ratio3: '',
-                    Day4: '',
-                    Ratio4: '',
-                    CustomRatio: '',
-                    Caution: '',
-                    Description: '',
-                    Type: 6
-              },
-              {
-                    PolicyType: 3,
-                    PolicyID: 2175,
-                    PolicyName: '费用不包含',
-                    ServiceTypeID: 5,
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2: '',
-                    Day3: '',
-                    Ratio3: '',
-                    Day4: '',
-                    Ratio4: '',
-                    CustomRatio: '',
-                    Caution: '',
-                    Description: '',
-                    Type: 7
-              },
-              {
-                    PolicyType: 4,
-                    PolicyID: 2176,
-                    PolicyName: '注意事项',
-                    ServiceTypeID: 5,
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2: '',
-                    Day3: '',
-                    Ratio3: '',
-                    Day4: '',
-                    Ratio4: '',
-                    CustomRatio: '',
-                    Caution: '',
-                    Description: '',
-                    Type: 8
-                }
-                ],
-                VehicleInfo: [
-                {
-                    vehicleInfoID: '',
+                 houseInfo:{
+                    houseID: '',
                     serviceID: '',
-                    brand: '',
-                    model: '',
-                    produceYear: '',
-                    seats: '',
                     person: '',
-                    clazz: '',
-                    insurance: '',
-                    luggage: ''
-                }
-                ],
-                VehicleCharges: [
-                {
-                    chargeID: 100674,
-                    serviceID: 100388,
-                    chargeType: 1,
-                    chargePrice: ''
-                },
-                {
-                    chargeID: 100675,
-                    serviceID: 100388,
-                    chargeType: 2,
-                    chargePrice: ''
-                },
-                {
-                    chargeID: 100676,
-                    serviceID: 100388,
-                    chargeType: 3,
-                    chargePrice: ''
-                }
-                ],
-                VehicleAddress: [
-                {
-                    addressID: 100761,
-                    serviceID: 100388,
-                    addressType: 1,
-                    address: ''
-                },
-                {
-                    addressID: 100762,
-                    serviceID: 100388,
-                    addressType: 2,
-                    address: ''
-                }
-                ],
-                VehicleSchedule: [ ],
-                Labels: [ ],
-                ActivityPrice: [ ],
-                HouseInfo: [ ],
-            },
-            IMGHOST: "http://123.59.144.47/"
-        };
-    },ctrlCarEdit=function(Plan, realView){
-        var tmplItem = $.tmplItem($('#carBrand')).data;
-        console.log(tmplItem);
+                    room: '',
+                    bed: '',
+                    address: '',
+                    zipCode: '',
+                    zoneCode: '+86',
+                    tel: '',
+                    toilet: '',
+                    checkInTime: '',
+                    checkOutTime: '',
+                    countryID: '',
+                    countryNameCn: '',
+                    countryNameEn:'' ,
+                    cityID: '',
+                    cityNameCn: '',
+                    cityNameEn: ''
+                 }
+             },
+             IMGHOST: "http://123.59.144.47/"
+         };
+         $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.UserID}, function (respJSON, reqJSON) {
+             if(respJSON){
+                 //console.log(JSON.stringify(respJSON));
+                 if (null != respJSON["DetailMain"] && respJSON["DetailMain"].length > 0) {
+
+                     picURLs = respJSON["DetailMain"][0]["picURLs"];
+                     covers = respJSON["DetailMain"][0]["covers"];
+                     coverURL="";
+                     picURLs2 =[];
+
+                     for(key in picURLs){
+
+                         if(1 == covers[key]){
+                             coverURL = picURLs[key];
+                             delete picURLs[key];
+                             respJSON["DetailMain"][0]["coverURL"] = coverURL;
+                         } else{
+                             picURLs2.push(picURLs[key]);
+                         }
+                     }
+                     respJSON["DetailMain"][0]["picURLs"] = picURLs2;
+
+
+                     if (null != respJSON["DetailServiceMethod"] && '' != respJSON["DetailServiceMethod"]) {
+                         result["DetailMain"]["detailServiceMethod"] = respJSON["DetailServiceMethod"]
+                     }
+                     if (null != respJSON["Facility"] && '' != respJSON["Facility"]) {
+                         result["DetailMain"]["facility"] = respJSON["Facility"]
+                     }
+                     if (null != respJSON["UserFacilities"] && '' != respJSON["UserFacilities"]) {
+                         result["DetailMain"]["userFacilities"] = respJSON["UserFacilities"]
+                     }
+                     if (null != respJSON["Airports"] && '' != respJSON["Airports"]) {
+                         result["DetailMain"]["airports"] = respJSON["Airports"]
+                     }
+                     if (null != respJSON["Policy"] && '' != respJSON["Policy"]) {
+                        while(respJSON["Policy"].length < 4)
+                            {
+                             respJSON["policy"].push({policyType: '',policyID: '',policyName: '',serviceTypeID: '',day1: '',ratio1: '',day2: '',ratio2: '',day3: '',ratio3: '',day4: '',ratio4: '',customRatio: '',caution: '',description: '',type: 5});
+                            }
+                         result["DetailMain"]["policy"] = respJSON["Policy"];
+                     }
+                     if (null != respJSON["VehicleInfo"] && '' != respJSON["VehicleInfo"]) {
+                         result["DetailMain"]["vehicleInfo"] = respJSON["VehicleInfo"][0]
+                     }
+                     if (null != respJSON["VehicleCharges"] && '' != respJSON["VehicleCharges"]) {
+                         result["DetailMain"]["vehicleCharges"] = respJSON["VehicleCharges"]
+                     }
+                     if (null != respJSON["VehicleAddress"] && '' != respJSON["VehicleAddress"]) {
+                         result["DetailMain"]["vehicleAddress"] = respJSON["VehicleAddress"];
+                         //提车地址
+                        var lendAddresses = [];
+                        //repayAddresses
+                        var repayAddresses = [];
+                        for(key in result["DetailMain"]["vehicleAddress"]){
+                            if(1 == result["DetailMain"]["vehicleAddress"][key]["addressType"]){
+                                lendAddresses.push(result["DetailMain"]["vehicleAddress"][key])
+                            }else{
+                                repayAddresses.push(result["DetailMain"]["vehicleAddress"][key])
+                            }
+
+                        }
+                        result["DetailMain"]["lendAddresses"]=lendAddresses;
+                        result["DetailMain"]["repayAddresses"]=repayAddresses;
+
+                     }
+                     if (null != respJSON["VehicleSchedule"] && '' != respJSON["VehicleSchedule"]) {
+                         result["DetailMain"]["vehicleSchedule"] = respJSON["VehicleSchedule"]
+                     }
+                     if (null != respJSON["Labels"] && '' != respJSON["Labels"]) {
+                         result["DetailMain"]["labels"] = respJSON["Labels"]
+                     }
+                     if (null != respJSON["ActivityPrice"] && '' != respJSON["ActivityPrice"]) {
+                         result["DetailMain"]["activityPrice"] = respJSON["ActivityPrice"][0]
+                     }
+                     if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
+                         result["DetailMain"]["houseInfo"] = respJSON["HouseInfo"][0]
+                     }
+                     if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
+                         result["DetailMain"]["carBrand"] = respJSON["CarBrand"]
+                     }
+                     
+                    result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0],respJSON.IMGHOST);
+                     function deepCopy(des,source,img) {      
+                        for (var key in source) {
+                            if(key){
+                                if(typeof source[key]==='object'){
+                                   //deepCopy(des[key],source[key])
+                                   des[key] = JSON.stringify(source[key]);
+                                   des[key] = JSON.parse(des[key]);
+                                   // if(key == 'picURLs'){
+                                   //      for(var i = 0; i < source[key].length ; i++){
+                                   //          des[key][i] = img + source[key][i];
+                                   //      }
+                                   //  }else{
+                                        
+                                   //  }                                   
+                                }else{
+                                        des[key] = source[key];
+                                                                   
+                                }
+                              //des[key] = typeof source[key]==='object'? deepCopy(des[key],source[key]): source[key];
+                              //des[key] = source[key];
+                            }
+                           } 
+                        return des; 
+                    }
+                    // console.log(result["DetailMain"]);
+
+                 }
+             }
+
+             $.rogerRefresh(result);
+         });
+         return result;
+
+    },ctrlServiceEdit=function(tmplItem, realView){        
         var html;
         var typeVal;
         $('#policydiv input[type=radio]').on('click',function(){
@@ -1423,7 +1364,7 @@ $(function () {
             }
             $("#policyView").html(html);            
         });
-
+        //包车中关联车辆
         $('#carList input[type=radio]').on('click',function(){
             var val = $(this).val();
             var detail = $(this).parent().next().find('li');
@@ -1453,424 +1394,32 @@ $(function () {
                 $.rogerRefresh(tmplItem);
             });    
 
-        });
+        });   
 
-        $('#save').rogerOnceClick(DetailMain, function(e){
-            var usr =$.rogerGetLoginUser();
-            console.log('test');
-            temp = e.data.DetailMain;
-            var filedata = e.data.DetailMain.picURLs;
-            var coverFiledata = e.data.DetailMain.coverURL;
-            // var filedata2=[];
-            // coverFiledata = coverFiledata.substr(coverFiledata.indexOf("base64,")+7,10);
-            // for(key in filedata){
-            //     itemtemp = filedata[key].substr(filedata[key].indexOf("base64,")+7,10);
-            //     filedata2.push(itemtemp);
-            // }
-            // filedata = null;
-            // filedata = filedata2;
-
-            temp["userID"]=usr.UserID;
-            temp["serviceTypeID"]=1;
-            temp["unit"]='天';
-            temp["priceType"]='1';
-            temp["serviceStatus"]='3';
-
-            temp["policyBean"]= temp["Policy"][0];
-            temp["feeBean"]= temp["Policy"][1];
-            temp["feeBean"]["type"]=5;
-            temp["feeNoBean"]= temp["Policy"][2];
-            temp["feeNoBean"]["type"]=5;
-            temp["noticeBean"]= temp["Policy"][3];
-            temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
-
-            if(4 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 29;
-            }else if(3 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 28;
-            }else if(2 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 27;
-            }else if(1 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 26;
-            } else {
-                temp["policyBean"]["ratio1"]=0.89;
-                temp["policyBean"]["ratio2"]=0.85;
-                temp["policyBean"]["ratio3"]=0.82;
-                temp["policyBean"]["ratio4"]=0.75;
-            }
-
-            temp["imghost"]=e.data.IMGHOST;
-            console.log('test');
-            var data = {
-                reqUploadService:temp,
-                // file:filedata,
-                // coverFile:coverFiledata,
-                IMGHOST:e.data.IMGHOST
-            };
-            $.rogerPost('/new/service/car', data, function(respJSON){
-                $.rogerNotice({Message:'保存包车成功'});
-
-                if(respJSON){
-                    //跳转到详情页面
-                    $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
-                }
+        //选择汽车品牌
+        $('#carBrand').on('focus',function(){
+            $('#carBrandList').modal('show');
+            $('#carBrandList  input[type=radio]').on('click',function(){
+                var val = $(this).next().text();
+                tmplItem.DetailMain.vehicleInfo.brand = val;
 
             });
-
-        });
-
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
-     var initServiceEdit=function(){
-         var ServiceID = $.rogerGetUrlParam('ServiceID');
-         var usr = $.rogerGetLoginUser();
-         result = {
-             DetailMain:
-             {
-                 serviceID: '',
-                 userID: '',
-                 serviceName: '',
-                 serviceTypeID: '',
-                 serviceTypeName: '',
-                 primaryPrice: '',
-                 unit: '',
-                 priceType: '',
-                 serviceTime: '',
-                 serviceOutTimePrice: '',
-                 incMileage: '',
-                 exMileagePrice: '',
-                 freeForDelay: '',
-                 waitOutTimePrice: '',
-                 description: '',
-                 serviceStatus: '',
-                 serviceMethod: '',
-                 picURLs:[],
-                 coverURL:'',
-                 detailServiceMethod: [123],
-                 facility: [
-                     {
-                         serviceID: '',
-                         facilityID: '',
-                         userID: '',
-                         facilityType: '',
-                         facilityName: '',
-                         brand: '',
-                         model: '',
-                         produceYear: '',
-                         seats: '',
-                         person: '',
-                         clazz: '',
-                         insurance: '',
-                         description: '',
-                         luggage: '',
-                         facilityPics: [
-                             // "group1/M00/00/00/CgkB6Vfo4B-AIZdyAAFCQ2cYzZ8551.jpg"
-                         ]
-                     }
-                 ],
-                 airports: [ ],
-                 policy: [
-                     {
-                       policyType: 1,
-                       policyID: 26,
-                       policyname: "退订政策",
-                       serviceTypeID: 1,
-                       day1: '',
-                       ratio1: '',
-                       day2: '',
-                       ratio2: '',
-                       day3: '',
-                       ratio3: '',
-                       day4: '',
-                       ratio4: '',
-                       customRatio: '',
-                       caution: '',
-                       description: '',
-                       type: 1
-                     },
-                     {
-                       policyType: 2,
-                       policyID: 984,
-                       policyName: '费用包含',
-                       serviceTypeID: 1,
-                       day1: '',
-                       ratio1: '',
-                       day2: '',
-                       ratio2: '',
-                       day3: '',
-                       ratio3: '',
-                       day4: '',
-                       ratio4: '',
-                       customRatio: '',
-                       caution: '',
-                       description: '',
-                       type: 5
-                     },
-                     {
-                       policyType: 3,
-                       policyID: 985,
-                       policyName: '费用不包含9999',
-                       serviceTypeID: 1,
-                       day1: '',
-                       ratio1: '',
-                       day2: '',
-                       ratio2: '',
-                       day3: '',
-                       ratio3: '',
-                       day4: '',
-                       ratio4: '',
-                       customRatio: '',
-                       caution: '',
-                       description: '',
-                       type: 5
-                     },
-                     {
-                       policyType: 4,
-                       policyID: 986,
-                       policyName: '预订须知',
-                       serviceTypeID: 1,
-                       day1: '',
-                       ratio1: '',
-                       day2: '',
-                       ratio2: '',
-                       day3: '',
-                       ratio3: '',
-                       day4: '',
-                       ratio4: '',
-                       customRatio: '',
-                       caution: '',
-                       description: '',
-                       type: 5
-                     }
-                 ],
-                 vehicleInfo:
-                 {
-                     vehicleInfoID: '',
-                     serviceID: '100388',
-                     brand: '',
-                     model: '',
-                     produceYear: '',
-                     seats: '',
-                     person: '',
-                     clazz: '',
-                     insurance: '',
-                     luggage: ''
-                 },
-                 vehicleCharges: [
-                 {
-                     chargeID:'',
-                     chargePrice:'',
-                     chargeType:'',
-                     serviceID:''
-                 },
-                 {
-                     chargeID:'',
-                     chargePrice:'',
-                     chargeType:'',
-                     serviceID:''
-                 },
-                 {
-                     chargeID:'',
-                     chargePrice:'',
-                     chargeType:'',
-                     serviceID:''
-                 }],
-                 vehicleAddress: [{
-                    addressID: '', 
-                    serviceID: '', 
-                    addressType: '', 
-                    address: ''
-                 }],
-                 vehicleSchedule: [ ],
-                 labels: ["咖啡简餐"],
-                 activityPrice: [ ],
-                 houseInfo:
-                 {
-                    houseID: '',
-                    serviceID: '',
-                    person: '',
-                    room: '',
-                    bed: '',
-                    address: '',
-                    zipCode: '',
-                    zoneCode: '+86',
-                    tel: '',
-                    toilet: '',
-                    checkInTime: '',
-                    checkOutTime: '',
-                    countryID: '',
-                    countryNameCn: '',
-                    countryNameEn:'' ,
-                    cityID: '',
-                    cityNameCn: '',
-                    cityNameEn: ''
-                 }
-             },
-             IMGHOST: "http://123.59.144.47/"
-         };
-         $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.UserID}, function (respJSON, reqJSON) {
-             if(respJSON){
-
-                 if (null != respJSON["DetailMain"] && respJSON["DetailMain"].length > 0) {
-
-
-                     if (null != respJSON["DetailServiceMethod"] && '' != respJSON["DetailServiceMethod"]) {
-                         result["DetailMain"]["detailServiceMethod"] = respJSON["DetailServiceMethod"]
-                     }
-                     if (null != respJSON["Facility"] && '' != respJSON["Facility"]) {
-                         result["DetailMain"]["facility"] = respJSON["Facility"]
-                     }
-                     if (null != respJSON["UserFacilities"] && '' != respJSON["UserFacilities"]) {
-                         result["DetailMain"]["userFacilities"] = respJSON["UserFacilities"]
-                     }
-                     if (null != respJSON["Airports"] && '' != respJSON["Airports"]) {
-                         result["DetailMain"]["airports"] = respJSON["Airports"]
-                     }
-                     if (null != respJSON["Policy"] && '' != respJSON["Policy"]) {
-                        while(respJSON["Policy"].length < 4)
-                            {
-                             respJSON["policy"].push({policyType: '',policyID: '',policyName: '',serviceTypeID: '',day1: '',ratio1: '',day2: '',ratio2: '',day3: '',ratio3: '',day4: '',ratio4: '',customRatio: '',caution: '',description: '',type: 5});
-                            }
-                         result["DetailMain"]["policy"] = respJSON["Policy"];
-                     }
-                     if (null != respJSON["VehicleInfo"] && '' != respJSON["VehicleInfo"]) {
-                         result["DetailMain"]["vehicleInfo"] = respJSON["VehicleInfo"][0]
-                     }
-                     if (null != respJSON["VehicleCharges"] && '' != respJSON["VehicleCharges"]) {
-                         result["DetailMain"]["vehicleCharges"] = respJSON["VehicleCharges"]
-                     }
-                     if (null != respJSON["VehicleAddress"] && '' != respJSON["VehicleAddress"]) {
-                         result["DetailMain"]["vehicleAddress"] = respJSON["VehicleAddress"]
-                     }
-                     if (null != respJSON["VehicleSchedule"] && '' != respJSON["VehicleSchedule"]) {
-                         result["DetailMain"]["vehicleSchedule"] = respJSON["VehicleSchedule"]
-                     }
-                     if (null != respJSON["Labels"] && '' != respJSON["Labels"]) {
-                         result["DetailMain"]["labels"] = respJSON["Labels"]
-                     }
-                     if (null != respJSON["ActivityPrice"] && '' != respJSON["ActivityPrice"]) {
-                         result["DetailMain"]["activityPrice"] = respJSON["ActivityPrice"]
-                     }
-                     if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
-                         result["DetailMain"]["houseInfo"] = respJSON["HouseInfo"]
-                     }
-                     
-                    result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0],respJSON.IMGHOST);
-                     function deepCopy(des,source,img) {      
-                        for (var key in source) {
-                            if(key){
-                                if(typeof source[key]==='object'){
-                                   //deepCopy(des[key],source[key])
-                                   des[key] = JSON.stringify(source[key]);
-                                   des[key] = JSON.parse(des[key]);
-                                   // if(key == 'picURLs'){
-                                   //      for(var i = 0; i < source[key].length ; i++){
-                                   //          des[key][i] = img + source[key][i];
-                                   //      }
-                                   //  }else{
-                                        
-                                   //  }                                   
-                                }else{
-                                        des[key] = source[key];
-                                                                   
-                                }
-                              //des[key] = typeof source[key]==='object'? deepCopy(des[key],source[key]): source[key];
-                              //des[key] = source[key];
-                            }
-                           } 
-                        return des; 
-                    }
-                     console.log(result["DetailMain"]);
-
-                 }
-             }
-
-             $.rogerRefresh(result);
-         });
-         return result;
-
-    },ctrlServiceCarEdit=function(DetailMain, realView){
-        var tmplItem = $.tmplItem($('#carBrand')).data;
-        console.log(tmplItem);
-        var html;
-        var typeVal;
-        $('#policydiv input[type=radio]').on('click',function(){
-            html = $(this).parent().next().html();
-            $('#type').val($(this).val());
-            $('#type').trigger("keyup");
-            typeVal = $(this).val();
-        });
-        $("#policyconfirm").on('click',function(){
-            var days = $('#policycontent4 p');
-            if(typeVal == 5 || typeVal == '5'){
-                html = '<h3>自定义的退订政策</h3>'+
-                       '<p>1、服务开始前'+ days.eq(0).find('input').val() +'天(含)以上退订，退还服务费用的99%；</p>'+
-                       '<p>2、服务开始前'+ days.eq(1).find('input').val() +'天(含)以上退订，退还服务费用的50%；</p>'+
-                       '<p>3、服务开始前'+ days.eq(2).find('input').val() +'天(含)以上退订，退还服务费用的20%；</p>'+
-                       '<p>4、服务开始前'+ days.eq(3).find('input').val() +'天以内退订，不退还服务费用；</p>'+
-                       '<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>';
-            }
-            $("#policyView").html(html);            
-        });
-
-        $('#carList input[type=radio]').on('click',function(){
-            var val = $(this).val();
-            var detail = $(this).parent().next().find('li');
-            $('#facilityID').val(val).trigger("keyup");
-            tmplItem.DetailMain.facility[0].brand = detail.eq(0).find('span').text();
-            tmplItem.DetailMain.facility[0].model = detail.eq(1).find('span').text();
-            tmplItem.DetailMain.facility[0].person = detail.eq(2).find('span').text();
-            tmplItem.DetailMain.facility[0].luggage = detail.eq(3).find('span').text();
-            var clazz = detail.eq(4).find('span').text();
-            if(clazz == '经济'){
-                tmplItem.DetailMain.facility[0].clazz = '1';
-            }else if(clazz == '舒适'){
-                tmplItem.DetailMain.facility[0].clazz = '2';
-            }else if(clazz == '豪华'){
-                tmplItem.DetailMain.facility[0].clazz = '3';
-            }
-            var insurance = detail.eq(5).find('span').text();
-            if( insurance == '有'){
-                tmplItem.DetailMain.facility[0].insurance = '1';
-            }else if( insurance == '无'){
-                tmplItem.DetailMain.facility[0].insurance = '0';
-            }
-
-            $('#facilityconfirm').on('click',function(){
+            $('#carBrandconfirm').on('click',function(){
+                $('#carBrandList').modal('hide');
                 $('body').removeClass('modal-open');
                 $('.modal-backdrop').remove();
-                //$.rogerRefresh(tmplItem);
-            });    
-
-        });
-
-        // DetailMain.createLabel = function (User) {
-        //     User.Labels.push('');
-        // };
-
-
-
-
-        $('#save').rogerOnceClick(DetailMain, function(e){
+                $.rogerRefresh(tmplItem);
+            });  
+        });    
+        
+        //包车
+        $('#save').rogerOnceClick(tmplItem, function(e){
             var usr =$.rogerGetLoginUser();
             console.log('test');
             temp = e.data.DetailMain;
             var filedata = e.data.DetailMain.picURLs;
             var coverFiledata = e.data.DetailMain.coverURL;
-            // var filedata2=[];
-            // coverFiledata = coverFiledata.substr(coverFiledata.indexOf("base64,")+7,10);
-            // for(key in filedata){
-            //     itemtemp = filedata[key].substr(filedata[key].indexOf("base64,")+7,10);
-            //     filedata2.push(itemtemp);
-            // }
-            // filedata = null;
-            // filedata = filedata2;
-
+            
             temp["userID"]=usr.UserID;
             temp["serviceTypeID"]=1;
             temp["unit"]='天';
@@ -1884,8 +1433,8 @@ $(function () {
             temp["feeNoBean"]["type"]=5;
             temp["noticeBean"]= temp["policy"][3];
             temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
 
             if(4 == temp["policyBean"]["type"]){
                 temp["policyBean"]["policyID"] = 29;
@@ -1922,21 +1471,40 @@ $(function () {
 
         });
 
-        $('#saveCar').rogerOnceClick(DetailMain, function(e){
+        //租车增加存车取车地址
+        tmplItem.createLendAddress = function (User) {
+            User.DetailMain.lendAddresses.push({address:'',addressID:'',addressType:1,serviceID:''});
+            $.rogerRefresh(tmplItem);
+        };
+        tmplItem.createRepayAddress = function (User) {
+            User.DetailMain.repayAddresses.push({address:'',addressID:'',addressType:2,serviceID:''});
+            $.rogerRefresh(tmplItem);
+        };
+
+        var disday = [];
+        if(tmplItem.DetailMain.vehicleSchedule.length > 0 ) {
+            for(var i=0; i<tmplItem.DetailMain.vehicleSchedule.length; i++) {
+                disday.push(tmplItem.DetailMain.vehicleSchedule[i].scheduleFormatTime);
+            }
+        }
+        var pickr = $("#calendar").flatpickr({
+            inline: true,
+            mode: "multiple",
+            defaultDate: disday,
+            minDate: new Date(),
+            onChange:function (dateObj, dateStr) {
+                tmplItem.DetailMain["schedules"]=dateStr.split("; ");
+                
+            }
+        });
+        //租车
+        $('#saveCar').rogerOnceClick(tmplItem, function(e){
             var usr =$.rogerGetLoginUser();
             console.log('test');
             temp = e.data.DetailMain;
             var filedata = e.data.DetailMain.picURLs;
             var coverFiledata = e.data.DetailMain.coverURL;
-            // var filedata2=[];
-            // coverFiledata = coverFiledata.substr(coverFiledata.indexOf("base64,")+7,10);
-            // for(key in filedata){
-            //     itemtemp = filedata[key].substr(filedata[key].indexOf("base64,")+7,10);
-            //     filedata2.push(itemtemp);
-            // }
-            // filedata = null;
-            // filedata = filedata2;
-
+           
             temp["userID"]=usr.UserID;
             temp["serviceTypeID"]=5;
             temp["unit"]='天';
@@ -1950,8 +1518,8 @@ $(function () {
             temp["feeNoBean"]["type"]=5;
             temp["noticeBean"]= temp["policy"][3];
             temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
 
             if(4 == temp["policyBean"]["type"]){
                 temp["policyBean"]["policyID"] = 29;
@@ -1969,21 +1537,7 @@ $(function () {
             }
 
 
-            //提车地址
-            lendAddresses = [];
-            //repayAddresses
-            repayAddresses = [];
-            for(key in temp["vehicleAddress"]){
-                if(1 == temp["vehicleAddress"][key]["addressType"]){
-                    lendAddresses.push(temp["vehicleAddress"][key])
-                }else{
-                    repayAddresses.push(temp["vehicleAddress"][key])
-                }
-
-            }
-            temp["lendAddresses"]=lendAddresses;
-            temp["repayAddresses"]=repayAddresses;
-
+            
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');
             var data = {
@@ -1997,7 +1551,207 @@ $(function () {
 
                 if(respJSON){
                     //跳转到详情页面
+                    $.rogerLocation('#/cardetail?ServiceID='+respJSON.ServiceID);
+                }
+
+            });
+
+        });
+
+        //接送机添加机场
+        tmplItem.createAirport = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Airports:Spot});
+        };
+
+        $('#savePickup').rogerOnceClick(tmplItem, function(e){
+            var usr =$.rogerGetLoginUser();
+            temp = e.data.DetailMain;
+            var filedata = e.data.DetailMain.picURLs;
+            var coverFiledata = e.data.DetailMain.coverURL;
+
+            temp["userID"]=usr.UserID;
+            if(temp["serviceTypeName"]=='接机'){
+                temp["serviceTypeID"]=3;
+            }else if(temp["serviceTypeName"]=='送机'){
+                temp["serviceTypeID"]=4;
+            }            
+            temp["unit"]='天';
+            temp["priceType"]='1';
+            temp["serviceStatus"]='3';
+
+            var serviceAirportsItem = {};
+            var serviceAirports = [];
+            temp.serviceAirports = [];
+            for(var i=0; i<temp["airports"].length; i++){
+                serviceAirportsItem = {};
+                !function(){
+                    for(var akey in temp["airports"][i]) {
+                    var akeyNew = akey.replace(/\b\w+\b/g, function(word){
+                    return word.substring(0,1).toLowerCase()+word.substring(1);}
+                    );
+                    console.log(akeyNew,akey);
+                    serviceAirportsItem[akeyNew] = temp["airports"][i][akey]; 
+                    }
+                }(i) 
+
+                serviceAirports[i]=serviceAirportsItem;                
+            }
+            temp.serviceAirports=serviceAirports;   
+            console.log(temp.serviceAirports);
+               
+
+            temp["policyBean"]= temp["policy"][0];
+            temp["feeBean"]= temp["policy"][1];
+            temp["feeBean"]["type"]=5;
+            temp["feeNoBean"]= temp["policy"][2];
+            temp["feeNoBean"]["type"]=5;
+            temp["noticeBean"]= temp["policy"][3];
+            temp["noticeBean"]["type"]=5;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
+
+            if(4 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 29;
+            }else if(3 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 28;
+            }else if(2 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 27;
+            }else if(1 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 26;
+            } else {
+                temp["policyBean"]["ratio1"]=0.89;
+                temp["policyBean"]["ratio2"]=0.85;
+                temp["policyBean"]["ratio3"]=0.82;
+                temp["policyBean"]["ratio4"]=0.75;
+            }
+
+            temp["imghost"]=e.data.IMGHOST;
+            console.log('test');
+            var data = {
+                reqUploadService:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('/new/service/car', data, function(respJSON){
+                $.rogerNotice({Message:'接送机服务保存成功'});
+
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/serviceotherdetail?ServiceID='+respJSON.ServiceID);
+                }
+
+            });
+
+        });
+
+        $('#saveOther').rogerOnceClick(tmplItem, function(e){
+            var usr =$.rogerGetLoginUser();
+            temp = e.data.DetailMain;
+            var filedata = e.data.DetailMain.picURLs;
+            var coverFiledata = e.data.DetailMain.coverURL;
+
+            temp["userID"]=usr.UserID;
+            temp["unit"]='天';
+            temp["priceType"]='1';
+            temp["serviceStatus"]='3';
+
+            temp["policyBean"]= temp["policy"][0];
+            temp["feeBean"]= temp["policy"][1];
+            temp["feeBean"]["type"]=5;
+            temp["feeNoBean"]= temp["policy"][2];
+            temp["feeNoBean"]["type"]=5;
+            temp["noticeBean"]= temp["policy"][3];
+            temp["noticeBean"]["type"]=5;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
+
+            if(4 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 29;
+            }else if(3 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 28;
+            }else if(2 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 27;
+            }else if(1 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 26;
+            } else {
+                temp["policyBean"]["ratio1"]=0.89;
+                temp["policyBean"]["ratio2"]=0.85;
+                temp["policyBean"]["ratio3"]=0.82;
+                temp["policyBean"]["ratio4"]=0.75;
+            }
+
+            temp["imghost"]=e.data.IMGHOST;
+            console.log('test');
+            var data = {
+                reqUploadService:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('/new/service/car', data, function(respJSON){
+                $.rogerNotice({Message:'服务保存成功'});
+
+                if(respJSON){
+                    //跳转到详情页面
                     $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+                }
+
+            });
+
+        });
+        
+        $('#saveActivity').rogerOnceClick(tmplItem, function(e){
+            var usr =$.rogerGetLoginUser();
+            temp = e.data.DetailMain;
+            var filedata = e.data.DetailMain.picURLs;
+            var coverFiledata = e.data.DetailMain.coverURL;
+
+            temp["userID"]=usr.UserID;
+            temp["unit"]='天';
+            temp["serviceTypeID"]=6;
+            temp["priceType"]='1';
+            temp["serviceStatus"]='3';
+
+            temp["policyBean"]= temp["policy"][0];
+            temp["feeBean"]= temp["policy"][1];
+            temp["feeBean"]["type"]=5;
+            temp["feeNoBean"]= temp["policy"][2];
+            temp["feeNoBean"]["type"]=5;
+            temp["noticeBean"]= temp["policy"][3];
+            temp["noticeBean"]["type"]=5;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
+
+            if(4 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 29;
+            }else if(3 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 28;
+            }else if(2 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 27;
+            }else if(1 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 26;
+            } else {
+                temp["policyBean"]["ratio1"]=0.89;
+                temp["policyBean"]["ratio2"]=0.85;
+                temp["policyBean"]["ratio3"]=0.82;
+                temp["policyBean"]["ratio4"]=0.75;
+            }
+
+            temp["imghost"]=e.data.IMGHOST;
+            console.log('test');
+            var data = {
+                reqUploadService:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('/new/service/car', data, function(respJSON){
+                $.rogerNotice({Message:'活动保存成功'});
+
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/serviceactivitydetail?ServiceID='+respJSON.ServiceID);
                 }
 
             });
@@ -2005,7 +1759,7 @@ $(function () {
         });
 
         //服务的编辑页面不需要发布按钮
-         // $('#publish').rogerOnceClick(DetailMain, function(e){
+         // $('#publish').rogerOnceClick(tmplItem, function(e){
          //     var usr =$.rogerGetLoginUser();
          //     console.log('test');
          //     temp = e.data.DetailMain;
@@ -2043,407 +1797,12 @@ $(function () {
         realView.rogerCropImages();
     } ;
 
-     var initServicePickupEdit = function(){
-        return {
-            DetailMain: [
-                {
-                    serviceID: '',
-                    userID: '',
-                    serviceName: '',
-                    serviceTypeID: '',
-                    serviceTypeName: '接机',
-                    primaryPrice:'',
-                    unit: '',
-                    priceType: '',
-                    serviceTime: '',
-                    serviceOutTimePrice:'',
-                    incMileage: '',
-                    exMileagePrice: '',
-                    freeForDelay: '',
-                    waitOutTimePrice: '',
-                    description:'',
-                    serviceStatus: '',
-                    serviceMethod: '',
-                    pictureIDs: {},
-                    picURLs: [],
-                    covers: ''
-                }
-            ],
-            DetailServiceMethod: [],
-            Facility: [
-                {
-                    serviceID: '',
-                    facilityID: '',
-                    userID: '',
-                    facilityType: '',
-                    facilityName: '',
-                    brand:  '',
-                    model: '',
-                    produceYear: '',
-                    seats: '',
-                    person: '',
-                    clazz: '',
-                    insurance: '',
-                    description: '',
-                    luggage: '',
-                    facilityPics: []
-                }
-            ],
-            Airports:[{
-                    AirportID: '',
-                    ServiceID: '',
-                    AirportCode: '',
-                    NameEn: '',
-                    NameCh: '',
-                    CreateDate:''
-                }],
-            Policy: [
-                {
-                    PolicyType: 1,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 2,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 3,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 4,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-            ],
-            VehicleInfo: [],
-            VehicleCharges: [],
-            VehicleAddress: [],
-            VehicleSchedule: [],
-            Labels: [],
-            ActivityPrice: [],
-            HouseInfo: [],
-            IMGHOST: "http://123.59.144.47/"
-        };
-    },ctrlServicePickupEdit = function(Plan, realView){
-        Plan.createAirport = function (Plan, Spot) {
-            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Airports:Spot});
-        };
-
-        $('#save').rogerOnceClick(DetailMain, function(e){
-            var usr =$.rogerGetLoginUser();
-            console.log('test');
-            temp = e.data.DetailMain;
-            var filedata = e.data.DetailMain.picURLs;
-            var coverFiledata = e.data.DetailMain.coverURL;
-
-            temp["userID"]=usr.UserID;
-            temp["serviceTypeID"]=4;
-
-            temp["unit"]='天';
-            temp["priceType"]='1';
-            temp["serviceStatus"]='3';
-
-            temp["policyBean"]= temp["Policy"][0];
-            temp["feeBean"]= temp["Policy"][1];
-            temp["feeBean"]["type"]=5;
-            temp["feeNoBean"]= temp["Policy"][2];
-            temp["feeNoBean"]["type"]=5;
-            temp["noticeBean"]= temp["Policy"][3];
-            temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
-
-            if(4 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 29;
-            }else if(3 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 28;
-            }else if(2 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 27;
-            }else if(1 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 26;
-            } else {
-                temp["policyBean"]["ratio1"]=0.89;
-                temp["policyBean"]["ratio2"]=0.85;
-                temp["policyBean"]["ratio3"]=0.82;
-                temp["policyBean"]["ratio4"]=0.75;
-            }
-
-            var data = {
-                reqUploadService:temp,
-                // file:filedata,
-                // coverFile:coverFiledata,
-                IMGHOST:e.data.IMGHOST
-            };
-            // $.rogerPost('/new/service/car', data, function(respJSON){
-            //     $.rogerNotice({Message:'接送机服务保存成功'});
-
-            //     if(respJSON){
-            //         //跳转到详情页面
-            //         $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
-            //     }
-
-            // });
-
-        });
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
-     var initServiceOtherEdit=function(){
-        return {
-            DetailMain:{
-                serviceID: '',
-                userID: '',
-                serviceName: '',
-                serviceTypeID: '',
-                serviceTypeName: '',
-                primaryPrice: '',
-                unit: '',
-                priceType: '自定义价格',
-                serviceTime: '',
-                serviceOutTimePrice: '',
-                incMileage: '',
-                exMileagePrice: '',
-                freeForDelay: '',
-                waitOutTimePrice: '',
-                description: '',
-                serviceStatus: '',
-                serviceMethod: '',
-                pictureIDs: {},
-                picURLs: [],
-                covers: '',
-                DetailServiceMethod: [],
-                Facility: [],
-                Airports: [],
-                Policy: [
-                    {
-                       policyType: 1,
-                       policyID: 26,
-                       policyname: "退订政策",
-                       serviceTypeID: 1,
-                       day1: '',
-                       ratio1: '',
-                       day2: '',
-                       ratio2: '',
-                       day3: '',
-                       ratio3: '',
-                       day4: '',
-                       ratio4: '',
-                       customRatio: '',
-                       caution: '',
-                       description: '',
-                       type: 1
-                     },
-                    {
-                        PolicyType: 2,
-                        PolicyID: '',
-                        PolicyName: '',
-                        ServiceTypeID:'',
-                        Day1: '',
-                        Ratio1: '',
-                        Day2: '',
-                        Ratio2:'',
-                        Day3: '',
-                        Ratio3:'',
-                        Day4: '',
-                        Ratio4:'',
-                        CustomRatio:'',
-                        Caution: '',
-                        Description:'',
-                        Type: ''
-                    },
-                    {
-                        PolicyType: 3,
-                        PolicyID: '',
-                        PolicyName: '',
-                        ServiceTypeID:'',
-                        Day1: '',
-                        Ratio1: '',
-                        Day2: '',
-                        Ratio2:'',
-                        Day3: '',
-                        Ratio3:'',
-                        Day4: '',
-                        Ratio4:'',
-                        CustomRatio:'',
-                        Caution: '',
-                        Description:'',
-                        Type: ''
-                    },
-                    {
-                        PolicyType: 4,
-                        PolicyID: '',
-                        PolicyName: '',
-                        ServiceTypeID:'',
-                        Day1: '',
-                        Ratio1: '',
-                        Day2: '',
-                        Ratio2:'',
-                        Day3: '',
-                        Ratio3:'',
-                        Day4: '',
-                        Ratio4:'',
-                        CustomRatio:'',
-                        Caution: '',
-                        Description:'',
-                        Type: ''
-                    },
-                ],
-                VehicleInfo: [],
-                VehicleCharges: [],
-                VehicleAddress: [],
-                VehicleSchedule: [],
-                Labels: [],
-                ActivityPrice: [],
-                HouseInfo: [
-                    {
-                    houseID: '',
-                    serviceID: '',
-                    person: '',
-                    room: '',
-                    bed: '',
-                    address: '',
-                    zipCode: '',
-                    zoneCode: '+86',
-                    tel: '',
-                    toilet: '',
-                    checkInTime: '',
-                    checkOutTime: '',
-                    countryID: '',
-                    countryNameCn: '',
-                    countryNameEn:'' ,
-                    cityID: '',
-                    cityNameCn: '',
-                    cityNameEn: ''
-                }],
-            },
-            IMGHOST: 'http://123.59.144.47/'
-        };
-    },ctrlServiceOtherEdit=function(Plan, realView){
-        $('#save').rogerOnceClick(DetailMain, function(e){
-            var usr =$.rogerGetLoginUser();
-            console.log('test');
-            temp = e.data.DetailMain;
-            var filedata = e.data.DetailMain.picURLs;
-            var coverFiledata = e.data.DetailMain.coverURL;
-
-            temp["userID"]=usr.UserID;
-            temp["serviceTypeID"]=4;
-
-            temp["unit"]='天';
-            temp["priceType"]='1';
-            temp["serviceStatus"]='3';
-
-            temp["policyBean"]= temp["Policy"][0];
-            temp["feeBean"]= temp["Policy"][1];
-            temp["feeBean"]["type"]=5;
-            temp["feeNoBean"]= temp["Policy"][2];
-            temp["feeNoBean"]["type"]=5;
-            temp["noticeBean"]= temp["Policy"][3];
-            temp["noticeBean"]["type"]=5;
-            temp["coverFile"]=coverFiledata;
-            temp["files"]=filedata;
-
-            if(4 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 29;
-            }else if(3 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 28;
-            }else if(2 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 27;
-            }else if(1 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 26;
-            } else {
-                temp["policyBean"]["ratio1"]=0.89;
-                temp["policyBean"]["ratio2"]=0.85;
-                temp["policyBean"]["ratio3"]=0.82;
-                temp["policyBean"]["ratio4"]=0.75;
-            }
-            console.log('test');
-            var data = {
-                reqUploadService:temp,
-                // file:filedata,
-                // coverFile:coverFiledata,
-                IMGHOST:e.data.IMGHOST
-            };
-            // $.rogerPost('/new/service/car', data, function(respJSON){
-            //     $.rogerNotice({Message:'服务保存成功'});
-
-            //     if(respJSON){
-            //         //跳转到详情页面
-            //         $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
-            //     }
-
-            // });
-
-        });
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
      var initTraveLogueEdit=function(){
         var usr =$.rogerGetLoginUser();
         var type = $.rogerGetUrlParam('type');
 
          // '/travelogue/detail'
-        return {
+        returnvalue= {
             Travelogue: {
                 articleID: '',
                 userID: usr.UserID,
@@ -2466,18 +1825,36 @@ $(function () {
             IMGHOST:$.rogerImgHost()
         };
 
+         var articleID = $.rogerGetUrlParam('articleID');
+
+         $.rogerPost('/travelogue/detail', {"articleID": articleID}, function (respJSON, reqJSON) {
+             if(respJSON){
+
+                 if (null != respJSON["Travelogue"] && respJSON["Travelogue"].length > 0) {
+                     returnvalue["Travelogue"]=respJSON["Travelogue"][0];
+                 }
+                 if (null != respJSON["TravelogueDetail"] && '' != respJSON["TravelogueDetail"] && respJSON["TravelogueDetail"].length>0) {
+                     returnvalue["Travelogue"]["TravelogueDetail"] = respJSON["TravelogueDetail"];
+                 }
+
+                 $.rogerRefresh(returnvalue);
+
+             }});
+
+        return returnvalue
+
     },ctrlTraveLogueEdit=function(TraveLogue, realView){
-         TraveLogue.createDay = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            TravelogueDetail.push({label:' ', DAY:'', content:null, picURL: null});
-            $.rogerRefresh(Plan);
+         TraveLogue.createDay = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({label:' ', DAY:'0', content:null, picURL: null});
+            $.rogerRefresh(TraveLogue);
         };
-         TraveLogue.createPicture = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+         TraveLogue.createPicture = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             TravelogueDetail.push({label:null, DAY:null, content:null, picURL: null, PE:true});
-            $.rogerRefresh(Plan);
+            $.rogerRefresh(TraveLogue);
         };
-         TraveLogue.createContent = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+         TraveLogue.createContent = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             TravelogueDetail.push({label:null, DAY:null, content:'请输入描述', picURL: null});
-            $.rogerRefresh(Plan);
+            $.rogerRefresh(TraveLogue);
         };
 
 
@@ -2525,31 +1902,66 @@ $(function () {
     } ;
 
     var initEquipEdit=function(){
-        return {
+        var usr =$.rogerGetLoginUser();
+        var facilityID = $.rogerGetUrlParam('facilityID');
+        var facilityType = $.rogerGetUrlParam('facilityType');
+        returnvalue = {
             Facility : {
-                facilityID : 122,
-                userID : 10083,
-                facilityType : 1,
-                facilityName : "奥迪A6",
-                brand : "奥迪",
-                model : "A6",
-                produceYear : "2014-09-28",
-                seats : 5,
-                person : 5,
-                clazz : 3,
-                insurance : 1,
-                description : null,
-                luggage : 5,
-                coverURL : "group1/M00/00/03/CgkB6VfrqGuAUSqlAAFKSs7UdPc666.jpg",
-                pics : [
-                    "group1/M00/00/03/CgkB6VfrqGuAQP3IAAFKSs7UdPc307.jpg"
-                ]
+                facilityID :"" ,
+                userID :usr.UserID,
+                facilityType : facilityType,
+                facilityName : "",
+                brand : "",
+                model : "",
+                produceYear : "",
+                seats : "",
+                person : "",
+                clazz : "",
+                insurance : "",
+                description : "",
+                luggage : "",
+                coverURL : "",
+                pics : []
             },
             IMGHOST : $.rogerImgHost()
         };
 
 
+
+        $.rogerPost('/facility/detail', {"facilityID": facilityID, "userID": usr.UserID}, function (respJSON, reqJSON) {
+            if(respJSON){
+
+                if (null != respJSON["Facility"] && respJSON["Facility"].length > 0) {
+                    returnvalue["Facility"]=respJSON["Facility"][0];
+                }
+                if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
+                    returnvalue["carBrand"] = respJSON["CarBrand"]
+                }
+
+                $.rogerRefresh(returnvalue);
+
+            }});
+
+
+        return returnvalue;
+
     },ctrlEquipEdit=function(Facility, realView){
+
+        //选择汽车品牌
+        $('#carBrand').on('focus',function(){
+            $('#carBrandList').modal('show');
+            $('#carBrandList  input[type=radio]').on('click',function(){
+                var val = $(this).next().text();
+                Facility.Facility.brand = val;
+
+            });
+            $('#carBrandconfirm').on('click',function(){
+                $('#carBrandList').modal('hide');
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
+                $.rogerRefresh(Facility);
+            });  
+        });    
 
         $('#save').rogerOnceClick(Facility, function(e){
             var usr =$.rogerGetLoginUser();
@@ -2560,10 +1972,15 @@ $(function () {
 
             picURLs=[];
             for(key in temp.pics) {
-                picURLs.push({isCover:0,picUrl:temp.pics[0]});
+                picURLs.push({isCover:2,picUrl:temp.pics[0],facilityID:temp["facilityID"]});
             }
-            picURLs.push({isCover:1,picUrl:coverURL});
+
+            if(null !=temp["coverURL"] && temp["coverURL"].length>0){
+                picURLs.push({isCover:1,picUrl:temp["coverURL"],facilityID:temp["facilityID"]});
+            }
+
             temp["picURLs"] = picURLs;
+            temp["deletePicURLs"] = {facilityID:temp.facilityID};
 
             var data = {
                 Facility:temp,
@@ -2571,15 +1988,29 @@ $(function () {
                 // coverFile:coverFiledata,
                 IMGHOST:e.data.IMGHOST
             };
-            $.rogerPost('/new/facility', data, function(respJSON){
-                $.rogerNotice({Message:'保存装备成功'});
 
-                if(respJSON){
-                    //跳转到详情页面
-                    $.rogerLocation('#/equipdetail?facilityID='+respJSON.insertId);
-                }
+            if(null == temp["facilityID"] || temp["facilityID"].length==0){
+                $.rogerPost('/new/facility', data, function(respJSON){
+                    $.rogerNotice({Message:'保存装备成功'});
 
-            });
+                    if(respJSON){
+                        //跳转到详情页面
+                        $.rogerLocation('#/equipdetail?facilityID='+respJSON.Facility.insertId);
+                    }
+
+                });
+            } else {
+                $.rogerPost('/update/facility', data, function(respJSON){
+                    $.rogerNotice({Message:'更新装备成功'});
+
+                    if(respJSON){
+                        //跳转到详情页面
+                        $.rogerLocation('#/equipdetail?facilityID='+temp.facilityID);
+                    }
+
+                });
+
+            }
 
         });
 
@@ -2629,23 +2060,22 @@ $(function () {
         '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
         '#/userinfo':                     {fragment:'fragment/userInfo.html',                          rootrest: '/user/info',                                                ctrl: ctrlUserInfo},
-        '#/equipdetail':                  {view:'product-equip-detail.html',                          rootrest:'/facility/detail',                                       ctrl: ctrlTravelogueDetail},
+        '#/equipdetail':                  {view:'product-equip-detail.html',                          rootrest:'/facility/detail',                                       ctrl: ctrlFacilityDetail},
         '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',	                          rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/serviceactivitydetail':       {view:'product-activity-detail.html',	                      rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/servicepickupdetail':         {view:'product-service-pickup-detail.html',	              rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/traveloguedetail':            {view:'travelogue-detail.html',	                           rootrest:'/travelogue/detail',                                       ctrl: ctrlTravelogueDetail},
         '#/attractionedit':               {fragment: 'fragment/product-attraction-edit.html',       init: initAttractionEdit,                                                 ctrl: ctrlAttractionEdit},
-        '#/accommodationedit':            {fragment: 'fragment/product-accommodation-edit.html',   init: initAccommodationEdit,                                              ctrl: ctrlAccommodationEdit},
-        '#/activityedit':                 {fragment: 'fragment/product-activity-edit.html',          init: initActivityEdit,                                                   ctrl: ctrlActivityEdit},
-        '#/delicacyedit':                 {fragment: 'fragment/product-delicacy-edit.html',          init: initDelicacyEdit,                                                   ctrl: ctrlDelicacyEdit},
-        '#/caredit':                       {fragment: 'fragment/product-car-edit.html',                init: initServiceEdit,                                                        ctrl: ctrlServiceCarEdit},
-        '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',       init:initServiceEdit,                                               ctrl: ctrlServiceCarEdit},
-        '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServiceEdit,                                              ctrl: ctrlServicePickupEdit},
-        '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceEdit,                                               ctrl: ctrlServiceOtherEdit},
+        '#/accommodationedit':            {fragment: 'fragment/product-accommodation-edit.html',   init: initAttractionEdit,                                              ctrl: ctrlAttractionEdit},
+        '#/activityedit':                 {fragment: 'fragment/product-activity-edit.html',          init: initServiceEdit,                                                   ctrl: ctrlServiceEdit},
+        '#/delicacyedit':                 {fragment: 'fragment/product-delicacy-edit.html',          init: initAttractionEdit,                                                   ctrl: ctrlAttractionEdit},
+        '#/caredit':                       {fragment: 'fragment/product-car-edit.html',                init: initServiceEdit,                                                        ctrl: ctrlServiceEdit},
+        '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',      init: initServiceEdit,                                               ctrl: ctrlServiceEdit},
+        '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServiceEdit,                                              ctrl: ctrlServiceEdit},
+        '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceEdit,                                               ctrl: ctrlServiceEdit},
         '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',                 init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},
         '#/equipedit':                     {fragment: 'fragment/product-equip-edit.html',              init: initEquipEdit,                                                      ctrl: ctrlEquipEdit},
-        '#/servicecardetail':            {view:'product-service-car-detail.html',	                    rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/orderdetail':                  {view:'payCompletion.html',	                                    rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
         '#/citychooser3':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser3},
     });

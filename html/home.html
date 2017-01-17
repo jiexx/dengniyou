@@ -1,11 +1,11 @@
 <div class="fixedPos">
   <ul>
     <li id="backTop" ></li>
-    <li style="background-color: #667980"><a href="#EuropeImg">欧洲</a></li>
-    <li style="background-color: #99b0b9"><a href="#AsiaImg">亚洲</a></li>
-    <li ><a href="#NorthAmericaImg">北美</a></li>
-    <li style="background-color: #667980"><a href="#SouthAmericaImg">南美</a></li>
-    <li style="background-color: #99b0b9"><a href="#OceaniaImg">大洋洲</a></li>
+    <li style="background-color: #667980"><a href="#Europe">欧洲</a></li>
+    <li style="background-color: #99b0b9"><a href="#Asia">亚洲</a></li>
+    <li ><a href="#NorthAmerica">北美</a></li>
+    <li style="background-color: #667980"><a href="#SouthAmerica">南美</a></li>
+    <li style="background-color: #99b0b9"><a href="#Oceania">大洋洲</a></li>
     <li ><a href="#Africa">非洲</a></li>
     <li ><a href="#NSpoles">南北极</a></li>
     <li class="kefu"><a id='kefu' href="" target="_blank">&nbsp;</a> </li>
@@ -29,16 +29,15 @@
   </div><!-- end container -->
 </div> <!-- end 搜索框index-searchbox -->
 
-<div class="homepage">  
-  <div class="carousel-container">
+<div class="homepage"> 
+  <!--暂时隐藏-->
+  <!-- <div class="carousel-container">
     <div id="carousel-generic" class="carousel slide" data-ride="carousel">
-        <!-- Indicators -->
         <ol class="carousel-indicators">
             <li data-target="#carousel-generic" data-slide-to="0" class="active"></li>
             <li data-target="#carousel-generic" data-slide-to="1"></li>
             <li data-target="#carousel-generic" data-slide-to="2"></li>
         </ol>
-        <!-- Wrapper for slides -->
         <div class="carousel-inner">
           {{each Advs}} 
 		      {{if $index == 0}}
@@ -49,52 +48,47 @@
             <img src="${ $data.IMGHOST }${PicUrl}" alt="Chania">
             <div class="carousel-caption">
               <h3>${Note}</h3>
-              <!-- <p>${Note}</p> -->
             </div>
           </div>
           {{/each}}
         </div>
-            <!-- Controls
-            <a class="left carousel-control" href="#" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
-            </a>
-            <a class="right carousel-control" href="#" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
-            </a-->
-    </div><!-- end carousel -->
-  </div> <!-- end carousel-container -->
-
-<div class="solution" id="solution">
-  <div class="box">
-    <ul id="RunTopic">
-    {{each(i,p) PlansByCountry['中国'].__values[0].Plans}}
-      <li>
-        {{if p.CreateType == 1}}
-        <a class="pull-left" href="#/plandetail?PlanID=${p.PlanID}">
-          {{else}}
-          <a class="pull-left" href="#/plandetailshort?PlanID=${ p.PlanID}">
-            {{/if}}
-        <div class="detail">
-          <div class="img">
-          <img data-src="${ $data.IMGHOST }${p.PicURL}" alt="">
-        </div>
-        <div class="text">
-          <h4>${p.PlanName}</h4>
-          <p class="textCon">${p.RegionCnName}</p>
-          <p><span class="price">${p.PlanPriceBase}</span><span class="unit">元/人</span></p>
-        </div>
-        </div>
-      </a>
-      </li>
-    {{/each}}
-    </ul>
-  </div>
-</div>
+    </div>
+  </div>  -->
 
     <div class="content">
+      <div class="container">
+        <div class="solution" id="solution">
+          <div class="box">
+            <ul id="RunTopic">
+            {{each(i,p) PlansByCountry['中国'].__values[0].Plans}}
+              <li>
+                {{if p.CreateType == 1}}
+                <a class="pull-left" href="#/plandetail?PlanID=${p.PlanID}">
+                  {{else}}
+                  <a class="pull-left" href="#/plandetailshort?PlanID=${ p.PlanID}">
+                    {{/if}}
+                <div class="detail">
+                  <div class="img">
+                  <img data-src="${ $data.IMGHOST }${p.PicURL}" alt="">
+                </div>
+                <div class="text">
+                  <h4>${p.PlanName}</h4>
+                  <p class="textCon">${p.RegionCnName}</p>
+                  <p><span class="price">${p.PlanPriceBase}</span><span class="unit">元/人</span></p>
+                </div>
+                </div>
+              </a>
+              </li>
+            {{/each}}
+            </ul>
+          </div>
+        </div>
+      </div>
+
       {{each(i,p) PlansByContinent}}
       <div class="container">
-        <div class="continent-tit">
+      <!--暂时隐藏-->
+        <!-- <div class="continent-tit">
             {{if PlansByContinent[i].Continent=='1'}}
             <img src="../img/home-banner6.jpg"></img>
             {{/if}}
@@ -116,7 +110,8 @@
             {{if PlansByContinent[i].Continent=='7'}}
             <img src="../img/home-banner4.jpg"  id="NorthAmericaImg"></img>
             {{/if}}
-        </div><!-- end 大洲continent-tit -->
+        </div> -->
+        <!-- end 大洲continent-tit -->
         <br>
         <div class="nav-buttons">
           <div class="btn-group">
@@ -139,32 +134,48 @@
             {{/each}}  -->
             </ul>
           </div>
-          <div class="btn-group">
-            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" >
-              国家 <span class="caret"></span>
-            </button>
+          <div class="btn-group">                          
+            {{if PlansByContinent[i].Continent=='1'}}
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="background-color: #805e51; border-color: #805e51">非洲国家<span class="caret"></span></button>
+            {{else PlansByContinent[i].Continent=='2'}}
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="background-color: #55b359; border-color: #55b359">南美国家<span class="caret"></span></button>
+            {{else PlansByContinent[i].Continent=='3'}}
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="background-color: #5b4703; border-color: #5b4703">欧洲国家<span class="caret"></span></button>
+            {{else PlansByContinent[i].Continent=='4'}}
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="background-color: #2c9bf3; border-color: #2c9bf3">大洋洲国家<span class="caret"></span></button>
+            {{else PlansByContinent[i].Continent=='5'}}
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="background-color: #0dbfd5; border-color: #0dbfd5">南北极国家<span class="caret"></span></button>
+            {{else PlansByContinent[i].Continent=='6'}}
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="background-color: #fe9d0d; border-color: #fe9d0d">亚洲国家<span class="caret"></span></button>
+            {{else PlansByContinent[i].Continent=='7'}}
+            <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" style="background-color: #6f44bb; border-color: #6f44bb">北美国家<span class="caret"></span></button>
+            {{/if}} 
+            <span class="label label-self"></span>  
             <ul class="dropdown-menu country" role="menu" >
             {{each(i,p) CountryByContinent[$data.PlansByContinent[i].Continent].__values[0].Country}}
             <li>${p}</li>
             {{/each}}
             </ul>
           </div>
+          
         </div>
-        <div class="continent-tips">
+        <!--暂时隐藏-->
+        <!-- <div class="continent-tips">
             {{each(i,p) CountryByContinent[$data.PlansByContinent[i].Continent].__values[0].Country}}
             <li class="label label-warning media-left">${p}</li>
             {{/each}}
-        </div>
+        </div> -->
+
         {{if PlansByContinent[i].Continent=='1'}}
-        <div class="regular-grid" id="">
+        <div class="regular-grid" id="Africa">
         {{else PlansByContinent[i].Continent=='2'}}
-        <div class="regular-grid" id="">
+        <div class="regular-grid" id="SouthAmerica">
         {{else PlansByContinent[i].Continent=='3'}}
         <div class="regular-grid" id="Europe">
         {{else PlansByContinent[i].Continent=='4'}}
         <div class="regular-grid" id="Oceania">
         {{else PlansByContinent[i].Continent=='5'}}
-        <div class="regular-grid" id="">
+        <div class="regular-grid" id="NSpoles">
         {{else PlansByContinent[i].Continent=='6'}}
         <div class="regular-grid" id="Asia">
         {{else PlansByContinent[i].Continent=='7'}}
