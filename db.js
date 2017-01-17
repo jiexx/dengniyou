@@ -213,8 +213,8 @@ exports.registe = function(item, callback) {
             return;
         }
         var pwd = crypto.createHash('md5').update(item.loginPass).digest('hex').toUpperCase();
-        var sql = "INSERT INTO traveldb.tab_userinfo (UserMobile, Password)VALUES(?,?); ";
-        exec(connection, sql, [item.loginName, pwd], callback);
+        var sql = "INSERT INTO traveldb.tab_userinfo (AreaCode, UserMobile, Password, AuthCode)VALUES(?,?,?,'F4AA0DD960521E045AE2F20621FB4EE9'); ";
+        exec(connection, sql, [item.loginArea, item.loginName, pwd], callback);
         console.log(sql);
     });
 };

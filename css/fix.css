@@ -1,4 +1,4 @@
-
+.bootstrap-select .btn-info{background-color: #ffffff; color: #000000}
 /*重置开始*/
 @charset "utf-8";
 *{margin:0;padding:0;}
@@ -494,7 +494,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .carousel .carousel-control{width: 10%;}
 .detailpage .detailpage-mainbody{padding: 25px 0px; border-left: 1px solid #eee; -webkit-box-shadow: 5px 5px 10px #eee; -moz-box-shadow: 5px 5px 10px #eee; -ms-box-shadow: 5px 5px 10px #eee; -o-box-shadow: 5px 5px 10px #eee; box-shadow: 5px 5px 10px #eee;}
 .detailpage .detailpage-mainbody .row{margin-left: 0;margin-right: 0;}
-.detailpage .detailpage-title h1{font-size: 18px;color: #333; font-weight: bold; margin-bottom: 20px;}
+.detailpage .detailpage-title h1{font-size: 18px;color: #333; font-weight: bold; margin-bottom: 20px; padding-left: 20px;}
 .detailpage .detailpage-title>span{display: inline-block;width: 68px;height: 20px;line-height: 18px;font-size: 12px;color: #666;text-align: center;border: 1px solid #9B9B9B;-webkit-border-radius: 10px;-moz-border-radius: 10px;-ms-border-radius: 10px;-o-border-radius: 10px;border-radius: 10px;}
 .detailpage .price-detail{padding: 22px 0;}
 .detailpage .price-detail p{font-size: 14px;color: #666;}
@@ -509,9 +509,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .detailpage-mainbody .trip, .detailpage .detailpage-mainbody .policy, .detailpage .detailpage-mainbody .service-description,
 .detailpage .detailpage-mainbody .product-detail{margin-top: 25px;}
 .detailpage .detailpage-mainbody .trip h2, .detailpage .detailpage-mainbody .policy h2,.detailpage .detailpage-mainbody .service-description h2,
-.detailpage .detailpage-mainbody .product-detail h2{font-size: 16px;color: #333;border-bottom: 1px solid #ccc;padding: 10px 0; margin-bottom: 10px;}
+.detailpage .detailpage-mainbody .product-detail h2{font-size: 16px;color: #333;border-bottom: 1px solid #ccc;padding: 10px 20px; margin-bottom: 10px;}
+.detailpage .detailpage-mainbody .product-detail div{padding-left: 50px;}
 .detailpage .detailpage-mainbody .trip p{font-size: 14px;color: #666;}
-.detailpage .detailpage-mainbody .policy .des,.detailpage .detailpage-mainbody .service-description .des{padding: 15px 0 30px 80px; white-space: pre;}
+.detailpage .detailpage-mainbody .policy .des,.detailpage .detailpage-mainbody .service-description .des{padding: 30px;}
 .detailpage .detailpage-mainbody .policy .des p{font-size: 14px;color: #666;}
 .detailpage .buttons {text-align: center;}
 .detailpage .buttons button{margin-left: 20px; background-color: #F1741F;color: #fff;}
@@ -531,11 +532,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .cardetail-title .guide-headimg span{font-size: 18px;font-weight: bold;color: #333;}
 .detailpage .cardetail-title .guide-tit h1{font-size: 16px;color: #333; font-weight: bold; margin-bottom: 20px;}
 .detailpage .cardetail-title .guide-tit>span{display: inline-block;width: 68px;height: 20px;line-height: 18px;font-size: 12px;color: #666;text-align: center;border: 1px solid #9B9B9B;-webkit-border-radius: 10px;-moz-border-radius: 10px;-ms-border-radius: 10px;-o-border-radius: 10px;border-radius: 10px;}
-.detailpage .cardetail-title .guide-tit .price{font-size: 16px; color: #ff6600;}
-.detailpage .detailpage-mainbody .pickup-detail p{padding: 15px 0 0 80px;}
+.detailpage .cardetail-title .guide-tit .price{font-size: 16px; color: #ff6600; margin-right: 50px;}
+.detailpage .detailpage-mainbody .pickup-detail p{padding: 15px 0 0 50px;}
 /* end 租车预览*/
 /*景点、美食、住宿、车辆详情、装备详情预览*/
-.detailpage .detailpage-mainbody .attraction p{font-size: 16px;color: #333;}
+.detailpage .detailpage-mainbody .attraction p{font-size: 16px;color: #333; padding-left: 20px;}
 .detailpage .detailpage-mainbody .attraction .price{font-size: 16px;color: #ff6600;}
 .detailpage .detailpage-mainbody .service-description .des p{font-size: 14px;color: #666;text-indent: 2em;}
 /*end 景点、美食、住宿、车辆详情、装备详情预览*/

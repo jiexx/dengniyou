@@ -828,6 +828,7 @@
                     });
                 }else {
                     data.PlanInfo.CreateUserID = usr.UserID;
+                    dataPlanInfo.UserPlan = {UserID:usr.UserID};
                     $.rogerPost('/new/tmpplan/visitor', data, function (respJSON) {
                         if(respJSON.PlanInfo.insertId > 0 ) {
                             data.PlanInfo.PlanID = respJSON.PlanInfo.insertId;
@@ -869,6 +870,7 @@
                 var data = {PlanInfo: PS.Plan.PlanInfo};
                 var usr = $.rogerGetLoginUser();
                 PS.Plan.PlanInfo.CreateUserID = guide[0];
+                PS.Plan.PlanInfo.UserPlan = {UserID:guide[0]};
                 $.rogerPost('/new/tmpplan/visitor', data, function (respJSON) {
                     var usr = $.rogerGetLoginUser();
                     var newWin = window.open('about:blank');
