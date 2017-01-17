@@ -1,4 +1,4 @@
-$(function () { 
+ $(function () { 
     var policy1 = '1  游客在行程开始日期前60天以上提出取消，扣除已产生的费用以外的全部费用；\r\n2  游客在行程开始日期前30天以上提出取消，退还总费用的50%；\r\n3  游客在行程开始日期前15天以上提出取消，退还总费用的20%；\r\n4  游客在行程开始日期前15天（含）以内提出取消，不退还服务费用。';
     var policy2 = '1  一辆如服务描述（或同级别）的车辆使用费（在限定时间和里程范围内）；\r\n2  服务发布者本人作为司机兼导游的服务费（限定时间内），含小费；\r\n3  燃油费\r\n4  停车费\r\n5  车载WiFi热点每天1GB流量\r\n6  高速，桥梁，隧道的过路费，进城费\r\n7  司机/导游的住宿费，空程费\r\n8  如下景点的门票费用：\r\n9  行程描述中酒店（或同等级别酒店）的双人标准间；\r\n10  酒店内自助式早餐；\r\n11  旅行医疗及意外保险；\r\n12  签证办理费用。';
     var policy3 = '1  景点游览和公务/商务活动期间的服务费用；\r\n2  超时等待的费用，资费参看服务描述；\r\n3  机场和送达目的地的停车费。';
@@ -517,12 +517,42 @@ $(function () {
 
     var ctrlDelicacyDetail = function(response, realView) {
 
+        $('#release').rogerOnceClick(response, function (e) {
+                temp = e.data.SpotDetail[0];
+                var status = $('#release').data("status")
+                //3,隐藏，4发布
+                $.rogerPost('/update/service/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
+                    $.rogerNotice({Message: '发布成功'});
+
+                });
+            }
+        );
+
+        $('#edit').rogerOnceClick(response, function (e) {
+                temp = e.data.SpotDetail[0];
+                $.rogerLocation('#/delicacyedit?SpotsID='+temp.SpotsID+"&spotType=1");
+            }
+        );
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
 
     var ctrlAccommodationDetail = function(response, realView) {
+        $('#release').rogerOnceClick(response, function (e) {
+            temp = e.data.SpotDetail[0];
+            var status = $('#release').data("status")
+            //3,隐藏，4发布
+            $.rogerPost('/update/service/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
+                $.rogerNotice({Message: '发布成功'});
 
+            });
+        });
+
+        $('#edit').rogerOnceClick(response, function (e) {
+                temp = e.data.SpotDetail[0];
+                $.rogerLocation('#/accommodationedit?SpotsID='+temp.SpotsID+"&spotType=1");
+            }
+        );
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
@@ -774,47 +804,47 @@ $(function () {
         spotType = $.rogerGetUrlParam('spotType');
         var usr =$.rogerGetLoginUser();
         var returnvalue = {
-        SpotDetail: 
-        {
-            SpotsID:'' ,
-            UserID:usr.UserID ,
-            CountryID:'' ,
-            CityID:'' ,
-            SpotsTypeID:spotType ,
-            CommondReason: '' ,
-            CreateDate:'' ,
-            SpotsType:'' ,
-            NameEn:'' ,
-            NameCh:'',
-            Status:'',
-            UpdateDate: '' ,
-            Flavor:'' ,
-            PicURL:''  ,
-            Address:'' ,
-            ZipCode:'' ,
-            ZoneCode:'' ,
-            Tel:'' ,
-            Description:'' ,
-            Price:''  ,
-            Score: '' ,
-            LocalName: '',
-            Alias:'' ,
-            comment: '' ,
-            TravelTime:'' ,
-            CountryName:'' ,
-            CityName: '',
-            picURLs:{picURLs:[]},
-            SpotLabels: {
-                LabelIDs:[],                
-                Labels:[],
-            },
-            ClassifyLabels:[]
-        },        
-        IMGHOST: "http://123.59.144.47/" };
+            SpotDetail: 
+            {
+                SpotsID:'' ,
+                UserID:usr.UserID ,
+                CountryID:'' ,
+                CityID:'' ,
+                SpotsTypeID:spotType ,
+                CommondReason: '' ,
+                CreateDate:'' ,
+                SpotsType:'' ,
+                NameEn:'' ,
+                NameCh:'',
+                Status:'',
+                UpdateDate: '' ,
+                Flavor:'' ,
+                PicURL:''  ,
+                Address:'' ,
+                ZipCode:'' ,
+                ZoneCode:'' ,
+                Tel:'' ,
+                Description:'' ,
+                Price:''  ,
+                Score: '' ,
+                LocalName: '',
+                Alias:'' ,
+                comment: '' ,
+                TravelTime:'' ,
+                CountryName:'' ,
+                CityName: '',
+                picURLs:{picURLs:[]},
+                SpotLabels: {
+                    LabelIDs:[],                
+                    Labels:[],
+                },
+                ClassifyLabels:[]
+            },        
+            IMGHOST: "http://123.59.144.47/" 
+        };
 
         $.rogerPost('/dashboard/product/attraction/detail', {"spotType":spotType,"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
             if(respJSON){
-                console.log(JSON.stringify(respJSON));
                 if (null != respJSON["SpotDetail"] && respJSON["SpotDetail"].length > 0) {
                     var spotdetail = respJSON["SpotDetail"][0];
 
@@ -880,6 +910,11 @@ $(function () {
             console.log(Spots);
             $.rogerRefresh(Spots);
         };
+        $('#labelConfirm').on('click',function(){
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+
 
         Spots.createCity = function (Spots) {
             $.rogerTrigger('#modal', '#/citychooser3', {Spots:Spots});
@@ -897,7 +932,6 @@ $(function () {
                     }
                 }
 
-
                 var data = {
                     DeleteSpotsPics:temp,
                     DeleteTravelSpotsLabel:temp,
@@ -909,7 +943,7 @@ $(function () {
                     IMGHOST:e.data.IMGHOST
                 };
                 $.rogerPost('/update/spots', data, function(respJSON){
-                    $.rogerNotice({Message:'景点修改成功'});
+                    $.rogerNotice({Message:'修改成功'});
 
                 });
             } else {
@@ -922,7 +956,7 @@ $(function () {
                     IMGHOST:e.data.IMGHOST
                 };
                 $.rogerPost('/new/spots', data, function(respJSON){
-                    $.rogerNotice({Message:'景点保存成功'});
+                    $.rogerNotice({Message:'保存成功'});
 
                     if(respJSON){
                         //跳转到详情页面
@@ -985,338 +1019,6 @@ $(function () {
         //
         //
         // });
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
-     var initAccommodationEdit=function(){
-        return {
-        SpotDetail:
-        {
-            SpotsID: '',
-            UserID: '',
-            CountryID: '',
-            CityID: '',
-            SpotsTypeID:'',
-            CommondReason: '',
-            CreateDate: '',
-            SpotsType: '',
-            NameEn: '',
-            NameCh: '',
-            Status: '',
-            UpdateDate: '',
-            Flavor: '',
-            PicURL: '',
-            Address: '',
-            ZipCode: '',
-            ZoneCode: '',
-            Tel: '',
-            Description:'',
-            Rank: '',
-            Price: '',
-            Score: '',
-            LocalName: '',
-            Alias: '',
-            comment:'',
-            TravelTime: '',
-            CountryName: '',
-            CityName: '',
-            picURLs:[],
-            coverURL:'',
-            SpotPics: [
-                {PicURL: ''},
-                {PicURL: ''}
-            ],
-            Labels:["场馆","建筑","历史"],
-            SpotLabels: [
-                {ClassifyLabel: "民宿"},
-                {ClassifyLabel: "人文"},
-                {ClassifyLabel: "历史"}
-            ],
-        },
-        IMGHOST: "http://123.59.144.47/"
-    };
-    },ctrlAccommodationEdit=function(Plan, realView){
-        Plan.createLabel = function(Plan, Labels){
-            Labels .push('');
-            $.rogerRefresh(Plan);
-        };
-        $('#save').rogerOnceClick(Plan, function(e){
-
-            console.log('');
-        });
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
-    var initActivityEdit=function(){
-        return {
-            DetailMain:
-            {
-                serviceID: '',
-                userID: '',
-                serviceName: '',
-                serviceTypeID: '',
-                serviceTypeName: '',
-                primaryPrice: '',
-                unit: '',
-                priceType: '',
-                serviceTime: '',
-                serviceOutTimePrice:'',
-                incMileage: '',
-                exMileagePrice: '',
-                freeForDelay: '',
-                waitOutTimePrice:'',
-                description:'',
-                serviceStatus: '',
-                serviceMethod: '',
-                pictureIDs: {},
-                picURLs: [],
-                coverURL:'',
-                covers: '',
-                DetailServiceMethod: [],
-                Facility: [
-                    {
-                        serviceID:'',
-                        facilityID:'',
-                        userID: '',
-                        facilityType: '',
-                        facilityName: '',
-                        brand: '',
-                        model: '',
-                        produceYear:'',
-                        seats: '',
-                        person: '',
-                        clazz: '',
-                        insurance: '',
-                        description: '',
-                        luggage: '',
-                        facilityPics: []
-                    }
-                ],
-                Airports: [],
-                Policy: [
-                {
-                    PolicyType: 1,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 2,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 3,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                },
-                {
-                    PolicyType: 4,
-                    PolicyID: '',
-                    PolicyName: '',
-                    ServiceTypeID:'',
-                    Day1: '',
-                    Ratio1: '',
-                    Day2: '',
-                    Ratio2:'',
-                    Day3: '',
-                    Ratio3:'',
-                    Day4: '',
-                    Ratio4:'',
-                    CustomRatio:'',
-                    Caution: '',
-                    Description:'',
-                    Type: ''
-                }],
-                VehicleInfo: [],
-                VehicleCharges: [],
-                VehicleAddress: [],
-                VehicleSchedule: [],
-                Labels: [],
-                ActivityPrice: [
-                    {
-                        activityID: '',
-                        serviceID: '',
-                        adultPrice: '',
-                        kidPrice: '',
-                        duration: ''
-                    }
-                ],
-                HouseInfo: [],
-            },
-            IMGHOST:$.rogerImgHost()
-        };
-    },ctrlActivityEdit=function(Plan, realView){
-        $('#save').rogerOnceClick(Plan, function(e){
-            console.log('text');
-        });
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    } ;
-
-     var initDelicacyEdit=function(){
-        var SpotsID = $.rogerGetUrlParam('SpotsID');
-        var usr =$.rogerGetLoginUser();
-        var returnvalue = {
-        SpotDetail: 
-        {
-            SpotsID:'' ,
-            UserID:usr.UserID ,
-            CountryID:'' ,
-            CityID:'' ,
-            SpotsTypeID: 107,
-            CommondReason: '' ,
-            CreateDate:'' ,
-            SpotsType:'' ,
-            NameEn:'' ,
-            NameCh:'',
-            Status:'',
-            UpdateDate: '' ,
-            Flavor:'' ,
-            PicURL:''  ,
-            Address:'' ,
-            ZipCode:'' ,
-            ZoneCode:'' ,
-            Tel:'' ,
-            Description:'' ,
-            Rank: '',
-            Price:''  ,
-            Score: '' ,
-            LocalName: '',
-            Alias:'' ,
-            comment: '' ,
-            TravelTime:'' ,
-            CountryName:'' ,
-            CityName: '',
-            picURLs:{picURLs:[]},
-            SpotLabels: {
-                LabelIDs:[],                
-                Labels:[],
-            },
-
-            // picURLs:[],
-            // coverURL:'',
-            // SpotPics: [
-            //     {PicURL: ""},
-            //     {PicURL: ""},
-            //     {PicURL: ""},
-            //     {PicURL: ""},
-            //     {PicURL: ""},
-            //     {PicURL: ""}
-            // ],
-            // Labels:[],
-            // SpotLabels: [
-            //     {ClassifyLabel: "咖啡简餐"},
-            //     {ClassifyLabel: "甜点"}
-            // ],
-
-            ClassifyLabels:[]
-        },        
-        IMGHOST: "http://123.59.144.47/" };
-
-        $.rogerPost('/dashboard/product/attraction/detail', {"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
-            if(respJSON){
-                console.log(JSON.stringify(respJSON));
-                if (null != respJSON["SpotDetail"] && respJSON["SpotDetail"].length > 0) {
-                    var spotdetail = respJSON["SpotDetail"][0];
-
-                    if (null == respJSON["SpotPics"] || '' == respJSON["SpotPics"] || respJSON["SpotPics"].length==0) {
-                        spotdetail["picURLs"]=returnvalue["SpotDetail"]["picURLs"]
-
-                    }else {
-
-                        picURLs = [];
-                        for( key in respJSON["SpotPics"]){
-                            picURLs.push(respJSON["SpotPics"][key].PicURL);
-                            // spotdetail["picURLs"]["picURLs"][key]=respJSON["SpotPics"][key].PicURL
-
-                        }
-                        spotdetail["picURLs"]={"picURLs":picURLs};
-                    }
-
-                    if (null == respJSON["SpotLabels"] || '' == respJSON["SpotLabels"] || respJSON["SpotLabels"].length==0) {
-                        spotdetail["SpotLabels"]=returnvalue["SpotDetail"]["SpotLabels"]
-
-                    }else {
-
-                        LabelIDs = [];
-                        Labels=[];
-                        for( key in respJSON["SpotLabels"]){
-                            LabelIDs.push(respJSON["SpotLabels"][key]["ClassifyLabelID"]);
-                            Labels.push(respJSON["SpotLabels"][key]["ClassifyLabel"])
-                        }
-                        spotdetail["SpotLabels"]={"LabelIDs":LabelIDs};
-                        spotdetail["SpotLabels"]={"Labels":Labels};
-                    }
-
-                    returnvalue = {"SpotDetail":spotdetail}
-
-                    console.log(returnvalue["SpotDetail"])
-
-                }
-                if (null != respJSON["ClassifyLabels"] && '' != respJSON["ClassifyLabels"]) {
-                     returnvalue['SpotDetail']["ClassifyLabels"] = respJSON["ClassifyLabels"];
-                 }
-            }
-
-            $.rogerRefresh(returnvalue);
-        });
-
-        return returnvalue;
-        
-    },ctrlDelicacyEdit=function(Plan, realView){
-
-        Plan.createLabel = function(Plan, Labels){
-            Labels .push('');
-            $.rogerRefresh(Plan);
-        };
-
-        $('#save').rogerOnceClick(Plan, function(e){
-
-        });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -1491,7 +1193,13 @@ $(function () {
                  }],
                  vehicleSchedule: [ ],
                  labels: [],
-                 activityPrice: [ ],
+                 activityPrice: {
+                    activityID: '', 
+                    serviceID: '', 
+                    adultPrice: '', 
+                    kidPrice: '', 
+                    duration: ''
+                },
                  houseInfo:{
                     houseID: '',
                     serviceID: '',
@@ -1588,7 +1296,7 @@ $(function () {
                          result["DetailMain"]["labels"] = respJSON["Labels"]
                      }
                      if (null != respJSON["ActivityPrice"] && '' != respJSON["ActivityPrice"]) {
-                         result["DetailMain"]["activityPrice"] = respJSON["ActivityPrice"]
+                         result["DetailMain"]["activityPrice"] = respJSON["ActivityPrice"][0]
                      }
                      if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
                          result["DetailMain"]["houseInfo"] = respJSON["HouseInfo"][0]
@@ -1934,6 +1642,7 @@ $(function () {
             var filedata = e.data.DetailMain.picURLs;
             var coverFiledata = e.data.DetailMain.coverURL;
 
+            temp["userID"]=usr.UserID;
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
@@ -1977,6 +1686,63 @@ $(function () {
                 if(respJSON){
                     //跳转到详情页面
                     $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+                }
+
+            });
+
+        });
+        
+        $('#saveActivity').rogerOnceClick(tmplItem, function(e){
+            var usr =$.rogerGetLoginUser();
+            temp = e.data.DetailMain;
+            var filedata = e.data.DetailMain.picURLs;
+            var coverFiledata = e.data.DetailMain.coverURL;
+
+            temp["userID"]=usr.UserID;
+            temp["unit"]='天';
+            temp["serviceTypeID"]=6;
+            temp["priceType"]='1';
+            temp["serviceStatus"]='3';
+
+            temp["policyBean"]= temp["policy"][0];
+            temp["feeBean"]= temp["policy"][1];
+            temp["feeBean"]["type"]=5;
+            temp["feeNoBean"]= temp["policy"][2];
+            temp["feeNoBean"]["type"]=5;
+            temp["noticeBean"]= temp["policy"][3];
+            temp["noticeBean"]["type"]=5;
+            temp["coverFileWeb"]=coverFiledata;
+            temp["filesWeb"]=filedata;
+
+            if(4 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 29;
+            }else if(3 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 28;
+            }else if(2 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 27;
+            }else if(1 == temp["policyBean"]["type"]){
+                temp["policyBean"]["policyID"] = 26;
+            } else {
+                temp["policyBean"]["ratio1"]=0.89;
+                temp["policyBean"]["ratio2"]=0.85;
+                temp["policyBean"]["ratio3"]=0.82;
+                temp["policyBean"]["ratio4"]=0.75;
+            }
+
+            temp["imghost"]=e.data.IMGHOST;
+            console.log('test');
+            var data = {
+                reqUploadService:temp,
+                // file:filedata,
+                // coverFile:coverFiledata,
+                IMGHOST:e.data.IMGHOST
+            };
+            $.rogerPost('/new/service/car', data, function(respJSON){
+                $.rogerNotice({Message:'活动保存成功'});
+
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/serviceactivitydetail?ServiceID='+respJSON.ServiceID);
                 }
 
             });
@@ -2272,11 +2038,11 @@ $(function () {
         '#/servicepickupdetail':         {view:'product-service-pickup-detail.html',	              rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/traveloguedetail':            {view:'travelogue-detail.html',	                           rootrest:'/travelogue/detail',                                       ctrl: ctrlTravelogueDetail},
         '#/attractionedit':               {fragment: 'fragment/product-attraction-edit.html',       init: initAttractionEdit,                                                 ctrl: ctrlAttractionEdit},
-        '#/accommodationedit':            {fragment: 'fragment/product-accommodation-edit.html',   init: initAttractionEdit,                                              ctrl: ctrlAccommodationEdit},
-        '#/activityedit':                 {fragment: 'fragment/product-activity-edit.html',          init: initActivityEdit,                                                   ctrl: ctrlActivityEdit},
-        '#/delicacyedit':                 {fragment: 'fragment/product-delicacy-edit.html',          init: initAttractionEdit,                                                   ctrl: ctrlDelicacyEdit},
+        '#/accommodationedit':            {fragment: 'fragment/product-accommodation-edit.html',   init: initAttractionEdit,                                              ctrl: ctrlAttractionEdit},
+        '#/activityedit':                 {fragment: 'fragment/product-activity-edit.html',          init: initServiceEdit,                                                   ctrl: ctrlServiceEdit},
+        '#/delicacyedit':                 {fragment: 'fragment/product-delicacy-edit.html',          init: initAttractionEdit,                                                   ctrl: ctrlAttractionEdit},
         '#/caredit':                       {fragment: 'fragment/product-car-edit.html',                init: initServiceEdit,                                                        ctrl: ctrlServiceEdit},
-        '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',       init:initServiceEdit,                                               ctrl: ctrlServiceEdit},
+        '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',      init: initServiceEdit,                                               ctrl: ctrlServiceEdit},
         '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServiceEdit,                                              ctrl: ctrlServiceEdit},
         '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceEdit,                                               ctrl: ctrlServiceEdit},
         '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',                 init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},

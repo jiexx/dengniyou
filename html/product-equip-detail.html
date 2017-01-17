@@ -28,14 +28,16 @@
 
       <!--   banner -->
       <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+
         <ol class="carousel-indicators">
           {{each(i,p) Facility[0].pics}}
           <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==0}}active{{/if}}"></li>
+
           {{/each}}
         </ol>
         <div class="carousel-inner" role="listbox">
           {{each(i,p) Facility[0].pics}}
-          <div class="item {{if i==1}}active{{/if}}">
+          <div class="item {{if i==0}}active{{/if}}">
             <img src="${$data.IMGHOST}${p}" alt="...">
           </div>
           {{/each}}

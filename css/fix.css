@@ -740,6 +740,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 
 
 /*导游端列表页*/
+.service-dropdown{position: relative;}
+.service-dropdown .service-release{position: absolute; top: -140px; right: -40px;}
 .service-list{font-size: 14px; color: #666;}
 .service-list .service-name{padding-left: 6%;}
 .service-list .media-heading{margin-top: 30px;}
