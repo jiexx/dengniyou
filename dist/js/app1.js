@@ -58,20 +58,20 @@
             $.rogerLocation('#/search?key=%'+k+'%&begin=0&end=1000&label=%');
         });
 
-        var item = $.tmplItem($('.carousel-caption'));
+        var item = $.tmplItem($('.textCon'));
     
         $('.nav-buttons .theme,.nav-buttons .country,.continent-tips').on('click','li',function(){
           var changeData,desE;
           var text = $(this).text();
           
           if($(this).parent().hasClass('theme')){
-            $(this).parent().prev().text(text);
+            $(this).parent().parent().next().find('.label-self').text(text);
             changeData = item.data.PlansByLabel[text].__values;
-            desE = $(this).parent().parent().parent().next().next().attr('id');
+            desE = $(this).parent().parent().parent().next().attr('id');
           }else if($(this).parent().hasClass('country')){
             $(this).parent().prev().text(text);
             changeData = item.data.PlansByCountry[text].__values;
-            desE = $(this).parent().parent().parent().next().next().attr('id');
+            desE = $(this).parent().parent().parent().next().attr('id');
           }else if($(this).parent().hasClass('continent-tips')){
             changeData = item.data.PlansByCountry[text].__values;
             desE = $(this).parent().next().attr('id');
@@ -85,7 +85,7 @@
         var marqueeE1 = document.getElementById("RunTopic");
         var speed=200;    //数值越大滚动速度越慢 
         function Marquee(){ 
-            if(marqueeE1.offsetWidth<=marqueeE.scrollLeft+1100){               
+            if(marqueeE1.offsetWidth<=marqueeE.scrollLeft+1200){               
                 marqueeE.scrollLeft=0
             }
             else{ 

@@ -7,7 +7,14 @@
 		  <li class="active">装备编辑</li>
 		</ul>
 
-		<h4>基本信息</h4>
+		<h4>{{if Facility.facilityType==1}}小型客车{{/if}}
+			{{if Facility.facilityType==2}}WIFI设备{{/if}}
+			{{if Facility.facilityType==3}}转换插座{{/if}}
+			{{if Facility.facilityType==4}}摄影摄像{{/if}}
+			{{if Facility.facilityType==5}}体育运动{{/if}}
+			{{if Facility.facilityType==6}}船舶{{/if}}
+			{{if Facility.facilityType==7}}其他装备{{/if}}
+			基本信息</h4>
 		<form class="form-horizontal">
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">装备名称</label>
@@ -21,14 +28,14 @@
 
 	<!-- 车辆信息 -->
 	<div class="carInfo">
-		<h4>车辆信息</h4>
+		<h4>{{if Facility.facilityType==1}}车辆信息{{else}}装备信息{{/if}}</h4>
 		<div class="row">
 			<div class="col-md-6">
 				<form class="form-horizontal">
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">{{if Facility.facilityType==1}}车辆品牌{{else}}装备品牌{{/if}}</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.Facility.brand}" data-value="/Facility/brand" placeholder="请输入" id="carBrand">
+				      <input type="text" class="form-control" value="${$data.Facility.brand}" data-value="/Facility/brand" placeholder="请输入" id="{{if Facility.facilityType==1}}carBrand{{else}}other{{/if}}">
 				    </div>
 				  </div>
 				  {{if Facility.facilityType==1}}
@@ -64,8 +71,9 @@
 							{{/if}}
 						</label>
 				    </div>
+					</div>
 					{{/if}}
-				  </div>
+
 				</form>
 			</div>
 			<div class="col-md-6">

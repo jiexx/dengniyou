@@ -16,7 +16,7 @@
         {{each(i,p) TravelogueDetail}}
         <li>
           {{if label!=null}}<h2>${label}<br><span></span></h2>{{/if}}
-          {{if picURL!=null}}<img src="${$data.IMGHOST}${picURL}" alt="">{{/if}}
+          {{if picURL!=null}}<img src="${ $data.IMGHOST }${picURL}" >{{/if}}
           {{if content!=null}}
           <div class="tipsdes">
             <p>
@@ -31,7 +31,7 @@
 
     <div class="buttons">
       <button id="delete" type="button" class="btn btn-default">删除</button>
-      <a id="edit" type="button" class="btn btn-warning" href="#/travelogueedit?">编辑</a>
+      <a id="edit" type="button" class="btn btn-warning" href="#/travelogueedit?articleID=${Travelogue[0].articleID}">编辑</a>
     </div>
-  </div> <!-- end container-box -->
+  </div> <!-- end container-box -->articleID=${articleID}
 </div> <!-- end container -->

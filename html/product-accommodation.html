@@ -2,9 +2,9 @@
 	<div class="row service-dropdown">
 		<div class="col-md-10"></div>
 		<div class="col-md-2 service-release">
-			<div class="btn-group">
+			<div class="btn-group pull-right">
 				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-					发布住宿
+					<a href="#/accommodationedit?spotType=3">发布住宿</a>
 				</button>
 			</div>
 		</div><!-- end 下拉菜单部分 -->
@@ -12,7 +12,7 @@
 	<!-- 住宿列表开始 -->
 	<div class="list-group service-list">
 		{{each Attraction}}
-		<div class="list-group-item clearfix">
+		<div class="list-group-item clearfix disabled">
 			<div class="col-md-1"></div>
 			<div class="col-md-5 service-name">我的住宿方案</div>
 			<div class="col-md-1">价格</div>

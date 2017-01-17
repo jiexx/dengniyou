@@ -559,9 +559,6 @@
 
     var ctrlAttractionDetail = function(response, realView) {
 
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-
         $('#release').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
                 var status = $('#release').data("status")
@@ -588,6 +585,8 @@
         //     }
         // );
 
+        bindRidoesForSwitch();
+        realView.rogerCropImages();
     };
 
     var ctrlOrderlist = function(response, realView) {
@@ -715,24 +714,24 @@
 
             }
         );
-        //租车
-        $('#editCar').rogerOnceClick(response, function (e) {
-                temp = e.data.DetailMain[0];
-                $.rogerLocation('#/caredit?ServiceID='+temp.serviceID);
-            }
-        );
-        //接送机
-        $('#editPickup').rogerOnceClick(response, function (e) {
-                temp = e.data.DetailMain[0];
-                $.rogerLocation('#/servicepickupedit?ServiceID='+temp.serviceID);
-            }
-        );
-        //其他服务类
-        $('#editOther').rogerOnceClick(response, function (e) {
-                temp = e.data.DetailMain[0];
-                $.rogerLocation('#/serviceotheredit?ServiceID='+temp.serviceID);
-            }
-        );
+        // //租车
+        // $('#editCar').rogerOnceClick(response, function (e) {
+        //         temp = e.data.DetailMain[0];
+        //         $.rogerLocation('#/caredit?ServiceID='+temp.serviceID);
+        //     }
+        // );
+        // //接送机
+        // $('#editPickup').rogerOnceClick(response, function (e) {
+        //         temp = e.data.DetailMain[0];
+        //         $.rogerLocation('#/servicepickupedit?ServiceID='+temp.serviceID);
+        //     }
+        // );
+        // //其他服务类
+        // $('#editOther').rogerOnceClick(response, function (e) {
+        //         temp = e.data.DetailMain[0];
+        //         $.rogerLocation('#/serviceotheredit?ServiceID='+temp.serviceID);
+        //     }
+        // );
 
         $('#delete').rogerOnceClick(response, function (e) {
                 temp = e.data.DetailMain[0];
@@ -968,7 +967,6 @@
 
         });
 
-
         // $('#publish').rogerOnceClick(Spots, function(e){
         //     console.data.log('publish');
         //
@@ -1191,7 +1189,13 @@
                     addressType: '', 
                     address: ''
                  }],
-                 vehicleSchedule: [ ],
+                 lendAddresses:[""],
+                 repayAddresses:[""],
+                 vehicleSchedule: [
+                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-20'},
+                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-21'},
+                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-22'}
+                 ],
                  labels: [],
                  activityPrice: {
                     activityID: '', 
@@ -1225,7 +1229,7 @@
          };
          $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.UserID}, function (respJSON, reqJSON) {
              if(respJSON){
-                 console.log(JSON.stringify(respJSON));
+                 //console.log(JSON.stringify(respJSON));
                  if (null != respJSON["DetailMain"] && respJSON["DetailMain"].length > 0) {
 
                      picURLs = respJSON["DetailMain"][0]["picURLs"];
@@ -1330,7 +1334,7 @@
                            } 
                         return des; 
                     }
-                     console.log(result["DetailMain"]);
+                    // console.log(result["DetailMain"]);
 
                  }
              }
@@ -1339,8 +1343,7 @@
          });
          return result;
 
-    },ctrlServiceEdit=function(tmplItem, realView){
-        
+    },ctrlServiceEdit=function(tmplItem, realView){        
         var html;
         var typeVal;
         $('#policydiv input[type=radio]').on('click',function(){
@@ -1393,7 +1396,6 @@
 
         });   
 
-
         //选择汽车品牌
         $('#carBrand').on('focus',function(){
             $('#carBrandList').modal('show');
@@ -1410,23 +1412,14 @@
             });  
         });    
         
-
-
+        //包车
         $('#save').rogerOnceClick(tmplItem, function(e){
             var usr =$.rogerGetLoginUser();
             console.log('test');
             temp = e.data.DetailMain;
             var filedata = e.data.DetailMain.picURLs;
             var coverFiledata = e.data.DetailMain.coverURL;
-            // var filedata2=[];
-            // coverFiledata = coverFiledata.substr(coverFiledata.indexOf("base64,")+7,10);
-            // for(key in filedata){
-            //     itemtemp = filedata[key].substr(filedata[key].indexOf("base64,")+7,10);
-            //     filedata2.push(itemtemp);
-            // }
-            // filedata = null;
-            // filedata = filedata2;
-
+            
             temp["userID"]=usr.UserID;
             temp["serviceTypeID"]=1;
             temp["unit"]='天';
@@ -1478,7 +1471,6 @@
 
         });
 
-
         //租车增加存车取车地址
         tmplItem.createLendAddress = function (User) {
             User.DetailMain.lendAddresses.push({address:'',addressID:'',addressType:1,serviceID:''});
@@ -1488,6 +1480,23 @@
             User.DetailMain.repayAddresses.push({address:'',addressID:'',addressType:2,serviceID:''});
             $.rogerRefresh(tmplItem);
         };
+
+        var disday = [];
+        if(tmplItem.DetailMain.vehicleSchedule.length > 0 ) {
+            for(var i=0; i<tmplItem.DetailMain.vehicleSchedule.length; i++) {
+                disday.push(tmplItem.DetailMain.vehicleSchedule[i].scheduleFormatTime);
+            }
+        }
+        var pickr = $("#calendar").flatpickr({
+            inline: true,
+            mode: "multiple",
+            defaultDate: disday,
+            minDate: new Date(),
+            onChange:function (dateObj, dateStr) {
+                tmplItem.DetailMain["schedules"]=dateStr.split("; ");
+                
+            }
+        });
         //租车
         $('#saveCar').rogerOnceClick(tmplItem, function(e){
             var usr =$.rogerGetLoginUser();
@@ -1793,7 +1802,7 @@
         var type = $.rogerGetUrlParam('type');
 
          // '/travelogue/detail'
-        return {
+        returnvalue= {
             Travelogue: {
                 articleID: '',
                 userID: usr.UserID,
@@ -1816,18 +1825,36 @@
             IMGHOST:$.rogerImgHost()
         };
 
+         var articleID = $.rogerGetUrlParam('articleID');
+
+         $.rogerPost('/travelogue/detail', {"articleID": articleID}, function (respJSON, reqJSON) {
+             if(respJSON){
+
+                 if (null != respJSON["Travelogue"] && respJSON["Travelogue"].length > 0) {
+                     returnvalue["Travelogue"]=respJSON["Travelogue"][0];
+                 }
+                 if (null != respJSON["TravelogueDetail"] && '' != respJSON["TravelogueDetail"] && respJSON["TravelogueDetail"].length>0) {
+                     returnvalue["Travelogue"]["TravelogueDetail"] = respJSON["TravelogueDetail"];
+                 }
+
+                 $.rogerRefresh(returnvalue);
+
+             }});
+
+        return returnvalue
+
     },ctrlTraveLogueEdit=function(TraveLogue, realView){
-         TraveLogue.createDay = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            TravelogueDetail.push({label:' ', DAY:'', content:null, picURL: null});
-            $.rogerRefresh(Plan);
+         TraveLogue.createDay = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            TravelogueDetail.push({label:' ', DAY:'0', content:null, picURL: null});
+            $.rogerRefresh(TraveLogue);
         };
-         TraveLogue.createPicture = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+         TraveLogue.createPicture = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             TravelogueDetail.push({label:null, DAY:null, content:null, picURL: null, PE:true});
-            $.rogerRefresh(Plan);
+            $.rogerRefresh(TraveLogue);
         };
-         TraveLogue.createContent = function(Plan, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+         TraveLogue.createContent = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             TravelogueDetail.push({label:null, DAY:null, content:'请输入描述', picURL: null});
-            $.rogerRefresh(Plan);
+            $.rogerRefresh(TraveLogue);
         };
 
 
@@ -1876,28 +1903,30 @@
 
     var initEquipEdit=function(){
         var usr =$.rogerGetLoginUser();
+        var facilityID = $.rogerGetUrlParam('facilityID');
+        var facilityType = $.rogerGetUrlParam('facilityType');
         returnvalue = {
             Facility : {
                 facilityID :"" ,
                 userID :usr.UserID,
-                facilityType : 1,
-                facilityName : "小车A",
-                brand : "宝马",
-                model : "2",
+                facilityType : facilityType,
+                facilityName : "",
+                brand : "",
+                model : "",
                 produceYear : "",
-                seats : 5,
-                person : 5,
-                clazz : 3,
-                insurance : 1,
-                description : "小车A描述",
-                luggage : 5,
+                seats : "",
+                person : "",
+                clazz : "",
+                insurance : "",
+                description : "",
+                luggage : "",
                 coverURL : "",
                 pics : []
             },
             IMGHOST : $.rogerImgHost()
         };
 
-        var facilityID = $.rogerGetUrlParam('facilityID');
+
 
         $.rogerPost('/facility/detail', {"facilityID": facilityID, "userID": usr.UserID}, function (respJSON, reqJSON) {
             if(respJSON){
@@ -1943,7 +1972,7 @@
 
             picURLs=[];
             for(key in temp.pics) {
-                picURLs.push({isCover:0,picUrl:temp.pics[0],facilityID:temp["facilityID"]});
+                picURLs.push({isCover:2,picUrl:temp.pics[0],facilityID:temp["facilityID"]});
             }
 
             if(null !=temp["coverURL"] && temp["coverURL"].length>0){

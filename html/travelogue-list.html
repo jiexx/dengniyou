@@ -1,9 +1,20 @@
 <div class="container">
+	<div class="row service-dropdown">
+		<div class="col-md-10"></div>
+		<div class="col-md-2 service-release">
+			<div class="btn-group pull-right">
+				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+					<a href="#/travelogueedit">发布攻略</a>
+				</button>
+			</div>
+		</div><!-- end 下拉菜单部分 -->
+	</div> <!-- end  攻略列表页头部row -->
+	<!-- 攻略列表开始 -->
     <div class="list-group service-list">
 	{{each TravelogueList}}
 		<div class="list-group-item clearfix disabled">
 		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
-		  	<div class="col-md-8 service-name">攻略</div>
+		  	<div class="col-md-8 service-name">我的攻略</div>
 		  	<div class="col-md-2 ">发布状态</div>
 		  	<div class="col-md-1 ">编辑</div>
 		</div>
@@ -24,7 +35,7 @@
 		  	</div>
 		    <div class="col-md-2 margin-top">{{if STATUS==0}}草稿中{{else}}已发布{{/if}}</div>
 		    <div class="col-md-1 service-edit">
-		   		<a href="#/travelogueedit?">
+		   		<a href="#/travelogueedit?articleID=${articleID}">
 		   			<span class="btn  glyphicon glyphicon-edit"></span>
 		   		</a>
 		   	</div>
