@@ -22,8 +22,9 @@
 
         var filter2ev = $._data($('#filter2 input[type=radio][name="filterradio"]')[0], 'events');
         if(!filter2ev || !filter2ev.change) {
+            var usr = $.rogerGetLoginUser();
             $('#filter2 input[type=radio][name="filterradio"]').unbind().change(function(e){
-                var usr = $.rogerGetLoginUser();
+                
                 if(!usr) {
                     $.rogerShowLogin();
                     return;
@@ -32,8 +33,6 @@
                 $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
             });
 
-
-            $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:"all"});
         }
 
         var urlPath = $.rogerGetPath();
@@ -1165,7 +1164,7 @@
                  picURLs:[],
                  coverURL:'',
                  detailServiceMethod: [],
-                 facility: [
+                 facilities: [
                      {
                          serviceID: '',
                          facilityID: '',
@@ -1191,7 +1190,7 @@
                      {
                        policyType: 1,
                        policyID: '',
-                       policyname: "退订政策",
+                       policyName: "退订政策",
                        serviceTypeID: '',
                        day1: '',
                        ratio1: '',
@@ -1204,7 +1203,7 @@
                        customRatio: '',
                        caution: '',
                        description: '',
-                       type: 1
+                       type:'' 
                      },
                      {
                        policyType: 2,
@@ -1336,6 +1335,12 @@
          $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.UserID}, function (respJSON, reqJSON) {
              if(respJSON){
                  //console.log(JSON.stringify(respJSON));
+                 if (null != respJSON["UserFacilities"] && '' != respJSON["UserFacilities"]) {
+                         result["DetailMain"]["userFacilities"] = respJSON["UserFacilities"]
+                     }
+                 if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
+                         result["DetailMain"]["carBrand"] = respJSON["CarBrand"]
+                     }    
                  if (null != respJSON["DetailMain"] && respJSON["DetailMain"].length > 0) {
 
                      picURLs = respJSON["DetailMain"][0]["picURLs"];
@@ -1360,11 +1365,10 @@
                          result["DetailMain"]["detailServiceMethod"] = respJSON["DetailServiceMethod"]
                      }
                      if (null != respJSON["Facility"] && '' != respJSON["Facility"]) {
-                         result["DetailMain"]["facility"] = respJSON["Facility"]
+                         result["DetailMain"]["facilities"] = respJSON["Facility"]
+                         result["DetailMain"]["facilities"]["facilityId"] =result["DetailMain"]["facilities"]["facilityID"];
                      }
-                     if (null != respJSON["UserFacilities"] && '' != respJSON["UserFacilities"]) {
-                         result["DetailMain"]["userFacilities"] = respJSON["UserFacilities"]
-                     }
+                     
                      if (null != respJSON["Airports"] && '' != respJSON["Airports"]) {
                          result["DetailMain"]["airports"] = respJSON["Airports"]
                      }
@@ -1411,9 +1415,7 @@
                      if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
                          result["DetailMain"]["houseInfo"] = respJSON["HouseInfo"][0]
                      }
-                     if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
-                         result["DetailMain"]["carBrand"] = respJSON["CarBrand"]
-                     }
+                     
                      
                     result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0],respJSON.IMGHOST);
                      function deepCopy(des,source,img) {      
@@ -1462,6 +1464,10 @@
             $('#type').val($(this).val());
             $('#type').trigger("keyup");
             typeVal = $(this).val();
+            tmplItem.DetailMain.policy[0].type = typeVal;
+            if(typeVal == 5 || typeVal == '5' ){
+                tmplItem.DetailMain.policy[0].policyName = '自定义的退订政策';
+            }
         });
         $("#policyconfirm").on('click',function(){
             var days = $('#policycontent4 p');
@@ -1472,6 +1478,7 @@
                        '<p>3、服务开始前'+ days.eq(2).find('input').val() +'天(含)以上退订，退还服务费用的20%；</p>'+
                        '<p>4、服务开始前'+ days.eq(3).find('input').val() +'天以内退订，不退还服务费用；</p>'+
                        '<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>';
+
             }
             $("#policyView").html(html);            
         });
@@ -1480,23 +1487,23 @@
             var val = $(this).val();
             var detail = $(this).parent().next().find('li');
             $('#facilityID').val(val).trigger("keyup");
-            tmplItem.DetailMain.facility[0].brand = detail.eq(0).find('span').text();
-            tmplItem.DetailMain.facility[0].model = detail.eq(1).find('span').text();
-            tmplItem.DetailMain.facility[0].person = detail.eq(2).find('span').text();
-            tmplItem.DetailMain.facility[0].luggage = detail.eq(3).find('span').text();
+            tmplItem.DetailMain.facilities[0].brand = detail.eq(0).find('span').text();
+            tmplItem.DetailMain.facilities[0].model = detail.eq(1).find('span').text();
+            tmplItem.DetailMain.facilities[0].person = detail.eq(2).find('span').text();
+            tmplItem.DetailMain.facilities[0].luggage = detail.eq(3).find('span').text();
             var clazz = detail.eq(4).find('span').text();
             if(clazz == '经济'){
-                tmplItem.DetailMain.facility[0].clazz = '1';
+                tmplItem.DetailMain.facilities[0].clazz = '1';
             }else if(clazz == '舒适'){
-                tmplItem.DetailMain.facility[0].clazz = '2';
+                tmplItem.DetailMain.facilities[0].clazz = '2';
             }else if(clazz == '豪华'){
-                tmplItem.DetailMain.facility[0].clazz = '3';
+                tmplItem.DetailMain.facilities[0].clazz = '3';
             }
             var insurance = detail.eq(5).find('span').text();
             if( insurance == '有'){
-                tmplItem.DetailMain.facility[0].insurance = '1';
+                tmplItem.DetailMain.facilities[0].insurance = '1';
             }else if( insurance == '无'){
-                tmplItem.DetailMain.facility[0].insurance = '0';
+                tmplItem.DetailMain.facilities[0].insurance = '0';
             }
 
             $('#facilityconfirm').on('click',function(){
@@ -1536,6 +1543,9 @@
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
+            if(temp["pictureIDs"]){
+                temp["pictureIds"]=temp["serviceID"];
+            }            
 
             temp["policyBean"]= temp["policy"][0];
             temp["feeBean"]= temp["policy"][1];
@@ -1621,6 +1631,7 @@
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
+            temp["pictureIds"]=temp["pictureIDs"].join();
 
             temp["policyBean"]= temp["policy"][0];
             temp["feeBean"]= temp["policy"][1];
@@ -1694,6 +1705,7 @@
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
+            temp["pictureIds"]=temp["pictureIDs"].join();
 
             var serviceAirportsItem = {};
             var serviceAirports = [];
@@ -1771,6 +1783,7 @@
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
+            temp["pictureIds"]=temp["pictureIDs"].join();
 
             temp["policyBean"]= temp["policy"][0];
             temp["feeBean"]= temp["policy"][1];
@@ -1828,6 +1841,7 @@
             temp["serviceTypeID"]=6;
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
+            temp["pictureIds"]=temp["pictureIDs"];
 
             temp["policyBean"]= temp["policy"][0];
             temp["feeBean"]= temp["policy"][1];
