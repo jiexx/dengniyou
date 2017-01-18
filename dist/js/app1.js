@@ -37,7 +37,6 @@
 
     var initHomeList = function (param) {
         param[0].IMGHOST = "http://123.59.144.47/";
-        console.log(param);
         return param;
     };
     var ctrlHomeList = function(response, realView) {

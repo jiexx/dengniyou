@@ -1,6 +1,6 @@
 {
 	"SpotDetail": {
-		"sql": "INSERT INTO traveldb.tab_travelspots ( UserID, CountryID, CityID, SpotsTypeID, CommondReason, CreateDate, SpotsType, NameEn, NameCh, Status, UpdateDate, Flavor, PicURL, Address, ZipCode, ZoneCode, Tel, Description, Rank, Price, Score, LocalName, Alias,TravelTime) VALUES ( ?, ?,?, ?, ?, NOW(), ?, ?, ?, ?, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )",
+		"sql": "INSERT INTO traveldb.tab_travelspots ( UserID, CountryID, CityID, SpotsTypeID, CommondReason, CreateDate, SpotsType, NameEn, NameCh, Status, UpdateDate, Flavor, PicURL, Address, ZipCode, ZoneCode, Tel, Description, Rank, Price, Score, LocalName, Alias,TravelTime) VALUES ( ?, ?,?, ?, ?, NOW(), ?, ?, ?, 1, NOW(), ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ? )",
 		"params": [
 			"UserID",
 			"CountryID",
@@ -10,7 +10,6 @@
 			"SpotsType",
 			"NameEn",
 			"NameCh",
-			"Status",
 			"Flavor",
 			"PicURL",
 			"Address",
@@ -43,7 +42,7 @@
 		"SpotLabels": {
 			"sql": "INSERT INTO traveldb.tab_travelspotslabel ( ClassifyLabelID,SpotsID,UpdateTime) VALUES ( ?, ?,NOW())",
 			"params": [
-				"LabelIDs",
+				"LabelID",
 				"insertId"
 			],
 			"findkey": "insertId"
