@@ -40,9 +40,9 @@
 				  </div>
 				  {{if Facility.facilityType==1}}
 				  <div class="form-group">
-				    <label for="" class="col-sm-4 col-md-3 control-label">舒适乘坐</label>
+				    <label for="" class="col-sm-4 col-md-3 control-label">座位数</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.Facility.person}" data-value="/BaseInfo/seats" placeholder="请输入"> 人
+				      <input type="text" class="form-control" value="${$data.Facility.seats}" data-value="/Facility/seats" placeholder="请输入"> 人
 				    </div> 
 				  </div>
 					<div class="form-group">
@@ -72,6 +72,12 @@
 						</label>
 				    </div>
 					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-4 col-md-3 control-label">出厂年份</label>
+						<div class="col-sm-8 col-md-9">
+							<input type="text" class="form-control flatpickr" value="${$data.Facility.produceYear}" data-value="/Facility/produceYear" placeholder="请选择日期" style="background-color: #fff;">
+						</div>
+					</div>
 					{{/if}}
 
 				</form>
@@ -98,20 +104,26 @@
 							<input type="hidden" name="insurancehidden" id="insurance" value="${$data.Facility.insurance}" data-value="/Facility/insurance" />
 							{{if Facility.insurance == '1' }}
 
-							<input type="radio" name="insurancecheck" id="" value="1" checked > 有
+							<input type="radio" name="insurancecheck" value="1" checked > 有
 							{{else}}
-							<input type="radio" name="insurancecheck" id="" value="1"> 有
+							<input type="radio" name="insurancecheck" value="1"> 有
 							{{/if}}
 						</label>
 						<label class="radio-inline">
 							{{if Facility.insurance != '1' }}
-							<input type="radio" name="insurancecheck" id="" value="0" checked > 无
+							<input type="radio" name="insurancecheck" value="0" checked > 无
 							{{else}}
-							<input type="radio" name="insurancecheck" id="" value="0"> 无
+							<input type="radio" name="insurancecheck" value="0"> 无
 							{{/if}}
 						</label>
 				    </div>
 				  </div>
+					<div class="form-group">
+						<label for="" class="col-sm-4 col-md-3 control-label">舒适乘坐</label>
+						<div class="col-sm-8 col-md-9">
+							<input type="text" class="form-control" value="${$data.Facility.person}" data-value="/Facility/person" placeholder="请输入"> 人
+						</div>
+					</div>
 					{{/if}}
 				</form>
 			</div>
@@ -208,6 +220,8 @@
              $("#clazz").val(this.value).trigger('keyup');
          });
 
+         flatpickr(".flatpickr");
+         $('.flatpickr-calendar').css('width','330px');
      });
 
 

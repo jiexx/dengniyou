@@ -26,6 +26,18 @@
             }
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
         });
+
+
+        $('#traveloguectr').rogerOnceClick2(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $.rogerLocation('#/travelogue?UserID='+user.UserID+'&status=0&page=1');
+        });
+
     }
 	var ctrlDashboard = function(response, realView) {
         if( !$.trim( $('#modal').html() ) ) {
@@ -520,8 +532,8 @@
         $('#release').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
                 var status = $('#release').data("status")
-                //3,隐藏，4发布
-                $.rogerPost('/update/service/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
+                //1,隐藏，2发布
+                $.rogerPost('/update/spots/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
                     $.rogerNotice({Message: '发布成功'});
 
                 });
@@ -530,9 +542,21 @@
 
         $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
-                $.rogerLocation('#/delicacyedit?SpotsID='+temp.SpotsID+"&spotType=1");
+                $.rogerLocation('#/delicacyedit?SpotsID='+temp.SpotsID+"&spotType=2");
             }
         );
+
+        $('#delete').rogerOnceClick(response, function (e) {
+            var del = confirm("确定要删除吗？删除后数据无法恢复，请谨慎操作！");
+            if(del){
+                temp = e.data.DetailMain[0];
+                $.rogerPost('/delete/spots', {SpotsID:temp.spotsID}, function (respJSON) {
+                    $.rogerNotice({Message: '删除成功'});
+                    $.rogerLocation('#/delicacy'+"?UserID="+usr.UserID);
+                });
+            }
+        });
+
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
@@ -541,8 +565,8 @@
         $('#release').rogerOnceClick(response, function (e) {
             temp = e.data.SpotDetail[0];
             var status = $('#release').data("status")
-            //3,隐藏，4发布
-            $.rogerPost('/update/service/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
+            //1,隐藏，2发布
+            $.rogerPost('/update/spots/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
                 $.rogerNotice({Message: '发布成功'});
 
             });
@@ -550,9 +574,21 @@
 
         $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
-                $.rogerLocation('#/accommodationedit?SpotsID='+temp.SpotsID+"&spotType=1");
+                $.rogerLocation('#/accommodationedit?SpotsID='+temp.SpotsID+"&spotType=3");
             }
         );
+
+        $('#delete').rogerOnceClick(response, function (e) {
+            var del = confirm("确定要删除吗？删除后数据无法恢复，请谨慎操作！");
+            if(del){
+                temp = e.data.DetailMain[0];
+                $.rogerPost('/delete/spots', {SpotsID:temp.spotsID}, function (respJSON) {
+                    $.rogerNotice({Message: '删除成功'});
+                    $.rogerLocation('#/accommodation'+"?UserID="+usr.UserID);
+                });
+            }
+        });
+
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
@@ -562,11 +598,11 @@
         $('#release').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
                 var status = $('#release').data("status")
-                //3,隐藏，4发布
-                $.rogerPost('/update/service/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
-                    $.rogerNotice({Message: '发布成功'});
+            //1,隐藏，2发布
+            $.rogerPost('/update/spots/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
+                $.rogerNotice({Message: '发布成功'});
 
-                });
+            });
             }
         );
 
@@ -576,14 +612,16 @@
             }
         );
 
-        // $('#delete').rogerOnceClick(response, function (e) {
-        //         temp = e.data.DetailMain[0];
-        //         $.rogerPost('/delete/service', {ServiceId:temp.serviceID}, function (respJSON) {
-        //             $.rogerNotice({Message: '删除成功'});
-        //             $.rogerLocation('#/service'+"?UserID="+usr.UserID);
-        //         });
-        //     }
-        // );
+        $('#delete').rogerOnceClick(response, function (e) {
+            var del = confirm("确定要删除吗？删除后数据无法恢复，请谨慎操作！");
+            if(del){
+                temp = e.data.DetailMain[0];
+                $.rogerPost('/delete/spots', {SpotsID:temp.spotsID}, function (respJSON) {
+                    $.rogerNotice({Message: '删除成功'});
+                    $.rogerLocation('#/attraction'+"?UserID="+usr.UserID);
+                });
+            }
+        });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -734,13 +772,15 @@
         // );
 
         $('#delete').rogerOnceClick(response, function (e) {
+            var del = confirm("确定要删除吗？删除后数据无法恢复，请谨慎操作！");
+            if(del){
                 temp = e.data.DetailMain[0];
                 $.rogerPost('/delete/service', {ServiceId:temp.serviceID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
                     $.rogerLocation('#/service'+"?UserID="+usr.UserID);
                 });
             }
-        );
+        });
 
         realView.rogerCropImages();
 
@@ -757,19 +797,34 @@
         );
 
         $('#delete').rogerOnceClick(response, function (e) {
+            var del = confirm("确定要删除吗？删除后数据无法恢复，请谨慎操作！");
+            if(del){
                 temp = e.data.Facility[0];
                 var usr =$.rogerGetLoginUser();
                 $.rogerPost('/delete/facility', {facilityID:temp.facilityID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
                     $.rogerLocation('#/facilitylist'+"?UserID="+usr.UserID);
                 });
-            }
-        );
+            } 
+        });
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
 
     var ctrlTravelogueDetail = function(response, realView) {
+
+        $('#publish').rogerOnceClick(response, function(e){
+            temp = e.data.Travelogue[0];
+            var status = $('#publish').data("status")
+            $.rogerPost('/update/travellogue/status', {articleID:temp.articleID,STATUS:status}, function(respJSON){
+                $.rogerNotice({Message:'发布攻略成功'});
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/travelogue?UserID='+user.UserID+'&page=1');
+                }
+            });
+        });
+
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -922,14 +977,14 @@
         $('#save').rogerOnceClick(Spots, function(e){
 
             temp = e.data.SpotDetail;
-
-            if(null != temp.SpotsID && '' != temp.SpotsID){
-                tempSpotLabels = []
-                if(null != temp.SpotLabels.LabelIDs && 0< temp.SpotLabels.LabelIDs.length){
-                    for(key in temp.SpotLabels.LabelIDs){
-                        tempSpotLabels.push({LabelID:temp.SpotLabels.LabelIDs[0],SpotsID:temp.SpotsID})
-                    }
+            tempSpotLabels = []
+            if(null != temp.SpotLabels.LabelIDs && 0< temp.SpotLabels.LabelIDs.length){
+                for(key in temp.SpotLabels.LabelIDs){
+                    tempSpotLabels.push({LabelID:temp.SpotLabels.LabelIDs[0],SpotsID:temp.SpotsID})
                 }
+            }
+            if(null != temp.SpotsID && '' != temp.SpotsID){
+
 
                 var data = {
                     DeleteSpotsPics:temp,
@@ -943,10 +998,20 @@
                 };
                 $.rogerPost('/update/spots', data, function(respJSON){
                     $.rogerNotice({Message:'修改成功'});
+                    if(respJSON){
+                        //跳转到详情页面
+                        if(temp.SpotsTypeID==1){
+                            $.rogerLocation('#/attractiondetail?spotsID='+temp.SpotsID);
+                        }else if(temp.SpotsTypeID==2){
+                            $.rogerLocation('#/delicacydetail?spotsID='+temp.SpotsID);
+                        }else if(temp.SpotsTypeID==3){
+                            $.rogerLocation('#/accommodationdetail?spotsID='+temp.SpotsID);
+                        }
+                    }
 
                 });
             } else {
-
+                temp["SpotLabels"]=tempSpotLabels;
                 temp["Status"]=1;
                 var data = {
                     SpotDetail:temp,
@@ -959,7 +1024,7 @@
 
                     if(respJSON){
                         //跳转到详情页面
-                        $.rogerLocation('#/attractiondetail?ServiceID='+respJSON.ServiceID);
+                        $.rogerLocation('#/attractiondetail?spotsID='+respJSON.SpotDetail.insertId);
                     }
 
                 });
@@ -1069,14 +1134,7 @@
                          ]
                      }
                  ],
-                 airports: [{
-                    AirportCode:'',
-                    AirportID:'',
-                    CreateDate:'',
-                    NameCh:'',
-                    NameEn:'',
-                    ServiceID:''
-                }],
+                 airports: [],
                  policy: [
                      {
                        policyType: 1,
@@ -1189,13 +1247,9 @@
                     addressType: '', 
                     address: ''
                  }],
-                 lendAddresses:[""],
-                 repayAddresses:[""],
-                 vehicleSchedule: [
-                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-20'},
-                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-21'},
-                    {scheduleDate:1236584523,scheduleFormatTime:'2017-01-22'}
-                 ],
+                 lendAddresses:[{}],
+                 repayAddresses:[{}],
+                 vehicleSchedule: [],
                  labels: [],
                  activityPrice: {
                     activityID: '', 
@@ -1336,6 +1390,11 @@
                     }
                     // console.log(result["DetailMain"]);
 
+                 } else {
+                     //主数据没有的时候，汽车铭牌取得
+                     if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
+                         result["DetailMain"]["carBrand"] = respJSON["CarBrand"]
+                     }
                  }
              }
 
@@ -1562,6 +1621,11 @@
         tmplItem.createAirport = function (Plan, Spot) {
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Airports:Spot});
         };
+        $('.deleteAirport').on('click',function(){
+            var index = $(this).parent().index();
+            tmplItem.DetailMain.airports.splice(index,1);
+            $.rogerRefresh(tmplItem);
+        });
 
         $('#savePickup').rogerOnceClick(tmplItem, function(e){
             var usr =$.rogerGetLoginUser();
@@ -1570,7 +1634,7 @@
             var coverFiledata = e.data.DetailMain.coverURL;
 
             temp["userID"]=usr.UserID;
-            if(temp["serviceTypeName"]=='接机'){
+            if(temp["serviceTypeName"]=='接机' || temp["serviceTypeName"]==''){
                 temp["serviceTypeID"]=3;
             }else if(temp["serviceTypeName"]=='送机'){
                 temp["serviceTypeID"]=4;
@@ -1880,22 +1944,13 @@
             };
             $.rogerPost('/new/travellogue', data, function(respJSON){
                 $.rogerNotice({Message:'保存攻略成功'});
-
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/equipdetail?facilityID='+respJSON.Travelogue.insertId);
+                }
             });
         });
 
-         $('#publish').rogerOnceClick(TraveLogue, function(e){
-             temp = e.data.Travelogue;
-             temp.STATUS=1;
-             var data = {
-                 Travelogue:temp,
-                 IMGHOST:e.data.IMGHOST
-             };
-             $.rogerPost('/new/travellogue', data, function(respJSON){
-                 $.rogerNotice({Message:'发布攻略成功'});
-
-             });
-         });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -1933,6 +1988,9 @@
 
                 if (null != respJSON["Facility"] && respJSON["Facility"].length > 0) {
                     returnvalue["Facility"]=respJSON["Facility"][0];
+                    if(null == respJSON["Facility"][0]["pics"] || respJSON["Facility"][0]["pics"].length==0){
+                        returnvalue["Facility"]["pics"] = [];
+                    }
                 }
                 if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
                     returnvalue["carBrand"] = respJSON["CarBrand"]

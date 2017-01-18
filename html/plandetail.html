@@ -149,39 +149,46 @@
 							{{each(k,v) PlanSchedule}}
 							{{if  ("__countScheduleID" != k)  }}
 							<li id="day01">
-								<h3 class="day">第${v.__index}天</h3>
+								<h3 class="day">第${v.__index}天
+								{{each  v.__values}}
+								{{if  ScheduleType == 0  }}
+								<span>${CountryNameCn}${CountryNameEn}</span>
+								<span>${CityNameCn}${CityNameEn}</span>
+								{{/if}}
+								{{/each}}
+								</h3>
 								<div class="content">
 									<ul class="clearfix">
 										{{each  v.__values}}
+										{{if ScheduleType != 0  }}
 										<li>
 											<div class="picText">
-												{{if ScheduleType == 0  }}
+												<!-- {{if ScheduleType == 0  }}
 													{{if PicURL == null }}<img src="../img/CityIcon.png" alt="">{{/if}}
 													{{if PicURL != null }}<img src="${ $data.IMGHOST }${PicURL}" alt="">{{/if}}
-												{{/if}}
+												{{/if}} -->
+												<div class="text">																										
+													{{if  ScheduleType == 1  }}
+													<strong>${AirportNameCn}${AirportNameEn}${AirportCode}</strong>
+													<p>机场</p>
+													{{else}}
+													<strong>${NameCh}</strong>
+													<p>建议游玩时间：${SpotTravelTime} 小时</p>
+													{{/if}}
+												</div>
 												{{if ScheduleType == 1 }}
 												<img src="../img/airPlaneIcon.png" alt="">
 												{{/if}}
 												{{if (ScheduleType == 2 ||ScheduleType == 3 ||ScheduleType == 4 ||ScheduleType == 5) }}
 												<img data-src="${ $data.IMGHOST }${PicURL}">
 												{{/if}}
-												<div class="text media-body">
-													<div class="media-heading">${NameCh}</div>
-													<div>${PlanNumber}</div>
-													<div>${StartCity}</div>
-													{{if  ScheduleType == 0  }}
-													<span>${CountryNameCn}${CountryNameEn}&nbsp;&nbsp;</span>
-													<span>${CityNameCn}${CityNameEn}</span>
-													{{/if}}
-													{{if  ScheduleType == 1  }}
-													<div>${AirportNameCn}${AirportNameEn}${AirportCode}</div>
-													{{/if}}
-												</div>
+												<div class="des">${Description}</div>
 											</div><!-- end picText -->
 											<div class="nextBtn">
 												<span class="glyphicon glyphicon-menu-right"></span>
 											</div>
 										</li>
+										{{/if}}
 										{{/each}}
 									</ul>
 								</div>

@@ -1,0 +1,26 @@
+{
+	"DeleteSpots": {
+		"sql": "DELETE FROM traveldb.tab_travelspots WHERE SpotsID=?",
+		"params": [
+			"SpotsID"
+		]
+	},
+	"DeleteSpotsDetail": {
+		"sql": "DELETE FROM traveldb.tab_travelspotsdetail WHERE SpotsID=?",
+		"params": [
+			"SpotsID"
+		]
+	},
+	"DeleteSpotsLabel": {
+		"sql": "DELETE FROM traveldb.tab_travelspotslabel WHERE SpotsID=?",
+		"params": [
+			"SpotsID"
+		]
+	},
+	"DeleteSpotsCollect": {
+		"sql": "delete from traveldb.tab_SpotsCollect where SpotsID =?",
+		"params": [
+			"SpotsID"
+		]
+	}
+}

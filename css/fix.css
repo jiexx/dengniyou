@@ -100,7 +100,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .label-self{display: inline-block;  padding: 0 8px; background-color: #FA713D; border-radius: 17px; margin: 0 5px; line-height: 28px;}
 .homepage .continent-tips li{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px; cursor: pointer;}
 .homepage .regular-grid div{padding: 0; margin: 0; }
-.homepage .regular-grid  .continent-box{ margin-bottom: 70px;}
+.homepage .regular-grid  .continent-box{ margin-bottom: 50px; margin-top: 10px;}
 .homepage .hovereffect { width:100%; height:100%; float:left; overflow:hidden; position:relative; text-align:center; cursor:default;}
 .homepage .hovereffect ul li:first-child{margin-bottom: 10px;}
 .homepage .hovereffect li a { font-size: 14px; color: #fff; text-decoration: none; text-align: left;}
@@ -206,16 +206,18 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .feature { padding: 10px 0; }
 .plandetail-page .feature .tittle { border: 1px solid #00b8ee; float: right; padding: 4px 8px; font-size: 14px;font-weight: bold; color: #00b8ee; }
 .plandetail-page .feature .text{ padding-top: 5px;}
-.plandetail-page .scheduleDetails ul li h3 { height: 45px; line-height: 45px; border-top: 2px solid #00b8ee; border-bottom: 1px solid #00b8ee; text-align: center; margin-top: 0; margin-bottom: 0;}
+.plandetail-page .scheduleDetails ul li h3 { height: 45px; line-height: 45px; border-top: 2px solid #00b8ee; border-bottom: 1px solid #00b8ee; text-align: left; text-indent: 20px; margin-top: 0; margin-bottom: 0;}
 .plandetail-page .scheduleDetails li .content { padding: 15px 55px; width: 100%; background-color: #fff;}
 .plandetail-page .scheduleDetails .content li { width: 290px; height: 200px; float: left; overflow: hidden; }
 .plandetail-page .scheduleDetails .content li:nth-child(4n){ width: 150px; }
 .plandetail-page .scheduleDetails .content li:last-child .nextBtn{ display: none; }
-.plandetail-page .scheduleDetails .content .picText img { height: 150px; width: 150px; }
+.plandetail-page .scheduleDetails .content .picText img { height: 100px; width: 150px; }
 .plandetail-page .scheduleDetails .content .picText, .scheduleDetails .content .nextBtn { float: left; }
 .plandetail-page .scheduleDetails .content .nextBtn { margin: 0 40px; }
 .plandetail-page .scheduleDetails .content .picText { width: 150px; }
-.plandetail-page .scheduleDetails .content .media-heading{margin-top: 6px;}
+.plandetail-page .scheduleDetails .content strong{display: block; height: 16px; line-height: 16px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
+.plandetail-page .scheduleDetails .content p{margin-bottom: 0;}
+.plandetail-page .scheduleDetails .content .des{word-break: break-all; text-overflow: ellipsis; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;}
 .plandetail-page .scheduleDetails .content .nextBtn span { font-size: 60px; height: 150px; line-height: 150px; color: #00b8ee; }
 .plandetail-page .scheduleDetails .footer, .comments .footer { height: 44px; background-color: #00b8ee; color: #fff; text-align: center; font-size: 16px; line-height: 46px; }
 /*行程概览结束*/

@@ -59,11 +59,11 @@
           {{if Facility[0].facilityType==1}}
           <div class="col-md-3">
             <p>品牌：<span>${Facility[0].brand}</span></p>
-            <p>座位数：<span>2位</span></p>
+            <p>座位数：<span>${Facility[0].seats}</span></p>
           </div>
           <div class="col-md-3">
             <p>型号：<span>${Facility[0].model}</span></p>
-            <p>舒适乘坐：<span>${Facility[0].seats}</span></p>
+            <p>舒适乘坐：<span>${Facility[0].person}位</span></p>
           </div>
           <div class="col-md-3">
             <p>车辆等级：<span>${Facility[0].clazz}</span></p>

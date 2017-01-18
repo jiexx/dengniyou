@@ -81,8 +81,6 @@
   },
   "CarBrand": {
     "sql": "select VehicleID as vehicleID,Brand as brand,Classify as classify from traveluserdb.tab_vehicle order by VehicleID asc",
-    "params": [
-      "facilityID"
-    ]
+    "params": []
   }
 }

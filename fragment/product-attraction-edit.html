@@ -58,9 +58,9 @@
 		      	<label for="" class="col-sm-2 col-md-1 control-label">电&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;话</label>
 		      	<div class="col-sm-10 col-md-11">
 		      		<div class="input-group">
-		  		  		<span class="input-group-addon" id="phone">+86</span>
-		  		  		<input type="text" class="form-control" aria-describedby="phone" value="${$data.SpotDetail.Tel}" data-value="/SpotDetail/Tel">
-		  			</div>
+					  <input class="input-group-addon" id="phone" type="text" value="${$data.SpotDetail.zoneCode}" data-value="/SpotDetail/zoneCode" style="width: 40px; float: left; height: 34px; padding: 0;" placeholder="区号">
+					  <input type="text" class="form-control" aria-describedby="phone" value="${$data.SpotDetail.tel}" data-value="/SpotDetail/tel" >
+					</div>
 		      	</div>
 			</div>
 			<div class="form-group">
@@ -147,7 +147,6 @@
 		<textarea name="" id="" data-value="/SpotDetail/Description" placeholder="可输入1200字">${$data.SpotDetail.Description}</textarea>
 		<div class="optionBtn">
 			<button id="save" class="btn btn-warning">保存</button>
-			<button id="publish" class="btn btn-warning">发布 </button>
 		</div>
 	</div>
 	<!-- 须知信息结束 -->

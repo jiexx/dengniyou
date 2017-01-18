@@ -31,7 +31,14 @@
 
     <div class="buttons">
       <button id="delete" type="button" class="btn btn-default">删除</button>
+      <!--内容状态（0草稿1发布）-->
+      {{if Travelogue[0].STATUS == 0}}
+      <button id="publish" type="button" data-status="1" class="btn btn-default">发布</button>
+      {{/if}}
+      {{if Travelogue[0].STATUS == 1}}
+      <button id="publish" type="button" data-status="0" class="btn btn-default">隐藏</button>
+      {{/if}}
       <a id="edit" type="button" class="btn btn-warning" href="#/travelogueedit?articleID=${Travelogue[0].articleID}">编辑</a>
     </div>
-  </div> <!-- end container-box -->articleID=${articleID}
+  </div> <!-- end container-box -->
 </div> <!-- end container -->

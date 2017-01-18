@@ -20,13 +20,12 @@
 		    <label for="" class="col-sm-2 col-md-1 control-label">服务类型</label>
 		    <div class="col-sm-10 col-md-11">
 		    	<select name="" id="ServiceTypeChoice" class="form-control" >
-		    		{{if $data.DetailMain.serviceTypeName=='接机'}}
-		    		<option value="" selected>接机</option>		    		
-		    		<option value="">送机</option>
-		    		{{/if}}
 		    		{{if $data.DetailMain.serviceTypeName=='送机'}}
 		    		<option value="" >接机</option>		    		
 		    		<option value="" selected>送机</option>
+		    		{{else}}
+		    		<option value="" selected>接机</option>		    		
+		    		<option value="">送机</option>
 		    		{{/if}}
 		    	</select>
 		        <input type="hidden" class="form-control" id="ServiceTypeName" value="${$data.DetailMain.serviceTypeName}"  data-value="/DetailMain/serviceTypeName">
@@ -115,7 +114,10 @@
 	<div class="baseInfo airportInfo">
 		<h4>机场信息</h4>
 		<form class="form-horizontal">
+		<ul>
 		{{each DetailMain.airports}}
+		<li style="position: relative; list-style: none;">
+		<a class="glyphicon glyphicon-remove-circle deleteAirport" style="right: 25%; z-index: 99;"></a>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">机场代码</label>
 		    <div class="col-sm-10 col-md-11">
@@ -135,7 +137,9 @@
 		    </div> 
 		  </div>
 		  <hr>
+		</li>
 		{{/each}}
+		</ul>
 		</form>			
 		<div class="row textRight">
 			<div class="col-sm-10 col-md-8">

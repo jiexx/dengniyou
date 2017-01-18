@@ -1,0 +1,9 @@
+{
+	"TravelogueStatus": {
+		"sql": "update traveluserdb.tab_travelarticle set Status=?,UpdateDate=NOW() where ArticleID=?",
+		"params": [
+			"STATUS",
+			"articleID"
+		]
+	}
+}
