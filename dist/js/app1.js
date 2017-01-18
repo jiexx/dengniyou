@@ -810,6 +810,7 @@
             if(item && item.CityID > 0) {
                 var data = {PlanInfo: e.data.PlanInfo};
                 data.PlanInfo.StartCityID = item.CityID;
+                data.PlanInfo.StartCity = item.CityNameCn;
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 var usr = $.rogerGetLoginUser();
                 if(data.PlanInfo.CreateUserID == usr.UserID) {

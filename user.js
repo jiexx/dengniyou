@@ -64,7 +64,7 @@ var _filter = {
         });
     },
     errCaptchaEmpty: function (item, callback) {
-        if (!captcha) {
+        if (!item.captcha) {
             callback(true, '验证码不能为空');
         }else {
             callback(false);

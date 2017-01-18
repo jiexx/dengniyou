@@ -466,6 +466,7 @@
                 if (!Plan.PlanInfo.PlanID) {
                     var data = {PlanInfo: e.data.PlanInfo};
                     data.PlanInfo.StartCityID = item.CityID;
+                    data.PlanInfo.StartCity = item.CityNameCn;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
                         $.rogerNotice({Message: '模板方案成功'});
@@ -477,6 +478,7 @@
                     $.rogerPost('/delete/plan', {PlanID: Plan.PlanInfo.PlanID}, function (respJSON) {
                         var data = {PlanInfo: e.data.PlanInfo};
                         data.PlanInfo.StartCityID = item.CityID;
+                        data.PlanInfo.StartCity = item.CityNameCn;
                         data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                         $.rogerPost('/new/tmpplan', data, function (respJSON) {
                             $.rogerNotice({Message: '模板方案发布成功'});
