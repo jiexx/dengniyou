@@ -154,7 +154,7 @@
             PlanInfo:{
                 PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:policy1,CostInclude:policy2,
                 CostExclude:policy3,VisaNotice:policy4,Notice:policy5,CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
-
+                UserPlan:{UserID:usr.UserID},
                 Picture: {
                     Pics: []
                 },
@@ -210,7 +210,7 @@
             PlanInfo:{
                 PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:null,Policy:policy1,CostInclude:policy2,
                 CostExclude:policy3,VisaNotice:policy4,Notice:policy5,CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
-
+                UserPlan:{UserID:usr.UserID},
                 Picture:{
                     Pics:[]
                 },

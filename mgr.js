@@ -237,17 +237,17 @@ app.post('/new/service/car', upload.array(), function(req, res) {
 
 app.post('/login', upload.array(), function(req, res) {
     if( req.body.loginName[0] && req.body.loginName[0].length > 0) {
-        user.login(req.body.loginName[0], req.body.loginPass[0], function (err, msg) {
+        user.login({name:req.body.loginName[0], pwd:req.body.loginPass[0]}, function (err, msg) {
             res.send(JSON.stringify({error:err,message:msg}));
         })
     }
     else if(req.body.loginName[1] && req.body.loginName[1].length > 0){
-        user.registe(req.body.loginName[1], req.body.loginPass[1], req.body.captcha[0], function (err, msg) {
+        user.registe({name:req.body.loginName[1], pwd:req.body.loginPass[1], captcha:req.body.captcha[0], area:req.body.loginArea[1]}, function (err, msg) {
             res.send(JSON.stringify({error:err,message:msg}));
         })
     }
     else if(req.body.loginName[2] && req.body.loginName[2].length > 0){
-        user.captchaLogin(req.body.loginName[2], req.body.captcha[1], function (err, msg) {
+        user.captchaLogin({name:req.body.loginName[2], captcha:req.body.captcha[1]}, function (err, msg) {
             res.send(JSON.stringify({error:err,message:msg}));
         })
     }
