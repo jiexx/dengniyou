@@ -99,22 +99,28 @@
             <h5 class="list-group">产品信息</h5>
             <div id="menu" class="list-group">
                 <span class="text-warning">产品类型 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/spcialplan" >特色方案</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/classicplan" >经典方案</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/service" >服务</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/activiy" >活动</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/car" >租车</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/attraction" >景点</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/delicacy" >美食</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/accommodation" >住宿</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer"><div  data-href="#/facilitylist" >装备</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/spcialplan" >特色方案</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/classicplan" >经典方案</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/service" >服务</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/activiy" >活动</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/car" >租车</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/attraction" >景点</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/delicacy" >美食</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/accommodation" >住宿</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/facilitylist" >装备</div></label>
             </div>
-            <div id="filter" class="list-group">
+            <div id="filter" class="list-group" style="display: none;">
                 <span class="text-warning">产品状态 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" name="optradio">全部</label>
-                <label class="radio-inline"><input type="radio" name="optradio">已发布</label>
-                <label class="radio-inline"><input type="radio" name="optradio">已加入</label>
-                <label class="radio-inline"><input type="radio" name="optradio">定制中</label>
+                <label class="radio-inline"><input type="radio" name="filterradio">全部</label>
+                <label class="radio-inline"><input type="radio" name="filterradio">已发布</label>
+                <label class="radio-inline"><input type="radio" name="filterradio">已加入</label>
+                <label class="radio-inline"><input type="radio" name="filterradio">定制中</label>
+            </div>
+            <div id="filter2" class="list-group"  style="display: none;">
+                <span class="text-warning">产品状态 <i>|</i></span>
+                <label class="radio-inline"><input type="radio" name="filterradio">全部</label>
+                <label class="radio-inline"><input type="radio" name="filterradio">已发布</label>
+                <label class="radio-inline"><input type="radio" name="filterradio">草稿</label>
             </div>
             <!-- <div id="menu2" class="list-group">
                 <span class="text-warning">临时编辑 <i>|</i></span>
@@ -139,13 +145,22 @@
   </div> <!-- end dashboard-page -->
 	<script>
 	  $(document).ready(function() {
-		$('#app').rogerGo();
-          $("#menu label a").click(function (e) {
+      $("#menu label input").on('change',function (e) {
+        if($(this).val() == '0'){
+          $('#filter').show();
+          $('#filter2').hide();
+        }else if($(this).val() == '1'){
+          $('#filter').hide();
+          $('#filter2').show();
+        }
+      });
 
-              href = $(this).data("href");
-              var usr =$.rogerGetLoginUser();
-              $.rogerLocation(href+"?UserID="+usr.UserID);
-          });
+		  $('#app').rogerGo();
+      $("#menu label a").click(function (e) {
+          href = $(this).data("href");
+          var usr =$.rogerGetLoginUser();
+          $.rogerLocation(href+"?UserID="+usr.UserID);
+      });
 	  });
 	</script>
   </div>

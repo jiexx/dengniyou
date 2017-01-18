@@ -208,17 +208,17 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .feature .text{ padding-top: 5px;}
 .plandetail-page .scheduleDetails ul li h3 { height: 45px; line-height: 45px; border-top: 2px solid #00b8ee; border-bottom: 1px solid #00b8ee; text-align: left; text-indent: 20px; margin-top: 0; margin-bottom: 0;}
 .plandetail-page .scheduleDetails li .content { padding: 15px 55px; width: 100%; background-color: #fff;}
-.plandetail-page .scheduleDetails .content li { width: 290px; height: 200px; float: left; overflow: hidden; }
-.plandetail-page .scheduleDetails .content li:nth-child(4n){ width: 150px; }
-.plandetail-page .scheduleDetails .content li:last-child .nextBtn{ display: none; }
+.plandetail-page .scheduleDetails .content li { width: 210px; float: left; overflow: hidden; }
+.plandetail-page .scheduleDetails .content li:nth-child(5n){ width: 150px; }
+.plandetail-page .scheduleDetails .content li:nth-child(5n) .nextBtn,.plandetail-page .scheduleDetails .content li:last-child .nextBtn{ display: none; }
 .plandetail-page .scheduleDetails .content .picText img { height: 100px; width: 150px; }
 .plandetail-page .scheduleDetails .content .picText, .scheduleDetails .content .nextBtn { float: left; }
-.plandetail-page .scheduleDetails .content .nextBtn { margin: 0 40px; }
 .plandetail-page .scheduleDetails .content .picText { width: 150px; }
 .plandetail-page .scheduleDetails .content strong{display: block; height: 16px; line-height: 16px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 .plandetail-page .scheduleDetails .content p{margin-bottom: 0;}
 .plandetail-page .scheduleDetails .content .des{word-break: break-all; text-overflow: ellipsis; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;}
-.plandetail-page .scheduleDetails .content .nextBtn span { font-size: 60px; height: 150px; line-height: 150px; color: #00b8ee; }
+.plandetail-page .scheduleDetails .content .fa{color:#999; cursor: pointer;}
+.plandetail-page .scheduleDetails .content .nextBtn span { font-size: 50px; height: 150px; line-height: 150px; color: #00b8ee; margin:0 5px;}
 .plandetail-page .scheduleDetails .footer, .comments .footer { height: 44px; background-color: #00b8ee; color: #fff; text-align: center; font-size: 16px; line-height: 46px; }
 /*行程概览结束*/
 /*上传图片功能自定义样式*/

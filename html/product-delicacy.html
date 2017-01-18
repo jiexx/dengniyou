@@ -11,7 +11,8 @@
 	</div> <!-- end  美食列表页头部row -->
 	<!-- 美食列表开始 -->
 	<div class="list-group service-list">
-		{{each Attraction}}
+		{{each(i,att) Attraction}}
+		{{if i==0}}
 		<div class="list-group-item clearfix disabled">
 			<div class="col-md-1"></div>
 			<div class="col-md-5 service-name">我的美食方案</div>
@@ -20,6 +21,7 @@
 			<div class="col-md-2 ">发布状态</div>
 			<div class="col-md-1 ">编辑</div>
 		</div>
+		{{/if}}
 		<div class="list-group-item clearfix btn-group">
 			<div class="col-md-1"><input type="radio" name="optradio"></div>
 			<div class="col-md-5 ">
