@@ -118,9 +118,9 @@
             </div>
             <div id="filter2" class="list-group"  style="display: none;">
                 <span class="text-warning">产品状态 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" name="filterradio">全部</label>
-                <label class="radio-inline"><input type="radio" name="filterradio">已发布</label>
-                <label class="radio-inline"><input type="radio" name="filterradio">草稿</label>
+                <label class="radio-inline"><input type="radio" value = "all" name="filterradio">全部</label>
+                <label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>
+                <label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>
             </div>
             <!-- <div id="menu2" class="list-group">
                 <span class="text-warning">临时编辑 <i>|</i></span>
@@ -145,22 +145,16 @@
   </div> <!-- end dashboard-page -->
 	<script>
 	  $(document).ready(function() {
-      $("#menu label input").on('change',function (e) {
-        if($(this).val() == '0'){
-          $('#filter').show();
-          $('#filter2').hide();
-        }else if($(this).val() == '1'){
-          $('#filter').hide();
-          $('#filter2').show();
-        }
-      });
-
-		  $('#app').rogerGo();
+      $('#app').rogerGo();
       $("#menu label a").click(function (e) {
           href = $(this).data("href");
           var usr =$.rogerGetLoginUser();
           $.rogerLocation(href+"?UserID="+usr.UserID);
       });
+
+      
+      
+		  
 	  });
 	</script>
   </div>

@@ -6,6 +6,8 @@
     var policy5 = '1  因游客擅自行动走失，发生事故等产生的费用由游客自行承担；\r\n2  如遇不可预见的事件，如堵车，交通事故等，导游与游客商定可临时合理更改行程，并继续旅程，由此产生的加班费用和超程费用由游客承担；\r\n3  旅客不可要求导游进行违反交通规则、法律、当地风俗的活动，如旅客有违规、违法行为倾向导游须劝阻，劝阻无效则报警处理；\r\n4  导游不可强制旅客参与购物活动或参加自费项目，约定行程外项目需取得旅客同意；\r\n5  原则上导游与游客共进正餐（午餐和晚餐），费用由游客支付，缺少正餐时游客应支付缺餐补助；\r\n6  如导游陪同游客游览景点，游客需为导游支付门票费用。';
     function bindRidoesForSwitch (){
         var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
+
+        var url ="";
         if(!ev || !ev.change) {
             $('#menu input[type=radio][name="optradio"]').unbind().change(function(e){
                 var usr = $.rogerGetLoginUser();
@@ -13,10 +15,58 @@
                     $.rogerShowLogin();
                     return;
                 }
-                var url = $(this).next('div').data('href');
-                $.rogerTrigger('#app',url, {UserID:usr.UserID});
+                url = $(this).next('div').data('href');
+                $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:"all"});
             });
         }
+
+        var filter2ev = $._data($('#filter2 input[type=radio][name="filterradio"]')[0], 'events');
+        if(!filter2ev || !filter2ev.change) {
+            $('#filter2 input[type=radio][name="filterradio"]').unbind().change(function(e){
+                var usr = $.rogerGetLoginUser();
+                if(!usr) {
+                    $.rogerShowLogin();
+                    return;
+                }
+                filtertemp = $(this).val();
+                $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
+            });
+
+
+            $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:"all"});
+        }
+
+        var urlPath = $.rogerGetPath();
+          if(urlPath == "#/"){
+            $('#filter').show();
+            $('#filter2').hide();
+          }else if(urlPath.indexOf("#/travelogue") != -1){
+            $('#filter').hide();
+            $('#filter2').show();
+          }
+          $('.nav-sidebar li').on('click',function(){
+            var urlPath = $.rogerGetPath();
+            console.log(33,urlPath);
+            if(urlPath == "#/" || urlPath == "" ){
+              $('#filter').show();
+              $('#filter2').hide();
+            }else if(urlPath.indexOf("#/travelogue") != -1){
+              $('#filter').hide();
+              $('#filter2').show();
+            }
+          });
+
+      $("#menu label input").on('change',function (e) {
+        if($(this).val() == '0'){
+          $('#filter').show();
+          $('#filter2').hide();
+        }else if($(this).val() == '1'){
+          $('#filter').hide();
+          $('#filter2').show();
+        }
+      });
+
+        
         $('#usercenter').rogerOnceClick2(null, function () {
             var user = $.rogerGetLoginUser();
             if(!user) {
@@ -573,7 +623,7 @@
         });
 
         $('#edit').rogerOnceClick(response, function (e) {
-                temp = e.data.SpotDetail[0];
+                    temp = e.data.SpotDetail[0];
                 $.rogerLocation('#/accommodationedit?SpotsID='+temp.SpotsID+"&spotType=3");
             }
         );
@@ -1175,7 +1225,7 @@
                      {
                        policyType: 3,
                        policyID: '',
-                       policyName: '费用不包含9999',
+                       policyName: '费用不包含',
                        serviceTypeID: '',
                        day1: '',
                        ratio1: '',

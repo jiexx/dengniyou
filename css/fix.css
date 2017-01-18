@@ -118,7 +118,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 	/* end 首页搜索框*/
 
 	/*跑马灯推荐区*/
-.solution{max-width: 1200px; height: 106px; margin:0 auto 30px; padding-top:30px; overflow: hidden; position: relative; }
+.solution{max-width: 1200px; height: 106px; margin:0 auto; padding-top:14px; overflow: hidden; position: relative; }
 /*.solution .box{width:600px; overflow: visible;}*/
 .solution .box ul{display: inline-block; width:3550px;}
 .solution li {display: inline-block; width:335px; margin-right: 10px;}

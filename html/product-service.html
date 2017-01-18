@@ -16,6 +16,9 @@
 		</div><!-- end 下拉菜单部分 -->
 	</div> <!-- end  服务列表页头部row -->
 	<!-- 服务列表开始 -->
+	{{if Service == 0}}
+	暂无数据
+	{{else}}
 	<div class="list-group service-list">
 	  	<div class="list-group-item clearfix disabled">
 		  	<div class="col-md-1"></div>
@@ -76,6 +79,7 @@
 		</div>
 		{{/each}}
 	</div><!-- end list-group -->
+	{{/if}}
 </div><!-- end container -->
 
 <!-- 页码 -->
