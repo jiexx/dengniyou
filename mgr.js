@@ -290,7 +290,7 @@ app.get('/talk', function (req, res) {
 });
 
 app.post('/sms/get', function (req, res) {
-    user.getCaptcha(req.body.mobile, function (err, msg) {
+    user.getCaptcha({name:req.body.mobile}, function (err, msg) {
         res.send(JSON.stringify({error:err, message:msg}));
     });
 });

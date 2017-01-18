@@ -7,9 +7,7 @@ $(function () {
 		options.async = true;
 	});
     $(window).on("popstate", function(e) {
-        if(e.originalEvent.state === null) {
-            $.rogerLocation('#/');
-        } else {
+        if(e.originalEvent.state) {
             $.rogerLocation(e.originalEvent.state.url);
         }
     });

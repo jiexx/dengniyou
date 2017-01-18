@@ -3,8 +3,8 @@
   <div class="container">
     <br>
     <div class="plandetail-page">
+      <h1 class="custom-title">${$data.PlanInfo.PlanName}</h1>
       <div>
-
         <div class="row plandetail-main">
           <div class="col-md-12  ">
             <div class="scheduleBox">
@@ -53,11 +53,11 @@
                 <ul>
                   {{each(k,day) $data.PlanInfo.PlanSchedule}}
                   <li id="day01">
-                    <h3 class="day">第${k}天</h3>
+                    <h3 class="day">第${k+1}天</h3>
                     <div class="content">
                       <ul class="clearfix">
                         {{each  day.Spot}}
-                        <li style="width:350px">
+                        <li>
                           <div class="picText">
                             {{if ScheduleType == 0  }}
                             {{if SpotPicUrl == null }}<img src="../img/CityIcon.png" alt="">{{/if}}
@@ -97,11 +97,9 @@
 
           </div>
         </div> <!-- end plandetail-main -->
-        <div class="notice">
-          <div class="optionBtn">
+        <div class="plandetail-bottom">
             <a href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo.PlanID}"  class="btn btn-warning">编辑</a>
             <button id="send" class="btn btn-warning">发送</button>
-          </div>
         </div>
 
       </div>
