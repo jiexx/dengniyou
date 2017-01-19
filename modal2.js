@@ -411,13 +411,14 @@ var roger = {
 								}else {
                             		left.push({fileid:d[j],index:pos, row:j});
 								}
+
                             }
                         }else if('string' == typeof d){
                             //files.push(d);
                             if(d.indexOf('data:image')>-1) {
                                 files.push({base64: d, index: pos, row: 0});
                             }else {
-                                left.push({fileid:d[j],index:pos, row:0});
+                                left.push({fileid:d,index:pos, row:0});
                             }
                         }
 					}/*else {
