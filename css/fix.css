@@ -555,8 +555,9 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*包车、接机、活动预览*/
 .detailpage .vihicle-list .vihicle-listbody{ padding: 0 10px;}
 .detailpage .vihicle-list ul> li img{display: block; margin: 0 auto; max-width: 95%;}
-.detailpage .vihicle-list h2{font-size: 16px; color: #333; border-bottom: 1px solid #ccc; padding: 10px 0; }
-.detailpage .vihicle-list>p{text-align: center; font-size: 14px; color: #666; margin-top: 26px;}
+.detailpage .vihicle-list h2{font-size: 16px; color: #333; border-bottom: 1px solid #ccc; padding: 10px 20px; }
+.detailpage .vihicle-list .col-md-3{padding-left: 50px;}
+.detailpage .vihicle-list p{text-align: left; font-size: 14px; color: #666; margin-top: 26px; }
 .detailpage .detailpage-mainbody .price-box p{font-size: 14px;}
 /*end 包车、接机、活动预览*/
 /*攻略预览*/

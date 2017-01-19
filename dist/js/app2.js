@@ -769,6 +769,13 @@
     };
 
     var ctrlServicedetail = function (response, realView) {
+        // 车辆与装备轮播图初始化
+        $('.vmcarousel-centered-infitine').vmcarousel({
+           centered: true,
+           start_item: 1,
+           autoplay: false,
+           infinite: true
+        });   
         var usr = $.rogerGetLoginUser();
 
         $('#release').rogerOnceClick(response, function (e) {
@@ -828,7 +835,11 @@
                 temp = e.data.DetailMain[0];
                 $.rogerPost('/delete/service', {ServiceId:temp.serviceID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
-                    $.rogerLocation('#/service'+"?UserID="+usr.UserID);
+                    if (temp.serviceTypeID == 6) {
+                        $.rogerLocation('#/activiy'+"?UserID="+usr.UserID);
+                    }else{
+                        $.rogerLocation('#/service'+"?UserID="+usr.UserID);
+                    }
                 });
             }
         });
@@ -864,10 +875,11 @@
 
     var ctrlTravelogueDetail = function(response, realView) {
 
+        var user = $.rogerGetLoginUser();
         $('#publish').rogerOnceClick(response, function(e){
             temp = e.data.Travelogue[0];
             var status = $('#publish').data("status")
-            $.rogerPost('/update/travellogue/status', {articleID:temp.articleID,STATUS:status}, function(respJSON){
+            $.rogerPost('/update/travelogue/status', {articleID:temp.articleID,STATUS:status}, function(respJSON){
                 $.rogerNotice({Message:'发布攻略成功'});
                 if(respJSON){
                     //跳转到详情页面
@@ -876,6 +888,17 @@
             });
         });
 
+        $('#delete').rogerOnceClick(response, function(e){
+            temp = e.data.Travelogue[0];
+            var status = $('#publish').data("status")
+            $.rogerPost('/delete/travelogue', {articleID:temp.articleID}, function(respJSON){
+                $.rogerNotice({Message:'删除攻略成功'});
+                if(respJSON){
+                    //跳转到详情页面
+                    $.rogerLocation('#/travelogue?UserID='+user.UserID+'&page=1');
+                }
+            });
+        });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -892,6 +915,20 @@
             data.CountryName=country[1];
             data.CityID=city[0];
             data.CityName=city[1];
+            $.rogerRefresh(e.data.Plan);
+        });
+    };
+    var ctrlCityChooser4 = function (PS, realView) {
+        $('#cityChooser').modal('show');
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data.Plan.DetailMain.houseInfo;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
+            $('#cityChooser').modal('hide');
+            data.countryID=country[0];
+            data.countryNameCn=country[1];
+            data.cityID=city[0];
+            data.cityNameCn=city[1];
             $.rogerRefresh(e.data.Plan);
         });
     };
@@ -1770,11 +1807,40 @@
 
                 if(respJSON){
                     //跳转到详情页面
-                    $.rogerLocation('#/serviceotherdetail?ServiceID='+respJSON.ServiceID);
+                    $.rogerLocation('#/servicepickupdetail?ServiceID='+respJSON.ServiceID);
                 }
 
             });
 
+        });
+
+        tmplItem.createCity = function (tmplItem) {
+            $.rogerTrigger('#modal', '#/citychooser4', {Spots:tmplItem});
+        };
+        //其他服务
+        if ($('#ServiceTypeName').val() == '民宿') {
+                $('#minsuInfo').show();
+            }else {
+                $('#minsuInfo').hide();
+            }
+        $('#ServiceTypeChoice').on('click','input',function(){
+            var ServiceTypeId = $(this).val();
+            var ServiceTypeName = $(this).next().text();
+            $('#ServiceTypeId').val(ServiceTypeId).trigger('keyup');
+            $('#ServiceTypeName').val(ServiceTypeName).trigger('keyup');
+            if (ServiceTypeName == '民宿') {
+                $('#minsuInfo').show();
+            }else {
+                $('#minsuInfo').hide();
+            }
+        });
+
+        $('#PriceTypeChoice').on('click','input[type="radio"]',function(){
+            var PriceType = $(this).val();
+            $('#PriceType').val(PriceType).trigger('keyup');
+            if(PriceType == '2'){
+                $('#primaryPrice').val('').trigger('keyup');
+            }            
         });
 
         $('#saveOther').rogerOnceClick(tmplItem, function(e){
@@ -1785,7 +1851,9 @@
 
             temp["userID"]=usr.UserID;
             temp["unit"]='天';
+            if(temp["priceType"] == '' || !temp["priceType"] ){
             temp["priceType"]='1';
+            }
             temp["serviceStatus"]='3';
             if(temp["pictureIDs"]){
                 temp["pictureIds"]=temp["serviceID"];
@@ -1829,7 +1897,7 @@
 
                 if(respJSON){
                     //跳转到详情页面
-                    $.rogerLocation('#/servicecardetail?ServiceID='+respJSON.ServiceID);
+                    $.rogerLocation('#/serviceotherdetail?ServiceID='+respJSON.ServiceID);
                 }
 
             });
@@ -2016,13 +2084,27 @@
                 Travelogue:temp,
                 IMGHOST:e.data.IMGHOST
             };
-            $.rogerPost('/new/travellogue', data, function(respJSON){
-                $.rogerNotice({Message:'保存攻略成功'});
-                if(respJSON){
-                    //跳转到详情页面
-                    $.rogerLocation('#/equipdetail?facilityID='+respJSON.Travelogue.insertId);
-                }
-            });
+
+
+            if(null != temp.articleID && temp.articleID!=''){
+                $.rogerPost('/update/travellogue', data, function(respJSON){
+                    $.rogerNotice({Message:'更新攻略成功'});
+                    if(respJSON){
+                        //跳转到详情页面
+                        $.rogerLocation('#/traveloguedetail?articleID='+temp.articleID);
+                    }
+                });
+            } else{
+                $.rogerPost('/new/travellogue', data, function(respJSON){
+                    $.rogerNotice({Message:'保存攻略成功'});
+                    if(respJSON){
+                        //跳转到详情页面
+                        $.rogerLocation('#/traveloguedetail?articleID='+respJSON.Travelogue.insertId);
+                    }
+                });
+            }
+
+
         });
 
 
@@ -2102,17 +2184,29 @@
 
             temp = e.data.Facility;
 
-            picURLs=[];
+            picURLsData=[];
+            picURLsID=[];
             for(key in temp.pics) {
-                picURLs.push({isCover:2,picUrl:temp.pics[0],facilityID:temp["facilityID"]});
+                if(temp.pics[key].indexOf("data:image/jpeg;base64") !=-1){
+                    picURLsData.push({isCover:2,picUrl:temp.pics[key],facilityID:temp["facilityID"]});
+                } else {
+                    picURLsID.push({isCover:2,picUrl:temp.pics[key],facilityID:temp["facilityID"]});
+                }
+
             }
 
             if(null !=temp["coverURL"] && temp["coverURL"].length>0){
-                picURLs.push({isCover:1,picUrl:temp["coverURL"],facilityID:temp["facilityID"]});
+                if(temp["coverURL"].indexOf("data:image/jpeg;base64") !=-1){
+                    picURLsData.push({isCover:1,picUrl:temp["coverURL"],facilityID:temp["facilityID"]});
+                } else{
+                    picURLsID.push({isCover:1,picUrl:temp["coverURL"],facilityID:temp["facilityID"]});
+                }
+
             }
 
-            temp["picURLs"] = picURLs;
             temp["deletePicURLs"] = {facilityID:temp.facilityID};
+            temp["picURLs"] = picURLsData;
+            temp["picURLsID"] = picURLsID;
 
             var data = {
                 Facility:temp,
@@ -2210,6 +2304,8 @@
         '#/equipedit':                     {fragment: 'fragment/product-equip-edit.html',              init: initEquipEdit,                                                      ctrl: ctrlEquipEdit},
         '#/orderdetail':                  {view:'payCompletion.html',	                                    rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
         '#/citychooser3':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser3},
+        '#/citychooser4':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser4},
+
     });
 
 

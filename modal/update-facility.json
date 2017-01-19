@@ -23,7 +23,6 @@
 			]
 
 		},
-
 		"picURLs": {
 			"sql": "INSERT INTO traveluserdb.tab_facilitypictures (PictureID,PicURL,IsCover,PicType ) VALUES( ?,?,?,2)",
 			"params": [
@@ -36,6 +35,14 @@
 				"picUrl"
 			]
 
+		},
+		"picURLsID": {
+			"sql": "INSERT INTO traveluserdb.tab_facilitypictures (PictureID,PicURL,IsCover,PicType ) VALUES( ?,?,?,2)",
+			"params": [
+				"facilityID",
+				"picUrl",
+				"isCover"
+			]
 		}
 	}
 }

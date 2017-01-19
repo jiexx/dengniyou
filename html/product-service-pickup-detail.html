@@ -1,25 +1,4 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-  <head>
-    <meta charset="utf-8">
-    <title>接机预览页</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="renderer" content="webkit">
-    
-    <link rel="stylesheet" href="css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="../css/fix.css">
 
-    <!--[if lt IE 9]>  
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>  
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>  
-    <![endif]-->
-
-  <!-- 车辆与装备轮播图css --> 
-  <link rel="stylesheet" href="dist/js/detail/jquery.vm-carousel.css">
-
-  </head>
-<body>
   <div class="container">
     <div class="detailpage">
       <ol class="col-md-4 pull-right breadcrumb">
@@ -70,34 +49,45 @@
 
         <div class="row product-detail price-detail">
           <h2>商品详情</h2>
-          <div class="col-md-3">
-            <p>包含里程：<span>${DetailMain[0].incMileage}</span>km/天</p>
-          </div>
-          <div class="col-md-3">
-            <p>额外里程：<span>${DetailMain[0].exMileagePrice}</span>元/km</p>
+          <div class="col-md-2">
+            <p>包含里程：<span>${DetailMain[0].incMileage}</span>公里</p>
           </div>
           <div class="col-md-2">
-            <p>延误等待：<span>${DetailMain[0].freeForDelay}</span>/h</p>
+            <p>额外里程价格：<span>${DetailMain[0].exMileagePrice}</span>元/公里</p>
           </div>
           <div class="col-md-2">
-            <p>等待超时：<span>${DetailMain[0].waitOutTimePrice}</span>元/h</p>
+            <p>免费等待时间：<span>${DetailMain[0].freeForDelay}</span>/h</p>
           </div>
           <div class="col-md-2">
-            <p>服务方式：<span>{{each(i,p) DetailServiceMethod[0]}} {{if p.checked==1}} ${p.methodName} {{/if}} {{/each}}</span></p>
+            <p>额外时长价格：<span>${DetailMain[0].waitOutTimePrice}</span>元/h</p>
+          </div>
+          <div class="col-md-2">
+            <p>服务方式：<span>{{if DetailMain[0].serviceMethod==2}}无忧等候{{else DetailMain[0].serviceMethod==4}}即停即走{{else DetailMain[0].serviceMethod==3}}举牌等候{{else DetailMain[0].serviceMethod==5}}即停即走{{/if}}</span></p>
           </div>
         </div> <!-- end 商品详情product-detail -->
 
         <div class="vihicle-list">
           <h2>机场详情</h2>
-          <p>${Airports[0].AirportCode} <span>${Airports[0].NameCh}</span> <br> <span>${Airports[0].NameEn}</span></p>
-          <div class="vihicle-listbody">
-            <ul class="vmcarousel-centered-infitine vmc-centered">
-            暂无图片
-              <!-- {{each(i,p) Airports[0]}}
-              <li style="width:250px"><img src="${$data.IMGHOST}${p}" alt=""></li>
-              {{/each}} -->
-            </ul> 
+          {{each(i,p) Airports}}
+          <div class="row">
+            <div class="col-md-3">
+              <p>机场代码：<span>${Airports[i].AirportCode}</span></p>
+            </div>
+            <div class="col-md-3">
+              <p>机场名称：<span>${Airports[i].NameCh}</span></p>
+            </div>
+            <div class="col-md-3">
+              <p>英文名称：<span>${Airports[i].NameEn}</span></p>
+            </div>
           </div>
+          {{/each}}
+          <!-- <div class="vihicle-listbody">暂无图片
+            <ul class="vmcarousel-centered-infitine vmc-centered">
+              {{each(i,p) Airports[0]}}
+              <li style="width:250px"><img src="${$data.IMGHOST}${p}" alt=""></li>
+              {{/each}}
+            </ul> 
+          </div> -->
         </div><!-- end 车辆轮播图vihicle-list -->
         
         <div class="service-description">
@@ -110,32 +100,43 @@
         </div><!-- end 服务描述service-description -->
 
         <div class="policy">
-          {{each(i,p) Policy}}
-            {{if p.PolicyType==1}}
-	            <h2>退订政策</h2>
-	            <div class="des">
-	              <p>${p.Description}</p>
-	            </div>
-	          {{/if}}
-	          {{if p.PolicyType==2}}
-	            <h2>费用包含</h2>
-	            <div class="des">
-	              <p>${p.CustomRatio}</p>
-	            </div>
-	          {{/if}}
-	          {{if p.PolicyType==3}}
-	            <h2>费用不包含</h2>
-	            <div class="des">
-	              <p>${p.CustomRatio}</p>
-	            </div>
-	          {{/if}}
-	          {{if p.PolicyType==4}}
-	            <h2>预定须知</h2>
-	            <div class="des">
-	              <p>${p.Caution}</p>
-	            </div>
-	          {{/if}}
-	        {{/each}}
+        {{each(i,p) Policy}}
+          {{if p.policyType==1}}
+          {{if p.type==4}}
+          <h2>${p.policyName}</h2>
+          <div class="des">
+          <p>${p.description}</p>
+          </div>
+          {{else}}
+          <h2>${p.policyName}</h2>
+          <div class="des">
+            <p>1、服务开始前${p.day1}天(含)以上退订，退还服务费用的${p.ratio1*100}%；</p>
+            <p>2、服务开始前${p.day2}天(含)至${p.day1}天退订，退还服务费用的${p.ratio2*100}%；</p>
+            <p>3、服务开始前${p.day3}天(含)至${p.day2}天退订，退还服务费用的${p.ratio3*100}%；</p>
+            <p>4、服务开始前${p.day3}天以内退订，不退还服务费用；</p>
+            <p>5、${p.description}</p>
+          </div>
+          {{/if}}
+          {{/if}}
+          {{if p.policyType==2}}
+          <h2>${p.policyName}</h2>
+          <div class="des">
+            <p>${p.customRatio}</p>
+          </div>
+          {{/if}}
+          {{if p.policyType==3}}
+          <h2>${p.policyName}</h2>
+          <div class="des">
+            <p>${p.customRatio}</p>
+          </div>
+          {{/if}}
+          {{if p.policyType==4}}
+          <h2>预订须知</h2>
+          <div class="des">
+            <p>${p.caution}</p>
+          </div>
+          {{/if}}
+        {{/each}}
         </div>
       </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
@@ -153,20 +154,6 @@
     </div><!-- end container-box -->
   </div> <!-- end container -->
 
-    <script src="js/jquery-1.11.3.min.js"></script>
-    <script src="js/bootstrap.min.js"></script>
-
-  <!-- 车辆轮播图JS --> 
-    <script type="text/javascript" src="dist/js/detail/jquery.vm-carousel.js"></script> 
     <script type="text/javascript">
-        // 车辆与装备轮播图初始化
-        $('.vmcarousel-centered-infitine').vmcarousel({
-           centered: true,
-           start_item: 1,
-           autoplay: false,
-           infinite: true
-        });   
+        
     </script>
-  </body>
- 
-</html>

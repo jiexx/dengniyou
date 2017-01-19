@@ -32,22 +32,22 @@
 				  {{if $data.DetailMain.serviceTypeName=='民宿'}}<input type="radio" name="serviceType" id="" value="7" checked>  <span>民宿</span>{{else}}<input type="radio" name="serviceType" id="" value="7">  <span>民宿</span>{{/if}}
 				</label>
 				<label class="radio-inline">
-				  {{if $data.DetailMain.serviceTypeName=='民宿'}}<input type="radio" name="serviceType" id="" value="118" checked> <span>其他</span>{{else}}<input type="radio" name="serviceType" id="" value="118"> <span>其他</span>{{/if}}
+				  {{if $data.DetailMain.serviceTypeName=='其他'}}<input type="radio" name="serviceType" id="" value="118" checked> <span>其他</span>{{else}}<input type="radio" name="serviceType" id="" value="118"> <span>其他</span>{{/if}}
 				</label>
 		    </div>
-		    <input type="hidden" class="form-control" id="ServiceTypeId"  value="${$data.DetailMain.serviceTypeId}"  data-value="/DetailMain/serviceTypeId">
+		    <input type="hidden" class="form-control" id="ServiceTypeId"  value="${$data.DetailMain.serviceTypeID}"  data-value="/DetailMain/serviceTypeID">
 		    <input type="hidden" class="form-control" id="ServiceTypeName"  value="${$data.DetailMain.serviceTypeName}"  data-value="/DetailMain/serviceTypeName">
 		  </div>
 		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">编辑价格</label>
 		    <div class="col-sm-10 col-md-11" id="PriceTypeChoice">
 		        <div class="form-group">
-				    <label for="" class="col-md-9 control-label" style="text-align: left;"><input type="radio" name="priceType" value="option1" checked style="width:20px;"> <span>自定义价格</span> 
-				    	<input type="text" class="form-control" value="${$data.DetailMain.primaryPrice}"  data-value="/DetailMain/primaryPrice" > 元
+				    <label for="" class="col-md-9 control-label" style="text-align: left;">{{if DetailMain.priceType == '1'}}<input type="radio" name="priceType" value="1" checked style="width:20px;">{{else}}<input type="radio" name="priceType" value="1" style="width:20px;">{{/if}}<span>自定义价格</span> 
+				    	<input type="text" id="primaryPrice" class="form-control" value="${$data.DetailMain.primaryPrice}"  data-value="/DetailMain/primaryPrice" > 元
 				    </label>
 				</div>
 				<div class="form-group">
-				    <label for="" class="col-md-9 control-label" style="text-align: left;"><input type="radio" name="priceType" value="option1" style="width:20px;"> <span>游客咨询报价</span></label>	
+				    <label for="" class="col-md-9 control-label" style="text-align: left;">{{if DetailMain.priceType == '2'}}<input type="radio" name="priceType" value="2" style="width:20px;" checked>{{else}}<input type="radio" name="priceType" value="2" style="width:20px;">{{/if}}<span>游客咨询报价</span></label>	
 				</div>
 		    </div>
 		    <input type="hidden" class="form-control" id="PriceType"  value="${$data.DetailMain.priceType}"  data-value="/DetailMain/priceType">
@@ -127,7 +127,9 @@
 				  <div class="form-group">
 				    <label for="" class="col-sm-4 col-md-3 control-label">所在城市</label>
 				    <div class="col-sm-8 col-md-9">
-				      <input type="text" class="form-control" value="${$data.DetailMain.houseInfo.cityNameCn}" data-value="/DetailMain/houseInfo/cityNameCn" placeholder="请输入">
+					    <div class="col-sm-5" style="padding-left: 0"><input type="text" class="form-control" value="${$data.DetailMain.houseInfo.countryNameCn}" data-value="/DetailMain/houseInfo/countryNameCn" style="width: 100%;"></div>
+					    <div class="col-sm-5" style="padding-left: 0"><input type="text" class="form-control" value="${$data.DetailMain.houseInfo.cityNameCn}" data-value="/DetailMain/houseInfo/cityNameCn" style="width: 100%;"></div>
+					    <div class="col-sm-2"><button type="button" class="btn btn-default btn-sm" data-op="change"  data-pointer="/DetailMain/houseInfo" data-action="createCity">选择城市</button></div>
 				    </div>
 				  </div>
 				  <div class="form-group">
@@ -151,7 +153,7 @@
 				{{each $data.DetailMain.picURLs}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img data-src="${$data.IMGHOST}${$data.DetailMain.picURLs[$index]}">
+						<img name="autoPrefix" src="${$data.DetailMain.picURLs[$index]}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/picURLs/${$index}"></a>
 					</div>
 				</div>
@@ -168,7 +170,7 @@
 				{{if $data.DetailMain.coverURL}}
 				<div class="col-md-3">
 					<div class="imgBox">
-						<img data-src="${$data.IMGHOST}${$data.DetailMain.coverURL}">
+						<img name="autoPrefix" src="${$data.DetailMain.coverURL}">
 						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/coverURL" ></a>
 					</div>
 				</div>
@@ -179,7 +181,6 @@
 				{{/if}}
 			</div>
 		</div>
-	</div>
 	<!-- 相册上传结束 -->
 
 	<!-- 须知信息 -->
@@ -191,17 +192,17 @@
 		    <div class="col-sm-10 col-md-11">
 		      <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#policydiv" style="margin-bottom: 8px; background-color: #FF6600; padding: 5px;">请选择退订政策</button>
 			    <div id="policyView">
-					{{if $data.DetailMain.policy[0].type == '4'}}
-						<h3>${$data.DetailMain.policy[0].policyName}</h3>
-						<p>${$data.DetailMain.policy[0].description}</p>
-				    {{else}}
-				    	<h3>${$data.DetailMain.policy[0].policyName}</h3>
-						<p>1、服务开始前${$data.DetailMain.policy[0].day1}天(含)以上退订，退还服务费用的99%；</p>
-						<p>2、服务开始前${$data.DetailMain.policy[0].day2}天(含)以上退订，退还服务费用的50%；</p>
-						<p>3、服务开始前${$data.DetailMain.policy[0].day3}天(含)以上退订，退还服务费用的20%；</p>
-						<p>4、服务开始前${$data.DetailMain.policy[0].day4}天以内退订，不退还服务费用；</p>
-						<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
-					{{/if}}	
+			    {{if $data.DetailMain.policy[0].type == '4'}}
+					<h3>${$data.DetailMain.policy[0].policyName}</h3>
+					<p>${$data.DetailMain.policy[0].description}</p>
+			    {{else}}
+			    	<h3>${$data.DetailMain.policy[0].policyName}</h3>
+					<p>1、服务开始前${$data.DetailMain.policy[0].day1}天(含)以上退订，退还服务费用的99%；</p>
+					<p>2、服务开始前${$data.DetailMain.policy[0].day2}天(含)以上退订，退还服务费用的50%；</p>
+					<p>3、服务开始前${$data.DetailMain.policy[0].day3}天(含)以上退订，退还服务费用的20%；</p>
+					<p>4、服务开始前${$data.DetailMain.policy[0].day4}天以内退订，不退还服务费用；</p>
+					<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
+				{{/if}}				
 			    </div>
 		    </div>
 			<!-- 退订政策弹出框 -->
@@ -284,10 +285,10 @@
 								</div>
 								<div id="policycontent4" class="col-md-10">
 									<h3>自定义的退订政策</h3>
-									<p>1、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day1}" data-value="/DetailMain/Policy/${0}/day1">天(含)以上退订，退还服务费用的99%；</p>
-									<p>2、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day2}" data-value="/DetailMain/Policy/${0}/day2">天(含)以上退订，退还服务费用的50%；</p>
-									<p>3、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day3}" data-value="/DetailMain/Policy/${0}/day3">天(含)以上退订，退还服务费用的20%；</p>
-									<p>4、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day4}" data-value="/DetailMain/Policy/${0}/day4">天以内退订，不退还服务费用；</p>
+									<p>1、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day1}" data-value="/DetailMain/policy/${0}/day1">天(含)以上退订，退还服务费用的99%；</p>
+									<p>2、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day2}" data-value="/DetailMain/policy/${0}/day2">天(含)以上退订，退还服务费用的50%；</p>
+									<p>3、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day3}" data-value="/DetailMain/policy/${0}/day3">天(含)以上退订，退还服务费用的20%；</p>
+									<p>4、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day4}" data-value="/DetailMain/policy/${0}/day4">天以内退订，不退还服务费用；</p>
 									<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
 								</div>
 							</div>
@@ -305,56 +306,36 @@
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/1/customRatio" class="form-control">${$data.DetailMain.policy[1].customRatio}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/1/customRatio" class="form-control">${$data.DetailMain.policy[1].customRatio}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/2/customRatio" class="form-control">${$data.DetailMain.policy[2].customRatio}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/2/customRatio" class="form-control">${$data.DetailMain.policy[2].customRatio}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">预订须知：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/3/caution" class="form-control">${$data.DetailMain.policy[3].caution}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/3/caution" class="form-control">${$data.DetailMain.policy[3].caution}</textarea>
 		    </div>
 		  </div>
 		</form>
 		<div class="optionBtn">
 			<button id="saveOther" class="btn btn-warning">保存</button>
-			<!--<button id="publish" class="btn btn-warning">发布 </button>-->
+			<button id="publish" class="btn btn-warning">发布 </button>
 		</div>
 	</div>
 	<input type="hidden" id="type" data-value="/DetailMain/Policy/0/type"/>
-
+ 
 	<!-- 须知信息结束 -->
 </div>
 
 
 <script>
 	$(function(){
-		if ($('#ServiceTypeName').val() == '民宿') {
-				$('#minsuInfo').show();
-			}else {
-				$('#minsuInfo').hide();
-			}
-		$('#ServiceTypeChoice').on('click','input',function(){
-			var ServiceTypeId = $(this).val();
-			var ServiceTypeName = $(this).next().text();
-			$('#ServiceTypeId').val(ServiceTypeId).trigger('keyup');
-			$('#ServiceTypeName').val(ServiceTypeName).trigger('keyup');
-			if (ServiceTypeName == '民宿') {
-				$('#minsuInfo').show();
-			}else {
-				$('#minsuInfo').hide();
-			}
-		});
-
-		$('#PriceTypeChoice').on('click','input[type="radio"]',function(){
-			var PriceType = $(this).next().text();
-			$('#PriceType').val(PriceType).trigger('keyup');			
-		});
+		
 
 	});
 </script>

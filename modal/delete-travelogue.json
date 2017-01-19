@@ -1,4 +1,14 @@
 {
-	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?  LIMIT 0, 8;",	"params":["UserID"]},
-	"CountOFPlans": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/plan/detail_planinfo`where PlanType= 2 and CreateUserID=?;",	"params":["UserID"]}
+	"DeleteTravelogue": {
+		"sql": "delete from traveluserdb.tab_travelarticle where articleID=?",
+		"params": [
+			"articleID"
+		]
+	},
+	"DeleteTravelogueDetail": {
+		"sql": "delete from traveluserdb.tab_travelarticledetail where articleID=?",
+		"params": [
+			"articleID"
+		]
+	}
 }
