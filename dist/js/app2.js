@@ -850,6 +850,8 @@
                     $.rogerNotice({Message: '删除成功'});
                     if (temp.serviceTypeID == 6) {
                         $.rogerLocation('#/activiy'+"?UserID="+usr.UserID);
+                    }else if(temp.serviceTypeID == 5){
+                        $.rogerLocation('#/car'+"?UserID="+usr.UserID);
                     }else{
                         $.rogerLocation('#/service'+"?UserID="+usr.UserID);
                     }
@@ -1028,8 +1030,8 @@
                             LabelIDs.push(respJSON["SpotLabels"][key]["ClassifyLabelID"]);
                             Labels.push(respJSON["SpotLabels"][key]["ClassifyLabel"])
                         }
-                        spotdetail["SpotLabels"]={"LabelIDs":LabelIDs};
-                        spotdetail["SpotLabels"]={"Labels":Labels};
+                        spotdetail["SpotLabels"]["LabelIDs"]=LabelIDs};
+                        spotdetail["SpotLabels"]["Labels"]=Labels};
                     }
 
                     returnvalue = {"SpotDetail":spotdetail}
@@ -1081,12 +1083,10 @@
             tempSpotLabels = []
             if(null != temp.SpotLabels.LabelIDs && 0< temp.SpotLabels.LabelIDs.length){
                 for(key in temp.SpotLabels.LabelIDs){
-                    tempSpotLabels.push({LabelID:temp.SpotLabels.LabelIDs[0],SpotsID:temp.SpotsID})
+                    tempSpotLabels.push({LabelID:temp.SpotLabels.LabelIDs[key],SpotsID:temp.SpotsID})
                 }
             }
             if(null != temp.SpotsID && '' != temp.SpotsID){
-
-
                 var data = {
                     DeleteSpotsPics:temp,
                     DeleteTravelSpotsLabel:temp,
@@ -1109,7 +1109,6 @@
                             $.rogerLocation('#/accommodationdetail?spotsID='+temp.SpotsID);
                         }
                     }
-
                 });
             } else {
                 temp["SpotLabels"]=tempSpotLabels;
@@ -1672,6 +1671,10 @@
             var clazz = $(this).val();
             tmplItem.DetailMain.vehicleInfo.clazz = clazz;
         });
+        $('#carInsurance').on('click','input',function(){
+            var clazz = $(this).val();
+            tmplItem.DetailMain.vehicleInfo.insurance = clazz;
+        });
         //租车
         $('#saveCar').rogerOnceClick(tmplItem, function(e){
             var usr =$.rogerGetLoginUser();
@@ -2086,31 +2089,28 @@
             temp["STATUS"]=0;
 
             TravelogueDetail = temp.TravelogueDetail;
-            dayemp = '';
+            flag = 0;
             for(key in temp.TravelogueDetail){
                 TravelogueDetail[key]["articleID"]=temp["articleID"];
-                if(TravelogueDetail[key]["DAY"]!=null && TravelogueDetail[key]["DAY"]!=''){
-                    dayemp = TravelogueDetail[key]["DAY"];
-                }else {
-                    TravelogueDetail[key]["DAY"] = dayemp;
+                if(flag == 0
+                    && typeof(TravelogueDetail[key]["picURL"]) != "undefined"
+                    &&TravelogueDetail[key]["picURL"]!=null
+                    && TravelogueDetail[key]["picURL"]!=''){
+                    temp["articlePicURL"]=TravelogueDetail[key]["picURL"];
+                    flag++;
                 }
-
             }
-
-            temp["DeleteTravelogueDetail"] = {articleID:temp["articleID"]};
-
-            var data = {
-                Travelogue:temp,
-                IMGHOST:e.data.IMGHOST
-            };
 
 
             if(null != temp.articleID && temp.articleID!=''){
 
                 temp["DeleteTravelogueDetail"] = {articleID:temp["articleID"]};
 
+                abc = {articleID:temp["articleID"]};
+                abc["Travelogue"]=temp;
+                abc["TravelogueDetail"]=temp["TravelogueDetail"];
                 var data = {
-                    Travelogue:temp,
+                    DeleteTravelogueDetail:abc,
                     IMGHOST:e.data.IMGHOST
                 };
 
@@ -2122,6 +2122,12 @@
                     }
                 });
             } else{
+
+                var data = {
+                    Travelogue:temp,
+                    IMGHOST:e.data.IMGHOST
+                };
+
                 $.rogerPost('/new/travellogue', data, function(respJSON){
                     $.rogerNotice({Message:'保存攻略成功'});
                     if(respJSON){

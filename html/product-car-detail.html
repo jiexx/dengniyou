@@ -92,7 +92,7 @@
             <p>舒适乘坐：<span>${VehicleInfo[0].person}位</span></p>
           </div>
           <div class="col-md-4">
-            <p>车辆级别：<span>${VehicleInfo[0].clazz}</span></p>
+            <p>车辆级别：<span>{{if VehicleInfo[0].clazz == '1'}}经济{{else VehicleInfo[0].clazz == '2'}}舒适{{else VehicleInfo[0].clazz == '3'}}豪华{{else VehicleInfo[0].clazz == '4'}}商务{{/if}}</span></p>
             <p>行李空间：<span>${VehicleInfo[0].luggage}升</span></p>
           </div>
           <div class="col-md-4">
