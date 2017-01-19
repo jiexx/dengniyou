@@ -49,6 +49,12 @@
 
         <div class="row product-detail price-detail">
           <h2>商品详情</h2>
+          <div class="col-md-4">
+            <p>包含里程：<span>${DetailMain[0].incMileage}</span>/公里</p>
+          </div>
+          <div class="col-md-4">
+            <p>额外里程：<span>${DetailMain[0].exMileagePrice}</span>元/公里</p>
+          </div>
           {{each(i,p) VehicleCharges}}
           {{if p.chargeType==1}}
           <div class="col-md-4">
@@ -69,15 +75,21 @@
             <p>免赔险：<span>${VehicleCharges[2].chargePrice}元</span>/天</p>
           </div>
           {{/if}}
-          {{/each}}
+          {{/each}} 
         </div> <!-- end 商品详情product-detail -->
+        <div class="row product-detail">
+          <h2>服务屏蔽日期</h2>
+          <div class="col-md-5 calender">
+            <div id="calendarDetail"></div>
+          </div>
+        </div>
 
         <div class="row product-detail price-detail">
           <h2>车辆详情</h2>
           <div class="col-md-4">
             <!-- <p>车辆名称：<span>Panamera</span></p> -->
             <p>品牌：<span>${VehicleInfo[0].brand}</span></p>
-            <p>舒适乘坐：<span>${VehicleInfo[0].seats}位</span></p>
+            <p>舒适乘坐：<span>${VehicleInfo[0].person}位</span></p>
           </div>
           <div class="col-md-4">
             <p>车辆级别：<span>${VehicleInfo[0].clazz}</span></p>
@@ -112,28 +124,39 @@
 
         <div class="policy">
         {{each(i,p) Policy}}
-          {{if p.PolicyType==1}}
-          <h2>退订政策</h2>
+          {{if p.policyType==1}}
+          {{if p.type==4}}
+          <h2>${p.policyName}</h2>
           <div class="des">
-            <p>${p.Description}</p>
+          <p>${p.description}</p>
+          </div>
+          {{else}}
+          <h2>${p.policyName}</h2>
+          <div class="des">
+            <p>1、服务开始前${p.day1}天(含)以上退订，退还服务费用的${p.ratio1*100}%；</p>
+            <p>2、服务开始前${p.day2}天(含)至${p.day1}天退订，退还服务费用的${p.ratio2*100}%；</p>
+            <p>3、服务开始前${p.day3}天(含)至${p.day2}天退订，退还服务费用的${p.ratio3*100}%；</p>
+            <p>4、服务开始前${p.day3}天以内退订，不退还服务费用；</p>
+            <p>5、${p.description}</p>
           </div>
           {{/if}}
-          {{if p.PolicyType==2}}
-          <h2>费用包含</h2>
+          {{/if}}
+          {{if p.policyType==2}}
+          <h2>${p.policyName}</h2>
           <div class="des">
-            <p>${p.CustomRatio}</p>
+            <p>${p.customRatio}</p>
           </div>
           {{/if}}
-          {{if p.PolicyType==3}}
-          <h2>费用不包含</h2>
+          {{if p.policyType==3}}
+          <h2>${p.policyName}</h2>
           <div class="des">
-            <p>${p.CustomRatio}</p>
+            <p>${p.customRatio}</p>
           </div>
           {{/if}}
-          {{if p.PolicyType==4}}
+          {{if p.policyType==4}}
           <h2>预订须知</h2>
           <div class="des">
-            <p>${p.Caution}</p>
+            <p>${p.caution}</p>
           </div>
           {{/if}}
         {{/each}}

@@ -96,31 +96,31 @@
 				    <div class="col-sm-8 col-md-9" id="carClazz">
 				        <label class="radio-inline">
 				        {{if DetailMain.vehicleInfo.clazz == '1'}}
-						  <input type="radio" name="clazzType" id="clazzRadio1" value="经济" checked > 经济
+						  <input type="radio" name="clazzType" id="clazzRadio1" value="1" checked > 经济
 				        {{else}}
-				          <input type="radio" name="clazzType" id="clazzRadio1" value="经济" > 经济
+				          <input type="radio" name="clazzType" id="clazzRadio1" value="1" > 经济
 				        {{/if}}
 						</label>
 						<label class="radio-inline">
 						{{if DetailMain.vehicleInfo.clazz == '2'}}
-						  <input type="radio" name="clazzType" id="clazzRadio2" value="舒适" checked > 舒适
+						  <input type="radio" name="clazzType" id="clazzRadio2" value="2" checked > 舒适
 						{{else}}
-						  <input type="radio" name="clazzType" id="clazzRadio2" value="舒适" > 舒适
+						  <input type="radio" name="clazzType" id="clazzRadio2" value="2" > 舒适
 						{{/if}}
 						</label>
 						<label class="radio-inline">
 						{{if DetailMain.vehicleInfo.clazz == '3'}}
-						  <input type="radio" name="clazzType" id="clazzRadio3" value="豪华" checked > 豪华
+						  <input type="radio" name="clazzType" id="clazzRadio3" value="3" checked > 豪华
 						{{else}}
-						  <input type="radio" name="clazzType" id="clazzRadio3" value="豪华" > 豪华
+						  <input type="radio" name="clazzType" id="clazzRadio3" value="3" > 豪华
 						{{/if}}
 						</label>
 						<label class="radio-inline">
 						{{if DetailMain.vehicleInfo.clazz == '4'}}
-						  <input type="radio" name="clazzType" id="clazzRadio3" value="商务" checked > 商务
+						  <input type="radio" name="clazzType" id="clazzRadio3" value="4" checked > 商务
 						{{else}}
-						  <input type="radio" name="clazzType" id="clazzRadio3" value="商务" > 商务
-						{{/if}}
+						  <input type="radio" name="clazzType" id="clazzRadio3" value="4" > 商务
+						{{/if}}1
 						</label>
 				    </div>
 				  </div>
@@ -145,16 +145,16 @@
 				    <div class="col-sm-8 col-md-9" id="carInsurance">
 				        <label class="radio-inline">
 				        {{if DetailMain.vehicleInfo.insurance == '1'}}
-						  <input type="radio" name="insuranceType" id="insuranceRadio1" value="有" checked > 有
+						  <input type="radio" name="insuranceType" id="insuranceRadio1" value="1" checked > 有
 				        {{else}}
-				          <input type="radio" name="insuranceType" id="insuranceRadio1" value="有" > 有
-				        {{/if}}
+				          <input type="radio" name="insuranceType" id="insuranceRadio1" value="1" > 有
+				        {{/if}}0
 						</label>
 						<label class="radio-inline">
 						{{if DetailMain.vehicleInfo.insurance == '0'}}
-						  <input type="radio" name="insuranceType" id="insuranceRadio2" value="无" checked > 无
+						  <input type="radio" name="insuranceType" id="insuranceRadio2" value="0" checked > 无
 						{{else}}
-				          <input type="radio" name="insuranceType" id="insuranceRadio2" value="无" > 无
+				          <input type="radio" name="insuranceType" id="insuranceRadio2" value="0" > 无
 				        {{/if}}
 						</label>
 				    </div>
@@ -333,10 +333,10 @@
 								</div>
 								<div id="policycontent4" class="col-md-10">
 									<h3>自定义的退订政策</h3>
-									<p>1、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day1}" data-value="/DetailMain/Policy/${0}/day1">天(含)以上退订，退还服务费用的99%；</p>
-									<p>2、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day2}" data-value="/DetailMain/Policy/${0}/day2">天(含)以上退订，退还服务费用的50%；</p>
-									<p>3、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day3}" data-value="/DetailMain/Policy/${0}/day3">天(含)以上退订，退还服务费用的20%；</p>
-									<p>4、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day4}" data-value="/DetailMain/Policy/${0}/day4">天以内退订，不退还服务费用；</p>
+									<p>1、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day1}" data-value="/DetailMain/policy/${0}/day1">天(含)以上退订，退还服务费用的99%；</p>
+									<p>2、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day2}" data-value="/DetailMain/policy/${0}/day2">天(含)以上退订，退还服务费用的50%；</p>
+									<p>3、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day3}" data-value="/DetailMain/policy/${0}/day3">天(含)以上退订，退还服务费用的20%；</p>
+									<p>4、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day4}" data-value="/DetailMain/policy/${0}/day4">天以内退订，不退还服务费用；</p>
 									<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
 								</div>
 							</div>
@@ -354,19 +354,19 @@
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/1/customRatio" class="form-control">${$data.DetailMain.policy[1].customRatio}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/1/customRatio" class="form-control">${$data.DetailMain.policy[1].customRatio}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/2/customRatio" class="form-control">${$data.DetailMain.policy[2].customRatio}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/2/customRatio" class="form-control">${$data.DetailMain.policy[2].customRatio}</textarea>
 		    </div>
 		  </div>
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">预订须知：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/Policy/3/caution" class="form-control">${$data.DetailMain.policy[3].caution}</textarea>
+		      <textarea name="" data-value="/DetailMain/policy/3/caution" class="form-control">${$data.DetailMain.policy[3].caution}</textarea>
 		    </div>
 		  </div>
 		</form>
@@ -376,6 +376,7 @@
 		</div>
 	</div>
 	<input type="hidden" id="type" data-value="/DetailMain/Policy/0/type"/>
+
 	<!-- 须知信息结束 -->
 
 
@@ -407,17 +408,6 @@
 	<!-- 汽车品牌弹出框结束 -->
 
 </div>
-
-<script>
-	$(function(){
-		$('#serviceType').on('click','input',function(){
-			var ServiceMethodName = $(this).val();
-			$('#ServiceMethodName').val(ServiceMethodName).trigger('keyup');
-		});
-
-		
-	});
-</script>
 
 
 

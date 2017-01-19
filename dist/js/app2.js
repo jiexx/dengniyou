@@ -777,6 +777,19 @@
            infinite: true
         });   
         var usr = $.rogerGetLoginUser();
+        
+        //包车详情页
+        var disday = [];
+        for(var i=0; i<response.VehicleSchedule.length; i++){
+            disday.push(response.VehicleSchedule[i].scheduleFormatTime);
+        }
+                
+        var pickr = $("#calendarDetail").flatpickr({
+            inline: true,
+            mode: "multiple",
+            disable: disday,
+            minDate: new Date()
+        });
 
         $('#release').rogerOnceClick(response, function (e) {
                 temp = e.data.DetailMain[0];
@@ -1335,8 +1348,8 @@
                     addressType: '', 
                     address: ''
                  }],
-                 lendAddresses:[{}],
-                 repayAddresses:[{}],
+                 lendAddresses:[{address:'',addressID:'',addressType:1,serviceID:''}],
+                 repayAddresses:[{address:'',addressID:'',addressType:2,serviceID:''}],
                  vehicleSchedule: [],
                  labels: [],
                  activityPrice: {
@@ -1654,6 +1667,10 @@
                 tmplItem.DetailMain["schedules"]=dateStr.split("; ");
                 
             }
+        });
+        $('#carClazz').on('click','input',function(){
+            var clazz = $(this).val();
+            tmplItem.DetailMain.vehicleInfo.clazz = clazz;
         });
         //租车
         $('#saveCar').rogerOnceClick(tmplItem, function(e){
@@ -2071,7 +2088,7 @@
             TravelogueDetail = temp.TravelogueDetail;
             dayemp = '';
             for(key in temp.TravelogueDetail){
-
+                TravelogueDetail[key]["articleID"]=temp["articleID"];
                 if(TravelogueDetail[key]["DAY"]!=null && TravelogueDetail[key]["DAY"]!=''){
                     dayemp = TravelogueDetail[key]["DAY"];
                 }else {
@@ -2080,6 +2097,8 @@
 
             }
 
+            temp["DeleteTravelogueDetail"] = {articleID:temp["articleID"]};
+
             var data = {
                 Travelogue:temp,
                 IMGHOST:e.data.IMGHOST
@@ -2087,6 +2106,14 @@
 
 
             if(null != temp.articleID && temp.articleID!=''){
+
+                temp["DeleteTravelogueDetail"] = {articleID:temp["articleID"]};
+
+                var data = {
+                    Travelogue:temp,
+                    IMGHOST:e.data.IMGHOST
+                };
+
                 $.rogerPost('/update/travellogue', data, function(respJSON){
                     $.rogerNotice({Message:'更新攻略成功'});
                     if(respJSON){
