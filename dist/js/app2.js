@@ -1030,8 +1030,7 @@
                             LabelIDs.push(respJSON["SpotLabels"][key]["ClassifyLabelID"]);
                             Labels.push(respJSON["SpotLabels"][key]["ClassifyLabel"])
                         }
-                        spotdetail["SpotLabels"]["LabelIDs"]=LabelIDs};
-                        spotdetail["SpotLabels"]["Labels"]=Labels};
+                        spotdetail["SpotLabels"]={"LabelIDs":LabelIDs,"Labels":Labels};
                     }
 
                     returnvalue = {"SpotDetail":spotdetail}
@@ -2089,16 +2088,15 @@
             temp["STATUS"]=0;
 
             TravelogueDetail = temp.TravelogueDetail;
-            flag = 0;
+            dayemp = '';
             for(key in temp.TravelogueDetail){
                 TravelogueDetail[key]["articleID"]=temp["articleID"];
-                if(flag == 0
-                    && typeof(TravelogueDetail[key]["picURL"]) != "undefined"
-                    &&TravelogueDetail[key]["picURL"]!=null
-                    && TravelogueDetail[key]["picURL"]!=''){
-                    temp["articlePicURL"]=TravelogueDetail[key]["picURL"];
-                    flag++;
+                if(TravelogueDetail[key]["DAY"]!=null && TravelogueDetail[key]["DAY"]!=''){
+                    dayemp = TravelogueDetail[key]["DAY"];
+                }else {
+                    TravelogueDetail[key]["DAY"] = dayemp;
                 }
+
             }
 
 
@@ -2122,6 +2120,8 @@
                     }
                 });
             } else{
+
+
 
                 var data = {
                     Travelogue:temp,
