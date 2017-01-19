@@ -1366,7 +1366,7 @@
                      }
                      if (null != respJSON["Facility"] && '' != respJSON["Facility"]) {
                          result["DetailMain"]["facilities"] = respJSON["Facility"]
-                         result["DetailMain"]["facilities"]["facilityId"] =result["DetailMain"]["facilities"]["facilityID"];
+                         result["DetailMain"]["facilities"][0]["facilityId"] =result["DetailMain"]["facilities"][0]["facilityID"];
                      }
                      
                      if (null != respJSON["Airports"] && '' != respJSON["Airports"]) {
@@ -1631,7 +1631,9 @@
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
-            temp["pictureIds"]=temp["pictureIDs"].join();
+            if(temp["pictureIDs"]){
+                temp["pictureIds"]=temp["serviceID"];
+            }
 
             temp["policyBean"]= temp["policy"][0];
             temp["feeBean"]= temp["policy"][1];
@@ -1705,7 +1707,9 @@
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
-            temp["pictureIds"]=temp["pictureIDs"].join();
+            if(temp["pictureIDs"]){
+                temp["pictureIds"]=temp["serviceID"];
+            }
 
             var serviceAirportsItem = {};
             var serviceAirports = [];
@@ -1783,7 +1787,9 @@
             temp["unit"]='天';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
-            temp["pictureIds"]=temp["pictureIDs"].join();
+            if(temp["pictureIDs"]){
+                temp["pictureIds"]=temp["serviceID"];
+            }
 
             temp["policyBean"]= temp["policy"][0];
             temp["feeBean"]= temp["policy"][1];
@@ -1841,7 +1847,9 @@
             temp["serviceTypeID"]=6;
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
-            temp["pictureIds"]=temp["pictureIDs"];
+            if(temp["pictureIDs"]){
+                temp["pictureIds"]=temp["serviceID"];
+            }
 
             temp["policyBean"]= temp["policy"][0];
             temp["feeBean"]= temp["policy"][1];
