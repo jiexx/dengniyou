@@ -466,6 +466,7 @@
                     var data = {PlanInfo: e.data.PlanInfo};
                     data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.StartCity = item.CityNameCn;
+                    data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
                         $.rogerNotice({Message: '模板方案成功'});
@@ -478,6 +479,7 @@
                         var data = {PlanInfo: e.data.PlanInfo};
                         data.PlanInfo.StartCityID = item.CityID;
                         data.PlanInfo.StartCity = item.CityNameCn;
+                        data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                         data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                         $.rogerPost('/new/tmpplan', data, function (respJSON) {
                             $.rogerNotice({Message: '模板方案发布成功'});
@@ -535,6 +537,7 @@
             if(!Plan.PlanInfo.PlanID) {
                 var data = {PlanInfo:e.data.PlanInfo};
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                 $.rogerPost('/new/shortplan', data, function(respJSON){
                     $.rogerNotice({Message:'快捷方案发布成功'});
                     $('#show').removeClass("btn btn-warning invisible");
@@ -544,6 +547,7 @@
             }else {
                 var data = {PlanInfo:e.data.PlanInfo};
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                 $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
                     $.rogerPost('/new/shortplan', data, function(respJSON){
                         $.rogerNotice({Message:'快捷方案发布成功'});
