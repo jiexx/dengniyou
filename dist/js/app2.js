@@ -16,7 +16,7 @@
                     return;
                 }
                 url = $(this).next('div').data('href');
-                $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:"all"});
+                $.rogerTrigger('#app',url, {UserID:usr.UserID});
             });
         }
 
@@ -30,28 +30,30 @@
                     return;
                 }
                 filtertemp = $(this).val();
+                if('all' == filtertemp){
+                    filtertemp = null;
+                }
                 $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
             });
 
         }
 
         var urlPath = $.rogerGetPath();
-          if(urlPath == "#/"){
+          if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1){
+            $('.mainbody-top').show();
             $('#filter').show();
             $('#filter2').hide();
           }else if(urlPath.indexOf("#/travelogue") != -1){
-            $('#filter').hide();
-            $('#filter2').show();
+            $('.mainbody-top').hide();
           }
           $('.nav-sidebar li').on('click',function(){
             var urlPath = $.rogerGetPath();
-            console.log(33,urlPath);
             if(urlPath == "#/" || urlPath == "" ){
+              $('.mainbody-top').show();
               $('#filter').show();
               $('#filter2').hide();
             }else if(urlPath.indexOf("#/travelogue") != -1){
-              $('#filter').hide();
-              $('#filter2').show();
+                $('.mainbody-top').hide();
             }
           });
 
@@ -62,6 +64,9 @@
         }else if($(this).val() == '1'){
           $('#filter').hide();
           $('#filter2').show();
+        }else if($(this).val() == '2'){
+          $('#filter').hide();
+          $('#filter2').hide();
         }
       });
 
@@ -74,6 +79,16 @@
                 return;
             }
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
+        });
+
+        $('#productctr').rogerOnceClick2(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $.rogerLocation('#/spcialplan?UserID='+user.UserID+'&page=1');
         });
 
 
@@ -121,35 +136,48 @@
     };
     var ctrlService = function(response, realView) {
 
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    };
-    var ctrlActivity = function(response, realView) {
+        $(".switchCheckbox").bootstrapSwitch();
+        $('.release').on('switchChange.bootstrapSwitch', function (e, data) {
+            var status = $(this).data("status");
+            var ServiceId = $(this).data("serviceid");
+            //3,隐藏，4发布
+            $.rogerPost('/update/service/status', {Status: status, ServiceId: ServiceId}, function (respJSON) {
+                $.rogerNotice({Message: '操作成功'});
 
+            });
+            }
+        );
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
-    var ctrlCar = function(response, realView) {
+    // var ctrlActivity = function(response, realView) {
 
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    };
+    //     bindRidoesForSwitch();
+    //     realView.rogerCropImages();
+    // };
+    // var ctrlCar = function(response, realView) {
+
+    //     bindRidoesForSwitch();
+    //     realView.rogerCropImages();
+    // };
     var ctrlAttraction = function(response, realView) {
+        $(".switchCheckbox").bootstrapSwitch();
+        $('.release').on('switchChange.bootstrapSwitch', function (e, data) {
+            var status = $(this).data("status");
+            var SpotsID = $(this).data("spotsid");
+            //1,隐藏，2发布
+            $.rogerPost('/update/spots/status', {Status: status, SpotsID: SpotsID}, function (respJSON) {
+                $.rogerNotice({Message: '操作成功'});
+
+            });
+            }
+        );
         realView.rogerCropImages();
         if(response.Counts > 10) {
 
         }
     };
-    var ctrlAccommodation = function(response, realView) {
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    };
-    var ctrlDelicacy = function(response, realView) {
-
-        bindRidoesForSwitch();
-        realView.rogerCropImages();
-    };
+    
     var ctrlTravelogue = function(response, realView) {
 
         bindRidoesForSwitch();
@@ -583,7 +611,7 @@
     };
 
     var ctrlDelicacyDetail = function(response, realView) {
-
+        var usr = $.rogerGetLoginUser();
         $('#release').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
                 var status = $('#release').data("status")
@@ -604,8 +632,8 @@
         $('#delete').rogerOnceClick(response, function (e) {
             var del = confirm("确定要删除吗？删除后数据无法恢复，请谨慎操作！");
             if(del){
-                temp = e.data.DetailMain[0];
-                $.rogerPost('/delete/spots', {SpotsID:temp.spotsID}, function (respJSON) {
+                temp = e.data.SpotDetail[0];
+                $.rogerPost('/delete/spots', {SpotsID:temp.SpotsID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
                     $.rogerLocation('#/delicacy'+"?UserID="+usr.UserID);
                 });
@@ -617,6 +645,7 @@
     };
 
     var ctrlAccommodationDetail = function(response, realView) {
+        var usr = $.rogerGetLoginUser();
         $('#release').rogerOnceClick(response, function (e) {
             temp = e.data.SpotDetail[0];
             var status = $('#release').data("status")
@@ -636,8 +665,8 @@
         $('#delete').rogerOnceClick(response, function (e) {
             var del = confirm("确定要删除吗？删除后数据无法恢复，请谨慎操作！");
             if(del){
-                temp = e.data.DetailMain[0];
-                $.rogerPost('/delete/spots', {SpotsID:temp.spotsID}, function (respJSON) {
+                temp = e.data.SpotDetail[0];
+                $.rogerPost('/delete/spots', {SpotsID:temp.SpotsID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
                     $.rogerLocation('#/accommodation'+"?UserID="+usr.UserID);
                 });
@@ -649,14 +678,14 @@
     };
 
     var ctrlAttractionDetail = function(response, realView) {
-
+        var usr = $.rogerGetLoginUser();
         $('#release').rogerOnceClick(response, function (e) {
                 temp = e.data.SpotDetail[0];
                 var status = $('#release').data("status")
             //1,隐藏，2发布
             $.rogerPost('/update/spots/status', {Status: status, SpotsID: temp.SpotsID}, function (respJSON) {
                 $.rogerNotice({Message: '发布成功'});
-
+                $.rogerLocation('#/attraction'+"?UserID="+usr.UserID);
             });
             }
         );
@@ -670,8 +699,8 @@
         $('#delete').rogerOnceClick(response, function (e) {
             var del = confirm("确定要删除吗？删除后数据无法恢复，请谨慎操作！");
             if(del){
-                temp = e.data.DetailMain[0];
-                $.rogerPost('/delete/spots', {SpotsID:temp.spotsID}, function (respJSON) {
+                temp = e.data.SpotDetail[0];
+                $.rogerPost('/delete/spots', {SpotsID:temp.SpotsID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
                     $.rogerLocation('#/attraction'+"?UserID="+usr.UserID);
                 });
@@ -1065,8 +1094,8 @@
                 }
             });            
 
-            Spots.SpotDetail.SpotLabels.LabelIDs = newLabelID;
-            Spots.SpotDetail.SpotLabels.Labels = newLabel;
+            Spots.SpotDetail.SpotLabels.LabelIDs = Spots.SpotDetail.SpotLabels.LabelIDs.concat(newLabelID);
+            Spots.SpotDetail.SpotLabels.Labels = Spots.SpotDetail.SpotLabels.Labels.concat(newLabel);
             console.log(Spots);
             $.rogerRefresh(Spots);
         };
@@ -1127,7 +1156,13 @@
 
                     if(respJSON){
                         //跳转到详情页面
-                        $.rogerLocation('#/attractiondetail?spotsID='+respJSON.SpotDetail.insertId);
+                        if(temp.SpotsTypeID==1){
+                            $.rogerLocation('#/attractiondetail?spotsID='+respJSON.SpotDetail.insertId);
+                        }else if(temp.SpotsTypeID==2){
+                            $.rogerLocation('#/delicacydetail?spotsID='+respJSON.SpotDetail.insertId);
+                        }else if(temp.SpotsTypeID==3){
+                            $.rogerLocation('#/accommodationdetail?spotsID='+respJSON.SpotDetail.insertId);
+                        }
                     }
 
                 });
@@ -2295,11 +2330,11 @@
         '#/spcialplan':                   {view:'product-specialplan.html',                         rootrest:'/dashboard/product/specialplan',                          ctrl: ctrlSpecialplan},
         '#/classicplan':                  {view:'product-classicplan.html',                         rootrest:'/dashboard/product/classicplan',                                                 ctrl: ctrlClassicplan},
         '#/service':                       {view:'product-service.html',                              rootrest:'/dashboard/product/service',	                          ctrl: ctrlService},
-        '#/activiy':                       {view:'product-activity.html',	                            rootrest:'/dashboard/product/activity',	                          ctrl: ctrlActivity},
-        '#/car':                           {view:'product-car.html',                                   rootrest:'/dashboard/product/car', 		                          ctrl: ctrlCar},
+        '#/activiy':                       {view:'product-activity.html',	                            rootrest:'/dashboard/product/activity',	                          ctrl: ctrlService},
+        '#/car':                           {view:'product-car.html',                                   rootrest:'/dashboard/product/car', 		                          ctrl: ctrlService},
         '#/attraction':                   {view:'product-attraction.html',                           rootrest:'/dashboard/product/attraction',	                          ctrl: ctrlAttraction},
-        '#/delicacy':                     {view:'product-delicacy.html',                              rootrest:'/dashboard/product/delicacy',	                          ctrl: ctrlDelicacy},
-        '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                       ctrl: ctrlAccommodation},
+        '#/delicacy':                     {view:'product-delicacy.html',                              rootrest:'/dashboard/product/delicacy',	                          ctrl: ctrlAttraction},
+        '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                       ctrl: ctrlAttraction},
         '#/travelogue':                    {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                         ctrl: ctrlTravelogue},
         '#/facilitylist':                 {view:'facilitylist.html',                                  rootrest:'/facility/list',                                            ctrl: ctrlFacilityList},
         '#/orderlist':                     {view: 'orderlist-guide.html',                             rootrest: '/order/list',                                              ctrl: ctrlOrderlist},

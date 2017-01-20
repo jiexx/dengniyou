@@ -68,7 +68,7 @@
       {{if SpotDetail[0].Status==1}}
       <button id="release" type="button" data-status="2" class="btn">发布</button>
       {{/if}}
-      {{if SpotDetail[0].Status==2}}
+      {{if SpotDetail[0].Status!=1}}
       <button id="release" type="button" data-status="1" class="btn">隐藏</button>
       {{/if}}
     </div>

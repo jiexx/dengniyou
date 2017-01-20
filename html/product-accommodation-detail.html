@@ -50,8 +50,8 @@
       
       <div class="detailpage-mainbody">
         <div class="attraction detailpage-title">
-          <h1>${SpotDetail[0].NameCh}</h1>
-          <p>${SpotDetail[0].NameEn}</p>
+          <h1>${SpotDetail[0].NameCh} ${SpotDetail[0].NameEn}</h1>
+          <p>{{each SpotLabels}}<span class="label label-warning">${ClassifyLabel}</span> {{/each}}</p>
         </div> 
         <div class="row product-detail price-detail">
           <h2>商品详情</h2>

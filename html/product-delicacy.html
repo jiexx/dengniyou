@@ -18,7 +18,7 @@
 			<div class="col-md-5 service-name">我的美食方案</div>
 			<div class="col-md-1">价格</div>
 			<div class="col-md-2">行程天数</div>
-			<div class="col-md-2 ">发布状态</div>
+			<div class="col-md-2 ">发布状态(发布/草稿)</div>
 			<div class="col-md-1 ">编辑</div>
 		</div>
 		{{/if}}
@@ -41,7 +41,7 @@
 			<div class="col-md-1 margin-top">${PlanPriceBase}</div>
 			<div class="col-md-2 margin-top">${PlanDays}</div>
 			<div class="col-md-2 margin-top">
-				{{if Status ==1}}待审核 {{/if}}{{if Status ==2}}审核通过 {{/if}}{{if Status ==3}}导游隐藏 {{/if}}{{if Status ==4}}导游发布 {{/if}}{{if Status ==5}}导游定制 {{/if}}{{if Status ==6}}未加入 {{/if}}{{if Status ==7}}已加入 {{/if}}
+				{{if Status ==1}}<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="隐藏" data-status='2' data-spotsid=${id}> {{/if}}{{if Status ==2}}<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="隐藏" data-status='1'  data-spotsid=${id} checked > {{/if}}
 			</div>
 			<div class="col-md-1 service-edit">
 				<a href="#/delicacyedit?SpotsID=${ SpotsID}&spotType=2">
@@ -55,6 +55,7 @@
 <!-- 页码 -->
 <div class="container">
 	<div class="pagination">
+	{{if $data.Counts[0].Count != 0}}
 		<li>
 			<a href="#" aria-label="Previous">
 				<span aria-hidden="true">&laquo;</span>
@@ -68,5 +69,6 @@
 				<span aria-hidden="true">&raquo;</span>
 			</a>
 		</li>
+	{{/if}}
 	</div>
 </div>

@@ -40,7 +40,7 @@
 		    <div class="col-sm-10 col-md-11">
 		         <ul class="label-base">
 		        	{{each $data.SpotDetail.SpotLabels.Labels}}
-					<li><input type="text" value="${$data.SpotDetail.SpotLabels.Labels[$index]}" data-value="/SpotDetail/SpotLabels/Labels/${$index}" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotLabels/Labels/${$index}"></a></li>
+					<li><input type="text" value="${$data.SpotDetail.SpotLabels.Labels[$index]}" data-value="/SpotDetail/SpotLabels/Labels/${$index}" placeholder="点击输入"><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotLabels/Labels/${$index}"></a><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/SpotDetail/SpotLabels/LabelIDs/${$index}" onclick="$(this).prev().click();"></a></li>
 					{{/each}}
 					<li><div class="addItemBtn" data-toggle="modal" data-target="#attrLabelList"> + </div></li>
 				</ul>
