@@ -1,18 +1,18 @@
 {
-	"Travelogue": {
-		"sql": "update `traveluserdb`.`tab_travelarticle` SET ArticlePicURL=?,Description=?,Title=? WHERE ArticleID=?",
+	"DeleteTravelogueDetail": {
+		"sql": "delete from  `traveluserdb`.`tab_travelarticledetail` WHERE ArticleID=?",
 		"params": [
-			"articlePicURL",
-			"description",
-			"title",
 			"articleID"
 		],
-
-		"DeleteTravelogueDetail": {
-			"sql": "delete from  `traveluserdb`.`tab_travelarticledetail WHERE ArticleID=?",
-			"params": ["articleID"]
+		"Travelogue": {
+			"sql": "update `traveluserdb`.`tab_travelarticle` SET ArticlePicURL=?,Description=?,Title=? WHERE ArticleID=?",
+			"params": [
+				"articlePicURL",
+				"description",
+				"title",
+				"articleID"
+			]
 		},
-
 		"TravelogueDetail": {
 			"sql": "INSERT INTO `traveluserdb`.`tab_travelarticledetail` (`ArticleID`, `Label`, `PicURL`, `Content`, `Day`, `CreateDate`) VALUES (?, ?, ?, ?, ?, NOW())",
 			"params": [

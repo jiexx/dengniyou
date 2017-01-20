@@ -1,4 +1,4 @@
 {
-	"Service": {"sql": "SELECT * FROM traveluserdb.`vw_/dashboard/product/service` WHERE UserID=? AND ServiceTypeID not in(5,6) AND IF (?= 'all' ,- 1, ServiceStatus) = IF (?= 'all' ,-1, IF(?='released',4,3)) ORDER BY UpdateDate desc LIMIT 0, 8;",	"params":["UserID","filter","filter","filter"]},
-	"Counts": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/dashboard/product/service` WHERE UserID=? AND IF (?= 'all' ,- 1, ServiceStatus) = IF (?= 'all' ,-1, IF(?='released',4,3)) AND ServiceTypeID not in(5,6)",	"params":["UserID","filter","filter","filter"]}
+	"Service": {"sql": "SELECT * FROM traveluserdb.`vw_/dashboard/product/service` WHERE UserID=? AND ServiceTypeID not in(5,6) AND IF (? is null ,- 1, ServiceStatus) = IF (? is null ,-1, IF(?='released',4,3)) ORDER BY UpdateDate desc LIMIT 0, 8;",	"params":["UserID","filter","filter","filter"]},
+	"Counts": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/dashboard/product/service` WHERE UserID=? AND IF (? is null ,- 1, ServiceStatus) = IF (? is null ,-1, IF(?='released',4,3)) AND ServiceTypeID not in(5,6)",	"params":["UserID","filter","filter","filter"]}
 }

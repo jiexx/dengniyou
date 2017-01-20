@@ -22,6 +22,7 @@
     <!-- Custom styles for this template -->   
 	  <link href='../css/airbnb.css' rel='stylesheet' />
     <link href="../dist/css/bootstrap-select.min.css" rel="stylesheet" >
+    <link href="../dist/css/bootstrap-switch.min.css" rel="stylesheet" >
     <link href="../css/dashboard.css" rel="stylesheet">
     <link href="../css/fix.css" rel="stylesheet">
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
@@ -47,6 +48,7 @@
 
     <!-- Latest compiled and minified JavaScript -->
   <script src="../dist/js/bootstrap-select.min.js" type= "text/javascript"  ></script>
+  <script src="../dist/js/bootstrap-switch.min.js" type= "text/javascript"  ></script>
 	<script src="../dist/js/jquery.cookie.js" type="text/javascript"></script>
 	<script src="../dist/js/jquery.tmpl.js" type="text/javascript"></script>
 	<script src="../dist/js/app2.js" type="text/javascript"></script>
@@ -73,13 +75,12 @@
       <div class="row">
         <div class="col-sm-2 sidebar">
           <ul class="nav nav-sidebar">
-            <li><a  href="#/"><i class="product-icon"></i><span>产品管理</span> <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a  id="productctr" href="javascript:void(0)"><i class="product-icon"></i><span>产品管理</span> <span class="sr-only">(current)</span></a></li>
             <li><a id="traveloguectr" href="#"><i class="travelogue-icon"></i><span>攻略管理</span></a></li>
-            <!-- <li><a href=""><i class="order-icon"></i><span>订单管理</span></a></li>
-            <li><a href=""><i class="market-icon"></i><span>营销管理</span></a></li>
+            <li><a href="javascript:void(0)" id="usercenter"><i class="order-icon"></i><span>订单管理</span></a></li>
+            <!-- <li><a href=""><i class="market-icon"></i><span>营销管理</span></a></li>
             <li><a href=""><i class="settle-icon"></i><span>结算管理</span></a></li>
             <li><a href=""><i class="data-icon"></i><span>资料管理</span></a></li> -->
-            <li><a  href="javascript:void(0)"id="usercenter">订单列表</a></li>
           </ul>
           <!--ul class="nav nav-sidebar">
             <li><a href="">Nav item</a></li>
@@ -99,26 +100,26 @@
             <h5 class="list-group">产品信息</h5>
             <div id="menu" class="list-group">
                 <span class="text-warning">产品类型 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/spcialplan" >特色方案</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/classicplan" >经典方案</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0" checked><div  data-href="#/spcialplan">我的方案</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/classicplan" >已加入的方案</div></label>
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/service" >服务</div></label>
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/activiy" >活动</div></label>
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/car" >租车</div></label>
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/attraction" >景点</div></label>
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/delicacy" >美食</div></label>
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/accommodation" >住宿</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/facilitylist" >装备</div></label>
+                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="2"><div  data-href="#/facilitylist" >装备</div></label>
             </div>
             <div id="filter" class="list-group" style="display: none;">
                 <span class="text-warning">产品状态 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" name="filterradio">全部</label>
+                <label class="radio-inline"><input type="radio" name="filterradio" checked>全部</label>
                 <label class="radio-inline"><input type="radio" name="filterradio">已发布</label>
                 <label class="radio-inline"><input type="radio" name="filterradio">已加入</label>
                 <label class="radio-inline"><input type="radio" name="filterradio">定制中</label>
             </div>
             <div id="filter2" class="list-group"  style="display: none;">
                 <span class="text-warning">产品状态 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" value = "all" name="filterradio">全部</label>
+                <label class="radio-inline"><input type="radio" value = "all" name="filterradio" checked>全部</label>
                 <label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>
                 <label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>
             </div>
@@ -150,6 +151,11 @@
           href = $(this).data("href");
           var usr =$.rogerGetLoginUser();
           $.rogerLocation(href+"?UserID="+usr.UserID);
+      });
+
+      $('.nav-sidebar').on('click','li',function(){
+        $('.nav-sidebar li').removeClass('active');
+        $(this).addClass('active');
       });
 
       

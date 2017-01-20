@@ -532,9 +532,9 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .detailpage-mainbody .product-detail{margin-top: 25px;}
 .detailpage .detailpage-mainbody .trip h2, .detailpage .detailpage-mainbody .policy h2,.detailpage .detailpage-mainbody .service-description h2,
 .detailpage .detailpage-mainbody .product-detail h2{font-size: 16px;color: #333;border-bottom: 1px solid #ccc;padding: 10px 20px; margin-bottom: 10px;}
-.detailpage .detailpage-mainbody .product-detail div{padding-left: 50px;}
+.detailpage .detailpage-mainbody .product-detail .col-md-4{padding-left: 50px;}
 .detailpage .detailpage-mainbody .trip p{font-size: 14px;color: #666;}
-.detailpage .detailpage-mainbody .policy .des,.detailpage .detailpage-mainbody .service-description .des{padding: 30px;}
+.detailpage .detailpage-mainbody .policy .des,.detailpage .detailpage-mainbody .service-description .des{padding: 30px; white-space: pre-line;}
 .detailpage .detailpage-mainbody .policy .des p{font-size: 14px;color: #666;}
 .detailpage .buttons {text-align: center;}
 .detailpage .buttons button{margin-left: 20px; background-color: #F1741F;color: #fff;}

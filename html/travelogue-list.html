@@ -1,6 +1,13 @@
 <div class="container">
 	<div class="row service-dropdown">
-		<div class="col-md-10"></div>
+		<div class="col-md-10">
+			<div id="filter2" class="list-group">
+                <span class="text-warning">产品状态 <i>|</i></span>
+                <label class="radio-inline"><input type="radio" value = "all" name="filterradio">全部</label>
+                <label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>
+                <label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>
+            </div>
+		</div>
 		<div class="col-md-2 service-release">
 			<div class="btn-group pull-right">
 				<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
@@ -11,13 +18,14 @@
 	</div> <!-- end  攻略列表页头部row -->
 	<!-- 攻略列表开始 -->
     <div class="list-group service-list">
+	{{if TravelogueList.length != 0}}
+	<div class="list-group-item clearfix disabled">
+	  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+	  	<div class="col-md-8 service-name">我的攻略</div>
+	  	<div class="col-md-2 ">发布状态（草稿/发布）</div>
+	  	<div class="col-md-1 ">编辑</div>
+	</div>
 	{{each TravelogueList}}
-		<div class="list-group-item clearfix disabled">
-		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
-		  	<div class="col-md-8 service-name">我的攻略</div>
-		  	<div class="col-md-2 ">发布状态</div>
-		  	<div class="col-md-1 ">编辑</div>
-		</div>
 		<div class="list-group-item clearfix btn-group">
 		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
 		  	<div class="col-md-8 ">
@@ -41,11 +49,13 @@
 		   	</div>
 		</div>
 	{{/each}}
+	{{/if}}
 	</div> <!-- end list-group -->
 </div> <!-- end container -->
 <!-- 页码 -->
 <div class="container">
   <div class="pagination">
+  {{if $data.Counts[0].Count != 0}}
     <li>
       <a href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
@@ -59,5 +69,6 @@
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
+  {{/if}}
   </div>
 </div>
