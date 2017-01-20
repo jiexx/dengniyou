@@ -103,7 +103,7 @@
 			</h1>
 			
 			<div class="project-main clearfix">
-				<div class="col-md-5">
+				<div class="col-md-5 clearfix">
 					<div class="imgBox">
 						<img src="${ $data.IMGHOST }${$data.PlanInfo[0].AvatarPicURL}" alt="策划师头像" id="planerAvatar">
 					</div>
@@ -113,13 +113,21 @@
 						<a  class="btn btn-warning" id="TALK" target="_blank">我要咨询</a>						
 					</div>
 				</div>
-				<div class="col-md-5">
-					<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].AdultPrice}</span>元</h4>
-					<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即购买</button></a>
+				<div class="col-md-5 clearfix">
+					<div class="row">
+						<div class="col-xs-6 col-md-12">
+							<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].AdultPrice}</span>元</h4>
+						</div>
+						<div class="col-xs-6 col-md-12">
+							<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即购买</button></a>
+						</div>
+					</div>
 				</div>
-				<div class="col-md-2">
-					<p><i class="fa fa-heart-o"></i>添加收藏</p>
-					<p><span id="playedNum">99</span>人玩过 | <span id="commetsNum">99</span>条评论</p>
+				<div class="col-md-2 clearfix">
+					<div class="row">
+						<p class="col-xs-6 col-md-12"><i class="fa fa-heart-o"></i>添加收藏</p>
+						<p class="col-xs-6 col-md-12"><span id="playedNum">99</span>人玩过 | <span id="commetsNum">99</span>条评论</p>
+					</div>
 				</div>		
 			</div><!-- end main -->
 		</div><!-- end 咨询师部分project -->
@@ -240,8 +248,7 @@
 								</a>
 								<div class="media-body">
 									<p>${PlanName}</p>
-									<span class="label label-default">方案</span>
-									<p class="text-warning">￥<strong>${AdultPrice}</strong></p>
+									<p class="planprice">方案 <span class="text-warning">¥<strong>${AdultPrice}</strong></span></p>
 								</div>
 							</div>
 						</div>
