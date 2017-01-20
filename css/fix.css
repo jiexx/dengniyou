@@ -34,7 +34,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .fixedBar ul li i{width:36px; height: 36px; line-height: 36px; font-size: 20px;}
 .indexpage .fixedBar ul li p{ margin-bottom: 6px;}
 .indexpage .fixedBar ul li .kefu{background-image: url(../img/kefu.png); display: inline-block; width:24px; height: 24px;}
-.indexpage .topWidth{width:90%; max-width: 1200px; margin:0 auto;}
+.indexpage .topWidth{max-width: 1200px; margin:0 auto;}
+.indexpage .topWidth .logo{display: inline-block;}
+.indexpage .topWidth .panel-body .both-end,.indexpage .topWidth .panel-body .inter-edition,
+.indexpage .topWidth .panel-body .user-center{display: inline-block; margin-left: 20px;}
+.indexpage .topWidth .panel-body .topLeft{margin-bottom: 10px;}
 .indexpage .topWidth .panel-body .col-md-6 span,.indexpage .topWidth .panel-body .col-md-6 a{font-size: 14px;}
 .indexpage .topWidth .panel-body .col-md-6 .on{background-color: #F9703C;}
 .indexpage .topWidth .panel-body #userlogin span{color: #F9703C; font-weight: bold;}
@@ -54,12 +58,14 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:82px; /*height: 34px; */line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
 .indexpage .topWidth .navBar li.active{background-color: #006583;}
 .indexpage .topWidth .navBar li a{color: #fff; font-weight: bold;}
-.indexpage footer{height: 366px; background-color: #4d4d4d; color: #FFF; padding-top: 20px}
+.indexpage footer{background-color: #4d4d4d; color: #FFF; padding-top: 20px}
 .indexpage footer .hr{height: 0; border-top:1px dashed #FFF;margin:10px 0;}
 .indexpage footer .info {width: 90%; max-width: 1200px; margin:0 auto;}
-.indexpage footer .info .h3{height: 50px; line-height: 40px;}
+.indexpage footer .info h3{height: 50px; line-height: 40px; color: #fff; margin-top: 0; margin-bottom: 0;}
+.indexpage footer .info .contact h4{font-size: 14px;}
+.indexpage footer .info>div{margin-bottom: 10px;}
 .indexpage footer .info li{font-size: 16px; line-height: 38px; height: 30px;}
-.indexpage footer .info .fa,footer .info .tel{line-height: 50px;}
+/*.indexpage footer .info .fa,footer .info .tel{line-height: 50px;}*/
 .indexpage footer .info .fa{font-size: 38px; text-indent: 2px;}
 .indexpage footer .info .tel{font-size: 16px;}
 .indexpage footer .picList{width:520px;margin: 10px auto;}
@@ -71,7 +77,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .fixedPos ul li a{color:#FFF;}
 .indexpage .fixedPos ul li#backTop{background:#999 url(../img/toTop.png) no-repeat center center;}
 .indexpage .fixedPos ul li.kefu{background:#999 url(../img/kefuLg.png) no-repeat center center ;}
-.indexpage .text-warning { color: #eea236; }
+.indexpage .text-warning { color: #F9703C; }
 .indexpage .hovereffect .overlay{width:100%; height:100%; position:absolute; overflow:hidden; bottom:0; left:0; opacity:0;background-color:rgba(0,0,0,0.5);-webkit-transition:all .4s ease-in-out;transition:all .4s ease-in-out}
 .indexpage .hovereffect img{height: 100%; width:100%; display:block; -webkit-transition:all .4s linear; transition:all .4s linear; position: absolute; }
 .indexpage .hovereffect .head{text-transform:uppercase; color:#fff; text-align:left;position:absolute; bottom:0; left:0; width: 100%; opacity:0; font-size:17px; background:rgba(0,0,0,0.5);
@@ -164,6 +170,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .project h1 { font-size: 24px; font-weight: bold; color: #333; padding-left: 20px; margin-bottom: 20px;}
 .plandetail-page .project h1 a{display: inline-block; margin-left: 15px; background-color: #00B8EE; color: #fff; border-color: #00B8EE; padding: 5px 6px;}
 .plandetail-page .project .project-main { border-bottom: 1px solid #ccc; border-top: 1px solid #ccc; padding: 10px 0; }
+.plandetail-page .project .project-main>div{margin-bottom: 10px;}
 .plandetail-page .project .project-main .imgBox, .project .project-main .planner { float: left; }
 .plandetail-page .project .project-main .imgBox { height: 68px; width: 68px; border-radius: 32px; overflow: hidden; margin-right: 20px; }
 .plandetail-page .project .project-main .imgBox img { width: 68px; height: 68px; }
@@ -173,7 +180,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .project .planner i { font-size: 20px; text-indent: 10px; color: #fa703e; }
 .plandetail-page .project .price { color: #fa703e; height: 24px; line-height: 24px; }
 .plandetail-page .project .price span { font-size: 24px; }
-.plandetail-page .project .btn-primary { border-color: #F9703C; background-color: #F9703C; color: #fff; border-radius: 20px; margin: 10px 0 0; outline: none;}
+.plandetail-page .project .btn-primary { border-color: #F9703C; background-color: #F9703C; color: #fff; border-radius: 20px; outline: none;}
 .plandetail-page .project .project-main .col-md-2 p { height: 30px; line-height: 30px; }
 .plandetail-page .plandetail-main{ margin-top: 20px}
 .plandetail-page .plandetail-main .main-left{padding-left: 0;}
@@ -185,7 +192,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .recommendBox{margin-top: 10px;}
 .plandetail-page .recommendBox h2 { background-color: #00b8ee; font-size: 24px; color: #fff; line-height: 50px; text-indent: 10px; text-align: center; margin-top: 0; margin-bottom: 0;}
 .plandetail-page .recommendBox .list-group{margin-bottom: 0;}
-.plandetail-page .recommendBox .list-group .label-default{background-color: #ddd;}
+.plandetail-page .recommendBox .list-group .planprice span{margin-left: 60px;}
 .plandetail-page .recommendBox .list-group p{text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 /*.plandetail-page .recommendBox ul{padding-top: 15px;}
 .plandetail-page .recommendBox ul li { height: 82px; padding: 10px; border-bottom: 1px solid #F5F5F5; }
@@ -205,7 +212,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .scheduleNav .navList i { font-size: 30px; line-height: 46px; }
 .plandetail-page .address { border-bottom: 1px solid #00b8ee; text-align: left; padding-left: 45px;}
 .plandetail-page .address .starter{ position: relative; left: -44px;}
-.plandetail-page .address .starter, .address .pass { font-size: 14px; color: #333; padding: 5px; }
+.plandetail-page .address .starter, .address .pass { font-size: 14px; color: #333; padding: 5px; white-space: nowrap;}
 .plandetail-page .address .starter i, .address .pass i { color: #00b8ee; }
 .plandetail-page .address .starter span, .address .pass span{ color: #666;}
 .plandetail-page .feature { padding: 10px 0; }
