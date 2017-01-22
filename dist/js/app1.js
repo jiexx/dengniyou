@@ -491,7 +491,7 @@
             var Reason = $('#Reason').val();
             var ApplyRefund = $('#ApplyRefund').val();
             var RefundDec = $('#RefundDec').val();
-            var OrderID = response.OrderDetail[0].OrderID
+            var OrderID = response.OrderDetail[0].OrderID;
 
             var user = $.rogerGetLoginUser();
             complaintdetail = {"Reason":Reason,"ApplyRefund":ApplyRefund,"UserID":user.UserID,"OrderID":OrderID};
@@ -516,26 +516,7 @@
             User:PS.User
         };
     };
-    var initUserInfo = function (param) {
-        var usr = $.rogerGetLoginUser();
-        return {
-            User: [{
-                CityName:'',
-                CountryName:'',
-                CityID:usr.CityID,
-                CountryID:usr.CountryID,
-                Labels:usr.Labels.split(','),
-                Sex:usr.Sex,
-                TrueName:usr.TrueName,
-                UserID:usr.UserID,
-                UserName:usr.UserName,
-                ComLogo:usr.ComLogo,
-                ComAdv:usr.ComAdv,
-                AvatarPicURL:usr.AvatarPicURL
-            }],
-            IMGHOST:$.rogerImgHost()
-        };
-    };
+    
     var ctrlCityChooser2 = function (PS, realView) {
         $('#cityChooser').modal('show');
         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
@@ -551,25 +532,11 @@
         });
     };
     var ctrlUserInfo = function(response, realView) {
-        var usr = $.rogerGetLoginUser();
-        console.log(usr,usr.Labels.split(','));
-        result = {
-            User: [{
-                CityName:'',
-                CountryName:'',
-                CityID:usr.CityID,
-                CountryID:usr.CountryID,
-                Labels:usr.Labels.split(','),
-                Sex:usr.Sex,
-                TrueName:usr.TrueName,
-                UserID:usr.UserID,
-                UserName:usr.UserName,
-                ComLogo:usr.ComLogo,
-                ComAdv:usr.ComAdv,
-                AvatarPicURL:usr.AvatarPicURL
-            }],
-            IMGHOST:$.rogerImgHost()
-        };
+
+        $('input[name="sex"]').on('change',function(){
+          var val=$(this).val();
+          response.User[0].Sex = val;
+        });
 
         response.createCity = function (result, Spot) {
             $.rogerTrigger('#modal', '#/citychooser2', {User:result});
@@ -577,9 +544,10 @@
 
         $('#userUpdate').rogerOnceClick(response, function (e) {
             var data = e.data.User;
+            data[0].Labels = data[0].Labels.join(';');
             console.log(e.data.User);
             //data.Labels = data.Labels.join();
-            $.rogerPost('/user/update', data, function (respJSON) {
+            $.rogerPost('/user/update', data[0], function (respJSON) {
                 $.rogerNotice({Message: '个人信息修改成功'});
             });
         });
@@ -910,7 +878,7 @@
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
         '#/orderdetail':              {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
 	    '#/plansearch':               {view:'planSearch.html',                                rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
-        '#/userinfo':                 {fragment:'fragment/userInfo.html',                      rootrest: '/user/info',                    ctrl: ctrlUserInfo},
+        '#/userinfo':                 {fragment:'fragment/userInfo-visitor.html',                      rootrest: '/user/info',                    ctrl: ctrlUserInfo},
         '#/citychooser2':             {fragment: 'fragment/dialog-city-chooser.html',    init: initCityChooser2,                     ctrl: ctrlCityChooser2}
     });
 	

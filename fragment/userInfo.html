@@ -38,7 +38,7 @@
               {{if $data.User[0].AvatarPicURL}}
               <div class="col-md-5">
                 <div class="imgBox">
-                  <img src="${$data.IMGHOST}${$data.User[0].AvatarPicURL}">
+                  <img name="autoPrefix" src="${$data.User[0].AvatarPicURL}">
                   <a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/User/0/AvatarPicURL" ></a>
                 </div>
               </div>
@@ -59,15 +59,24 @@
           <div class="form-group">
             <label  class="col-sm-2 control-label">真实姓名：</label>
             <div class="col-sm-10">
-              <input type="text" class="form-control" value="${$data.User[0].TrueName}"  data-value="/TrueName">
+              <input type="text" class="form-control" value="${$data.User[0].TrueName}"  data-value="/User/0/TrueName">
             </div>
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label">性别：</label>
             <div class="col-sm-10">
-              <div class="row">
-                <div class="col-md-3"><input type="radio" name="sex"  value="${$data.User[0].Sex}"  data-value="/User/0/Sex" checked>男</div>
-                <div class="col-md-3"><input type="radio" name="sex"  value="${$data.User[0].Sex}"  data-value="/User/0/Sex" >女</div>
+              <div class="row" >
+                <div class="col-md-3">
+                {{if User[0].Sex == 1}}
+                <input type="radio" name="sex"  value="1"   checked>
+                {{else}}
+                <input type="radio" name="sex"  value="1"  >男
+                {{/if}}
+                </div>
+                <div class="col-md-3">
+                {{if User[0].Sex == 0}}<input type="radio" name="sex"  value="0" checked>
+                {{else}}<input type="radio" name="sex"  value="0" >女
+                {{/if}}</div>
               </div>
             </div>
           </div>
@@ -76,10 +85,10 @@
             <label  class="col-sm-2 control-label">居住地：</label>
             <div class="col-sm-10">
               <ul class="label-base">
-                {{if $data.CityID }}
+                {{if $data.User[0].CityID }}
                 <li><input type="text" value="${$data.User[0].CountryName} ${$data.User[0].CityName}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/User/0/CityID" ></a></li>
                 {{/if}}
-                {{if !$data.CityID }}
+                {{if !$data.User[0].CityID }}
                 <li><div class="addItemBtn" data-op="change" data-pointer="/User/0/CityID" data-action="createCity"> + </div></li>
                 {{/if}}
               </ul>
@@ -92,7 +101,7 @@
               {{if $data.User[0].ComLogo}}
               <div class="col-md-5">
                 <div class="imgBox">
-                  <img name="needPrefix" src="${$data.IMGHOST}${$data.User[0].ComLogo}">
+                  <img name="needPrefix" src="${$data.User[0].ComLogo}">
                   <!--<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/User/0/ComLogo" ></a>-->
                 </div>
               </div>
@@ -117,7 +126,7 @@
                 {{each $data.User[0].Labels}}
                   <li><input type="text" value="${$data.User[0].Labels[$index]}" data-value="/User/0/Labels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/User/0/Labels/${$index}"></a></li>
                 {{/each}}
-                <li><div class="addItemBtn" data-op="change" data-pointer="/User/0/Labels-" data-action="createLabel"> + </div></li>
+                <li><div class="addItemBtn" data-op="change" data-pointer="/User/0/Labels/-" data-action="createLabel"> + </div></li>
               </ul>
             </div>
           </div>    
@@ -135,4 +144,4 @@
   </div>    
   <!-- 右侧详细内容结束 -->
 </div>
-<!-- 内容部分结束
+<!-- 内容部分结束-->

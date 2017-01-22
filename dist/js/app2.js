@@ -4,6 +4,8 @@
     var policy3 = '1  景点游览和公务/商务活动期间的服务费用；\r\n2  超时等待的费用，资费参看服务描述；\r\n3  机场和送达目的地的停车费。';
     var policy4 = '1  公务和商务活动中的专业翻译费用（可另付费提供）\r\n2  护照费用；\r\n3  航空公司燃油涨幅；\r\n4  酒店内电话、上网，传真、洗熨、收费电视、饮料等额外费用；\r\n5  酒店门童，餐馆服务生小费；\r\n6  报价中未提及的门票；\r\n7  因不可抗拒的客观原因（如天灾、战争、罢工等）、航空公司航班延误或取消等特殊情况导致行程取消或变更，由此产生的额外费用（如延期签证费、住、食及交通费、国家航空运价调整等）；\r\n8  导游及司机加班工资，资费如服务描述；\r\n9  导游及司机行程中缺餐补助，资费如服务描述；\r\n10  服务及方案描述中未提及的景点费用。';
     var policy5 = '1  因游客擅自行动走失，发生事故等产生的费用由游客自行承担；\r\n2  如遇不可预见的事件，如堵车，交通事故等，导游与游客商定可临时合理更改行程，并继续旅程，由此产生的加班费用和超程费用由游客承担；\r\n3  旅客不可要求导游进行违反交通规则、法律、当地风俗的活动，如旅客有违规、违法行为倾向导游须劝阻，劝阻无效则报警处理；\r\n4  导游不可强制旅客参与购物活动或参加自费项目，约定行程外项目需取得旅客同意；\r\n5  原则上导游与游客共进正餐（午餐和晚餐），费用由游客支付，缺少正餐时游客应支付缺餐补助；\r\n6  如导游陪同游客游览景点，游客需为导游支付门票费用。';
+    
+
     function bindRidoesForSwitch (){
         var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
 
@@ -100,6 +102,34 @@
                 return;
             }
             $.rogerLocation('#/travelogue?UserID='+user.UserID+'&page=1');
+        });
+
+
+        if( !$.trim( $('#modal').html() ) ) {
+            $('#modal').rogerReloadFile('./fragment/dialog-login.html');
+        }
+        if($.rogerIsLogined()) {
+            $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
+            $('#usrlogout').click(function () {
+                $.rogerLogout();
+                $.rogerRefresh();
+            });
+            $.rogerHideLogin();
+        }else {
+            $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogin" data-toggle="modal" data-target="#homeLogin">登录</span>');
+            $('#usrlogin').click(function () {
+                $.rogerLogin('#homeLogin', '/login'/*, '/dashboard.html'*/);
+                //$.rogerShowLogin();
+            })
+        }
+        $('#usercenter').rogerOnceClick2(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
         });
 
     }
@@ -779,47 +809,7 @@
         realView.rogerCropImages();
     };
     
-    var ctrlUserInfo = function(response, realView) {
-        var usr = $.rogerGetLoginUser();
-        console.log(usr,usr.Labels.split(','));
-        result = {
-            User: [{
-                CityName:'',
-                CountryName:'',
-                CityID:usr.CityID,
-                CountryID:usr.CountryID,
-                Labels:usr.Labels.split(','),
-                Sex:usr.Sex,
-                TrueName:usr.TrueName,
-                UserID:usr.UserID,
-                UserName:usr.UserName,
-                ComLogo:usr.ComLogo,
-                ComAdv:usr.ComAdv,
-                AvatarPicURL:usr.AvatarPicURL
-            }],
-            IMGHOST:$.rogerImgHost()
-        };
-
-        response.createCity = function (result, Spot) {
-            $.rogerTrigger('#modal', '#/citychooser2', {User:result});
-        };
-
-        $('#userUpdate').rogerOnceClick(response, function (e) {
-            var data = e.User;
-            console.log(e.User);
-            //data.Labels = data.Labels.join();
-            $.rogerPost('/user/update', data, function (respJSON) {
-                $.rogerNotice({Message: '个人信息修改成功'});
-            });
-        });
-
-        response.createLabel = function (User) {
-            User.Labels.push('');
-        };
-
-        realView.rogerCropImages();
-        bindRidoesForSwitch();
-    };
+    
 
     var ctrlServicedetail = function (response, realView) {
         // 车辆与装备轮播图初始化
@@ -2345,6 +2335,56 @@
 
     };
 
+    var initCityChooser5 = function (PS) {
+        return {
+            User:PS.User
+        };
+    };
+    var ctrlCityChooser5 = function (PS, realView) {
+        $('#cityChooser').modal('show');
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data.User;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
+            data.User[0].CityID = city[0];
+            data.User[0].CityName = city[1];
+            data.User[0].CountryID = country[0];
+            data.User[0].CountryName = country[1];
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data);
+        });
+    };
+    var ctrlUserInfo = function(response, realView) {
+
+        $('input[name="sex"]').on('change',function(){
+          var val=$(this).val();
+          response.User[0].Sex = val;
+        });
+
+        response.createCity = function (result, Spot) {
+            $.rogerTrigger('#modal', '#/citychooser5', {User:result});
+        };
+
+        $('#userUpdate').rogerOnceClick(response, function (e) {
+            var data = e.data.User;
+            data[0].Labels = data[0].Labels.join(';');
+            console.log(e.data.User);
+            //data.Labels = data.Labels.join();
+            $.rogerPost('/user/update', data[0], function (respJSON) {
+                $.rogerNotice({Message: '个人信息修改成功'});
+            });
+        });
+
+        response.createLabel = function (User) {
+            User.User[0].Labels.push('');
+            $.rogerRefresh(User);
+        };
+
+        realView.rogerCropImages();
+        bindRidoesForSwitch();
+    };
+
+
 
 	$.rogerRouter({
 		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                          ctrl: ctrlDashboard},
@@ -2378,7 +2418,6 @@
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
         '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
-        '#/userinfo':                     {fragment:'fragment/userInfo.html',                          rootrest: '/user/info',                                                ctrl: ctrlUserInfo},
         '#/equipdetail':                  {view:'product-equip-detail.html',                          rootrest:'/facility/detail',                                       ctrl: ctrlFacilityDetail},
         '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',	                          rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
@@ -2398,7 +2437,8 @@
         '#/orderdetail':                  {view:'payCompletion.html',	                                    rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
         '#/citychooser3':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser3},
         '#/citychooser4':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser4},
-
+        '#/userinfo':                 {fragment:'fragment/userInfo-guide.html',                      rootrest: '/user/info',                    ctrl: ctrlUserInfo},
+        '#/citychooser5':             {fragment: 'fragment/dialog-city-chooser.html',    init: initCityChooser5,                     ctrl: ctrlCityChooser5}
     });
 
 

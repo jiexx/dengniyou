@@ -1,0 +1,7 @@
+{
+	"Comment": {"sql": "INSERT INTO traveluserdb.tab_travelevaluate(RelativeID, RelativeType, SponsorID, Remark, CreateDate)VALUES(?,1,?,?,NOW());",	"params":["PlanID", "UserID","Comment"],
+		"Picture": {"sql": "INSERT INTO traveluserdb.tab_travelevaluatepic(EvaluateID, PicURL, CreateDate)VALUES(?,?,NOW());",	"params":["insertId", "Pics"], "files":["Pics"], "findkey": "insertId"}
+
+	}
+
+}
