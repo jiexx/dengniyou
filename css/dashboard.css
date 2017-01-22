@@ -1,11 +1,11 @@
 /* * Base structure */
-.dashboard-page #dashboard-top{background: url(../img/dashboard-top.png) no-repeat;}
+.dashboard-page #dashboard-top{background-color: #333;}
 .dashboard-page .navbar-header .logo{float: left; padding-left: 3%;}
 .dashboard-page .navbar-header .navbar-brand{margin-left: 17%; }
 .dashboard-page .navbar-header .navbar-brand a{font-size: 20px; font-weight: bold; color: #fff; line-height: 50px; }
 .dashboard-page .dashboard-login{}
 .dashboard-page .sub-header{padding-bottom: 10px; border-bottom: 1px solid #eee;}
-.dashboard-page .navbar-fixed-top{border: 0; height: 79px; line-height: 79px;}
+.dashboard-page .navbar-fixed-top{border: 0; height: 79px; }
 .dashboard-page .sidebar{width:210px; position: fixed; top: 25px; bottom: 0; left: 0; z-index: 1000; display: block; padding: 20px; overflow-x: hidden; overflow-y: auto; background-color: #e8e8e8;}
 /*.dashboard-page .sidebar{background: url(../img/dashboard-sidebar.png) no-repeat;}*/
 .dashboard-page .nav-sidebar{margin-top: 120px; padding-left: 11%;}
