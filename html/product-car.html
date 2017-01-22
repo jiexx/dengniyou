@@ -50,6 +50,7 @@
 <!-- 页码 -->
 <div class="container">
 	<div class="pagination">
+	{{if $data.Counts[0].Count != 0}}
 		<li>
 			<a href="#" aria-label="Previous">
 				<span aria-hidden="true">&laquo;</span>
@@ -63,5 +64,6 @@
 				<span aria-hidden="true">&raquo;</span>
 			</a>
 		</li>
+	{{/if}}
 	</div>
 </div>

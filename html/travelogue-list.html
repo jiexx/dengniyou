@@ -41,7 +41,9 @@
 					</div>
 				</div> <!-- end media -->
 		  	</div>
-		    <div class="col-md-2 margin-top">{{if STATUS==0}}草稿中{{else}}已发布{{/if}}</div>
+		    <div class="col-md-2 margin-top">
+		    {{if STATUS==0}}<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="草稿中" data-status='1' data-articleid=${articleID}> {{/if}}{{if STATUS==1}}<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="草稿中" data-status='0'  data-articleid=${articleID} checked > {{/if}}
+		    </div>
 		    <div class="col-md-1 service-edit">
 		   		<a href="#/travelogueedit?articleID=${articleID}">
 		   			<span class="btn  glyphicon glyphicon-edit"></span>

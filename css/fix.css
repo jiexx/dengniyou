@@ -35,10 +35,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .fixedBar ul li p{ margin-bottom: 6px;}
 .indexpage .fixedBar ul li .kefu{background-image: url(../img/kefu.png); display: inline-block; width:24px; height: 24px;}
 .indexpage .topWidth{max-width: 1200px; margin:0 auto;}
-.indexpage .topWidth .logo{display: inline-block;}
+.indexpage .topWidth .logo{display: inline-block; margin-left: 20px;}
+.indexpage .topWidth .panel-body{padding:0; width:1200px;}
 .indexpage .topWidth .panel-body .both-end,.indexpage .topWidth .panel-body .inter-edition,
 .indexpage .topWidth .panel-body .user-center{display: inline-block; margin-left: 20px;}
-.indexpage .topWidth .panel-body .topLeft{margin-bottom: 10px;}
+.indexpage .topWidth .panel-body .topLeft{margin-bottom: 10px; padding-top:20px;}
 .indexpage .topWidth .panel-body .col-md-6 span,.indexpage .topWidth .panel-body .col-md-6 a{font-size: 14px;}
 .indexpage .topWidth .panel-body .col-md-6 .on{background-color: #F9703C;}
 .indexpage .topWidth .panel-body #userlogin span{color: #F9703C; font-weight: bold;}
@@ -106,7 +107,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .homepage .label-self{display: inline-block;  padding: 0 8px; background-color: #FA713D; border-radius: 17px; margin: 0 5px; line-height: 28px;}
 .homepage .continent-tips li{display: inline-block;  padding: 6px 8px; background-color: #FA713D; border-radius: 17px; margin-right: 5px; cursor: pointer;}
 .homepage .regular-grid div{padding: 0; margin: 0; }
-.homepage .regular-grid  .continent-box{ margin-bottom: 50px; margin-top: 10px;}
+.homepage .regular-grid  .continent-box{margin-top: 10px;}
 .homepage .hovereffect { width:100%; height:100%; float:left; overflow:hidden; position:relative; text-align:center; cursor:default;}
 .homepage .hovereffect ul li:first-child{margin-bottom: 10px;}
 .homepage .hovereffect li a { font-size: 14px; color: #fff; text-decoration: none; text-align: left;}
@@ -124,10 +125,9 @@ div.c-wrapper{ width: 100%; margin: auto;}
 	/* end 首页搜索框*/
 
 	/*跑马灯推荐区*/
-.solution{max-width: 1200px; height: 106px; margin:0 auto 30px; padding-top:30px; overflow: hidden; position: relative; }
-/*.solution .box{width:600px; overflow: visible;}*/
-.solution .box ul{display: inline-block; width:3550px;}
-.solution li {display: inline-block; width:335px; margin-right: 10px;}
+.solution{max-width: 1200px; margin:0 auto; padding-top:10px; overflow: hidden; position: relative; }
+.solution .box ul{display: inline-block; width:3550px; height: 80px; margin-bottom: 0;}
+.solution li {display: inline-block; width:335px; margin-right: 10px; }
 .solution li .detail{width:335px; margin:0 auto; background-color: #FFF;}
 .solution li .img{width:115px; height: 80px; display: inline-block; vertical-align: top;}
 .solution li img{width:115px; height:80px;}
@@ -220,16 +220,16 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .feature .text{ padding-top: 5px;}
 .plandetail-page .scheduleDetails ul li h3 { height: 45px; line-height: 45px; border-top: 2px solid #00b8ee; border-bottom: 1px solid #00b8ee; text-align: left; text-indent: 20px; margin-top: 0; margin-bottom: 0;}
 .plandetail-page .scheduleDetails li .content { padding: 15px 55px; width: 100%; background-color: #fff;}
-.plandetail-page .scheduleDetails .content li { width: 290px; height: 200px; float: left; overflow: hidden; margin-bottom: 15px;}
-.plandetail-page .scheduleDetails .content li:nth-child(4n){ width: 150px; }
+.plandetail-page .scheduleDetails .content li { width: 218px; height: 200px; float: left; overflow: hidden; margin-bottom: 15px;}
+.plandetail-page .scheduleDetails .content li:nth-child(5n){ width: 150px; }
 .plandetail-page .scheduleDetails .content li:last-child .nextBtn{ display: none; }
 .plandetail-page .scheduleDetails .content .picText img { height: 100px; width: 150px; }
 .plandetail-page .scheduleDetails .content .picText, .scheduleDetails .content .nextBtn { float: left; }
-.plandetail-page .scheduleDetails .content .nextBtn { margin: 0 40px; }
 .plandetail-page .scheduleDetails .content .picText { width: 150px; }
 .plandetail-page .scheduleDetails .content strong{display: block; height: 16px; line-height: 16px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 .plandetail-page .scheduleDetails .content p{margin-bottom: 0;}
 .plandetail-page .scheduleDetails .content .des{word-break: break-all; text-overflow: ellipsis; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;}
+.plandetail-page .scheduleDetails .content .moreDetail{position: relative; top:-11px; right: -5px; cursor: pointer;}
 .plandetail-page .scheduleDetails .content .nextBtn span { font-size: 60px; height: 150px; line-height: 150px; color: #00b8ee; }
 .plandetail-page .scheduleDetails .footer, .comments .footer { height: 44px; background-color: #00b8ee; color: #fff; text-align: center; font-size: 16px; line-height: 46px; }
 /*行程概览结束*/
@@ -242,7 +242,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .comments .commentList>li { border-bottom: 1px solid #00b8ee; padding: 10px; }
 .plandetail-page .comments .commentList>li:last-child{border-bottom: none;}
 .plandetail-page .comments .commentList li .col-md-2 { text-align: center; }
-.plandetail-page .comments .col-md-2 img { height: 60px; width: 60px; }
+.plandetail-page .comments .col-md-2 img { height: 40px; width: 40px; }
 .plandetail-page .comments .col-md-10 .userId { font-size: 14px; height: 16px; line-height: 16px; margin-bottom: 16px; }
 .plandetail-page .comments .col-md-10 .comment-pic li { display: inline-block; }
 .plandetail-page .comments .col-md-10 .comment-pic img { width: 80px; height: 80px; }
@@ -264,10 +264,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 
 /*企业信息部分*/
 .interpriseArea .content{/*background-color: inherit;*/}
-.interpriseInfo {height: 94px; line-height: 94px; border-bottom: 1px dotted #b2b2b2; }
-.interpriseInfo img { height: 60px; width: 100px; }
+.interpriseInfo {height: 94px; border-bottom: 1px dotted #b2b2b2; }
+.interpriseInfo img { height: 60px; width: 100px; margin-top: 17px;}
 .interpriseInfo div { float: left; height: 94px; font-size: 16px; }
-.interpriseInfo .contact,.interpriseInfo .ad{ line-height: 30px; padding:14px 8px 0; font-size: 16px; color: #333;}
+.interpriseInfo .ad{line-height: 94px; font-size: 30px; padding-left: 10px;}
+.interpriseInfo .contact{line-height: 30px; padding-top: 17px;}
 .interpriseArea nav .navbar-header button{background-color: #666;}
 .interpriseArea nav .navbar-header button span{background-color: #fff;}
 .interpriseArea nav .navbar-header .navbar-brand{background-color: #00b8ee; border-color: #00b8ee; border-radius: 28px; color: #fff;height: 37px; line-height: 6px; margin-top: 10px; margin-right: 13px; margin-left: 3px;}
@@ -635,7 +636,6 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .scheduleShort textarea{width:100%; height: 195px;}
 .editPage .scheduleShort textarea{border:1px solid #CCC;}
 .editPage .scheduleShort .form-group,.editPage .scheduleShort .row{position: relative; }
-.editPage .scheduleShort .glyphicon-remove-circle{left:58%; }
 .editPage .scheduleShort form label{text-align: left;}
 .editPage .scheduleShort .col-md-6{margin-bottom: 10px;}
 /*租车编辑页*/
@@ -765,7 +765,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*导游端列表页*/
 .service-dropdown{padding-top: 15px;}
 .service-dropdown .service-release button{background-color: #FA703E;}
-.service-list{font-size: 14px; color: #666; margin-top: 10px;}
+.service-list{font-size: 14px; color: #666;}
 .service-list .service-name{padding-left: 6%;}
 .service-list .media-heading{margin-top: 30px;}
 .service-list .margin-top{margin-top: 30px;}

@@ -6,7 +6,7 @@
 .dashboard-page .dashboard-login{}
 .dashboard-page .sub-header{padding-bottom: 10px; border-bottom: 1px solid #eee;}
 .dashboard-page .navbar-fixed-top{border: 0; height: 79px; line-height: 79px;}
-.dashboard-page .sidebar{width:200px; position: fixed; top: 25px; bottom: 0; left: 0; z-index: 1000; display: block; padding: 20px; overflow-x: hidden; overflow-y: auto; background-color: #e8e8e8;}
+.dashboard-page .sidebar{width:210px; position: fixed; top: 25px; bottom: 0; left: 0; z-index: 1000; display: block; padding: 20px; overflow-x: hidden; overflow-y: auto; background-color: #e8e8e8;}
 /*.dashboard-page .sidebar{background: url(../img/dashboard-sidebar.png) no-repeat;}*/
 .dashboard-page .nav-sidebar{margin-top: 120px; padding-left: 11%;}
 .dashboard-page .nav-sidebar > li{height: 86px; line-height: 86px; border-bottom: 1px solid #CCC;}
@@ -22,8 +22,8 @@
 .dashboard-page .nav-sidebar > li .settle-icon{background-position: 2px -113px;}
 .dashboard-page .nav-sidebar > li .data-icon{background-position: 2px -141px;}
 .dashboard-page .nav-sidebar > li > a span{display: inline-block; margin-left: 35px;}
-.dashboard-page .mainbody{ margin-left: 14%; background-color: #fff; margin-top: 123px;}
-.dashboard-page .mainbody .mainbody-top{background-color: #eee; margin: 0 auto; padding: 20px; margin-bottom: 20px; -webkit-box-shadow: 3px 3px 9px #999; -moz-box-shadow: 3px 3px 9px #999; -ms-box-shadow: 3px 3px 9px #999; -o-box-shadow: 3px 3px 9px #999; box-shadow: 3px 3px 9px #999;}
+.dashboard-page .mainbody{ margin-left: 14%; background-color: #fff; margin-top: 100px;}
+.dashboard-page .mainbody .mainbody-top{background-color: #eee; margin: 0 auto; padding: 20px; -webkit-box-shadow: 3px 3px 9px #999; -moz-box-shadow: 3px 3px 9px #999; -ms-box-shadow: 3px 3px 9px #999; -o-box-shadow: 3px 3px 9px #999; box-shadow: 3px 3px 9px #999;}
 .dashboard-page .mainbody .mainbody-top h5{font-size: 14px; font-weight: bold; color: #1d1d1d; }
 .dashboard-page .mainbody .mainbody-top .list-group span{font-size: 14px; color: #ff6600;}
 .dashboard-page .mainbody .mainbody-top .list-group span i{display: inline-block; width: 1px; font-style: normal; margin-left: 10px; margin-right: 10px;}
