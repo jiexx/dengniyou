@@ -1482,7 +1482,7 @@
                      if (null != respJSON["Policy"] && '' != respJSON["Policy"]) {
                         while(respJSON["Policy"].length < 4)
                             {
-                             respJSON["policy"].push({policyType: '',policyID: '',policyName: '',serviceTypeID: '',day1: '',ratio1: '',day2: '',ratio2: '',day3: '',ratio3: '',day4: '',ratio4: '',customRatio: '',caution: '',description: '',type: 5});
+                             respJSON["Policy"].push({policyType: '',policyID: '',policyName: '',serviceTypeID: '',day1: '',ratio1: '',day2: '',ratio2: '',day3: '',ratio3: '',day4: '',ratio4: '',customRatio: '',caution: '',description: '',type: 5});
                             }
                          result["DetailMain"]["policy"] = respJSON["Policy"];
                      }
@@ -1759,22 +1759,8 @@
             temp["noticeBean"]["type"]=5;
             temp["coverFileWeb"]=coverFiledata;
             temp["filesWeb"]=filedata;
-
-            if(4 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 29;
-            }else if(3 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 28;
-            }else if(2 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 27;
-            }else if(1 == temp["policyBean"]["type"]){
-                temp["policyBean"]["policyID"] = 26;
-            } else {
-                temp["policyBean"]["ratio1"]=0.89;
-                temp["policyBean"]["ratio2"]=0.85;
-                temp["policyBean"]["ratio3"]=0.82;
-                temp["policyBean"]["ratio4"]=0.75;
-            }
-
+            temp["policyBean"]["type"]=5;
+            temp["policyBean"]["serviceTypeID"]=5;
 
             
             temp["imghost"]=e.data.IMGHOST;
@@ -1786,7 +1772,7 @@
                 IMGHOST:e.data.IMGHOST
             };
             $.rogerPost('/new/service/car', data, function(respJSON){
-                $.rogerNotice({Message:'保存包车成功'});
+                $.rogerNotice({Message:'保存租车成功'});
 
                 if(respJSON){
                     //跳转到详情页面
@@ -1819,7 +1805,7 @@
             }else if(temp["serviceTypeName"]=='送机'){
                 temp["serviceTypeID"]=4;
             }            
-            temp["unit"]='天';
+            temp["unit"]='次';
             temp["priceType"]='1';
             temp["serviceStatus"]='3';
             if(temp["pictureIDs"]){
