@@ -323,6 +323,15 @@
                 }
             }
         }
+        var usr = $.rogerGetLoginUser();
+        if(!usr) {
+            $.rogerLogin('#homeLogin', '/login');
+            $.rogerShowLogin();
+            return;
+        }
+        $('#username').val(usr.UserName);
+        $('#phone').val(usr.UserMobile);
+        $('#mail').val(usr.Email);
         var pickr = $("#calendar").flatpickr({
             inline: true,
             disable: disday,
