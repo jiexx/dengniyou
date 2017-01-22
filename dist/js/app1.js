@@ -33,6 +33,7 @@
             }
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
         });
+
     }
 
     var initHomeList = function (param) {
