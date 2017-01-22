@@ -121,6 +121,7 @@
                 $.rogerLocation('#/?UserID='+usr.UserID)
             }
         }
+        $('#productctr').trigger('click');
         
         bindRidoesForSwitch();
         realView.rogerCropImages();

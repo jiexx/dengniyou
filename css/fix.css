@@ -35,10 +35,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .fixedBar ul li p{ margin-bottom: 6px;}
 .indexpage .fixedBar ul li .kefu{background-image: url(../img/kefu.png); display: inline-block; width:24px; height: 24px;}
 .indexpage .topWidth{max-width: 1200px; margin:0 auto;}
-.indexpage .topWidth .logo{display: inline-block;}
+.indexpage .topWidth .logo{display: inline-block; margin-left: 20px;}
+.indexpage .topWidth .panel-body{padding:0; width:1200px;}
 .indexpage .topWidth .panel-body .both-end,.indexpage .topWidth .panel-body .inter-edition,
 .indexpage .topWidth .panel-body .user-center{display: inline-block; margin-left: 20px;}
-.indexpage .topWidth .panel-body .topLeft{margin-bottom: 10px;}
+.indexpage .topWidth .panel-body .topLeft{margin-bottom: 10px; padding-top:20px;}
 .indexpage .topWidth .panel-body .col-md-6 span,.indexpage .topWidth .panel-body .col-md-6 a{font-size: 14px;}
 .indexpage .topWidth .panel-body .col-md-6 .on{background-color: #F9703C;}
 .indexpage .topWidth .panel-body #userlogin span{color: #F9703C; font-weight: bold;}

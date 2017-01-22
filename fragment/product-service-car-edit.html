@@ -194,20 +194,9 @@
 		  <div class="form-group">
 		    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
 		    <div class="col-sm-10 col-md-11">
-		      <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#policydiv" style="margin-bottom: 8px; background-color: #FF6600; padding: 5px;">请选择退订政策</button>
-			    <div id="policyView">
-			    {{if $data.DetailMain.policy[0].type == '4'}}
-					<h3>${$data.DetailMain.policy[0].policyName}</h3>
-					<p>${$data.DetailMain.policy[0].description}</p>
-			    {{else}}
-			    	<h3>${$data.DetailMain.policy[0].policyName}</h3>
-					<p>1、服务开始前${$data.DetailMain.policy[0].day1}天(含)以上退订，退还服务费用的99%；</p>
-					<p>2、服务开始前${$data.DetailMain.policy[0].day2}天(含)以上退订，退还服务费用的50%；</p>
-					<p>3、服务开始前${$data.DetailMain.policy[0].day3}天(含)以上退订，退还服务费用的20%；</p>
-					<p>4、服务开始前${$data.DetailMain.policy[0].day4}天以内退订，不退还服务费用；</p>
-					<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
-				{{/if}}				
-			    </div>
+				<div class="col-sm-10 col-md-11">
+					<textarea name="" data-value="/DetailMain/policy/1/customRatio" class="form-control">${$data.DetailMain.policy[1].customRatio}</textarea>
+				</div>
 		    </div>
 			<!-- 退订政策弹出框 -->
 			<div id="policydiv" class="modal fade">

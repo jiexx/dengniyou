@@ -8,7 +8,7 @@
 				{{else}}
 				<div><img src="../img/LOGO-2.png"  ></div>
 				{{/if}}
-				<div class="ad">${$data.PlanInfo[0].ComAdv}我是广告语测试中</div>
+				<div class="ad">${$data.PlanInfo[0].ComAdv}精彩每一天</div>
 			</div>
 			<div class="col-md-4">
 				{{if PlanMore.length != 0}}
@@ -107,7 +107,7 @@
 							</a>
 							<a class="right carousel-control" href="#carousel-generic" data-slide="next">
 								<span class="glyphicon glyphicon-chevron-right"></span>
-								</a>
+							</a>
 						</div><!-- end carousel -->
 					</div> <!-- end carousel-container -->
 				</div> <!-- end carousel-container -->
@@ -329,4 +329,36 @@
 		</div> <!-- end plandetail-main -->
 	</div>
 	</div> <!-- end plandetail-page -->
-</div> <!-- end container
+</div> <!-- end container-->
+
+<style>
+	#detailBox{width:600px;}
+</style>
+
+<div id="detailBox">
+	<div class="carousel">
+		<div class="carousel-container">
+			<div id="carousel-generic" class="carousel slide" data-ride="carousel">
+				<!-- Wrapper for slides -->
+				<div class="carousel-inner" role="listbox">
+					{{each $data.PlanInfo[0].PicURL}}
+					{{if $index == 0}}
+					<div class="item active">
+					{{else}}
+						<div class="item">
+					{{/if}}
+						<img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
+					</div>
+					{{/each}}
+					</div>
+					<a class="left carousel-control" href="#carousel-generic" data-slide="prev">
+						<span class="glyphicon glyphicon-chevron-left"></span>
+					</a>
+					<a class="right carousel-control" href="#carousel-generic" data-slide="next">
+						<span class="glyphicon glyphicon-chevron-right"></span>
+					</a>
+				</div><!-- end carousel -->
+			</div> <!-- end carousel-container -->
+		</div> <!-- end carousel-container -->
+	</div><!-- end 日历和banner部分widget -->
+</div>
