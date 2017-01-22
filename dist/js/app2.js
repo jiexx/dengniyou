@@ -38,12 +38,12 @@
 
         }
 
-        var urlPath = $.rogerGetPath();
+        var urlPath = $.rogerGetPath() || window.location.hash;
           if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1){
             $('.mainbody-top').show();
             $('#filter').show();
             $('#filter2').hide();
-          }else if(urlPath.indexOf("#/travelogue") != -1){
+          }else if(urlPath.indexOf("#/travelogue") != -1 || urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/travelogueedit") != -1){
             $('.mainbody-top').hide();
           }
           $('.nav-sidebar li').on('click',function(){
@@ -52,7 +52,7 @@
               $('.mainbody-top').show();
               $('#filter').show();
               $('#filter2').hide();
-            }else if(urlPath.indexOf("#/travelogue") != -1){
+            }else if(urlPath.indexOf("#/travelogue") != -1 || urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/travelogueedit") != -1){
                 $('.mainbody-top').hide();
             }
           });
@@ -99,7 +99,7 @@
                 $.rogerShowLogin();
                 return;
             }
-            $.rogerLocation('#/travelogue?UserID='+user.UserID+'&status=0&page=1');
+            $.rogerLocation('#/travelogue?UserID='+user.UserID+'&page=1');
         });
 
     }
@@ -150,16 +150,6 @@
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
-    // var ctrlActivity = function(response, realView) {
-
-    //     bindRidoesForSwitch();
-    //     realView.rogerCropImages();
-    // };
-    // var ctrlCar = function(response, realView) {
-
-    //     bindRidoesForSwitch();
-    //     realView.rogerCropImages();
-    // };
     var ctrlAttraction = function(response, realView) {
         $(".switchCheckbox").bootstrapSwitch();
         $('.release').on('switchChange.bootstrapSwitch', function (e, data) {
@@ -172,6 +162,10 @@
             });
             }
         );
+
+        url = $.rogerGetUrlParam();
+        console.log(url)
+
         realView.rogerCropImages();
         if(response.Counts > 10) {
 
@@ -179,6 +173,32 @@
     };
     
     var ctrlTravelogue = function(response, realView) {
+        $(".switchCheckbox").bootstrapSwitch();
+        $('.release').on('switchChange.bootstrapSwitch', function (e, data) {
+            var status = $(this).data("status");
+            var articleID = $(this).data("articleid");
+            //0,草稿，1发布
+            $.rogerPost('/update/travelogue/status', {articleID:articleID,STATUS:status}, function (respJSON) {
+                $.rogerNotice({Message: '操作成功'});
+
+            });
+            }
+        );
+
+
+        $('#filter2 input[type=radio][name="filterradio"]').on('change',function(e){
+            var usr = $.rogerGetLoginUser();
+            var url = $.rogerGetPath() || window.location.hash;
+            if(!usr) {
+                $.rogerShowLogin();
+                return;
+            }
+            filtertemp = $(this).val();
+            if('all' == filtertemp){
+                filtertemp = null;
+            }
+            $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
+        });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -756,7 +776,6 @@
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
-
     };
     
     var ctrlUserInfo = function(response, realView) {
@@ -928,7 +947,7 @@
             temp = e.data.Travelogue[0];
             var status = $('#publish').data("status")
             $.rogerPost('/update/travelogue/status', {articleID:temp.articleID,STATUS:status}, function(respJSON){
-                $.rogerNotice({Message:'发布攻略成功'});
+                $.rogerNotice({Message:'操作攻略成功'});
                 if(respJSON){
                     //跳转到详情页面
                     $.rogerLocation('#/travelogue?UserID='+user.UserID+'&page=1');
@@ -1225,7 +1244,7 @@
         realView.rogerCropImages();
     } ;
 
-     var initServiceEdit=function(){
+    var initServiceEdit=function(){
          var ServiceID = $.rogerGetUrlParam('ServiceID');
          var usr = $.rogerGetLoginUser();
          result = {
@@ -2061,7 +2080,7 @@
         realView.rogerCropImages();
     } ;
 
-     var initTraveLogueEdit=function(){
+    var initTraveLogueEdit=function(){
         var usr =$.rogerGetLoginUser();
         var type = $.rogerGetUrlParam('type');
 
@@ -2081,29 +2100,26 @@
                 browseCount: '',
                 praiseCount: '',
                 evaluateCount: '',
-                TravelogueDetail: [
-
-                ],
+                TravelogueDetail: []
             },
-
             IMGHOST:$.rogerImgHost()
         };
 
-         var articleID = $.rogerGetUrlParam('articleID');
+        var articleID = $.rogerGetUrlParam('articleID');
 
-         $.rogerPost('/travelogue/detail', {"articleID": articleID}, function (respJSON, reqJSON) {
-             if(respJSON){
+        $.rogerPost('/travelogue/detail', {"articleID": articleID}, function (respJSON, reqJSON) {
+            if(respJSON){
 
-                 if (null != respJSON["Travelogue"] && respJSON["Travelogue"].length > 0) {
-                     returnvalue["Travelogue"]=respJSON["Travelogue"][0];
-                 }
-                 if (null != respJSON["TravelogueDetail"] && '' != respJSON["TravelogueDetail"] && respJSON["TravelogueDetail"].length>0) {
-                     returnvalue["Travelogue"]["TravelogueDetail"] = respJSON["TravelogueDetail"];
-                 }
+                if (null != respJSON["Travelogue"] && respJSON["Travelogue"].length > 0) {
+                    returnvalue["Travelogue"]=respJSON["Travelogue"][0];
+                }
+                if (null != respJSON["TravelogueDetail"] && '' != respJSON["TravelogueDetail"] && respJSON["TravelogueDetail"].length>0) {
+                    returnvalue["Travelogue"]["TravelogueDetail"] = respJSON["TravelogueDetail"];
+                }
 
-                 $.rogerRefresh(returnvalue);
+                $.rogerRefresh(returnvalue);
 
-             }});
+            }});
 
         return returnvalue
 
@@ -2118,6 +2134,24 @@
         };
          TraveLogue.createContent = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             TravelogueDetail.push({label:null, DAY:null, content:'请输入描述', picURL: null});
+            $.rogerRefresh(TraveLogue);
+        };
+        
+
+        TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
+            var index;
+        $('.functionBtn').on('click','li',function(e){
+            index = $(this).data('index');
+        });
+            TravelogueDetail.splice(index,0,{label:' ', DAY:'0', content:null, picURL: null});
+            $.rogerRefresh(TraveLogue);
+        };
+         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){ 
+            TravelogueDetail.splice(index,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+            $.rogerRefresh(TraveLogue);
+        };
+         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){  
+            TravelogueDetail.splice(index,0,{label:null, DAY:null, content:'请输入描述', picURL: null});
             $.rogerRefresh(TraveLogue);
         };
 

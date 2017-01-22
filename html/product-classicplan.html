@@ -9,7 +9,7 @@
     <div class="list-group service-list">
 	    {{each PlansByUser}}
 	    <div class="list-group-item clearfix disabled">
-		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+		  	<div class="col-md-1"></div>
 		  	<div class="col-md-5 service-name">方案</div>
 		  	<div class="col-md-1">价格</div>
 		  	<div class="col-md-2">行程天数</div>
@@ -59,6 +59,7 @@
 <!-- 页码 -->
 <div class="container">
   <div class="pagination">
+  	{{if $data.CountOFPlans[0].Count != 0}}
     <li>
       <a href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
@@ -72,5 +73,6 @@
         <span aria-hidden="true">&raquo;</span>
       </a>
     </li>
+  {{/if}}
   </div>
 </div>

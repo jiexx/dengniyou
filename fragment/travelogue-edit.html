@@ -21,27 +21,34 @@
 
 		<!-- 行程信息（方案） -->
 		<div class="scheduleShort clearfix">
-			<div class="col-md-12">
+			<div class="row">
+			<div class="col-md-6">
 				<h4>行程信息</h4>
-				<div class="pull-right btn-group">
+			</div>
+			<div class="col-md-6">
+				<div class="btn-group">
 					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createDay">添加段落</a>
 					<a class="btn btn-warning   " href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createPicture">添加图片</a>
 					<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createContent">添加描述</a>
 				</div>
 			</div>
+			</div>
 			{{each $data.Travelogue.TravelogueDetail}}
 			{{if label}}
+			<div class="row" style="margin-bottom: 10px;">
 			<div class="col-md-12">
 				<div class="row">
 					<label   class="col-sm-2 col-md-1 control-label">段落标题</label>
-					<div class="col-md-4">
+					<div class="col-md-5">
 						<input type="text" class="form-control"  value="${label}"  data-value="/Travelogue/TravelogueDetail/${$index}/label" placeholder="标题">
 					</div>
 				</div>
 			</div>
+			</div>
 			{{/if}}
 			
 			{{if label==null}}{{if content==null}}{{if articleID}}
+			<div class="row">
 			<div class="col-md-6">
 				<div class="row">					
 					{{if picURL}}
@@ -57,8 +64,10 @@
 					</div>					
 				</div>
 			</div>
+			</div>
 			{{/if}}{{/if}}{{/if}}
 			{{if PE}}
+			<div class="row">
 			<div class="col-md-6">
 				<div class="row">					
 					{{if picURL}}
@@ -74,13 +83,24 @@
 					</div>
 				</div>
 			</div>
+			</div>
 			{{/if}}
 			
 			{{if content }}
+			<div class="row">
 			<div class="col-md-6">
 				<div class="introduction">
 					<textarea name="" rows="6" data-value="/Travelogue/TravelogueDetail/${$index}/content" placeholder="描述">${ content}</textarea>
 				</div>
+			</div>
+			<!-- <div class="col-md-1">
+				<ul class="functionBtn">
+					<li data-op="remove" data-pointer="/Travelogue/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+					<li data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+				</ul>
+			</div> -->
 			</div>
 			{{/if}}
 			{{/each}}

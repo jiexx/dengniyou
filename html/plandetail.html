@@ -1,7 +1,7 @@
 <!-- 企业信息 -->
 <div class="interpriseArea">
 	<div class="container">
-		<div class="interpriseInfo">
+		<div class="interpriseInfo row">
 			<div class="col-md-6">
 				{{if $data.PlanInfo[0].ComAdv}}
 				<div><img src="${ $data.IMGHOST }${$data.PlanInfo[0].ComLogo}"  ></div>
@@ -10,10 +10,27 @@
 				{{/if}}
 				<div class="ad">${$data.PlanInfo[0].ComAdv}我是广告语测试中</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
+				{{if PlanMore.length != 0}}
+				<a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+					<img data-src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+				</a>
+				<a href="#/plandetail?PlanID=${PlanMore[1].PlanID}">
+					<img data-src="${ $data.IMGHOST }${PlanMore[1].PicURL}" alt="">
+				</a>
+				<a href="#/plandetail?PlanID=${PlanMore[2].PlanID}">
+					<img data-src="${ $data.IMGHOST }${PlanMore[2].PicURL}" alt="">
+				</a>
+				{{else}}
+				<a href="javascript:void(0);">
+					<img data-src="" alt="预留广告位">
+				</a>
+				{{/if}}
+			</div>
+			<div class="col-md-2">
 				<!-- <div><img src="" alt="经理/客服头像"></div> -->
 				<div class="contact">
-					<p>企业联系方式：<span class="tel">${$data.PlanInfo[0].UserMobile}</span></p>
+					<p>企业联系方式：<br/><span class="tel">${$data.PlanInfo[0].UserMobile}</span></p>
 					<!-- <p>企业联系邮箱：<span class="email">1234@134.com</span></p> -->
 				</div>
 			</div>
@@ -215,7 +232,7 @@
 												{{if (ScheduleType == 2 ||ScheduleType == 3 ||ScheduleType == 4 ||ScheduleType == 5) }}
 												<img data-src="${ $data.IMGHOST }${PicURL}">
 												<div class="des">${Description}</div>
-												<span class="fa fa-chevron-right fr"></span>
+												<span class="fa fa-chevron-right fr moreDetail"></span>
 												{{/if}}
 
 											</div><!-- end picText -->
@@ -239,7 +256,7 @@
 				<div class="recommendBox">
 					<h2>更多推荐</h2>
 					<div class="list-group">
-						{{if PlanMore.length != 0}}
+					{{if PlanMore.length != 0}}
 						{{each $data.PlanMore}}
 						<div class="list-group-item">
 							<div class="media">
@@ -253,9 +270,7 @@
 							</div>
 						</div>
 						{{/each}}
-						{{else}}
-						暂无数据
-						{{/if}}
+			        {{/if}}
 					</div>
 					<!--<p class="moreBtn"><a href="#">查看更多宝贝</a></p>-->
 				</div>
@@ -280,9 +295,6 @@
 						{{each PlanComment}}
 						<li>
 							<div class="row">
-								<div class="col-md-2">
-									<img src="${ $data.IMGHOST }${AvatarPicURL}">
-								</div>
 								<div class="col-md-10">									
 									<div class="commentText">${Remark}</div>
 									<ul class="comment-pic">
@@ -291,8 +303,11 @@
 											<img data-src="${ $data.IMGHOST }${v}">
 										</li>
 									{{/each}}
-									<p class="userId text-right">${UserName}</p>
 									</ul>
+								</div>
+								<div class="col-md-2">
+									<img data-src="${ $data.IMGHOST }${AvatarPicURL}">
+									<p>${UserName} 提供</p>
 								</div>
 							</div>
 							<!--<div class="reply col-md-offset-2">

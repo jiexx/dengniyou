@@ -250,28 +250,19 @@
         }
 		$.rogerTrigger('#plan-comment','#/comment',{PlanID:response.PlanInfo[0].PlanID});
 
-        //$('#TALK').rogerOnceClick(null,function () {
-            //$('#TALK').each(function () {
-            $('#TALK').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
-                var data = e.data;
-                var usr = $.rogerGetLoginUser();
-                if(!usr) {
-                    $.rogerLogin('#homeLogin', '/login');
-                    $.rogerShowLogin();
-                    return;
-                }
-                var newWin = window.open('about:blank');
-                newWin.location.href = 'http://'+window.location.host
-                    +'/talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID+'&msg=D'+data;
-            });
-        //});
-		
-		/*$('#BUY').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
-			$.rogerPost('/pay',{PlanID:e.data}, function (respJSON) {
-				console.log(respJSON);
-                window.open(respJSON.url, '_blank');
-            })
-        })*/
+        $('#TALK').rogerOnceClick(response.PlanInfo[0].PlanID, function (e) {
+            var data = e.data;
+            var usr = $.rogerGetLoginUser();
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            var newWin = window.open('about:blank');
+            newWin.location.href = 'http://'+window.location.host
+                +'/talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID+'&msg=D'+data;
+        });
+
         $('#customize').on('click',function () {
             var usr = $.rogerGetLoginUser();
             if(!usr) {
@@ -290,6 +281,11 @@
                 return;
             }
             $.rogerLocation($(this).attr('data-href'));
+        });
+
+        //景点住宿美食点击看详情
+        $('.moreDetail').on('click',function(){
+            console.log(333);
         });
 
 	};
