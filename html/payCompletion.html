@@ -179,7 +179,7 @@
             </div>
           </div>
         </div> <!-- end detailInfo -->
-        <div class="aboutOrder">
+        <div class="aboutOrder clearfix">
           <div class="row">
             <div class="col-md-6">
               <dl>
@@ -219,19 +219,19 @@
             {{each OrderEvaluate}}
             <h4>评论 </h4>
               <div class="row">
-                <div class="col-md-2">
-                  <img src="${ $data.IMGHOST }${TouristAvatarPicURL}" style="width：100px;height: 100px;">
-                </div>
                 <div class="col-md-10">
-                  <p class="userId">游客：${TouristName}</p>
                   <div class="commentText">${Remark}</div>
                   <ul class="comment-pic">
                     {{each(k,v) PicURLs}}
                     <li>
-                      <img src="${ $data.IMGHOST }${v}" style="width：100px;height: 100px;">
+                      <img src="${ $data.IMGHOST }${v}" style="width: 100px;height: 100px;">
                     </li>
                     {{/each}}
                   </ul>
+                </div>
+                <div class="col-md-2">
+                  <img src="${ $data.IMGHOST }${TouristAvatarPicURL}" style="width: 50px;height: 50px;">
+                  <p class="userId">游客：${TouristName}</p>
                 </div>
               </div>
 
