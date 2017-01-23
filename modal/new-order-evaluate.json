@@ -18,6 +18,13 @@
 				"PicURLs"
 			],
 			"findkey": "insertId"
+		},
+
+		"OrderIfEvaluate": {
+			"sql": "update travelorderdb.tab_travelorder set IfEvaluate=1,UpdateTIme=now() where OrderID=?",
+			"params": [
+				"OrderID"
+			]
 		}
 	}
 }

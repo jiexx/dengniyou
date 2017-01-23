@@ -407,6 +407,7 @@
             <div class="col-sm-3"><label>投诉信息</label></div>
             <div class="col-sm-9"><p>{{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}{{else}}${OrderComplaint[0].Reason}{{/if}}</p></div>
           </div>
+          {{if OrderComplaint=='' || OrderComplaint[0].ApplyRefund=='' || OrderComplaint[0].ApplyRefund == null}}{{else}}
           <div class="row" style="margin-bottom: 10px;"> 
             <div class="col-sm-3"><label>退款金额</label></div>
             <div class="col-sm-9">
@@ -416,6 +417,7 @@
               </p>
             </div>
           </div>
+          {{/if}}
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>

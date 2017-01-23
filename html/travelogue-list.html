@@ -32,7 +32,11 @@
 			    <div class="media">
 				  	<div class="media-left media-top">
 					  	<a href="#/traveloguedetail?articleID=${articleID}">
+					  	{{if articlePicURL}}
 							<img src="${ $data.IMGHOST }${articlePicURL}" class="media-object" style="width:160px;height:160px"></img>
+					  	{{else}}
+					  		<img src="../img/default.png" class="media-object" style="width:160px;height:160px"></img>
+					  	{{/if}}}}
 					  	</a>
 					</div>
 					<div class="media-body">
