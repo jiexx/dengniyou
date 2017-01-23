@@ -8,6 +8,9 @@
 			"title",
 			"STATUS"
 		],
+		"files": [
+			"articlePicURL"
+		],
 		"TravelogueDetail": {
 			"sql": "INSERT INTO `traveluserdb`.`tab_travelarticledetail` (`ArticleID`, `Label`, `PicURL`, `Content`, `Day`, `CreateDate`) VALUES (?, ?, ?, ?, ?, NOW())",
 			"params": [

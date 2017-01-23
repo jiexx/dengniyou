@@ -1,0 +1,12 @@
+{
+	"Comment": {
+		"sql": "INSERT INTO `travelorderdb`.`tab_travelorderreply` ( `OrderEvaluateID`, `SponsorID`, `CreateDate`, `AnswerID`, `Remark` ) VALUES ( ?, ?, NOW(), ?, ? )",
+		"params": [
+			"OrderEvaluateID",
+			"SponsorID",
+			"AnswerID",
+			"Remark"
+		]
+
+	}
+}

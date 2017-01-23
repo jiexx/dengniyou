@@ -579,6 +579,9 @@
             });
         });*/
         $('#cancel').rogerOnceClick(Plan, function(e){
+
+            orderdetail = e.data.OrderDetail;
+
             $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
                 $.rogerNotice({Message:'模板方案已取消发布..'});
                 $.rogerRefresh(Plan);
@@ -2110,7 +2113,7 @@
             $.rogerRefresh(TraveLogue);
         };
          TraveLogue.createContent = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            TravelogueDetail.push({label:null, DAY:null, content:'请输入描述', picURL: null});
+            TravelogueDetail.push({label:null, DAY:null, content:' ', picURL: null});
             $.rogerRefresh(TraveLogue);
         };
         
@@ -2128,7 +2131,7 @@
             $.rogerRefresh(TraveLogue);
         };
          TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){  
-            TravelogueDetail.splice(index,0,{label:null, DAY:null, content:'请输入描述', picURL: null});
+            TravelogueDetail.splice(index,0,{label:null, DAY:null, content:' ', picURL: null});
             $.rogerRefresh(TraveLogue);
         };
 
@@ -2138,13 +2141,15 @@
             temp["STATUS"]=0;
 
             TravelogueDetail = temp.TravelogueDetail;
-            dayemp = '';
-            for(key in temp.TravelogueDetail){
+            hasArticlePicURL = 0;
+            for(key in TravelogueDetail){
                 TravelogueDetail[key]["articleID"]=temp["articleID"];
-                if(TravelogueDetail[key]["DAY"]!=null && TravelogueDetail[key]["DAY"]!=''){
-                    dayemp = TravelogueDetail[key]["DAY"];
-                }else {
-                    TravelogueDetail[key]["DAY"] = dayemp;
+                if(hasArticlePicURL==0
+                    &&TravelogueDetail.length>0
+                    && null != TravelogueDetail[key]["picURL"]
+                    && ""!=TravelogueDetail[key]["picURL"]){
+                    temp["articlePicURL"] = TravelogueDetail[key]["picURL"];
+                    hasArticlePicURL=1;
                 }
 
             }
@@ -2330,6 +2335,29 @@
 
     var ctrlOrderdetail = function(response, realView) {
 
+        console.log(JSON.stringify(response));
+
+        $('#commitR').rogerOnceClick(response, function (e) {
+            orderDetail = e.data.OrderDetail[0];
+            orderEvaluateI = e.data.OrderEvaluateI[0];
+            orderEvaluate = e.data.OrderEvaluate[0];
+
+            data = {};
+
+            data["Remark"]=orderEvaluateI["ReplyDetail"];
+            data["AnswerID"]=orderDetail["GuideID"];
+            data["SponsorID"]=orderEvaluate["TouristID"];
+            data["OrderEvaluateID"]=orderEvaluate["OrderEvaluateID"];
+
+
+            $.rogerPost('/new/order/reply', data , function(respJSON){
+                $.rogerNotice({Message:'完成回复'});
+
+                window.location.reload();
+
+            });
+        });
+
         bindRidoesForSwitch();
         realView.rogerCropImages();
 
@@ -2434,7 +2462,7 @@
         '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceEdit,                                               ctrl: ctrlServiceEdit},
         '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',                 init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},
         '#/equipedit':                     {fragment: 'fragment/product-equip-edit.html',              init: initEquipEdit,                                                      ctrl: ctrlEquipEdit},
-        '#/orderdetail':                  {view:'payCompletion.html',	                                    rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
+        '#/orderdetail':                  {fragment:'payCompletion.html',	                                    rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
         '#/citychooser3':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser3},
         '#/citychooser4':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser4},
         '#/userinfo':                 {fragment:'fragment/userInfo-guide.html',                      rootrest: '/user/info',                    ctrl: ctrlUserInfo},

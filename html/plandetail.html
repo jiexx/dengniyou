@@ -3,27 +3,49 @@
 	<div class="container">
 		<div class="interpriseInfo row">
 			<div class="col-md-6">
-				{{if $data.PlanInfo[0].ComAdv}}
+				{{if $data.PlanInfo[0].ComLogo}}
 				<div><img src="${ $data.IMGHOST }${$data.PlanInfo[0].ComLogo}"  ></div>
 				{{else}}
-				<div><img src="../img/LOGO-2.png"  ></div>
+				<div><img src="${ $data.IMGHOST }${$data.PlanInfo[0].AvatarPicURL}"/></div>
 				{{/if}}
-				<div class="ad">${$data.PlanInfo[0].ComAdv}精彩每一天</div>
+				<div class="ad">
+				{{if $data.PlanInfo[0].ComAdv}}${$data.PlanInfo[0].ComAdv}
+				{{else}}世界辣么大，一起去看看
+				{{/if}}
+				</div>
 			</div>
 			<div class="col-md-4">
 				{{if PlanMore.length != 0}}
 				<a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
-					<img data-src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+					<img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
 				</a>
+				{{if PlanMore[1]}}
 				<a href="#/plandetail?PlanID=${PlanMore[1].PlanID}">
-					<img data-src="${ $data.IMGHOST }${PlanMore[1].PicURL}" alt="">
-				</a>
-				<a href="#/plandetail?PlanID=${PlanMore[2].PlanID}">
-					<img data-src="${ $data.IMGHOST }${PlanMore[2].PicURL}" alt="">
+					<img src="${ $data.IMGHOST }${PlanMore[1].PicURL}" alt="">
 				</a>
 				{{else}}
+				<a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+					<img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+				</a>
+				{{/if}}
+				{{if PlanMore[2]}}
+				<a href="#/plandetail?PlanID=${PlanMore[2].PlanID}">
+					<img src="${ $data.IMGHOST }${PlanMore[2].PicURL}" alt="">
+				</a>
+				{{else}}
+				<a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+					<img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+				</a>
+				{{/if}}
+				{{else}}
 				<a href="javascript:void(0);">
-					<img data-src="" alt="预留广告位">
+					<img src="" alt="预留广告位">
+				</a>
+				<a href="javascript:void(0);">
+					<img src="" alt="预留广告位">
+				</a>
+				<a href="javascript:void(0);">
+					<img src="" alt="预留广告位">
 				</a>
 				{{/if}}
 			</div>
@@ -35,7 +57,7 @@
 				</div>
 			</div>
 		</div> <!-- end interpriseInfo -->
-		<nav class="navbar" role="navigation">
+		<nav class="navbar" role="navigation" style="margin-bottom: 0;">
 	        <div class="navbar-header">
 	          	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
 	            <span class="sr-only">Toggle navigation</span>
@@ -136,7 +158,7 @@
 							<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].AdultPrice}</span>元</h4>
 						</div>
 						<div class="col-xs-6 col-md-12">
-							<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即购买</button></a>
+							<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即下单</button></a>
 						</div>
 					</div>
 				</div>
@@ -270,6 +292,8 @@
 							</div>
 						</div>
 						{{/each}}
+					{{else}}
+					期待中
 			        {{/if}}
 					</div>
 					<!--<p class="moreBtn"><a href="#">查看更多宝贝</a></p>-->
@@ -362,3 +386,56 @@
 		</div>
 	</div>
 </div> -->
+<style>
+	.layui-layer-tips .layui-layer-content{background-color: #FFF; color:#333; }
+	.layui-layer-tips i.layui-layer-TipsL, .layui-layer-tips i.layui-layer-TipsR{border-bottom-color: #FFF;}
+	.layui-layer-tips .layui-layer-content h4{margin-bottom: 0;}
+	.layui-layer-tips .layui-layer-content p{color: #666;}
+</style>
+<script>
+	$(function(){
+		
+        $('.moreDetail').on('click',function(){
+        	var self = $(this);
+        	$.ajax({
+        		url:'http://10.101.1.36:8888/dashboard/product/attraction/detail',
+        		type: 'post',
+        		data: {spotsID:24282},
+        		success:function(data){
+        			var data = JSON.parse(data);
+        			var html ='';
+					html += '<div id="carousel-example-generic" class="carousel slide" data-ride="carousel"><ol class="carousel-indicators">';
+					for(var i=0; i<data.SpotPics.length; i++){
+						if(i==0){html += '<li data-target="#carousel-example-generic" data-slide-to="'+(i+1)+'" class="active"></li>';}
+						else{html += '<li data-target="#carousel-example-generic" data-slide-to="'+(i+1)+'" ></li>';}
+					}
+				    html += '</ol><div class="carousel-inner" role="listbox">';
+				    for(var i=0; i<data.SpotPics.length; i++){
+						if(i==0){html += '<div class="item active"><img src="'+data.IMGHOST+data.SpotPics[i].PicURL+'" alt="..."></div>';}
+						else{html += '<div class="item"><img src="'+data.IMGHOST+data.SpotPics[i].PicURL+'" alt="..."></div>';}
+					} 
+				    html += '</div><a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" ><span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a></div>';
+
+        			html += '<h4><span class="fa fa-university"></span>'+data.SpotDetail[0].NameCh+'</h4><p>'+data.SpotDetail[0].NameEn+'</p>';
+        			for(var i = 0; i<data.SpotLabels.length; i++){
+        				html += '<span class="label label-primary">'+data.SpotLabels[i].ClassifyLabel+'</span> ';
+        			}
+        			html += '<div>建议游玩时间：<span class="pull-right">'+data.SpotDetail[0].TravelTime+'小时</span></div>';
+        			html += '<div><p><span class="fa fa-map-marker"></span>'+data.SpotDetail[0].CountryName+':'+data.SpotDetail[0].CityName+'</p></div>';
+        			html += '<div><p><span class="fa fa-phone"></span>'+data.SpotDetail[0].Address+'</p></div>';
+        			html += '<h4>详情信息</h4><div>'+data.SpotDetail[0].Description+'</div>';
+        			layer.open({
+		              type: 4,
+		              closeBtn: 0,
+		              area: '500px',
+		              fixed: false,
+		              shadeClose:true,
+		              content: [html, self] 
+		            });
+        		}
+        	})
+            
+            
+        });
+	});
+</script>

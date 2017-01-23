@@ -26,11 +26,11 @@
         <div ui-view>
         	<div class="orderAll" id="orderAll">
 				<ul id="order-a_all" class="navSecond">
-					<li><a id="a0" data-value="#/orderlist?usertype=1&status=0&page=1" href="#">全部订单</a></li>
-					<li><a id="a1" data-value="#/orderlist?usertype=1&status=1&page=1" href="#">待支付<span></span></a></li>
-					<li><a id="a2" data-value="#/orderlist?usertype=1&status=2&page=1" href="#">待接单<span></span></a></li>
-					<li><a id="a4" data-value="#/orderlist?usertype=1&status=4&page=1" href="#">待完成<span></span></a></li>
-					<li><a id="a6" data-value="#/orderlist?usertype=1&status=6&page=1" href="#" >待评价<span></span></a></li>
+					<li><a id="a0" data-value="usertype=1&status=0&page=1" href="#">全部订单</a></li>
+					<li><a id="a1" data-value="usertype=1&status=1&page=1" href="#">待支付<span></span></a></li>
+					<li><a id="a2" data-value="usertype=1&status=2&page=1" href="#">待接单<span></span></a></li>
+					<li><a id="a4" data-value="usertype=1&status=4&page=1" href="#">待完成<span></span></a></li>
+					<li><a id="a6" data-value="usertype=1&status=6&page=1" href="#" >待评价<span></span></a></li>
 				</ul>
 
 				<!-- <div class="searchBy">
@@ -149,10 +149,10 @@
 			case '2':
 			navSecond.eq(2).addClass('active');
 			break;
-			case '3':
+			case '4':
 			navSecond.eq(3).addClass('active');
 			break;
-			case '4':
+			case '6':
 			navSecond.eq(4).addClass('active');
 			break;
 		}

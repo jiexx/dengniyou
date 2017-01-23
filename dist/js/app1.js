@@ -285,7 +285,13 @@
 
         //景点住宿美食点击看详情
         $('.moreDetail').on('click',function(){
-            console.log(333);
+            // var self = $(this);
+            // layer.open({
+            //   type: 4,
+            //   closeBtn: 2,
+            //   shadeClose:true,
+            //   content: ['9999999999999999999', self] //数组第二项即吸附元素选择器或者DOM
+            // });
         });
 
 	};
@@ -335,6 +341,7 @@
             inline: true,
             disable: disday,
             onChange:function (dateObj, dateStr) {
+                $('#BUY').attr('disabled',false).next().hide();
                 if(checkDayInDisable(dateStr, days, disday)) {
                     pickr.selectedDates.splice(0,pickr.selectedDates.length);
                     pickr.redraw();
@@ -364,7 +371,7 @@
         })
 
         var ev = $._data($('#adult'), 'events');
-        if(!ev || !ev.change) {
+            if(!ev || !ev.change) {
             $('#adult').on("change", function () {
                 adult = parseInt($('#adult option:selected').val());
                 $('.price').each(function () {
@@ -486,15 +493,41 @@
                 });
             }
         });
+
+        $('#order-a_all').on('click','li a',function(){
+            var href = $(this).data('value');
+            $.rogerLocation('#/orderlist?userID='+usr.UserID+'&'+href);
+        });
+
         frameCtrl();
         realView.rogerCropImages();
     };
 
+    abc = 0;
     var ctrlOrderdetail = function(response, realView) {
 
-        // console.log(JSON.stringify(response));
+        console.log(JSON.stringify(response));
         realView.rogerCropImages();
         frameCtrl();
+        $('#commitE').rogerOnceClick(response, function (e) {
+            orderDetail = e.data.OrderDetail[0];
+            orderEvaluateI = e.data.OrderEvaluateI[0];
+
+
+            orderEvaluateI["GuideUserID"] = orderDetail["GuideID"];
+            orderEvaluateI["TouristUserID"] = orderDetail["UserID"];
+            orderEvaluateI["ServiceTripID"] = orderDetail["ServiceTripID"];
+            orderEvaluateI["OrderID"] = orderDetail["OrderID"];
+            orderEvaluateI["OrderType"] = orderDetail["OrderType"];
+
+            $.rogerPost('/new/order/evaluate', orderEvaluateI , function(respJSON){
+                $.rogerNotice({Message:'发表评论'});
+
+                window.location.reload();
+
+            });
+        });
+
 
         $('#complain-commit').rogerOnceClick(null, function () {
             var Reason = $('#Reason').val();
@@ -885,7 +918,7 @@
         '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
         '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
 		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
-        '#/orderdetail':              {view:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
+        '#/orderdetail':              {fragment:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
 	    '#/plansearch':               {view:'planSearch.html',                                rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
         '#/userinfo':                 {fragment:'fragment/userInfo-visitor.html',                      rootrest: '/user/info',                    ctrl: ctrlUserInfo},
         '#/citychooser2':             {fragment: 'fragment/dialog-city-chooser.html',    init: initCityChooser2,                     ctrl: ctrlCityChooser2}

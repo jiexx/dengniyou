@@ -12,5 +12,15 @@
         "OrderID"
       ]
     }
+  },
+  "OrderEvaluate": {
+    "sql": "SELECT * from traveluserdb.`vw_/order/evaluate` where OrderID = ? ",
+    "params": [
+      "OrderID"
+    ]
+  },
+  "OrderEvaluateI": {
+    "sql": "SELECT concat( '[', '', ']' ) AS `PicURLs`",
+    "params": []
   }
 }
