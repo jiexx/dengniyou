@@ -35,8 +35,8 @@
 					  	{{if articlePicURL}}
 							<img src="${ $data.IMGHOST }${articlePicURL}" class="media-object" style="width:160px;height:160px"></img>
 					  	{{else}}
-					  		<img src="../img/default.png" class="media-object" style="width:160px;height:160px"></img>
-					  	{{/if}}}}
+					  		<img src="../img/default.jpg" class="media-object" style="width:160px;height:160px"></img>
+					  	{{/if}}
 					  	</a>
 					</div>
 					<div class="media-body">
@@ -55,6 +55,8 @@
 		   	</div>
 		</div>
 	{{/each}}
+	{{else}}
+	您暂时还没有发布攻略，请点击右上角按钮开始发布攻略
 	{{/if}}
 	</div> <!-- end list-group -->
 </div> <!-- end container -->

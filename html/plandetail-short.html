@@ -1,23 +1,62 @@
 <!-- 企业信息 -->
 <div class="interpriseArea">
 	<div class="container">
-		<div class="interpriseInfo">
+		<div class="interpriseInfo row">
 			<div class="col-md-6">
-				{{if $data.PlanInfo[0].ComAdv}}
+				{{if $data.PlanInfo[0].ComLogo}}
 				<div><img src="${ $data.IMGHOST }${$data.PlanInfo[0].ComLogo}"  ></div>
 				{{else}}
-				<div><img src="../img/LOGO-2.png"  ></div>
+				<div><img src="${ $data.IMGHOST }${$data.PlanInfo[0].AvatarPicURL}"/></div>
 				{{/if}}
-				<div class="ad">${$data.PlanInfo[0].ComAdv}</div>
+				<div class="ad">
+				{{if $data.PlanInfo[0].ComAdv}}${$data.PlanInfo[0].ComAdv}
+				{{else}}
+				{{/if}}
+				</div>
 			</div>
-			<div class="col-md-6">
+			<div class="col-md-4">
+				{{if PlanMore.length != 0}}
+				<a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+					<img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+				</a>
+				{{if PlanMore[1]}}
+				<a href="#/plandetail?PlanID=${PlanMore[1].PlanID}">
+					<img src="${ $data.IMGHOST }${PlanMore[1].PicURL}" alt="">
+				</a>
+				{{else}}
+				<a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+					<img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+				</a>
+				{{/if}}
+				{{if PlanMore[2]}}
+				<a href="#/plandetail?PlanID=${PlanMore[2].PlanID}">
+					<img src="${ $data.IMGHOST }${PlanMore[2].PicURL}" alt="">
+				</a>
+				{{else}}
+				<a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+					<img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+				</a>
+				{{/if}}
+				{{else}}
+				<a href="javascript:void(0);">
+					<img src="" alt="预留广告位">
+				</a>
+				<a href="javascript:void(0);">
+					<img src="" alt="预留广告位">
+				</a>
+				<a href="javascript:void(0);">
+					<img src="" alt="预留广告位">
+				</a>
+				{{/if}}
+			</div>
+			<div class="col-md-2">
 				<!-- <div><img src="" alt="经理/客服头像"></div> -->
 				<div class="contact">
-					<p>企业联系方式：<span class="tel">${$data.PlanInfo[0].UserMobile}</span></p>
+					<p>企业联系方式：<br/><span class="tel">${$data.PlanInfo[0].UserMobile}</span></p>
 					<!-- <p>企业联系邮箱：<span class="email">1234@134.com</span></p> -->
 				</div>
 			</div>
-		</div>
+		</div> <!-- end interpriseInfo -->
 		<nav class="navbar" role="navigation">
 	        <div class="navbar-header">
 	          	<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-controls="navbar">
@@ -210,16 +249,13 @@
 				</div><!-- end 预定须知结束 -->
 				<!-- 评论列表 -->
 				<div class="comments">
-					<h4>游客评论 <a href="#commentOn" class="makeComments">我要点评 <i class="glyphicon glyphicon-edit"></i></a></h4>
+					<h4>游客评论</h4>
 					<ul class="commentList clearfix" id="commentList">
+						{{if PlanComment.length != 0}}
 						{{each PlanComment}}
 						<li>
 							<div class="row">
-								<div class="col-md-2">
-									<img src="${ $data.IMGHOST }${AvatarPicURL}">
-								</div>
-								<div class="col-md-10">
-									<p class="userId">${UserName}</p>
+								<div class="col-md-10">									
 									<div class="commentText">${Remark}</div>
 									<ul class="comment-pic">
 									{{each(k,v) PicURLs}}
@@ -229,13 +265,20 @@
 									{{/each}}
 									</ul>
 								</div>
+								<div class="col-md-2">
+									<img data-src="${ $data.IMGHOST }${AvatarPicURL}">
+									<p>${UserName} 提供</p>
+								</div>
 							</div>
-							<<div class="reply col-md-offset-2">
+							<!--<div class="reply col-md-offset-2">
 								<div class="triangle"></div>
-								<!--导游回复：<span class="replyText">导游回复内容</span>-->
-							</div>
+								导游回复：<span class="replyText">导游回复内容</span>
+							</div> -->
 						</li>
 						{{/each}}
+						{{else}}
+						暂无数据
+						{{/if}}
 					</ul>
 				</div><!-- end 评论列表 -->
 				<!-- 评论区 -->

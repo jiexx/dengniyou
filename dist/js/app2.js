@@ -2133,7 +2133,11 @@
                 browseCount: '',
                 praiseCount: '',
                 evaluateCount: '',
-                TravelogueDetail: []
+                TravelogueDetail: [
+                {label:' ', DAY:'0', content:null, picURL: null},
+                {label:null, DAY:null, content:null, picURL: null, PE:true},
+                {label:null, DAY:null, content:' ', picURL: null}
+                ]
             },
             IMGHOST:$.rogerImgHost()
         };

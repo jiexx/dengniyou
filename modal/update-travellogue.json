@@ -11,6 +11,9 @@
 				"description",
 				"title",
 				"articleID"
+			],
+			"files": [
+				"articlePicURL"
 			]
 		},
 		"TravelogueDetail": {
