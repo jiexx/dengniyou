@@ -763,9 +763,9 @@
         var Avatar = $.rogerImgHost() + usr.AvatarPicURL;
         $('.avatar img').attr('src', Avatar);
 
-        $('#personInfo').rogerOnceClick( null, function () {
-            $.rogerLocation('#/userinfo?UserID='+usr.UserID);
-        });
+        // $('#personInfo').rogerOnceClick( null, function () {
+        //     $.rogerLocation('#/userinfo?UserID='+usr.UserID);
+        // });
         $('#orderList').rogerOnceClick( null, function () {
             $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=1&status=0&page=1');
         });
@@ -805,46 +805,52 @@
         realView.rogerCropImages();
     };
 
-    var ctrlUserInfo = function(response, realView) {
-        var usr = $.rogerGetLoginUser();
-        console.log(usr,usr.Labels.split(','));
-        result = {
-            User: [{
-                CityName:'',
-                CountryName:'',
-                CityID:usr.CityID,
-                CountryID:usr.CountryID,
-                Labels:usr.Labels.split(','),
-                Sex:usr.Sex,
-                TrueName:usr.TrueName,
-                UserID:usr.UserID,
-                UserName:usr.UserName,
-                ComLogo:usr.ComLogo,
-                ComAdv:usr.ComAdv,
-                AvatarPicURL:usr.AvatarPicURL
-            }],
-            IMGHOST:$.rogerImgHost()
+    var initCityChooser5 = function (PS) {
+        return {
+            User:PS.User
         };
+    };
+    
+    var ctrlCityChooser5 = function (PS, realView) {
+        $('#cityChooser').modal('show');
+        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+            var data = e.data.User;
+            var country = $('#country option:selected').val().split(':');
+            var city = $('#city option:selected').val().split(':');
+            data.User[0].CityID = city[0];
+            data.User[0].CityName = city[1];
+            data.User[0].CountryID = country[0];
+            data.User[0].CountryName = country[1];
+            $('#cityChooser').modal('hide');
+            $.rogerRefresh(data);
+        });
+    };
+
+    var ctrlUserInfo = function(response, realView) {
+        $('input[name="sex"]').on('change',function(){
+          var val=$(this).val();
+          response.User[0].Sex = val;
+        });
 
         response.createCity = function (result, Spot) {
-            $.rogerTrigger('#modal', '#/citychooser2', {User:result});
+            $.rogerTrigger('#modal', '#/citychooser5', {User:result});
         };
 
         $('#userUpdate').rogerOnceClick(response, function (e) {
-            var data = e.User;
-            console.log(e.User);
-            //data.Labels = data.Labels.join();
-            $.rogerPost('/user/update', data, function (respJSON) {
+            var data = e.data.User;
+            data[0].Labels = data[0].Labels.join(';');
+            $.rogerPost('/user/update', data[0], function (respJSON) {
                 $.rogerNotice({Message: '个人信息修改成功'});
             });
         });
 
         response.createLabel = function (User) {
-            User.Labels.push('');
+            User.User[0].Labels.push('');
+            $.rogerRefresh(User);
         };
 
         realView.rogerCropImages();
-        bindRidoesForSwitch();
+        frameCtrl();
     };
 
     var ctrlServicedetail = function (response, realView) {
@@ -2423,7 +2429,7 @@
         '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
         '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
-        '#/userinfo':                     {fragment:'fragment/userInfo.html',                          rootrest: '/user/info',                                                ctrl: ctrlUserInfo},
+        '#/userinfo':                     {fragment:'fragment/userInfo-guide.html',                          rootrest: '/user/info',                                                ctrl: ctrlUserInfo},
         '#/equipdetail':                  {view:'product-equip-detail.html',                          rootrest:'/facility/detail',                                       ctrl: ctrlFacilityDetail},
         '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',	                          rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
@@ -2443,7 +2449,7 @@
         '#/orderdetail':                  {fragment:'payCompletion.html',	                                    rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
         '#/citychooser3':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser3},
         '#/citychooser4':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser4},
-
+        '#/citychooser5':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser5,                     ctrl: ctrlCityChooser5}
     });
 
 

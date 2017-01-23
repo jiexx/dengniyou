@@ -589,7 +589,6 @@
             var data = e.data.User;
             data[0].Labels = data[0].Labels.join(';');
             console.log(e.data.User);
-            //data.Labels = data.Labels.join();
             $.rogerPost('/user/update', data[0], function (respJSON) {
                 $.rogerNotice({Message: '个人信息修改成功'});
             });
