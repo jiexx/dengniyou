@@ -214,11 +214,10 @@
             </div>
           </div>
         </div><!-- end aboutOrder -->
-        <div class="comments">
-          <ul class="commentList clearfix" id="commentList">
+
+
             {{each OrderEvaluate}}
             <h4>评论 </h4>
-            <li>
               <div class="row">
                 <div class="col-md-2">
                   <img src="${ $data.IMGHOST }${TouristAvatarPicURL}" style="width：100px;height: 100px;">
@@ -257,10 +256,7 @@
               </div>
               {{/if}}
               {{/if}}
-            </li>
             {{/each}}
-          </ul>
-        </div>
 
         {{if OrderEvaluate.length==0}}
         {{if UserType==1}}
@@ -301,12 +297,12 @@
 
         <div class="btnList">
           {{if Status==2 || Status==3 || Status==4}}
-          {{if UserType==1}}
           {{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}
+          {{if UserType==1}}
             <button type="button" class="btn btn btn-warning com" data-toggle="modal" data-target="#complainModal">投诉</button>
+          {{/if}}
           {{else}}
             <button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#complainModal2">查看投诉</button>
-          {{/if}}
           {{/if}}
           {{/if}}
           {{if Status==1}}

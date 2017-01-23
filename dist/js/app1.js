@@ -828,20 +828,26 @@
                                 $.rogerNotice({Message: '定制方案保存成功'});
                                 $('#show').removeClass("btn btn-warning invisible");
                                 $('#show').addClass("btn btn-warning");
-                                $('#show').attr('href','#/templateplandetail?version=2&PlanID='+respJSON.PlanInfo.insertId );
+                                $('#show').click(function (e) {
+                                    $.rogerLocation('#/templateplandetail?version=2&PlanID='+respJSON.PlanInfo.insertId);
+                                });
+                                //$('#show').attr('href','#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId );
                             }
                         });
                     });
                 }else {
                     data.PlanInfo.CreateUserID = usr.UserID;
-                    dataPlanInfo.UserPlan = {UserID:usr.UserID};
+                    data.PlanInfo.UserPlan = {UserID:usr.UserID};
                     $.rogerPost('/new/tmpplan/visitor', data, function (respJSON) {
                         if(respJSON.PlanInfo.insertId > 0 ) {
                             data.PlanInfo.PlanID = respJSON.PlanInfo.insertId;
                             $.rogerNotice({Message: '定制方案保存成功'});
                             $('#show').removeClass("btn btn-warning invisible");
                             $('#show').addClass("btn btn-warning");
-                            $('#show').attr('href','#/templateplandetail?version=2&PlanID='+respJSON.PlanInfo.insertId );
+                            $('#show').click(function (e) {
+                                $.rogerLocation('#/templateplandetail?version=2&PlanID='+respJSON.PlanInfo.insertId);
+                            });
+                            //$('#show').attr('href','#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId );
                         }
                     });
                 }

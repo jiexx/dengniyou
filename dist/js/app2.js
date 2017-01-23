@@ -544,7 +544,10 @@
                         $.rogerNotice({Message: '模板方案成功'});
                         $('#show').removeClass("btn btn-warning invisible");
                         $('#show').addClass("btn btn-warning");
-                        $('#show').attr('href','#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                        $('#show').click(function (e) {
+                            $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                        })
+                        //$('#show').attr('href',);
                     });
                 } else {
                     $.rogerPost('/delete/plan', {PlanID: Plan.PlanInfo.PlanID}, function (respJSON) {
@@ -557,7 +560,10 @@
                             $.rogerNotice({Message: '模板方案发布成功'});
                             $('#show').removeClass("btn btn-warning invisible");
                             $('#show').addClass("btn btn-warning");
-                            $('#show').attr('href','#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                            $('#show').click(function (e) {
+                                $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                            })
+                            //$('#show').attr('href','#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
                         });
                     });
                 }
@@ -617,7 +623,10 @@
                     $.rogerNotice({Message:'快捷方案发布成功'});
                     $('#show').removeClass("btn btn-warning invisible");
                     $('#show').addClass("btn btn-warning");
-                    $('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                    $('#show').click(function (e) {
+                        $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                    });
+                    //$('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
                 });
             }else {
                 var data = {PlanInfo:e.data.PlanInfo};
@@ -628,7 +637,10 @@
                         $.rogerNotice({Message:'快捷方案发布成功'});
                         $('#show').removeClass("btn btn-warning invisible");
                         $('#show').addClass("btn btn-warning");
-                        $('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                        $('#show').click(function (e) {
+                            $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                        });
+                        //$('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
                     });
                 });
             }
@@ -838,7 +850,10 @@
 
         $('#userUpdate').rogerOnceClick(response, function (e) {
             var data = e.data.User;
-            data[0].Labels = data[0].Labels.join(';');
+            if(typeof data[0].Labels != "string"){
+               data[0].Labels = data[0].Labels.join(';'); 
+            }
+            
             $.rogerPost('/user/update', data[0], function (respJSON) {
                 $.rogerNotice({Message: '个人信息修改成功'});
             });
@@ -850,7 +865,6 @@
         };
 
         realView.rogerCropImages();
-        frameCtrl();
     };
 
     var ctrlServicedetail = function (response, realView) {
