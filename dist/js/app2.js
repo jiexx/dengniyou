@@ -40,21 +40,45 @@
 
         var urlPath = $.rogerGetPath() || window.location.hash;
           if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1){
-            $('.mainbody-top').show();
+            $('#title').show();
+            $('#menu').show();
             $('#filter').show();
             $('#filter2').hide();
-          }else if(urlPath.indexOf("#/travelogue") != -1 || urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/travelogueedit") != -1){
-            $('.mainbody-top').hide();
+            $('#filter3').hide();
+          }else if(urlPath.indexOf("#/travelogue") != -1 ||urlPath.indexOf("#/travelogueedit") != -1){
+            $('#title').hide();
+            $('#menu').hide();
+            $('#filter').hide();
+            $('#filter2').hide();
+            $('#filter3').show();
+          }else if(urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/userinfo") != -1){
+            $('#title').hide();
+            $('#menu').hide();
+            $('#filter').hide();
+            $('#filter2').hide();
+            $('#filter3').hide();
           }
           $('.nav-sidebar li').on('click',function(){
             var urlPath = $.rogerGetPath();
-            if(urlPath == "#/" || urlPath == "" ){
-              $('.mainbody-top').show();
-              $('#filter').show();
-              $('#filter2').hide();
-            }else if(urlPath.indexOf("#/travelogue") != -1 || urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/travelogueedit") != -1){
-                $('.mainbody-top').hide();
-            }
+            if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1){
+            $('#title').show();
+            $('#menu').show();
+            $('#filter').show();
+            $('#filter2').hide();
+            $('#filter3').hide();
+          }else if(urlPath.indexOf("#/travelogue") != -1 ||urlPath.indexOf("#/travelogueedit") != -1){
+            $('#title').hide();
+            $('#menu').hide();
+            $('#filter').hide();
+            $('#filter2').hide();
+            $('#filter3').show();
+          }else if(urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/userinfo") != -1 ){
+            $('#title').hide();
+            $('#menu').hide();
+            $('#filter').hide();
+            $('#filter2').hide();
+            $('#filter3').hide();
+          }
           });
 
       $("#menu label input").on('change',function (e) {
@@ -863,7 +887,7 @@
             User.User[0].Labels.push('');
             $.rogerRefresh(User);
         };
-
+        bindRidoesForSwitch();
         realView.rogerCropImages();
     };
 
@@ -2194,7 +2218,7 @@
 
         $('#save').rogerOnceClick(TraveLogue, function(e){
             temp = e.data.Travelogue;
-            temp["STATUS"]=0;
+            temp["STATUS"]=1;
 
             TravelogueDetail = temp.TravelogueDetail;
             hasArticlePicURL = 0;

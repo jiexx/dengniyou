@@ -122,11 +122,13 @@ app.post('/pay', upload.array(), function(req, res) {
 //立即支付的时候
 app.post("/pay2",function (req, res) {
     var params = req.body;
+    var url = 'http://123.59.144.169:8888/#/orderdetail?UserType=1&OrderID='+params.orderid;
+    pay.setConfig('return_url', url);
     var usr_redirect_url = pay.buildDirectPayURL({
         out_trade_no: ''+ params.orderNo,
         subject: 'dengniyou-order',// 'order-312412',//body.datas.orderId,
-        body:  params.ServiceTripName,//body.datas.orderId,
-        total_fee:  '0.01',//body.datas.costMoney
+        body:  'dengniyou-order',//body.datas.orderId,
+        total_fee:  params.realCostMoney,//body.datas.costMoney
     });
     res.send(JSON.stringify({url:usr_redirect_url}));
 

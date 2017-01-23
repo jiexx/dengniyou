@@ -97,7 +97,7 @@
 									{{if (datas[i].status == 1 )}}
 									<div class="col-md-1 payBtn" id="payBtn">
 										<p>￥<span class="productPrice">${datas[i].realCostMoney}</span></p>
-										<button id="confirm" data-id="${datas[i].orderNo}" data-status="${datas[i].status}" data-name="${datas[i].ServiceTripName}" type="button" class="btn btn-warning btn-orange">
+										<button id="OK" data-id="${datas[i].orderNo}" data-status="${datas[i].status}" data-name="${datas[i].ServiceTripName}" data-price="${datas[i].realCostMoney}" data-orderid="${datas[i].orderid}" type="button" class="btn btn-warning btn-orange">
 											立即支付
 										</button>
 									</div>

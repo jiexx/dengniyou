@@ -500,6 +500,40 @@
             $.rogerLocation('#/orderlist?userID='+usr.UserID+'&'+href);
         });
 
+
+        var ok = realView.find('#OK');
+        
+        ok.rogerOnceClick(null,function () {
+            var buy = {
+                orderid:ok.data('orderid'),
+                orderNo:ok.data('id'),
+                ServiceTripName:ok.data('name'),
+                realCostMoney:ok.data('price')
+            }
+
+             var newWin = window.open('about:blank');
+            $.rogerPost('/pay2',buy, function (respJSON) {
+
+                if( respJSON.ERR) {
+                    $.rogerNotice({Message:'生成订单有错,错误码:'+respJSON.ERR});
+                    newWin.close();
+                }else {
+                    newWin.location.href = respJSON.url;
+                    //window.open(respJSON.url, '_blank');
+                    /*var parms = $.rogerGetJsonUrlParams(respJSON.url);
+                    for(var i in parms) {
+                        $('<input>').attr({
+                            type: 'hidden',
+                            name: i,
+                            value: parms[i]
+                        }).appendTo('#Alipay');
+                    }
+                    $('#Alipay').attr('action', parms.link);
+                    $('#Alipay').submit();*/
+                }
+            })
+        })
+
         frameCtrl();
         realView.rogerCropImages();
     };
