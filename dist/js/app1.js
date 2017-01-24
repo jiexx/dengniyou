@@ -432,7 +432,8 @@
 
                 var ok = realView.find('#OK');
                 ok.rogerOnceClick(null,function () {
-                     var newWin = window.open('about:blank', "newwindow", 'height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
+                    var iLeft = (window.screen.availWidth - 10 - 400) / 2;
+                    var newWin = window.open('about:blank','','height=600, width=400, top=0, left='+iLeft );
                     $.rogerPost('/pay',buy, function (respJSON) {
 
                         if( respJSON.ERR) {
@@ -475,7 +476,8 @@
             var status = $('#confirm').data('status');
             var user = $.rogerGetLoginUser();
             if ('1' == status) {
-                var newWin = window.open('about:blank');
+                var iLeft = (window.screen.availWidth - 10 - 400) / 2;
+                var newWin = window.open('about:blank','','height=600, width=400, top=0, left='+iLeft );
                 $.rogerPost('/pay', buy, function (respJSON) {
                     if (respJSON.ERR) {
                         $.rogerNotice({Message: '生成订单有错,错误码:' + respJSON.ERR});
@@ -511,7 +513,8 @@
                 realCostMoney:ok.data('price')
             }
 
-             var newWin = window.open('about:blank');
+            var iLeft = (window.screen.availWidth - 10 - 400) / 2;
+            var newWin = window.open('about:blank','','height=600, width=400, top=0, left='+iLeft );
             $.rogerPost('/pay2',buy, function (respJSON) {
 
                 if( respJSON.ERR) {
