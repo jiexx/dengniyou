@@ -10,9 +10,9 @@ var request = require('request');
 var user = require("./user");
 var db = require("./db");
 var modal = require("./modal2");
-var FdfsClient = require('fdfs');
 var pay = require('./pay');
 var http= require("http");
+var fdfsconfig = require('./fdfsconfig');
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true })); // for parsing application/x-www-form-urlencoded
@@ -33,19 +33,7 @@ app.use(function(req, res, next) {
     next();
 });
 
-var fdfs = new FdfsClient({
-    // tracker servers
-    trackers: [
-        {
-            //host: '10.101.1.165',
-			host: '123.59.144.47',
-            port: 22122
-        }
-    ],
-    timeout: 10000,
-    //defaultExt: 'txt',
-    charset: 'utf8'
-});
+var fdfs = fdfsconfig.fdfs;
 
 function decodeBase64Image(dataString) {
   //////console.log(dataString);

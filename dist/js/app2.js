@@ -234,7 +234,7 @@
         );
 
 
-        $('#filter2 input[type=radio][name="filterradio"]').on('change',function(e){
+        $('#filter3 input[type=radio][name="filterradio"]').on('change',function(e){
             var usr = $.rogerGetLoginUser();
             var url = $.rogerGetPath() || window.location.hash;
             if(!usr) {

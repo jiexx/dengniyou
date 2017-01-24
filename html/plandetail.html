@@ -254,7 +254,7 @@
 												{{if (ScheduleType == 2 ||ScheduleType == 3 ||ScheduleType == 4 ||ScheduleType == 5) }}
 												<img data-src="${ $data.IMGHOST }${PicURL}">
 												<div class="des">${Description}</div>
-												<span class="fa fa-chevron-right fr moreDetail"></span>
+												<span class="fa fa-chevron-right fr moreDetail" data-spotsid="${SpotsID}" data-scheduletype="${ScheduleType}"></span>
 												{{/if}}
 
 											</div><!-- end picText -->
@@ -359,48 +359,25 @@
 	#detailBox{width:600px;}
 </style>
 
-<!-- <div id="detailBox">
-	<div class="carousel">
-		<div class="carousel-container">
-			<div id="carousel-generic" class="carousel slide" data-ride="carousel">
-				
-				<div class="carousel-inner" role="listbox">
-					{{each $data.PlanInfo[0].PicURL}}
-					{{if $index == 0}}
-					<div class="item active">
-					{{else}}
-						<div class="item">
-					{{/if}}
-						<img src="${ $data.IMGHOST }${PicUrl}${ $data.PlanInfo[0].PicURL[$index]}" alt="Chania">
-					</div>
-					{{/each}}
-					</div>
-					<a class="left carousel-control" href="#carousel-generic" data-slide="prev">
-						<span class="glyphicon glyphicon-chevron-left"></span>
-					</a>
-					<a class="right carousel-control" href="#carousel-generic" data-slide="next">
-						<span class="glyphicon glyphicon-chevron-right"></span>
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-</div> -->
 <style>
 	.layui-layer-tips .layui-layer-content{background-color: #FFF; color:#333; }
 	.layui-layer-tips i.layui-layer-TipsL, .layui-layer-tips i.layui-layer-TipsR{border-bottom-color: #FFF;}
-	.layui-layer-tips .layui-layer-content h4{margin-bottom: 0;}
-	.layui-layer-tips .layui-layer-content p{color: #666;}
+	.layui-layer-tips .layui-layer-content h3{margin: 0; }
+	.layui-layer-tips .layui-layer-content p{color: #666; margin-bottom: 0; font-size: 14px;}
+	.layui-layer-tips .layui-layer-content .fa{color:#00b8ee; margin-right: 6px;}
+	.layui-layer-tips .layui-layer-content .lineBox{padding:5px 20px; margin:5px 0; border-top: 1px solid #f1f1f1;}
 </style>
 <script>
 	$(function(){
 		
         $('.moreDetail').on('click',function(){
         	var self = $(this);
+        	var scheduletype = $(this).data("scheduletype");
+        	var spotsid = $(this).data("spotsid");
         	$.ajax({
         		url:'http://10.101.1.36:8888/dashboard/product/attraction/detail',
         		type: 'post',
-        		data: {spotsID:24282},
+        		data: {spotsID:spotsid},
         		success:function(data){
         			var data = JSON.parse(data);
         			var html ='';
@@ -416,14 +393,14 @@
 					} 
 				    html += '</div><a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" ><span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a></div>';
 
-        			html += '<h4><span class="fa fa-university"></span>'+data.SpotDetail[0].NameCh+'</h4><p>'+data.SpotDetail[0].NameEn+'</p>';
+        			html += '<div class="lineBox" style="border-top:none;"><h3> <span class="fa fa-university"></span>'+data.SpotDetail[0].NameCh+'</h3><p style=" padding-left: 34px;">'+data.SpotDetail[0].NameEn+'</p>';
         			for(var i = 0; i<data.SpotLabels.length; i++){
         				html += '<span class="label label-primary">'+data.SpotLabels[i].ClassifyLabel+'</span> ';
         			}
-        			html += '<div>建议游玩时间：<span class="pull-right">'+data.SpotDetail[0].TravelTime+'小时</span></div>';
-        			html += '<div><p><span class="fa fa-map-marker"></span>'+data.SpotDetail[0].CountryName+':'+data.SpotDetail[0].CityName+'</p></div>';
-        			html += '<div><p><span class="fa fa-phone"></span>'+data.SpotDetail[0].Address+'</p></div>';
-        			html += '<h4>详情信息</h4><div>'+data.SpotDetail[0].Description+'</div>';
+        			html += '</div><div class="lineBox">建议游玩时间：<span class="pull-right">'+data.SpotDetail[0].TravelTime+'小时</span></div>';
+        			html += '<div class="lineBox"><p><span class="fa fa-map-marker"> </span>'+data.SpotDetail[0].CountryName+':'+data.SpotDetail[0].CityName+'</p></div>';
+        			html += '<div class="lineBox"><p><span class="fa fa-phone"> </span>'+data.SpotDetail[0].Address+'</p></div>';
+        			html += '<h4 style="padding-left:20px;">详情信息</h4><div class="lineBox">'+data.SpotDetail[0].Description+'</div>';
         			layer.open({
 		              type: 4,
 		              closeBtn: 0,
