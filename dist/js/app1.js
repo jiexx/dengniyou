@@ -432,7 +432,7 @@
 
                 var ok = realView.find('#OK');
                 ok.rogerOnceClick(null,function () {
-                     var newWin = window.open('about:blank');
+                     var newWin = window.open('about:blank', "newwindow", 'height=100, width=400, top=0, left=0, toolbar=no, menubar=no, scrollbars=no, resizable=no, location=no, status=no');
                     $.rogerPost('/pay',buy, function (respJSON) {
 
                         if( respJSON.ERR) {
