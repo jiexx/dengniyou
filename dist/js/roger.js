@@ -78,6 +78,7 @@ $(function () {
 					$.ajax({
 						url: srcViewReqURL, type: 'post', dataType: 'json', async: false, data: srcViewReqJSON,
 						success: function(respJSON) {
+							$('#loadingIcon').hide();
 							destContainer.empty();
 							destContainer.hide();
 							var realView = $view.tmpl(respJSON);
@@ -98,6 +99,7 @@ $(function () {
 			if(srcView && destContainer  ) {
 				var $view = $("<div/>");
 				$($view).load(srcView, function () {
+					$('#loadingIcon').hide();
 					destContainer.empty();
 					destContainer.hide();
 					var realView = $view.tmpl(reqJSON);
@@ -146,6 +148,7 @@ $(function () {
 			return window._rogerRouter[path];
 		},
 		rogerLocation: function(url, json) {
+			$('#loadingIcon').show();
 			if(url.substring(0,2)=='#/'){
 				var path = url.indexOf("?") > 0 ? url.substring(0, url.indexOf("?")): url;
 				var router = $.rogerGetRouter(path);
@@ -197,6 +200,7 @@ $(function () {
 			}
 		},
         rogerTrigger: function(container, url, json ) {
+        	$('#loadingIcon').show();
             if(url.substring(0,2)=='#/') {
 				var path = url.indexOf("?") > 0 ? url.substring(0, url.indexOf("?")): url;
                 var router = $.rogerGetRouter(path);

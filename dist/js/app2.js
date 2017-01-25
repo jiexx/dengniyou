@@ -33,66 +33,77 @@
                 if('all' == filtertemp){
                     filtertemp = null;
                 }
+
+                if(url == ''){
+                    url = $.rogerGetPath() || window.location.hash;
+                }
+
                 $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
             });
 
         }
 
-        var urlPath = $.rogerGetPath() || window.location.hash;
-          if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1){
-            $('#title').show();
-            $('#menu').show();
-            $('#filter').show();
-            $('#filter2').hide();
-            $('#filter3').hide();
-          }else if(urlPath.indexOf("#/travelogue") != -1 ||urlPath.indexOf("#/travelogueedit") != -1){
-            $('#title').hide();
-            $('#menu').hide();
-            $('#filter').hide();
-            $('#filter2').hide();
-            $('#filter3').show();
-          }else if(urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/userinfo") != -1){
-            $('#title').hide();
-            $('#menu').hide();
-            $('#filter').hide();
-            $('#filter2').hide();
-            $('#filter3').hide();
-          }
-          $('.nav-sidebar li').on('click',function(){
-            var urlPath = $.rogerGetPath();
-            if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1){
-            $('#title').show();
-            $('#menu').show();
-            $('#filter').show();
-            $('#filter2').hide();
-            $('#filter3').hide();
-          }else if(urlPath.indexOf("#/travelogue") != -1 ||urlPath.indexOf("#/travelogueedit") != -1){
-            $('#title').hide();
-            $('#menu').hide();
-            $('#filter').hide();
-            $('#filter2').hide();
-            $('#filter3').show();
-          }else if(urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/userinfo") != -1 ){
-            $('#title').hide();
-            $('#menu').hide();
-            $('#filter').hide();
-            $('#filter2').hide();
-            $('#filter3').hide();
-          }
-          });
+        var filter3ev = $._data($('#filter3 input[type=radio][name="filterradio"]')[0], 'events');
+        if(!filter3ev || !filter3ev.change) {
+            $('#filter3 input[type=radio][name="filterradio"]').unbind().on('change',function(e){
+                var usr = $.rogerGetLoginUser();
+                var url = $.rogerGetPath() || window.location.hash;
+                if(!usr) {
+                    $.rogerShowLogin();
+                    return;
+                }
+                filtertemp = $(this).val();
+                if('all' == filtertemp){
+                    filtertemp = null;
+                }
+                if(url == ''){
+                    url = $.rogerGetPath() || window.location.hash;
+                }
+                $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
+            });
+        }
+        function titleList(){
+            var urlPath = $.rogerGetPath() || window.location.hash;
+              if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1){
+                $('#title').show();
+                $('#menu').show();
+                $('#filter').show();
+                $('#filter2').hide();
+                $('#filter3').hide();
+              }else if(urlPath.indexOf("#/travelogue") != -1 ||urlPath.indexOf("#/travelogueedit") != -1){
+                $('#title').hide();
+                $('#menu').hide();
+                $('#filter').hide();
+                $('#filter2').hide();
+                $('#filter3').show();
+              }else if(urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/userinfo") != -1){
+                $('#title').hide();
+                $('#menu').hide();
+                $('#filter').hide();
+                $('#filter2').hide();
+                $('#filter3').hide();
+              }
+        }
+        
+        titleList();
+        $('.nav-sidebar li').on('click',titleList());
 
       $("#menu label input").on('change',function (e) {
         if($(this).val() == '0'){
           $('#filter').show();
           $('#filter2').hide();
+          $('#filter3').hide();
         }else if($(this).val() == '1'){
           $('#filter').hide();
           $('#filter2').show();
+          $('#filter3').hide();
         }else if($(this).val() == '2'){
           $('#filter').hide();
           $('#filter2').hide();
+          $('#filter3').hide();
         }
       });
+
         if($.rogerIsLogined()) {
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
             $('#usrlogout').click(function () {
@@ -212,8 +223,6 @@
         );
 
         url = $.rogerGetUrlParam();
-        console.log(url)
-
         realView.rogerCropImages();
         if(response.Counts > 10) {
 
@@ -234,19 +243,19 @@
         );
 
 
-        $('#filter3 input[type=radio][name="filterradio"]').on('change',function(e){
-            var usr = $.rogerGetLoginUser();
-            var url = $.rogerGetPath() || window.location.hash;
-            if(!usr) {
-                $.rogerShowLogin();
-                return;
-            }
-            filtertemp = $(this).val();
-            if('all' == filtertemp){
-                filtertemp = null;
-            }
-            $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
-        });
+        // $('#filter3 input[type=radio][name="filterradio"]').on('change',function(e){
+        //     var usr = $.rogerGetLoginUser();
+        //     var url = $.rogerGetPath() || window.location.hash;
+        //     if(!usr) {
+        //         $.rogerShowLogin();
+        //         return;
+        //     }
+        //     filtertemp = $(this).val();
+        //     if('all' == filtertemp){
+        //         filtertemp = null;
+        //     }
+        //     $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
+        // });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();

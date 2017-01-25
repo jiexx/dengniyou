@@ -366,16 +366,18 @@
 	.layui-layer-tips .layui-layer-content p{color: #666; margin-bottom: 0; font-size: 14px;}
 	.layui-layer-tips .layui-layer-content .fa{color:#00b8ee; margin-right: 6px;}
 	.layui-layer-tips .layui-layer-content .lineBox{padding:5px 20px; margin:5px 0; border-top: 1px solid #f1f1f1;}
+	.layui-layer-tips .layui-layer-content .carousel-inner > .item > img{height: 100%;}
 </style>
 <script>
 	$(function(){
 		
         $('.moreDetail').on('click',function(){
-        	var self = $(this);
+        	var self = $(this).parent().find('img');
         	var scheduletype = $(this).data("scheduletype");
         	var spotsid = $(this).data("spotsid");
+        	
         	$.ajax({
-        		url:'http://10.101.1.36:8888/dashboard/product/attraction/detail',
+        		url:'/dashboard/product/attraction/detail',
         		type: 'post',
         		data: {spotsID:spotsid},
         		success:function(data){
@@ -407,6 +409,7 @@
 		              area: '500px',
 		              fixed: false,
 		              shadeClose:true,
+		              anim:0,
 		              content: [html, self] 
 		            });
         		}

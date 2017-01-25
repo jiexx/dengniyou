@@ -14,7 +14,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../dist/css/bootstrap.css" rel="stylesheet">
-
+    <link href="../dist/css/font-awesome.min.css" rel="stylesheet">
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <link href="../assets/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
     <!-- 车辆与装备轮播图css -->
@@ -166,12 +166,12 @@
             </div>
             <div id="filter3" class="row service-dropdown">
               <div class="col-md-10">
-                <div id="filter2" class="list-group">
-                            <span class="text-warning">产品状态 <i>|</i></span>
-                            <label class="radio-inline"><input type="radio" value = "all" name="filterradio">全部</label>
-                            <label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>
-                            <label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>
-                        </div>
+                <div class="list-group">
+                    <span class="text-warning">产品状态 <i>|</i></span>
+                    <label class="radio-inline"><input type="radio" value = "all" name="filterradio">全部</label>
+                    <label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>
+                    <label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>
+                </div>
               </div>
               <div class="col-md-2 service-release">
                 <div class="btn-group pull-right">
@@ -180,19 +180,7 @@
                   </button>
                 </div>
               </div>
-            </div> 
-            <!-- <div id="menu2" class="list-group">
-                <span class="text-warning">临时编辑 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/attractionedit?spotType=1" >景点编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/delicacyedit?spotType=2" >美食编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/accommodationedit?spotType=3" >住宿编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/caredit?ServiceID=100388" >租车编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/servicecaredit?ServiceID=100263" >包车编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/activityedit?ServiceID=100387" >活动编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/servicepickupedit?ServiceID=100397" >接送机编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/serviceotheredit?ServiceID=100398" >其他服务编辑</a></label>
-                <label class="radio-inline"><input type="radio" name="optradio"><a  href="#/travelogueedit" >攻略编辑</a></label>
-            </div> -->
+            </div>
           </div> <!-- end mainbody-top -->
           <div id="app" class="mainbody-main">
           </div>	<!-- end mainbody-main --> 
@@ -202,6 +190,11 @@
     </div> <!-- end container-fluid -->
       </div>
   </div> <!-- end dashboard-page -->
+
+  <div id="loadingIcon" style="position:fixed; z-index:9999; top:200px; left:45%; display: none">
+    <h3 style="color:#fa703e;"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>数据加载中...</h3>
+  </div>
+
 	<script>
 	  $(document).ready(function() {
       $('#app').rogerGo();
@@ -215,12 +208,10 @@
         $('.nav-sidebar li').removeClass('active');
         $(this).addClass('active');
       });
-
-      
-      
-		  
+  
 	  });
 	</script>
   </div>
+    
   </body>
 </html>

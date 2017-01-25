@@ -23,7 +23,7 @@
 .dashboard-page .nav-sidebar > li .data-icon{background-position: 2px -141px;}
 .dashboard-page .nav-sidebar > li > a span{display: inline-block; margin-left: 35px;}
 .dashboard-page .mainbody{ margin-left: 14%; background-color: #fff; margin-top: 100px;}
-.dashboard-page .mainbody .mainbody-top{margin: 0 auto; padding: 20px; }
+.dashboard-page .mainbody .mainbody-top{margin: 0 auto;}
 .dashboard-page .mainbody .mainbody-top h5{font-size: 14px; font-weight: bold; color: #1d1d1d; }
 .dashboard-page .mainbody .mainbody-top .list-group span{font-size: 14px; color: #ff6600;}
 .dashboard-page .mainbody .mainbody-top .list-group span i{display: inline-block; width: 1px; font-style: normal; margin-left: 10px; margin-right: 10px;}
