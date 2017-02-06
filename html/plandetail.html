@@ -1,3 +1,7 @@
+<style>
+	.flatpickr-next-month svg, .flatpickr-prev-month svg {width: 28px;}
+</style>
+
 <!-- 企业信息 -->
 <div class="interpriseArea">
 	<div class="container">
@@ -106,8 +110,13 @@
 	<div class="plandetail-page">
 	<div>
 		<div class="row">
-			<div class="col-md-5 calender">
-				<div id="calendar"></div>
+			<div class="col-md-5" style="position: relative;">
+				<div id="calendar" ></div>
+				<h3 style="position: absolute; top:4px; left:90px; z-index: 99; color: #fa703e; font-size: 22px;">导游日历</h3>
+				<h3 style="position: absolute; top:4px; right:90px; z-index: 99; color: #fa703e; font-size: 22px;">仅供阅览</h3>
+				<span style="position: absolute; left:50px; top:12px; border-top: 1px solid #333; border-bottom: 1px solid #333; z-index: 99; font-size: 16px;">上月</span>
+				<span style="position: absolute; right:50px; top:12px; border-top: 1px solid #333; border-bottom: 1px solid #333; z-index: 99; font-size: 16px;">下月</span>
+				<span>* 游客点击“立即下单”按钮后，可根据需要选择出发日期</span>
 			</div><!-- end calender -->
 			<div class="col-md-7 carousel">
 				<div class="carousel-container">
@@ -183,7 +192,7 @@
 								{{each(k,v) PlanSchedule}}
 								{{if  ("__countScheduleID" != k)  }}
 								<li>
-									<a href="#day01">
+									<a href="#day${k}">
 										<button type="button" class="btn btn-default">第${v.__index}天</button>
 									</a>
 								</li>
@@ -220,7 +229,7 @@
 						<ul>
 							{{each(k,v) PlanSchedule}}
 							{{if  ("__countScheduleID" != k)  }}
-							<li id="day01">
+							<li id="day${k}">
 								<h3 class="day">第${v.__index}天
 								{{each  v.__values}}
 								{{if  ScheduleType == 0  }}
@@ -362,7 +371,7 @@
 <style>
 	.layui-layer-tips .layui-layer-content{background-color: #FFF; color:#333; }
 	.layui-layer-tips i.layui-layer-TipsL, .layui-layer-tips i.layui-layer-TipsR{border-bottom-color: #FFF;}
-	.layui-layer-tips .layui-layer-content h3{margin: 0; }
+	.layui-layer-tips .layui-layer-content h3{margin: 0; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 	.layui-layer-tips .layui-layer-content p{color: #666; margin-bottom: 0; font-size: 14px;}
 	.layui-layer-tips .layui-layer-content .fa{color:#00b8ee; margin-right: 6px;}
 	.layui-layer-tips .layui-layer-content .lineBox{padding:5px 20px; margin:5px 0; border-top: 1px solid #f1f1f1;}

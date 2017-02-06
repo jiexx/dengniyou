@@ -245,13 +245,13 @@
               {{if ReplyDetail == null }}
               <div class="row">
                 <div class="col-md-12">
+                  <textarea name=""  data-value="/OrderEvaluateI/0/ReplyDetail" class="form-control" rows="5"  ></textarea>
                   <h6>
-                    <div class="commit">
-                      <button id="commitR" class="btn btn-primary">回复</button>
+                    <div class="commit pull-right">
+                      <button id="commitR" class="btn btn-primary ">回复</button>
                     </div>
                   </h6>
-                  <textarea name=""  data-value="/OrderEvaluateI/0/ReplyDetail" class="form-control" rows="5"  ></textarea>
-                  <span class="tip">还可以输入<strong>100</strong>个字符</span>
+                  <!-- <span class="tip">还可以输入<strong>100</strong>个字符</span> -->
                 </div>
               </div>
               {{/if}}
@@ -398,7 +398,7 @@
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title" >您的投诉</h4>
         </div>
-        <div class="modal-body" style="background-color: #F2F2F2; margin: 30px 70px; padding: 40px 40px; font-size: 14px;">
+        <div class="modal-body" style="background-color: #F2F2F2; padding: 40px 20px; font-size: 14px;">
           <div class="row" style="margin-bottom: 10px;">
             <div class="col-sm-3"><label>投诉信息</label></div>
             <div class="col-sm-9"><p>{{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}{{else}}${OrderComplaint[0].Reason}{{/if}}</p></div>

@@ -239,9 +239,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .comments { border: 1px solid #00b8ee; }
 .plandetail-page .comments h4 { border-bottom: 2px solid #00b8ee; border-top: 1px solid #00b8ee; border-left: 1px solid #00b8ee; border-right: 1px solid #00b8ee; color: #00b8ee; line-height: 46px; margin-top: 0; margin-bottom: 0; padding: 0 20px;}
 .plandetail-page .comments h4 a { font-size: 14px; color: #00b8ee; float: right; }
-.plandetail-page .comments .commentList>li { border-bottom: 1px solid #00b8ee; padding: 10px; }
+.plandetail-page .comments .commentList>li { border-bottom: 1px solid #00b8ee; padding: 10px; position: relative;}
 .plandetail-page .comments .commentList>li:last-child{border-bottom: none;}
-.plandetail-page .comments .commentList li .col-md-2 { text-align: center; }
+.plandetail-page .comments .commentList li .col-md-10 {min-height: 60px;}
+.plandetail-page .comments .commentList li .col-md-2 { text-align: center; position: absolute; bottom: 0; right: 0;}
 .plandetail-page .comments .col-md-2 img { height: 40px; width: 40px; }
 .plandetail-page .comments .col-md-10 .userId { font-size: 14px; height: 16px; line-height: 16px; margin-bottom: 16px; }
 .plandetail-page .comments .col-md-10 .comment-pic li { display: inline-block; }
