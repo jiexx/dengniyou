@@ -105,6 +105,41 @@
                     <div class="content">
                       <ul class="clearfix">
                         {{each  v.__values}}
+                        {{if ScheduleType != 0  }}
+                        <li>
+                          <div class="picText">
+                            <!-- {{if ScheduleType == 0  }}
+                              {{if PicURL == null }}<img src="../img/CityIcon.png" alt="">{{/if}}
+                              {{if PicURL != null }}<img src="${ $data.IMGHOST }${PicURL}" alt="">{{/if}}
+                            {{/if}} -->
+                            <div class="text">                                                    
+                              {{if  ScheduleType == 1  }}
+                              <strong>${AirportNameCn}${AirportNameEn}${AirportCode}</strong>
+                              <p>机场</p>
+                              {{else}}
+                              <strong>${NameCh}</strong>
+                              <p>建议游玩时间：${SpotTravelTime} 小时</p>
+                              {{/if}}
+                            </div>
+                            {{if ScheduleType == 1 }}
+                            <img src="../img/airPlaneIcon.png" alt="">
+                            {{/if}}
+                            {{if (ScheduleType == 2 ||ScheduleType == 3 ||ScheduleType == 4 ||ScheduleType == 5) }}
+                            <img data-src="${ $data.IMGHOST }${PicURL}">
+                            <div class="des">${Description}</div>
+                            <span class="fa fa-chevron-right fr moreDetail" data-spotsid="${SpotsID}" data-scheduletype="${ScheduleType}"></span>
+                            {{/if}}
+
+                          </div><!-- end picText -->
+                          <div class="nextBtn">
+                            <span class="glyphicon glyphicon-menu-right"></span>
+                          </div>
+                        </li>
+                        {{/if}}
+                        {{/each}}
+                      </ul>
+                      <!-- <ul class="clearfix">
+                        {{each  v.__values}}
                         <li style="width:350px">
                           <div class="picText">
                             {{if ScheduleType == 0  }}
@@ -129,13 +164,13 @@
                               <div>${AirportNameCn}${AirportNameEn}${AirportCode}</div>
                               {{/if}}
                             </div>
-                          </div><!-- end picText -->
+                          </div>
                           <div class="nextBtn">
                             <span class="glyphicon glyphicon-menu-right"></span>
                           </div>
                         </li>
                         {{/each}}
-                      </ul>
+                      </ul> -->
                     </div>
                   </li>
                   {{/if}}
@@ -198,4 +233,78 @@
         <a href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}"  class="btn  btn-warning">编辑</a>
       </div>
     </div> <!-- end plandetail-page -->
-  </div> <!-- end container
+  </div> <!-- end container-->
+
+
+  <style>
+  .layui-layer-tips .layui-layer-content{background-color: #FFF; color:#333; }
+  .layui-layer-tips i.layui-layer-TipsL, .layui-layer-tips i.layui-layer-TipsR{border-bottom-color: #FFF;}
+  .layui-layer-tips .layui-layer-content h3{margin: 0; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
+  .layui-layer-tips .layui-layer-content p{color: #666; margin-bottom: 0; font-size: 14px;}
+  .layui-layer-tips .layui-layer-content .fa{color:#00b8ee; margin-right: 6px;}
+  .layui-layer-tips .layui-layer-content .lineBox{padding:5px 20px; margin:5px 0; border-top: 1px solid #f1f1f1;}
+  .layui-layer-tips .layui-layer-content .carousel-inner > .item > img{height: 100%;}
+</style>
+<script>
+  $(function(){
+    
+        $('.moreDetail').on('click',function(){
+          var self = $(this).parent().find('img');
+          var scheduletype = $(this).data("scheduletype");
+          var spotsid = $(this).data("spotsid");
+          
+          $.ajax({
+            url:'/dashboard/product/attraction/detail',
+            type: 'post',
+            data: {spotsID:spotsid},
+            success:function(data){
+              var data = JSON.parse(data);
+              var html ='';
+          html += '<div id="carousel-example-generic" class="carousel slide" data-ride="carousel"><ol class="carousel-indicators">';
+          for(var i=0; i<data.SpotPics.length; i++){
+            if(i==0){html += '<li data-target="#carousel-example-generic" data-slide-to="'+(i+1)+'" class="active"></li>';}
+            else{html += '<li data-target="#carousel-example-generic" data-slide-to="'+(i+1)+'" ></li>';}
+          }
+            html += '</ol><div class="carousel-inner" role="listbox">';
+            for(var i=0; i<data.SpotPics.length; i++){
+            if(i==0){html += '<div class="item active"><img src="'+data.IMGHOST+data.SpotPics[i].PicURL+'" alt="..."></div>';}
+            else{html += '<div class="item"><img src="'+data.IMGHOST+data.SpotPics[i].PicURL+'" alt="..."></div>';}
+          } 
+            html += '</div><a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" ><span class="glyphicon glyphicon-chevron-left"></span></a><a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next"><span class="glyphicon glyphicon-chevron-right"></span></a></div>';
+
+              html += '<div class="lineBox" style="border-top:none;"><h3> <span class="fa fa-university"></span>'+data.SpotDetail[0].NameCh+'</h3><p style=" padding-left: 34px;">'+data.SpotDetail[0].NameEn+'</p>';
+              for(var i = 0; i<data.SpotLabels.length; i++){
+                html += '<span class="label label-primary">'+data.SpotLabels[i].ClassifyLabel+'</span> ';
+              }
+              html += '</div><div class="lineBox">建议游玩时间：<span class="pull-right">'+data.SpotDetail[0].TravelTime+'小时</span></div>';
+              html += '<div class="lineBox"><p><span class="fa fa-map-marker"> </span>'+data.SpotDetail[0].CountryName+':'+data.SpotDetail[0].CityName+'</p></div>';
+              html += '<div class="lineBox"><p><span class="fa fa-phone"> </span>'+data.SpotDetail[0].Address+'</p></div>';
+              html += '<h4 style="padding-left:20px;">详情信息</h4><div class="lineBox">'+data.SpotDetail[0].Description+'</div>';
+              layer.open({
+                  type: 4,
+                  closeBtn: 0,
+                  area: '500px',
+                  fixed: false,
+                  shadeClose:true,
+                  anim:0,
+                  content: [html, self] 
+                });
+            }
+          })          
+            
+        });
+
+        $('#disMore').on('click',function(){
+          $('#otherBox').hide();
+          $('#recommendBox').hide();
+          $('#recommendBox2').show();
+          
+        });
+        $('#disMore2').on('click',function(){
+          $('#otherBox').show();
+          $('#recommendBox').show();
+          $('#recommendBox2').hide();
+          
+        });
+  });
+</script>

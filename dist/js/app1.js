@@ -175,7 +175,7 @@
             $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
             days.removeClass("btn btn-warning");
         });
-        $('#buyNow').on('click',function () {
+        $('.buyNow').on('click',function () {
             var usr = $.rogerGetLoginUser();
             if(!usr) {
                 $.rogerLogin('#homeLogin', '/login');
@@ -366,7 +366,7 @@
         var kid = parseInt($('#kid option:selected').val());
         var adultprice = parseFloat(response.PlanInfo[0].AdultPrice);
         var kidprice = parseFloat(response.PlanInfo[0].KidPrice);
-        var cash = adult*adultprice+kid*kidprice;
+        var cash = Math.round((adult*adultprice+kid*kidprice)*100)/100;
         $('.price').each(function () {
 			$(this).html(''+cash);
         })
@@ -376,7 +376,7 @@
             $('#adult').on("change", function () {
                 adult = parseInt($('#adult option:selected').val());
                 $('.price').each(function () {
-                    cash = adult*adultprice+kid*kidprice
+                    cash = Math.round((adult*adultprice+kid*kidprice)*100)/100;
                     $(this).html(''+cash);
                 })
             });
@@ -386,7 +386,7 @@
             $('#kid').on("change", function () {
                 kid = parseInt($('#kid option:selected').val());
                 $('.price').each(function () {
-                    cash = adult*adultprice+kid*kidprice
+                    cash = Math.round((adult*adultprice+kid*kidprice)*100)/100;
                     $(this).html(''+cash);
                 })
             });
@@ -432,6 +432,7 @@
 
                 var ok = realView.find('#OK');
                 ok.rogerOnceClick(null,function () {
+                    ok.attr('disabled',true);
                     var iLeft = (window.screen.availWidth - 10 - 400) / 2;
                     var newWin = window.open('about:blank','','height=600, width=400, top=0, left='+iLeft );
                     $.rogerPost('/pay',buy, function (respJSON) {
@@ -439,6 +440,7 @@
                         if( respJSON.ERR) {
                             $.rogerNotice({Message:'生成订单有错,错误码:'+respJSON.ERR});
                             newWin.close();
+                            ok.attr('disabled',false);
                         }else {
                             newWin.location.href = respJSON.url;
                             //window.open(respJSON.url, '_blank');

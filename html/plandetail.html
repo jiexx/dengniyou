@@ -283,9 +283,9 @@
 				</div>
 			</div>
 
-			<div class="col-md-3 ">
+			<div class="col-md-3" id="recommendBox">
 				<div class="recommendBox">
-					<h2>更多推荐</h2>
+					<h2>更多推荐<small id="disMore">展开</small></h2>
 					<div class="list-group">
 					{{if PlanMore.length != 0}}
 						{{each $data.PlanMore}}
@@ -309,7 +309,7 @@
 				</div>
 			</div><!-- end 店铺内推荐列表 -->
 
-			<div class="col-md-9  ">	
+			<div class="col-md-9" id="otherBox">	
 				<div class="feature featureAlone clearfix" id="attention">
 					<div class="col-md-2">
 						<div class="tittle">预订须知</div>
@@ -359,6 +359,32 @@
 
 			  </div><!--end  评论区 -->
 			</div>
+
+			<div class="col-md-12" id="recommendBox2" style="display: none; margin-bottom: 20px;">
+				<div class="recommendBox clearfix">
+					<h2>更多推荐<small id="disMore2">收缩</small></h2>
+					<div class="list-group">
+					{{if PlanMore.length != 0}}
+						{{each $data.PlanMore}}
+						<div class="list-group-item col-md-3">
+							<div class="media">
+								<a href="#/plandetail?PlanID=${PlanID}" class="media-left" >
+									<img class="media-object" src="${ $data.IMGHOST }${PicURL}" style="width:60px;height:60px"></img>
+								</a>
+								<div class="media-body">
+									<p>${PlanName}</p>
+									<p class="planprice">方案 <span class="text-warning">¥<strong>${AdultPrice}</strong></span></p>
+								</div>
+							</div>
+						</div>
+						{{/each}}
+					{{else}}
+					期待中
+			        {{/if}}
+					</div>
+					<!--<p class="moreBtn"><a href="#">查看更多宝贝</a></p>-->
+				</div>
+			</div><!-- end 店铺内推荐列表 -->
 		</div> <!-- end plandetail-main -->
 	</div>
 	</div> <!-- end plandetail-page -->
@@ -422,9 +448,21 @@
 		              content: [html, self] 
 		            });
         		}
-        	})
+        	})          
             
-            
+        });
+
+        $('#disMore').on('click',function(){
+        	$('#otherBox').hide();
+        	$('#recommendBox').hide();
+        	$('#recommendBox2').show();
+        	
+        });
+        $('#disMore2').on('click',function(){
+        	$('#otherBox').show();
+        	$('#recommendBox').show();
+        	$('#recommendBox2').hide();
+        	
         });
 	});
 </script>

@@ -22,9 +22,9 @@
 
         var filter2ev = $._data($('#filter2 input[type=radio][name="filterradio"]')[0], 'events');
         if(!filter2ev || !filter2ev.change) {
-            var usr = $.rogerGetLoginUser();
-            $('#filter2 input[type=radio][name="filterradio"]').unbind().change(function(e){
 
+            $('#filter2 input[type=radio][name="filterradio"]').unbind().change(function(e){
+                var usr = $.rogerGetLoginUser();
                 if(!usr) {
                     $.rogerShowLogin();
                     return;
@@ -834,6 +834,11 @@
             var user = $.rogerGetLoginUser();
             if('2'==status) {
                 $.rogerPost('/update/order',{OrderID:orderid,Status:3, CloseReason:'',OperateDesc:'',OperateUserID:user.UserID},function () {
+                    $.rogerRefresh();
+                });
+            }
+            if('5'==status) {
+                $.rogerPost('/update/order',{OrderID:orderid,Status:5,CloseReason:'导游拒绝接单',OperateUserID:user.UserID},function () {
                     $.rogerRefresh();
                 });
             }
@@ -2207,23 +2212,30 @@
             $.rogerRefresh(TraveLogue);
         };
 
-
         TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
-            var index;
-        $('.functionBtn').on('click','li',function(e){
-            index = $(this).data('index');
-        });
-            TravelogueDetail.splice(index,0,{label:' ', DAY:'0', content:null, picURL: null});
-            $.rogerRefresh(TraveLogue);
+            var indexInsert;
+            $('.functionBtn').on('click','li',function(e){
+                indexInsert = $(this).attr('data-index');
+                TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
+                $.rogerRefresh(TraveLogue);
+            });            
         };
          TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){
-            TravelogueDetail.splice(index,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
-            $.rogerRefresh(TraveLogue);
+            var indexInsert;
+            $('.functionBtn').on('click','li',function(e){
+                indexInsert = $(this).attr('data-index');
+                TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+                $.rogerRefresh(TraveLogue);
+            });            
         };
          TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){
-            TravelogueDetail.splice(index,0,{label:null, DAY:null, content:' ', picURL: null});
+            var indexInsert;
+            $('.functionBtn').on('click','li',function(e){
+                indexInsert = $(this).attr('data-index');
+                TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
+                $.rogerRefresh(TraveLogue);
+            });            
         };
-
 
         $('#save').rogerOnceClick(TraveLogue, function(e){
             temp = e.data.Travelogue;

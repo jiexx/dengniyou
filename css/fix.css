@@ -1,4 +1,5 @@
 .bootstrap-select .btn-info{background-color: #ffffff; color: #000000}
+.necessary{color: red; font-size: 20px; display: inline-block; width: 20px; height: 20px; line-height: 20px; text-align: center; vertical-align: text-top;}
 /*重置开始*/
 @charset "utf-8";
 *{margin:0;padding:0;}
@@ -191,6 +192,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .recommendBox, .scheduleBox { border: 1px solid #00b8ee; }
 .plandetail-page .recommendBox{margin-top: 10px;}
 .plandetail-page .recommendBox h2 { background-color: #00b8ee; font-size: 24px; color: #fff; line-height: 50px; text-indent: 10px; text-align: center; margin-top: 0; margin-bottom: 0;}
+.plandetail-page .recommendBox h2 small{float: right; color: #ddd; margin-right: 20px; line-height: 50px; cursor: pointer;}
 .plandetail-page .recommendBox .list-group{margin-bottom: 0;}
 .plandetail-page .recommendBox .list-group .planprice span{margin-left: 60px;}
 .plandetail-page .recommendBox .list-group p{text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
@@ -640,6 +642,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .scheduleShort .form-group,.editPage .scheduleShort .row{position: relative; }
 .editPage .scheduleShort form label{text-align: left;}
 .editPage .scheduleShort .col-md-6,.editPage .scheduleShort .col-md-3{margin-bottom: 10px;}
+.editPage .scheduleShort .functionBtn li{display: inline-block; width:24%; text-align: center;}
 /*租车编辑页*/
 .editPage .carInfo input{width:80%; display: inline-block;}
 .editPage .carInfo input[type="radio"]{width:40%;}

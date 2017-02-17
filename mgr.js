@@ -152,7 +152,6 @@ app.post('/notify', function (req, res) {
     });
 });
 
-
 app.post('/new/service/car', upload.array(), function(req, res) {
     //var js = fs.readFileSync('./fakeorder', 'utf8');
     //var fake = JSON.parse(js);
@@ -161,7 +160,7 @@ app.post('/new/service/car', upload.array(), function(req, res) {
      console.log();
      });*/
 
-   request.post(
+    request.post(
         {
             url: 'http://123.59.144.44/travel/service/uploadServiceWeb',
             // url: 'http://10.101.1.36:8080/travel/service/uploadServiceWeb',
@@ -223,6 +222,21 @@ app.post('/new/service/car', upload.array(), function(req, res) {
     //
     //     }
     // );
+});
+
+app.get('/order/update', upload.array(), function (req, res) {
+
+    parameters = req.body;
+    request('http://123.59.144.44/travel/order/updateOrder?orderid=' + parameters.orderid
+        + '&status=' + parameters.status, function (error, response, body) {
+        if (!error && response.statusCode == 200 && body.datas) {
+            console.log(body) // Show the HTML for the baidu homepage.
+            res.send(JSON.stringify({url: +false, "message": "操作成功","status":0}));
+        } else {
+            res.send(JSON.stringify({url: +false, "message": "操作失败","status":1}));
+        }
+    })
+
 });
 
 app.post('/login', upload.array(), function(req, res) {
