@@ -4,10 +4,12 @@
     var policy3 = '1  景点游览和公务/商务活动期间的服务费用；\r\n2  超时等待的费用，资费参看服务描述；\r\n3  机场和送达目的地的停车费。';
     var policy4 = '1  公务和商务活动中的专业翻译费用（可另付费提供）\r\n2  护照费用；\r\n3  航空公司燃油涨幅；\r\n4  酒店内电话、上网，传真、洗熨、收费电视、饮料等额外费用；\r\n5  酒店门童，餐馆服务生小费；\r\n6  报价中未提及的门票；\r\n7  因不可抗拒的客观原因（如天灾、战争、罢工等）、航空公司航班延误或取消等特殊情况导致行程取消或变更，由此产生的额外费用（如延期签证费、住、食及交通费、国家航空运价调整等）；\r\n8  导游及司机加班工资，资费如服务描述；\r\n9  导游及司机行程中缺餐补助，资费如服务描述；\r\n10  服务及方案描述中未提及的景点费用。';
     var policy5 = '1  因游客擅自行动走失，发生事故等产生的费用由游客自行承担；\r\n2  如遇不可预见的事件，如堵车，交通事故等，导游与游客商定可临时合理更改行程，并继续旅程，由此产生的加班费用和超程费用由游客承担；\r\n3  旅客不可要求导游进行违反交通规则、法律、当地风俗的活动，如旅客有违规、违法行为倾向导游须劝阻，劝阻无效则报警处理；\r\n4  导游不可强制旅客参与购物活动或参加自费项目，约定行程外项目需取得旅客同意；\r\n5  原则上导游与游客共进正餐（午餐和晚餐），费用由游客支付，缺少正餐时游客应支付缺餐补助；\r\n6  如导游陪同游客游览景点，游客需为导游支付门票费用。';
+    url='';
+    pamaeta ={pagestart:0,pagesize:8};
+    page = 1;
     function bindRidoesForSwitch (){
         var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
 
-        var url ="";
         if(!ev || !ev.change) {
             $('#menu input[type=radio][name="optradio"]').unbind().change(function(e){
                 var usr = $.rogerGetLoginUser();
@@ -16,7 +18,8 @@
                     return;
                 }
                 url = $(this).next('div').data('href');
-                $.rogerTrigger('#app',url, {UserID:usr.UserID});
+                pamaeta["UserID"]=usr.UserID;
+                $.rogerTrigger('#app',url, pamaeta);
             });
         }
 
@@ -31,14 +34,19 @@
                 }
                 filtertemp = $(this).val();
                 if('all' == filtertemp){
-                    filtertemp = null;
+                    delete pamaeta["filter"];
+                } else {
+                    pamaeta["filter"]=filtertemp;
                 }
+
+                pamaeta["UserID"]=usr.UserID;
 
                 if(url == ''){
                     url = $.rogerGetPath() || window.location.hash;
                 }
 
-                $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
+
+                $.rogerTrigger('#app',url, pamaeta);
             });
 
         }
@@ -54,12 +62,16 @@
                 }
                 filtertemp = $(this).val();
                 if('all' == filtertemp){
-                    filtertemp = null;
+                    delete pamaeta["filter"];
+                } else {
+                    pamaeta["filter"]=filtertemp;
                 }
+
+                pamaeta["UserID"]=usr.UserID;
                 if(url == ''){
                     url = $.rogerGetPath() || window.location.hash;
                 }
-                $.rogerTrigger('#app',url, {UserID:usr.UserID,filter:filtertemp});
+                $.rogerTrigger('#app',url, pamaeta);
             });
         }
         function titleList(){
@@ -185,6 +197,19 @@
         realView.rogerCropImages();
 	};
     var ctrlSpecialplan = function(response, realView) {
+        $(".switchCheckbox").bootstrapSwitch();
+        $('.release').on('switchChange.bootstrapSwitch', function (e, data) {
+            var user = $.rogerGetLoginUser();
+            var status = $(this).data("status");
+            var ServiceId = $(this).data("serviceid");
+            //3,隐藏，4发布
+            // $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: status, planID: ServiceId,userID:user.UserID}, function (respJSON) {
+            //     $.rogerNotice({Message: '操作成功'});
+            // });
+            $.get("http://123.59.144.44/travel/guideplan/editPlanStatus?planStatus="+status+"&planID="+ServiceId+"&userID="+user.UserID,function(){
+                $.rogerNotice({Message: '操作成功'});
+            });
+        });
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
@@ -208,6 +233,8 @@
         );
         bindRidoesForSwitch();
         realView.rogerCropImages();
+
+        pageclick();
     };
     var ctrlAttraction = function(response, realView) {
         $(".switchCheckbox").bootstrapSwitch();
@@ -222,11 +249,9 @@
             }
         );
 
-        url = $.rogerGetUrlParam();
         realView.rogerCropImages();
-        if(response.Counts > 10) {
 
-        }
+        pageclick();
     };
 
     var ctrlTravelogue = function(response, realView) {
@@ -259,6 +284,8 @@
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
+
+        pageclick();
     };
 
     var ctrlShortplanDetail = function(response, realView) {
@@ -696,10 +723,42 @@
         realView.rogerCropImages();
     };
 
+    var pageclick = function() {
+
+        $('[name=page]').click(function (e) {
+            clickpage = $(this).data("value");
+            //前一页
+            if(clickpage == 'p'){
+                if(page > 1){
+                    page = page-1;
+                } else {
+                    return;
+                }
+                //后一页
+            } else if(clickpage == 'n'){
+                if(page < $('[name=page]').length-2){
+                    page = page+1;
+                } else {
+                    return;
+                }
+                //当前页
+            } else if( page == clickpage){
+                return;
+                //其他
+            } else {
+                page = clickpage;
+            }
+            pamaeta["pagestart"] = (page-1)*8;
+            $.rogerTrigger('#app',url, pamaeta);
+        });
+    };
+
     var ctrlFacilityList = function(response, realView) {
         console.log(response);
         bindRidoesForSwitch();
         realView.rogerCropImages();
+        pageclick();
+
     };
 
     var ctrlDelicacyDetail = function(response, realView) {

@@ -1,4 +1,4 @@
 {
-  "Facilities": {"sql": "SELECT * FROM traveluserdb.`vw_/facility/list` WHERE userID = ? order by updateDate desc",	"params":["UserID"]},
-  "Counts": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveluserdb.`vw_/facility/list` WHERE userID = ? ",	"params":["UserID"]}
+  "Facilities": {"sql": "SELECT * FROM traveluserdb.`vw_/facility/list` WHERE userID = ? order by updateDate desc LIMIT ?,?",	"params":["UserID","pagestart","pagesize"]},
+  "Counts": {"sql": "SELECT ceil(count(*)/ 8) as Count FROM traveluserdb.`vw_/facility/list` WHERE userID = ? ",	"params":["UserID"]}
 }

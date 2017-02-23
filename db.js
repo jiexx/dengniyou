@@ -10,7 +10,8 @@ var pool  = mysql.createPool({
 	connectionLimit: 500,
 //	acquireTimeout: 30000
 });
-var IMG_HOST = "http://123.59.144.47/";
+var IMG_HOST = "http://123.59.144.47/";//"http://10.101.1.165:8097/";
+IMG_HOST = "http://10.101.1.165:8097/";
 
 function execfinal(conn, sql, params, callback, close) {
 	conn.query(sql, params, function(err, results) {
@@ -194,6 +195,12 @@ exports.login = function(item, callback) {
 		console.log(sql);
 	});
 };
+
+exports.getimg_host = function() {
+ return IMG_HOST;
+};
+
+
 exports.getUser = function(item, callback) {
     pool.getConnection(function(err, connection) {
         if(err) {
@@ -410,13 +417,13 @@ exports.getAddorderDetail = function (item, callback) {
                 "FROM traveluserdb.tab_userplan pl LEFT JOIN traveldb.tab_userinfo useri ON " +
                 "( useri.UserID = pl.UserID AND useri.`Identified` = 1 ) WHERE PlanID =" + item.planID;
 
-            schedulerssql = "select DATE_FORMAT(ScheduleDate,'%Y-%m-%d')  from tab_travelorderschedule " +
+            schedulerssql = "select DATE_FORMAT(ScheduleDate,'%Y-%m-%d')  from travelorderdb.tab_travelorderschedule " +
                 "where GuideID=? and ScheduleDate>=NOW() and Status in('0','2')";
         }
 
         var userList;
         var addDetail;
-        exec(connection, sql.join(""), [,], function (err, results) {
+        exec(connection, sql, [,], function (err, results) {
 
             if (err) {
                 callback(err, results);
@@ -425,15 +432,16 @@ exports.getAddorderDetail = function (item, callback) {
             addDetail = {"addDetail": results};
 
             if (null != useersql && typeof(useersql) != "undefined") {
-                exec(connection, useersql.join(""), [,], function (err, usrlist) {
+                exec(connection, useersql, [,], function (err, usrlist) {
                     if (err) {
                         callback(false, remJson(addDetail));
                     }
 
                     if (null != schedulerssql && typeof(schedulerssql) != "undefined") {
-                        for (i=0;i<usrlist.length;i++) {
+                        i=0;
+                    	for (i=0;i<usrlist.length;i++) {
 
-                            exec(connection, schedulerssql.join(""), [usrlist[i]["UserID"]], function (err, schedulars) {
+                            exec(connection, schedulerssql, [usrlist[i]["UserID"]], function (err, schedulars) {
                                 if (err) {
                                     addDetail["userList"] = usrlist;
                                     callback(false, remJson(addDetail));
@@ -447,6 +455,11 @@ exports.getAddorderDetail = function (item, callback) {
 
                             });
                         }
+
+                        if(i==0){
+                            callback(false, remJson(addDetail));
+						}
+
                     }
 
 

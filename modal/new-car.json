@@ -66,14 +66,14 @@
 			"findkey": "insertId"
 		},
 		"VehicleSchedule": {
-			"sql": "insert into tab_servicevehicleschedule (ServiceID,GuideID,UserID,ScheduleDate,Status,CreateDate) values(#{serviceID},#{guideID},0,#{scheduleDate},1,NOW())",
-			"params": [
-				"insertId",
-				"guideID",
-				"scheduleDate"
-			],
-			"findkey": "insertId"
-		}
+		"sql": "insert into tab_servicevehicleschedule (ServiceID,GuideID,UserID,ScheduleDate,Status,CreateDate) values(#{serviceID},#{guideID},0,#{scheduleDate},1,NOW())",
+		"params": [
+			"insertId",
+			"guideID",
+			"scheduleDate"
+		],
+		"findkey": "insertId"
+	}
 
 	}
 }

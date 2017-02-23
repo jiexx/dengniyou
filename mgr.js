@@ -326,8 +326,8 @@ app.post('/order/list', upload.array(), function(req, res) {
 });
 
 //usertype:1,游客，2导游,userID
-app.post('/order/getAddorderDetail', upload.array(), function(req, res) {
-    db.getAddorderDetail(req.body, function(error, results){
+app.get('/order/getAddorderDetail', upload.array(), function(req, res) {
+    db.getAddorderDetail(req.query, function(error, results){
         if(!error) {
             ////console.log(JSON.stringify(results));
             res.send(results);
@@ -335,6 +335,32 @@ app.post('/order/getAddorderDetail', upload.array(), function(req, res) {
     });
 });
 
+
+app.post('/service/list', upload.array(), function (req, res) {
+    parameters = req.body;
+    //Integer type, Integer page, String condition, Long userID, int regionType,Integer regionID
+    // var urlarray = [];
+    // urlarray.push('http://123.59.144.44/travel/service/getCustomServiceByConditionForWeb?');
+
+    request('http://10.101.1.36:8080/travel/service/getCustomServiceByConditionForWeb?' +
+        'type=' + parameters.type
+        + '&page=' + parameters.page
+        + '&condition=' + (parameters.condition?  encodeURI(parameters.condition):'')
+        + '&userID=' + (parameters.userID?  parameters.userID:'')
+        + '&regionType=' + parameters.regionType
+        + '&regionID=' + (parameters.regionID?  parameters.regionID:'')
+        , function (error, response, body) {
+            if (!error && response.statusCode == 200 && JSON.parse(body).datas) {
+                jsonret= JSON.parse(body).datas;
+                jsonret["IMGHOST"] = db.getimg_host();
+                //console.log(body); //
+
+                res.send(JSON.stringify(jsonret));
+            } else {
+                res.send(JSON.stringify({url: +false, "message": "失败", "status": 1}));
+            }
+        });
+});
 
 
 var MODAL = {};

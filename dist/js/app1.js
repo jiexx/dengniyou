@@ -942,31 +942,187 @@
         });
         realView.rogerCropImages();
     };
+
+    //列表页
+    var ctrlCarList = function(){
+        realView.rogerCropImages();
+        frameCtrl();
+    };
+    var ctrlServiceList = function(data,realView){
+        var urlParams = $.rogerGetURLJsonParams();
+        if(urlParams){
+            var type = urlParams.type;
+            switch (type){
+                case "1":
+                $('#carChoose .btn-group:eq(0) a').addClass('btn-primary');
+                break;
+                case "7":
+                $('#carChoose .btn-group:eq(1) a').addClass('btn-primary');
+                break;
+                case "3":
+                $('#carChoose .btn-group:eq(2) a').addClass('btn-primary');
+                break;
+                case "4":
+                $('#carChoose .btn-group:eq(3) a').addClass('btn-primary');
+                break;
+            }
+        }
+        
+        var link = $.rogerGetPath();
+
+        $('#homeSearch').rogerOnceClick(null, function () {
+            var k = $('#keySearch').val();
+            $.rogerTrigger('#homesearchlist', '#/itemlist', {type:type,page:1,condition:k,regionType:0});
+        });
+
+        function filterUnlimit(elem){
+            if(elem.html()=='不限'){
+                return '%';
+            }
+            return '%'+elem.html()+'%';
+        }
+
+        $("#label div").on("click", function(){
+            var label = $("#label").find(".btn.btn-warning");
+            var country = $("#country").find(".btn.btn-warning");
+            var days = $("#type").find(".btn.btn-warning");
+            var a = filterUnlimit($(this));
+            var b = filterUnlimit(country);
+            var c = filterUnlimit(days);
+            var c =c.match(/\d/g);
+            c = !c ? [0,1000] : c;
+            $(this).addClass("btn btn-warning");
+            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            label.removeClass("btn btn-warning");
+        });
+        $("#country div").on("click", function(){
+            var label = $("#label").find(".btn.btn-warning");
+            var country = $("#country").find(".btn.btn-warning");
+            var days = $("#type").find(".btn.btn-warning");
+            var a = filterUnlimit(label);
+            var b = filterUnlimit($(this));
+            var c = filterUnlimit(days);
+            var c =c.match(/\d/g);
+            c = !c ? [0,1000] : c;
+            $(this).addClass("btn btn-warning");
+            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            country.removeClass("btn btn-warning");
+        });
+        $("#type div").on("click", function(){
+            var label = $("#label").find(".btn.btn-warning");
+            var country = $("#country").find(".btn.btn-warning");
+            var days = $("#type").find(".btn.btn-warning");
+            var a = filterUnlimit(label);
+            var b = filterUnlimit(country);
+            var c = filterUnlimit($(this));
+            var c =c.match(/\d/g);
+            c = !c ? [0,1000] : c;
+            $(this).addClass("btn btn-warning");
+            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            days.removeClass("btn btn-warning");
+        });
+
+        //搜索
+        // $('#search').on('click',function(){
+        //     $.get('http://10.101.1.36:8080/travel/service/getCustomServiceByConditionForWeb?' +
+        //     'type=' + 4
+        //     + '&page=' + 1
+        //     + '&condition=' + '悉尼'
+        //     + '&regionType=' + 0
+        //     , function (data){});
+        // });
+        
+        
+
+        //页码
+        var totalcount = data.count;
+        var pagescount = Math.ceil(totalcount/10);
+        var html = '';
+        for(var i=1; i<=pagescount; i++){
+            html += "<li><a href='#''>"+i+"</a></li>";
+        }
+        $('#previous').after(html);
+        realView.rogerCropImages();
+        frameCtrl();
+    }
+    var ctrlServicedetail = function (response, realView) {
+
+        $('.pgwSlideshow').pgwSlideshow({
+          transitionEffect:'sliding',
+          autoSlide:false
+        });
+
+        $('#commentText').on('keyup',function(){
+          $(this).next().find('strong').text(100-$(this).val().length);
+        });
+
+        $.rogerTrigger('#plan-comment','#/comment',{PlanID:100232});
+
+  
+        // 车辆与装备轮播图初始化
+        $('.vmcarousel-centered-infitine').vmcarousel({
+           centered: true,
+           start_item: 1,
+           autoplay: false,
+           infinite: true
+        });
+        var usr = $.rogerGetLoginUser();
+
+        //包车详情页
+        var disday = [];
+        for(var i=0; i<response.VehicleSchedule.length; i++){
+            disday.push(response.VehicleSchedule[i].scheduleFormatTime);
+        }
+
+        var pickr = $("#calendarDetail").flatpickr({
+            inline: true,
+            mode: "multiple",
+            disable: disday,
+            minDate: new Date()
+        });
+
+        realView.rogerCropImages();
+
+    };
+
     //-------------------------------plan customize end---------------------------------
 
 	$.rogerRouter({
-		'#/':							{view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
-        '#/search':					{view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
-		'#/plandetail': 				{view:'plandetail.html',									rootrest:'/plan/detail', 			    ctrl: ctrlPlandetail},
-        '#/plandetailshort':			{view:'plandetail-short.html',							rootrest:'/plan/detail2', 			    ctrl: ctrlPlandetail},
+		'#/':						  {view:'home.html',										rootrest:'/home', 						ctrl: ctrlHome},
+        '#/search':					  {view:'home-search.html',								rootrest:'/home/search',					ctrl: ctrlHomeSearch},
+		'#/plandetail': 			  {view:'plandetail.html',									rootrest:'/plan/detail', 			    ctrl: ctrlPlandetail},
+        '#/plandetailshort':		  {view:'plandetail-short.html',							rootrest:'/plan/detail2', 			    ctrl: ctrlPlandetail},
         '#/homelist':                 {fragment: 'fragment/home-list.html',                 init: initHomeList,                          ctrl: ctrlHomeList},
-        '#/homesearchlist':          {fragment: 'fragment/home-search-list.html',         rootrest:'/home/search',                 ctrl: ctrlHomeSearchList},
+        '#/homesearchlist':           {fragment: 'fragment/home-search-list.html',         rootrest:'/home/search',                 ctrl: ctrlHomeSearchList},
 
-        '#/templateplanedit':        {fragment: 'fragment/visitor-tempplan-edit.html',   rootrest:'/plan/detail/tmpl',           ctrl: ctrlTemplateplanNew},
-        '#/templateplandetail':      {view: 'visitor-tempplan-detail.html',                rootrest: '/plan/detail/tmpl2',        ctrl: ctrlTemplateplanDetail},
+        '#/templateplanedit':         {fragment: 'fragment/visitor-tempplan-edit.html',   rootrest:'/plan/detail/tmpl',           ctrl: ctrlTemplateplanNew},
+        '#/templateplandetail':       {view: 'visitor-tempplan-detail.html',                rootrest: '/plan/detail/tmpl2',        ctrl: ctrlTemplateplanDetail},
 
         '#/citychooser':              {fragment: 'fragment/dialog-city-chooser.html',     init: initCityChooser,                       ctrl: ctrlCityChooser},
         '#/spotchooser':              {fragment: 'fragment/dialog-spot-chooser.html',     init: initSpotChooser,                       ctrl: ctrlSpotChooser},
         '#/airportchooser':           {fragment: 'fragment/dialog-airport-chooser.html', init: initAirportChooser,                    ctrl: ctrlAirportChooser},
         '#/guidechooser':             {fragment: 'fragment/dialog-guide-chooser.html',   init: initGuideChooser,                       ctrl: ctrlGuideChooser},
 
-        '#/planpay1': 				{view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
-        '#/orderlist': 				{view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
-		'#/comment':             		{fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
-        '#/orderdetail':              {fragment:'payCompletion.html',	                            rootrest:'/order/detail',               ctrl: ctrlOrderdetail},
+        '#/planpay1': 				  {view:'plandetail-pay-1.html',							rootrest:'/plan/pay1',    				ctrl: ctrlPlanpay1},
+        '#/orderlist': 				  {view: 'orderlist-vistor.html',            			    rootrest: '/order/list', 				ctrl: ctrlOrderlist},
+		'#/comment':             	  {fragment: 'fragment/comment.html',					init: initComment,						    ctrl: ctrlComment},
+        '#/orderdetail':              {fragment:'payCompletion.html',	                            rootrest:'/order/detail',           ctrl: ctrlOrderdetail},
 	    '#/plansearch':               {view:'planSearch.html',                                rootrest:'/plan/plansearch',            ctrl: ctrlPlanSearch},
-        '#/userinfo':                 {fragment:'fragment/userInfo-visitor.html',                      rootrest: '/user/info',                    ctrl: ctrlUserInfo},
-        '#/citychooser2':             {fragment: 'fragment/dialog-city-chooser.html',    init: initCityChooser2,                     ctrl: ctrlCityChooser2}
+        '#/userinfo':                 {fragment:'fragment/userInfo-visitor.html',                      rootrest: '/user/info',        ctrl: ctrlUserInfo},
+        '#/citychooser2':             {fragment: 'fragment/dialog-city-chooser.html',    init: initCityChooser2,                     ctrl: ctrlCityChooser2},
+        '#/car':                      {view:'car-list.html',                              rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/itemlist':                 {fragment: 'fragment/item-list.html',                             rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/activity':                 {view:'activity-list.html',                         rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/customization':            {view:'activity-list.html',                         rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/scheme':                   {view:'activity-list.html',                         rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/accommodation':            {view:'activity-list.html',                         rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/visa':                     {view:'visa-list.html',                             rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/planeticket':              {view:'activity-list.html',                         rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/insurance':                {view:'insurance-list.html',                        rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/attraction':               {view:'activity-list.html',                         rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/delicacy':                 {view:'activity-list.html',                         rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/otherservice':             {view:'activity-list.html',                         rootrest:'/service/list',                  ctrl: ctrlServiceList},
+        '#/serviceactivitydetail':    {view:'product-activity-detail-1.html',             rootrest:'/dashboard/product/service/detail',  ctrl: ctrlServicedetail},
     });
 	
 })();

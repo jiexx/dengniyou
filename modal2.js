@@ -13,7 +13,7 @@ var pool  = mysql.createPool({
 	connectionLimit: 500
 //	acquireTimeout: 30000
 });
-var IMG_HOST = "http://123.59.144.47/";//"http://10.101.1.165/";
+var IMG_HOST = "http://123.59.144.47/";//"http://10.101.1.165:8097/";
 
 function doSql(funcArgu, onFinish) {
 	pool.getConnection(function(err, conn) {
@@ -445,7 +445,7 @@ var roger = {
 				var data = funcArgu.item.data;
 				var finalParams = [];
 				for (var tag in params) {
-					if(data[params[tag]]) {
+					if(typeof(data[params[tag]])!="undefined") {
 						finalParams.push(data[params[tag]]);
 					}else {
 						finalParams.push(null);
@@ -574,6 +574,13 @@ function isEmpty(obj) {
 exports.rogerSmartSql = function(modal, data, callback) {
 	var out = [];
 	var version = data.version;
+    if(data["pagestart"]){
+        data["pagestart"] = parseInt(data["pagestart"]);
+	}
+
+    if(data["pagesize"]){
+        data["pagesize"] = parseInt(data["pagesize"]);
+    }
 	if(roger.check(data) == 1) {
 		roger.prepare1(null, 'root', modal, data, out);
 	}else {

@@ -517,7 +517,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*.detailpage{position: relative;max-width: 1200px;border: 1px solid #E0E0E0;margin-top: 46px;margin-bottom: 46px;padding: 20px 0;}*/
 .detailpage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
 .detailpage .breadcrumb li a{font-size: 14px;color: #666;}
-.detailpage .carousel{width: 100%;overflow: hidden;margin-top: 80px;}
+.detailpage .carousel{width: 100%;overflow: hidden;}
 .detailpage .carousel .carousel-control{width: 10%;}
 .detailpage .detailpage-mainbody{padding: 25px 0px; border-left: 1px solid #eee; -webkit-box-shadow: 5px 5px 10px #eee; -moz-box-shadow: 5px 5px 10px #eee; -ms-box-shadow: 5px 5px 10px #eee; -o-box-shadow: 5px 5px 10px #eee; box-shadow: 5px 5px 10px #eee;}
 .detailpage .detailpage-mainbody .row{margin-left: 0;margin-right: 0;}
@@ -778,4 +778,86 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .service-list .service-edit span{margin-top: 20px; font-size: 20px;}
 .service-release button a{color:#FFF;}
 /* end 导游端列表页*/
+
+/*包车详情页头部charterinfo-header开始*/
+.detailV .charterinfo-header { margin-top: 36px; }
+.detailV .share-collect { height: 30px; padding: 2px 66px; margin-top: 15px; }
+.detailV .share-collect .share { float: left; font-size: 16px; color: #333; }
+.detailV .share-collect .collect { float: right; font-size: 16px; color: #333; }
+.detailV .share-collect i { display: inline-block; margin-right: 5px; font-size: 20px; }
+
+/*包车详情页标题charter-title开始*/
+.detailV .charter-title { padding: 20px; }
+.detailV .charter-title h2 { font-size: 22px; font-weight: bold; color: #333; margin-bottom: 30px; }
+.detailV .charter-title p { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 26px; }
+.detailV .charter-title .price,
+.detailV .charter-title .package { font-size: 18px; font-weight: bold; }
+.detailV .charter-title .price span { font-size: 26px; font-weight: bold; color: #fa703e; }
+.detailV .charter-title .package span { display: inline-block; padding: 4px 12px; border: 1px solid #333; margin-right: 8px; font-size: 14px; font-weight: normal; color: #333; }
+.detailV .charter-title .package .on { background-color: #4AC0F9; border: 0; padding: 6px 14px; color: #fff; }
+.detailV .charter-title button { padding: 10px 20px; font-size: 20px; font-weight: normal; color: #fff; margin-top: 34px; }
+.detailV .charter-title .advice { background-color: #00B9ED; }
+.detailV .charter-title .book { background-color: #FE8410; margin-left: 70px; }
+/*包车详情页主要内容charterinfo-mianbody开始*/
+.detailV .charterinfo-mianbody { margin-top: 30px; }
+
+/*侧边栏infomain-sidebar开始*/
+.detailV .infomain-sidebar { margin-bottom: 40px; }
+
+/*商家信息business开始*/
+.detailV .business { border: 1px solid #00B9ED; }
+.detailV .business-avatar { border-bottom: 1px solid #00B9ED; padding: 30px 0; text-align: center; }
+.detailV .business-avatar img { width: 162px; height: 162px; }
+.detailV .business-info { padding: 20px 40px; }
+.detailV .business-info h3,
+.detailV .business-info p { font-size: 18px; color: #333; margin-bottom: 20px; }
+.detailV .business-info p { position: relative; }
+.detailV .business-info p i { position: absolute; top: 0; margin-left: 7px; font-size: 20px; color: #0096DE; }
+.detailV .business-info button { font-size: 18px; color: #333; border: 1px solid #00B9ED; margin-left: 20px; }
+.detailV .business-info button:hover { border: 1px solid #00B9ED; background-color: #00B9ED; color: #fff; }
+
+/*商家信息business结束*/
+
+/*更多推荐recommend开始*/
+.detailV .recommend { border: 1px solid #00B9ED; margin-top: 30px; }
+.detailV .recommend-title { height: 56px; line-height: 56px; background-color: #00B9ED; color: #fff; font-size: 24px; text-align: center; }
+.detailV .recommend-main { padding: 20px 10px; }
+.detailV .recommend-main li { margin-bottom: 20px; text-align: center; }
+.detailV .recommend-main li:last-child { margin-bottom: 0; }
+.detailV .recommend-main li img { width: 240px; height: 200px; }
+.detailV .recommend-main li .des { padding: 10px; background-color: #F4FBFE; }
+.detailV .recommend-main li .des p { font-size: 14px; color: #333; }
+.detailV .recommend-main li .des span { font-size: 12px; color: #333; }
+.detailV .recommend-main li .des .price { color: #FA723B; }
+.detailV .recommend-main li .price em { font-size: 18px; color: #FC7741; }
+.detailV .recommend-main li .des button { float: right; background-color: #FC7741; color: #fff; font-size: 12px; padding: 3px 5px; }
+.detailV .recommend-bottom { height: 42px; line-height: 42px; font-size: 12px; color: #333; text-align: center; border-top: 1px solid #00B9ED; }
+
+/*更多推荐recommend结束*/
+
+/*侧边栏infomain-sidebar结束*/
+
+/*商品详情infomian-detail开始*/
+.detailV .infomian-detail { }
+.detailV .infomian-detail .items-info,
+.detailV .infomian-detail .booking,
+.detailV .comments { border: 1px solid #00B9ED; }
+
+/*商品信息items-info开始*/
+.detailV .items-info {	/*	position: relative;*/ }
+.detailV .iteminfo-top { height: 50px; width: 100%; line-height: 50px; border-top: 1px solid #00B9ED; border-right: 1px solid #00B9ED; border-bottom: 2px solid #00B9ED; border-left: 1px solid #00B9ED; text-align: center; }
+.detailV .iteminfo-top a { border: 1px solid #00B9ED; padding: 10px 8px; font-size: 16px; color: #00b8ee; }
+.detailV .iteminfo-top .on { background-color: #00b8ee; color: #fff; }
+.detailV .booking { padding: 30px 50px; }
+.detailV .iteminfo-main p,
+.detailV .booking p { font-size: 12px; color: #666; line-height: 24px; }
+
+/*商品信息items-info结束*/
+
+/*预订须知booking开始*/
+.detailV .booking h4 { float: left; font-size: 14px; font-weight: bold; color: #00b8ee; border: 1px solid #00b8ee; padding: 5px 10px; margin-top: 0; }
+.detailV .booking .text { float: left; padding: 8px 20px; }
+
+/*预订须知booking结束*/
+/*包车详情页主要内容charterinfo-mianbody结束*/
 

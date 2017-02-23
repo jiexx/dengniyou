@@ -39,7 +39,11 @@
 		  	<div class="col-md-1 margin-top">${AdultPrice}</div>
 		  	<div class="col-md-2 margin-top">${PlanDays}</div>
 		  	<div class="col-md-2 margin-top">
-		   		{{if PlanStatus ==1}}待审核 {{/if}}{{if PlanStatus ==2}}审核通过 {{/if}}{{if PlanStatus ==3}}导游隐藏 {{/if}}{{if PlanStatus ==4}}导游发布 {{/if}}{{if PlanStatus ==5}}导游定制 {{/if}}{{if PlanStatus ==6}}未加入 {{/if}}{{if PlanStatus ==7}}已加入 {{/if}}
+				{{if PlanStatus ==3}}<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="隐藏" data-status='4' data-serviceid=${PlanID}> {{/if}}{{if PlanStatus ==4}}<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="隐藏" data-status='3'  data-serviceid=${PlanID} checked > {{/if}}
+
+
+
+		   		<!-- {{if PlanStatus ==1}}待审核 {{/if}}{{if PlanStatus ==2}}审核通过 {{/if}}{{if PlanStatus ==3}}导游隐藏 {{/if}}{{if PlanStatus ==4}}导游发布 {{/if}}{{if PlanStatus ==5}}导游定制 {{/if}}{{if PlanStatus ==6}}未加入 {{/if}}{{if PlanStatus ==7}}已加入 {{/if}} -->
 		   	</div>
 		   	<div class="col-md-1 service-edit">
 				{{if CreateType==1}}
