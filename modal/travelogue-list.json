@@ -1,11 +1,13 @@
 {
 	"TravelogueList": {
-		"sql": "SELECT * FROM traveluserdb.`vw_/travelogue/detail` where type = 5 and  userID= ? AND IF (? is null ,- 1, STATUS) = IF (? is null ,-1, IF(?='released',1,0))",
+		"sql": "SELECT * FROM traveluserdb.`vw_/travelogue/detail` where type = 5 and  userID= ? AND IF (? is null ,- 1, STATUS) = IF (? is null ,-1, IF(?='released',1,0)) LIMIT ?,?",
 		"params": [
 			"UserID",
 			"filter",
 			"filter",
-			"filter"
+			"filter",
+			"pagestart",
+			"pagesize"
 		]
 	},
 	"Counts": {

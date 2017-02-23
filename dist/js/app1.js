@@ -22,7 +22,7 @@
         }
         $(".navBar a").on("click", function(){
             $(".navBar").find(".active").removeClass("active");
-            $(this).parent().addClass("active");
+            $(this).find('li').addClass("active");
         });
         $('#usercenter').rogerOnceClick2(null, function () {
             var user = $.rogerGetLoginUser();
@@ -977,9 +977,9 @@
 
         function filterUnlimit(elem){
             if(elem.html()=='不限'){
-                return '%';
+                return '';
             }
-            return '%'+elem.html()+'%';
+            return elem.html();
         }
 
         $("#label div").on("click", function(){
@@ -989,10 +989,8 @@
             var a = filterUnlimit($(this));
             var b = filterUnlimit(country);
             var c = filterUnlimit(days);
-            var c =c.match(/\d/g);
-            c = !c ? [0,1000] : c;
             $(this).addClass("btn btn-warning");
-            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            $.rogerTrigger('#homesearchlist', '#/itemlist', {type:type,page:1,condition:a,regionType:0});
             label.removeClass("btn btn-warning");
         });
         $("#country div").on("click", function(){
@@ -1002,10 +1000,8 @@
             var a = filterUnlimit(label);
             var b = filterUnlimit($(this));
             var c = filterUnlimit(days);
-            var c =c.match(/\d/g);
-            c = !c ? [0,1000] : c;
             $(this).addClass("btn btn-warning");
-            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            $.rogerTrigger('#homesearchlist', '#/itemlist', {type:type,page:1,condition:b,regionType:0});
             country.removeClass("btn btn-warning");
         });
         $("#type div").on("click", function(){
@@ -1015,10 +1011,8 @@
             var a = filterUnlimit(label);
             var b = filterUnlimit(country);
             var c = filterUnlimit($(this));
-            var c =c.match(/\d/g);
-            c = !c ? [0,1000] : c;
             $(this).addClass("btn btn-warning");
-            $.rogerTrigger('#homesearchlist', '#/homesearchlist', {key:b,begin:c[0],end:c[1],label:a});
+            $.rogerTrigger('#homesearchlist', '#/itemlist', {type:type,page:1,condition:c,regionType:0});
             days.removeClass("btn btn-warning");
         });
 

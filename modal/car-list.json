@@ -1,0 +1,6 @@
+{
+	"Plans": {
+		"sql": "SELECT * FROM traveluserdb.`vw_/home_search` WHERE (PlanName like ? OR StartCity like ? OR RegionCnName like ? OR PlanLabels like ?) AND PlanDays >= ? AND PlanDays <= ? AND PlanStatus=4 AND PlanType<>3 AND PlanLabels like ? ",
+		"params":["key","key","key","key","begin","end", "label"]
+	}
+}

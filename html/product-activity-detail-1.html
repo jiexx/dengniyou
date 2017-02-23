@@ -1,0 +1,372 @@
+
+<!-- 企业信息 -->
+<div class="interpriseArea">
+  <div class="container">
+    <div class="interpriseInfo row">
+      <div class="col-md-6">
+        {{if $data.ComLogo}}
+        <div><img src="${ $data.IMGHOST }${$data.ComLogo}"  ></div>
+        {{else}}
+        <div><img src="${ $data.IMGHOST }${$data.AvatarPicURL}"/></div>
+        {{/if}}
+        <div class="ad">
+        {{if $data.ComAdv}}${$data.ComAdv}
+        {{else}}
+        {{/if}}
+        </div>
+      </div>
+      <div class="col-md-4">
+        {{if PlanMore}}
+        <a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+          <img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+        </a>
+        {{if PlanMore[1]}}
+        <a href="#/plandetail?PlanID=${PlanMore[1].PlanID}">
+          <img src="${ $data.IMGHOST }${PlanMore[1].PicURL}" alt="">
+        </a>
+        {{else}}
+        <a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+          <img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+        </a>
+        {{/if}}
+        {{if PlanMore[2]}}
+        <a href="#/plandetail?PlanID=${PlanMore[2].PlanID}">
+          <img src="${ $data.IMGHOST }${PlanMore[2].PicURL}" alt="">
+        </a>
+        {{else}}
+        <a href="#/plandetail?PlanID=${PlanMore[0].PlanID}">
+          <img src="${ $data.IMGHOST }${PlanMore[0].PicURL}" alt="">
+        </a>
+        {{/if}}
+        {{else}}
+        <a href="javascript:void(0);">
+          <img src="" alt="预留广告位">
+        </a>
+        <a href="javascript:void(0);">
+          <img src="" alt="预留广告位">
+        </a>
+        <a href="javascript:void(0);">
+          <img src="" alt="预留广告位">
+        </a>
+        {{/if}}
+      </div>
+      <div class="col-md-2">
+        <!-- <div><img src="" alt="经理/客服头像"></div> -->
+        <div class="contact">
+          <p>企业联系方式：<br/><span class="tel">${$data.UserMobile}</span></p>
+          <!-- <p>企业联系邮箱：<span class="email">1234@134.com</span></p> -->
+        </div>
+      </div>
+    </div> <!-- end interpriseInfo -->
+    <nav class="navbar" role="navigation" style="margin-bottom: 0;">
+          <div class="navbar-header">
+              <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">企业主页</a>
+          </div>
+          <div id="navbar" class="collapse navbar-collapse">
+            <ul class="nav navbar-nav">
+              <li class="active"><a href="#">方案</a></li>
+              <li><a href="#">包车</a></li>
+              <li><a href="#">导游</a></li>
+              <li><a href="#">签证</a></li>
+              <li><a href="#">住宿</a></li>
+              <li><a href="#">保险</a></li>
+              <li><a href="#">机票</a></li>
+              <li><a href="#">活动</a></li>
+              <li><a href="#">景点</a></li>
+              <li><a href="#">美食</a></li>
+            </ul>
+          </div><!--/.nav-collapse -->
+    </nav>
+  </div><!-- end container -->
+</div> <!-- end interpriseArea -->
+<!-- 企业信息结束 -->
+
+<div class="container detailV plandetail-page">
+  <div class="row charterinfo-header">
+    <div class="col-sm-6">
+      <div class="slides">
+        <!-- 幻灯片插件部分开始 -->
+        <ul class="pgwSlideshow">
+          {{each(i,p) DetailMain[0].picURLs}}
+            <li><img src="${$data.IMGHOST}${p}" alt="" data-description=""></li>
+          {{/each}}
+        </ul>
+        <!-- 幻灯片插件部分结束 -->
+      </div> <!-- end 幻灯片slides -->
+      <div class="share-collect">
+        <div class="share"><i class="glyphicon glyphicon-share"></i>分享宝贝</div>
+        <div class="collect"><i class="glyphicon glyphicon-heart-empty"></i>收藏宝贝</div>
+      </div> <!-- end 收藏与分享share -->
+    </div>
+    <div class="col-sm-6">
+      <div class="charter-title">
+        <h2>普吉岛环岛包车一日游 泰国普吉岛包车旅游普吉岛环岛包车一日游 泰国普吉岛包车旅游</h2>
+        <p class="price">价格：¥<span>${ActivityPrice[0].adultPrice}</span>天</p>
+        <p>服务地区：<span>普吉岛</span></p>
+        <p class="package">套餐类型：
+          <span class="on">经济5座</span>
+          <span>舒适6座</span>
+          <span>经济7座</span>
+          <span>舒适8座</span>
+        </p>
+        <button class="btn btn-default advice">咨询客服</button>
+        <a href="orderSubmit.html"><button class="btn btn-default book">马上预订</button></a>
+      </div><!-- end 包车详情页标题charter-title -->
+    </div>
+  </div> <!-- end 包车详情页头部charterinfo-header -->
+  <div class="row charterinfo-mianbody">
+    <div class="col-sm-3">
+      <div class="infomain-sidebar">
+        <div class="business">
+          <div class="business-avatar">
+            <img src="img/charter/business-avatar.png" alt="">
+          </div>
+          <div class="business-info">
+            <h3>商家名称：<span>xxx旗舰店</span></h3>
+            <p>联系客服<i class="fa fa-comments"></i></p>
+            <button class="btn btn-default">查看店铺首页</button>
+          </div>
+        </div><!-- end 商家信息business -->
+        <div class="recommend">
+          <div class="recommend-title">更多推荐</div>
+          <ul class="recommend-main">
+            <li>
+              <a href=""><img src="img/planner/travelPlan.png" alt=""></a>
+              <div class="des">
+                <a href=""><p>巴黎组团5天4夜游 豪华游5天…</p></a>
+                <span>优惠价格：</span> <span class="price">¥ <em>3999</em>元</span>
+                <button class="btn btn-default btn-sm">马上预订</button>
+              </div>
+            </li>
+            <li>
+              <a href=""><img src="img/planner/travelPlan.png" alt=""></a>
+              <div class="des">
+                <a href=""><p>巴黎组团5天4夜游 豪华游5天…</p></a>
+                <span>优惠价格：</span> <span class="price">¥ <em>3999</em>元</span>
+                <button class="btn btn-default btn-sm">马上预订</button>
+              </div>
+            </li>
+            <li>
+              <a href=""><img src="img/planner/travelPlan.png" alt=""></a>
+              <div class="des">
+                <a href=""><p>巴黎组团5天4夜游 豪华游5天…</p></a>
+                <span>优惠价格：</span> <span class="price">¥ <em>3999</em>元</span>
+                <button class="btn btn-default btn-sm">马上预订</button>
+              </div>
+            </li>
+            <li>
+              <a href=""><img src="img/planner/travelPlan.png" alt=""></a>
+              <div class="des">
+                <a href=""><p>巴黎组团5天4夜游 豪华游5天…</p></a>
+                <span>优惠价格：</span> <span class="price">¥ <em>3999</em>元</span>
+                <button class="btn btn-default btn-sm">马上预订</button>
+              </div>
+            </li>
+          </ul>
+          <div class="recommend-bottom">查看更多宝贝</div>
+        </div><!-- end 更多推荐recommend -->
+      </div> <!-- end 侧边栏infomain-sidebar -->
+    </div>
+    <div class="col-sm-9">
+      <div class="infomian-detail">
+        <div class="items-info">
+          <div class="iteminfo-top">
+            <a class="on" href="#iteminfo-main">商品详情</a>
+            <a href="#booking">预订须知</a>
+            <a href="#comments">商品评价</a>
+          </div>
+          <div class="iteminfo-main" id="iteminfo-main">
+              <div class="detailpage">
+                <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+                  <ol class="carousel-indicators">
+                    {{each(i,p) DetailMain[0].picURLs}}
+                    <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==1}}active{{/if}}"></li>
+                    {{/each}}
+                  </ol>
+                  <div class="carousel-inner" role="listbox">
+                    {{each(i,p) DetailMain[0].picURLs}}
+                    <div class="item {{if i==1}}active{{/if}}">
+                      <img src="${$data.IMGHOST}${p}" alt="...">
+                    </div>
+                    {{/each}}
+                  </div>
+                  <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" >
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                  </a>
+                  <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                  </a>
+                </div><!--  end  banner -->
+
+                <div class="detailpage-mainbody">
+                  <div class="cardetail-title">
+                    <div class="row">
+                      <div class="col-md-2 guide-headimg">
+                        <img src="img/Guide/product-classicplan-detail1.png" alt="">
+                        <span>Denise<i class="glyphicon glyphicon-ok"></i></span>
+                      </div>
+                      <div class="col-md-10 guide-tit">
+                        <h1>${DetailMain[0].serviceName}</h1>
+                        {{each(i,p) Labels}}
+                        <span>${p}</span>
+                        {{/each}}
+                        <!-- <span>活动标签</span>
+                        <span>活动标签</span> -->
+                        <div class="price-box pull-right">
+                          <!-- <p class="price">价格：¥ <span>${DetailMain[0].primaryPrice}</span>元/人起</p> -->
+                          <p>儿童价：¥ <span>${ActivityPrice[0].kidPrice}</span>元/人起</p>
+                          <p>成人价：¥ <span>${ActivityPrice[0].adultPrice}</span>元/人起</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div> <!-- end 租车详情标题cardetail-title -->
+                  {{if Facility.length[0]}}
+                  <div class="row product-detail price-detail">
+                    <h2>活动车辆详情</h2>
+                    <div class="col-md-4">
+                      <p>车辆名称：<span>${Facility[0].facilityName}</span></p>
+                      <p>车辆级别：<span>${Facility[0].clazz}</span></p>
+                      <p>舒适乘坐：<span>${Facility[0].seats}位</span></p>
+                    </div>
+                    <div class="col-md-4">
+                      <p>品 牌：<span>${Facility[0].brand}</span></p>
+                      <p>行李空间：<span>${Facility[0].luggage}升</span></p>
+                    </div>
+                    <div class="col-md-4">
+                      <p>型号：<span>${Facility[0].model}</span></p>
+                      <p>乘车险：<span>{{if Facility[0].insurance==1}}有{{else}}无{{/if}}</span></p>
+                    </div>
+                  </div> <!-- end 商品详情product-detail -->
+                  
+
+                  <div class="vihicle-list">
+                    <div class="vihicle-listbody">
+                      <ul class="vmcarousel-centered-infitine vmc-centered">
+                        {{each(i,p) Facility[0].facilityPics}}
+                        <li style="width:250px"><img src="${$data.IMGHOST}${p}" alt=""></li>
+                        {{/each}}
+                        <!-- <li style="width:250px"><img src="img/Guide/2.jpg" alt=""></li>
+                        <li style="width:250px"><img src="img/Guide/3.jpg" alt=""></li>
+                        <li style="width:250px"><img src="img/Guide/4.jpg" alt=""></li>
+                        <li style="width:250px"><img src="img/Guide/5.jpg" alt=""></li>
+                        <li style="width:250px"><img src="img/Guide/6.jpg" alt=""></li> -->
+                      </ul>
+                    </div>
+                  </div><!-- end 车辆轮播图vihicle-list -->
+                  {{/if}}
+
+                  <div class="service-description">
+                    <h2>服务说明</h2>
+                    <div class="des">
+                      <p>
+                        ${DetailMain[0].description}
+                      </p>
+                    </div>
+                  </div><!-- end 服务描述service-description -->
+
+                  <div class="policy">
+                  {{each(i,p) Policy}}
+                    {{if p.policyType==1}}
+                    {{if p.type==4}}
+                    <h2>${p.policyName}</h2>
+                    <div class="des">
+                    <p>${p.description}</p>
+                    </div>
+                    {{else}}
+                    <h2>${p.policyName}</h2>
+                    <div class="des">
+                      <p>1、服务开始前${p.day1}天(含)以上退订，退还服务费用的${p.ratio1*100}%；</p>
+                      <p>2、服务开始前${p.day2}天(含)至${p.day1}天退订，退还服务费用的${p.ratio2*100}%；</p>
+                      <p>3、服务开始前${p.day3}天(含)至${p.day2}天退订，退还服务费用的${p.ratio3*100}%；</p>
+                      <p>4、服务开始前${p.day3}天以内退订，不退还服务费用；</p>
+                      <p>5、${p.description}</p>
+                    </div>
+                    {{/if}}
+                    {{/if}}
+                    {{if p.policyType==2}}
+                    <h2>${p.policyName}</h2>
+                    <div class="des">
+                      <p>${p.customRatio}</p>
+                    </div>
+                    {{/if}}
+                    {{if p.policyType==3}}
+                    <h2>${p.policyName}</h2>
+                    <div class="des">
+                      <p>${p.customRatio}</p>
+                    </div>
+                    {{/if}}
+                    {{if p.policyType==4}}
+                    <h2>预订须知</h2>
+                    <div class="des">
+                      <p>${p.caution}</p>
+                    </div>
+                    {{/if}}
+                  {{/each}}
+                  </div>
+                </div> <!-- end 方案预览主题内容specialplan-mainbody -->
+              </div><!-- end container-box -->
+            </div>
+        </div> <!-- end 商品信息items-info -->
+
+        <!-- <div class="booking clearfix" id="booking">
+          <h4>预订须知</h4>
+          <div class="text">
+            <p>1、Curabitur suscipit, arcu ut interdum fringilla, dui lacus dignissim urna.</p> 
+            <p>2、sed lacinia dui metus sed ipsum. Mauris placerat nisl id eros viverra.</p>
+            <p>3、congue. Nullam tempus pellentesque mollis. Duis dolor tellus, ornare.</p>
+            <p>4、eu augue sed, consectetur tincidunt eros. Quisque molestie a felis vel.</p>
+          </div>
+        </div>-->
+        <!-- end 预订须知booking --> 
+
+      </div><!-- end 商品详情infomian-detail -->
+
+      <!-- 评论列表 -->
+      <div class="comments" style="margin-top:10px;">
+        <h4>游客评论</h4>
+        <ul class="commentList clearfix" id="commentList">
+          {{if PlanComment}}
+          {{each PlanComment}}
+          <li>
+            <div class="row">
+              <div class="col-md-10">                 
+                <div class="commentText">${Remark}</div>
+                <ul class="comment-pic">
+                {{each(k,v) PicURLs}}
+                  <li>
+                    <img data-src="${ $data.IMGHOST }${v}">
+                  </li>
+                {{/each}}
+                </ul>
+              </div>
+              <div class="col-md-2">
+                <img data-src="${ $data.IMGHOST }${AvatarPicURL}">
+                <p>${UserName} 提供</p>
+              </div>
+            </div>
+            <!--<div class="reply col-md-offset-2">
+              <div class="triangle"></div>
+              导游回复：<span class="replyText">导游回复内容</span>
+            </div> -->
+          </li>
+          {{/each}}
+          {{else}}
+          暂无数据
+          {{/if}}
+        </ul>
+      </div><!-- end 评论列表 -->
+      <!-- 评论区 -->
+      <div class="commentOn" id="plan-comment">
+
+      </div><!--end  评论区 -->
+    </div>
+  </div><!-- end 包车详情页主要内容charterinfo-mianbody -->
+</div><!-- end container -->
+
+

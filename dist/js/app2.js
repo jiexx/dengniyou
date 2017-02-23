@@ -170,7 +170,9 @@
                 $.rogerShowLogin();
                 return;
             }
-            $.rogerLocation('#/travelogue?UserID='+user.UserID+'&page=1');
+            pamaeta["UserID"]=usr.UserID;
+
+            $.rogerLocation('#/travelogue?UserID='+user.UserID+'&pagestart=0'+'&pagesize='+pamaeta.pagesize);
         });
     }
 	var ctrlDashboard = function(response, realView) {

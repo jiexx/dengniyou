@@ -1,0 +1,123 @@
+<style>
+	a.btn-primary{color:#FFF;}
+</style>
+
+  <div class="homesearch-page">
+  	<div class="container">  
+		<div class="btn-group btn-group-justified" role="group" style="margin-top: 8px;" id="carChoose">
+			<div class="btn-group" role="group">
+			    <a class="btn btn-default" href="#/car?type=1&page=1&regionType=0" >用车</a>
+			</div>
+			<div class="btn-group" role="group">
+			    <a class="btn btn-default" href="#/car?type=7&page=1&regionType=0" >租车</a>
+			</div>
+			<div class="btn-group" role="group">
+			    <a class="btn btn-default" href="#/car?type=3&page=1&regionType=0" >接机</a>
+			</div>
+			<div class="btn-group" role="group">
+			    <a class="btn btn-default" href="#/car?type=4&page=1&regionType=0" >送机</a>
+			</div>
+		</div>
+	  	<div class="searchBox" id="searchBox">
+				<div class="searchArea">
+					<div class="searchText" id="searchText1">
+						<label>查找：</label>
+						<input type="text" id="keySearch" placeholder="国家/城市/主题" id="searchT">
+					</div>
+					<button id="homeSearch" class="search"><span class="glyphicon glyphicon-search"></span> 搜索</button>
+				</div> <!-- end searchArea -->
+
+			<dl>
+	  			<dt><i></i>国家：</dt>
+	  			<dd>
+	  				<ul id="country">
+						<li><div style="cursor:pointer"  class="btn btn-warning unlimit">不限</div></li>
+	  					<li><div style="cursor:pointer">日本</div></li>
+	  					<li><div style="cursor:pointer">韩国</div></li>
+	  					<li><div style="cursor:pointer">美国</div></li>
+	  					<li><div style="cursor:pointer">英国</div></li>
+	  				</ul>
+	  			</dd>
+			</dl>
+			<dl>
+	  			<dt><i></i>车型：</dt>
+	  			<dd>
+	  				<ul id="type">
+						<li><div style="cursor:pointer" class="btn btn-warning unlimit">不限</div></li>
+						<li><div style="cursor:pointer">小型轿车</div></li>
+						<li><div style="cursor:pointer">中大型轿车</div></li>
+						<li><div style="cursor:pointer">SUV</div></li>
+						<li><div style="cursor:pointer">商务车</div></li>
+						<li><div style="cursor:pointer">皮卡</div></li>
+	  				</ul>
+	  			</dd>
+		  	</dl>
+			<dl>
+				<dt><i></i>座位：</dt>
+				<dd>
+					<ul id="label">
+						<li><div  style="cursor:pointer" class="btn btn-warning unlimit">不限</div></li>
+						<li><div style="cursor:pointer">经济5座</div></li>
+						<li><div style="cursor:pointer">舒适6座</div></li>
+						<li><div style="cursor:pointer">经济7座</div></li>
+						<li><div style="cursor:pointer">豪华8座</div></li>
+						<li><div style="cursor:pointer">经济16座</div></li>
+					</ul>
+				</dd>
+			</dl>
+
+	  	</div>  <!-- end searchBox -->
+	</div><!-- end container -->
+	<div id="homesearchlist" class="container" style="margin-top: 5px;">
+		<div class="itemArea" id="itemarea">
+			<div class="sortRule">
+				<ul>
+					<li class="default">综合</li>
+				</ul>
+			</div>
+			<ul class="itemList">
+				{{each serviceList}}
+				<li class="list-group-item">
+					<div class="media">
+						<a href="#/serviceactivitydetail?ServiceID=${serviceID}" class="media-left" >
+							<img class="media-object" src="${ $data.IMGHOST }${picURL}" style="width:280px;height:160px"></img>
+						</a>
+						<div class="media-body">
+							<div class="col-md-8">
+								<h3>${serviceName}</h3>
+								<p><img class="img-circle" src="${ $data.IMGHOST }${avatarPicURL}" alt="" style="width: 40px; height: 40px;"> ${userName} 策划师&nbsp;&nbsp;<span>${countryName} ${cityName}</span></p>
+								<p>${typeName}服务</p>
+								<p></p>
+							</div>
+							<div class="col-md-4 media-price">
+								<p class="money">￥<span>${primaryPrice}</span>起</p>
+								<a data-href="#/planpay1?PlanID=${PlanID}" class="btn btn-warning buyNow" id="">马上预订</a>
+							</div>
+						</div>
+					</div>
+				</li>
+				{{/each}}
+			</ul>
+		</div> <!-- end itemArea -->
+		<!-- 页码 -->
+		{{if count}}
+		<div class="pagination">
+		{{if count != 0}}
+			<li id="previous">
+				<a href="#" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			<!-- {{for count}}
+			<li><a href="#">${i}</a></li>
+			{{/for}} -->
+			<li>
+				<a href="#" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		{{/if}}
+		</div>
+		{{/if}}
+  	</div> <!-- end container -->		
+  </div>

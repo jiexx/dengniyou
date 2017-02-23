@@ -1,0 +1,52 @@
+
+
+		<div class="itemArea" id="itemarea">
+			<div class="sortRule">
+				<ul>
+					<li class="default">综合</li>
+				</ul>
+			</div>
+			<ul class="itemList">
+				{{each serviceList}}
+				<li class="list-group-item">
+					<div class="media">
+						<a href="#/serviceactivitydetail?ServiceID=${serviceID}" class="media-left" >
+							<img class="media-object" src="${ $data.IMGHOST }${picURL}" style="width:280px;height:160px"></img>
+						</a>
+						<div class="media-body">
+							<div class="col-md-8">
+								<h3>${serviceName}</h3>
+								<p><img class="img-circle" src="${ $data.IMGHOST }${avatarPicURL}" alt="" style="width: 40px; height: 40px;"> ${userName} 策划师&nbsp;&nbsp;<span>${countryName} ${cityName}</span></p>
+								<p>${typeName}服务</p>
+								<p></p>
+							</div>
+							<div class="col-md-4 media-price">
+								<p class="money">￥<span>${primaryPrice}</span>起</p>
+								<a data-href="#/planpay1?PlanID=${PlanID}" class="btn btn-warning buyNow" id="">马上预订</a>
+							</div>
+						</div>
+					</div>
+				</li>
+				{{/each}}
+			</ul>
+		</div> <!-- end itemArea -->
+		<!-- 页码 -->
+		{{if count}}
+		<div class="pagination">
+		{{if count != 0}}
+			<li id="previous">
+				<a href="#" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+			</li>
+			<!-- {{for count}}
+			<li><a href="#">${i}</a></li>
+			{{/for}} -->
+			<li>
+				<a href="#" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+			</li>
+		{{/if}}
+		</div>
+		{{/if}}

@@ -1,4 +1,4 @@
 {
-	"Attraction": {"sql": "SELECT * FROM traveldb.`vw_/dashboard/product/attraction` WHERE UserID=? AND IF (? is null ,- 1, Status) = IF (? is null ,-1, IF(?='released',2,1)) LIMIT (?-1)*8, 8;",	"params":["UserID","filter","filter","filter","Page"]},
-	"Counts": {"sql": "SELECT cast(count(*)/8 as decimal(10,0)) as Count FROM traveldb.`vw_/dashboard/product/attraction` where  UserID=? AND IF (? is null ,- 1, Status) = IF (? is null ,-1, IF(?='released',2,1));",	"params":["UserID","filter","filter","filter"]}
+	"Attraction": {"sql": "SELECT * FROM traveldb.`vw_/dashboard/product/attraction` WHERE UserID=? AND IF (? is null ,- 1, Status) = IF (? is null ,-1, IF(?='released',2,1)) LIMIT ?, ?;",	"params":["UserID","filter","filter","filter","pagestart","pagesize"]},
+	"Counts": {"sql": "SELECT ceil(count(*)/ 8) as Count FROM traveldb.`vw_/dashboard/product/attraction` where  UserID=? AND IF (? is null ,- 1, Status) = IF (? is null ,-1, IF(?='released',2,1));",	"params":["UserID","filter","filter","filter"]}
 }
