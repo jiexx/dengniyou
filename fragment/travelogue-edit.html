@@ -1,3 +1,8 @@
+<style>
+	#planListDetail2 li{border:1px solid #ccc; border-radius: 4px; margin-bottom: 4px; padding-bottom:4px; margin-left: 0;}
+</style>
+
+
 <div class="container">
 	<div class="editPage">
 		<!-- 方案基本信息 -->
@@ -13,6 +18,27 @@
 					<label class="col-sm-2 col-md-1 control-label"><span class="necessary">*</span>攻略名称</label>
 					<div class="col-sm-10 col-md-11">
 						<input type="text" class="form-control"  value="${$data.Travelogue.title}"  data-value="/Travelogue/title" placeholder="新建攻略">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-sm-2 col-md-1 control-label">关联方案</label>
+					<div class="col-sm-10 col-md-11">
+						<button class="btn btn-warning"  data-toggle="modal" data-target="#planList">关联方案</button>
+					</div>
+					<div class="col-sm-10 col-md-6 col-md-offset-1 col-sm-offset-2">
+						<ul id="planListDetail2">	
+						{{each $data.Travelogue.TravelogueToPlan}}	    		
+			        	<li class="row" style="">
+                            <h4>${planName}</h4>
+                            <div class="col-md-5">
+                                <img src="${$data.IMGHOST}${picURL}" alt="方案封面" style="width:60px; height:60px;">
+                            </div>
+                            <div class="col-md-6">
+                                <p>开始城市：${startCity} </p>
+                                <p>方案ID：${planNumber} </p>
+                            </div>
+				        {{/each}}				        
+						</ul>
 					</div>
 				</div>
 			</form>
@@ -156,13 +182,36 @@
 		<!-- 行程信息结束（方案） -->
 
 		<!-- 须知信息 -->
-		<div style="border:0; box-shadow: none;">
-			
+		<div style="border:0; box-shadow: none;">			
 			<div class="optionBtn">
 				<button id="save" class="btn btn-warning">发布</button>
 			</div>
 		</div>
 		<!-- 须知信息结束 -->
-	</div>
-</div>
 
+		<!-- 关联方案弹出框 -->
+		<div id="planList" class="modal fade">
+			<div class="modal-dialog">
+			  <div class="modal-content">
+			    <div class="modal-header">
+			      <button type="button" class="close" data-dismiss="modal">
+			      	<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+			      </button>
+			      <h4 class="modal-title clearfix">选择关联的方案</h4>
+			    </div>
+			    <div class="modal-body">
+			    	<ul id="planListDetail">		    		
+			        	
+				        				        
+					</ul>
+			    </div> <!-- end modal-body -->
+			    <div class="modal-footer">
+			      <button type="button" id="planconfirm" class="btn btn-primary" data-dismiss="modal">确定</button>
+			    </div>
+			  </div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!-- 关联方案弹出框 -->
+
+	</div>	
+</div>

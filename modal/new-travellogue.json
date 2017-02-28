@@ -24,6 +24,15 @@
 				"picURL"
 			],
 			"findkey": "insertId"
+		},
+		"TravelogueToPlan": {
+			"sql": "INSERT INTO traveluserdb.tab_travelarticletoplan (ArticleID,UserID,PlanID,CreateDate) values (?,?,?,NOW())",
+			"params": [
+				"insertId",
+				"userID",
+				"planID"
+			],
+			"findkey": "insertId"
 		}
 	}
 }

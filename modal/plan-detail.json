@@ -3,5 +3,6 @@
 	"PlanCalender": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_plancalender`  WHERE PlanID=?;", "params":["PlanID"]},
 	"PlanSchedule": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planschedule` WHERE PlanID=?;",	 "params":["PlanID"], "orderby":"ScheduleID"},
 	"PlanComment": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_comments` WHERE RelativeID=? ORDER BY CreateDate;", "params":["PlanID"]},
-	"PlanMore": {"sql": "SELECT PlanID,AdultPrice,PlanName,PicURL,CreateUserID FROM traveluserdb.tab_planinfo WHERE CreateUserID IN(SELECT CreateUserID FROM traveluserdb.tab_planinfo WHERE PlanID=?) AND PlanID<>? AND CreateType<>3 AND PlanStatus=4 limit 0, 10;", "params":["PlanID","PlanID"]}
+	"PlanMore": {"sql": "SELECT PlanID,AdultPrice,PlanName,PicURL,CreateUserID FROM traveluserdb.tab_planinfo WHERE CreateUserID IN(SELECT CreateUserID FROM traveluserdb.tab_planinfo WHERE PlanID=?) AND PlanID<>? AND CreateType<>3 AND PlanStatus=4 limit 0, 10;", "params":["PlanID","PlanID"]},
+	"PlanSpendInfoList": {"sql": "select SpendID, SpendName, PlanID, AdultPrice, KidPrice from traveluserdb.tab_planspend  where planID=? order by SpendID asc",	"params":["PlanID"]}
 }

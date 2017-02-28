@@ -328,7 +328,7 @@
           <!--{{/if}}-->
           <!--{{/if}}-->
           <!--{{/if}}-->
-          <button class="btn btn-warning">联系导游</button>
+          <button class="btn btn-warning" id="talkTo">联系导游</button>
         </div>
       </div>   
   </div>
@@ -390,37 +390,38 @@
   </div>
 </div>
 
-  <!-- Modal2 -->
-  <div class="modal fade" id="complainModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-          <h4 class="modal-title" >您的投诉</h4>
+<!-- Modal2 -->
+<div class="modal fade" id="complainModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" >您的投诉</h4>
+      </div>
+      <div class="modal-body" style="background-color: #F2F2F2; padding: 40px 20px; font-size: 14px;">
+        <div class="row" style="margin-bottom: 10px;">
+          <div class="col-sm-3"><label>投诉信息</label></div>
+          <div class="col-sm-9"><p>{{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}{{else}}${OrderComplaint[0].Reason}{{/if}}</p></div>
         </div>
-        <div class="modal-body" style="background-color: #F2F2F2; padding: 40px 20px; font-size: 14px;">
-          <div class="row" style="margin-bottom: 10px;">
-            <div class="col-sm-3"><label>投诉信息</label></div>
-            <div class="col-sm-9"><p>{{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}{{else}}${OrderComplaint[0].Reason}{{/if}}</p></div>
+        {{if OrderComplaint=='' || OrderComplaint[0].ApplyRefund=='' || OrderComplaint[0].ApplyRefund == null}}{{else}}
+        <div class="row" style="margin-bottom: 10px;"> 
+          <div class="col-sm-3"><label>退款金额</label></div>
+          <div class="col-sm-9">
+            <p>￥
+              <span style="color: #FA703E; font-size: 16px; font-weight: bold; display: inline-block; padding: 0 5px;">{{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}{{else}}${OrderComplaint[0].ApplyRefund}{{/if}}</span>
+              元
+            </p>
           </div>
-          {{if OrderComplaint=='' || OrderComplaint[0].ApplyRefund=='' || OrderComplaint[0].ApplyRefund == null}}{{else}}
-          <div class="row" style="margin-bottom: 10px;"> 
-            <div class="col-sm-3"><label>退款金额</label></div>
-            <div class="col-sm-9">
-              <p>￥
-                <span style="color: #FA703E; font-size: 16px; font-weight: bold; display: inline-block; padding: 0 5px;">{{if OrderComplaint=='' || OrderComplaint[0].ComplaintID==''}}{{else}}${OrderComplaint[0].ApplyRefund}{{/if}}</span>
-                元
-              </p>
-            </div>
-          </div>
-          {{/if}}
         </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-        </div>
+        {{/if}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
       </div>
     </div>
   </div>
+</div>
+
 </div>
 
 </div>

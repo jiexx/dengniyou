@@ -10,5 +10,12 @@
 		"params": [
 			"articleID"
 		]
+	},
+
+	"TravelogueToPlan": {
+		"sql": "SELECT * FROM traveluserdb.`vw_/travelogue/plan` aplan WHERE aplan.articleID = ? AND aplan.PlanStatus = 4 AND aplan.PlanType = 2 ORDER BY aplan.UpdateDate DESC",
+		"params": [
+			"articleID"
+		]
 	}
 }

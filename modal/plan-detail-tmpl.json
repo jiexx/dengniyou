@@ -14,5 +14,6 @@
 			},
 			"isarray": true
 		}
-	}
+	},
+	"PlanSpendInfoList": {"sql": "select SpendID, SpendName, PlanID, AdultPrice, KidPrice from traveluserdb.tab_planspend  where planID=? order by SpendID asc",	"params":["PlanID"], "isarray": true}
 }

@@ -151,7 +151,7 @@
 			</h1>
 			
 			<div class="project-main clearfix">
-				<div class="col-md-5 clearfix">
+				<div class="col-md-4 clearfix">
 					<div class="imgBox">
 						<img src="${ $data.IMGHOST }${$data.PlanInfo[0].AvatarPicURL}" alt="策划师头像" id="planerAvatar">
 					</div>
@@ -161,10 +161,20 @@
 						<a  class="btn btn-warning" id="TALK" target="_blank">我要咨询</a>						
 					</div>
 				</div>
-				<div class="col-md-5 clearfix">
+				<div class="col-md-6 clearfix">
 					<div class="row">
-						<div class="col-xs-6 col-md-12">
-							<h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].AdultPrice}</span>元</h4>
+						<div class="col-xs-6 col-md-12" style="position: relative;">
+							<h4 class="price">成人价：￥<span id="AdultPrice">${ $data.PlanInfo[0].AdultPrice}</span>元起&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;儿童价：￥<span id="KidPrice">${ $data.PlanInfo[0].KidPrice}</span>元起 <a style="margin-left:10px; font-size: 14px;" id="morePrice">更多报价</a></h4>
+							<div id="morePriceList">
+								<span class="glyphicon glyphicon-remove-sign"></span>
+								{{if $data.PlanSpendInfoList.length != 0}}
+								{{each $data.PlanSpendInfoList}}
+								<div class="col-md-4"><label class="label label-warning">${SpendName}</label></div>
+								{{/each}}
+								{{else}}
+								暂无更多报价
+								{{/if}}
+							</div>
 						</div>
 						<div class="col-xs-6 col-md-12">
 							<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即下单</button></a>

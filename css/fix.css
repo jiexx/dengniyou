@@ -57,7 +57,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .indexpage .sidebar{top: 96px !important;}
 .indexpage .indexnav{width:100%; /*height: 96px;*/ background-color: #00b8ee; padding-top: 10px; padding-bottom: 1px;}
 .indexpage .topWidth .navBar{margin-bottom: 10px; /*padding-top: 5px;*/ padding: 0 30px;}
-.indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:82px; /*height: 34px; */line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
+.indexpage .topWidth .navBar li{list-style: none; display: inline-block; width:78px; /*height: 34px; */line-height: 34px; color:#FFF; font-size:18px;  text-align:center; }
 .indexpage .topWidth .navBar li.active{background-color: #006583;}
 .indexpage .topWidth .navBar li a{color: #fff; font-weight: bold;}
 .indexpage footer{background-color: #4d4d4d; color: #FFF; padding-top: 20px}
@@ -165,6 +165,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .plandetail-page .pickmeup .pmu-instance nav.pmu-day-of-week { padding: 0 20px; }
 .plandetail-page .pickmeup .pmu-instance .pmu-day-of-week *, .pickmeup .pmu-instance .pmu-days * { line-height: 40px; width: 40px; margin: 2px 10px; }
 /*calender样式结束*/
+.plandetail-page #morePriceList{display:none; position: absolute; top: 80px; width: 70%; background-color: #eee; padding: 12px 2px 0 2px; z-index: 9}
+.plandetail-page #morePriceList .col-md-4{margin-bottom: 8px; text-align: center;}
+.plandetail-page #morePriceList .glyphicon{position: absolute; right: 0; top: 0px; font-size: 14px;}    
+
 .plandetail-page .carousel img { height: 370px; width: 100%;}
 .plandetail-page .owl-theme .owl-controls { position: relative; top: -40px; }
 .plandetail-page .project{ margin-top: 30px;}
@@ -636,6 +640,11 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .optionBtn {text-align: center;}
 .editPage .optionBtn button{/*width:110px; height: 38px;*/ margin-left: 20px; background-color: #FF6600;}
 
+/*方案多价格设置*/
+.editPage .morePrices li{border:1px solid #CCC; border-radius: 4px; position: relative; margin-right: 6px; margin-bottom: 6px;}
+.editPage .morePrices li .glyphicon-remove-circle{position: absolute; top:0px; right: 0;}
+.editPage .morePrices li:last-child{border:0;}
+.editPage .morePrices li:last-child div{border:1px solid #00b8ee; height: 100px; line-height: 100px; width:100px; font-size: 40px; text-align: center; margin-left: 10px; margin-top: 20px;}
 /*快捷方案*/
 .editPage .scheduleShort textarea{width:100%; height: 195px;}
 .editPage .scheduleShort textarea{border:1px solid #CCC;}
@@ -643,6 +652,9 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .scheduleShort form label{text-align: left;}
 .editPage .scheduleShort .col-md-6,.editPage .scheduleShort .col-md-3{margin-bottom: 10px;}
 .editPage .scheduleShort .functionBtn li{display: inline-block; width:24%; text-align: center;}
+/*攻略编辑页关联方案*/
+.editPage #planListDetail li{border-bottom:1px solid #ddd; padding-bottom: 8px;}
+.editPage #planListDetail li:last-child{border-bottom:0;}
 /*租车编辑页*/
 .editPage .carInfo input{width:80%; display: inline-block;}
 .editPage .carInfo input[type="radio"]{width:40%;}
@@ -653,7 +665,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .baseInfo .carPrice li:before{content: ''; background: url(../img/containIcon.png) no-repeat; width: 20px; height: 70px; position: absolute; left: -20px;}
 .editPage .baseInfo .carPrice li:last-child:before{ width: 0;}
 .editPage .baseInfo .carPrice li>.addItemBtn{width:70%; height: 60px; background-color: #FFF; border-radius: 0; border:1px dotted #00b8ee; color:#00b8ee; cursor: pointer; text-align: center; line-height: 54px; font-size: 40px;}
-	/*包车退订政策弹出框部分*/
+/*包车退订政策弹出框部分*/
 .editPage .notice #policydiv ul li{background-color: #F2F2F2; margin: 10px 10px; padding: 10px 10px; font-size: 14px;}
 .editPage .notice #policydiv ul li .title{border-bottom: 1px solid #fff;}
 .editPage .notice #policydiv ul li .main{padding: 5px 0;}
@@ -670,12 +682,15 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .baseInfo form input[type="radio"]{width:40%;}
 /*景点编辑*/
 .editPage .spotDescription textarea{border:1px solid #CCC; height: 200px; margin-bottom: 20px; padding: 15px;}
+
 /*导游端编辑类页面结束*/
 
 /*提交订单部分*/
 #partOne .col-sm-10 input,#partOne .col-sm-10 select{ width:50%; display: inline-block; border-radius: 0; border-color: #00b8ee; box-shadow: none; -webkit-box-shadow: none;}
 #partOne>form .col-sm-10 input{width:240px;}
 #partOne>form .col-sm-10 select{width:100px;}
+#partOne>form .pricesList li{display: inline-block; width:100px; height: 36px; line-height: 36px; text-align: center; background-color: #CCC; }
+#partOne>form .pricesList li.active{background-color: #00b8ee; color:#FFF;}
 
 #partOne .control-label{font-weight: normal;}
 #partOne .control-label .fa{color:#00b8ee; margin-right: 10px;}

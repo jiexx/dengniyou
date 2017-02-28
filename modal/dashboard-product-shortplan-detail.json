@@ -3,5 +3,6 @@
 	"PlanShort":{
 		"sql":"SELECT * FROM traveluserdb.tab_planshort WHERE PlanID = ?;",
 		"params":["PlanID"]
-	}
+	},
+	"PlanSpendInfoList": {"sql": "select SpendID, SpendName, PlanID, AdultPrice, KidPrice from traveluserdb.tab_planspend  where planID=? order by SpendID asc",	"params":["PlanID"]}
 }

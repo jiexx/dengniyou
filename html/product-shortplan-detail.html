@@ -35,7 +35,7 @@
       <div class="row project">
         <h1>${$data.PlanInfo[0].PlanName}</h1>
         <div class="project-main clearfix">
-          <div class="col-md-5">
+          <div class="col-md-4">
             <div class="imgBox">
               <img src="${ $data.IMGHOST }${$data.PlanInfo[0].AvatarPicURL}" alt="策划师头像" id="planerAvatar">
             </div>
@@ -45,8 +45,18 @@
               <!--<a  class="btn btn-warning" id="TALK" target="_blank">咨询</a>-->
             </div>
           </div>
-          <div class="col-md-5">
-            <h4 class="price">￥<span id="salePrice">${ $data.PlanInfo[0].AdultPrice}</span>元</h4>
+          <div class="col-md-6">
+            <h4 class="price">成人价：￥<span id="AdultPrice">${ $data.PlanInfo[0].AdultPrice}</span>元起&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;儿童价：￥<span id="KidPrice">${ $data.PlanInfo[0].KidPrice}</span>元起 <a style="margin-left:10px; font-size: 14px;" id="morePrice">更多报价</a></h4>
+            <div id="morePriceList" style="top:40px;">
+              <span class="glyphicon glyphicon-remove-sign"></span>
+              {{if $data.PlanSpendInfoList.length != 0}}
+              {{each $data.PlanSpendInfoList}}
+              <div class="col-md-4"><label class="label label-warning">${SpendName}</label></div>
+              {{/each}}
+              {{else}}
+              暂无更多报价
+              {{/if}}
+            </div>
             <!--<a data-href="#/planpay1?PlanID=${$data.PlanInfo[0].PlanID}" id="buyNow"><button class="btn btn-primary">立即购买</button></a>-->
           </div>
           <div class="col-md-2">

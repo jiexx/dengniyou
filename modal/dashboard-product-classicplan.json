@@ -1,4 +1,4 @@
 {
-	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.tab_planinfo where PlanType= 1 and CreateUserID=?  LIMIT 0, 8;",	"params":["UserID"]},
-	"CountOFPlans": {"sql": "SELECT ceil(count(*)/ 8) as Count FROM traveluserdb.tab_planinfo where PlanType= 2 and CreateUserID=?;",	"params":["UserID"]}
+	"PlansByUser": {"sql": "SELECT * FROM traveluserdb.tab_planinfo where PlanType= 1 and CreateUserID=?  LIMIT 0, 8;",	"params":["UserID","filter","filter","filter","pagestart","pagesize"]},
+	"CountOFPlans": {"sql": "SELECT ceil(count(*)/ 8) as Count FROM traveluserdb.tab_planinfo where PlanType= 2 and CreateUserID=?;",	"params":["UserID","filter","filter","filter"]}
 }

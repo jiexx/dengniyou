@@ -182,6 +182,26 @@
     </div>
     <!-- 内容部分结束 -->
 
+<!-- 页码 -->
+<div class="container">
+	<div class="pagination">
+		{{if $data.Counts[0].Count != 0}}
+		<li>
+			<a name="page" href="#" data-value="p" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</a>
+		</li>
+		{{for $data.Counts[0].Count}}
+		<li><a name="page" data-value="${i}" href="#">${i}</a></li>
+		{{/for}}
+		<li>
+			<a name="page" href="#" data-value="n" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+		{{/if}}
+	</div>
+</div><!-- end 页码 -->
 
 <script>
 	$(function(){

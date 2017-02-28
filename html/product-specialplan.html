@@ -59,21 +59,21 @@
 </div> <!-- end container -->
 <!-- 页码 -->
 <div class="container">
-  <div class="pagination">
-  	{{if $data.CountOFPlans[0].Count != 0}}
-    <li>
-      <a href="#" aria-label="Previous">
-        <span aria-hidden="true">&laquo;</span>
-      </a>
-    </li>
-	{{for $data.CountOFPlans[0].Count}}
-    <li><a href="#">${i}</a></li>
-    {{/for}}
-    <li>
-      <a href="#" aria-label="Next">
-        <span aria-hidden="true">&raquo;</span>
-      </a>
-    </li>
-  {{/if}}
-  </div>
+	<div class="pagination">
+		{{if $data.CountOFPlans[0].Count != 0}}
+		<li>
+			<a name="page" href="#" data-value="p" aria-label="Previous">
+				<span aria-hidden="true">&laquo;</span>
+			</a>
+		</li>
+		{{for $data.CountOFPlans[0].Count}}
+		<li><a name="page" data-value="${i}" href="#">${i}</a></li>
+		{{/for}}
+		<li>
+			<a name="page" href="#" data-value="n" aria-label="Next">
+				<span aria-hidden="true">&raquo;</span>
+			</a>
+		</li>
+		{{/if}}
+	</div>
 </div>

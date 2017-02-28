@@ -11,7 +11,7 @@ var pool  = mysql.createPool({
 //	acquireTimeout: 30000
 });
 var IMG_HOST = "http://123.59.144.47/";//"http://10.101.1.165:8097/";
-IMG_HOST = "http://10.101.1.165:8097/";
+// IMG_HOST = "http://10.101.1.165:8097/";
 
 function execfinal(conn, sql, params, callback, close) {
 	conn.query(sql, params, function(err, results) {
@@ -329,68 +329,79 @@ exports.getOrderList = function(item, callback) {
 
         var sql =[];
 		var countSql = [];
+        var comcondition = [];
+        var limit ;
         if(item.usertype == 1){
-            countSql.push("SELECT cast(count(*)/8 as decimal(10,0)) as Count  from travelorderdb.tab_travelorder travelorder where travelorder.UserID = "+item.userID);
+            countSql.push("SELECT ceil(count(*)/ 20) as Count");
             sql.push( "select 1 as usertype,travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.GuideID as userid,userinfo.UserName as username,travelorder.Status as status, " +
                 "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl, " +
                 "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays, " +
-                "                           travelorder.IfEvaluate as ifevaluate,travelorder.IfReply as ifreply,userinfo.AvatarPicURL " +
-                "                           from travelorderdb.tab_travelorder travelorder left join traveldb.tab_userinfo userinfo on travelorder.GuideID = userinfo.UserID " +
+                "                           travelorder.IfEvaluate as ifevaluate,travelorder.IfReply as ifreply,userinfo.AvatarPicURL ");
+
+
+            comcondition.push("                           from travelorderdb.tab_travelorder travelorder left join traveldb.tab_userinfo userinfo on travelorder.GuideID = userinfo.UserID " +
                 "                                                            left join traveluserdb.tab_services userservice on travelorder.ServiceTripID=IF(travelorder.OrderType=1,userservice.ServiceID,-1) " +
                 "                                                            left join traveluserdb.tab_facilitypictures pict on (IF(travelorder.OrderType=1,userservice.ServiceID,-1)=pict.PictureID AND pict.PicType=1 AND pict.IsCover=1) " +
-                "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) " +
-                "							where travelorder.UserID = "+item.userID);
+                "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) where travelorder.UserID = "+item.UserID);
 		} else if(item.usertype == 2){
-            countSql.push("SELECT cast(count(*)/8 as decimal(10,0)) as Count from travelorderdb.tab_travelorder travelorder where travelorder.GuideID = "+item.userID);
-            sql.push("select 1 as usertype,travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.UserID as userid,userinfo.UserName as username,travelorder.Status as status,\n" +
-            "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl,\n" +
-            "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays,\n" +
-            "                           travelorder.IfEvaluate as ifevaluate,travelorder.IfReply as ifreply,userinfo.AvatarPicURL\n" +
-            "                           from travelorderdb.tab_travelorder travelorder left join traveldb.tab_userinfo userinfo on travelorder.UserID = userinfo.UserID\n" +
-            "                                                            left join traveluserdb.tab_services userservice on travelorder.ServiceTripID=IF(travelorder.OrderType=1,userservice.ServiceID,-1)\n" +
-            "                                                            left join traveluserdb.tab_facilitypictures pict " +
-            "                                                                 on (IF(travelorder.OrderType=1,userservice.ServiceID,-1)=pict.PictureID AND pict.PicType=1 AND pict.IsCover=1)\n" +
-            "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) " +
-            "                            where travelorder.GuideID = "+item.userID);
+            countSql.push("SELECT ceil(count(*)/ 20) as Count");
+            sql.push( "select 1 as usertype,travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.GuideID as userid,userinfo.UserName as username,travelorder.Status as status, " +
+                "                           userservice.ServiceName as servicename,userservice.PrimaryPrice as money,ServiceTripTypeID, ServiceTripTypeName,IF(travelorder.OrderType=1,pict.PicURL,plan.picurl) as picurl, " +
+                "                           userservice.Unit as unit,DATE_FORMAT(travelorder.StartTime, '%Y/%m/%d') AS starttime,DATE_FORMAT(travelorder.EndTime, '%Y/%m/%d') AS endtime,travelorder.CostMoney as costmoney,travelorder.realCostMoney,travelorder.TravelDays as traveldays, " +
+                "                           travelorder.IfEvaluate as ifevaluate,travelorder.IfReply as ifreply,userinfo.AvatarPicURL ");
+
+
+            comcondition.push("                           from travelorderdb.tab_travelorder travelorder left join traveldb.tab_userinfo userinfo on travelorder.GuideID = userinfo.UserID " +
+                "                                                            left join traveluserdb.tab_services userservice on travelorder.ServiceTripID=IF(travelorder.OrderType=1,userservice.ServiceID,-1) " +
+                "                                                            left join traveluserdb.tab_facilitypictures pict on (IF(travelorder.OrderType=1,userservice.ServiceID,-1)=pict.PictureID AND pict.PicType=1 AND pict.IsCover=1) " +
+                "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) where travelorder.GuideID = "+item.UserID);
+
 		}
 
         if (0 != item.status) {
 
             //前端接口的4:已完成，已关闭
             if (3 == item.status) {
-                sql.push(" and travelorder.status in (4,3)");
+                comcondition.push(" and travelorder.status in (4,3)");
             } else {
-                sql.push(" and travelorder.status = " + item.status);
+                comcondition.push(" and travelorder.status = " + item.status);
             }
         }
-        sql.push(" order by travelorder.UpdateTime desc");
+        comcondition.push(" order by travelorder.UpdateTime desc");
 
         if(0!=item.page) {
 
         	var start = (item.page-1)*20;
 
-            sql.push(" limit "+start+",  20 ");
+            limit = " limit "+start+",  20 ";
         }
 
         datas = {};
-        exec(connection, sql.join(""), [,], function(err, results){
 
-			if (err){
-                callback(err,results);
-			}
-            datas["datas"]=results;
-            callback(err,remJson(datas));
-
+        comcondition.forEach(function (v) {
+            sql.push(v);
+            countSql.push(v);
         });
 
-        // exec(connection, countSql.join(""), [,], function(err2, results2){
-        //     if (err2){
-        //         callback(err2,results2);
-        //     }
-        //     datas.set("Counts",results2)
-        //     callback(err2,remJson(datas));
-        //
-        // });
+        sql.push(limit);
+
+        execfinal(connection, countSql.join(''), [,], function(err2, results2){
+            if (err2){
+                callback(err2,results2);
+            }
+            datas["Counts"]= results2;
+            exec(connection, sql.join(""), [,], function(err, results){
+
+                if (err){
+                    callback(err,results);
+                }
+
+                datas["datas"]=results;
+
+                callback(err2,remJson(datas));
+			});
+
+        });
 
 		//console.log(sql + ' ' + start + ' ' +offset +" search:"+search+ ' type:"+type);
 	});
@@ -963,21 +974,21 @@ exports.privileges = function(item, callback) {
 			callback(true); 
 			return;
 		}
-		//var sql = "UPDATE traveldb.tab_travelspots SET CountryID = ?, CityID = ?, SpotsTypeID = ?, CommondReason = ?, NameEn = ?, NameCh = ?, UpdateDate = NOW() WHERE SpotsID = ?; ";
-		var sql = "SELECT * FROM traveldb.usr_privileges;";
-		console.log(sql);
-		var it = [];
-		exec(connection, sql, it, callback);
-	});
+        //var sql = "UPDATE traveldb.tab_travelspots SET CountryID = ?, CityID = ?, SpotsTypeID = ?, CommondReason = ?, NameEn = ?, NameCh = ?, UpdateDate = NOW() WHERE SpotsID = ?; ";
+        var sql = "SELECT * FROM traveldb.usr_privileges;";
+        console.log(sql);
+        var it = [];
+        exec(connection, sql, it, callback);
+    });
 };
 exports.uprivileges = function(item, callback) {
-	pool.getConnection(function(err, connection) {
-		if(err) { 
-			console.log(err); 
-			callback(true); 
-			return;
-		}
-		//var id = res.insertId;
+    pool.getConnection(function(err, connection) {
+        if(err) {
+            console.log(err);
+            callback(true);
+            return;
+        }
+        //var id = res.insertId;
 		//console.log(''+res+'  '+id);
 		var values = [];
 		for(var i in item) {

@@ -243,6 +243,22 @@
             disable: disday
 		});
 
+        //更多报价的切换
+        $('#morePrice').on('click',function(){
+            $('#morePriceList').css('display','block');
+        });
+        $('#morePriceList .glyphicon').on('click',function(){
+            $('#morePriceList').css('display','none');
+        });
+        $('#morePriceList').on('click','div label',function(){
+            $('#morePriceList div label').removeClass('label-success').addClass('label-warning');
+            $(this).removeClass('label-warning').addClass('label-success');
+            var AdultPrice = $(this).data('AdultPrice');
+            var KidPrice = $(this).data('KidPrice');
+            $('#AdultPrice').html(AdultPrice);
+            $('#KidPrice').html(KidPrice);
+        });
+
 		realView.rogerCropImages();
         // frameCtrl();
 
@@ -284,16 +300,7 @@
             $.rogerLocation($(this).attr('data-href'));
         });
 
-        //景点住宿美食点击看详情
-        $('.moreDetail').on('click',function(){
-            // var self = $(this);
-            // layer.open({
-            //   type: 4,
-            //   closeBtn: 2,
-            //   shadeClose:true,
-            //   content: ['9999999999999999999', self] //数组第二项即吸附元素选择器或者DOM
-            // });
-        });
+        
 
 	};
     function addDays(date, days) {
@@ -361,6 +368,11 @@
         //pickr.selectedDates.push('');
         realView.rogerCropImages();
         frameCtrl();
+
+        $('.pricesList').on('click','li',function(){
+            $('.pricesList li').removeClass('active');
+            $(this).addClass('active');
+        });
 
         var adult = parseInt($('#adult option:selected').val());
         var kid = parseInt($('#kid option:selected').val());
@@ -546,7 +558,7 @@
     abc = 0;
     var ctrlOrderdetail = function(response, realView) {
 
-        console.log(JSON.stringify(response));
+        //console.log(JSON.stringify(response));
         realView.rogerCropImages();
         frameCtrl();
         $('#commitE').rogerOnceClick(response, function (e) {
@@ -586,6 +598,21 @@
             });
 
         });
+
+        //联系导游
+        $('#talkTo').rogerOnceClick(response.OrderDetail[0].OrderNo, function (e) {
+            var data = e.data;
+            var usr = $.rogerGetLoginUser();
+            if(!usr) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            var newWin = window.open('about:blank');
+            newWin.location.href = 'http://'+window.location.host
+                +'/talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID+'&msg=D'+data;
+        });
+
     };
 
     var ctrlPlanSearch = function(response, realView) {
@@ -702,16 +729,26 @@
     };
     var ctrlSpotChooser = function (PS, realView) {
         $('#spotChooser').modal('show');
+        var ReplaceFlag;
         $('#spotlist').html('').append('<li class="list-group-item">'+PS.TypeCn+'</li>');
         $('#city').change(PS, function (e) {
             var data = e.data;
+            ReplaceFlag = data.Replace;
             var city = $('#city option:selected').val().split(':');
             if(city && city[0]) {
                 $('#spotlist').rogerDialogTrigger('fragment/dialog-spotlist.html', '/dialog/'+PS.Type, {CityID:city[0]}, function (data, realView) {
                     //console.log('spot');
                     $("#spotlist .list-group-item").click(function(e) {
-                        $("#spotlist .list-group-item").removeClass("active");
-                        $(this).addClass("active");
+                        if(ReplaceFlag) {
+                            $("#spotlist .list-group-item").removeClass("active");
+                            $(this).addClass("active");
+                        }else{
+                            if($(this).hasClass("active")){
+                                $(this).removeClass("active");
+                            }else{
+                                $(this).addClass("active");
+                            }
+                        }    
                     });
                 });
             }
@@ -723,8 +760,16 @@
                 //console.log('spot');
                 realView.rogerCropImages();
                 $("#spotlist .list-group-item").click(function(e) {
-                    $("#spotlist .list-group-item").removeClass("active");
-                    $(this).addClass("active");
+                    if(ReplaceFlag) {
+                        $("#spotlist .list-group-item").removeClass("active");
+                        $(this).addClass("active");
+                    }else{
+                        if($(this).hasClass("active")){
+                            $(this).removeClass("active");
+                        }else{
+                            $(this).addClass("active");
+                        }
+                    }    
                 });
             });
         }
@@ -732,7 +777,15 @@
             var data = e.data;
             var country = $('#country option:selected').val().split(':');
             var city = $('#city option:selected').val().split(':');
-            var spot = $('#spotlist  .list-group-item.active').data('info').split(':');
+            if(data.Replace) {
+                var spot = $('#spotlist  .list-group-item.active').data('info').split(':');
+            }else{
+                var spot = [];
+                $('#spotlist  .list-group-item.active').each(function(){
+                    var tempSpot = $(this).data('info').split(':');
+                    spot.push(tempSpot); 
+                });            
+            }
             //${SpotsID}:${NameCh}:${NameEn}:${PicURL}:${Rank}:${TravelTime}:${SpotsTypeID}
             if(data.Replace) {
                 ok:
@@ -747,8 +800,10 @@
                         }
                     }
             }else {
-                data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
-                    SpotID:spot[0],SpotName:spot[1],SpotLocalName:spot[2],SpotTravelTime:spot[5],HotelStarLevel:spot[4],ScheduleType:parseInt(spot[6])+1,SpotPicUrl:spot[3]});
+                for(var m=0; m<spot.length; m++){
+                    data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                    SpotID:spot[m][0],SpotName:spot[m][1],SpotLocalName:spot[m][2],SpotTravelTime:spot[m][5],HotelStarLevel:spot[m][4],ScheduleType:parseInt(spot[m][6])+1,SpotPicUrl:spot[m][3]});
+                }  
             }
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.Plan);

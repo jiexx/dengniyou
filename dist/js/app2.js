@@ -7,6 +7,22 @@
     url='';
     pamaeta ={pagestart:0,pagesize:8};
     page = 1;
+
+    function pamaetainit(){
+        pamaeta ={pagestart:0,pagesize:8};
+        page = 1;
+    }
+
+    function getGetUri(para){
+        geturiparameta = [];
+        $.each(para, function (ind, val) {
+            geturiparameta.push(ind+'='+val);
+        });
+        geturi = geturiparameta.join("&");
+
+        return geturi
+    }
+
     function bindRidoesForSwitch (){
         var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
 
@@ -17,10 +33,41 @@
                     $.rogerShowLogin();
                     return;
                 }
+
+                pamaetainit();
                 url = $(this).next('div').data('href');
                 pamaeta["UserID"]=usr.UserID;
                 $.rogerTrigger('#app',url, pamaeta);
             });
+        }
+
+        var filterev = $._data($('#filter input[type=radio][name="filterradio"]')[0], 'events');
+        if(!filter2ev || !filter2ev.change) {
+
+            $('#filterev input[type=radio][name="filterradio"]').unbind().change(function(e){
+                var usr = $.rogerGetLoginUser();
+                if(!usr) {
+                    $.rogerShowLogin();
+                    return;
+                }
+                filtertemp = $(this).val();
+                if('all' == filtertemp){
+                    delete pamaeta["filter"];
+                } else {
+                    pamaeta["filter"]=filtertemp;
+                }
+
+                pamaeta["UserID"]=usr.UserID;
+
+                if(url == ''){
+                    url = $.rogerGetPath() || window.location.hash;
+                }
+
+                $.rogerLocation(url,pamaeta);
+
+                // $.rogerTrigger('#app',url, pamaeta);
+            });
+
         }
 
         var filter2ev = $._data($('#filter2 input[type=radio][name="filterradio"]')[0], 'events');
@@ -45,8 +92,9 @@
                     url = $.rogerGetPath() || window.location.hash;
                 }
 
+                $.rogerLocation(url,pamaeta);
 
-                $.rogerTrigger('#app',url, pamaeta);
+                // $.rogerTrigger('#app',url, pamaeta);
             });
 
         }
@@ -149,7 +197,15 @@
                 $.rogerShowLogin();
                 return;
             }
-            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
+
+            page = 1;
+            pamaeta["userID"]=user.UserID;
+            pamaeta["usertype"]=2;
+            pamaeta["status"]=0;
+            pamaeta["page"]=page;
+
+            url = "#/orderlist";
+            $.rogerLocation('#/orderlist?UserID='+user.UserID+'&usertype=2&status=0&page=1');
         });
 
         $('#productctr').rogerOnceClick2(null, function () {
@@ -159,7 +215,10 @@
                 $.rogerShowLogin();
                 return;
             }
-            $.rogerLocation('#/spcialplan?UserID='+user.UserID+'&page=1');
+            pamaetainit();
+            pamaeta["UserID"]=user.UserID;
+            $.rogerLocation('#/spcialplan?'+getGetUri(pamaeta));
+
         });
 
 
@@ -170,7 +229,7 @@
                 $.rogerShowLogin();
                 return;
             }
-            pamaeta["UserID"]=usr.UserID;
+            pamaeta["UserID"]=user.UserID;
 
             $.rogerLocation('#/travelogue?UserID='+user.UserID+'&pagestart=0'+'&pagesize='+pamaeta.pagesize);
         });
@@ -214,6 +273,8 @@
         });
         bindRidoesForSwitch();
         realView.rogerCropImages();
+        pageclick();
+
     };
     var ctrlClassicplan = function(response, realView) {
 
@@ -257,6 +318,7 @@
     };
 
     var ctrlTravelogue = function(response, realView) {
+
         $(".switchCheckbox").bootstrapSwitch();
         $('.release').on('switchChange.bootstrapSwitch', function (e, data) {
             var status = $(this).data("status");
@@ -291,6 +353,23 @@
     };
 
     var ctrlShortplanDetail = function(response, realView) {
+
+        //更多报价的切换
+        $('#morePrice').on('click',function(){
+            $('#morePriceList').css('display','block');
+        });
+        $('#morePriceList .glyphicon').on('click',function(){
+            $('#morePriceList').css('display','none');
+        });
+        $('#morePriceList').on('click','div label',function(){
+            $('#morePriceList div label').removeClass('label-success').addClass('label-warning');
+            $(this).removeClass('label-warning').addClass('label-success');
+            var AdultPrice = $(this).data('AdultPrice');
+            var KidPrice = $(this).data('KidPrice');
+            $('#AdultPrice').html(AdultPrice);
+            $('#KidPrice').html(KidPrice);
+        });
+
         if( response.PlanInfo[0].Policy ){
             $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
         }
@@ -310,6 +389,22 @@
         realView.rogerCropImages();
     };
     var ctrlTemplateplanDetail = function(response, realView) {
+
+        //更多报价的切换
+        $('#morePrice').on('click',function(){
+            $('#morePriceList').css('display','block');
+        });
+        $('#morePriceList .glyphicon').on('click',function(){
+            $('#morePriceList').css('display','none');
+        });
+        $('#morePriceList').on('click','div label',function(){
+            $('#morePriceList div label').removeClass('label-success').addClass('label-warning');
+            $(this).removeClass('label-warning').addClass('label-success');
+            var AdultPrice = $(this).data('AdultPrice');
+            var KidPrice = $(this).data('KidPrice');
+            $('#AdultPrice').html(AdultPrice);
+            $('#KidPrice').html(KidPrice);
+        });
 
         if( response.PlanInfo[0].Policy ){
             $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
@@ -338,6 +433,11 @@
                 PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:0,Policy:policy1,CostInclude:policy2,
                 CostExclude:policy3,VisaNotice:policy4,Notice:policy5,CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
                 UserPlan:{UserID:usr.UserID},
+                PlanSpendInfoList:[{
+                    SpendName:'',
+                    AdultPrice:0,
+                    KidPrice:0
+                }],
                 Picture: {
                     Pics: []
                 },
@@ -394,6 +494,11 @@
                 PlanName:'', PlanType: type, PlanPriceBase:0,PicURL:[],CarURL:[],PlanDays:1,StartCity:'',StartCityID:null,Policy:policy1,CostInclude:policy2,
                 CostExclude:policy3,VisaNotice:policy4,Notice:policy5,CreateUserID:usr.UserID, AdultPrice:0,KidPrice:0, PlanStatus:3,
                 UserPlan:{UserID:usr.UserID},
+                PlanSpendInfoList:[{
+                    SpendName:'',
+                    AdultPrice:0,
+                    KidPrice:0
+                }],
                 Picture:{
                     Pics:[]
                 },
@@ -453,16 +558,26 @@
     };
     var ctrlSpotChooser = function (PS, realView) {
         $('#spotChooser').modal('show');
+        var ReplaceFlag;
         $('#spotlist').html('').append('<li class="list-group-item">'+PS.TypeCn+'</li>');
         $('#city').change(PS, function (e) {
             var data = e.data;
+            ReplaceFlag = data.Replace;
             var city = $('#city option:selected').val().split(':');
             if(city && city[0]) {
                 $('#spotlist').rogerDialogTrigger('fragment/dialog-spotlist.html', '/dialog/'+PS.Type, {CityID:city[0]}, function (data, realView) {
                     //console.log('spot');
                     $("#spotlist .list-group-item").click(function(e) {
-                        $("#spotlist .list-group-item").removeClass("active");
-                        $(this).addClass("active");
+                        if(ReplaceFlag) {
+                            $("#spotlist .list-group-item").removeClass("active");
+                            $(this).addClass("active");
+                        }else{
+                            if($(this).hasClass("active")){
+                                $(this).removeClass("active");
+                            }else{
+                                $(this).addClass("active");
+                            }
+                        }    
                     });
                 });
             }
@@ -474,8 +589,16 @@
                 //console.log('spot');
                 realView.rogerCropImages();
                 $("#spotlist .list-group-item").click(function(e) {
-                    $("#spotlist .list-group-item").removeClass("active");
-                    $(this).addClass("active");
+                    if(ReplaceFlag) {
+                        $("#spotlist .list-group-item").removeClass("active");
+                        $(this).addClass("active");
+                    }else{
+                        if($(this).hasClass("active")){
+                            $(this).removeClass("active");
+                        }else{
+                            $(this).addClass("active");
+                        }
+                    }                   
                 });
             });
         }
@@ -483,7 +606,15 @@
             var data = e.data;
             var country = $('#country option:selected').val().split(':');
             var city = $('#city option:selected').val().split(':');
-            var spot = $('#spotlist  .list-group-item.active').data('info').split(':');
+            if(data.Replace) {
+                var spot = $('#spotlist  .list-group-item.active').data('info').split(':');
+            }else{
+                var spot = [];
+                $('#spotlist  .list-group-item.active').each(function(){
+                    var tempSpot = $(this).data('info').split(':');
+                    spot.push(tempSpot); 
+                });            
+            }
             //${SpotsID}:${NameCh}:${NameEn}:${PicURL}:${Rank}:${TravelTime}:${SpotsTypeID}
             if(data.Replace) {
                 ok:
@@ -498,8 +629,10 @@
                     }
                 }
             }else {
-                data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
-                SpotID:spot[0],SpotName:spot[1],SpotLocalName:spot[2],SpotTravelTime:spot[5],HotelStarLevel:spot[4],ScheduleType:parseInt(spot[6])+1,SpotPicUrl:spot[3]});
+                for(var m=0; m<spot.length; m++){
+                    data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                    SpotID:spot[m][0],SpotName:spot[m][1],SpotLocalName:spot[m][2],SpotTravelTime:spot[m][5],HotelStarLevel:spot[m][4],ScheduleType:parseInt(spot[m][6])+1,SpotPicUrl:spot[m][3]});
+                }                
             }
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.Plan);
@@ -544,12 +677,36 @@
         });
     };
     var ctrlTemplateplanNew = function(Plan, realView) {
+
+        if(!Plan.PlanInfo.PlanSpendInfoList){
+            if(Plan.PlanSpendInfoList.length == 0){
+                Plan.PlanInfo.PlanSpendInfoList=[{
+                    SpendName:'',
+                    AdultPrice:0,
+                    KidPrice:0
+                }]
+            }else{
+                Plan.PlanInfo.PlanSpendInfoList = Plan.PlanSpendInfoList;
+            }            
+            $.rogerRefresh(Plan);
+        }
+
         $('img[name="needPrefix"]').each(function () {
             var src = $(this).attr('src');
             if(src.indexOf('group1') > -1) {
                 $(this).attr('src',Plan.IMGHOST+src);
             }
         })
+        Plan.createPrices = function(Plan,Prices){
+            Prices.push({
+                    PriceName:'',
+                    AdultPrice:0,
+                    KidPrice:0
+                });
+
+            $.rogerRefresh(Plan);
+        };
+
         Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanSchedule.push({
                 Spot:[{CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
@@ -602,6 +759,28 @@
                     data.PlanInfo.StartCity = item.CityNameCn;
                     data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+
+                    minAdultPrice = 0;
+                    minKidPrice = 0;
+                    var index=0;
+                    for(planSpendInfo in data.PlanInfo.PlanSpendInfoList){
+                        index ++;
+                        if(null == planSpendInfo.SpendName || '' == planSpendInfo.SpendName){
+                            planSpendInfo.SpendName = "套餐" + index
+                        }
+
+                        bFindFlag = false;
+                        //取第一个成人儿童价格
+                        if (planSpendInfo.AdultPrice > 0 && !bFindFlag) {
+                            minAdultPrice = planSpendInfo.AdultPrice;
+                            minKidPrice = planSpendInfo.AidPrice;
+                            bFindFlag = true;
+                        }
+
+                    }
+
+                    data.PlanInfo.AdultPrice = minAdultPrice;
+                    data.PlanInfo.KidPrice = minKidPrice;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
                         $.rogerNotice({Message: '模板方案成功'});
                         $('#show').removeClass("btn btn-warning invisible");
@@ -618,6 +797,28 @@
                         data.PlanInfo.StartCity = item.CityNameCn;
                         data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                         data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+
+                        minAdultPrice = 0;
+                        minKidPrice = 0;
+                        var index=0;
+                        for(planSpendInfo in data.PlanInfo.PlanSpendInfoList){
+                            index ++;
+                            if(null == planSpendInfo.SpendName || '' == planSpendInfo.SpendName){
+                                planSpendInfo.SpendName = "套餐" + index
+                            }
+
+                            bFindFlag = false;
+                            //取第一个成人儿童价格
+                            if (planSpendInfo.AdultPrice > 0 && !bFindFlag) {
+                                minAdultPrice = planSpendInfo.AdultPrice;
+                                minKidPrice = planSpendInfo.AidPrice;
+                                bFindFlag = true;
+                            }
+                        }
+
+                        data.PlanInfo.AdultPrice = minAdultPrice;
+                        data.PlanInfo.KidPrice = minKidPrice;
+
                         $.rogerPost('/new/tmpplan', data, function (respJSON) {
                             $.rogerNotice({Message: '模板方案发布成功'});
                             $('#show').removeClass("btn btn-warning invisible");
@@ -653,12 +854,35 @@
         realView.rogerCropImages();
     };
     var ctrlShortplanNew = function(Plan, realView) {
+
+        if(!Plan.PlanInfo.PlanSpendInfoList){
+            if(Plan.PlanSpendInfoList.length == 0){
+                Plan.PlanInfo.PlanSpendInfoList=[{
+                    SpendName:'',
+                    AdultPrice:0,
+                    KidPrice:0
+                }]
+            }else{
+                Plan.PlanInfo.PlanSpendInfoList = Plan.PlanSpendInfoList;
+            }            
+            $.rogerRefresh(Plan);
+        }
+
         $('img[name="needPrefix"]').each(function () {
             var src = $(this).attr('src');
             if(src.indexOf('group1') > -1) {
                 $(this).attr('src',Plan.IMGHOST+src);
             }
-        })
+        });
+        Plan.createPrices = function(Plan,Prices){
+            Prices.push({
+                    PriceName:'',
+                    AdultPrice:0,
+                    KidPrice:0
+                });
+
+            $.rogerRefresh(Plan);
+        };
         Plan.createDay = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanShort.push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
             $.rogerRefresh(Plan);
@@ -681,6 +905,28 @@
                 var data = {PlanInfo:e.data.PlanInfo};
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
+
+                minAdultPrice = 0;
+                minKidPrice = 0;
+                var index=0;
+                for(planSpendInfo in data.PlanInfo.PlanSpendInfoList){
+                    index ++;
+                    if(null == planSpendInfo.SpendName || '' == planSpendInfo.SpendName){
+                        planSpendInfo.SpendName = "套餐" + index
+                    }
+
+                    bFindFlag = false;
+                    //取第一个成人儿童价格
+                    if (planSpendInfo.AdultPrice > 0 && !bFindFlag) {
+                        minAdultPrice = planSpendInfo.AdultPrice;
+                        minKidPrice = planSpendInfo.AidPrice;
+                        bFindFlag = true;
+                    }
+                }
+
+                data.PlanInfo.AdultPrice = minAdultPrice;
+                data.PlanInfo.KidPrice = minKidPrice;
+
                 $.rogerPost('/new/shortplan', data, function(respJSON){
                     $.rogerNotice({Message:'快捷方案发布成功'});
                     $('#show').removeClass("btn btn-warning invisible");
@@ -695,6 +941,28 @@
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                 $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
+
+                    minAdultPrice = 0;
+                    minKidPrice = 0;
+                    var index=0;
+                    for(planSpendInfo in data.PlanInfo.PlanSpendInfoList){
+                        index ++;
+                        if(null == planSpendInfo.SpendName || '' == planSpendInfo.SpendName){
+                            planSpendInfo.SpendName = "套餐" + index
+                        }
+
+                        bFindFlag = false;
+                        //取第一个成人儿童价格
+                        if (planSpendInfo.AdultPrice > 0 && !bFindFlag) {
+                            minAdultPrice = planSpendInfo.AdultPrice;
+                            minKidPrice = planSpendInfo.AidPrice;
+                            bFindFlag = true;
+                        }
+                    }
+
+                    data.PlanInfo.AdultPrice = minAdultPrice;
+                    data.PlanInfo.KidPrice = minKidPrice;
+
                     $.rogerPost('/new/shortplan', data, function(respJSON){
                         $.rogerNotice({Message:'快捷方案发布成功'});
                         $('#show').removeClass("btn btn-warning invisible");
@@ -751,6 +1019,11 @@
                 page = clickpage;
             }
             pamaeta["pagestart"] = (page-1)*8;
+            pamaeta["page"] = page;
+
+            url = $.rogerGetPath() || window.location.hash;
+
+
             $.rogerTrigger('#app',url, pamaeta);
         });
     };
@@ -911,6 +1184,7 @@
             }
         });
 
+        pageclick();
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -2236,14 +2510,15 @@
                 {label:' ', DAY:'0', content:null, picURL: null},
                 {label:null, DAY:null, content:null, picURL: null, PE:true},
                 {label:null, DAY:null, content:' ', picURL: null}
-                ]
+                ],
+                TravelogueToPlan2:[]
             },
             IMGHOST:$.rogerImgHost()
         };
 
         var articleID = $.rogerGetUrlParam('articleID');
 
-        $.rogerPost('/travelogue/detail', {"articleID": articleID}, function (respJSON, reqJSON) {
+        $.rogerPost('/travelogue/detail', {"articleID": articleID,"userID": usr.UserID}, function (respJSON, reqJSON) {
             if(respJSON){
 
                 if (null != respJSON["Travelogue"] && respJSON["Travelogue"].length > 0) {
@@ -2253,6 +2528,15 @@
                     returnvalue["Travelogue"]["TravelogueDetail"] = respJSON["TravelogueDetail"];
                 }
 
+                if (null != respJSON["TravelogueToPlan"] && '' != respJSON["TravelogueToPlan"] && respJSON["TravelogueToPlan"].length>0) {
+                    returnvalue["Travelogue"]["TravelogueToPlan"] = respJSON["TravelogueToPlan"];
+                    var planList = [];
+                    for(var m=0; m < respJSON["TravelogueToPlan"].length; m++){
+                        planList.push(respJSON["TravelogueToPlan"][m].planID);
+                    }                    
+                    returnvalue["Travelogue"]["TravelogueToPlan2"] = planList;
+                }
+
                 $.rogerRefresh(returnvalue);
 
             }});
@@ -2260,6 +2544,68 @@
         return returnvalue
 
     },ctrlTraveLogueEdit=function(TraveLogue, realView){
+        //关联方案
+        $.ajax({
+            url:"http://10.101.1.36:8888/dashboard/product/specialplan",
+            data:{
+                pagestart:0,
+                pagesize:8,
+                UserID:10083
+            },
+            success:function(data){
+                data = JSON.parse(data);
+                var dataD = data.PlansByUser;
+                var html = '';
+                for(var m = 0; m < dataD.length; m++){
+                    if(dataD[m].StartCountry == null){dataD[m].StartCountry=''}
+                    if(dataD[m].StartCity == null){dataD[m].StartCity=''}
+                    html +='<li class="row"><div class="col-md-1"><input type="checkbox" name="planRadios" value="" data-value="'+dataD[m].PlanID+'"></div><div class="col-md-11">'+
+                            '<h4>'+dataD[m].PlanName+'</h4>'+
+                            '<div class="col-md-5">'+
+                                '<img src="'+ data.IMGHOST + dataD[m].PicURL +'" alt="方案封面" style="width:60px; height:60px;">'+
+                            '</div>'+
+                            '<div class="col-md-6">'+
+                                '<p>开始城市：'+ dataD[m].StartCountry + dataD[m].StartCity + '</p>'+
+                                '<p>方案ID：' + dataD[m].PlanNumber + '</p>'+
+                            '</div></div></li>';
+                    //console.log(html);
+                }
+                $('#planListDetail').html(html);   
+            }
+        });
+        var TravelogueToPlan2 = TraveLogue.Travelogue.TravelogueToPlan2;
+        //关联方案选择
+        $('#planListDetail').on('click','li input',function(){
+            var PlanID = $(this).data('value');
+            if($(this).prop('checked')){
+                if(TravelogueToPlan2.length<3){
+                    TravelogueToPlan2.push(PlanID);
+                }else{
+                    alert("最多只能关联三个方案！");
+                    $(this).prop('checked',false);
+                }
+            }else{
+                for(var m = 0; m < TravelogueToPlan.length; m++){
+                    if(PlanID == TravelogueToPlan[m]){
+                        TravelogueToPlan2.splice(m,1);
+                    }
+                }
+                
+            }
+        });
+
+        $('#planconfirm').on('click',function(){
+            var html = '';
+            $('#planListDetail li input').each(function(){
+                if($(this).prop('checked')){
+                    html+= '<li class="row">'+$(this).parent().next().html() + "</li>";
+                }
+                
+            });
+            $('#planListDetail2').html(html);
+        })
+
+
          TraveLogue.createDay = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             TravelogueDetail.push({label:' ', DAY:'0', content:null, picURL: null});
             $.rogerRefresh(TraveLogue);
@@ -2300,6 +2646,20 @@
 
         $('#save').rogerOnceClick(TraveLogue, function(e){
             temp = e.data.Travelogue;
+
+            //关联方案数据调整
+            var PlanList = temp.TravelogueToPlan2;
+            var PlanListNew = [];
+            for(var m=0; m< PlanList.length; m++){
+                PlanListNew.push({
+                    articleID:temp.articleID,
+                    userID:temp.userID,
+                    planID:PlanList[m]
+                })
+            }
+            temp.TravelogueToPlan = PlanListNew;
+            console.log(temp);
+
             temp["STATUS"]=1;
 
             TravelogueDetail = temp.TravelogueDetail;

@@ -15,6 +15,11 @@
 			"params":["insertId", "Lable","PicURL","Content","Day"],
 			"findkey": "insertId",
 			"files":["PicURL"]
+		},
+		"PlanSpendInfoList": {
+			"sql": "INSERT INTO tab_planspend (planID,spendName,adultPrice,kidPrice) values (?, ?,?, ?)",
+			"params": ["insertId","spendName","adultPrice","kidPrice"],
+			"findkey": "insertId"
 		}
 	}
 }
