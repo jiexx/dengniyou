@@ -1,6 +1,6 @@
 {
 	"DeleteTravelogueDetail": {
-		"sql": "delete from  `traveluserdb`.`tab_travelarticledetail` WHERE ArticleID=?",
+		"sql": "DELETE traveluserdb.detail, traveluserdb.plan FROM traveluserdb.tab_travelarticledetail detail LEFT JOIN traveluserdb.tab_travelarticletoplan plan ON detail.ArticleID = plan.ArticleID WHERE detail.ArticleID = ?",
 		"params": [
 			"articleID"
 		],
@@ -14,7 +14,15 @@
 			],
 			"files": [
 				"articlePicURL"
-			]
+			],
+			"TravelogueToPlan": {
+				"sql": "INSERT INTO traveluserdb.tab_travelarticletoplan (ArticleID,UserID,PlanID,CreateDate) values (?,?,?,NOW())",
+				"params": [
+					"articleID",
+					"userID",
+					"planID"
+				]
+			}
 		},
 		"TravelogueDetail": {
 			"sql": "INSERT INTO `traveluserdb`.`tab_travelarticledetail` (`ArticleID`, `Label`, `PicURL`, `Content`, `Day`, `CreateDate`) VALUES (?, ?, ?, ?, ?, NOW())",

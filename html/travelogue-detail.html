@@ -12,6 +12,7 @@
       <div class="tips-title">
         <h1>${Travelogue[0].title}</h1>
       </div> 
+      
       <ul class="tips-description">
         {{each(i,p) TravelogueDetail}}
         <li>
@@ -27,6 +28,25 @@
         </li>
         {{/each}}
       </ul><!--  end tips-description -->
+      
+      <h3>关联方案</h3>
+      <div class="col-md-12">
+        <ul id="planListDetail2"> 
+        {{each $data.TravelogueToPlan}}          
+          <li class="row" style="">
+            <h4>${planName}</h4>
+            <div class="col-md-5">
+                <img src="${$data.IMGHOST}${picURL}" alt="方案封面" style="width:60px; height:60px;">
+            </div>
+            <div class="col-md-6">
+                <p>开始城市：${startCity} </p>
+                <p>方案ID：${planNumber} </p>
+            </div>
+          </li>
+        {{/each}}               
+        </ul>
+      </div>
+
     </div> <!-- end 方案预览主题内容specialplan-mainbody -->
 
     <div class="buttons">

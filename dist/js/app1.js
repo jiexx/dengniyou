@@ -599,19 +599,7 @@
 
         });
 
-        //联系导游
-        $('#talkTo').rogerOnceClick(response.OrderDetail[0].OrderNo, function (e) {
-            var data = e.data;
-            var usr = $.rogerGetLoginUser();
-            if(!usr) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-            var newWin = window.open('about:blank');
-            newWin.location.href = 'http://'+window.location.host
-                +'/talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid='+response.PlanInfo[0].UserID+'&msg=D'+data;
-        });
+        
 
     };
 
