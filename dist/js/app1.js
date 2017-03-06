@@ -31,6 +31,13 @@
                 $.rogerShowLogin();
                 return;
             }
+
+            page = 1;
+            pamaeta["userID"]=user.UserID;
+            pamaeta["usertype"]=1;
+            pamaeta["status"]=0;
+            pamaeta["page"]=page;
+
             $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=1&status=0&page=1');
         });
 
@@ -987,10 +994,7 @@
     };
 
     //列表页
-    var ctrlCarList = function(){
-        realView.rogerCropImages();
-        frameCtrl();
-    };
+    
     var ctrlServiceList = function(data,realView){
         var urlParams = $.rogerGetURLJsonParams();
         if(urlParams){

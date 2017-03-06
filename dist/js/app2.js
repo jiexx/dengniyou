@@ -205,7 +205,7 @@
             pamaeta["page"]=page;
 
             url = "#/orderlist";
-            $.rogerLocation('#/orderlist?UserID='+user.UserID+'&usertype=2&status=0&page=1');
+            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
         });
 
         $('#productctr').rogerOnceClick2(null, function () {
@@ -1146,7 +1146,7 @@
         //     $.rogerLocation('#/userinfo?UserID='+usr.UserID);
         // });
         $('#orderList').rogerOnceClick( null, function () {
-            $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=1&status=0&page=1');
+            $.rogerLocation('#/orderlist?userID='+usr.UserID+'&usertype=2&status=0&page=1');
         });
         $("#order-a_all").find("a").each(function () {
             var el = $(this);

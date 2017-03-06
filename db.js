@@ -321,7 +321,7 @@ exports.enableGuide = function(id, enable, callback) {
 ////usertype:1,游客，2导游,userID,status,page
 exports.getOrderList = function(item, callback) {
 	pool.getConnection(function(err, connection) {
-		if(err) { 
+		if(err) {
 			console.log(err); 
 			callback(true); 
 			return;
@@ -342,7 +342,7 @@ exports.getOrderList = function(item, callback) {
             comcondition.push("                           from travelorderdb.tab_travelorder travelorder left join traveldb.tab_userinfo userinfo on travelorder.GuideID = userinfo.UserID " +
                 "                                                            left join traveluserdb.tab_services userservice on travelorder.ServiceTripID=IF(travelorder.OrderType=1,userservice.ServiceID,-1) " +
                 "                                                            left join traveluserdb.tab_facilitypictures pict on (IF(travelorder.OrderType=1,userservice.ServiceID,-1)=pict.PictureID AND pict.PicType=1 AND pict.IsCover=1) " +
-                "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) where travelorder.UserID = "+item.UserID);
+                "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) where travelorder.UserID = "+item.userID);
 		} else if(item.usertype == 2){
             countSql.push("SELECT ceil(count(*)/ 20) as Count");
             sql.push( "select 1 as usertype,travelorder.orderNo,travelorder.OrderID as orderid,travelorder.ServiceTripID,travelorder.CloseReason,travelorder.ServiceTripName,travelorder.GuideID as userid,userinfo.UserName as username,travelorder.Status as status, " +
@@ -354,7 +354,7 @@ exports.getOrderList = function(item, callback) {
             comcondition.push("                           from travelorderdb.tab_travelorder travelorder left join traveldb.tab_userinfo userinfo on travelorder.GuideID = userinfo.UserID " +
                 "                                                            left join traveluserdb.tab_services userservice on travelorder.ServiceTripID=IF(travelorder.OrderType=1,userservice.ServiceID,-1) " +
                 "                                                            left join traveluserdb.tab_facilitypictures pict on (IF(travelorder.OrderType=1,userservice.ServiceID,-1)=pict.PictureID AND pict.PicType=1 AND pict.IsCover=1) " +
-                "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) where travelorder.GuideID = "+item.UserID);
+                "                                                            left join traveluserdb.tab_planinfo plan on(travelorder.ServiceTripID=IF(travelorder.OrderType=2,plan.PlanID,-1)) where travelorder.GuideID = "+item.userID);
 
 		}
 
