@@ -3,14 +3,14 @@ var crypto = require('crypto');
 
 var pool  = mysql.createPool({
 	//host : '10.101.1.163',
-	host : '123.59.144.47',
-	user : 'root',
+	host : '114.55.139.196',
+	user : 'traveldb',
 	//password : '123456',
-	password: 'zl_2wsx!QAZ',
+	password: 'traveldb',
 	connectionLimit: 500,
 //	acquireTimeout: 30000
 });
-var IMG_HOST = "http://123.59.144.47/";//"http://10.101.1.165:8097/";
+var IMG_HOST = "http://pic.dengnilvyou.com.cn/";//"http://10.101.1.165:8097/";
 // IMG_HOST = "http://10.101.1.165:8097/";
 
 function execfinal(conn, sql, params, callback, close) {

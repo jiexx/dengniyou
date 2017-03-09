@@ -72,8 +72,8 @@ pay.config({
     seller_id:'2088612188470577',
     partner: '2088612188470577',
     key: 'w8dmwl2awivsqjv7f3m1chynw49ya8yv',
-    notify_url: 'http://123.59.144.169:8888/notify',//'http://123.59.144.169:8888/notify',//'http://www.dengniyou.com/notify',
-    return_url: 'http://123.59.144.169:8888'
+    notify_url: 'http://101.37.21.172:8888/notify',//'http://123.59.144.169:8888/notify',//'http://www.dengniyou.com/notify',
+    return_url: 'http://101.37.21.172:8888'
 });
 
 app.post('/pay', upload.array(), function(req, res) {
@@ -85,13 +85,13 @@ app.post('/pay', upload.array(), function(req, res) {
     });*/
 	request.post(
         {
-            url: 'http://123.59.144.44/travel/order/addOrder',
+            url: 'http://app.dengnilvyou.com.cn/travel/order/addOrder',
             method: "POST",
             json: req.body
         },
 		function (error, response, body) {
 			if (!error && response.statusCode == 200 && body.datas) {
-			    var url = 'http://123.59.144.169:8888/#/orderdetail?UserType=1&OrderID='+body.datas.orderid;
+			    var url = 'http://101.37.21.172:8888/#/orderdetail?UserType=1&OrderID='+body.datas.orderid;
 			    pay.setConfig('return_url', url);
                 var usr_redirect_url = pay.buildDirectPayURL({
                     out_trade_no: ''+body.datas.orderNo,
@@ -110,7 +110,7 @@ app.post('/pay', upload.array(), function(req, res) {
 //立即支付的时候
 app.post("/pay2",function (req, res) {
     var params = req.body;
-    var url = 'http://123.59.144.169:8888/#/orderdetail?UserType=1&OrderID='+params.orderid;
+    var url = 'http://101.37.21.172:8888/#/orderdetail?UserType=1&OrderID='+params.orderid;
     pay.setConfig('return_url', url);
     var usr_redirect_url = pay.buildDirectPayURL({
         out_trade_no: ''+ params.orderNo,
@@ -131,11 +131,11 @@ app.post('/notify', function (req, res) {
         console.log("result:" + result);
         console.log("result type:" + typeof result);
         if (result == "true") {
-            console.log("success start:http://123.59.144.44/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
+            console.log("success start:http://app.dengnilvyou.com.cn/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
                 "&total_fee=" + params.total_fee +
                 "&trade_no=" + params.trade_no +
                 "&buyer_email=" + params.buyer_email);
-            request.get("http://123.59.144.44/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
+            request.get("http://app.dengnilvyou.com.cn/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
                 "&total_fee=" + params.total_fee +
                 "&trade_no=" + params.trade_no +
                 "&buyer_email=" + params.buyer_email,
@@ -162,7 +162,7 @@ app.post('/new/service/car', upload.array(), function(req, res) {
 
     request.post(
         {
-            url: 'http://123.59.144.44/travel/service/uploadServiceWeb',
+            url: 'http://app.dengnilvyou.com.cn/travel/service/uploadServiceWeb',
             // url: 'http://10.101.1.36:8080/travel/service/uploadServiceWeb',
             method: "POST",
             json: req.body.reqUploadService
@@ -227,7 +227,7 @@ app.post('/new/service/car', upload.array(), function(req, res) {
 app.get('/order/update', upload.array(), function (req, res) {
 
     parameters = req.body;
-    request('http://123.59.144.44/travel/order/updateOrder?orderid=' + parameters.orderid
+    request('http://app.dengnilvyou.com.cn/travel/order/updateOrder?orderid=' + parameters.orderid
         + '&status=' + parameters.status, function (error, response, body) {
         if (!error && response.statusCode == 200 && body.datas) {
             console.log(body) // Show the HTML for the baidu homepage.
@@ -342,7 +342,7 @@ app.post('/service/list', upload.array(), function (req, res) {
     // var urlarray = [];
     // urlarray.push('http://123.59.144.44/travel/service/getCustomServiceByConditionForWeb?');
 
-    request('http://10.101.1.36:8080/travel/service/getCustomServiceByConditionForWeb?' +
+    request('http://app.dengnilvyou.com.cn/travel/service/getCustomServiceByConditionForWeb?' +
         'type=' + parameters.type
         + '&page=' + parameters.page
         + '&condition=' + (parameters.condition?  encodeURI(parameters.condition):'')

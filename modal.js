@@ -1,31 +1,19 @@
 var mysql = require('mysql');
 var crypto = require('crypto');
-var FdfsClient = require('fdfs');
+var fdfsconfig = require('./fdfsconfig');
 
-var fdfs = new FdfsClient({
-    // tracker servers
-    trackers: [
-        {
-            //host: '10.101.1.165',//host: '172.16.36.1',//'123.59.144.47',
-            host:'123.59.144.47',
-            port: 22122
-        }
-    ],
-    timeout: 10000,
-    //defaultExt: 'txt',
-    charset: 'utf8'
-});
+var fdfs = fdfsconfig.fdfs;
 
 var pool  = mysql.createPool({
 	//host : '10.101.1.163',
-	host : '123.59.144.47',
-	user : 'root',
+	host : '114.55.139.196',
+	user : 'traveldb',
 	//password : '123456',
-	password: 'zl_2wsx!QAZ',
+	password: 'traveldb',
 	connectionLimit: 500
 //	acquireTimeout: 30000
 });
-var IMG_HOST = "http://123.59.144.47/";
+var IMG_HOST = "http://pic.dengnilvyou.com.cn/";
 
 function doSql(funcArgu, onFinish) {
 	pool.getConnection(function(err, conn) {

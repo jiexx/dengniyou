@@ -1,4 +1,6 @@
 (function () {
+
+    pamaeta ={pagestart:0,pagesize:8};
 	function frameCtrl() {
         if( !$.trim( $('#footer').html() ) ) {
             $('#footer').rogerReloadFile('./footer.html');
