@@ -459,7 +459,6 @@ var roger = {
 			before :function(funcArgu, onFinish) {
 				var item = funcArgu.item;
 				item.valid = true;
-				item.sql = item.modal.sql;
 				item.params = item.modal.params;
 				onFinish();
 			}
