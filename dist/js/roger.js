@@ -351,7 +351,7 @@ $(function () {
         roger_pointer_parse: function(pointer) {
             if (pointer === '') { return []; }
             if (pointer.charAt(0) !== '/') { throw new Error('Invalid JSON pointer: ' + pointer); }
-            return pointer.substring(1).split(/\\\\/).map($.roger_pointer_unescape);
+            return pointer.substring(1).split(/\//).map($.roger_pointer_unescape);
         },
         roger_pointer_is_array_elem: function(obj, pointer) {
             var ptr = pointer.substring(0,pointer.lastIndexOf('/'));

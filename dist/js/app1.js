@@ -1170,8 +1170,4 @@
 	
 })();
 
-
-function a(){
-
-}
 // init: initUserInfo,

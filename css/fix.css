@@ -26,6 +26,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 /*游客端页面*/
 /*网站首页*/
 /*首页共同部分*/
+.indexpage { overflow: hidden }
 .indexpage #app .homesearch-list{margin-top: 50px;}
 .indexpage #app .homepage .carousel-inner > .item { height: 486px; }
 .indexpage #app .homepage .carousel-inner > .item > img{top: 49%;}
@@ -374,7 +375,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .stepBarBox ul li.active{color:#00b8ee;}
 .stepBarBox ul li:nth-child(1){text-align: left;}
 .stepBarBox ul li:nth-child(2){text-align: center;}
-.stepBarBox ul li:nth-child(3){text-align: right;}
+.stepBarBox ul li:nth-child(3){texxt-align: right;}
 /*提交订单部分*/
 /*公共部分*/
 .stepPart .partTitle{font-size: 20px; border-bottom:2px solid #00b8ee; height: 40px; line-height: 40px; margin-bottom: 20px;}
