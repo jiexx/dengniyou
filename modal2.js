@@ -483,7 +483,6 @@ var roger = {
 						var outkey = output[j] ? output[j][findkey] : null;
                         copy.params = roger.replace(funcArgu.item.params, funcArgu.item.modal.params, findkey, outkey);
                         var newArgu = {sql:copy.sql, params:copy.params, item:copy, doing:null};
-                        newArgu.item.__idx = j;
                         funcArgu.vector.push(copy);
                         argus.push(newArgu);
 					}
