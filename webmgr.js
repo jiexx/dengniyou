@@ -408,3 +408,7 @@ process.on('SIGINT', function() {
     //console.log('Naughty SIGINT-handler');
 	process.exit()
 });
+
+function a(){
+
+}
