@@ -526,6 +526,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .carousel .carousel-control{width: 10%;}
 .detailpage .detailpage-mainbody{padding: 25px 0px; border-left: 1px solid #eee; -webkit-box-shadow: 5px 5px 10px #eee; -moz-box-shadow: 5px 5px 10px #eee; -ms-box-shadow: 5px 5px 10px #eee; -o-box-shadow: 5px 5px 10px #eee; box-shadow: 5px 5px 10px #eee;}
 .detailpage .detailpage-mainbody .row{margin-left: 0;margin-right: 0;}
+.detailpage .detailpage-mainbody p.rowMarginLeft{margin-left: -15px;}
+.detailpage .detailpage-mainbody .marginB10{margin-bottom: 16px;}
 .detailpage .detailpage-title h1{font-size: 18px;color: #333; font-weight: bold; margin-bottom: 20px; padding-left: 20px;}
 .detailpage .detailpage-title>span{display: inline-block;width: 68px;height: 20px;line-height: 18px;font-size: 12px;color: #666;text-align: center;border: 1px solid #9B9B9B;-webkit-border-radius: 10px;-moz-border-radius: 10px;-ms-border-radius: 10px;-o-border-radius: 10px;border-radius: 10px;}
 .detailpage .price-detail{padding: 22px 0;}
@@ -546,7 +548,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .detailpage-mainbody .trip p{font-size: 14px;color: #666;}
 .detailpage .detailpage-mainbody .policy .des,.detailpage .detailpage-mainbody .service-description .des{padding: 30px; white-space: pre-line;}
 .detailpage .detailpage-mainbody .policy .des p{font-size: 14px;color: #666;}
-.detailpage .buttons {text-align: center;}
+.detailpage .buttons {text-align: center; margin:20px 0;}
 .detailpage .buttons button{margin-left: 20px; background-color: #F1741F;color: #fff;}
 .detailpage .buttons #delete{background-color: #898989;}
 /* end 经典方案预览*/
@@ -646,6 +648,8 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .morePrices li .glyphicon-remove-circle{position: absolute; top:0px; right: 0;}
 .editPage .morePrices li:last-child{border:0;}
 .editPage .morePrices li:last-child div{border:1px solid #00b8ee; height: 100px; line-height: 100px; width:100px; font-size: 40px; text-align: center; margin-left: 10px; margin-top: 20px;}
+.editPage .moreTels li:last-child div{border:1px solid #00b8ee; height: 36px; line-height: 36px; width:100%; font-size: 20px; text-align: center; margin-left: -15px; width:96%;}
+.editPage .moreTels li{position:relative;}
 /*快捷方案*/
 .editPage .scheduleShort textarea{width:100%; height: 195px;}
 .editPage .scheduleShort textarea{border:1px solid #CCC;}

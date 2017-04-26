@@ -46,7 +46,8 @@
     }
 
     var initHomeList = function (param) {
-        param[0].IMGHOST = "http://123.59.144.47/";
+        //param[0].IMGHOST = "http://123.59.144.47/";
+        param[0].IMGHOST = "http://pic.dengnilvyou.com.cn/";
         return param;
     };
     var ctrlHomeList = function(response, realView) {
@@ -92,9 +93,9 @@
         //推荐区跑马灯效果
         var marqueeE = document.getElementById("solution"); 
         var marqueeE1 = document.getElementById("RunTopic");
-        var speed=200;    //数值越大滚动速度越慢 
+        var speed=200;    //数值越大滚动速度越慢
         function Marquee(){ 
-            if(marqueeE1.offsetWidth<=marqueeE.scrollLeft+1200){               
+            if(marqueeE1.offsetWidth<=marqueeE.scrollLeft+1870){//显示8个
                 marqueeE.scrollLeft=0
             }
             else{ 

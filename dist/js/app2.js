@@ -233,6 +233,17 @@
 
             $.rogerLocation('#/travelogue?UserID='+user.UserID+'&pagestart=0'+'&pagesize='+pamaeta.pagesize);
         });
+        //点击资料管理
+        $('#datum').rogerOnceClick2(null, function () {
+            var user = $.rogerGetLoginUser();
+            if(!user) {
+                $.rogerLogin('#homeLogin', '/login');
+                $.rogerShowLogin();
+                return;
+            }
+            //$.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
+            $.rogerLocation('#/userinfodetail');
+        });
     }
 	var ctrlDashboard = function(response, realView) {
         if( !$.trim( $('#modal').html() ) ) {
@@ -330,8 +341,6 @@
             });
             }
         );
-
-
         // $('#filter3 input[type=radio][name="filterradio"]').on('change',function(e){
         //     var usr = $.rogerGetLoginUser();
         //     var url = $.rogerGetPath() || window.location.hash;
@@ -460,13 +469,6 @@
             IMGHOST:$.rogerImgHost()
         };
     };
-    var initCityChooser = function (PS) {
-        return {
-            UserData:0,
-            Spot:PS.Spot,
-            Plan:PS.Plan
-        };
-    };
 
     var initSpotChooser = function (PS) {
         return {
@@ -530,31 +532,6 @@
             }
         }
         return null;
-    };
-
-    var ctrlCityChooser = function (PS, realView) {
-        $('#cityChooser').modal('show');
-        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
-            var data = e.data;
-            var country = $('#country option:selected').val().split(':');
-            var city = $('#city option:selected').val().split(':');
-            data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
-                SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
-            $('#cityChooser').modal('hide');
-            $.rogerRefresh(data.Plan);
-        });
-    };
-    var ctrlCityChooser2 = function (PS, realView) {
-        $('#cityChooser').modal('show');
-        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
-            var data = e.data;
-            var country = $('#country option:selected').val().split(':');
-            var city = $('#city option:selected').val().split(':');
-            data.Plan.PlanInfo.StartCityID = city[0];
-            data.Plan.PlanInfo.StartCity = city[1];
-            $('#cityChooser').modal('hide');
-            $.rogerRefresh(data.Plan);
-        });
     };
     var ctrlSpotChooser = function (PS, realView) {
         $('#spotChooser').modal('show');
@@ -677,8 +654,7 @@
         });
     };
     var ctrlTemplateplanNew = function(Plan, realView) {
-
-        if(!Plan.PlanInfo.PlanSpendInfoList){
+         if(!Plan.PlanInfo.PlanSpendInfoList){
             if(Plan.PlanSpendInfoList.length == 0){
                 Plan.PlanInfo.PlanSpendInfoList=[{
                     SpendName:'',
@@ -688,6 +664,72 @@
             }else{
                 Plan.PlanInfo.PlanSpendInfoList = Plan.PlanSpendInfoList;
             }            
+            $.rogerRefresh(Plan);
+        }
+        if(!Plan.PlanInfo.PlanSpendInfoListDay){
+            if(!Plan.PlanSpendInfoListDay || Plan.PlanSpendInfoListDay.length == 0){
+                Plan.PlanInfo.PlanSpendInfoListDay=[
+                    {
+                        id:"2017-03-10",
+                        title: '已设置',
+                        start: '2017-03-10',
+                        prices:[
+                            {
+                                SpendName:'套餐一',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                storeNumber:8
+                            }
+                        ]
+                    },
+                    {
+                        id:"2017-04-10",
+                        title: '已设置',
+                        start: '2017-04-10',
+                        prices:[
+                            {
+                                SpendName:'套餐一',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                storeNumber:8
+                            },
+                            {
+                                SpendName:'套餐二',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                storeNumber:8
+                            },
+                            {
+                                SpendName:'套餐三',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                storeNumber:8
+                            }
+                        ]
+                    },
+                    {
+                        id:"2017-04-16",
+                        title: '已设置',
+                        start: '2017-04-16',
+                        prices:[
+                            {
+                                SpendName:'套餐一',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                storeNumber:8
+                            },
+                            {
+                                SpendName:'套餐二',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                storeNumber:8
+                            }
+                        ]
+                    }
+                    ]
+            }else{
+                Plan.PlanInfo.PlanSpendInfoListDay = Plan.PlanSpendInfoListDay;
+            }
             $.rogerRefresh(Plan);
         }
 
@@ -749,6 +791,229 @@
         Plan.changeAirport = function (Plan, SpotItem) {
             $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
         };
+
+        //编辑价格
+        var trStr = '<tr><td><input type="text" placeholder="请输入"></td>'+
+            '<td><input type="text" placeholder="请输入"></td>'+
+            '<td><input type="text" placeholder="请输入"></td>'+
+            '<td><input type="text" placeholder="请输入"></td>'+
+            '<td><span class="glyphicon glyphicon-minus-sign"></span></td></tr>';
+        var trStrEdit ;
+        function PriceListEdit(temp){
+            trStrEdit = '';
+            for(var i = 0; i < temp.length; i++){
+                trStrEdit += '<tr><td><input type="text" placeholder="请输入" value="'+ temp[i].SpendName +'"></td>'+
+                    '<td><input type="text" placeholder="请输入" value="'+ temp[i].AdultPrice +'"></td>'+
+                    '<td><input type="text" placeholder="请输入" value="'+ temp[i].KidPrice +'"></td>'+
+                    '<td><input type="text" placeholder="请输入" value="'+ temp[i].storeNumber +'"></td>'+
+                    '<td><span class="glyphicon glyphicon-minus-sign"></span></td></tr>';
+            }
+            $('#dayPriceSet tbody').html(trStrEdit);
+        }
+
+        $('#calendar').fullCalendar({
+            fixedWeekCount:false,
+            buttonIcons:false,
+            buttonText:{
+                prev:'上月',
+                next:'下月',
+                prevYear:'上一年',
+                nextYear:'下一年',
+                today:'今天',
+            },
+            customButtons: {
+                myCustomButton: {
+                    text: '批量设置价格',
+                    click: function() {
+                        $('#monthPriceSet').modal();
+                        setTimeout(function(){
+                            $('#monthPriceSet .fc-today-button').trigger('click');
+                        },500);
+                    }
+                }
+            },
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'prevYear,nextYear myCustomButton'
+            },
+            eventSources: [
+                {
+                    events: Plan.PlanInfo.PlanSpendInfoListDay,
+                    //className: 'eventStyle1'
+                }
+            ],
+            //events:Plan.PlanInfo.PlanSpendInfoListDay,
+            dayClick:function(date, jsEvent, view){
+                var dd = $.fullCalendar.formatDate(date,'YYYY年MM月DD日');
+                var idtemp = $.fullCalendar.formatDate(date,'YYYY-MM-DD');
+                var eventArr = view.options.eventSources[0].events;
+                var now = new Date();
+                if(Date.parse(date) < (Date.parse(now)-1000*60*60*24) ){
+                    alert('时间已过期，不可用！');
+                }else{
+                    $('#dayPriceSet').modal();
+                    $('#dayPriceSet .modal-title').html(dd);
+                    var flag = false;
+                    var temp;
+                    for(var i=0; i < eventArr.length; i++){
+                        if(idtemp == eventArr[i].start){
+                            flag = true;
+                            temp = eventArr[i].prices;
+                            break;
+                        }
+                    }
+                    if(flag){
+                        trStrEdit = '';
+                        PriceListEdit(temp);
+                    }else{
+                        $('#dayPriceSet tbody').html(trStr);
+                    }
+                }
+
+            },
+            eventClick:function(eventData,jsEvent, view){
+                console.log(eventData)
+                var dd = $.fullCalendar.formatDate(eventData.start,'YYYY年MM月DD日');
+                $('#dayPriceSet').modal();
+                $('#dayPriceSet .modal-title').html(dd);
+                var temp = eventData.prices;
+                PriceListEdit(temp);
+            }
+        });
+
+        $('#dayPriceSet td .glyphicon-plus-sign').on('click',function(){
+            var trLength = $('#dayPriceSet tr').length;
+            if(trLength > 10){
+                alert('最多只能设置10组报价，已达到最大值！');
+            }else{
+                $('#dayPriceSet tbody').append(trStr);
+            }
+        });
+        $('#dayPriceSet').on('click',' td .glyphicon-minus-sign',function(){
+            $(this).parent().parent().remove();
+        });
+        $('#monthPriceSet').on('click',' td .glyphicon-plus-sign',function(){
+            var trLength = $('#monthPriceSet tr').length;
+            console.log(trLength);
+            if(trLength > 10){
+                alert('最多只能设置10组报价，已达到最大值！');
+            }else{
+                $('#monthPriceSet tbody').append(trStr);
+            }
+        });
+        $('#monthPriceSet').on('click',' td .glyphicon-minus-sign',function(){
+            $(this).parent().parent().remove();
+        });
+        //批量设置价格
+        var selectDays = [];
+        $('#calendar2').fullCalendar({
+            fixedWeekCount:false,
+            buttonIcons:false,
+            buttonText:{
+                prev:'上月',
+                next:'下月',
+                prevYear:'上一年',
+                nextYear:'下一年',
+                today:'今天',
+            },
+            selectable:true,
+            customButtons: {
+                myCustomButton: {
+                    text: '全选',
+                    click: function() {
+                        var title = $('#monthPriceSet .fc-center h2').text();
+                        var monthSelf = moment(title,'MMM YYYY','en').format('YYYY-MM');
+                        var daysInMonth = moment(title, 'MMM YYYY','en').daysInMonth();
+                        var eventData,i,start,istyle;
+                        selectDays = [];
+                        var now = new Date();
+                        var nowMD = moment(now).format('YYYY-MM');
+                        if(Date.parse(monthSelf) < Date.parse(nowMD)){
+                            alert('当前月份已过期，请重新选择月份！')
+                        }else{
+                            var startDay = 1;
+                            if(monthSelf == nowMD ){
+                                startDay = now.getDate();
+                            }
+                            for( i=startDay; i <= daysInMonth; i++){
+                                if(i <= 9){
+                                    istyle = "-0" + i;
+                                }else{
+                                    istyle = "-" + i;
+                                }
+                                start = monthSelf + istyle;
+                                eventData = {
+                                    title: '已选中',
+                                    id:i,
+                                    start: start,
+                                    //end: end,
+                                    className:'eventStyle'
+                                };
+                                selectDays.push(eventData);
+                            }
+                            //console.log(eventData,i,start,istyle,selectDays);
+                            $('#calendar2').fullCalendar( 'removeEvents' );
+                            $('#calendar2').fullCalendar('renderEvents', selectDays, true);
+                            $('#calendar2').fullCalendar('unselect');
+                        }
+                    }
+                },
+                myCustomButton2: {
+                    text: '取消全选',
+                    click: function() {
+                        selectDays = [];
+                        $('#calendar2').fullCalendar( 'removeEvents' );
+                        $('#calendar2').fullCalendar('unselect');
+                    }
+                }
+            },
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'prevYear,nextYear myCustomButton myCustomButton2'
+            },
+            dayClick:function(date, jsEvent, view, resourceObj){
+                // var dd = $.fullCalendar.formatDate(date,'YYYY年MM月DD日');
+                // var bgColor = $(this).css('background-color');
+                // console.log(bgColor.toString());
+                // if(bgColor == 'rgb(255, 0, 0)'){
+                //     $(this).css('background-color', '#FFF');
+                // }else{
+                //     $(this).css('background-color', '#F00');
+                // }
+            },
+            select: function( start, end, jsEvent, view,  resource ) {
+                var self = $(this);
+                console.log(start._d);
+                var id = start._d.getDate();
+                var eventData = {
+                    title: '已选中',
+                    id:id,
+                    start: start,
+                    end: end,
+                    className:'eventStyle'
+                };
+                console.log(id);
+                console.log(self);
+                var flag = 0;
+                for(var i = 0; i < selectDays.length; i++){
+                    if(selectDays[i].id == id){
+                        selectDays.splice(i,1);
+                        flag = 1;
+                        break;
+                    }
+                }
+                if(flag != 1){
+                    selectDays.push(eventData);
+                }
+                console.log(selectDays);
+                //$('#calendar2').fullCalendar( 'updateEvents', selectDays );无效
+                $('#calendar2').fullCalendar( 'removeEvents' );
+                $('#calendar2').fullCalendar('renderEvents', selectDays, true);
+                $('#calendar2').fullCalendar('unselect');
+            },
+        });
 
         $('#save').rogerOnceClick(Plan, function(e){
             var item = getItemWithStartCityID(Plan.PlanInfo.PlanSchedule[0].Spot);
@@ -1190,52 +1455,240 @@
         realView.rogerCropImages();
     };
 
-    var initCityChooser5 = function (PS) {
-        return {
-            User:PS.User
-        };
+    var initUserInfoDetail = function(PS, realView){
+         var usr =$.rogerGetLoginUser();
+         var returnvalue = {
+             DetailMain:{},
+             IMGHOST: $.rogerImgHost()
+         };
+         $.rogerPost('/guideDetail', {UserID: usr.UserID}, function (respJSON) {
+             returnvalue.DetailMain = respJSON.datas;
+             $.rogerRefresh(returnvalue);
+         });
+         return returnvalue;
+     };
+
+    var ctrlUserInfoDetail = function(response, realView) {
+         $('#edit').rogerOnceClick(response, function (e) {
+                 temp = e.data.DetailMain[0];
+                 $.rogerLocation('#/userinfoedit');
+             }
+         );
+         bindRidoesForSwitch();
+         realView.rogerCropImages();
     };
-    
-    var ctrlCityChooser5 = function (PS, realView) {
-        $('#cityChooser').modal('show');
-        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
-            var data = e.data.User;
-            var country = $('#country option:selected').val().split(':');
-            var city = $('#city option:selected').val().split(':');
-            data.User[0].CityID = city[0];
-            data.User[0].CityName = city[1];
-            data.User[0].CountryID = country[0];
-            data.User[0].CountryName = country[1];
-            $('#cityChooser').modal('hide');
-            $.rogerRefresh(data);
-        });
-    };
 
-    var ctrlUserInfo = function(response, realView) {
-        $('input[name="sex"]').on('change',function(){
-          var val=$(this).val();
-          response.User[0].Sex = val;
-        });
-
-        response.createCity = function (result, Spot) {
-            $.rogerTrigger('#modal', '#/citychooser5', {User:result});
+    var initUserInfoEdit = function(PS, realView){
+        var usr =$.rogerGetLoginUser();
+        var returnvalue = {
+            DetailMain:{},
+            IMGHOST: $.rogerImgHost()
         };
-
-        $('#userUpdate').rogerOnceClick(response, function (e) {
-            var data = e.data.User;
-            if(typeof data[0].Labels != "string"){
-               data[0].Labels = data[0].Labels.join(';'); 
+        $.rogerPost('/guideDetail', {UserID: usr.UserID}, function (respJSON) {
+            returnvalue.DetailMain = respJSON.datas;
+            returnvalue.DetailMain.labels = respJSON.datas.labels.split(';');
+            if(returnvalue.DetailMain.labels[returnvalue.DetailMain.labels.length-1] == ''){
+                returnvalue.DetailMain.labels.pop();
             }
-            
-            $.rogerPost('/user/update', data[0], function (respJSON) {
-                $.rogerNotice({Message: '个人信息修改成功'});
+            if(respJSON.datas.telsForshow == null || (respJSON.datas.telsForshow && respJSON.datas.telsForshow.length == 0)){
+                returnvalue.DetailMain.telsForshow = [
+                    {
+                        item1:'',
+                        item2:'',
+                        item3:'',
+                        item4:''
+                    }
+                ];
+            }
+            if(respJSON.datas.hasLanguageForshow == null || (respJSON.datas.hasLanguageForshow && respJSON.datas.hasLanguageForshow.length == 0)){
+                returnvalue.DetailMain.hasLanguageForshow = [
+                    {
+                        item1:'',
+                        item2:'',
+                        item3:'',
+                        item4:''
+                    }
+                ];
+            }
+            if(respJSON.datas.drivingLicensesForshow == null || (respJSON.datas.drivingLicensesForshow && respJSON.datas.drivingLicensesForshow.length == 0)){
+                returnvalue.DetailMain.drivingLicensesForshow = [
+                    {
+                        item1:'',
+                        item2:'',
+                        item3:'',
+                        item4:''
+                    }
+                ];
+            }
+            if(respJSON.datas.skillsForshow == null || (respJSON.datas.skillsForshow && respJSON.datas.skillsForshow.length == 0)){
+                returnvalue.DetailMain.skillsForshow = [
+                    {
+                        item1:'',
+                        item2:'',
+                        item3:'',
+                        item4:''
+                    }
+                ];
+            }
+            if(respJSON.datas.interestForshow == null || (respJSON.datas.interestForshow && respJSON.datas.interestForshow.length == 0)){
+                returnvalue.DetailMain.interestForshow = [
+                    {
+                        item1:'',
+                        item2:'',
+                        item3:'',
+                        item4:''
+                    }
+                ];
+            }
+            $.rogerRefresh(returnvalue);
+        });
+        return returnvalue;
+    };
+
+    var ctrlUserInfoEdit = function(response, realView) {
+        response.createLabel = function (User) {
+            response.DetailMain.labels.push('');
+            $.rogerRefresh(User);
+        };
+        $('input[name="sex"]').on('change',function(){
+            var val=$(this).val();
+            response.DetailMain.sex = val;
+        });
+        flatpickr(".flatpickr");
+        $('.flatpickr-calendar').css('width','330px');
+
+        response.createCity = function (response) {
+            $.rogerTrigger('#modal', '#/citychooser6', {response:response});
+        };
+        response.createCity2 = function (response) {
+            $.rogerTrigger('#modal', '#/citychooser7', {response:response});
+        };
+        response.createCountry = function (response) {
+            $.rogerTrigger('#modal', '#/countrychooser', {response:response});
+        };
+        response.createTels = function(response){
+            response.DetailMain.telsForshow.push({
+                item1:'',
+                item2:'',
+                item3:'',
+                item4:''
+            });
+            $.rogerRefresh(response);
+        };
+        response.createLanguages = function(response){
+            response.DetailMain.hasLanguageForshow.push({
+                item1:'',
+                item2:'',
+                item3:'',
+                item4:''
+            });
+            $.rogerRefresh(response);
+        };
+        response.createdrivingLicenses = function(response){
+            response.DetailMain.drivingLicensesForshow.push({
+                item1:'',
+                item2:'',
+                item3:'',
+                item4:''
+            });
+            $.rogerRefresh(response);
+        };
+        response.createskills = function(response){
+            response.DetailMain.skillsForshow.push({
+                item1:'',
+                item2:'',
+                item3:'',
+                item4:''
+            });
+            $.rogerRefresh(response);
+        };
+        response.createinterests = function(response){
+            response.DetailMain.interestForshow.push({
+                item1:'',
+                item2:'',
+                item3:'',
+                item4:''
+            });
+            $.rogerRefresh(response);
+        };
+
+        $('#userUpdate').rogerOnceClick(response,function(e){
+
+            function changeFormat(forShow, str, x){
+                var i,j;
+                response.DetailMain[str] = '';
+                for(i=0; i<response.DetailMain[forShow].length; i++){
+                    for(j=1; j<5; j++){
+                        if(response.DetailMain[forShow][i]['item'+j]){
+                            response.DetailMain[str] += response.DetailMain[forShow][i]['item'+j];
+                            if(j==x){
+                                response.DetailMain[str] += ';'
+                            }else{
+                                response.DetailMain[str] += ':'
+                            }
+                        }
+                    }
+                }
+                // console.log(response.DetailMain[str]);
+                // response.DetailMain[str].replace('/\:+/g',':');
+                // console.log(response.DetailMain[str]);
+                // response.DetailMain[str].replace('/\:\;/g',';');
+                // console.log(response.DetailMain[str]);
+            }
+            changeFormat('telsForshow', 'tels',3);
+            changeFormat('hasLanguageForshow', 'hasLanguage',3);
+            changeFormat('skillsForshow', 'skills',3);
+            changeFormat('interestForshow', 'interest',2);
+
+            if(response.DetailMain.avatarPicURL && response.DetailMain.avatarPicURL.indexOf('group1/') == -1){
+                var avatarPicBase64 = response.DetailMain.avatarPicURL;
+            }
+            if(response.DetailMain.mainPageLogoURL && response.DetailMain.mainPageLogoURL.indexOf('group1/') == -1){
+                var mainPageLogoBase64 = response.DetailMain.mainPageLogoURL;
+            }
+            if(response.DetailMain.coverPicURL && response.DetailMain.coverPicURL.indexOf('group1/') == -1){
+                var coverPicBase64 = response.DetailMain.coverPicURL;
+            }else if(response.DetailMain.coverPicURL.indexOf('group1/') != -1){
+                var coverPicUrl = response.DetailMain.coverPicURL;
+            }
+            if(response.DetailMain.picurls.length > 0 ){
+                var filesBase64 = [],filesUrl = [];
+                for(var m =0; m < response.DetailMain.picurls.length; m++ ){
+                    if( response.DetailMain.picurls[m].indexOf('group1/') == -1 ){
+                        filesBase64.push(response.DetailMain.picurls[m]);
+                    }else{
+                        filesUrl.push(response.DetailMain.picurls[m]);
+                    }
+                }
+            }
+
+            if(!response.DetailMain.scheduleList){response.DetailMain.scheduleList = [];}
+            if(!response.DetailMain.guiderList){response.DetailMain.guiderList = [];}
+            if(!response.DetailMain.travelPlaceList){response.DetailMain.travelPlaceList = [];}
+            if(!response.DetailMain.facilitiesModelList){response.DetailMain.facilitiesModelList = [];}
+            if(!response.DetailMain.planList){response.DetailMain.planList = [];}
+            if(!response.DetailMain.serviceList){response.DetailMain.serviceList = [];}
+            if(!response.DetailMain.travelFoodList){response.DetailMain.travelFoodList = [];}
+            if(!response.DetailMain.travelHotelList){response.DetailMain.travelHotelList = [];}
+            if(!response.DetailMain.travelSpotsList){response.DetailMain.travelSpotsList = [];}
+            if(!response.DetailMain.verifyPhotoUrls){response.DetailMain.verifyPhotoUrls = [];}
+            var data = {
+                "appType": "",
+                "commandid": 0,
+                "coverPicBase64": coverPicBase64,
+                "coverPicUrl": coverPicUrl,
+                "filesBase64": filesBase64,
+                "filesUrl": filesUrl,
+                "avatarPicBase64": avatarPicBase64,
+                "mainPageLogoBase64": mainPageLogoBase64,
+                "guider": response.DetailMain
+            };
+            data.guider.labels = response.DetailMain.labels.join(';');
+            $.rogerPost('/guideDetail/update',data,function(data){
+                console.log(data);
             });
         });
 
-        response.createLabel = function (User) {
-            User.User[0].Labels.push('');
-            $.rogerRefresh(User);
-        };
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
@@ -1391,42 +1844,7 @@
         realView.rogerCropImages();
     };
 
-    var ctrlCityChooser3 = function (PS, realView) {
-        $('#cityChooser').modal('show');
-        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
-            var data = e.data.Plan.SpotDetail;
-            var country = $('#country option:selected').val().split(':');
-            var city = $('#city option:selected').val().split(':');
-            $('#cityChooser').modal('hide');
-            data.CountryID=country[0];
-            data.CountryName=country[1];
-            data.CityID=city[0];
-            data.CityName=city[1];
-            $.rogerRefresh(e.data.Plan);
-        });
-    };
-    var ctrlCityChooser4 = function (PS, realView) {
-        $('#cityChooser').modal('show');
-        $('#cityChooserOK').rogerOnceClick(PS,function (e) {
-            var data = e.data.Plan.DetailMain.houseInfo;
-            var country = $('#country option:selected').val().split(':');
-            var city = $('#city option:selected').val().split(':');
-            $('#cityChooser').modal('hide');
-            data.countryID=country[0];
-            data.countryNameCn=country[1];
-            data.cityID=city[0];
-            data.cityNameCn=city[1];
-            $.rogerRefresh(e.data.Plan);
-        });
-    };
 
-    var initCityChooser3 = function (PS) {
-        return {
-            UserData:0,
-            Spot:PS.Spots,
-            Plan:PS.Spots
-        };
-    };
 
     var initAttractionEdit=function(){
         var SpotsID = $.rogerGetUrlParam('SpotsID');
@@ -1469,7 +1887,7 @@
                 },
                 ClassifyLabels:[]
             },
-            IMGHOST: "http://123.59.144.47/"
+            IMGHOST: $.rogerImgHost()
         };
 
         $.rogerPost('/dashboard/product/attraction/detail', {"spotType":spotType,"spotsID": SpotsID, "userID": usr.UserID}, function (respJSON, reqJSON) {
@@ -1664,6 +2082,47 @@
         realView.rogerCropImages();
     } ;
 
+    //服务描述图文编辑模块
+     function serviceDescDetail(TraveLogue,TravelogueDetail){
+         TraveLogue.createDay = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+             TravelogueDetail.push({label:' ', DAY:'0', content:null, picURL: null});
+             $.rogerRefresh(TraveLogue);
+         };
+         TraveLogue.createPicture = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+             TravelogueDetail.push({label:null, DAY:null, content:null, picURL: null, PE:true});
+             $.rogerRefresh(TraveLogue);
+         };
+         TraveLogue.createContent = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+             TravelogueDetail.push({label:null, DAY:null, content:' ', picURL: null});
+             $.rogerRefresh(TraveLogue);
+         };
+
+         TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
+             var indexInsert;
+             $('.functionBtn').on('click','li',function(e){
+                 indexInsert = $(this).attr('data-index');
+                 TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
+                 $.rogerRefresh(TraveLogue);
+             });
+         };
+         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){
+             var indexInsert;
+             $('.functionBtn').on('click','li',function(e){
+                 indexInsert = $(this).attr('data-index');
+                 TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+                 $.rogerRefresh(TraveLogue);
+             });
+         };
+         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){
+             var indexInsert;
+             $('.functionBtn').on('click','li',function(e){
+                 indexInsert = $(this).attr('data-index');
+                 TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
+                 $.rogerRefresh(TraveLogue);
+             });
+         };
+     }
+
     var initServiceEdit=function(){
          var ServiceID = $.rogerGetUrlParam('ServiceID');
          var usr = $.rogerGetLoginUser();
@@ -1854,9 +2313,14 @@
                     cityID: '',
                     cityNameCn: '',
                     cityNameEn: ''
-                 }
+                 },
+                 TravelogueDetail: [
+                     {label:' ', DAY:'0', content:null, picURL: null},
+                     {label:null, DAY:null, content:null, picURL: null, PE:true},
+                     {label:null, DAY:null, content:' ', picURL: null}
+                 ],
              },
-             IMGHOST: "http://123.59.144.47/"
+             IMGHOST: $.rogerImgHost()
          };
          $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.UserID}, function (respJSON, reqJSON) {
              if(respJSON){
@@ -1981,7 +2445,6 @@
              $.rogerRefresh(result);
          });
          return result;
-
     },ctrlServiceEdit=function(tmplItem, realView){
         var html;
         var typeVal;
@@ -2447,6 +2910,8 @@
 
         });
 
+        //服务描述图文编辑
+        serviceDescDetail(tmplItem,tmplItem.TravelogueDetail);
         //服务的编辑页面不需要发布按钮
          // $('#publish').rogerOnceClick(tmplItem, function(e){
          //     var usr =$.rogerGetLoginUser();
@@ -2546,7 +3011,7 @@
     },ctrlTraveLogueEdit=function(TraveLogue, realView){
         //关联方案
         $.ajax({
-            url:"http://10.101.1.36:8888/dashboard/product/specialplan",
+            url:"/dashboard/product/specialplan",
             data:{
                 pagestart:0,
                 pagesize:8,
@@ -2556,10 +3021,15 @@
                 data = JSON.parse(data);
                 var dataD = data.PlansByUser;
                 var html = '';
+                var flag = '';
                 for(var m = 0; m < dataD.length; m++){
                     if(dataD[m].StartCountry == null){dataD[m].StartCountry=''}
                     if(dataD[m].StartCity == null){dataD[m].StartCity=''}
-                    html +='<li class="row"><div class="col-md-1"><input type="checkbox" name="planRadios" value="" data-value="'+dataD[m].PlanID+'"></div><div class="col-md-11">'+
+
+                    for(var n=0; n < TraveLogue.Travelogue.TravelogueToPlan2.length; n++ ){
+                        if(dataD[m].PlanID == TraveLogue.Travelogue.TravelogueToPlan2[n]){flag = "checked";}
+                    }
+                    html +='<li class="row"><div class="col-md-1"><input type="checkbox" name="planRadios" value="" data-value="'+ dataD[m].PlanID +'" '+ flag +'></div><div class="col-md-11">'+
                             '<h4>'+dataD[m].PlanName+'</h4>'+
                             '<div class="col-md-5">'+
                                 '<img src="'+ data.IMGHOST + dataD[m].PicURL +'" alt="方案封面" style="width:60px; height:60px;">'+
@@ -2569,8 +3039,10 @@
                                 '<p>方案ID：' + dataD[m].PlanNumber + '</p>'+
                             '</div></div></li>';
                     //console.log(html);
+                    flag = '';
                 }
-                $('#planListDetail').html(html);   
+                $('#planListDetail').html(html);
+
             }
         });
         var TravelogueToPlan2 = TraveLogue.Travelogue.TravelogueToPlan2;
@@ -2584,13 +3056,14 @@
                     alert("最多只能关联三个方案！");
                     $(this).prop('checked',false);
                 }
+                console.log(TravelogueToPlan2);
             }else{
-                for(var m = 0; m < TravelogueToPlan.length; m++){
-                    if(PlanID == TravelogueToPlan[m]){
+                for(var m = 0; m < TravelogueToPlan2.length; m++){
+                    if(PlanID == TravelogueToPlan2[m]){
                         TravelogueToPlan2.splice(m,1);
                     }
                 }
-                
+                console.log(TravelogueToPlan2);
             }
         });
 
@@ -2880,20 +3353,152 @@
 
     };
 
+     var initCityChooser = function (PS) {
+         return {
+             UserData:0,
+             Spot:PS.Spot,
+             Plan:PS.Plan
+         };
+     };
+     var ctrlCityChooser = function (PS, realView) {
+         $('#cityChooser').modal('show');
+         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+             var data = e.data;
+             var country = $('#country option:selected').val().split(':');
+             var city = $('#city option:selected').val().split(':');
+             data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
+                 SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
+             $('#cityChooser').modal('hide');
+             $.rogerRefresh(data.Plan);
+         });
+     };
+     var ctrlCityChooser2 = function (PS, realView) {
+         $('#cityChooser').modal('show');
+         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+             var data = e.data;
+             var country = $('#country option:selected').val().split(':');
+             var city = $('#city option:selected').val().split(':');
+             data.Plan.PlanInfo.StartCityID = city[0];
+             data.Plan.PlanInfo.StartCity = city[1];
+             $('#cityChooser').modal('hide');
+             $.rogerRefresh(data.Plan);
+         });
+     };
+     var initCityChooser3 = function (PS) {
+         return {
+             UserData:0,
+             Spot:PS.Spots,
+             Plan:PS.Spots
+         };
+     };
+     var ctrlCityChooser3 = function (PS, realView) {
+         $('#cityChooser').modal('show');
+         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+             var data = e.data.Plan.SpotDetail;
+             var country = $('#country option:selected').val().split(':');
+             var city = $('#city option:selected').val().split(':');
+             $('#cityChooser').modal('hide');
+             data.CountryID=country[0];
+             data.CountryName=country[1];
+             data.CityID=city[0];
+             data.CityName=city[1];
+             $.rogerRefresh(e.data.Plan);
+         });
+     };
+     var ctrlCityChooser4 = function (PS, realView) {
+         $('#cityChooser').modal('show');
+         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+             var data = e.data.Plan.DetailMain.houseInfo;
+             var country = $('#country option:selected').val().split(':');
+             var city = $('#city option:selected').val().split(':');
+             $('#cityChooser').modal('hide');
+             data.countryID=country[0];
+             data.countryNameCn=country[1];
+             data.cityID=city[0];
+             data.cityNameCn=city[1];
+             $.rogerRefresh(e.data.Plan);
+         });
+     };
+     var initCityChooser5 = function (PS) {
+         return {
+             User:PS.User
+         };
+     };
+     var ctrlCityChooser5 = function (PS, realView) {
+         $('#cityChooser').modal('show');
+         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+             var data = e.data.User;
+             var country = $('#country option:selected').val().split(':');
+             var city = $('#city option:selected').val().split(':');
+             data.User[0].CityID = city[0];
+             data.User[0].CityName = city[1];
+             data.User[0].CountryID = country[0];
+             data.User[0].CountryName = country[1];
+             $('#cityChooser').modal('hide');
+             $.rogerRefresh(data);
+         });
+     };
+     var initCityChooser6 = function (PS) {
+         return {
+             DetailMain:PS.response.DetailMain
+         };
+     };
+     var ctrlCityChooser6 = function (PS, realView) {
+         $('#cityChooser').modal('show');
+         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+             var data = e.data;
+             var country = $('#country option:selected').val().split(':');
+             var city = $('#city option:selected').val().split(':');
+             data.DetailMain.cityID = city[0];
+             data.DetailMain.cityCnName = city[1];
+             data.DetailMain.countryID = country[0];
+             data.DetailMain.countryName = country[1];
+             $('#cityChooser').modal('hide');
+             $.rogerRefresh(data);
+         });
+     };
+     var ctrlCityChooser7 = function (PS, realView) {
+         $('#cityChooser').modal('show');
+         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+             var data = e.data;
+             var country = $('#country option:selected').val().split(':');
+             var city = $('#city option:selected').val().split(':');
+             data.DetailMain.homeCityID = city[0];
+             data.DetailMain.homeCityName = city[1];
+             data.DetailMain.homeCountryID = country[0];
+             data.DetailMain.homeCountryName = country[1];
+             $('#cityChooser').modal('hide');
+             $.rogerRefresh(data);
+         });
+     };
+     var ctrlCountryChooser = function (PS, realView) {
+         $('#cityChooser').modal('show');
+         $('#cityChooserOK').rogerOnceClick(PS,function (e) {
+             var data = e.data;
+             var country = $('#country option:selected').val().split(':');
+             data.DetailMain.nationality = country[0];
+             data.DetailMain.nationalityName = country[1];
+             $('#cityChooser').modal('hide');
+             $.rogerRefresh(data);
+         });
+     };
+
+
+
 
 	$.rogerRouter({
-		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                          ctrl: ctrlDashboard},
+		'#/':                               {view:'product-specialplan.html',                         rootrest:'/dashboard', 						                    ctrl: ctrlDashboard},
         '#/spcialplan':                   {view:'product-specialplan.html',                         rootrest:'/dashboard/product/specialplan',                          ctrl: ctrlSpecialplan},
-        '#/classicplan':                  {view:'product-classicplan.html',                         rootrest:'/dashboard/product/classicplan',                                                 ctrl: ctrlClassicplan},
-        '#/service':                       {view:'product-service.html',                              rootrest:'/dashboard/product/service',	                          ctrl: ctrlService},
-        '#/activiy':                       {view:'product-activity.html',	                            rootrest:'/dashboard/product/activity',	                          ctrl: ctrlService},
-        '#/car':                           {view:'product-car.html',                                   rootrest:'/dashboard/product/car', 		                          ctrl: ctrlService},
-        '#/attraction':                   {view:'product-attraction.html',                           rootrest:'/dashboard/product/attraction',	                          ctrl: ctrlAttraction},
-        '#/delicacy':                     {view:'product-delicacy.html',                              rootrest:'/dashboard/product/delicacy',	                          ctrl: ctrlAttraction},
-        '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                       ctrl: ctrlAttraction},
-        '#/travelogue':                    {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                         ctrl: ctrlTravelogue},
-        '#/facilitylist':                 {view:'facilitylist.html',                                  rootrest:'/facility/list',                                            ctrl: ctrlFacilityList},
-        '#/orderlist':                     {view: 'orderlist-guide.html',                             rootrest: '/order/list',                                              ctrl: ctrlOrderlist},
+        '#/classicplan':                  {view:'product-classicplan.html',                         rootrest:'/dashboard/product/classicplan',                          ctrl: ctrlClassicplan},
+        '#/service':                       {view:'product-service.html',                              rootrest:'/dashboard/product/service',	                        ctrl: ctrlService},
+        '#/activiy':                       {view:'product-activity.html',	                            rootrest:'/dashboard/product/activity',	                        ctrl: ctrlService},
+        '#/car':                           {view:'product-car.html',                                   rootrest:'/dashboard/product/car', 		                        ctrl: ctrlService},
+        '#/attraction':                   {view:'product-attraction.html',                           rootrest:'/dashboard/product/attraction',	                        ctrl: ctrlAttraction},
+        '#/delicacy':                     {view:'product-delicacy.html',                              rootrest:'/dashboard/product/delicacy',	                        ctrl: ctrlAttraction},
+        '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                        ctrl: ctrlAttraction},
+        '#/travelogue':                    {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                      ctrl: ctrlTravelogue},
+        '#/facilitylist':                 {view:'facilitylist.html',                                  rootrest:'/facility/list',                                        ctrl: ctrlFacilityList},
+        '#/orderlist':                     {view: 'orderlist-guide.html',                             rootrest: '/order/list',                                          ctrl: ctrlOrderlist},
 
         '#/shortplandetail':             {view: 'product-shortplan-detail.html',                    rootrest: '/dashboard/product/shortplan/detail',                  ctrl: ctrlShortplanDetail},
         '#/templateplandetail':          {view: 'product-tempplan-detail.html',                     rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
@@ -2909,11 +3514,10 @@
         '#/shortplanedit':               {fragment: 'fragment/product-shortplan-edit.html',        rootrest:'/plan/detail/short',                                         ctrl: ctrlShortplanNew},
         '#/templateplanedit':            {fragment: 'fragment/product-tempplan-edit.html',         rootrest:'/plan/detail/tmpl',                                         ctrl: ctrlTemplateplanNew},
 
-        '#/citychooser2':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser2},
-        '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                                                    ctrl: ctrlCityChooser},
-        '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
+       '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
-        '#/userinfo':                     {fragment:'fragment/userInfo-guide.html',                          rootrest: '/user/info',                                                ctrl: ctrlUserInfo},
+        '#/userinfoedit':                 {fragment:'fragment/userInfo-guide-edit.html',            init: initUserInfoEdit,   /*rootrest: '/user/info', */                    ctrl: ctrlUserInfoEdit},
+        '#/userinfodetail':               {fragment:'fragment/userInfo-guide-detail.html',          init: initUserInfoDetail,   /*rootrest: '/user/info', */                  ctrl: ctrlUserInfoDetail},
         '#/equipdetail':                  {view:'product-equip-detail.html',                          rootrest:'/facility/detail',                                       ctrl: ctrlFacilityDetail},
         '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',	                          rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
@@ -2928,12 +3532,19 @@
         '#/servicecaredit':               {fragment: 'fragment/product-service-car-edit.html',      init: initServiceEdit,                                               ctrl: ctrlServiceEdit},
         '#/servicepickupedit':            {fragment: 'fragment/product-service-pickup-edit.html',   init: initServiceEdit,                                              ctrl: ctrlServiceEdit},
         '#/serviceotheredit':             {fragment: 'fragment/product-service-other-edit.html',    init: initServiceEdit,                                               ctrl: ctrlServiceEdit},
-        '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',                 init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},
-        '#/equipedit':                     {fragment: 'fragment/product-equip-edit.html',              init: initEquipEdit,                                                      ctrl: ctrlEquipEdit},
-        '#/orderdetail':                  {fragment:'payCompletion.html',	                                    rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
-        '#/citychooser3':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser3},
-        '#/citychooser4':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                                                    ctrl: ctrlCityChooser4},
-        '#/citychooser5':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser5,                     ctrl: ctrlCityChooser5}
+        '#/travelogueedit':               {fragment: 'fragment/travelogue-edit.html',               init: initTraveLogueEdit,                                                 ctrl: ctrlTraveLogueEdit},
+        '#/equipedit':                     {fragment: 'fragment/product-equip-edit.html',           init: initEquipEdit,                                                      ctrl: ctrlEquipEdit},
+        '#/orderdetail':                  {fragment:'payCompletion.html',	                        rootrest:'/order/detail',                                              ctrl: ctrlOrderdetail},
+
+
+        '#/citychooser':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                        ctrl: ctrlCityChooser},
+        '#/citychooser2':                  {fragment: 'fragment/dialog-city-chooser.html',           init: initCityChooser,                       ctrl: ctrlCityChooser2},
+        '#/citychooser3':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                     ctrl: ctrlCityChooser3},
+        '#/citychooser4':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser3,                     ctrl: ctrlCityChooser4},
+        '#/citychooser5':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser5,                     ctrl: ctrlCityChooser5},
+        '#/citychooser6':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser6,                     ctrl: ctrlCityChooser6},
+        '#/citychooser7':                 {fragment: 'fragment/dialog-city-chooser.html',             init: initCityChooser6,                     ctrl: ctrlCityChooser7},
+        '#/countrychooser':               {fragment: 'fragment/dialog-country-chooser.html',          init: initCityChooser6,                     ctrl: ctrlCountryChooser}
     });
 
 

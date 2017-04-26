@@ -324,9 +324,28 @@
 		    </div>
 		  </div>
 		</form>
+
+	</div>
+	<!-- 须知信息结束 -->
+
+	<style>
+		.eventStyle{height:20px; width:40px; border-radius: 10px; background-color:#008000; line-height: 20px; text-align: center; margin:0 auto;}
+		.fc-past{background-color: #ccc;}
+        .fc-past {opacity: 0.3;}
+		.fc-day-number {font-size: 20px; display: inline-block; width: 100%; text-align: center; }
+		#monthPriceSet table td input{width:100px;}
+
+	</style>
+	<!--编辑报价-->
+	<div class="notice">
+		<h4>编辑报价</h4>
+		<div class="col-sm-offset-2 col-sm-10 col-md-offset-1 col-md-11">
+			<div class="col-sm-10 col-md-8" id="calendar"></div>
+		</div>
+
 		<div class="optionBtn">
-			<button id="save" class="btn btn-warning">发布</button>
-			<a href="javascript:void(0)" id="show" class="btn btn-warning invisible">预览</a>
+			<button id="save" class="btn btn-warning" style="margin-top:10px;">发布</button>
+			<a href="javascript:void(0)" id="show" class="btn btn-warning invisible" style="margin-top:10px;">预览</a>
 			<!--{{if  $data.PlanInfo.PlanStatus == 3}}
 			<button id="publish" class="btn btn-warning">发布 </button>
 			{{/if}}
@@ -338,7 +357,115 @@
 			{{/if}}-->
 		</div>
 	</div>
-	<!-- 须知信息结束 -->
-	</div>
+
+
+	</div><!--editPage结束-->
+
+	<!-- 单日价格设置弹出框 -->
+	<div id="dayPriceSet" class="modal fade">
+		<div class="modal-dialog modal-lg">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title clearfix text-center">设置价格</h4>
+				</div>
+				<div class="modal-body">
+					<table class="table table-bordered">
+						<thead>
+							<tr>
+								<td>报价名称</td>
+								<td>成人价</td>
+								<td>儿童价</td>
+								<td>库存</td>
+								<td><span class="glyphicon glyphicon-plus-sign"></span></td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input type="text" placeholder="请输入"></td>
+								<td><input type="text" placeholder="请输入"></td>
+								<td><input type="text" placeholder="请输入"></td>
+								<td><input type="text" placeholder="请输入"></td>
+								<td><span class="glyphicon glyphicon-minus-sign"></span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div> <!-- end modal-body -->
+				<div class="modal-footer">
+					<button type="button" id="dayConfirm" class="btn btn-primary">保存</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 单日价格设置弹出框结束 -->
+
+	<!-- 批量价格设置弹出框 -->
+	<div id="monthPriceSet" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title clearfix text-center">批量设置价格</h4>
+				</div>
+				<div class="modal-body">
+					<div id="calendar2"></div>
+					<table class="table table-bordered" >
+						<thead>
+						<tr>
+							<td>报价名称</td>
+							<td>成人价</td>
+							<td>儿童价</td>
+							<td>库存</td>
+							<td><span class="glyphicon glyphicon-plus-sign"></span></td>
+						</tr>
+						</thead>
+						<tbody>
+						<tr>
+							<td><input type="text" placeholder="请输入"></td>
+							<td><input type="text" placeholder="请输入"></td>
+							<td><input type="text" placeholder="请输入"></td>
+							<td><input type="text" placeholder="请输入"></td>
+							<td><span class="glyphicon glyphicon-minus-sign"></span></td>
+						</tr>
+						</tbody>
+					</table>
+					<!--<form action="" class="form-horizontal" style="margin-top:20px;">-->
+						<!--<div class="form-group">-->
+							<!--<label for="" class="col-sm-3 control-label">报价名称</label>-->
+							<!--<div class="col-sm-8">-->
+								<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="form-group">-->
+							<!--<label for="" class="col-sm-3 control-label">成人价</label>-->
+							<!--<div class="col-sm-8">-->
+								<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="form-group">-->
+							<!--<label for="" class="col-sm-3 control-label">儿童价</label>-->
+							<!--<div class="col-sm-8">-->
+								<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
+							<!--</div>-->
+						<!--</div>-->
+						<!--<div class="form-group">-->
+							<!--<label for="" class="col-sm-3 control-label">库存数量</label>-->
+							<!--<div class="col-sm-8">-->
+								<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
+							<!--</div>-->
+						<!--</div>-->
+					<!--</form>-->
+				</div> <!-- end modal-body -->
+				<div class="modal-footer">
+					<button type="button" id="monthConfirm" class="btn btn-primary">保存</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 批量价格设置弹出框结束 -->
 </div>
 
