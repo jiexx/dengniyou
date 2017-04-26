@@ -362,6 +362,19 @@ app.post('/service/list', upload.array(), function (req, res) {
         });
 });
 
+//导游个人详情
+app.post('/guideDetail', function (req, res) {
+    request.get('http://10.101.1.165:8096/travel/user/getGuiderDetail?userID='+ req.body.userID +'&guiderID=' + req.body.userID,function (error, response, body) {
+            var data = JSON.parse(body);
+            if (!error && response.statusCode == 200 && data.code == 200) {
+                res.send(body);
+            } else {
+                res.send(JSON.stringify({url: +false, "message": "失败", "status": 1}));
+            }
+        }
+    );
+});
+
 
 var MODAL = {};
 var server = app.listen(8888, function() {

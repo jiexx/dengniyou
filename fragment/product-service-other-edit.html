@@ -182,7 +182,139 @@
 			</div>
 		</div>
 	<!-- 相册上传结束 -->
+	</div>
 
+	<!-- 服务描述 -->
+	<div class="scheduleShort clearfix">
+		<h4>服务描述</h4>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<ul class="functionBtn">
+					<!-- <li data-op="remove" data-pointer="/Travelogue/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li> -->
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=-1 data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=-1 data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=-1 data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+				</ul>
+			</div>
+		</div>
+		{{each $data.DetailMain.TravelogueDetail}}
+		{{if label}}
+		<div class="row" style="margin-bottom: 10px;">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<div class="row">
+							<label   class="col-md-2 control-label">段落标题</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control"  value="${label}"  data-value="/DetailMain/TravelogueDetail/${$index}/label" placeholder="标题">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<ul class="functionBtn">
+							<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+							<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+							<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+							<li data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/if}}
+
+		{{if label==null}}{{if content==null}}{{if articleID}}
+		<div class="row">
+			<div class="col-md-offset-2 col-md-3">
+				<div class="row">
+					{{if picURL}}
+					<div class="col-md-12">
+						<div class="imgBox">
+							<img name="autoPrefix"  src="${picURL}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL"></a>
+						</div>
+					</div>
+					{{/if}}
+					<div class="col-md-12" data-op="toggle" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL" data-limit="1">
+						<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL" data-action="image">+</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<ul class="functionBtn">
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+					<li data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+				</ul>
+			</div>
+		</div>
+		{{/if}}{{/if}}{{/if}}
+		{{if PE}}
+		<div class="row">
+			<div class="col-md-offset-2 col-md-3">
+				<div class="row">
+					{{if picURL}}
+					<div class="col-md-12">
+						<div class="imgBox">
+							<img name="autoPrefix"  src="${picURL}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL"></a>
+						</div>
+					</div>
+					{{/if}}
+					<div class="col-md-12" data-op="toggle" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL" data-limit="1">
+						<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL" data-action="image">+</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<ul class="functionBtn">
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+					<li data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+				</ul>
+			</div>
+		</div>
+		{{/if}}
+
+		{{if content }}
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<div class="introduction">
+					<textarea name="" rows="6" data-value="/DetailMain/TravelogueDetail/${$index}/content" style="background-color: #fcf8e3;" placeholder="请输入描述">${ content}</textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<ul class="functionBtn">
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+					<li data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+				</ul>
+			</div>
+		</div>
+		{{/if}}
+		{{/each}}
+		<!-- <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="btn-group" style="width: 100%;">
+                    <a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createDay">添加段落</a>
+                    <a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createPicture">添加图片</a>
+                    <a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createContent">添加描述</a>
+                </div>
+            </div>
+        </div> -->
+	</div>
+	<!-- 服务描述结束 -->
 	<!-- 须知信息 -->
 	<div class="notice">
 		<h4>须知信息</h4>

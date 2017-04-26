@@ -1,0 +1,188 @@
+
+  <div class="container">
+    <div class="detailpage">
+      <ol class="col-md-4 pull-right breadcrumb">
+        <li><a href="">资料管理</a></li>
+        <li class="active"><a href="">资料预览</a></li>
+      </ol> <!-- end 面包屑导航breadcrumb -->
+
+      <!--   banner -->
+      <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+          {{each(i,p) DetailMain.picurls}}
+          <li data-target="#carousel-example-generic" data-slide-to="${i}" class="{{if i==0}}active{{/if}}"></li>
+          {{/each}}
+        </ol>
+        <div class="carousel-inner" role="listbox">
+          {{each(i,p) DetailMain.picurls}}
+          <div class="item {{if i==0}}active{{/if}}">
+            <img src="${$data.IMGHOST}${p}" alt="...">
+          </div>
+          {{/each}}
+        </div>
+        <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev" >
+          <span class="glyphicon glyphicon-chevron-left"></span>
+        </a>
+        <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+          <span class="glyphicon glyphicon-chevron-right"></span>
+        </a>
+      </div><!--  end  banner -->
+      
+      <div class="detailpage-mainbody">
+        <div class="cardetail-title">
+          <div class="row">
+            <div class="col-md-2 guide-headimg">
+              <img src="${$data.IMGHOST}${DetailMain.avatarPicURL}" alt="">
+              <!--<span>Denise<i class="glyphicon glyphicon-ok"></i></span>-->
+            </div>
+            <div class="col-md-10 guide-tit">
+              <h1>${DetailMain.userName}</h1>
+              {{each(i,p) DetailMain.labelsForshow}}
+              <span class="lebel label-warning">${p.item1}</span>
+              {{/each}}
+            </div>
+          </div> 
+        </div> <!--  -->
+
+        <div class="service-description">
+          <h2>自我介绍</h2>
+          <div class="des">
+            <p>
+              ${DetailMain.personIntroduct}
+            </p>
+          </div>
+        </div>
+
+        <div class="row product-detail price-detail">
+          <h2>基本信息</h2>
+          <div class="col-md-4">
+            <p>真实姓名：<span>${DetailMain.trueName}</span> {{if DetailMain.identified == 0}}<button class="btn btn-danger btn-sm" style="margin-left:10px;"> 去认证
+            </button>{{else DetailMain.identified == 1}} <span class="label label-success">已认证</span> {{else DetailMain.identified == 2}} <span class="label label-warn">认证中</span> {{else DetailMain.identified == 9}} <span class="label label-success">认证失败</span>{{/if}}</p>
+          </div>
+          <div class="col-md-4">
+            <p>等你游账号：<span>${DetailMain.userAccount}</span></p>
+          </div>
+          <div class="col-md-4">
+            <p>性别：<span>{{if DetailMain.sex == 1}}男{{else}}女{{/if}}</span></p>
+          </div>
+          <div class="col-md-4">
+            <p>出生日期：<span>${DetailMain.birthDay}</span></p>
+          </div>
+          <div class="col-md-4">
+            <p>常驻地：<span>${DetailMain.countryName} ${DetailMain.cityCnName}</span></p>
+          </div>
+          <div class="col-md-4">
+            <p>故乡：<span>${DetailMain.homeCountryName} ${DetailMain.homeCityName}</span></p>
+          </div>
+          <div class="col-md-4">
+            <p>国籍：<span>${DetailMain.nationalityName}</span></p>
+          </div>
+          <div class="col-md-4">
+            <p>公司：<span>${DetailMain.company}</span></p>
+          </div>
+          <div class="col-md-4">
+            <p>职业：<span>${DetailMain.occupation}</span></p>
+          </div>
+        </div> <!-- 基本信息结束  -->
+
+        <div class="row product-detail price-detail">
+          <h2>代理管理 <span class="col-md-10 pull-right">{{if DetailMain.agentStatus == 0}}未设置{{else}}已设置{{/if}}</span></h2>
+        </div>
+
+        <div class="row product-detail price-detail">
+          <h2>联系方式</h2>
+          <div class="col-md-12">
+            <div class="col-md-offset-2 col-md-10">
+              {{if DetailMain.telsForshow == null}}
+              <p>暂无数据</p>
+              {{else}}
+              {{each(i,p) DetailMain.telsForshow}}
+              <p class="row rowMarginLeft"><span class="col-md-2 col-sm-3">${p.item1}</span><span class="col-md-2 col-sm-3">${p.item2}</span><span class="col-md-6 col-sm-6">${p.item3}</span></p>
+              {{/each}}
+              {{/if}}
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-offset-2 col-md-10">
+              <p class="row rowMarginLeft"><span class="col-md-2 col-sm-3">微信账号：</span><span class="col-md-2 col-sm-3">${DetailMain.wechatID}</span></p>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="col-md-offset-2 col-md-10">
+              <p class="row rowMarginLeft"><span class="col-md-2 col-sm-3">电子邮箱：</span><span class="col-md-2 col-sm-3">${DetailMain.email}</span></p>
+            </div>
+          </div>
+        </div> <!--联系方式结束 -->
+
+        <div class="row product-detail price-detail">
+          <h2>职业技能</h2>
+          <div class="col-md-12 marginB10">
+            <div class="col-md-2"><p>目的地</p></div>
+            <div class="col-md-10">
+              <p>精通的地方：${DetailMain.masterPlace}</p>
+              <p>熟悉的地方：${DetailMain.fomiliarPlace}</p>
+              <p>了解的地方：${DetailMain.knowPlace}</p>
+            </div>
+          </div>
+          <div class="col-md-12 marginB10">
+            <div class="col-md-2"><p>语言</p></div>
+            <div class="col-md-10">
+              {{if DetailMain.hasLanguageForshow == null}}
+              <p>暂无数据</p>
+              {{else}}
+              {{each(i,p) DetailMain.hasLanguageForshow}}
+              <p class="row rowMarginLeft"><span class="col-md-2 col-sm-3">${p.item1}</span><span class="col-md-2 col-sm-3">${p.item2}</span><span class="col-md-8 col-sm-6">${p.item3}</span></p>
+              {{/each}}
+              {{/if}}
+            </div>
+          </div>
+          <div class="col-md-12 marginB10">
+            <div class="col-md-2"><p>驾驶执照</p></div>
+            <div class="col-md-10">
+              {{if DetailMain.drivingLicensesForshow == null}}
+              <p>暂无数据</p>
+              {{else}}
+              {{each(i,p) DetailMain.drivingLicensesForshow}}
+              <p class="row rowMarginLeft"><span class="col-md-2 col-sm-3">${p.item1}</span><span class="col-md-2 col-sm-3">${p.item2}</span><span class="col-md-8 col-sm-6">${p.item3}</span></p>
+              {{/each}}
+              {{/if}}
+            </div>
+          </div>
+          <div class="col-md-12 marginB10">
+            <div class="col-md-2"><p>技能证书</p></div>
+            <div class="col-md-10">
+              {{if DetailMain.skillsForshow == null}}
+              <p>暂无数据</p>
+              {{else}}
+              {{each(i,p) DetailMain.skillsForshow}}
+              <p class="row rowMarginLeft"><span class="col-md-2 col-sm-3">${p.item1}</span><span class="col-md-2 col-sm-3">${p.item2}</span><span class="col-md-8 col-sm-6">${p.item3}</span></p>
+              {{/each}}
+              {{/if}}
+            </div>
+          </div>
+        </div>
+
+        <div class="row product-detail price-detail">
+          <h2>兴趣爱好</h2>
+          <div class="col-md-12">
+            <div class="col-md-2"></div>
+            <div class="col-md-10">
+              {{if DetailMain.interestForshow == null}}
+              <p>暂无数据</p>
+              {{else}}
+              {{each(i,p) DetailMain.interestForshow}}
+              <p class="row rowMarginLeft"><span class="col-md-2 col-sm-3">${p.item1}</span><span class="col-md-6 col-sm-9">${p.item2}</span></p>
+              {{/each}}
+              {{/if}}
+            </div>
+          </div>
+        </div>
+
+
+      </div> <!-- end 方案预览主题内容specialplan-mainbody -->
+
+      <div class="buttons">
+        <button id="edit" type="button" class="btn">编辑</button>
+      </div>
+    </div><!-- end container-box -->
+  </div> <!-- end container -->

@@ -1,0 +1,396 @@
+<div class="container editPage">
+
+  <div class="baseInfo">
+    <ul class="breadcrumb">
+      <li><a href="#">资料管理</a> <span class="divider"></span></li>
+      <li class="active">资料编辑</li>
+    </ul>
+
+    <h4>基本信息</h4>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">用户昵称</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control"  value="${DetailMain.userName}"  data-value="/DetailMain/userName" placeholder="请输入昵称">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">真实姓名</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.trueName}"  data-value="/DetailMain/trueName" placeholder="请输入">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">等你游账号</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.userAccount}"  data-value="/DetailMain/userAccount" placeholder="等你游账号，只能设置一次">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 col-md-1 control-label">性别：</label>
+        <div class="col-sm-10 col-md-11">
+          <div class="row" >
+            <div class="col-md-1 col-sm-3">
+              {{if DetailMain.sex == 1}}
+              <input type="radio" name="sex"  value="1"   checked>
+              {{else}}
+              <input type="radio" name="sex"  value="1"  >
+              {{/if}}男
+            </div>
+            <div class="col-md-1  col-sm-3">
+              {{if DetailMain.sex == 0}}
+              <input type="radio" name="sex"  value="0" checked>
+              {{else}}
+              <input type="radio" name="sex"  value="0" >
+              {{/if}}女
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">出生日期</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control flatpickr" value="${DetailMain.birthDay}"  data-value="/DetailMain/birthDay" placeholder="选择日期"  style="background-color: #fff;">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">常驻地</label>
+        <div class="col-sm-10 col-md-11">
+          <div class="col-sm-4" style="padding-left: 0"><input type="text" class="form-control" value="${DetailMain.countryName}" data-value="/DetailMain/countryName" style="width: 100%;"></div>
+          <div class="col-sm-4" style="padding-left: 0"><input type="text" class="form-control" value="${DetailMain.cityCnName}" data-value="/DetailMain/cityCnName" style="width: 100%;"></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-default btn-sm" data-op="change"  data-pointer="/DetailMain" data-action="createCity">选择地区</button></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">故乡</label>
+        <div class="col-sm-10 col-md-11">
+            <div class="col-sm-4" style="padding-left: 0"><input type="text" class="form-control" value="${DetailMain.homeCountryName}" data-value="/DetailMain/homeCountryName" style="width: 100%;"></div>
+            <div class="col-sm-4" style="padding-left: 0"><input type="text" class="form-control" value="${DetailMain.homeCityName}" data-value="/DetailMain/homeCityName" style="width: 100%;"></div>
+            <div class="col-sm-2"><button type="button" class="btn btn-default btn-sm" data-op="change"  data-pointer="/DetailMain" data-action="createCity2">选择地区</button></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">国籍</label>
+        <div class="col-sm-10 col-md-11">
+          <div class="col-sm-4" style="padding-left: 0"><input type="text" class="form-control" value="${DetailMain.nationalityName}" data-value="/DetailMain/nationalityName" style="width: 100%;"></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-default btn-sm" data-op="change"  data-pointer="/DetailMain" data-action="createCountry">选择国籍</button></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">公司</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.company}"  data-value="/DetailMain/company" placeholder="请输入">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">职业</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.occupation}"  data-value="/DetailMain/occupation" placeholder="请输入">
+        </div>
+      </div>
+      <div class="form-group">
+        <label  class="col-sm-2 col-md-1 control-label">个人标签</label>
+        <div class="col-sm-10 col-md-11">
+          <ul class="label-base">
+            {{each DetailMain.labels}}
+            <li><input type="text" value="${DetailMain.labels[$index]}" data-value="/DetailMain/labels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/labels/${$index}"></a></li>
+            {{/each}}
+            <li><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/labels/-" data-action="createLabel"> + </div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">自我介绍</label>
+        <div class="col-sm-10 col-md-11">
+          <textarea name="" id="" data-value="/DetailMain/personIntroduct" placeholder="可输入1200字" style="border:  1px solid #CCC; height: 100px;">${DetailMain.personIntroduct}</textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- 方案基本信息结束 -->
+
+  <!-- 相册上传 -->
+  <div class="photoInfo">
+    <h4>相册信息</h4>
+    <div class="row">
+      <div class="col-md-1 ">主页LOGO：</div>
+      <div class="col-md-11 row" >
+        {{if DetailMain.mainPageLogoURL}}
+        <div class="col-md-3">
+          <div class="imgBox">
+            <img name="autoPrefix" src="${DetailMain.mainPageLogoURL}" />
+            <a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/mainPageLogoURL" ></a>
+          </div>
+        </div>
+        {{else}}
+        <div class="col-md-3">
+          <div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/mainPageLogoURL" data-action="image" >+</div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    <br/>
+    <div class="row">
+      <div class="col-md-1 ">个人头像：</div>
+      <div class="col-md-11 row" >
+        {{if DetailMain.avatarPicURL}}
+        <div class="col-md-3">
+          <div class="imgBox">
+            <img name="autoPrefix" src="${DetailMain.avatarPicURL}" />
+            <a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/avatarPicURL" ></a>
+          </div>
+        </div>
+        {{else}}
+        <div class="col-md-3">
+          <div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/avatarPicURL" data-action="image" >+</div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-1 ">相册上传:</div>
+      <div class="col-md-11 row" >
+        {{each(i,itemtem) DetailMain.picurls}}
+        <div class="col-md-3">
+          <div class="imgBox">
+            <img src="${itemtem}" name="autoPrefix">
+            <a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/picurls/${i}"></a>
+          </div>
+        </div>
+        {{/each}}
+        <div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/picurls" data-limit="8">
+          <div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/picurls/-" data-action="image">+</div>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-md-1 ">封面图片：</div>
+      <div class="col-md-11 row" >
+        {{if DetailMain.coverPicURL}}
+        <div class="col-md-3">
+          <div class="imgBox">
+            <img name="autoPrefix" src="${DetailMain.coverPicURL}" />
+            <a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/coverPicURL" ></a>
+          </div>
+        </div>
+        {{else}}
+        <div class="col-md-3">
+          <div class="imgBox addImg"  data-op="change" data-pointer="/DetailMain/coverPicURL" data-action="image" >+</div>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+  </div>
+  <!-- 相册上传结束 -->
+
+  <div class="baseInfo">
+    <h4>通讯信息</h4>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">手机号</label>
+        <div class="col-sm-10 col-md-11">
+          <ul class="moreTels">
+            {{each $data.DetailMain.telsForshow}}
+            <li class="row" style="margin:0;">
+              <div class="form-group col-md-3" >
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.telsForshow[$index].item1}"  data-value="/DetailMain/telsForshow/${$index}/item1" placeholder="号码名称">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.telsForshow[$index].item2}"  data-value="/DetailMain/telsForshow/${$index}/item2" placeholder="国家区号">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.telsForshow[$index].item3}"  data-value="/DetailMain/telsForshow/${$index}/item3" placeholder="电话号码">
+                </div>
+              </div>
+              <a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/telsForshow/${$index}"></a>
+            </li>
+            {{/each}}
+            <li class="col-md-9"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/telsForshow/-" data-action="createTels"> + </div></li>
+          </ul>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">个人微信</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.weChatID}"  data-value="/DetailMain/weChatID" placeholder="请输入">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">电子邮箱</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.email}"  data-value="/DetailMain/email" placeholder="请输入">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="baseInfo">
+    <h4>擅长目的地</h4>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">精通</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control"  value="${DetailMain.masterPlace}"  data-value="/DetailMain/masterPlace" placeholder="请填写您精通的目的地">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">熟悉</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.fomiliarPlace}"  data-value="/DetailMain/fomiliarPlace" placeholder="请填写您熟悉的目的地">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">了解</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.knowPlace}"  data-value="/DetailMain/knowPlace" placeholder="请填写您了解的目的地">
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="baseInfo">
+    <h4>语言</h4>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-10 col-md-11 col-md-offset-1 col-sm-offset-2">
+          <ul class="moreTels">
+            {{each $data.DetailMain.hasLanguageForshow}}
+            <li class="row" style="margin:0;">
+              <div class="form-group col-md-3" >
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.hasLanguageForshow[$index].item1}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item1" placeholder="语言">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.hasLanguageForshow[$index].item2}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item2" placeholder="水平">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.hasLanguageForshow[$index].item3}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item3" placeholder="简单描述">
+                </div>
+              </div>
+              <a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/hasLanguageForshow/${$index}"></a>
+            </li>
+            {{/each}}
+            <li class="col-md-9"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/drivingLicensesForshow/-" data-action="createLanguages"> + </div></li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="baseInfo">
+    <h4>驾驶执照</h4>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-10 col-md-11 col-md-offset-1 col-sm-offset-2">
+          <ul class="moreTels">
+            {{each $data.DetailMain.drivingLicensesForshow}}
+            <li class="row" style="margin:0;">
+              <div class="form-group col-md-3" >
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item1}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item1" placeholder="获得年份">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item2}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item2" placeholder="颁发国家">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item3}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item3" placeholder="驾照等级">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item4}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item4" placeholder="驾照号码">
+                </div>
+              </div>
+              <a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/drivingLicensesForshow/${$index}"></a>
+            </li>
+            {{/each}}
+            <li class="col-md-9"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/drivingLicensesForshow/-" data-action="createdrivingLicenses"> + </div></li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="baseInfo">
+    <h4>技能证书</h4>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-10 col-md-11 col-md-offset-1 col-sm-offset-2">
+          <ul class="moreTels">
+            {{each $data.DetailMain.skillsForshow}}
+            <li class="row" style="margin:0;">
+              <div class="form-group col-md-3" >
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.skillsForshow[$index].item1}"  data-value="/DetailMain/skillsForshow/${$index}/item1" placeholder="获得年份">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.skillsForshow[$index].item2}"  data-value="/DetailMain/skillsForshow/${$index}/item2" placeholder="机构名称">
+                </div>
+              </div>
+              <div class="form-group col-md-3">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.skillsForshow[$index].item3}"  data-value="/DetailMain/skillsForshow/${$index}/item3" placeholder="证书名称">
+                </div>
+              </div>
+              <a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/skillsForshow/${$index}"></a>
+            </li>
+            {{/each}}
+            <li class="col-md-9"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/skillsForshow/-" data-action="createskills"> + </div></li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="baseInfo">
+    <h4>兴趣爱好</h4>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-10 col-md-11 col-md-offset-1 col-sm-offset-2">
+          <ul class="moreTels">
+            {{each $data.DetailMain.interestForshow}}
+            <li class="row" style="margin:0;">
+              <div class="form-group col-md-3" >
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.interestForshow[$index].item1}"  data-value="/DetailMain/interestForshow/${$index}/item1" placeholder="兴趣">
+                </div>
+              </div>
+              <div class="form-group col-md-6">
+                <div class="">
+                  <input type="text" class="form-control"   value="${$data.DetailMain.interestForshow[$index].item2}"  data-value="/DetailMain/interestForshow/${$index}/item2" placeholder="简要描述16字以内">
+                </div>
+              </div>
+              <a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/interestForshow/${$index}"></a>
+            </li>
+            {{/each}}
+            <li class="col-md-9"><div class="addItemBtn" data-op="change" data-pointer="/DetailMain/interestForshow/-" data-action="createinterests"> + </div></li>
+          </ul>
+        </div>
+      </div>
+    </form>
+  </div>
+
+  <div class="optionBtn" style="border:0; box-shadow: 0 0;">
+    <button id="userUpdate" type="submit" class="btn btn-warning">保存</button>
+    <button id="userBack" type="button" class="btn btn-default">返回</button>
+  </div>
+
+</div>
+

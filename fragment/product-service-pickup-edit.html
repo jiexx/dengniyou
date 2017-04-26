@@ -32,36 +32,6 @@
 		    </div>
 		  </div>
 		  <div class="form-group">
-		    <label for="" class="col-sm-2 col-md-1 control-label">商品价格</label>
-		    <div class="col-sm-10 col-md-11">
-		    	<input type="text" class="form-control" value="${$data.DetailMain.primaryPrice}"  data-value="/DetailMain/primaryPrice" > 元/天
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="" class="col-sm-2 col-md-1 control-label">包含里程</label>
-		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.DetailMain.incMileage}"  data-value="/DetailMain/incMileage" > 公里
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="" class="col-sm-2 col-md-1 control-label">额外里程价格</label>
-		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.DetailMain.exMileagePrice}"  data-value="/DetailMain/exMileagePrice" > 元/公里
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="" class="col-sm-2 col-md-1 control-label">免费等待时间</label>
-		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.DetailMain.freeForDelay}"  data-value="/DetailMain/freeForDelay" > 小时
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="" class="col-sm-2 col-md-1 control-label">额外时长价格</label>
-		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control" value="${$data.DetailMain.waitOutTimePrice}"  data-value="/DetailMain/waitOutTimePrice"> 元/小时
-		    </div>
-		  </div>
-		  <div class="form-group">
 		    <label for="" class="col-sm-2 col-md-1 control-label">服务方式</label>
 		    <div class="col-sm-10 col-md-11" id="serviceType">
 			    <div id="pickupService">			    	
@@ -98,14 +68,42 @@
 			    </div>		        
 		    </div>
 			<input type="hidden" class="form-control" id="ServiceMethodName"  value="${$data.DetailMain.serviceMethod}"  data-value="/DetailMain/serviceMethod">
-
 		  </div>
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">服务描述</label>
-		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/description" class="form-control" rows="5" placeholder="请输入不少于300字描述" >${$data.DetailMain.description}</textarea>
-		    </div>
-		  </div>
+		</form>
+	</div>
+	<div class="baseInfo">
+		<h4>价格信息</h4>
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label for="" class="col-sm-2 col-md-1 control-label">基础价格</label>
+				<div class="col-sm-10 col-md-11">
+					<input type="text" class="form-control" value="${$data.DetailMain.primaryPrice}"  data-value="/DetailMain/primaryPrice" > 元/天
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-2 col-md-1 control-label">包含里程</label>
+				<div class="col-sm-10 col-md-11">
+					<input type="text" class="form-control" value="${$data.DetailMain.incMileage}"  data-value="/DetailMain/incMileage" > 公里
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-2 col-md-1 control-label">额外里程价格</label>
+				<div class="col-sm-10 col-md-11">
+					<input type="text" class="form-control" value="${$data.DetailMain.exMileagePrice}"  data-value="/DetailMain/exMileagePrice" > 元/公里
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-2 col-md-1 control-label">免费等待时长</label>
+				<div class="col-sm-10 col-md-11">
+					<input type="text" class="form-control" value="${$data.DetailMain.freeForDelay}"  data-value="/DetailMain/freeForDelay" > 小时
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="" class="col-sm-2 col-md-1 control-label">额外时长价格</label>
+				<div class="col-sm-10 col-md-11">
+					<input type="text" class="form-control" value="${$data.DetailMain.waitOutTimePrice}"  data-value="/DetailMain/waitOutTimePrice"> 元/小时
+				</div>
+			</div>
 		</form>
 	</div>
 	<!-- 方案基本信息结束 -->
@@ -150,6 +148,95 @@
 	</div>
 	<!-- 机场信息结束 -->
 
+	<!-- 车辆信息 -->
+	<div class="carInfo">
+		<h4>关联车辆</h4>
+		<div class="row">
+			<div class="col-md-6">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="" class="col-sm-4 col-md-3 control-label">车辆品牌</label>
+						<div class="col-sm-8 col-md-9">
+							<input type="text" class="form-control" value="${$data.DetailMain.facilities[0].brand}" data-value="/DetailMain/facilities/${0}/brand" disabled id="carBrand">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-4 col-md-3 control-label">舒适乘坐</label>
+						<div class="col-sm-8 col-md-9">
+							<input type="text" class="form-control" value="${$data.DetailMain.facilities[0].person}" data-value="/DetailMain/facilities/${0}/person" disabled id="carPerson"> 人
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-4 col-md-3 control-label">车辆级别</label>
+						<div class="col-sm-8 col-md-9" id="carClazz">
+							<label class="radio-inline">
+								{{if DetailMain.facilities[0].clazz == '1'}}
+								<input type="radio" name="clazzType" id="clazzRadio1" value="经济" checked disabled> 经济
+								{{else}}
+								<input type="radio" name="clazzType" id="clazzRadio1" value="经济" disabled> 经济
+								{{/if}}
+							</label>
+							<label class="radio-inline">
+								{{if DetailMain.facilities[0].clazz == '2'}}
+								<input type="radio" name="clazzType" id="clazzRadio2" value="舒适" checked disabled> 舒适
+								{{else}}
+								<input type="radio" name="clazzType" id="clazzRadio2" value="舒适" disabled> 舒适
+								{{/if}}
+							</label>
+							<label class="radio-inline">
+								{{if DetailMain.facilities[0].clazz == '3'}}
+								<input type="radio" name="clazzType" id="clazzRadio3" value="豪华" checked disabled> 豪华
+								{{else}}
+								<input type="radio" name="clazzType" id="clazzRadio3" value="豪华" disabled> 豪华
+								{{/if}}
+							</label>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col-md-6">
+				<form class="form-horizontal">
+					<div class="form-group">
+						<label for="" class="col-sm-4 col-md-3 control-label">车辆型号</label>
+						<div class="col-sm-8 col-md-9">
+							<input type="text" class="form-control" value="${$data.DetailMain.facilities[0].model}" data-value="/DetailMain/facilities/${0}/model" disabled id="carModel">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-4 col-md-3 control-label">行李空间</label>
+						<div class="col-sm-8 col-md-9">
+							<input type="text" class="form-control" value="${$data.DetailMain.facilities[0].luggage}" data-value="/DetailMain/facilities/${0}/luggage" disabled id="carLuggage">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="" class="col-sm-4 col-md-3 control-label">成员保险</label>
+						<div class="col-sm-8 col-md-9" id="carInsurance">
+							<label class="radio-inline">
+								{{if DetailMain.facilities[0].insurance == '1'}}
+								<input type="radio" name="insuranceType" id="insuranceRadio1" value="有" checked disabled> 有
+								{{else}}
+								<input type="radio" name="insuranceType" id="insuranceRadio1" value="有" disabled> 有
+								{{/if}}
+							</label>
+							<label class="radio-inline">
+								{{if DetailMain.facilities[0].insurance == '0'}}
+								<input type="radio" name="insuranceType" id="insuranceRadio2" value="无" checked disabled> 无
+								{{else}}
+								<input type="radio" name="insuranceType" id="insuranceRadio2" value="无" disabled> 无
+								{{/if}}
+							</label>
+						</div>
+						<input type="hidden" class="form-control" id="facilityID" value="${$data.DetailMain.facilities[0].facilityId}"  data-value="/DetailMain/facilities/${0}/facilityId">
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="row textRight">
+			<button class="btn btn-warning"  data-toggle="modal" data-target="#carList">关联车辆</button>
+		</div>
+	</div>
+	<!-- 车辆信息结束 -->
+
 	<!-- 相册上传 -->
 	<div class="photoInfo">
 		<h4>相册信息</h4>
@@ -189,6 +276,138 @@
 		</div>
 	</div>
 	<!-- 相册上传结束 -->
+
+	<!-- 服务描述 -->
+	<div class="scheduleShort clearfix">
+		<h4>服务描述</h4>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<ul class="functionBtn">
+					<!-- <li data-op="remove" data-pointer="/Travelogue/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li> -->
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=-1 data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=-1 data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=-1 data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+				</ul>
+			</div>
+		</div>
+		{{each $data.DetailMain.TravelogueDetail}}
+		{{if label}}
+		<div class="row" style="margin-bottom: 10px;">
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<div class="row">
+							<label   class="col-md-2 control-label">段落标题</label>
+							<div class="col-md-10">
+								<input type="text" class="form-control"  value="${label}"  data-value="/DetailMain/TravelogueDetail/${$index}/label" placeholder="标题">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<ul class="functionBtn">
+							<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+							<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+							<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+							<li data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+		{{/if}}
+
+		{{if label==null}}{{if content==null}}{{if articleID}}
+		<div class="row">
+			<div class="col-md-offset-2 col-md-3">
+				<div class="row">
+					{{if picURL}}
+					<div class="col-md-12">
+						<div class="imgBox">
+							<img name="autoPrefix"  src="${picURL}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL"></a>
+						</div>
+					</div>
+					{{/if}}
+					<div class="col-md-12" data-op="toggle" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL" data-limit="1">
+						<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL" data-action="image">+</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<ul class="functionBtn">
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+					<li data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+				</ul>
+			</div>
+		</div>
+		{{/if}}{{/if}}{{/if}}
+		{{if PE}}
+		<div class="row">
+			<div class="col-md-offset-2 col-md-3">
+				<div class="row">
+					{{if picURL}}
+					<div class="col-md-12">
+						<div class="imgBox">
+							<img name="autoPrefix"  src="${picURL}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL"></a>
+						</div>
+					</div>
+					{{/if}}
+					<div class="col-md-12" data-op="toggle" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL" data-limit="1">
+						<div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/TravelogueDetail/${$index}/picURL" data-action="image">+</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<ul class="functionBtn">
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+					<li data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+				</ul>
+			</div>
+		</div>
+		{{/if}}
+
+		{{if content }}
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<div class="introduction">
+					<textarea name="" rows="6" data-value="/DetailMain/TravelogueDetail/${$index}/content" style="background-color: #fcf8e3;" placeholder="请输入描述">${ content}</textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-offset-1 col-md-6">
+				<ul class="functionBtn">
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
+					<li data-op="change" data-pointer="/DetailMain/TravelogueDetail/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
+					<li data-op="remove" data-pointer="/DetailMain/TravelogueDetail/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
+				</ul>
+			</div>
+		</div>
+		{{/if}}
+		{{/each}}
+		<!-- <div class="row">
+            <div class="col-md-offset-3 col-md-6">
+                <div class="btn-group" style="width: 100%;">
+                    <a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createDay">添加段落</a>
+                    <a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createPicture">添加图片</a>
+                    <a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/Travelogue/TravelogueDetail/-" data-action="createContent">添加描述</a>
+                </div>
+            </div>
+        </div> -->
+	</div>
+	<!-- 服务描述结束 -->
 
 	<!-- 须知信息 -->
 	<div class="notice">
@@ -336,7 +555,52 @@
 	</div>
 	<input type="hidden" id="type" data-value="/DetailMain/Policy/0/type"/>
 
-	<!-- 须知信息结束 --> 
+	<!-- 须知信息结束 -->
+
+	<!-- 关联车辆弹出框 -->
+	<div id="carList" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title clearfix">选择关联的车辆</h4>
+				</div>
+				<div class="modal-body">
+					<ul>
+						{{each DetailMain.userFacilities}}
+						<li class="row">
+							<div class="col-md-1">
+								<input type="radio" name="carRadios" value="${facilityID}">
+							</div>
+							<div class="col-md-11">
+								<h4>${facilityName}</h4>
+								<div class="col-md-5">
+									<img src="${$data.IMGHOST}${coverURL}" alt="车辆封面">
+								</div>
+								<div class="col-md-6">
+									<ul>
+										<li>车辆品牌：<span>${brand}</span></li>
+										<li>车辆型号：<span>${model}</span></li>
+										<li>舒适乘坐：<span>${person}</span></li>
+										<li>行李空间：<span>${luggage}</span></li>
+										<li>车辆级别：<span>{{if clazz == 1}}经济{{else clazz == 2}}舒适{{else clazz == 3}}豪华{{/if}}</span></li>
+										<li>成员保险：<span>{{if insurance == 1}}有{{else}}无{{/if}}</span></li>
+									</ul>
+								</div>
+							</div>
+						</li>
+						{{/each}}
+					</ul>
+				</div> <!-- end modal-body -->
+				<div class="modal-footer">
+					<button type="button" id="facilityconfirm" class="btn btn-primary" data-dismiss="modal">确定</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 关联车辆弹出框 -->
 </div>
 
 <script>
