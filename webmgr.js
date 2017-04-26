@@ -13,6 +13,7 @@ var modal = require("./modal2");
 var pay = require('./pay');
 var http= require("http");
 var fdfsconfig = require('./fdfsconfig');
+var config = require('./config');
 
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true })); // for parsing application/x-www-form-urlencoded
@@ -72,7 +73,7 @@ pay.config({
     seller_id:'2088612188470577',
     partner: '2088612188470577',
     key: 'w8dmwl2awivsqjv7f3m1chynw49ya8yv',
-    notify_url: 'http://101.37.21.172:80/notify',//'http://123.59.144.169:8080/notify',//'http://www.dengniyou.com/notify',
+    notify_url: config.JAVA_SERVER+'/notify',//'http://123.59.144.169:8080/notify',//'http://www.dengniyou.com/notify',
     return_url: 'http://101.37.21.172:80'
 });
 
@@ -85,13 +86,13 @@ app.post('/pay', upload.array(), function(req, res) {
     });*/
 	request.post(
         {
-            url: 'http://app.dengnilvyou.com.cn/travel/order/addOrder',
+            url: config.LOCAL_HOST+'/travel/order/addOrder',
             method: "POST",
             json: req.body
         },
 		function (error, response, body) {
 			if (!error && response.statusCode == 200 && body.datas) {
-			    var url = 'http://101.37.21.172:80/#/orderdetail?UserType=1&OrderID='+body.datas.orderid;
+			    var url = config.LOCAL_HOST+'/#/orderdetail?UserType=1&OrderID='+body.datas.orderid;
 			    pay.setConfig('return_url', url);
                 var usr_redirect_url = pay.buildDirectPayURL({
                     out_trade_no: ''+body.datas.orderNo,
@@ -110,7 +111,7 @@ app.post('/pay', upload.array(), function(req, res) {
 //立即支付的时候
 app.post("/pay2",function (req, res) {
     var params = req.body;
-    var url = 'http://101.37.21.172:80/#/orderdetail?UserType=1&OrderID='+params.orderid;
+    var url = config.LOCAL_HOST+'/#/orderdetail?UserType=1&OrderID='+params.orderid;
     pay.setConfig('return_url', url);
     var usr_redirect_url = pay.buildDirectPayURL({
         out_trade_no: ''+ params.orderNo,
@@ -131,11 +132,11 @@ app.post('/notify', function (req, res) {
         console.log("result:" + result);
         console.log("result type:" + typeof result);
         if (result == "true") {
-            console.log("success start:http://app.dengnilvyou.com.cn/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
+            console.log("success start:"+config.JAVA_SERVER+"/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
                 "&total_fee=" + params.total_fee +
                 "&trade_no=" + params.trade_no +
                 "&buyer_email=" + params.buyer_email);
-            request.get("http://app.dengnilvyou.com.cn/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
+            request.get(config.JAVA_SERVER+"/apply/pay/updateOrderAfterPaid?out_trade_no=" + params.out_trade_no +
                 "&total_fee=" + params.total_fee +
                 "&trade_no=" + params.trade_no +
                 "&buyer_email=" + params.buyer_email,
@@ -162,7 +163,7 @@ app.post('/new/service/car', upload.array(), function(req, res) {
 
     request.post(
         {
-            url: 'http://app.dengnilvyou.com.cn/travel/service/uploadServiceWeb',
+            url: config.JAVA_SERVER+'/travel/service/uploadServiceWeb',
             // url: 'http://10.101.1.36:80/travel/service/uploadServiceWeb',
             method: "POST",
             json: req.body.reqUploadService
@@ -227,7 +228,7 @@ app.post('/new/service/car', upload.array(), function(req, res) {
 app.get('/order/update', upload.array(), function (req, res) {
 
     parameters = req.body;
-    request('http://app.dengnilvyou.com.cn/travel/order/updateOrder?orderid=' + parameters.orderid
+    request(config.JAVA_SERVER+'/travel/order/updateOrder?orderid=' + parameters.orderid
         + '&status=' + parameters.status, function (error, response, body) {
         if (!error && response.statusCode == 200 && body.datas) {
             console.log(body) // Show the HTML for the baidu homepage.
@@ -342,7 +343,7 @@ app.post('/service/list', upload.array(), function (req, res) {
     // var urlarray = [];
     // urlarray.push('http://123.59.144.44/travel/service/getCustomServiceByConditionForWeb?');
 
-    request('http://app.dengnilvyou.com.cn/travel/service/getCustomServiceByConditionForWeb?' +
+    request(config.JAVA_SERVER+'/travel/service/getCustomServiceByConditionForWeb?' +
         'type=' + parameters.type
         + '&page=' + parameters.page
         + '&condition=' + (parameters.condition?  encodeURI(parameters.condition):'')
@@ -364,7 +365,7 @@ app.post('/service/list', upload.array(), function (req, res) {
 
 
 var MODAL = {};
-var server = app.listen(80, function() {
+var server = app.listen(8089, function() {
 	
 	var host = server.address().address;
 	var port = server.address().port;

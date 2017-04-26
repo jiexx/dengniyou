@@ -1,0 +1,6 @@
+{
+  "Planstockquantitys": {
+	  "sql": "INSERT INTO traveluserdb.tab_planstockquantity (planID,scheduleDate,spendName,adultPrice,kidPrice,stockQuantity) values (?,?,?,?,?,?)",
+	  "params": ["planID","scheduleDate","spendName","adultPrice","kidPrice","stockQuantity"]
+  }
+}

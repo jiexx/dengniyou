@@ -1,16 +1,17 @@
 var mysql = require('mysql');
 var crypto = require('crypto');
+var config = require('./config');
 
 var pool  = mysql.createPool({
 	//host : '10.101.1.163',
-	host : '114.55.139.196',
+	host : config.DATA_HOST,
 	user : 'traveldb',
 	//password : '123456',
 	password: 'traveldb',
 	connectionLimit: 500,
 //	acquireTimeout: 30000
 });
-var IMG_HOST = "http://pic.dengnilvyou.com.cn/";//"http://10.101.1.165:8097/";
+var IMG_HOST = config.IMG_HOST;//"http://pic.dengnilvyou.com.cn/";
 // IMG_HOST = "http://10.101.1.165:8097/";
 
 function execfinal(conn, sql, params, callback, close) {
