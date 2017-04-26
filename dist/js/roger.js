@@ -19,7 +19,8 @@ $(function () {
 (function( $, undefined ){
 	$.extend({
         rogerImgHost:function() {
-            return 'http://123.59.144.47/';
+            //return 'http://123.59.144.47/';已废弃
+            return 'http://pic.dengnilvyou.com.cn/';
         },
 		rogerGetPath:function() {
 			var link = $._rogerGetLocation();
@@ -462,7 +463,7 @@ $(function () {
             var ev = $._data($(this), 'events');
             if((!ev || !ev.click)  )  {
                 $(this).unbind().click(data, function (e) {
-                	console.log(JSON.stringify(e.data));
+                	//console.log(JSON.stringify(e.data));
                     e.preventDefault();
                     callback(e);
                 });

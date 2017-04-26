@@ -363,6 +363,36 @@ app.post('/service/list', upload.array(), function (req, res) {
         });
 });
 
+//导游个人详情
+app.post('/guideDetail', upload.array(), function (req, res) {
+    request.get('http://10.101.1.165:8096/travel/user/getGuiderDetail?userID='+ req.body.UserID +'&guiderID=' + req.body.UserID,function (error, response, body) {
+            var data = JSON.parse(body);
+            if (!error && response.statusCode == 200 && data.datas) {
+                res.send(body);
+            } else {
+                res.send(JSON.stringify({url: +false, "message": "失败", "status": 1}));
+            }
+        }
+    );
+});
+
+app.post('/guideDetail/update', upload.array(), function (req, res) {
+    request.post(
+        {
+            url: 'http://10.101.1.165:8096/travel/userweb/updateGuiderInfoWeb',
+            method: "POST",
+            json: req.body
+        },
+        function (error, response, body) {
+            var data = JSON.parse(body);
+            if (!error && response.statusCode == 200 && data.code == 200) {
+                res.send(body);
+            }else{
+                res.send(JSON.stringify({url: +false, "message": body.message, "status": 1}));
+            }
+        })
+});
+
 
 var MODAL = {};
 var server = app.listen(8089, function() {
