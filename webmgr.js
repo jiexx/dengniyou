@@ -365,7 +365,7 @@ app.post('/service/list', upload.array(), function (req, res) {
 
 //导游个人详情
 app.post('/guideDetail', upload.array(), function (req, res) {
-    request.get('http://10.101.1.165:8096/travel/user/getGuiderDetail?userID='+ 10055 +'&guiderID=' + 10055,function (error, response, body) {//req.body.UserID
+    request.get(config.JAVA_SERVER+'/travel/user/getGuiderDetail?userID='+ 10055 +'&guiderID=' + 10055,function (error, response, body) {//req.body.UserID
             var data = JSON.parse(body);
             if (!error && response.statusCode == 200 && data.datas) {
                 res.send(body);
@@ -379,7 +379,7 @@ app.post('/guideDetail', upload.array(), function (req, res) {
 app.post('/guideDetail/update', upload.array(), function (req, res) {
     request.post(
         {
-            url: 'http://10.101.1.165:8096/travel/userweb/updateGuiderInfoWeb',
+            url: config.JAVA_SERVER+'/travel/userweb/updateGuiderInfoWeb',
             method: "POST",
             json: req.body
         },
