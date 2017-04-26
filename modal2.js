@@ -1,19 +1,19 @@
 var mysql = require('mysql');
 var crypto = require('crypto');
 var fdfsconfig = require('./fdfsconfig');
-
+var config = require('./config');
 var fdfs = fdfsconfig.fdfs;
 
 var pool  = mysql.createPool({
-	//host : '10.101.1.163',
-	host : '114.55.139.196',
+	host : config.DATA_HOST,
+	// host : '114.55.139.196',
 	user : 'traveldb',
 	//password : '123456',
 	password: 'traveldb',
 	connectionLimit: 500
 //	acquireTimeout: 30000
 });
-var IMG_HOST = "http://pic.dengnilvyou.com.cn/";//"http://10.101.1.165:8097/";
+var IMG_HOST = config.IMG_HOST;//"http://pic.dengnilvyou.com.cn/";
 
 function doSql(funcArgu, onFinish) {
 	pool.getConnection(function(err, conn) {

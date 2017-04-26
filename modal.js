@@ -1,12 +1,12 @@
 var mysql = require('mysql');
 var crypto = require('crypto');
 var fdfsconfig = require('./fdfsconfig');
-
+var config = require('./config');
 var fdfs = fdfsconfig.fdfs;
 
 var pool  = mysql.createPool({
-	//host : '10.101.1.163',
-	host : '114.55.139.196',
+	host : config.DATA_HOST,
+	// host : '114.55.139.196',
 	user : 'traveldb',
 	//password : '123456',
 	password: 'traveldb',

@@ -1047,6 +1047,19 @@
                     data.PlanInfo.AdultPrice = minAdultPrice;
                     data.PlanInfo.KidPrice = minKidPrice;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
+
+                        if(respJSON.PlanInfo.insertId && data.Planstockquantitys){
+
+                            for(var Planstockquantity in data.Planstockquantitys){
+                                Planstockquantity["planID"] = respJSON.PlanInfo.insertId
+                            }
+
+                            $.rogerPost('/new/stock', data.Planstockquantitys, function (respJSONInner) {
+
+                            });
+                        }
+
+
                         $.rogerNotice({Message: '模板方案成功'});
                         $('#show').removeClass("btn btn-warning invisible");
                         $('#show').addClass("btn btn-warning");
