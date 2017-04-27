@@ -1651,6 +1651,7 @@
             changeFormat('telsForshow', 'tels',3);
             changeFormat('hasLanguageForshow', 'hasLanguage',3);
             changeFormat('skillsForshow', 'skills',3);
+            changeFormat('drivingLicensesForshow', 'drivingLicenses',4);
             changeFormat('interestForshow', 'interest',2);
 
             if(response.DetailMain.avatarPicURL && response.DetailMain.avatarPicURL.indexOf('group1/') == -1){
@@ -1698,8 +1699,13 @@
             };
             data.guider.labels = response.DetailMain.labels.join(';');
             $.rogerPost('/guideDetail/update',data,function(data){
-                console.log(data);
+                alert('保存成功！');
+                $.rogerLocation('#/userinfodetail');
             });
+        });
+
+        $('#userBack').rogerOnceClick(response,function(e){
+            $.rogerLocation('#/userinfodetail');
         });
 
         bindRidoesForSwitch();
