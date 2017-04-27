@@ -365,7 +365,7 @@ app.post('/service/list', upload.array(), function (req, res) {
 
 //导游个人详情
 app.post('/guideDetail', upload.array(), function (req, res) {
-    request.get(config.JAVA_SERVER+'/travel/user/getGuiderDetail?userID='+ 10055 +'&guiderID=' + 10055,function (error, response, body) {//req.body.UserID
+    request.get(config.JAVA_SERVER+'/travel/user/getGuiderDetail?userID='+ req.body.UserID +'&guiderID=' + req.body.UserID,function (error, response, body) {
             var data = JSON.parse(body);
             if (!error && response.statusCode == 200 && data.datas) {
                 res.send(body);
