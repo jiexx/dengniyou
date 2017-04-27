@@ -1048,24 +1048,32 @@
                     data.PlanInfo.KidPrice = minKidPrice;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
 
-                        if(respJSON.PlanInfo.insertId && data.Planstockquantitys){
+                        if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
+                            var PlanstockquantitysInsert = new Array();
+                            for(var planstockquantityDay in data.PlanInfo.Planstockquantitys){
+                                var  scheduleDate = planstockquantityDay["scheduleDate"];
+                                scheduleDate = scheduleDate.replace(new RegExp("-","gm"),'');
+                                var prices = planstockquantityDay["prices"]
+                                for(var planstockquantity in prices){
+                                    planstockquantity["scheduleDate"] = scheduleDate;
+                                    planstockquantity["planID"] = respJSON.PlanInfo.insertId;
+                                    PlanstockquantitysInsert.push(planstockquantity);
+                                }
 
-                            for(var Planstockquantity in data.Planstockquantitys){
-                                Planstockquantity["planID"] = respJSON.PlanInfo.insertId
                             }
 
-                            $.rogerPost('/new/stock', data.Planstockquantitys, function (respJSONInner) {
-
+                            $.rogerPost('/new/stock', PlanstockquantitysInsert, function (respJSONInner) {
+                                $.rogerNotice({Message: '模板方案成功'});
+                                $('#show').removeClass("btn btn-warning invisible");
+                                $('#show').addClass("btn btn-warning");
+                                $('#show').click(function (e) {
+                                    $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                                })
                             });
                         }
 
 
-                        $.rogerNotice({Message: '模板方案成功'});
-                        $('#show').removeClass("btn btn-warning invisible");
-                        $('#show').addClass("btn btn-warning");
-                        $('#show').click(function (e) {
-                            $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
-                        })
+
                         //$('#show').attr('href',);
                     });
                 } else {
