@@ -411,7 +411,7 @@
                 var now = new Date();
                 if(Date.parse(date) < (Date.parse(now)-1000*60*60*24) ){
                     alert('时间已过期，不可用！');
-                }else{      
+                }else{
                     var flag = false;
                     var temp;
                     for(var i=0; i < eventArr.length; i++){
@@ -481,7 +481,7 @@
         }
 
         priceCalendarDetail(response);
-        
+
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
@@ -518,7 +518,7 @@
         if( response.PlanInfo[0].Notice ){
             $('#warning').html(response.PlanInfo[0].Notice.replace(/\r\n/g, '<br>'));
         }
-        
+
         priceCalendarDetail(response);
 
         bindRidoesForSwitch();
@@ -743,6 +743,36 @@
             $.rogerRefresh(data.Plan);
         });
     };
+
+     function setStockQuantity(PlanInfo) {
+         var minAdultPrice = 0;
+         var minKidPrice = 0;
+
+         var PlanstockquantitysInsert = new Array();
+         Planstockquantitys = PlanInfo.Planstockquantitys;
+         for(var day in Planstockquantitys){
+             var PlanstockquantitysDay = Planstockquantitys[day];
+             var  scheduleDate = PlanstockquantitysDay["scheduleDate"];
+             scheduleDate = scheduleDate.replace(new RegExp("-","gm"),'');
+             var prices = PlanstockquantitysDay["prices"];
+             for(var pricesindex in prices){
+                 prices[pricesindex]["scheduleDate"] = scheduleDate;
+                 prices[pricesindex]["planID"] = respJSON.PlanInfo.insertId;
+                 if(minAdultPrice>prices[pricesindex]["AdultPrice"]){
+                     minAdultPrice = prices[pricesindex]["AdultPrice"];
+                 }
+                 if(minKidPrice>prices[pricesindex]["AdultPrice"]){
+                     minKidPrice = prices[pricesindex]["KidPrice"];
+                 }
+                 PlanstockquantitysInsert.push(prices[pricesindex]);
+             }
+
+         }
+         PlanInfo.AdultPrice = minAdultPrice;
+         PlanInfo.KidPrice = minKidPrice;
+         PlanInfo["PlanstockquantitysInsert"]=PlanstockquantitysInsert;
+     }
+
     //calendar格式设置价格库存
     function priceCalendarEdit(Plan){
         if(!Plan.PlanInfo.Planstockquantitys){
@@ -946,7 +976,7 @@
                     Plan.PlanInfo.Planstockquantitys.push(dataTemp);
                 }
             }
-            
+
             $('#dayPriceSet').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').css('display','none');
@@ -1158,7 +1188,7 @@
             $('#monthPriceSet').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').css('display','none');
-            $.rogerRefresh(Plan);            
+            $.rogerRefresh(Plan);
         });
     }
 
@@ -1172,10 +1202,10 @@
                 }]
             }else{
                 Plan.PlanInfo.PlanSpendInfoList = Plan.PlanSpendInfoList;
-            }            
+            }
             $.rogerRefresh(Plan);
         }
-        
+
 
         $('img[name="needPrefix"]').each(function () {
             var src = $(this).attr('src');
@@ -1249,47 +1279,15 @@
                     data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
 
-                    minAdultPrice = 0;
-                    minKidPrice = 0;
-                    var index=0;
-                    for(planSpendInfo in data.PlanInfo.PlanSpendInfoList){
-                        index ++;
-                        if(null == planSpendInfo.SpendName || '' == planSpendInfo.SpendName){
-                            planSpendInfo.SpendName = "套餐" + index
-                        }
+                    setStockQuantity(data.PlanInfo);
 
-                        bFindFlag = false;
-                        //取第一个成人儿童价格
-                        if (planSpendInfo.AdultPrice > 0 && !bFindFlag) {
-                            minAdultPrice = planSpendInfo.AdultPrice;
-                            minKidPrice = planSpendInfo.AidPrice;
-                            bFindFlag = true;
-                        }
-
-                    }
-
-                    data.PlanInfo.AdultPrice = minAdultPrice;
-                    data.PlanInfo.KidPrice = minKidPrice;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
 
                         if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
-                            var PlanstockquantitysInsert = new Array();
-                            Planstockquantitys = data.PlanInfo.Planstockquantitys;
-                            for(var day in Planstockquantitys){
-                                var PlanstockquantitysDay = Planstockquantitys[day];
-                                var  scheduleDate = PlanstockquantitysDay["scheduleDate"];
-                                scheduleDate = scheduleDate.replace(new RegExp("-","gm"),'');
-                                var prices = PlanstockquantitysDay["prices"]
-                                for(var pricesindex in prices){
-                                    prices[pricesindex]["scheduleDate"] = scheduleDate;
-                                    prices[pricesindex]["planID"] = respJSON.PlanInfo.insertId;;
-                                    PlanstockquantitysInsert.push(prices[pricesindex]);
-                                }
 
-                            }
 
-                            $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":PlanstockquantitysInsert}}, function (respJSONInner) {
-                                $.rogerNotice({Message: '模板方案成功'});
+                            $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
+                                $.rogerNotice({Message: '模板方案做成成功'});
                                 $('#show').removeClass("btn btn-warning invisible");
                                 $('#show').addClass("btn btn-warning");
                                 $('#show').click(function (e) {
@@ -1297,8 +1295,6 @@
                                 })
                             });
                         }
-
-
 
                         //$('#show').attr('href',);
                     });
@@ -1310,34 +1306,20 @@
                         data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                         data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
 
-                        minAdultPrice = 0;
-                        minKidPrice = 0;
-                        var index=0;
-                        for(planSpendInfo in data.PlanInfo.PlanSpendInfoList){
-                            index ++;
-                            if(null == planSpendInfo.SpendName || '' == planSpendInfo.SpendName){
-                                planSpendInfo.SpendName = "套餐" + index
+                        setStockQuantity(data.PlanInfo);
+
+                        $.rogerPost('/update/tmpplan', data, function (respJSON) {
+                            if(respJSON.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
+
+                                $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
+                                    $.rogerNotice({Message: '模板方案更新成功'});
+                                    $('#show').removeClass("btn btn-warning invisible");
+                                    $('#show').addClass("btn btn-warning");
+                                    $('#show').click(function (e) {
+                                        $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.PlanID);
+                                    })
+                                });
                             }
-
-                            bFindFlag = false;
-                            //取第一个成人儿童价格
-                            if (planSpendInfo.AdultPrice > 0 && !bFindFlag) {
-                                minAdultPrice = planSpendInfo.AdultPrice;
-                                minKidPrice = planSpendInfo.AidPrice;
-                                bFindFlag = true;
-                            }
-                        }
-
-                        data.PlanInfo.AdultPrice = minAdultPrice;
-                        data.PlanInfo.KidPrice = minKidPrice;
-
-                        $.rogerPost('/new/tmpplan', data, function (respJSON) {
-                            $.rogerNotice({Message: '模板方案发布成功'});
-                            $('#show').removeClass("btn btn-warning invisible");
-                            $('#show').addClass("btn btn-warning");
-                            $('#show').click(function (e) {
-                                $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
-                            })
                             //$('#show').attr('href','#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
                         });
                     });
@@ -1365,7 +1347,7 @@
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
-    
+
     var ctrlShortplanNew = function(Plan, realView) {
 
         if(!Plan.PlanInfo.PlanSpendInfoList){
@@ -1422,46 +1404,13 @@
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
 
-                minAdultPrice = 0;
-                minKidPrice = 0;
-                var index=0;
-                for(planSpendInfo in data.PlanInfo.PlanSpendInfoList){
-                    index ++;
-                    if(null == planSpendInfo.SpendName || '' == planSpendInfo.SpendName){
-                        planSpendInfo.SpendName = "套餐" + index
-                    }
-
-                    bFindFlag = false;
-                    //取第一个成人儿童价格
-                    if (planSpendInfo.AdultPrice > 0 && !bFindFlag) {
-                        minAdultPrice = planSpendInfo.AdultPrice;
-                        minKidPrice = planSpendInfo.AidPrice;
-                        bFindFlag = true;
-                    }
-                }
-
-                data.PlanInfo.AdultPrice = minAdultPrice;
-                data.PlanInfo.KidPrice = minKidPrice;
+                setStockQuantity(data.PlanInfo);
 
                 $.rogerPost('/new/shortplan', data, function(respJSON){
 
                     if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
-                        var PlanstockquantitysInsert = new Array();
-                        Planstockquantitys = data.PlanInfo.Planstockquantitys;
-                        for(var day in Planstockquantitys){
-                            var PlanstockquantitysDay = Planstockquantitys[day];
-                            var  scheduleDate = PlanstockquantitysDay["scheduleDate"];
-                            scheduleDate = scheduleDate.replace(new RegExp("-","gm"),'');
-                            var prices = PlanstockquantitysDay["prices"]
-                            for(var pricesindex in prices){
-                                prices[pricesindex]["scheduleDate"] = scheduleDate;
-                                prices[pricesindex]["planID"] = respJSON.PlanInfo.insertId;;
-                                PlanstockquantitysInsert.push(prices[pricesindex]);
-                            }
 
-                        }
-
-                        $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":PlanstockquantitysInsert}}, function (respJSONInner) {
+                        $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                             $.rogerNotice({Message: '快捷方案发布成功'});
                             $('#show').removeClass("btn btn-warning invisible");
                             $('#show').addClass("btn btn-warning");
@@ -1480,34 +1429,20 @@
                 data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                 $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
 
-                    minAdultPrice = 0;
-                    minKidPrice = 0;
-                    var index=0;
-                    for(planSpendInfo in data.PlanInfo.PlanSpendInfoList){
-                        index ++;
-                        if(null == planSpendInfo.SpendName || '' == planSpendInfo.SpendName){
-                            planSpendInfo.SpendName = "套餐" + index
+                    setStockQuantity(data.PlanInfo);
+
+                    $.rogerPost('/update/shortplan', data, function(respJSON){
+                        if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
+
+                            $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
+                                $.rogerNotice({Message: '快捷方案发布成功'});
+                                $('#show').removeClass("btn btn-warning invisible");
+                                $('#show').addClass("btn btn-warning");
+                                $('#show').click(function (e) {
+                                    $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                                })
+                            });
                         }
-
-                        bFindFlag = false;
-                        //取第一个成人儿童价格
-                        if (planSpendInfo.AdultPrice > 0 && !bFindFlag) {
-                            minAdultPrice = planSpendInfo.AdultPrice;
-                            minKidPrice = planSpendInfo.AidPrice;
-                            bFindFlag = true;
-                        }
-                    }
-
-                    data.PlanInfo.AdultPrice = minAdultPrice;
-                    data.PlanInfo.KidPrice = minKidPrice;
-
-                    $.rogerPost('/new/shortplan', data, function(respJSON){
-                        $.rogerNotice({Message:'快捷方案发布成功'});
-                        $('#show').removeClass("btn btn-warning invisible");
-                        $('#show').addClass("btn btn-warning");
-                        $('#show').click(function (e) {
-                            $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
-                        });
                         //$('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
                     });
                 });
@@ -1813,7 +1748,7 @@
                     }
                 ];
             }
-            
+
             $.rogerRefresh(returnvalue);
         });
         return returnvalue;
