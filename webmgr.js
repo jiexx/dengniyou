@@ -393,6 +393,19 @@ app.post('/guideDetail/update', upload.array(), function (req, res) {
         })
 });
 
+//方案发布隐藏切换
+app.post('/travel/guideplan/editPlanStatus', upload.array(), function(req,res){
+    request.get(config.JAVA_SERVER +'/travel/guideplan/editPlanStatus?planStatus='+ req.body.planStatus +'&planID=' + req.body.planID + '&userID=' + req.body.userID,function (error, response, body) {
+            var data = JSON.parse(body);
+            if (!error && response.statusCode == 200 && data.errcode == 0) {
+                res.send(body);
+            } else {
+                res.send(JSON.stringify({url: +false, "message": "失败", "status": 1}));
+            }
+        }
+    );
+});
+
 
 var MODAL = {};
 var server = app.listen(8089, function() {

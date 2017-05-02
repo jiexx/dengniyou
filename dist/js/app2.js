@@ -275,12 +275,15 @@
             var status = $(this).data("status");
             var ServiceId = $(this).data("serviceid");
             //3,隐藏，4发布
-            // $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: status, planID: ServiceId,userID:user.UserID}, function (respJSON) {
+            $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: status, planID: ServiceId, userID:user.UserID}, function (respJSON) {
+                if(respJSON.errcode == 0){
+                    $.rogerNotice({Message: '操作成功'});
+                }
+            });
+
+            // $.get("http://123.59.144.44/travel/guideplan/editPlanStatus?planStatus="+status+"&planID="+ServiceId+"&userID="+user.UserID,function(){
             //     $.rogerNotice({Message: '操作成功'});
             // });
-            $.get("http://123.59.144.44/travel/guideplan/editPlanStatus?planStatus="+status+"&planID="+ServiceId+"&userID="+user.UserID,function(){
-                $.rogerNotice({Message: '操作成功'});
-            });
         });
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -363,52 +366,9 @@
 
     //calendar格式设置价格库存详情查看
     function priceCalendarDetail(response){
-        if(!response.PlanInfo.Planstockquantitys){
-            if(!response.Planstockquantitys || response.Planstockquantitys.length == 0){
-                response.PlanInfo.Planstockquantitys=[
-                    {
-                        scheduleDate: '2017-04-28',
-                        start:'2017-04-28',
-                        title:'已设置',
-                        prices:[
-                            {
-                                SpendName:'套餐一',
-                                AdultPrice:12,
-                                KidPrice:9,
-                                stockQuantity:8
-                            }
-                        ]
-                    },
-                    {
-                        scheduleDate: '2017-04-30',
-                        title:'已设置',
-                        start:'2017-04-30',
-                        prices:[
-                            {
-                                SpendName:'套餐一',
-                                AdultPrice:12,
-                                KidPrice:9,
-                                stockQuantity:8
-                            },
-                            {
-                                SpendName:'套餐二',
-                                AdultPrice:12,
-                                KidPrice:9,
-                                stockQuantity:8
-                            },
-                            {
-                                SpendName:'套餐三',
-                                AdultPrice:12,
-                                KidPrice:9,
-                                stockQuantity:8
-                            }
-                        ]
-                    }
-                    ]
-            }else{
-                response.PlanInfo.Planstockquantitys = response.Planstockquantitys;
-            }
-            //$.rogerRefresh(response);
+        for(var i = 0; i < response.Planstockquantitys.length; i++){
+            response.Planstockquantitys[i].title = '已设置';
+            response.Planstockquantitys[i].start = response.Planstockquantitys[i].scheduleDate;
         }
         var trStrEdit ;
         function PriceListEdit(temp){
@@ -417,7 +377,7 @@
                 trStrEdit += '<tr><td>'+temp[i].SpendName +'</td>'+
                     '<td>'+ temp[i].AdultPrice +'</td>'+
                     '<td>'+ temp[i].KidPrice +'</td>'+
-                    '<td>'+ temp[i].stockQuantity +'</td></tr>';
+                    '<td>'+ temp[i].StockQuantity +'</td></tr>';
             }
             $('#dayPriceSet tbody').html(trStrEdit);
         }
@@ -439,7 +399,7 @@
             },
             eventSources: [
                 {
-                    events: response.PlanInfo.Planstockquantitys,
+                    events: response.Planstockquantitys,
                     className: 'eventSetted'
                 }
             ],
@@ -528,20 +488,20 @@
     var ctrlTemplateplanDetail = function(response, realView) {
 
         //更多报价的切换
-        $('#morePrice').on('click',function(){
-            $('#morePriceList').css('display','block');
-        });
-        $('#morePriceList .glyphicon').on('click',function(){
-            $('#morePriceList').css('display','none');
-        });
-        $('#morePriceList').on('click','div label',function(){
-            $('#morePriceList div label').removeClass('label-success').addClass('label-warning');
-            $(this).removeClass('label-warning').addClass('label-success');
-            var AdultPrice = $(this).data('AdultPrice');
-            var KidPrice = $(this).data('KidPrice');
-            $('#AdultPrice').html(AdultPrice);
-            $('#KidPrice').html(KidPrice);
-        });
+        // $('#morePrice').on('click',function(){
+        //     $('#morePriceList').css('display','block');
+        // });
+        // $('#morePriceList .glyphicon').on('click',function(){
+        //     $('#morePriceList').css('display','none');
+        // });
+        // $('#morePriceList').on('click','div label',function(){
+        //     $('#morePriceList div label').removeClass('label-success').addClass('label-warning');
+        //     $(this).removeClass('label-warning').addClass('label-success');
+        //     var AdultPrice = $(this).data('AdultPrice');
+        //     var KidPrice = $(this).data('KidPrice');
+        //     $('#AdultPrice').html(AdultPrice);
+        //     $('#KidPrice').html(KidPrice);
+        // });
 
         if( response.PlanInfo[0].Policy ){
             $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
