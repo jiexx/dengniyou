@@ -361,6 +361,131 @@
         pageclick();
     };
 
+    //calendar格式设置价格库存详情查看
+    function priceCalendarDetail(response){
+        if(!response.PlanInfo.Planstockquantitys){
+            if(!response.Planstockquantitys || response.Planstockquantitys.length == 0){
+                response.PlanInfo.Planstockquantitys=[
+                    {
+                        scheduleDate: '2017-04-28',
+                        start:'2017-04-28',
+                        title:'已设置',
+                        prices:[
+                            {
+                                SpendName:'套餐一',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                stockQuantity:8
+                            }
+                        ]
+                    },
+                    {
+                        scheduleDate: '2017-04-30',
+                        title:'已设置',
+                        start:'2017-04-30',
+                        prices:[
+                            {
+                                SpendName:'套餐一',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                stockQuantity:8
+                            },
+                            {
+                                SpendName:'套餐二',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                stockQuantity:8
+                            },
+                            {
+                                SpendName:'套餐三',
+                                AdultPrice:12,
+                                KidPrice:9,
+                                stockQuantity:8
+                            }
+                        ]
+                    }
+                    ]
+            }else{
+                response.PlanInfo.Planstockquantitys = response.Planstockquantitys;
+            }
+            //$.rogerRefresh(response);
+        }
+        var trStrEdit ;
+        function PriceListEdit(temp){
+            trStrEdit = '';
+            for(var i = 0; i < temp.length; i++){
+                trStrEdit += '<tr><td>'+temp[i].SpendName +'</td>'+
+                    '<td>'+ temp[i].AdultPrice +'</td>'+
+                    '<td>'+ temp[i].KidPrice +'</td>'+
+                    '<td>'+ temp[i].stockQuantity +'</td></tr>';
+            }
+            $('#dayPriceSet tbody').html(trStrEdit);
+        }
+
+        $('#calendar').fullCalendar({
+            fixedWeekCount:false,
+            buttonIcons:false,
+            buttonText:{
+                prev:'上月',
+                next:'下月',
+                prevYear:'上一年',
+                nextYear:'下一年',
+                today:'今天',
+            },
+            header: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'prevYear,nextYear'
+            },
+            eventSources: [
+                {
+                    events: response.PlanInfo.Planstockquantitys,
+                    className: 'eventSetted'
+                }
+            ],
+            //events:Plan.PlanInfo.Planstockquantitys,
+            dayClick:function(date, jsEvent, view){
+                var dd = $.fullCalendar.formatDate(date,'YYYY年MM月DD日');
+                var idtemp = $.fullCalendar.formatDate(date,'YYYY-MM-DD');
+                var eventArr = view.options.eventSources[0].events;
+                var now = new Date();
+                if(Date.parse(date) < (Date.parse(now)-1000*60*60*24) ){
+                    alert('时间已过期，不可用！');
+                }else{
+                    var flag = false;
+                    var temp;
+                    for(var i=0; i < eventArr.length; i++){
+                        if(idtemp == eventArr[i].start){
+                            flag = true;
+                            temp = eventArr[i].prices;
+                            break;
+                        }
+                    }
+                    if(flag){
+                        trStrEdit = '';
+                        PriceListEdit(temp);
+                        $('#dayPriceSet').modal();
+                        $('#dayPriceSet .modal-title').html(dd);
+                        $('#dayPriceSet .modal-title').attr('data-value',idtemp);
+                    }else{
+                        alert('此日期暂无设置数据');
+                    }
+                }
+            },
+            eventClick:function(eventData,jsEvent, view){
+                //console.log(eventData)
+                var dd = $.fullCalendar.formatDate(eventData.start,'YYYY年MM月DD日');
+                var idtemp = $.fullCalendar.formatDate(eventData.start,'YYYY-MM-DD');
+                $('#dayPriceSet').modal();
+                $('#dayPriceSet .modal-title').html(dd);
+                $('#dayPriceSet .modal-title').attr('data-value',idtemp);
+                var temp = eventData.prices;
+                PriceListEdit(temp);
+            }
+        });
+
+    }
+
     var ctrlShortplanDetail = function(response, realView) {
 
         //更多报价的切换
@@ -394,6 +519,9 @@
         if( response.PlanInfo[0].Notice ){
             $('#warning').html(response.PlanInfo[0].Notice.replace(/\r\n/g, '<br>'));
         }
+
+        priceCalendarDetail(response);
+
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
@@ -430,6 +558,8 @@
         if( response.PlanInfo[0].Notice ){
             $('#warning').html(response.PlanInfo[0].Notice.replace(/\r\n/g, '<br>'));
         }
+
+        priceCalendarDetail(response);
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -683,19 +813,8 @@
          PlanInfo["PlanstockquantitysInsert"]=PlanstockquantitysInsert;
      }
 
-     var ctrlTemplateplanNew = function(Plan, realView) {
-         if(!Plan.PlanInfo.PlanSpendInfoList){
-            if(Plan.PlanSpendInfoList.length == 0){
-                Plan.PlanInfo.PlanSpendInfoList=[{
-                    SpendName:'',
-                    AdultPrice:0,
-                    KidPrice:0
-                }]
-            }else{
-                Plan.PlanInfo.PlanSpendInfoList = Plan.PlanSpendInfoList;
-            }            
-            $.rogerRefresh(Plan);
-        }
+    //calendar格式设置价格库存
+    function priceCalendarEdit(Plan){
         if(!Plan.PlanInfo.Planstockquantitys){
             if(!Plan.Planstockquantitys || Plan.Planstockquantitys.length == 0){
                 Plan.PlanInfo.Planstockquantitys=[
@@ -743,66 +862,6 @@
             }
             $.rogerRefresh(Plan);
         }
-
-        $('img[name="needPrefix"]').each(function () {
-            var src = $(this).attr('src');
-            if(src.indexOf('group1') > -1) {
-                $(this).attr('src',Plan.IMGHOST+src);
-            }
-        })
-        Plan.createPrices = function(Plan,Prices){
-            Prices.push({
-                    PriceName:'',
-                    AdultPrice:0,
-                    KidPrice:0
-                });
-
-            $.rogerRefresh(Plan);
-        };
-
-        Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            PlanSchedule.push({
-                Spot:[{CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
-                ],
-                TravelInstruction:'',
-                DayName:''
-            });
-            Plan.PlanInfo.PlanDays ++;
-            $.rogerRefresh(Plan);
-        };
-
-        Plan.createCity = function (Plan, Spot) {
-            $.rogerTrigger('#modal', '#/citychooser', {Plan:Plan, Spot:Spot});
-        };
-        Plan.createAttraction = function (Plan, Spot) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'attraction', TypeCn:'景点'});
-        };
-        Plan.createDelicacy = function (Plan, Spot) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'delicacy', TypeCn:'美食'});
-        };
-        Plan.createAccommodation = function (Plan, Spot) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'accommodation',TypeCn:'酒店'});
-        };
-        Plan.changeAttraction = function (Plan, SpotItem) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'attraction', TypeCn:'景点', SpotItem:SpotItem,Replace:true});
-        };
-        Plan.changeDelicacy = function (Plan, SpotItem) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'delicacy', TypeCn:'美食', SpotItem:SpotItem,Replace:true});
-        };
-        Plan.changeAccommodation = function (Plan, SpotItem) {
-            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'accommodation', TypeCn:'酒店',SpotItem:SpotItem,Replace:true});
-         };
-        Plan.createAirport = function (Plan, Spot) {
-            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Spot:Spot});
-        };
-        Plan.changeAirport = function (Plan, SpotItem) {
-            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
-        };
-
         //编辑价格
         var trStr = '<tr><td><input type="text" placeholder="请输入"></td>'+
             '<td><input type="text" placeholder="请输入"></td>'+
@@ -851,7 +910,7 @@
             eventSources: [
                 {
                     events: Plan.PlanInfo.Planstockquantitys,
-                    //className: 'eventStyle1'
+                    className: 'eventSetted'
                 }
             ],
             //events:Plan.PlanInfo.Planstockquantitys,
@@ -884,10 +943,12 @@
                 }
             },
             eventClick:function(eventData,jsEvent, view){
-                console.log(eventData)
+                //console.log(eventData)
                 var dd = $.fullCalendar.formatDate(eventData.start,'YYYY年MM月DD日');
+                var idtemp = $.fullCalendar.formatDate(eventData.start,'YYYY-MM-DD');
                 $('#dayPriceSet').modal();
                 $('#dayPriceSet .modal-title').html(dd);
+                $('#dayPriceSet .modal-title').attr('data-value',idtemp);
                 var temp = eventData.prices;
                 PriceListEdit(temp);
             }
@@ -901,59 +962,67 @@
                 $('#dayPriceSet tbody').append(trStr);
             }
         });
+        $('#dayPriceSet').on('click',' td .glyphicon-minus-sign',function(){
+            $(this).parent().parent().remove();
+        });
+        //读取设置的价格表单
+        function getPrices(trTemp,prices){
+            $.each(trTemp,function(x,y){
+                var SpengName = $(this).find('td:eq(0) input').val();
+                var AdutlPrice = $(this).find('td:eq(1) input').val();
+                var KidPrice = $(this).find('td:eq(2) input').val();
+                var stockQuantity = $(this).find('td:eq(3) input').val();
+                if( SpengName != '' || AdutlPrice  != '' || KidPrice  != '' || stockQuantity  != '' ){
+                    prices[x] = {
+                        SpendName: SpengName,
+                        AdultPrice: AdutlPrice,
+                        KidPrice: KidPrice,
+                        stockQuantity: stockQuantity
+                    };
+                }
+            });
+        }
 
         $('#dayPriceSet #dayConfirm').on('click',function(){
             var prices = [];
             var dayTime = $('#dayPriceSet .modal-title').attr('data-value');
             var trTemp = $('#dayPriceSet tbody tr');
             var dataTemp = {};
-            $.each(trTemp,function(x,y){
-                prices[x] = {
-                    SpendName: $(this).find('td:eq(0) input').val(),
-                    AdultPrice: $(this).find('td:eq(1) input').val(),
-                    KidPrice: $(this).find('td:eq(2) input').val(),
-                    stockQuantity: $(this).find('td:eq(3) input').val()
-                };
-            });
+            getPrices(trTemp,prices);
             var eventArr = Plan.PlanInfo.Planstockquantitys;
             var flag = false;
-            for(var i=0; i < eventArr.length; i++){
-                if(dayTime == eventArr[i].start){
-                    flag = true;
-                    Plan.PlanInfo.Planstockquantitys[i].prices = prices;
-                    break;
+            if(prices.length == 0){
+                for(var i=0; i < eventArr.length; i++){
+                    if(dayTime == eventArr[i].start){
+                        Plan.PlanInfo.Planstockquantitys.splice(i,1);
+                        break;
+                    }
+                }
+            }else{
+                for(var i=0; i < eventArr.length; i++){
+                    if(dayTime == eventArr[i].start){
+                        flag = true;
+                        Plan.PlanInfo.Planstockquantitys[i].prices = prices;
+                        break;
+                    }
+                }
+                if(!flag){
+                    dataTemp = {
+                        scheduleDate: dayTime,
+                        start:dayTime,
+                        title:'已设置',
+                        prices:prices
+                    }
+                    Plan.PlanInfo.Planstockquantitys.push(dataTemp);
                 }
             }
-            if(!flag){
-                dataTemp = {
-                    scheduleDate: dayTime,
-                    start:dayTime,
-                    title:'已设置',
-                    prices:prices
-                }
-                Plan.PlanInfo.Planstockquantitys.push(dataTemp);
-            }
+
             $('#dayPriceSet').modal('hide');
             $('body').removeClass('modal-open');
             $('.modal-backdrop').css('display','none');
             $.rogerRefresh(Plan);            
         });
 
-        $('#dayPriceSet').on('click',' td .glyphicon-minus-sign',function(){
-            $(this).parent().parent().remove();
-        });
-        $('#monthPriceSet').on('click',' td .glyphicon-plus-sign',function(){
-            var trLength = $('#monthPriceSet #addPriceItem tbody tr').length;
-            console.log(trLength);
-            if(trLength > 10){
-                alert('最多只能设置10组报价，已达到最大值！');
-            }else{
-                $('#monthPriceSet #addPriceItem tbody').append(trStr);
-            }
-        });
-        $('#monthPriceSet').on('click',' td .glyphicon-minus-sign',function(){
-            $(this).parent().parent().remove();
-        });
         //批量设置价格
         var selectDays = [];
         $('#calendar2').fullCalendar({
@@ -1002,8 +1071,9 @@
                                 selectDays.push(eventData);
                             }
                             //console.log(eventData,i,start,istyle,selectDays);
+                            var displayEv = Plan.PlanInfo.Planstockquantitys.concat(selectDays);
                             $('#calendar2').fullCalendar( 'removeEvents' );
-                            $('#calendar2').fullCalendar('renderEvents', selectDays, true);
+                            $('#calendar2').fullCalendar('renderEvents', displayEv, true);
                             $('#calendar2').fullCalendar('unselect');
                         }
                     }
@@ -1013,15 +1083,67 @@
                     click: function() {
                         selectDays = [];
                         $('#calendar2').fullCalendar( 'removeEvents' );
+                        $('#calendar2').fullCalendar('renderEvents', Plan.PlanInfo.Planstockquantitys, true);
                         $('#calendar2').fullCalendar('unselect');
+                    }
+                },
+                myCustomButton3:{
+                    text: '清除本月',
+                    click: function(){
+                        var confirmRes = confirm('确认清除本月所有已设置数据吗？确认后数据无法恢复，请谨慎操作！');
+                        if(confirmRes){
+                            var title = $('#monthPriceSet .fc-center h2').text();
+                            var monthSelf = moment(title,'MMM YYYY','en').format('YYYY-MM');
+                            var daysInMonth = moment(title, 'MMM YYYY','en').daysInMonth();
+                            var eventData,i,start,istyle;
+                            deleteDays = [];
+                            var now = new Date();
+                            var nowMD = moment(now).format('YYYY-MM');
+                            if(Date.parse(monthSelf) < Date.parse(nowMD)){
+                                alert('当前月份已过期，请重新选择月份！')
+                            }else{
+                                var startDay = 1;
+                                if(monthSelf == nowMD ){
+                                    startDay = now.getDate();
+                                }
+                                for( i=startDay; i <= daysInMonth; i++){
+                                    if(i <= 9){
+                                        istyle = "-0" + i;
+                                    }else{
+                                        istyle = "-" + i;
+                                    }
+                                    start = monthSelf + istyle;
+                                    deleteDays.push(start);
+                                }
+                                var eventAll = Plan.PlanInfo.Planstockquantitys;
+                                for(var j = 0; j < deleteDays.length; j++){
+                                    for(var k = 0; k < eventAll.length; k++){
+                                        if(deleteDays[j] == eventAll[k].start){
+                                            eventAll.splice(k,1);
+                                            break;
+                                        }
+                                    }
+                                }
+                                $('#monthPriceSet').modal('hide');
+                                $('body').removeClass('modal-open');
+                                $('.modal-backdrop').css('display','none');
+                                $.rogerRefresh(Plan);
+                            }
+                        }
                     }
                 }
             },
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: 'prevYear,nextYear myCustomButton myCustomButton2'
+                right: 'prevYear,nextYear myCustomButton myCustomButton2 myCustomButton3'
             },
+            eventSources: [
+                {
+                    events: Plan.PlanInfo.Planstockquantitys,
+                    className: 'eventSetted'
+                }
+            ],
             dayClick:function(date, jsEvent, view, resourceObj){
                 // var dd = $.fullCalendar.formatDate(date,'YYYY年MM月DD日');
                 // var bgColor = $(this).css('background-color');
@@ -1033,18 +1155,17 @@
                 // }
             },
             select: function( start, end, jsEvent, view,  resource ) {
-                var self = $(this);
                 console.log(start._d);
                 var id = start._d.getDate();
+                var startDay = moment(start._d).format('YYYY-MM-DD');
                 var eventData = {
                     title: '已选中',
                     id:id,
-                    start: start,
-                    end: end,
+                    start: startDay,
+                    //end: end,
                     className:'eventStyle'
                 };
                 console.log(id);
-                console.log(self);
                 var flag = 0;
                 for(var i = 0; i < selectDays.length; i++){
                     if(selectDays[i].id == id){
@@ -1057,12 +1178,136 @@
                     selectDays.push(eventData);
                 }
                 console.log(selectDays);
-                //$('#calendar2').fullCalendar( 'updateEvents', selectDays );无效
+                var displayEv = Plan.PlanInfo.Planstockquantitys.concat(selectDays);
                 $('#calendar2').fullCalendar( 'removeEvents' );
-                $('#calendar2').fullCalendar('renderEvents', selectDays, true);
+                $('#calendar2').fullCalendar('renderEvents', displayEv, true);
                 $('#calendar2').fullCalendar('unselect');
             },
         });
+
+        $('#monthPriceSet').on('click',' td .glyphicon-plus-sign',function(){
+            var trLength = $('#monthPriceSet #addPriceItem tbody tr').length;
+            console.log(trLength);
+            if(trLength > 10){
+                alert('最多只能设置10组报价，已达到最大值！');
+            }else{
+                $('#monthPriceSet #addPriceItem tbody').append(trStr);
+            }
+        });
+        $('#monthPriceSet').on('click',' td .glyphicon-minus-sign',function(){
+            $(this).parent().parent().remove();
+        });
+        $('#monthPriceSet #monthConfirm').on('click',function(){
+            var prices = [];
+            var trTemp = $('#monthPriceSet #addPriceItem  tbody tr');
+            getPrices(trTemp,prices);
+            if(prices.length != 0){
+                var eventArr = Plan.PlanInfo.Planstockquantitys;
+                for(var n=0; n < selectDays.length; n++){
+                    var dayTime = selectDays[n].start;
+                    var dataTemp = {};
+                    var flag = false;
+                    for(var i=0; i < eventArr.length; i++){
+                        if(dayTime == eventArr[i].start){
+                            flag = true;
+                            Plan.PlanInfo.Planstockquantitys[i].prices = prices;
+                            break;
+                        }
+                    }
+                    if(!flag){
+                        dataTemp = {
+                            scheduleDate: dayTime,
+                            start:dayTime,
+                            title:'已设置',
+                            prices:prices
+                        }
+                        Plan.PlanInfo.Planstockquantitys.push(dataTemp);
+                    }
+                }
+            }
+            $('#monthPriceSet').modal('hide');
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').css('display','none');
+            $.rogerRefresh(Plan);
+        });
+    }
+
+    var ctrlTemplateplanNew = function(Plan, realView) {
+        if(!Plan.PlanInfo.PlanSpendInfoList){
+            if(Plan.PlanSpendInfoList.length == 0){
+                Plan.PlanInfo.PlanSpendInfoList=[{
+                    SpendName:'',
+                    AdultPrice:0,
+                    KidPrice:0
+                }]
+            }else{
+                Plan.PlanInfo.PlanSpendInfoList = Plan.PlanSpendInfoList;
+            }
+            $.rogerRefresh(Plan);
+        }
+
+
+        $('img[name="needPrefix"]').each(function () {
+            var src = $(this).attr('src');
+            if(src.indexOf('group1') > -1) {
+                $(this).attr('src',Plan.IMGHOST+src);
+            }
+        })
+        // Plan.createPrices = function(Plan,Prices){
+        //     Prices.push({
+        //             PriceName:'',
+        //             AdultPrice:0,
+        //             KidPrice:0
+        //         });
+
+        //     $.rogerRefresh(Plan);
+        // };
+
+        Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+            PlanSchedule.push({
+                Spot:[{CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
+                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
+                ],
+                TravelInstruction:'',
+                DayName:''
+            });
+            Plan.PlanInfo.PlanDays ++;
+            $.rogerRefresh(Plan);
+        };
+
+        Plan.createCity = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/citychooser', {Plan:Plan, Spot:Spot});
+        };
+        Plan.createAttraction = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'attraction', TypeCn:'景点'});
+        };
+        Plan.createDelicacy = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'delicacy', TypeCn:'美食'});
+        };
+        Plan.createAccommodation = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan, Spot:Spot, Type:'accommodation',TypeCn:'酒店'});
+        };
+        Plan.changeAttraction = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'attraction', TypeCn:'景点', SpotItem:SpotItem,Replace:true});
+        };
+        Plan.changeDelicacy = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'delicacy', TypeCn:'美食', SpotItem:SpotItem,Replace:true});
+        };
+        Plan.changeAccommodation = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/spotchooser', {Plan:Plan,   Type:'accommodation', TypeCn:'酒店',SpotItem:SpotItem,Replace:true});
+         };
+        Plan.createAirport = function (Plan, Spot) {
+            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, Spot:Spot});
+        };
+        Plan.changeAirport = function (Plan, SpotItem) {
+            $.rogerTrigger('#modal', '#/airportchooser', {Plan:Plan, SpotItem:SpotItem, Replace: true});
+        };
+
+        //库存价格日历
+        priceCalendarEdit(Plan);
 
         $('#save').rogerOnceClick(Plan, function(e){
             var item = getItemWithStartCityID(Plan.PlanInfo.PlanSchedule[0].Spot);
@@ -1142,6 +1387,7 @@
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
+
     var ctrlShortplanNew = function(Plan, realView) {
 
         if(!Plan.PlanInfo.PlanSpendInfoList){
@@ -1163,15 +1409,15 @@
                 $(this).attr('src',Plan.IMGHOST+src);
             }
         });
-        Plan.createPrices = function(Plan,Prices){
-            Prices.push({
-                    PriceName:'',
-                    AdultPrice:0,
-                    KidPrice:0
-                });
+        // Plan.createPrices = function(Plan,Prices){
+        //     Prices.push({
+        //             PriceName:'',
+        //             AdultPrice:0,
+        //             KidPrice:0
+        //         });
 
-            $.rogerRefresh(Plan);
-        };
+        //     $.rogerRefresh(Plan);
+        // };
         Plan.createDay = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanShort.push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
             $.rogerRefresh(Plan);
@@ -1187,6 +1433,9 @@
         Plan.createCity = function (Plan, CityID) {
             $.rogerTrigger('#modal', '#/citychooser2', {Plan:Plan, CityID:CityID});
         };
+
+        //库存价格日历
+        priceCalendarEdit(Plan);
 
 
         $('#save').rogerOnceClick(Plan, function(e){
@@ -1539,6 +1788,7 @@
                     }
                 ];
             }
+
             $.rogerRefresh(returnvalue);
         });
         return returnvalue;

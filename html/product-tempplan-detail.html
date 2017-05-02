@@ -198,7 +198,7 @@
                 </ul>
               </div>
             </div><!-- end 预定须知结束 -->
-            <div class="feature featureAlone clearfix" id="attention">
+            <div class="feature featureAlone clearfix" id="">
               <div class="col-md-2">
                 <div class="tittle">费用包含</div>
               </div>
@@ -208,7 +208,7 @@
                 </ul>
               </div>
             </div><!-- end 预定须知结束 -->
-            <div class="feature featureAlone clearfix" id="attention">
+            <div class="feature featureAlone clearfix" id="">
               <div class="col-md-2">
                 <div class="tittle">费用自理</div>
               </div>
@@ -218,7 +218,7 @@
                 </ul>
               </div>
             </div><!-- end 预定须知结束 -->
-            <div class="feature featureAlone clearfix" id="attention">
+            <div class="feature featureAlone clearfix" id="">
               <div class="col-md-2">
                 <div class="tittle">签证须知</div>
               </div>
@@ -228,7 +228,7 @@
                 </ul>
               </div>
             </div><!-- end 预定须知结束 -->
-            <div class="feature featureAlone clearfix" id="attention">
+            <div class="feature featureAlone clearfix" id="">
               <div class="col-md-2">
                 <div class="tittle">注意事项</div>
               </div>
@@ -238,8 +238,53 @@
                 </ul>
               </div>
             </div><!-- end 预定须知结束 -->
+
           </div>
         </div> <!-- end plandetail-main -->
+
+        <!--编辑报价-->
+        <div class="featureAlone row">
+          <h4>查看报价</h4>
+          <div class="col-sm-offset-2 col-sm-8 col-md-offset-1 col-md-8">
+            <div class="col-sm-10 col-md-8" id="calendar"></div>
+          </div>
+        </div>
+
+        <!-- 单日价格设置弹出框 -->
+        <div id="dayPriceSet" class="modal fade">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">
+                  <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                </button>
+                <h4 class="modal-title clearfix text-center">查看价格详情</h4>
+              </div>
+              <div class="modal-body">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <td>报价名称</td>
+                      <td>成人价</td>
+                      <td>儿童价</td>
+                      <td>库存</td>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="text" placeholder="请输入"/></td>
+                      <td><input type="text" placeholder="请输入"/></td>
+                      <td><input type="text" placeholder="请输入"/></td>
+                      <td><input type="text" placeholder="请输入"/></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div> <!-- end modal-body -->
+            </div><!-- /.modal-content -->
+          </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
+        <!-- 单日价格设置弹出框结束 -->
+
         <a href="#/templateplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}"  class="btn  btn-warning">编辑</a>
       </div>
     </div> <!-- end plandetail-page -->

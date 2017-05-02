@@ -66,7 +66,7 @@
           </div>
         </div> <!-- end 商品详情product-detail -->
 
-        <div class="vihicle-list">
+        <div class="product-detail price-detail vihicle-list">
           <h2>机场详情</h2>
           {{each(i,p) Airports}}
           <div class="row">
@@ -91,11 +91,23 @@
         </div><!-- end 车辆轮播图vihicle-list -->
         
         <div class="service-description">
-          <h2>服务说明</h2>
+          <h2>服务描述</h2>
           <div class="des">
-            <p>
-              ${DetailMain[0].description}
-            </p>
+            <ul class="tips-description">
+              {{each(i,p) TravelogueDetail}}
+              <li>
+                {{if label!=null}}<h2>${label}<br><span></span></h2>{{/if}}
+                {{if picURL!=null}}<img src="${ $data.IMGHOST }${picURL}" >{{/if}}
+                {{if content!=null}}
+                <div class="tipsdes">
+                  <p>
+                    ${content}
+                  </p>
+                </div>
+                {{/if}}
+              </li>
+              {{/each}}
+            </ul>
           </div>
         </div><!-- end 服务描述service-description -->
 
