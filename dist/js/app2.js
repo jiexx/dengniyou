@@ -1067,7 +1067,7 @@
                     data.PlanInfo.KidPrice = minKidPrice;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
 
-                        if(respJSON.UserPlan.insertId && data.PlanInfo.Planstockquantitys){
+                        if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
                             var PlanstockquantitysInsert = new Array();
                             Planstockquantitys = data.PlanInfo.Planstockquantitys;
                             for(var day in Planstockquantitys){
@@ -1077,7 +1077,7 @@
                                 var prices = PlanstockquantitysDay["prices"]
                                 for(var pricesindex in prices){
                                     prices[pricesindex]["scheduleDate"] = scheduleDate;
-                                    prices[pricesindex]["planID"] = respJSON.UserPlan.insertId;;
+                                    prices[pricesindex]["planID"] = respJSON.PlanInfo.insertId;;
                                     PlanstockquantitysInsert.push(prices[pricesindex]);
                                 }
 
@@ -1236,7 +1236,7 @@
 
                 $.rogerPost('/new/shortplan', data, function(respJSON){
 
-                    if(respJSON.UserPlan.insertId && data.PlanInfo.Planstockquantitys){
+                    if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
                         var PlanstockquantitysInsert = new Array();
                         Planstockquantitys = data.PlanInfo.Planstockquantitys;
                         for(var day in Planstockquantitys){
@@ -1246,7 +1246,7 @@
                             var prices = PlanstockquantitysDay["prices"]
                             for(var pricesindex in prices){
                                 prices[pricesindex]["scheduleDate"] = scheduleDate;
-                                prices[pricesindex]["planID"] = respJSON.UserPlan.insertId;;
+                                prices[pricesindex]["planID"] = respJSON.PlanInfo.insertId;;
                                 PlanstockquantitysInsert.push(prices[pricesindex]);
                             }
 
