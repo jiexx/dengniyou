@@ -1067,21 +1067,23 @@
                     data.PlanInfo.KidPrice = minKidPrice;
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
 
-                        if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
+                        if(respJSON.UserPlan.insertId && data.PlanInfo.Planstockquantitys){
                             var PlanstockquantitysInsert = new Array();
-                            for(var planstockquantityDay in data.PlanInfo.Planstockquantitys){
-                                var  scheduleDate = planstockquantityDay["scheduleDate"];
+                            Planstockquantitys = data.PlanInfo.Planstockquantitys;
+                            for(var day in Planstockquantitys){
+                                var PlanstockquantitysDay = Planstockquantitys[day];
+                                var  scheduleDate = PlanstockquantitysDay["scheduleDate"];
                                 scheduleDate = scheduleDate.replace(new RegExp("-","gm"),'');
-                                var prices = planstockquantityDay["prices"]
-                                for(var planstockquantity in prices){
-                                    planstockquantity["scheduleDate"] = scheduleDate;
-                                    planstockquantity["planID"] = respJSON.PlanInfo.insertId;
-                                    PlanstockquantitysInsert.push(planstockquantity);
+                                var prices = PlanstockquantitysDay["prices"]
+                                for(var pricesindex in prices){
+                                    prices[pricesindex]["scheduleDate"] = scheduleDate;
+                                    prices[pricesindex]["planID"] = respJSON.UserPlan.insertId;;
+                                    PlanstockquantitysInsert.push(prices[pricesindex]);
                                 }
 
                             }
 
-                            $.rogerPost('/new/stock', PlanstockquantitysInsert, function (respJSONInner) {
+                            $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '模板方案成功'});
                                 $('#show').removeClass("btn btn-warning invisible");
                                 $('#show').addClass("btn btn-warning");

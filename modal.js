@@ -13,7 +13,7 @@ var pool  = mysql.createPool({
 	connectionLimit: 500
 //	acquireTimeout: 30000
 });
-var IMG_HOST = "http://pic.dengnilvyou.com.cn/";
+var IMG_HOST = config.IMG_HOST;
 
 function doSql(funcArgu, onFinish) {
 	pool.getConnection(function(err, conn) {
