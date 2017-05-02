@@ -1235,12 +1235,34 @@
                 data.PlanInfo.KidPrice = minKidPrice;
 
                 $.rogerPost('/new/shortplan', data, function(respJSON){
-                    $.rogerNotice({Message:'快捷方案发布成功'});
-                    $('#show').removeClass("btn btn-warning invisible");
-                    $('#show').addClass("btn btn-warning");
-                    $('#show').click(function (e) {
-                        $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
-                    });
+
+                    if(respJSON.UserPlan.insertId && data.PlanInfo.Planstockquantitys){
+                        var PlanstockquantitysInsert = new Array();
+                        Planstockquantitys = data.PlanInfo.Planstockquantitys;
+                        for(var day in Planstockquantitys){
+                            var PlanstockquantitysDay = Planstockquantitys[day];
+                            var  scheduleDate = PlanstockquantitysDay["scheduleDate"];
+                            scheduleDate = scheduleDate.replace(new RegExp("-","gm"),'');
+                            var prices = PlanstockquantitysDay["prices"]
+                            for(var pricesindex in prices){
+                                prices[pricesindex]["scheduleDate"] = scheduleDate;
+                                prices[pricesindex]["planID"] = respJSON.UserPlan.insertId;;
+                                PlanstockquantitysInsert.push(prices[pricesindex]);
+                            }
+
+                        }
+
+                        $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":PlanstockquantitysInsert}}, function (respJSONInner) {
+                            $.rogerNotice({Message: '快捷方案发布成功'});
+                            $('#show').removeClass("btn btn-warning invisible");
+                            $('#show').addClass("btn btn-warning");
+                            $('#show').click(function (e) {
+                                $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                            })
+                        });
+                    }
+
+
                     //$('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
                 });
             }else {
