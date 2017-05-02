@@ -1,17 +1,52 @@
 {
 	"PlanInfo": {
 		"sql": "SELECT PlanID,PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,IMUserID,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate FROM traveluserdb.tab_planinfo WHERE PlanID=?;",
-		"params":["PlanID"],
-		"stoa":["PicURL","CarURL"],
-		"Picture": {"sql": "SELECT PicUrl AS Pics FROM traveluserdb.tab_planpicture WHERE PlanID=?;",	"params":["PlanID"],"findkey":"PlanID","otoa":["Pics"] },
-		"Summary":{"sql":"SELECT * FROM traveluserdb.tab_plansummary WHERE PlanID=?;",	"params":["PlanID"],"findkey":"PlanID","stoa":["PlanLabels"]},
-		"PlanShort":{
-			"sql":"SELECT * FROM traveluserdb.tab_planshort WHERE PlanID = ?;",
-			"params":["PlanID"],
+		"params": [
+			"PlanID"
+		],
+		"stoa": [
+			"PicURL",
+			"CarURL"
+		],
+		"Picture": {
+			"sql": "SELECT PicUrl AS Pics FROM traveluserdb.tab_planpicture WHERE PlanID=?;",
+			"params": [
+				"PlanID"
+			],
+			"findkey": "PlanID",
+			"otoa": [
+				"Pics"
+			]
+		},
+		"Summary": {
+			"sql": "SELECT * FROM traveluserdb.tab_plansummary WHERE PlanID=?;",
+			"params": [
+				"PlanID"
+			],
+			"findkey": "PlanID",
+			"stoa": [
+				"PlanLabels"
+			]
+		},
+		"PlanShort": {
+			"sql": "SELECT * FROM traveluserdb.tab_planshort WHERE PlanID = ?;",
+			"params": [
+				"PlanID"
+			],
 			"findkey": "PlanID",
 			"isarray": true
+		},
+		"Planstockquantitys": {
+			"sql": "select * from traveluserdb.`vw_/plan/stockquantity` where planID=? ",
+			"params": [
+				"PlanID"
+			]
 		}
 	},
-
-	"PlanSpendInfoList": {"sql": "select SpendID, SpendName, PlanID, AdultPrice, KidPrice from traveluserdb.tab_planspend  where planID=? order by SpendID asc",	"params":["PlanID"]}
+	"PlanSpendInfoList": {
+		"sql": "select SpendID, SpendName, PlanID, AdultPrice, KidPrice from traveluserdb.tab_planspend  where planID=? order by SpendID asc",
+		"params": [
+			"PlanID"
+		]
+	}
 }
