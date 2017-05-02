@@ -590,7 +590,14 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage .tips-mainbody .tips-description li img{width: 100%; height: auto; margin-bottom: 10px;}
 .detailpage .tips-mainbody .tips-description li .tipsdes p{padding: 20px 50px; text-indent: 2em; line-height: 24px; font-size: 14px; color: #666;}
 /*end 攻略预览*/
+
+/*方案价格日历*/
+.plandetail-page .fc-past{background-color: #ccc;opacity: 0.3;}
+.plandetail-page .fc-day-number {font-size: 20px; display: inline-block; width: 100%; text-align: center; }
+.plandetail-page .eventSetted{text-align: center;}
 /*end 导游端预览页*/
+
+
 
 
 /*导游端编辑类页面*/
@@ -687,6 +694,14 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .baseInfo form input[type="radio"]{width:40%;}
 /*景点编辑*/
 .editPage .spotDescription textarea{border:1px solid #CCC; height: 200px; margin-bottom: 20px; padding: 15px;}
+
+/*方案价格日历*/
+.editPage .eventStyle{height:20px; width:40px; border-radius: 10px; background-color:#008000; line-height: 20px; text-align: center; margin:0 auto;}
+.editPage .fc-past{background-color: #ccc;opacity: 0.3;}
+.editPage .fc-day-number {font-size: 20px; display: inline-block; width: 100%; text-align: center; }
+.editPage #monthPriceSet table td input{width:100px;}
+.editPage .eventSetted{text-align: center;}
+.editPage #monthPriceSet, .editPage #dayPriceSet{margin-bottom: 0;} 
 
 /*导游端编辑类页面结束*/
 

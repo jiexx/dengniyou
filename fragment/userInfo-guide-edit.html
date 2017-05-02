@@ -264,19 +264,36 @@
             {{each $data.DetailMain.hasLanguageForshow}}
             <li class="row" style="margin:0;">
               <div class="form-group col-md-3" >
-                <div class="">
-                  <input type="text" class="form-control"   value="${$data.DetailMain.hasLanguageForshow[$index].item1}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item1" placeholder="语言">
-                </div>
+                <select class="form-control" id="LanguageKindChoice">
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '中文普通话'}}<option selected>中文普通话</option>{{else}}<option>中文普通话</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '中文粤语'}}<option selected>中文粤语</option>{{else}}<option>中文粤语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '英语'}}<option selected>英语</option>{{else}}<option>英语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '法语'}}<option selected>法语</option>{{else}}<option>法语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '德语'}}<option selected>德语</option>{{else}}<option>德语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '西班牙语'}}<option selected>西班牙语</option>{{else}}<option>西班牙语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '葡萄牙语'}}<option selected>葡萄牙语</option>{{else}}<option>葡萄牙语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '意大利语'}}<option selected>意大利语</option>{{else}}<option>意大利语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '俄语'}}<option selected>俄语</option>{{else}}<option>俄语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '日语'}}<option selected>日语</option>{{else}}<option>日语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '韩语'}}<option selected>韩语</option>{{else}}<option>韩语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '泰语'}}<option selected>泰语</option>{{else}}<option>泰语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '阿拉伯语'}}<option selected>阿拉伯语</option>{{else}}<option>阿拉伯语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '波斯语'}}<option selected>波斯语</option>{{else}}<option>波斯语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item1 == '其他'}}<option selected>其他</option>{{else}}<option>其他</option>{{/if}}
+                </select>
+                <input type="hidden" class="form-control" id="LanguageKind" value="${$data.DetailMain.hasLanguageForshow[$index].item1}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item1" placeholder="语言">
               </div>
               <div class="form-group col-md-3">
-                <div class="">
-                  <input type="text" class="form-control"   value="${$data.DetailMain.hasLanguageForshow[$index].item2}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item2" placeholder="水平">
-                </div>
+                <select class="form-control" id="LanguageLevelChoice">
+                  {{if DetailMain.hasLanguageForshow[$index].item2 == '母语'}}<option selected>母语</option>{{else}}<option>母语</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item2 == '精通'}}<option selected>精通</option>{{else}}<option>精通</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item2 == '熟练'}}<option selected>熟练</option>{{else}}<option>熟练</option>{{/if}}
+                  {{if DetailMain.hasLanguageForshow[$index].item2 == '了解'}}<option selected>了解</option>{{else}}<option>了解</option>{{/if}}
+                </select>
+                <input type="hidden" class="form-control" id="LanguageLevel" value="${$data.DetailMain.hasLanguageForshow[$index].item2}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item2" placeholder="水平">
               </div>
               <div class="form-group col-md-3">
-                <div class="">
-                  <input type="text" class="form-control"   value="${$data.DetailMain.hasLanguageForshow[$index].item3}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item3" placeholder="简单描述">
-                </div>
+                <input type="text" class="form-control"   value="${$data.DetailMain.hasLanguageForshow[$index].item3}"  data-value="/DetailMain/hasLanguageForshow/${$index}/item3" placeholder="简单描述">
               </div>
               <a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/hasLanguageForshow/${$index}"></a>
             </li>
@@ -297,24 +314,39 @@
             {{each $data.DetailMain.drivingLicensesForshow}}
             <li class="row" style="margin:0;">
               <div class="form-group col-md-3" >
-                <div class="">
-                  <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item1}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item1" placeholder="获得年份">
-                </div>
+                <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item1}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item1" placeholder="获得年份">
               </div>
               <div class="form-group col-md-3">
-                <div class="">
-                  <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item2}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item2" placeholder="颁发国家">
-                </div>
+                <select class="form-control" id="drivingCountryChoice">
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '中国'}}<option selected>中国</option>{{else}}<option>中国</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '中国香港'}}<option selected>中国香港</option>{{else}}<option>中国香港</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '中国台湾'}}<option selected>中国台湾</option>{{else}}<option>中国台湾</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '中国澳门'}}<option selected>中国澳门</option>{{else}}<option>中国澳门</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '日本'}}<option selected>日本</option>{{else}}<option>日本</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '韩国'}}<option selected>韩国</option>{{else}}<option>韩国</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '英联邦'}}<option selected>英联邦</option>{{else}}<option>英联邦</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '欧盟'}}<option selected>欧盟</option>{{else}}<option>欧盟</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '英国'}}<option selected>英国</option>{{else}}<option>英国</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '瑞士'}}<option selected>瑞士</option>{{else}}<option>瑞士</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '美国'}}<option selected>美国</option>{{else}}<option>美国</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '俄罗斯'}}<option selected>俄罗斯</option>{{else}}<option>俄罗斯</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item2 == '其他'}}<option selected>其他</option>{{else}}<option>其他</option>{{/if}}
+                </select>
+                <input type="hidden" class="form-control" id="drivingCountry" value="${$data.DetailMain.drivingLicensesForshow[$index].item2}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item2" placeholder="颁发国家">
               </div>
               <div class="form-group col-md-3">
-                <div class="">
-                  <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item3}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item3" placeholder="驾照等级">
-                </div>
+                <select class="form-control" id="drivingLevelChoice">
+                  {{if DetailMain.drivingLicensesForshow[$index].item3 == '小型客车'}}<option selected>小型客车</option>{{else}}<option>小型客车</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item3 == '大型客车'}}<option selected>大型客车</option>{{else}}<option>大型客车</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item3 == '大型货车'}}<option selected>大型货车</option>{{else}}<option>大型货车</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item3 == '摩托车'}}<option selected>摩托车</option>{{else}}<option>摩托车</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item3 == '赛车'}}<option selected>赛车</option>{{else}}<option>赛车</option>{{/if}}
+                  {{if DetailMain.drivingLicensesForshow[$index].item3 == '其他'}}<option selected>其他</option>{{else}}<option>其他</option>{{/if}}
+                </select>
+                <input type="hidden" class="form-control" id="drivingLevel" value="${$data.DetailMain.drivingLicensesForshow[$index].item3}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item3" placeholder="驾照等级">
               </div>
               <div class="form-group col-md-3">
-                <div class="">
-                  <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item4}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item4" placeholder="驾照号码">
-                </div>
+                <input type="text" class="form-control"   value="${$data.DetailMain.drivingLicensesForshow[$index].item4}"  data-value="/DetailMain/drivingLicensesForshow/${$index}/item4" placeholder="驾照号码">
               </div>
               <a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/DetailMain/drivingLicensesForshow/${$index}"></a>
             </li>
@@ -393,4 +425,23 @@
   </div>
 
 </div>
+
+<script>
+  $(function(){
+    selectChoice('LanguageKindChoice','LanguageKind');
+    selectChoice('LanguageLevelChoice','LanguageLevel');
+    selectChoice('drivingCountryChoice','drivingCountry');
+    selectChoice('drivingLevelChoice','drivingLevel');
+    selectChoice('LanguageLevelChoice','LanguageLevel');
+
+    function selectChoice(selectID,inputID){
+      $('#'+selectID).on('change',function(){
+        var temp = $(this).find('option:selected').text();
+        $('#'+inputID).val(temp).trigger('keyup');     
+      });
+    }
+    
+    
+  });
+</script>
 

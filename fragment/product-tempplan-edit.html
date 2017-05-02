@@ -1,379 +1,409 @@
 <div class="container">
 	<div class="editPage">
 	<!-- 方案基本信息 -->
-	<div class="baseInfo">
-		<ul class="breadcrumb">
-		  <li><a href="#">产品管理</a> <span class="divider"></span></li>
-		  <li><a href="#">经典方案</a> <span class="divider"></span></li>
-		  <li class="active">模板方案编辑</li>
-		</ul>
+		<div class="baseInfo">
+			<ul class="breadcrumb">
+			  <li><a href="#">产品管理</a> <span class="divider"></span></li>
+			  <li><a href="#">经典方案</a> <span class="divider"></span></li>
+			  <li class="active">模板方案编辑</li>
+			</ul>
 
-		<h4>基本信息</h4>
-		<form class="form-horizontal">
-		  <div class="form-group">
-		    <label   class="col-sm-2 col-md-1 control-label">方案名称</label>
-		    <div class="col-sm-10 col-md-11">
-		      <input type="text" class="form-control"  value="${$data.PlanInfo.PlanName}"  data-value="/PlanInfo/PlanName" placeholder="不能超过24个字符">
-		    </div>
-		  </div>
-		  <!-- <div class="form-group">
-		    <label   class="col-sm-2 col-md-1 control-label">成人价格</label>
-		    <div class="col-sm-10 col-md-11">
-				<input type="text" class="form-control"   value="${$data.PlanInfo.AdultPrice}"  data-value="/PlanInfo/AdultPrice" placeholder="请输入数字"> 元/人
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label   class="col-sm-2 col-md-1 control-label">儿童价格</label>
-		    <div class="col-sm-10 col-md-11">
-				<input type="text" class="form-control"  value="${$data.PlanInfo.KidPrice}" data-value="/PlanInfo/KidPrice"  placeholder="请输入数字"> 元/人
-		    </div>
-		  </div> -->
-		  <div class="form-group">
-		    <label   class="col-sm-2 col-md-1 control-label">方案价格</label>
-		    <div class="col-sm-10 col-md-11">
-		      <ul class="morePrices">
-				  {{each $data.PlanInfo.PlanSpendInfoList}}
-				  	<li class="col-md-3">
-				  		<div class="form-group" style="margin-top: 12px;">
-				  			<label   class="col-md-5 control-label">套餐名称</label>
-						    <div class="col-md-7">
-								<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].SpendName}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/SpendName" placeholder="新套餐名称">
-						    </div>
-				  		</div>
-				  		<div class="form-group">
-				  			<label   class="col-md-5 control-label">成人价格</label>
-						    <div class="col-md-7">
-								<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].AdultPrice}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/AdultPrice" placeholder="">
-						    </div>
-				  		</div>
-				  		<div class="form-group">
-				  			<label   class="col-md-5 control-label">儿童价格</label>
-						    <div class="col-md-7">
-								<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].KidPrice}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/KidPrice" placeholder="">
-						    </div>
-				  		</div>
-				  		<a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/PlanSpendInfoList/${$index}"></a>
-				  	</li>
-				  {{/each}}
-				  <li class="col-md-3"><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanSpendInfoList/-" data-action="createPrices"> + </div></li>
-			  </ul>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label   class="col-sm-2 col-md-1 control-label">方案标签</label>
-		    <div class="col-sm-10 col-md-11">
-		      <ul class="label-base">
-				  {{each $data.PlanInfo.Summary.PlanLabels}}
-				    <li><input type="text" value="${$data.PlanInfo.Summary.PlanLabels[$index]}" data-value="/PlanInfo/Summary/PlanLabels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/Summary/PlanLabels/${$index}"></a></li>
-				  {{/each}}
-				  <li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/Summary/PlanLabels-" data-action="createLabel"> + </div></li>
-			  </ul>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label   class="col-sm-2 col-md-1 control-label">方案特色</label>
-		    <div class="col-sm-10 col-md-11">
-				<textarea name=""  data-value="/PlanInfo/Summary/PlanFeature" class="form-control" rows="5" placeholder="请输入不少于300字描述">${$data.PlanInfo.Summary.PlanFeature}</textarea>
-		    </div>
-		  </div>
-		</form>
-	</div>
-	<!-- 方案基本信息结束 -->
+			<h4>基本信息</h4>
+			<form class="form-horizontal">
+			  <div class="form-group">
+			    <label   class="col-sm-2 col-md-1 control-label">方案名称</label>
+			    <div class="col-sm-10 col-md-11">
+			      <input type="text" class="form-control"  value="${$data.PlanInfo.PlanName}"  data-value="/PlanInfo/PlanName" placeholder="不能超过24个字符">
+			    </div>
+			  </div>
+			  <!-- <div class="form-group">
+			    <label   class="col-sm-2 col-md-1 control-label">成人价格</label>
+			    <div class="col-sm-10 col-md-11">
+					<input type="text" class="form-control"   value="${$data.PlanInfo.AdultPrice}"  data-value="/PlanInfo/AdultPrice" placeholder="请输入数字"> 元/人
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label   class="col-sm-2 col-md-1 control-label">儿童价格</label>
+			    <div class="col-sm-10 col-md-11">
+					<input type="text" class="form-control"  value="${$data.PlanInfo.KidPrice}" data-value="/PlanInfo/KidPrice"  placeholder="请输入数字"> 元/人
+			    </div>
+			  </div> -->
+			  <!-- <div class="form-group">
+			    <label   class="col-sm-2 col-md-1 control-label">方案价格</label>
+			    <div class="col-sm-10 col-md-11">
+			      <ul class="morePrices">
+					  {{each $data.PlanInfo.PlanSpendInfoList}}
+					  	<li class="col-md-3">
+					  		<div class="form-group" style="margin-top: 12px;">
+					  			<label   class="col-md-5 control-label">套餐名称</label>
+							    <div class="col-md-7">
+									<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].SpendName}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/SpendName" placeholder="新套餐名称">
+							    </div>
+					  		</div>
+					  		<div class="form-group">
+					  			<label   class="col-md-5 control-label">成人价格</label>
+							    <div class="col-md-7">
+									<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].AdultPrice}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/AdultPrice" placeholder="">
+							    </div>
+					  		</div>
+					  		<div class="form-group">
+					  			<label   class="col-md-5 control-label">儿童价格</label>
+							    <div class="col-md-7">
+									<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].KidPrice}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/KidPrice" placeholder="">
+							    </div>
+					  		</div>
+					  		<a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/PlanSpendInfoList/${$index}"></a>
+					  	</li>
+					  {{/each}}
+					  <li class="col-md-3"><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanSpendInfoList/-" data-action="createPrices"> + </div></li>
+				  </ul>
+			    </div>
+			  </div> -->
+			  <div class="form-group">
+			    <label   class="col-sm-2 col-md-1 control-label">方案标签</label>
+			    <div class="col-sm-10 col-md-11">
+			      <ul class="label-base">
+					  {{each $data.PlanInfo.Summary.PlanLabels}}
+					    <li><input type="text" value="${$data.PlanInfo.Summary.PlanLabels[$index]}" data-value="/PlanInfo/Summary/PlanLabels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/Summary/PlanLabels/${$index}"></a></li>
+					  {{/each}}
+					  <li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/Summary/PlanLabels-" data-action="createLabel"> + </div></li>
+				  </ul>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label   class="col-sm-2 col-md-1 control-label">方案特色</label>
+			    <div class="col-sm-10 col-md-11">
+					<textarea name=""  data-value="/PlanInfo/Summary/PlanFeature" class="form-control" rows="5" placeholder="请输入不少于300字描述">${$data.PlanInfo.Summary.PlanFeature}</textarea>
+			    </div>
+			  </div>
+			</form>
+		</div>
+		<!-- 方案基本信息结束 -->
 
-	<!-- 相册上传 -->
-	<div class="photoInfo">
-		<h4>相册信息</h4>
-		<div class="row">
-			<div class="col-md-1 ">相册上传:</div>
-			<div class="col-md-11 row" >
-				{{each $data.PlanInfo.Picture.Pics}}
-				<div class="col-md-3">
-					<div class="imgBox">
-						<img name="needPrefix" src="${$data.PlanInfo.Picture.Pics[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/Picture/Pics/${$index}"></a>
+		<!-- 相册上传 -->
+		<div class="photoInfo">
+			<h4>相册信息</h4>
+			<div class="row">
+				<div class="col-md-1 ">相册上传:</div>
+				<div class="col-md-11 row" >
+					{{each $data.PlanInfo.Picture.Pics}}
+					<div class="col-md-3">
+						<div class="imgBox">
+							<img name="needPrefix" src="${$data.PlanInfo.Picture.Pics[$index]}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/Picture/Pics/${$index}"></a>
+						</div>
+					</div>
+					{{/each}}
+					<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/Picture/Pics" data-limit="8">
+						<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/Picture/Pics/-" data-action="image">+</div>
 					</div>
 				</div>
-				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/Picture/Pics" data-limit="8">
-					<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/Picture/Pics/-" data-action="image">+</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-1 ">封面照片:</div>
+				<div class="col-md-11 row" >
+					{{each $data.PlanInfo.PicURL}}
+					<div class="col-md-3">
+						<div class="imgBox">
+							<img name="needPrefix" src="${$data.PlanInfo.PicURL[$index]}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PicURL/${$index}" ></a>
+						</div>
+					</div>
+					{{/each}}
+					<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/PicURL" data-limit="1">
+						<div class="imgBox addImg"  data-op="change" data-pointer="/PlanInfo/PicURL/-" data-action="image" >+</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<div class="row">
+				<div class="col-md-1 ">车辆照片:</div>
+				<div class="col-md-11 row" >
+					{{each $data.PlanInfo.CarURL}}
+					<div class="col-md-3">
+						<div class="imgBox">
+							<img name="needPrefix" src="${$data.PlanInfo.CarURL[$index]}">
+							<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CarURL/${$index}"></a>
+						</div>
+					</div>
+					{{/each}}
+					<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/CarURL" data-limit="1">
+						<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/CarURL/-" data-action="image">+</div>
+					</div>
 				</div>
 			</div>
 		</div>
-		<br>
-		<div class="row">
-			<div class="col-md-1 ">封面照片:</div>
-			<div class="col-md-11 row" >
-				{{each $data.PlanInfo.PicURL}}
-				<div class="col-md-3">
-					<div class="imgBox">
-						<img name="needPrefix" src="${$data.PlanInfo.PicURL[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PicURL/${$index}" ></a>
-					</div>
-				</div>
-				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/PicURL" data-limit="1">
-					<div class="imgBox addImg"  data-op="change" data-pointer="/PlanInfo/PicURL/-" data-action="image" >+</div>
-				</div>
-			</div>
-		</div>
-		<br>
-		<div class="row">
-			<div class="col-md-1 ">车辆照片:</div>
-			<div class="col-md-11 row" >
-				{{each $data.PlanInfo.CarURL}}
-				<div class="col-md-3">
-					<div class="imgBox">
-						<img name="needPrefix" src="${$data.PlanInfo.CarURL[$index]}">
-						<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/CarURL/${$index}"></a>
-					</div>
-				</div>
-				{{/each}}
-				<div class="col-md-3" data-op="toggle" data-pointer="/PlanInfo/CarURL" data-limit="1">
-					<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/CarURL/-" data-action="image">+</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- 相册上传结束 -->
+		<!-- 相册上传结束 -->
 
-	<!-- 行程信息（方案） -->
-	<div class="schedule">
-		<h4>行程信息</h4>
-		<div class="row">
-			<div class="col-md-1 col-sm-2">
-				<div class="list-group">
-				{{for $data.PlanInfo.PlanSchedule.length}}
-				  <a href="#day1" class="list-group-item active">第${i}天</a>
-				{{/for}}
-				  <a href="#" id="newOneDay" class="list-group-item" data-op="change" data-pointer="/PlanInfo/PlanSchedule/-" data-action="createDay">+</a>
+		<!-- 行程信息（方案） -->
+		<div class="schedule">
+			<h4>行程信息</h4>
+			<div class="row">
+				<div class="col-md-1 col-sm-2">
+					<div class="list-group">
+					{{for $data.PlanInfo.PlanSchedule.length}}
+					  <a href="#day1" class="list-group-item active">第${i}天</a>
+					{{/for}}
+					  <a href="#" id="newOneDay" class="list-group-item" data-op="change" data-pointer="/PlanInfo/PlanSchedule/-" data-action="createDay">+</a>
+					</div>
 				</div>
-			</div>
-			<div class="col-md-11 col-sm-10">
-				<!-- 一天行程 -->
-				{{each(k, day) $data.PlanInfo.PlanSchedule}}
-				<div class="dayBox" >
-					<h3>第${k+1}天<span class="orangeBtn" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}" >-</span></h3>
-					<div class="addCity">
-						<h4>添加城市</h4>
-						<ul class="label-base">
+				<div class="col-md-11 col-sm-10">
+					<!-- 一天行程 -->
+					{{each(k, day) $data.PlanInfo.PlanSchedule}}
+					<div class="dayBox" >
+						<h3>第${k+1}天<span class="orangeBtn" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}" >-</span></h3>
+						<div class="addCity">
+							<h4>添加城市</h4>
+							<ul class="label-base">
+								{{each(n,v) day.Spot}}
+								{{if (v.ScheduleType==0) }}
+								<li><input type="text" value="${CountryNameCn} ${CityNameCn}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}" ></a></li>
+								{{/if}}
+								{{/each}}
+								<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createCity"> + </div></li>
+							</ul>
+						</div>
+						<div class="addDetails addAirport">
+							<h4>添加机场<span class="orangeBtn" data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAirport">+</span></h4>
 							{{each(n,v) day.Spot}}
-							{{if (v.ScheduleType==0) }}
-							<li><input type="text" value="${CountryNameCn} ${CityNameCn}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}" ></a></li>
+							{{if (v.ScheduleType==1) }}
+							<ul class="airports">
+								<li>
+									<div class="planeIcon">
+										<img src="../img/airPlaneIcon.png" alt="">
+									</div>
+									<div class="planeText">
+										${AirportCode} ${AirportNameCn}<br>
+										${AirportNameEn}
+									</div>
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAirport">换</span>
+									<span class="glyphicon glyphicon-trash" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}" ></span>
+								</li>
+							</ul>
 							{{/if}}
 							{{/each}}
-							<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createCity"> + </div></li>
-						</ul>
+						</div>
+						<div class="addDetails">
+							<h4>添加景点
+								<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAttraction">+</span>
+							</h4>
+							{{each(n,v) day.Spot}}
+							{{if (v.ScheduleType==2) }}
+							<ul class="details" data-i="${$index}">
+								<li>
+									<div class="detailImg">
+										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+									</div>
+									<div class="detailText">
+										<h5>${SpotName} ${SpotLocalName}</h5>
+										<p>${CountryNameCn}：${CityNameCn}</p>
+										<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
+									</div>
+									{{if v.ScheduleType==2}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
+									{{/if}}
+									{{if v.ScheduleType==3}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
+									{{/if}}
+									{{if v.ScheduleType==4}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
+									{{/if}}
+									<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
+								</li>
+							</ul>
+							{{/if}}
+							{{/each}}
+						</div>
+						<div class="addDetails">
+							<h4>添加美食
+								<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createDelicacy">+</span>
+							</h4>
+							{{each(n,v) day.Spot}}
+							{{if (v.ScheduleType==3) }}
+							<ul class="details" data-i="${$index}">
+								<li>
+									<div class="detailImg">
+										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+									</div>
+									<div class="detailText">
+										<h5>${SpotName} ${SpotLocalName}</h5>
+										<p>${CountryNameCn}：${CityNameCn}</p>
+										<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
+									</div>
+									{{if v.ScheduleType==2}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
+									{{/if}}
+									{{if v.ScheduleType==3}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
+									{{/if}}
+									{{if v.ScheduleType==4}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
+									{{/if}}
+									<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
+								</li>
+							</ul>
+							{{/if}}
+							{{/each}}
+						</div>
+						<div class="addDetails">
+							<h4>添加住宿
+								<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAccommodation">+</span>
+							</h4>
+							{{each(n,v) day.Spot}}
+							{{if (v.ScheduleType==4) }}
+							<ul class="details" data-i="${$index}">
+								<li>
+									<div class="detailImg">
+										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+									</div>
+									<div class="detailText">
+										<h5>${SpotName} ${SpotLocalName}</h5>
+										<p>${CountryNameCn}：${CityNameCn}</p>
+										<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
+									</div>
+									{{if v.ScheduleType==2}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
+									{{/if}}
+									{{if v.ScheduleType==3}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
+									{{/if}}
+									{{if v.ScheduleType==4}}
+									<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
+									{{/if}}
+									<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
+								</li>
+							</ul>
+							{{/if}}
+							{{/each}}
+						</div>
+						<div class="introduction">
+							<h4>出行说明</h4>
+							<textarea name="" rows="6"   data-value="/PlanInfo/PlanSchedule/${k}/TravelInstruction">${ day.TravelInstruction}</textarea>
+						</div>
 					</div>
-					<div class="addDetails addAirport">
-						<h4>添加机场<span class="orangeBtn" data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAirport">+</span></h4>
-						{{each(n,v) day.Spot}}
-						{{if (v.ScheduleType==1) }}
-						<ul class="airports">
-							<li>
-								<div class="planeIcon">
-									<img src="../img/airPlaneIcon.png" alt="">
-								</div>
-								<div class="planeText">
-									${AirportCode} ${AirportNameCn}<br>
-									${AirportNameEn}
-								</div>
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAirport">换</span>
-								<span class="glyphicon glyphicon-trash" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}" ></span>
-							</li>
-						</ul>
-						{{/if}}
-						{{/each}}
-					</div>
-					<div class="addDetails">
-						<h4>添加景点
-							<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAttraction">+</span>
-						</h4>
-						{{each(n,v) day.Spot}}
-						{{if (v.ScheduleType==2) }}
-						<ul class="details" data-i="${$index}">
-							<li>
-								<div class="detailImg">
-									<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
-								</div>
-								<div class="detailText">
-									<h5>${SpotName} ${SpotLocalName}</h5>
-									<p>${CountryNameCn}：${CityNameCn}</p>
-									<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
-								</div>
-								{{if v.ScheduleType==2}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
-								{{/if}}
-								{{if v.ScheduleType==3}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
-								{{/if}}
-								{{if v.ScheduleType==4}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
-								{{/if}}
-								<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
-							</li>
-						</ul>
-						{{/if}}
-						{{/each}}
-					</div>
-					<div class="addDetails">
-						<h4>添加美食
-							<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createDelicacy">+</span>
-						</h4>
-						{{each(n,v) day.Spot}}
-						{{if (v.ScheduleType==3) }}
-						<ul class="details" data-i="${$index}">
-							<li>
-								<div class="detailImg">
-									<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
-								</div>
-								<div class="detailText">
-									<h5>${SpotName} ${SpotLocalName}</h5>
-									<p>${CountryNameCn}：${CityNameCn}</p>
-									<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
-								</div>
-								{{if v.ScheduleType==2}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
-								{{/if}}
-								{{if v.ScheduleType==3}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
-								{{/if}}
-								{{if v.ScheduleType==4}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
-								{{/if}}
-								<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
-							</li>
-						</ul>
-						{{/if}}
-						{{/each}}
-					</div>
-					<div class="addDetails">
-						<h4>添加住宿
-							<span class="orangeBtn"  data-op="change" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/-" data-action="createAccommodation">+</span>
-						</h4>
-						{{each(n,v) day.Spot}}
-						{{if (v.ScheduleType==4) }}
-						<ul class="details" data-i="${$index}">
-							<li>
-								<div class="detailImg">
-									<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
-								</div>
-								<div class="detailText">
-									<h5>${SpotName} ${SpotLocalName}</h5>
-									<p>${CountryNameCn}：${CityNameCn}</p>
-									<p>地址：${Address}, 邮编区号: ${ZipCode}</p>
-								</div>
-								{{if v.ScheduleType==2}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAttraction">换</span>
-								{{/if}}
-								{{if v.ScheduleType==3}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeDelicacy">换</span>
-								{{/if}}
-								{{if v.ScheduleType==4}}
-								<span class="blueBtn" data-op="change"  data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"  data-action="changeAccommodation">换</span>
-								{{/if}}
-								<span class="glyphicon glyphicon-trash"  data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}/Spot/${n}"></span>
-							</li>
-						</ul>
-						{{/if}}
-						{{/each}}
-					</div>
-					<div class="introduction">
-						<h4>出行说明</h4>
-						<textarea name="" rows="6"   data-value="/PlanInfo/PlanSchedule/${k}/TravelInstruction">${ day.TravelInstruction}</textarea>
-					</div>
+					{{/each}}
+					<!-- 一天行程结束 -->
 				</div>
-				{{/each}}
-				<!-- 一天行程结束 -->
 			</div>
 		</div>
-	</div>
-	<!-- 行程信息结束（方案） -->
+		<!-- 行程信息结束（方案） -->
 
-	<!-- 须知信息 -->
-	<div class="notice">
-		<h4>须知信息</h4>
-		<form class="form-horizontal">
-		  <div class="form-group">
-		    <label  class="col-sm-2 col-md-1 control-label">退订政策：</label>
-		    <div class="col-sm-10 col-md-11">
-				<textarea name="" id="Policy" data-value="/PlanInfo/Policy" class="form-control" >${ $data.PlanInfo.Policy}</textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label   class="col-sm-2 col-md-1 control-label">费用包含：</label>
-		    <div class="col-sm-10 col-md-11">
-				<textarea name="" id="CostInclude"　data-value="/PlanInfo/CostInclude" class="form-control" >${ $data.PlanInfo.CostInclude}</textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label   class="col-sm-2 col-md-1 control-label">费用自理：</label>
-		    <div class="col-sm-10 col-md-11">
-				<textarea name="" id="CostExclude" 　 data-value="/PlanInfo/CostExclude" class="form-control" >${ $data.PlanInfo.CostExclude}</textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label  class="col-sm-2 col-md-1 control-label">签证须知：</label>
-		    <div class="col-sm-10 col-md-11">
-				<textarea name="" id="VisaNotice" data-value="/PlanInfo/VisaNotice" class="form-control" >${ $data.PlanInfo.VisaNotice}</textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label  class="col-sm-2 col-md-1 control-label">注意事项：</label>
-		    <div class="col-sm-10 col-md-11">
-			    <textarea name="" id="Notice"  data-value="/PlanInfo/Notice" class="form-control"  >${ $data.PlanInfo.Notice}</textarea>
-		    </div>
-		  </div>
-		</form>
+		<!-- 须知信息 -->
+		<div class="notice">
+			<h4>须知信息</h4>
+			<form class="form-horizontal">
+			  <div class="form-group">
+			    <label  class="col-sm-2 col-md-1 control-label">退订政策：</label>
+			    <div class="col-sm-10 col-md-11">
+					<textarea name="" id="Policy" data-value="/PlanInfo/Policy" class="form-control" >${ $data.PlanInfo.Policy}</textarea>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label   class="col-sm-2 col-md-1 control-label">费用包含：</label>
+			    <div class="col-sm-10 col-md-11">
+					<textarea name="" id="CostInclude"　data-value="/PlanInfo/CostInclude" class="form-control" >${ $data.PlanInfo.CostInclude}</textarea>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label   class="col-sm-2 col-md-1 control-label">费用自理：</label>
+			    <div class="col-sm-10 col-md-11">
+					<textarea name="" id="CostExclude" 　 data-value="/PlanInfo/CostExclude" class="form-control" >${ $data.PlanInfo.CostExclude}</textarea>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label  class="col-sm-2 col-md-1 control-label">签证须知：</label>
+			    <div class="col-sm-10 col-md-11">
+					<textarea name="" id="VisaNotice" data-value="/PlanInfo/VisaNotice" class="form-control" >${ $data.PlanInfo.VisaNotice}</textarea>
+			    </div>
+			  </div>
+			  <div class="form-group">
+			    <label  class="col-sm-2 col-md-1 control-label">注意事项：</label>
+			    <div class="col-sm-10 col-md-11">
+				    <textarea name="" id="Notice"  data-value="/PlanInfo/Notice" class="form-control"  >${ $data.PlanInfo.Notice}</textarea>
+			    </div>
+			  </div>
+			</form>
 
-	</div>
-	<!-- 须知信息结束 -->
+		</div>
+		<!-- 须知信息结束 -->
 
-	<style>
-		.eventStyle{height:20px; width:40px; border-radius: 10px; background-color:#008000; line-height: 20px; text-align: center; margin:0 auto;}
-		.fc-past{background-color: #ccc;}
-        .fc-past {opacity: 0.3;}
-		.fc-day-number {font-size: 20px; display: inline-block; width: 100%; text-align: center; }
-		#monthPriceSet table td input{width:100px;}
+		<!--编辑报价-->
+		<div class="notice">
+			<h4>编辑报价</h4>
+			<div class="col-sm-offset-2 col-sm-10 col-md-offset-1 col-md-11">
+				<div class="col-sm-10 col-md-8" id="calendar"></div>
+			</div>
 
-	</style>
-	<!--编辑报价-->
-	<div class="notice">
-		<h4>编辑报价</h4>
-		<div class="col-sm-offset-2 col-sm-10 col-md-offset-1 col-md-11">
-			<div class="col-sm-10 col-md-8" id="calendar"></div>
+			<div class="optionBtn">
+				<button id="save" class="btn btn-warning" style="margin-top:10px;">发布</button>
+				<a href="javascript:void(0)" id="show" class="btn btn-warning invisible" style="margin-top:10px;">预览</a>
+				<!--{{if  $data.PlanInfo.PlanStatus == 3}}
+				<button id="publish" class="btn btn-warning">发布 </button>
+				{{/if}}
+				{{if  $data.PlanInfo.PlanStatus == 1}}
+				<button id="publish" class="btn btn-warning">发布 </button>
+				{{/if}}-->
+				<!--{{if  $data.PlanInfo.PlanStatus == 4}}
+				<button id="cancel" class="btn btn-warning">隐藏 </button>
+				{{/if}}-->
+			</div>
 		</div>
 
-		<div class="optionBtn">
-			<button id="save" class="btn btn-warning" style="margin-top:10px;">发布</button>
-			<a href="javascript:void(0)" id="show" class="btn btn-warning invisible" style="margin-top:10px;">预览</a>
-			<!--{{if  $data.PlanInfo.PlanStatus == 3}}
-			<button id="publish" class="btn btn-warning">发布 </button>
-			{{/if}}
-			{{if  $data.PlanInfo.PlanStatus == 1}}
-			<button id="publish" class="btn btn-warning">发布 </button>
-			{{/if}}-->
-			<!--{{if  $data.PlanInfo.PlanStatus == 4}}
-			<button id="cancel" class="btn btn-warning">隐藏 </button>
-			{{/if}}-->
-		</div>
-	</div>
+		<!-- 单日价格设置弹出框 -->
+		<div id="dayPriceSet" class="modal fade">
+			<div class="modal-dialog modal-lg">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title clearfix text-center">设置价格</h4>
+					</div>
+					<div class="modal-body">
+						<table class="table table-bordered">
+							<thead>
+								<tr>
+									<td>报价名称</td>
+									<td>成人价</td>
+									<td>儿童价</td>
+									<td>库存</td>
+									<td><span class="glyphicon glyphicon-plus-sign"></span></td>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><input type="text" placeholder="请输入"/></td>
+									<td><input type="text" placeholder="请输入"/></td>
+									<td><input type="text" placeholder="请输入"/></td>
+									<td><input type="text" placeholder="请输入"/></td>
+									<td><span class="glyphicon glyphicon-minus-sign"></span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div> <!-- end modal-body -->
+					<div class="modal-footer">
+						<button type="button" id="dayConfirm" class="btn btn-primary">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!-- 单日价格设置弹出框结束 -->
 
-
-	</div><!--editPage结束-->
-
-	<!-- 单日价格设置弹出框 -->
-	<div id="dayPriceSet" class="modal fade">
-		<div class="modal-dialog modal-lg">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title clearfix text-center">设置价格</h4>
-				</div>
-				<div class="modal-body">
-					<table class="table table-bordered">
-						<thead>
+		<!-- 批量价格设置弹出框 -->
+		<div id="monthPriceSet" class="modal fade">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+						</button>
+						<h4 class="modal-title clearfix text-center">批量设置价格</h4>
+					</div>
+					<div class="modal-body">
+						<div id="calendar2"></div>
+						<table class="table table-bordered" id="addPriceItem" style="margin-top: 10px;">
+							<thead>
 							<tr>
 								<td>报价名称</td>
 								<td>成人价</td>
@@ -381,91 +411,52 @@
 								<td>库存</td>
 								<td><span class="glyphicon glyphicon-plus-sign"></span></td>
 							</tr>
-						</thead>
-						<tbody>
+							</thead>
+							<tbody>
 							<tr>
-								<td><input type="text" placeholder="请输入"/></td>
-								<td><input type="text" placeholder="请输入"/></td>
-								<td><input type="text" placeholder="请输入"/></td>
-								<td><input type="text" placeholder="请输入"/></td>
+								<td><input type="text" placeholder="请输入"></td>
+								<td><input type="text" placeholder="请输入"></td>
+								<td><input type="text" placeholder="请输入"></td>
+								<td><input type="text" placeholder="请输入"></td>
 								<td><span class="glyphicon glyphicon-minus-sign"></span></td>
 							</tr>
-						</tbody>
-					</table>
-				</div> <!-- end modal-body -->
-				<div class="modal-footer">
-					<button type="button" id="dayConfirm" class="btn btn-primary">保存</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-	<!-- 单日价格设置弹出框结束 -->
+							</tbody>
+						</table>
+						<!--<form action="" class="form-horizontal" style="margin-top:20px;">-->
+							<!--<div class="form-group">-->
+								<!--<label for="" class="col-sm-3 control-label">报价名称</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label for="" class="col-sm-3 control-label">成人价</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label for="" class="col-sm-3 control-label">儿童价</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="form-group">-->
+								<!--<label for="" class="col-sm-3 control-label">库存数量</label>-->
+								<!--<div class="col-sm-8">-->
+									<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
+								<!--</div>-->
+							<!--</div>-->
+						<!--</form>-->
+					</div> <!-- end modal-body -->
+					<div class="modal-footer">
+						<button type="button" id="monthConfirm" class="btn btn-primary">保存</button>
+					</div>
+				</div><!-- /.modal-content -->
+			</div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<!-- 批量价格设置弹出框结束 -->
 
-	<!-- 批量价格设置弹出框 -->
-	<div id="monthPriceSet" class="modal fade">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">
-						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-					</button>
-					<h4 class="modal-title clearfix text-center">批量设置价格</h4>
-				</div>
-				<div class="modal-body">
-					<div id="calendar2"></div>
-					<table class="table table-bordered" id="addPriceItem" style="margin-top: 10px;">
-						<thead>
-						<tr>
-							<td>报价名称</td>
-							<td>成人价</td>
-							<td>儿童价</td>
-							<td>库存</td>
-							<td><span class="glyphicon glyphicon-plus-sign"></span></td>
-						</tr>
-						</thead>
-						<tbody>
-						<tr>
-							<td><input type="text" placeholder="请输入"></td>
-							<td><input type="text" placeholder="请输入"></td>
-							<td><input type="text" placeholder="请输入"></td>
-							<td><input type="text" placeholder="请输入"></td>
-							<td><span class="glyphicon glyphicon-minus-sign"></span></td>
-						</tr>
-						</tbody>
-					</table>
-					<!--<form action="" class="form-horizontal" style="margin-top:20px;">-->
-						<!--<div class="form-group">-->
-							<!--<label for="" class="col-sm-3 control-label">报价名称</label>-->
-							<!--<div class="col-sm-8">-->
-								<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
-							<!--</div>-->
-						<!--</div>-->
-						<!--<div class="form-group">-->
-							<!--<label for="" class="col-sm-3 control-label">成人价</label>-->
-							<!--<div class="col-sm-8">-->
-								<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
-							<!--</div>-->
-						<!--</div>-->
-						<!--<div class="form-group">-->
-							<!--<label for="" class="col-sm-3 control-label">儿童价</label>-->
-							<!--<div class="col-sm-8">-->
-								<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
-							<!--</div>-->
-						<!--</div>-->
-						<!--<div class="form-group">-->
-							<!--<label for="" class="col-sm-3 control-label">库存数量</label>-->
-							<!--<div class="col-sm-8">-->
-								<!--<input type="text" class="form-control" id="" placeholder="请输入">-->
-							<!--</div>-->
-						<!--</div>-->
-					<!--</form>-->
-				</div> <!-- end modal-body -->
-				<div class="modal-footer">
-					<button type="button" id="monthConfirm" class="btn btn-primary">保存</button>
-				</div>
-			</div><!-- /.modal-content -->
-		</div><!-- /.modal-dialog -->
-	</div><!-- /.modal -->
-	<!-- 批量价格设置弹出框结束 -->
+	</div><!--editPage结束-->	
 </div>
 
