@@ -784,7 +784,7 @@
         });
     };
 
-     function setStockQuantity(PlanInfo) {
+     function setStockQuantity(PlanInfo,PlanID) {
          var minAdultPrice = 0;
          var minKidPrice = 0;
 
@@ -797,7 +797,7 @@
              var prices = PlanstockquantitysDay["prices"];
              for(var pricesindex in prices){
                  prices[pricesindex]["scheduleDate"] = scheduleDate;
-                 prices[pricesindex]["planID"] = respJSON.PlanInfo.insertId;
+                 prices[pricesindex]["planID"] = PlanID;
                  if(minAdultPrice>prices[pricesindex]["AdultPrice"]){
                      minAdultPrice = prices[pricesindex]["AdultPrice"];
                  }
@@ -1319,12 +1319,10 @@
                     data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
 
-                    setStockQuantity(data.PlanInfo);
-
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
 
                         if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
-
+                            setStockQuantity(data.PlanInfo,respJSON.PlanInfo.insertId);
 
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '模板方案做成成功'});
@@ -1346,17 +1344,15 @@
                         data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                         data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
 
-                        setStockQuantity(data.PlanInfo);
-
                         $.rogerPost('/update/tmpplan', data, function (respJSON) {
-                            if(respJSON.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
-
+                            if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
+                                setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
                                 $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                     $.rogerNotice({Message: '模板方案更新成功'});
                                     $('#show').removeClass("btn btn-warning invisible");
                                     $('#show').addClass("btn btn-warning");
                                     $('#show').click(function (e) {
-                                        $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.PlanID);
+                                        $.rogerLocation('#/templateplandetail?PlanID='+data.PlanInfo.PlanID);
                                     })
                                 });
                             }
@@ -1444,12 +1440,10 @@
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
 
-                setStockQuantity(data.PlanInfo);
-
                 $.rogerPost('/new/shortplan', data, function(respJSON){
 
                     if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
-
+                        setStockQuantity(data.PlanInfo,respJSON.PlanInfo.insertId);
                         $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                             $.rogerNotice({Message: '快捷方案发布成功'});
                             $('#show').removeClass("btn btn-warning invisible");
@@ -1469,17 +1463,15 @@
                 data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                 $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
 
-                    setStockQuantity(data.PlanInfo);
-
                     $.rogerPost('/update/shortplan', data, function(respJSON){
-                        if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
-
+                        if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
+                            setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '快捷方案发布成功'});
                                 $('#show').removeClass("btn btn-warning invisible");
                                 $('#show').addClass("btn btn-warning");
                                 $('#show').click(function (e) {
-                                    $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                                    $.rogerLocation('#/shortplandetail?PlanID='+data.PlanInfo.PlanID);
                                 })
                             });
                         }
