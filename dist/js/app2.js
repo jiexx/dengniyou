@@ -761,16 +761,27 @@
              var  scheduleDate = PlanstockquantitysDay["scheduleDate"];
              scheduleDate = scheduleDate.replace(new RegExp("-","gm"),'');
              var prices = PlanstockquantitysDay["prices"];
+
+             // SpendName: SpengName,
+             //     AdultPrice: AdutlPrice,
+             //     KidPrice: KidPrice,
+             //     StockQuantity: StockQuantity
              for(var pricesindex in prices){
-                 prices[pricesindex]["scheduleDate"] = scheduleDate;
-                 prices[pricesindex]["planID"] = PlanID;
+                 pricesitem = {};
+                 pricesitem["scheduleDate"] = scheduleDate;
+                 pricesitem["planID"] = PlanID;
+                 pricesitem["AdultPrice"] = prices[pricesindex]["AdultPrice"];
+                 pricesitem["KidPrice"] = prices[pricesindex]["KidPrice"];
+                 pricesitem["SpendName"] = prices[pricesindex]["SpendName"];
+                 pricesitem["StockQuantity"] = prices[pricesindex]["StockQuantity"];
+
                  if(minAdultPrice>prices[pricesindex]["AdultPrice"]){
                      minAdultPrice = prices[pricesindex]["AdultPrice"];
                  }
                  if(minKidPrice>prices[pricesindex]["AdultPrice"]){
                      minKidPrice = prices[pricesindex]["KidPrice"];
                  }
-                 PlanstockquantitysInsert.push(prices[pricesindex]);
+                 PlanstockquantitysInsert.push(pricesitem);
              }
 
          }
@@ -1303,14 +1314,11 @@
 
                         if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
 
-                            var Planstockquantitys = data.PlanInfo.Planstockquantitys;
-                            for(var day in Planstockquantitys){
-                                var PlanstockquantitysDay = Planstockquantitys[day];
-                                var prices = PlanstockquantitysDay["prices"];
-                                for(var pricesindex in prices){
-                                    prices[pricesindex]["planID"] = respJSON.PlanInfo.insertId;
-                                }
+                            var pricesinsert =  data.PlanInfo.PlanstockquantitysInsert
+                            for (var pricesindex in pricesinsert) {
+                                pricesinsert[pricesindex]["planID"] = respJSON.PlanInfo.insertId;
                             }
+
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '模板方案做成成功'});
                                 $('#show').removeClass("btn btn-warning invisible");
