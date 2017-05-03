@@ -25,14 +25,10 @@
 		  "findkey": "insertId",
 		  "Spot": {
 			  "sql": "INSERT INTO traveluserdb.tab_planscheduleplace(ScheduleID,CountryID,CountryNameCn,CountryNameEn,CityID,CityNameCn,CityNameEn,AirportCode,AirportNameCn,AirportNameEn,SpotID,SpotName,SpotLocalName,SpotTravelTime,HotelStarLevel,ScheduleType,SpotPicUrl)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
-			  "params": ["insertId","CountryID ","CountryNameCn","CountryNameEn","CityID","CityNameCn","CityNameEn","AirportCode","AirportNameCn","AirportNameEn","SpotID","SpotName","SpotLocalName","SpotTravelTime","HotelStarLevel","ScheduleType","SpotPicUrl"],
+			  "params": ["insertId","CountryID","CountryNameCn","CountryNameEn","CityID","CityNameCn","CityNameEn","AirportCode","AirportNameCn","AirportNameEn","SpotID","SpotName","SpotLocalName","SpotTravelTime","HotelStarLevel","ScheduleType","SpotPicUrl"],
 			  "findkey": "insertId"
 		  }
-	  },
-	  "PlanSpendInfoList": {
-		  "sql": "INSERT INTO tab_planspend (planID,spendName,adultPrice,kidPrice) values (?, ?,?, ?)",
-		  "params": ["insertId","spendName","adultPrice","kidPrice"],
-		  "findkey": "insertId"
 	  }
+
   }
 }

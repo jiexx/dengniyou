@@ -10,7 +10,7 @@
         "SpendName",
         "AdultPrice",
         "KidPrice",
-        "stockQuantity"
+        "StockQuantity"
       ]
     }
   }

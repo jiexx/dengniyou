@@ -17,17 +17,12 @@
 		  "params": ["PlanID","PlanName","PlanFeature","_PlanLabels"]
 	  },
 	  "PlanSchedule": {
-		  "sql": "INSERT INTO traveluserdb.tab_planschedule(PlanID,DayName,TravelInstruction,CreateDate)VALUES(?,?,?,NOW());",
-		  "params": ["PlanID","DayName","TravelInstruction"],
+		  "sql": "INSERT INTO traveluserdb.tab_planschedule(ScheduleID,PlanID,DayName,TravelInstruction,CreateDate)VALUES(?,?,?,?,NOW());",
+		  "params": ["ScheduleID","PlanID","DayName","TravelInstruction"],
 		  "Spot": {
 			  "sql": "INSERT INTO traveluserdb.tab_planscheduleplace(ScheduleID,CountryID,CountryNameCn,CountryNameEn,CityID,CityNameCn,CityNameEn,AirportCode,AirportNameCn,AirportNameEn,SpotID,SpotName,SpotLocalName,SpotTravelTime,HotelStarLevel,ScheduleType,SpotPicUrl)VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?);",
-			  "params": ["insertId","CountryID ","CountryNameCn","CountryNameEn","CityID","CityNameCn","CityNameEn","AirportCode","AirportNameCn","AirportNameEn","SpotID","SpotName","SpotLocalName","SpotTravelTime","HotelStarLevel","ScheduleType","SpotPicUrl"],
-			  "findkey": "insertId"
+			  "params": ["ScheduleID","CountryID","CountryNameCn","CountryNameEn","CityID","CityNameCn","CityNameEn","AirportCode","AirportNameCn","AirportNameEn","SpotID","SpotName","SpotLocalName","SpotTravelTime","HotelStarLevel","ScheduleType","SpotPicUrl"]
 		  }
-	  },
-	  "PlanSpendInfoList": {
-		  "sql": "INSERT INTO tab_planspend (planID,spendName,adultPrice,kidPrice) values (?, ?,?, ?)",
-		  "params": ["PlanID","spendName","adultPrice","kidPrice"]
 	  }
   }
 }

@@ -1,5 +1,5 @@
 {
-	"del1":{"sql":"delete from traveluserdb.tab_planscheduleplace where ScheduleID in (select ScheduleID from tab_planschedule where PlanID = ?);", "params":["PlanID"]},
+	"del1":{"sql":"delete from traveluserdb.tab_planscheduleplace where ScheduleID in (select ScheduleID from traveluserdb.tab_planschedule where PlanID = ?);", "params":["PlanID"]},
 	"del2":{"sql":"delete from traveluserdb.tab_planschedule where PlanID = ?;", "params":["PlanID"]},
 	"del3":{"sql":"delete from traveluserdb.tab_planpicture where PlanID = ?;","params":["PlanID"]},
 	"del4":{"sql":"delete from traveluserdb.tab_planprice where PlanID = ?;","params":["PlanID"]},
