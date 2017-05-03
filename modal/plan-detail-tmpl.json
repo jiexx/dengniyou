@@ -47,7 +47,8 @@
 			"sql": "select * from traveluserdb.`vw_/plan/stockquantity` where planID=? ",
 			"params": [
 				"PlanID"
-			]
+			],
+			"isarray": true
 		}
 	},
 	"PlanSpendInfoList": {
