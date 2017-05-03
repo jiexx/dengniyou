@@ -62,15 +62,6 @@
 			"files": [
 				"PicURL"
 			]
-		},
-		"PlanSpendInfoList": {
-			"sql": "INSERT INTO tab_planspend (planID,spendName,adultPrice,kidPrice) values (?, ?,?, ?)",
-			"params": [
-				"PlanID",
-				"spendName",
-				"adultPrice",
-				"kidPrice"
-			]
 		}
 	}
 }

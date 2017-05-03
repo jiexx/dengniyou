@@ -554,7 +554,8 @@
 */                    ],
                     TravelInstruction:'',
                     DayName:''
-                }]  //0 city, 1 airport, 2 attraction, 3 delicacy, 4 accommodation
+                }],//0 city, 1 airport, 2 attraction, 3 delicacy, 4 accommodation
+                Planstockquantitys:[]
             },
             IMGHOST:$.rogerImgHost()
         };
@@ -775,53 +776,53 @@
 
     //calendar格式设置价格库存
     function priceCalendarEdit(Plan){
-        if(!Plan.PlanInfo.Planstockquantitys){
-            if(!Plan.Planstockquantitys || Plan.Planstockquantitys.length == 0){
-                Plan.PlanInfo.Planstockquantitys=[
-                    {
-                        scheduleDate: '2017-04-28',
-                        start:'2017-04-28',
-                        title:'已设置',
-                        prices:[
-                            {
-                                SpendName:'套餐一',
-                                AdultPrice:12,
-                                KidPrice:9,
-                                stockQuantity:8
-                            }
-                        ]
-                    },
-                    {
-                        scheduleDate: '2017-04-30',
-                        title:'已设置',
-                        start:'2017-04-30',
-                        prices:[
-                            {
-                                SpendName:'套餐一',
-                                AdultPrice:12,
-                                KidPrice:9,
-                                stockQuantity:8
-                            },
-                            {
-                                SpendName:'套餐二',
-                                AdultPrice:12,
-                                KidPrice:9,
-                                stockQuantity:8
-                            },
-                            {
-                                SpendName:'套餐三',
-                                AdultPrice:12,
-                                KidPrice:9,
-                                stockQuantity:8
-                            }
-                        ]
-                    }
-                    ]
-            }else{
-                Plan.PlanInfo.Planstockquantitys = Plan.Planstockquantitys;
-            }
-            $.rogerRefresh(Plan);
-        }
+        // if(!Plan.PlanInfo.Planstockquantitys){
+        //     if(!Plan.Planstockquantitys || Plan.Planstockquantitys.length == 0){
+        //         Plan.PlanInfo.Planstockquantitys=[
+        //             {
+        //                 scheduleDate: '2017-04-28',
+        //                 start:'2017-04-28',
+        //                 title:'已设置',
+        //                 prices:[
+        //                     {
+        //                         SpendName:'套餐一',
+        //                         AdultPrice:12,
+        //                         KidPrice:9,
+        //                         stockQuantity:8
+        //                     }
+        //                 ]
+        //             },
+        //             {
+        //                 scheduleDate: '2017-04-30',
+        //                 title:'已设置',
+        //                 start:'2017-04-30',
+        //                 prices:[
+        //                     {
+        //                         SpendName:'套餐一',
+        //                         AdultPrice:12,
+        //                         KidPrice:9,
+        //                         stockQuantity:8
+        //                     },
+        //                     {
+        //                         SpendName:'套餐二',
+        //                         AdultPrice:12,
+        //                         KidPrice:9,
+        //                         stockQuantity:8
+        //                     },
+        //                     {
+        //                         SpendName:'套餐三',
+        //                         AdultPrice:12,
+        //                         KidPrice:9,
+        //                         stockQuantity:8
+        //                     }
+        //                 ]
+        //             }
+        //             ]
+        //     }else{
+        //         Plan.PlanInfo.Planstockquantitys = Plan.Planstockquantitys;
+        //     }
+        //     $.rogerRefresh(Plan);
+        // }
         //编辑价格
         var trStr = '<tr><td><input type="text" placeholder="请输入"></td>'+
             '<td><input type="text" placeholder="请输入"></td>'+
@@ -835,7 +836,7 @@
                 trStrEdit += '<tr><td><input type="text" placeholder="请输入" value="'+ temp[i].SpendName +'"></td>'+
                     '<td><input type="text" placeholder="请输入" value="'+ temp[i].AdultPrice +'"></td>'+
                     '<td><input type="text" placeholder="请输入" value="'+ temp[i].KidPrice +'"></td>'+
-                    '<td><input type="text" placeholder="请输入" value="'+ temp[i].stockQuantity +'"></td>'+
+                    '<td><input type="text" placeholder="请输入" value="'+ temp[i].StockQuantity +'"></td>'+
                     '<td><span class="glyphicon glyphicon-minus-sign"></span></td></tr>';
             }
             $('#dayPriceSet tbody').html(trStrEdit);
@@ -931,13 +932,13 @@
                 var SpengName = $(this).find('td:eq(0) input').val();
                 var AdutlPrice = $(this).find('td:eq(1) input').val();
                 var KidPrice = $(this).find('td:eq(2) input').val();
-                var stockQuantity = $(this).find('td:eq(3) input').val();
-                if( SpengName != '' || AdutlPrice  != '' || KidPrice  != '' || stockQuantity  != '' ){
+                var StockQuantity = $(this).find('td:eq(3) input').val();
+                if( SpengName != '' || AdutlPrice  != '' || KidPrice  != '' || StockQuantity  != '' ){
                     prices[x] = {
                         SpendName: SpengName,
                         AdultPrice: AdutlPrice,
                         KidPrice: KidPrice,
-                        stockQuantity: stockQuantity
+                        StockQuantity: StockQuantity
                     };
                 }
             });
@@ -1206,6 +1207,14 @@
             $.rogerRefresh(Plan);
         }
 
+        if(Plan.PlanInfo.Planstockquantitys.length > 0 ){
+            for(var m=0; m<Plan.PlanInfo.Planstockquantitys.length; m++ ){
+                Plan.PlanInfo.Planstockquantitys[m].start = Plan.PlanInfo.Planstockquantitys[m].scheduleDate;
+                Plan.PlanInfo.Planstockquantitys[m].title = "已设置";
+            }
+
+        }
+
 
         $('img[name="needPrefix"]').each(function () {
             var src = $(this).attr('src');
@@ -1277,7 +1286,12 @@
                     data.PlanInfo.StartCityID = item.CityID;
                     data.PlanInfo.StartCity = item.CityNameCn;
                     data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
+                    data.PlanInfo["UserID"] = data.PlanInfo.CreateUserID;
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+
+                    for(var i = 0; i<data.PlanInfo.PlanSchedule.length; i++){
+                        data.PlanInfo.PlanSchedule[i]["DayName"] = "D"+(i+1);
+                    }
 
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
 
@@ -1303,6 +1317,20 @@
                         data.PlanInfo.StartCity = item.CityNameCn;
                         data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                         data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+
+                        UserPlan = {"UserID":data.PlanInfo.CreateUserID,"PlanID":data.PlanInfo.PlanID};
+                        data.PlanInfo["UserPlan"] = UserPlan;
+                        data.PlanInfo.Picture["PlanID"] = data.PlanInfo.PlanID;
+
+                        for(var i = 0; i<data.PlanInfo.PlanSchedule.length; i++){
+                            var PlanSchedule_i = data.PlanInfo.PlanSchedule[i];
+                            PlanSchedule_i["PlanID"] = data.PlanInfo.PlanID;
+                            PlanSchedule_i["DayName"] = "D"+(i+1);
+
+                            for(var j = 0; PlanSchedule_i.Spot.length; j++){
+                                PlanSchedule_i.Spot[j]["ScheduleID"] = PlanSchedule_i.ScheduleID;
+                            }
+                        }
 
                         $.rogerPost('/update/tmpplan', data, function (respJSON) {
                             if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
@@ -1422,6 +1450,9 @@
                 data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                 data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                 $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
+                    UserPlan = {"UserID":data.PlanInfo.UserID,"PlanID":data.PlanInfo.PlanID};
+                    data.PlanInfo["UserPlan"] = UserPlan;
+                    data.PlanInfo.Picture["PlanID"] = data.PlanInfo.PlanID;
 
                     $.rogerPost('/update/shortplan', data, function(respJSON){
                         if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
@@ -3574,7 +3605,7 @@
              var country = $('#country option:selected').val().split(':');
              var city = $('#city option:selected').val().split(':');
              data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
-                 SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
+                 SpotID:'0',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
              $('#cityChooser').modal('hide');
              $.rogerRefresh(data.Plan);
          });
