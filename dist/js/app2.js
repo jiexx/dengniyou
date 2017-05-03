@@ -726,8 +726,8 @@
                     var ps = data.Plan.PlanInfo.PlanSchedule[i];
                     for ( var j = 0; j < ps.Spot.length ; j ++ ) {
                         if(ps.Spot[j] === data.SpotItem) {
-                            ps.Spot[j]= {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
-                                SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''}
+                            ps.Spot[j]= {CountryID:'0',CountryNameCn:'',CountryNameEn:'',CityID:'0',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
+                                SpotID:'0',SpotName:'',SpotLocalName:'',SpotTravelTime:'0',HotelStarLevel:'0',ScheduleType:1,SpotPicUrl:''}
                             break ok;
                         }
                     }
@@ -736,8 +736,8 @@
                 if(data.Plan.DetailMain && data.Plan.DetailMain.airports){
                     data.Plan.DetailMain.airports.push({AirportCode:airport[0],NameCh:airport[1],NameEn:airport[2],CreateDate:'',ServiceID:''});
                 }else{
-                data.Spot.push({CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
-                    SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''});
+                data.Spot.push({CountryID:'0',CountryNameCn:'',CountryNameEn:'',CityID:'0',CityNameCn:'',CityNameEn:'',AirportCode:airport[0],AirportNameCn:airport[1],AirportNameEn:airport[2],
+                    SpotID:'0',SpotName:'',SpotLocalName:'',SpotTravelTime:'0',HotelStarLevel:'0',ScheduleType:1,SpotPicUrl:''});
                 }
             }
             $('#cityChooser').modal('hide');
@@ -1293,11 +1293,19 @@
                         data.PlanInfo.PlanSchedule[i]["DayName"] = "D"+(i+1);
                     }
 
+                    setStockQuantity(data.PlanInfo,'');
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
 
                         if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
-                            setStockQuantity(data.PlanInfo,respJSON.PlanInfo.insertId);
 
+                            var Planstockquantitys = data.PlanInfo.Planstockquantitys;
+                            for(var day in Planstockquantitys){
+                                var PlanstockquantitysDay = Planstockquantitys[day];
+                                var prices = PlanstockquantitysDay["prices"];
+                                for(var pricesindex in prices){
+                                    prices[pricesindex]["planID"] = respJSON.PlanInfo.insertId;
+                                }
+                            }
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '模板方案做成成功'});
                                 $('#show').removeClass("btn btn-warning invisible");
@@ -1327,14 +1335,15 @@
                             PlanSchedule_i["PlanID"] = data.PlanInfo.PlanID;
                             PlanSchedule_i["DayName"] = "D"+(i+1);
 
-                            for(var j = 0; PlanSchedule_i.Spot.length; j++){
+                            for(var j = 0; j<PlanSchedule_i.Spot.length; j++){
                                 PlanSchedule_i.Spot[j]["ScheduleID"] = PlanSchedule_i.ScheduleID;
                             }
                         }
 
+                        setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
                         $.rogerPost('/update/tmpplan', data, function (respJSON) {
                             if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
-                                setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
+
                                 $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                     $.rogerNotice({Message: '模板方案更新成功'});
                                     $('#show').removeClass("btn btn-warning invisible");
@@ -3605,7 +3614,7 @@
              var country = $('#country option:selected').val().split(':');
              var city = $('#city option:selected').val().split(':');
              data.Spot.push({CountryID:country[0],CountryNameCn:country[1],CountryNameEn:country[2],CityID:city[0],CityNameCn:city[1],CityNameEn:city[2],AirportCode:'',AirportNameCn:'',AirportNameEn:'',
-                 SpotID:'0',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''});
+                 SpotID:'0',SpotName:'',SpotLocalName:'',SpotTravelTime:'0',HotelStarLevel:'0',ScheduleType:0,SpotPicUrl:''});
              $('#cityChooser').modal('hide');
              $.rogerRefresh(data.Plan);
          });
