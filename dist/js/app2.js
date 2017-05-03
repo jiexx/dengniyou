@@ -751,6 +751,11 @@
 
          var PlanstockquantitysInsert = new Array();
          Planstockquantitys = PlanInfo.Planstockquantitys;
+         if(Planstockquantitys&&Planstockquantitys.length>1){
+             minAdultPrice = Planstockquantitys[0]["prices"][0]["AdultPrice"];
+             minKidPrice = Planstockquantitys[0]["prices"][0]["KidPrice"];
+         }
+
          for(var day in Planstockquantitys){
              var PlanstockquantitysDay = Planstockquantitys[day];
              var  scheduleDate = PlanstockquantitysDay["scheduleDate"];
