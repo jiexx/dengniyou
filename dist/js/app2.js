@@ -600,7 +600,8 @@
                     PlanFeature:'',
                     PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
                 },
-                PlanShort: []
+                PlanShort: [],
+                Planstockquantitys:[]
             },
             IMGHOST:$.rogerImgHost()
         };
@@ -1407,6 +1408,14 @@
                 Plan.PlanInfo.PlanSpendInfoList = Plan.PlanSpendInfoList;
             }            
             $.rogerRefresh(Plan);
+        }
+
+        if(Plan.PlanInfo.Planstockquantitys.length > 0 ){
+            for(var m=0; m<Plan.PlanInfo.Planstockquantitys.length; m++ ){
+                Plan.PlanInfo.Planstockquantitys[m].start = Plan.PlanInfo.Planstockquantitys[m].scheduleDate;
+                Plan.PlanInfo.Planstockquantitys[m].title = "已设置";
+            }
+
         }
 
         $('img[name="needPrefix"]').each(function () {
