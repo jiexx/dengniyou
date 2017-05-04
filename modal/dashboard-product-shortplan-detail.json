@@ -2,7 +2,7 @@
 	"PlanInfo": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE PlanID=?;",	"params":["PlanID"]},
 
 	"PlanShort":{
-		"sql":"SELECT * FROM traveluserdb.tab_planshort WHERE PlanID = ?;",
+		"sql":"SELECT * FROM traveluserdb.tab_shortdescription WHERE RelativeID = ? and RelativeType=2;",
 		"params":["PlanID"]
 	},
 

@@ -11,7 +11,7 @@
 		"Picture": {"sql": "INSERT INTO traveluserdb.tab_planpicture(PlanID,PicUrl)VALUES(?,?);",	"params":["insertId", "Pics"], "files":["Pics"], "findkey": "insertId"},
 		"Summary":{"sql":"INSERT INTO traveluserdb.tab_plansummary(PlanID,PlanName,PlanFeature,PlanLabels,PlanSeasons,PlanRhythm,StartTime)VALUES(?,?,?,?,'一年四季,春季,夏季,秋季,冬季',0,'随时出发');",	"params":["insertId","PlanName","PlanFeature","_PlanLabels"],"findkey": "insertId"},
 		"PlanShort":{
-			"sql":"INSERT INTO traveluserdb.tab_planshort(PlanID,Label,PicURL,Content,Day,CreateDate)VALUES(?,?,?,?,?,NOW());",
+			"sql":"INSERT INTO traveluserdb.tab_shortdescription(RelativeID,Label,PicURL,Content,Day,CreateDate,RelativeType)VALUES(?,?,?,?,?,NOW(),2);",
 			"params":["insertId", "Lable","PicURL","Content","Day"],
 			"findkey": "insertId",
 			"files":["PicURL"]
