@@ -1,5 +1,3 @@
-
-
 <div class="container">
   <br>
   <div class="plandetail-page">
@@ -85,20 +83,28 @@
               </div>
             </div>
             <div class="feature clearfix">
-              <div class="col-md-2">
-                <div class="tittle">方案特色</div>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="tittle">方案特色</div>
+                </div>
+                <div class="col-md-10" style="width:60%;">
+                  <div class="scheduleDetails">
+                    <p class="text">
+                      ${$data.PlanInfo[0].PlanFeature}
+                    </p>
+                  </div>
+                </div>
               </div>
-              <div class="col-md-10" style="width:60%;">
-                <div class="scheduleDetails">
-                  <p class="text">
-                    ${$data.PlanInfo[0].PlanFeature}
-                  </p>
+              <div class="row">
+                <div class="col-md-2">
+                  <div class="tittle">行程安排</div>
+                </div>
+                <div class="col-md-10" style="width:60%;">
                   <div class="scheduleDetails" style="padding-left: 15px; font-size: 14px; margin-top: 35px;">
-                    <p style="color: #F9703C; font-weight: bold;">开始城市: <span>${$data.PlanInfo[0].StartCity}</span></p>
                     {{each $data.PlanShort}}
-                    {{if Day}}
+                    {{if Label}}
                     <div class="row day-edit">
-                      <p>第${Day}天 <span>${Label}</span></p>
+                      <p><span>${Label}</span></p>
                     </div>
                     {{/if}}
 
@@ -117,8 +123,9 @@
                     {{/if}}
                     {{/each}}
                   </div><!-- end scheduleDetails -->
-                </div><!-- end scheduleDetails -->
-              </div><!-- col-md-10 -->
+                </div><!-- col-md-10 -->
+              </div>
+
             </div> <!-- end feature -->
           </div><!-- end 预定须知 -->
           <div class="feature featureAlone clearfix" id="attention">
