@@ -1,6 +1,6 @@
 {
 	"PlanInfo": {
-		"sql": "INSERT INTO traveluserdb.tab_planinfo(PlanID,PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,4,0,?,?,?,?,2,?,'随时',?,?,CONCAT('PL-',DATE_FORMAT(NOW(),'%Y%m%d%H%i%S'),CAST(unix_timestamp() AS char(4)) ) ,?,?,?,?,?,?,?,?,0,NOW(),NOW());",
+		"sql": "INSERT INTO traveluserdb.tab_planinfo(PlanID,PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,4,0,?,?,?,?,2,?,'随时',?,?,? ,?,?,?,?,?,?,?,?,0,NOW(),NOW());",
 		"params": [
 			"PlanID",
 			"PlanName",
@@ -11,6 +11,7 @@
 			"PlanDays",
 			"StartCity",
 			"StartCityID",
+			"PlanNumber",
 			"Policy",
 			"CostInclude",
 			"CostExclude",
