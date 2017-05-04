@@ -1438,59 +1438,63 @@
 
 
         $('#save').rogerOnceClick(Plan, function(e){
-            if(!Plan.PlanInfo.PlanID) {
-                var data = {PlanInfo:e.data.PlanInfo};
-                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
-                data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
+            if(Plan.PlanInfo.StartCityID) {
+                if(!Plan.PlanInfo.PlanID) {
+                    var data = {PlanInfo:e.data.PlanInfo};
+                    data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                    data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
 
-                setStockQuantity(data.PlanInfo,'');
-                $.rogerPost('/new/shortplan', data, function(respJSON){
+                    setStockQuantity(data.PlanInfo,'');
+                    $.rogerPost('/new/shortplan', data, function(respJSON){
 
-                    if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
+                        if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
 
-                        var pricesinsert =  data.PlanInfo.PlanstockquantitysInsert
-                        for (var pricesindex in pricesinsert) {
-                            pricesinsert[pricesindex]["planID"] = respJSON.PlanInfo.insertId;
-                        }
-
-                        $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
-                            $.rogerNotice({Message: '快捷方案发布成功'});
-                            $('#show').removeClass("btn btn-warning invisible");
-                            $('#show').addClass("btn btn-warning");
-                            $('#show').click(function (e) {
-                                $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
-                            })
-                        });
-                    }
-
-
-                    //$('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
-                });
-            }else {
-                var data = {PlanInfo:e.data.PlanInfo};
-                data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
-                data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
-                $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
-                    UserPlan = {"UserID":data.PlanInfo.UserID,"PlanID":data.PlanInfo.PlanID};
-                    data.PlanInfo["UserPlan"] = UserPlan;
-                    data.PlanInfo.Picture["PlanID"] = data.PlanInfo.PlanID;
-                    setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
-
-                    $.rogerPost('/update/shortplan', data, function(respJSON){
-                        if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
+                            var pricesinsert =  data.PlanInfo.PlanstockquantitysInsert
+                            for (var pricesindex in pricesinsert) {
+                                pricesinsert[pricesindex]["planID"] = respJSON.PlanInfo.insertId;
+                            }
 
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '快捷方案发布成功'});
                                 $('#show').removeClass("btn btn-warning invisible");
                                 $('#show').addClass("btn btn-warning");
                                 $('#show').click(function (e) {
-                                    $.rogerLocation('#/shortplandetail?PlanID='+data.PlanInfo.PlanID);
+                                    $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
                                 })
                             });
                         }
+
+
                         //$('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
                     });
-                });
+                }else {
+                    var data = {PlanInfo:e.data.PlanInfo};
+                    data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
+                    data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
+                    $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
+                        UserPlan = {"UserID":data.PlanInfo.UserID,"PlanID":data.PlanInfo.PlanID};
+                        data.PlanInfo["UserPlan"] = UserPlan;
+                        data.PlanInfo.Picture["PlanID"] = data.PlanInfo.PlanID;
+                        setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
+
+                        $.rogerPost('/update/shortplan', data, function(respJSON){
+                            if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
+
+                                $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
+                                    $.rogerNotice({Message: '快捷方案发布成功'});
+                                    $('#show').removeClass("btn btn-warning invisible");
+                                    $('#show').addClass("btn btn-warning");
+                                    $('#show').click(function (e) {
+                                        $.rogerLocation('#/shortplandetail?PlanID='+data.PlanInfo.PlanID);
+                                    })
+                                });
+                            }
+                            //$('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                        });
+                    });
+                }
+            }else {
+                $.rogerNotice({Message: '请选择起始城市'});
             }
         });
 

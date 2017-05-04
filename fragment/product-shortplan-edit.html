@@ -139,6 +139,19 @@
 		<!-- 行程信息（方案） -->
 		<div class="scheduleShort clearfix">
 			<h4>行程信息</h4>
+			<div class="row" style="margin-bottom: 20px;">
+				<label   class="col-sm-2 col-md-1 control-label">起始城市</label>
+				<div class="col-md-11 col-sm-10">
+					<ul class="label-base">
+						{{if $data.PlanInfo.StartCityID }}
+						<li><input type="text" value="${$data.PlanInfo.StartCity}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/StartCityID" ></a></li>
+						{{/if}}
+						{{if !$data.PlanInfo.StartCityID }}
+						<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/StartCityID" data-action="createCity"> + </div></li>
+						{{/if}}
+					</ul>
+				</div>
+			</div>
 			<div class="row">
 				<div class="col-md-offset-1 col-md-6">
 					<ul class="functionBtn">
@@ -177,11 +190,11 @@
 			</div>
 			{{/if}}
 
-			{{if Label==null}}{{if Content==null}}{{if PlanId}}
+			{{if Label==''}}{{if Content==''}}{{if $data.PlanInfo.PlanID}}
 			<div class="row">
 				<div class="col-md-offset-2 col-md-3">
 					<div class="row">
-						{{if picURL}}
+						{{if PicURL}}
 						<div class="col-md-12">
 							<div class="imgBox">
 								<img name="autoPrefix"  src="${PicURL}">
