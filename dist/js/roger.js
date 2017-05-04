@@ -623,9 +623,14 @@ $(function () {
 				}else if(!ev || !ev.click) {
                     $(this).on("click", function () {
                         var func = data[action];
+                        var indexInsert;
+                        if(action == 'insertDay' || action == 'insertPicture' || action == 'insertContent'){
+                            indexInsert = $(this).attr('data-index');
+                            ++indexInsert;
+						}
                         if(func && typeof func === "function") {
                             var obj = $.roger_pointer_get(data, ptr);
-                            func(data, obj);
+                            func(data, obj, indexInsert);
                         }
                     });
                 }

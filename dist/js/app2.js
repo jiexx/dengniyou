@@ -600,7 +600,11 @@
                     PlanFeature:'',
                     PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
                 },
-                PlanShort: [],
+                PlanShort: [
+                    {Label:' ', Day:'0', Content:null, PicURL: null},
+                    {Label:null, Day:null, Content:null, PicURL: null, PE:true},
+                    {Label:null, Day:null, Content:' ', PicURL: null}
+                ],
                 Planstockquantitys:[]
             },
             IMGHOST:$.rogerImgHost()
@@ -793,53 +797,6 @@
 
     //calendar格式设置价格库存
     function priceCalendarEdit(Plan){
-        // if(!Plan.PlanInfo.Planstockquantitys){
-        //     if(!Plan.Planstockquantitys || Plan.Planstockquantitys.length == 0){
-        //         Plan.PlanInfo.Planstockquantitys=[
-        //             {
-        //                 scheduleDate: '2017-04-28',
-        //                 start:'2017-04-28',
-        //                 title:'已设置',
-        //                 prices:[
-        //                     {
-        //                         SpendName:'套餐一',
-        //                         AdultPrice:12,
-        //                         KidPrice:9,
-        //                         stockQuantity:8
-        //                     }
-        //                 ]
-        //             },
-        //             {
-        //                 scheduleDate: '2017-04-30',
-        //                 title:'已设置',
-        //                 start:'2017-04-30',
-        //                 prices:[
-        //                     {
-        //                         SpendName:'套餐一',
-        //                         AdultPrice:12,
-        //                         KidPrice:9,
-        //                         stockQuantity:8
-        //                     },
-        //                     {
-        //                         SpendName:'套餐二',
-        //                         AdultPrice:12,
-        //                         KidPrice:9,
-        //                         stockQuantity:8
-        //                     },
-        //                     {
-        //                         SpendName:'套餐三',
-        //                         AdultPrice:12,
-        //                         KidPrice:9,
-        //                         stockQuantity:8
-        //                     }
-        //                 ]
-        //             }
-        //             ]
-        //     }else{
-        //         Plan.PlanInfo.Planstockquantitys = Plan.Planstockquantitys;
-        //     }
-        //     $.rogerRefresh(Plan);
-        // }
         //编辑价格
         var trStr = '<tr><td><input type="text" placeholder="请输入"></td>'+
             '<td><input type="text" placeholder="请输入"></td>'+
@@ -1433,20 +1390,47 @@
 
         //     $.rogerRefresh(Plan);
         // };
+        // Plan.createDay = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+        //     PlanShort.push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
+        //     $.rogerRefresh(Plan);
+        // };
+        // Plan.createPicture = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+        //     PlanShort.push({Label:null, Day:null, Content:null, PicURL: null, PicEnable:true});
+        //     $.rogerRefresh(Plan);
+        // };
+        // Plan.createContent = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
+        //     PlanShort.push({Label:null, Day:null, Content:'desc', PicURL: null, PicEnable:false});
+        //     $.rogerRefresh(Plan);
+        // };
+        Plan.createCity = function (Plan, CityID) {
+            $.rogerTrigger('#modal', '#/citychooser2', {Plan:Plan, CityID:CityID});
+        };
+
         Plan.createDay = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            PlanShort.push({Label:'', Day:PlanShort.length+1, Content:null, PicURL: null, PicEnable:false});
+            PlanShort.push({Label:' ', Day:'0', Content:null, PicURL: null});
             $.rogerRefresh(Plan);
         };
         Plan.createPicture = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            PlanShort.push({Label:null, Day:null, Content:null, PicURL: null, PicEnable:true});
+            PlanShort.push({Label:null, Day:null, Content:null, PicURL: null, PE:true});
             $.rogerRefresh(Plan);
         };
         Plan.createContent = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            PlanShort.push({Label:null, Day:null, Content:'desc', PicURL: null, PicEnable:false});
+            PlanShort.push({Label:null, Day:null, Content:' ', PicURL: null});
             $.rogerRefresh(Plan);
         };
-        Plan.createCity = function (Plan, CityID) {
-            $.rogerTrigger('#modal', '#/citychooser2', {Plan:Plan, CityID:CityID});
+
+
+        Plan.insertDay = function(Plan, PlanShort,indexInsert){
+            PlanShort.splice(indexInsert,0,{Label:' ', Day:'0', Content:null, PicURL: null});
+            $.rogerRefresh(Plan);
+        };
+        Plan.insertPicture = function(Plan, PlanShort,indexInsert){
+            PlanShort.splice(indexInsert,0,{Label:null, Day:null, Content:null, PicURL: null, PE:true});
+            $.rogerRefresh(Plan);
+        };
+        Plan.insertContent = function(Plan, PlanShort,indexInsert){
+            PlanShort.splice(indexInsert,0,{Label:null, Day:null, Content:' ', PssicURL: null});
+            $.rogerRefresh(Plan);
         };
 
         //库存价格日历
@@ -2374,28 +2358,16 @@
          };
 
          TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
-             var indexInsert;
-             $('.functionBtn').on('click','li',function(e){
-                 indexInsert = $(this).attr('data-index');
-                 TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
-                 $.rogerRefresh(TraveLogue);
-             });
+             TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
+             $.rogerRefresh(TraveLogue);
          };
          TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){
-             var indexInsert;
-             $('.functionBtn').on('click','li',function(e){
-                 indexInsert = $(this).attr('data-index');
-                 TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
-                 $.rogerRefresh(TraveLogue);
-             });
+             TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+             $.rogerRefresh(TraveLogue);
          };
          TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){
-             var indexInsert;
-             $('.functionBtn').on('click','li',function(e){
-                 indexInsert = $(this).attr('data-index');
-                 TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
-                 $.rogerRefresh(TraveLogue);
-             });
+             TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
+             $.rogerRefresh(TraveLogue);
          };
      }
 
@@ -3369,28 +3341,16 @@
         };
 
         TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
-            var indexInsert;
-            $('.functionBtn').on('click','li',function(e){
-                indexInsert = $(this).attr('data-index');
-                TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
-                $.rogerRefresh(TraveLogue);
-            });            
+            TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
+            $.rogerRefresh(TraveLogue);
         };
          TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){
-            var indexInsert;
-            $('.functionBtn').on('click','li',function(e){
-                indexInsert = $(this).attr('data-index');
-                TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
-                $.rogerRefresh(TraveLogue);
-            });            
+            TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+            $.rogerRefresh(TraveLogue);
         };
          TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){
-            var indexInsert;
-            $('.functionBtn').on('click','li',function(e){
-                indexInsert = $(this).attr('data-index');
-                TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
-                $.rogerRefresh(TraveLogue);
-            });            
+            TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
+            $.rogerRefresh(TraveLogue);
         };
 
         $('#save').rogerOnceClick(TraveLogue, function(e){
