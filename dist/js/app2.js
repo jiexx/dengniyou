@@ -1472,9 +1472,13 @@
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
                     data.PlanInfo.PlanPriceBase = data.PlanInfo.AdultPrice;
                     $.rogerPost('/delete/plan', {PlanID:data.PlanInfo.PlanID}, function(respJSON){
-                        UserPlan = {"UserID":data.PlanInfo.UserID,"PlanID":data.PlanInfo.PlanID};
+                        UserPlan = {"UserID":data.PlanInfo.CreateUserID,"PlanID":data.PlanInfo.PlanID};
                         data.PlanInfo["UserPlan"] = UserPlan;
                         data.PlanInfo.Picture["PlanID"] = data.PlanInfo.PlanID;
+
+                        for(var planshortindex in data.PlanInfo.PlanShort){
+                            data.PlanInfo.PlanShort[planshortindex]["RelativeID"]=data.PlanInfo.PlanID;
+                        }
                         setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
 
                         $.rogerPost('/update/shortplan', data, function(respJSONInner){

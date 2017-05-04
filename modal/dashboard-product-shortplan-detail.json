@@ -1,11 +1,20 @@
 {
-	"PlanInfo": {"sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE PlanID=?;",	"params":["PlanID"]},
-
-	"PlanShort":{
-		"sql":"SELECT * FROM traveluserdb.tab_shortdescription WHERE RelativeID = ? and RelativeType=2;",
-		"params":["PlanID"]
-	},
-
-	"Planstockquantitys": {"sql": "select * from traveluserdb.`vw_/plan/stockquantity` where planID=? ",	"params":["PlanID"]}
-
+  "PlanInfo": {
+    "sql": "SELECT * FROM traveluserdb.`vw_/plan/detail_planinfo` WHERE PlanID=?;",
+    "params": [
+      "PlanID"
+    ]
+  },
+  "PlanShort": {
+    "sql": "SELECT * FROM traveluserdb.tab_shortdescription WHERE RelativeID = ? and RelativeType=2;",
+    "params": [
+      "PlanID"
+    ]
+  },
+  "Planstockquantitys": {
+    "sql": "select * from traveluserdb.`vw_/plan/stockquantity` where planID=? ",
+    "params": [
+      "PlanID"
+    ]
+  }
 }

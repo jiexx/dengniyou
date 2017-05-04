@@ -1,6 +1,6 @@
 {
 	"PlanInfo": {
-		"sql": "INSERT INTO traveluserdb.tab_planinfo(PlanID,PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,4,0,?,?,?,?,2,?,'随时',?,?,? ,?,?,?,?,?,?,?,?,0,NOW(),NOW());",
+		"sql": "INSERT INTO traveluserdb.tab_planinfo(PlanID,PlanName,PlanStatus,AuditStatus,PlanType,PlanPriceBase,PicURL,CarURL,CreateType,PlanDays,StartTime,StartCity,StartCityID,PlanNumber,Policy,CostInclude,CostExclude,VisaNotice,Notice,CreateUserID,AdultPrice,KidPrice,Weight,UpdateDate,CreateDate)VALUES(?,?,4,0,?,?,?,?,2,?,'随时',?,?,? ,?,?,?,?,?,?,?,?,0,NOW(),NOW());",
 		"params": [
 			"PlanID",
 			"PlanName",
@@ -52,13 +52,12 @@
 			]
 		},
 		"PlanShort": {
-			"sql": "INSERT INTO traveluserdb.tab_planshort(PlanID,Label,PicURL,Content,Day,CreateDate)VALUES(?,?,?,?,?,NOW());",
+			"sql": "INSERT INTO traveluserdb.tab_shortdescription(RelativeID,Label,PicURL,Content,Day,CreateDate,RelativeType)VALUES(?,?,?,?,0,NOW(),2)",
 			"params": [
-				"PlanID",
-				"Lable",
+				"RelativeID",
+				"Label",
 				"PicURL",
-				"Content",
-				"Day"
+				"Content"
 			],
 			"files": [
 				"PicURL"
