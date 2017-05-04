@@ -29,7 +29,7 @@
 			]
 		},
 		"PlanShort": {
-			"sql": "SELECT * FROM traveluserdb.tab_planshort WHERE PlanID = ?;",
+			"sql": "SELECT * FROM traveluserdb.tab_shortdescription WHERE RelativeID = ? and RelativeType=2;",
 			"params": [
 				"PlanID"
 			],
