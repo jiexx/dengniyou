@@ -601,9 +601,9 @@
                     PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
                 },
                 PlanShort: [
-                    {label:' ', DAY:'0', content:null, picURL: null},
-                    {label:null, DAY:null, content:null, picURL: null, PE:true},
-                    {label:null, DAY:null, content:' ', picURL: null}
+                    {Label:' ', Day:'0', Content:null, PicURL: null},
+                    {Label:null, Day:null, Content:null, PicURL: null, PE:true},
+                    {Label:null, Day:null, Content:' ', PicURL: null}
                 ],
                 Planstockquantitys:[]
             },
@@ -1407,29 +1407,29 @@
         };
 
         Plan.createDay = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            PlanShort.push({label:' ', DAY:'0', content:null, picURL: null});
+            PlanShort.push({Label:' ', Day:'0', Content:null, PicURL: null});
             $.rogerRefresh(Plan);
         };
         Plan.createPicture = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            PlanShort.push({label:null, DAY:null, content:null, picURL: null, PE:true});
+            PlanShort.push({Label:null, Day:null, Content:null, PicURL: null, PE:true});
             $.rogerRefresh(Plan);
         };
         Plan.createContent = function(Plan, PlanShort){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            PlanShort.push({label:null, DAY:null, content:' ', picURL: null});
+            PlanShort.push({Label:null, Day:null, Content:' ', PicURL: null});
             $.rogerRefresh(Plan);
         };
 
 
         Plan.insertDay = function(Plan, PlanShort,indexInsert){
-            PlanShort.splice(indexInsert,0,{label:' ', DAY:'0', content:null, picURL: null});
+            PlanShort.splice(indexInsert,0,{Label:' ', Day:'0', Content:null, PicURL: null});
             $.rogerRefresh(Plan);
         };
         Plan.insertPicture = function(Plan, PlanShort,indexInsert){
-            PlanShort.splice(indexInsert,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+            PlanShort.splice(indexInsert,0,{Label:null, Day:null, Content:null, PicURL: null, PE:true});
             $.rogerRefresh(Plan);
         };
         Plan.insertContent = function(Plan, PlanShort,indexInsert){
-            PlanShort.splice(indexInsert,0,{label:null, DAY:null, content:' ', picURL: null});
+            PlanShort.splice(indexInsert,0,{Label:null, Day:null, Content:' ', PssicURL: null});
             $.rogerRefresh(Plan);
         };
 
