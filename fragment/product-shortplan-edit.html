@@ -177,7 +177,7 @@
 			</div>
 			{{/if}}
 
-			{{if Label==null}}{{if Content==null}}{{if articleID}}
+			{{if Label==null}}{{if Content==null}}{{if PlanId}}
 			<div class="row">
 				<div class="col-md-offset-2 col-md-3">
 					<div class="row">
@@ -210,7 +210,7 @@
 			<div class="row">
 				<div class="col-md-offset-2 col-md-3">
 					<div class="row">
-						{{if picURL}}
+						{{if PicURL}}
 						<div class="col-md-12">
 							<div class="imgBox">
 								<img name="autoPrefix"  src="${PicURL}">
@@ -265,65 +265,6 @@
 					</div>
 				</div>
 			</div> -->
-		</div>
-		<!-- 行程信息结束（方案） -->
-
-		<!-- 行程信息（方案） -->
-		<div class="schedule clearfix">
-			<div class="row">
-				<h4 class="col-md-3">开始城市</h4>
-				<div class="col-md-3">
-					<ul class="label-base">
-						{{if $data.PlanInfo.StartCityID }}
-						<li><input type="text" value="${$data.PlanInfo.StartCity}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/StartCityID" ></a></li>
-						{{/if}}
-						{{if !$data.PlanInfo.StartCityID }}
-						<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/StartCityID" data-action="createCity"> + </div></li>
-						{{/if}}
-					</ul>
-				</div>
-				<div class="col-md-6 pull-right">
-					<div class="btn-group">
-						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createDay">添加标题</a>
-						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createPicture">添加图片</a>
-						<a class="btn btn-warning  " href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createContent">添加描述</a>
-					</div>
-				</div>
-			</div>
-			{{each $data.PlanInfo.PlanShort}}
-			{{if Day}}
-			<div class="row day-edit">
-				<div class="col-md-3">
-					<label>第</label>
-					<input type="text" class="form-control one"  value="${Day}"  data-value="/PlanInfo/PlanShort/${$index}/Day" placeholder="第几天">
-					<label>天</label>
-				</div>
-				<div class="col-md-5">
-					<input type="text" class="form-control"  value="${Label}"  data-value="/PlanInfo/PlanShort/${$index}/Label" placeholder="标题">
-				</div>
-			</div>
-			{{/if}}
-
-			{{if PicURL}}
-			<div class="col-md-5 picture-edit">
-				<div class="imgBox">
-					<img name="needPrefix" src="${PicURL}">
-					<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL"></a>
-				</div>
-			</div>
-			{{/if}}
-			{{if PicEnable}}
-			<div class="col-md-5 picture-edit" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
-				<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-action="image">+</div>
-			</div>
-			{{/if}}
-
-			{{if Content}}
-			<div class="col-md-5 introduction">
-				<textarea name="" rows="10"   data-value="/PlanInfo/PlanShort/${$index}/Content" placeholder="描述">${ Content}</textarea>
-			</div>
-			{{/if}}
-			{{/each}}
 		</div>
 		<!-- 行程信息结束（方案） -->
 
