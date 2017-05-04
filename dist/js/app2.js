@@ -1313,7 +1313,7 @@
                     setStockQuantity(data.PlanInfo,'');
                     $.rogerPost('/new/tmpplan', data, function (respJSON) {
 
-                        if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
+                        if(respJSON.PlanInfo && data.PlanInfo.Planstockquantitys){
 
                             var pricesinsert =  data.PlanInfo.PlanstockquantitysInsert
                             for (var pricesindex in pricesinsert) {
@@ -1355,8 +1355,8 @@
                         }
 
                         setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
-                        $.rogerPost('/update/tmpplan', data, function (respJSON) {
-                            if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
+                        $.rogerPost('/update/tmpplan', data, function (respJSONInner) {
+                            if(respJSONInner.PlanInfo && data.PlanInfo.Planstockquantitys){
 
                                 $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                     $.rogerNotice({Message: '模板方案更新成功'});
@@ -1462,7 +1462,7 @@
                 setStockQuantity(data.PlanInfo,'');
                 $.rogerPost('/new/shortplan', data, function(respJSON){
 
-                    if(respJSON.PlanInfo.insertId && data.PlanInfo.Planstockquantitys){
+                    if(respJSON.PlanInfo && data.PlanInfo.Planstockquantitys){
 
                         var pricesinsert =  data.PlanInfo.PlanstockquantitysInsert
                         for (var pricesindex in pricesinsert) {
@@ -1492,8 +1492,8 @@
                     data.PlanInfo.Picture["PlanID"] = data.PlanInfo.PlanID;
                     setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
 
-                    $.rogerPost('/update/shortplan', data, function(respJSON){
-                        if(data.PlanInfo.PlanID && data.PlanInfo.Planstockquantitys){
+                    $.rogerPost('/update/shortplan', data, function(respJSONInner){
+                        if(respJSONInner.PlanInfo && data.PlanInfo.Planstockquantitys){
 
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '快捷方案发布成功'});
