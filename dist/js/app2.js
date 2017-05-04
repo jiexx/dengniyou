@@ -1477,7 +1477,7 @@
                         data.PlanInfo.Picture["PlanID"] = data.PlanInfo.PlanID;
                         setStockQuantity(data.PlanInfo,data.PlanInfo.PlanID);
 
-                        $.rogerPost('/update/shortplan', data, function(respJSON){
+                        $.rogerPost('/update/shortplan', data, function(respJSONInner){
                             if(respJSONInner.PlanInfo && data.PlanInfo.Planstockquantitys){
 
                                 $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
