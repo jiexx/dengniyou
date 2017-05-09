@@ -1730,6 +1730,12 @@
      };
 
     var ctrlUserInfoDetail = function(response, realView) {
+
+         //去认证
+         $('#goVerify').rogerOnceClick(response, function (e){
+             console.log('222');
+            $.rogerLocation('#/userinfoverify');
+         });
          $('#edit').rogerOnceClick(response, function (e) {
                  temp = e.data.DetailMain[0];
                  $.rogerLocation('#/userinfoedit');
@@ -1960,6 +1966,115 @@
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
+
+     var initUserInfoVerify = function(PS, realView) {
+         var usr = $.rogerGetLoginUser();
+         var returnvalue = {
+             DetailMain: {
+                 verifyPhotoUrls:[]
+             },
+             IMGHOST: $.rogerImgHost()
+         };
+         $.rogerPost('/getVerifyImf', {UserID: usr.UserID}, function (respJSON) {
+             returnvalue.DetailMain = respJSON.datas;
+             if(!returnvalue.DetailMain.verifyPhotoUrls){returnvalue.DetailMain.verifyPhotoUrls = [];}
+             $.rogerRefresh(returnvalue);
+         });
+         $.rogerPost('/getContract',null, function (respJSON) {
+             returnvalue.DetailMain.contractID = respJSON.datas.contractID;
+             returnvalue.contractContent = respJSON.datas.contractContent;
+             $.rogerRefresh(returnvalue);
+         });
+
+         return returnvalue;
+     }
+
+     var ctrlUserInfoVerify = function(response, realView) {
+
+         $('input[name="sex"]').on('change',function(){
+             var val=$(this).val();
+             response.DetailMain.sex = val;
+         });
+         flatpickr(".flatpickr");
+         $('.flatpickr-calendar').css('width','330px');
+         response.createCountry = function (response) {
+             $.rogerTrigger('#modal', '#/countrychooser', {response:response});
+         };
+
+         $('.baseInfo h4').on('click','.fa',function(){
+             if($(this).hasClass('fa-angle-up')){
+                 $('.contractText').css('display','none');
+                 $(this).removeClass('fa-angle-up').addClass('fa-angle-down');
+             }else{
+                 $('.contractText').css('display','block');
+                 $(this).removeClass('fa-angle-down').addClass('fa-angle-up');
+             }
+
+         });
+
+         $('#contractAgree').on('click',function(){
+             if($(this).prop('checked')){
+                 $('#userVerify').attr('disabled',false);
+             }else{
+                 $('#userVerify').attr('disabled',true);
+             }
+         });
+
+         $('#userVerify').rogerOnceClick(response,function(e){
+
+             if(response.DetailMain.verifyPhotoUrls.length > 0 ){
+                 var verifyPhotoBase64 = [],verifyPhotoUrl = [];
+                 for(var m =0; m < response.DetailMain.verifyPhotoUrls.length; m++ ){
+                     if( response.DetailMain.verifyPhotoUrls[m].indexOf('group1/') == -1 ){
+                         verifyPhotoBase64.push(response.DetailMain.verifyPhotoUrls[m]);
+                     }else{
+                         verifyPhotoUrl.push(response.DetailMain.verifyPhotoUrls[m]);
+                     }
+                 }
+             }
+             response.DetailMain.verifyPhotoUrls = verifyPhotoUrl;
+             if(!response.DetailMain.scheduleList){response.DetailMain.scheduleList = [];}
+             if(!response.DetailMain.guiderList){response.DetailMain.guiderList = [];}
+             if(!response.DetailMain.travelPlaceList){response.DetailMain.travelPlaceList = [];}
+             if(!response.DetailMain.facilitiesModelList){response.DetailMain.facilitiesModelList = [];}
+             if(!response.DetailMain.planList){response.DetailMain.planList = [];}
+             if(!response.DetailMain.serviceList){response.DetailMain.serviceList = [];}
+             if(!response.DetailMain.travelFoodList){response.DetailMain.travelFoodList = [];}
+             if(!response.DetailMain.travelHotelList){response.DetailMain.travelHotelList = [];}
+             if(!response.DetailMain.travelSpotsList){response.DetailMain.travelSpotsList = [];}
+             if(!response.DetailMain.picurls){response.DetailMain.picurls = [];}
+             if(!response.DetailMain.drivingLicensesForshow){response.DetailMain.drivingLicensesForshow = [];}
+             if(!response.DetailMain.hasLanguageForshow){response.DetailMain.hasLanguageForshow = [];}
+             if(!response.DetailMain.interestForshow){response.DetailMain.interestForshow = [];}
+             if(!response.DetailMain.labelsForshow){response.DetailMain.labelsForshow = [];}
+             if(!response.DetailMain.skillsForshow){response.DetailMain.skillsForshow = [];}
+             if(!response.DetailMain.telsForshow){response.DetailMain.telsForshow = [];}
+
+             var data = {
+                 "appType": "",
+                 "commandid": 0,
+                 "verifyPhotoBase64":verifyPhotoBase64,
+                 "guider": response.DetailMain
+             };
+
+             $.rogerPost('/userVerify/save',data,function(data){
+                 if(data.errcode == 0){
+                     alert('保存成功！');
+                     $.rogerLocation('#/userinfodetail');
+                 }else{
+                     alert('保存出错，错误:'+data.msg);
+                 }
+
+             });
+         });
+
+         $('#userBack').rogerOnceClick(response,function(e){
+             $.rogerLocation('#/userinfodetail');
+         });
+
+         bindRidoesForSwitch();
+         realView.rogerCropImages();
+     };
 
     var ctrlServicedetail = function (response, realView) {
         // 车辆与装备轮播图初始化
@@ -3760,8 +3875,9 @@
 
        '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
-        '#/userinfoedit':                 {fragment:'fragment/userInfo-guide-edit.html',            init: initUserInfoEdit,   /*rootrest: '/user/info', */                    ctrl: ctrlUserInfoEdit},
-        '#/userinfodetail':               {fragment:'fragment/userInfo-guide-detail.html',          init: initUserInfoDetail,   /*rootrest: '/user/info', */                  ctrl: ctrlUserInfoDetail},
+        '#/userinfoedit':                 {fragment:'fragment/userInfo-guide-edit.html',            init: initUserInfoEdit,   /*rootrest: '/user/info', */              ctrl: ctrlUserInfoEdit},
+        '#/userinfoverify':               {fragment:'fragment/userInfo-guide-verify.html',          init: initUserInfoVerify,   /*rootrest: '/user/info', */            ctrl: ctrlUserInfoVerify},
+        '#/userinfodetail':               {fragment:'fragment/userInfo-guide-detail.html',          init: initUserInfoDetail,   /*rootrest: '/user/info', */            ctrl: ctrlUserInfoDetail},
         '#/equipdetail':                  {view:'product-equip-detail.html',                          rootrest:'/facility/detail',                                       ctrl: ctrlFacilityDetail},
         '#/servicecardetail':            {view:'product-service-car-detail.html',	                  rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/cardetail':                    {view:'product-car-detail.html',	                          rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},

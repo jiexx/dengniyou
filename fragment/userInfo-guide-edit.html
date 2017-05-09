@@ -265,6 +265,7 @@
             <li class="row" style="margin:0;">
               <div class="form-group col-md-3" >
                 <select class="form-control" id="LanguageKindChoice">
+                  {{if !DetailMain.hasLanguageForshow[$index].item1}}<option value="">请选择</option>{{/if}}
                   {{if DetailMain.hasLanguageForshow[$index].item1 == '中文普通话'}}<option selected>中文普通话</option>{{else}}<option>中文普通话</option>{{/if}}
                   {{if DetailMain.hasLanguageForshow[$index].item1 == '中文粤语'}}<option selected>中文粤语</option>{{else}}<option>中文粤语</option>{{/if}}
                   {{if DetailMain.hasLanguageForshow[$index].item1 == '英语'}}<option selected>英语</option>{{else}}<option>英语</option>{{/if}}
@@ -285,6 +286,7 @@
               </div>
               <div class="form-group col-md-3">
                 <select class="form-control" id="LanguageLevelChoice">
+                  {{if !DetailMain.hasLanguageForshow[$index].item2}}<option value="">请选择</option>{{/if}}
                   {{if DetailMain.hasLanguageForshow[$index].item2 == '母语'}}<option selected>母语</option>{{else}}<option>母语</option>{{/if}}
                   {{if DetailMain.hasLanguageForshow[$index].item2 == '精通'}}<option selected>精通</option>{{else}}<option>精通</option>{{/if}}
                   {{if DetailMain.hasLanguageForshow[$index].item2 == '熟练'}}<option selected>熟练</option>{{else}}<option>熟练</option>{{/if}}
@@ -318,6 +320,7 @@
               </div>
               <div class="form-group col-md-3">
                 <select class="form-control" id="drivingCountryChoice">
+                  {{if !DetailMain.drivingLicensesForshow[$index].item2}}<option value="">请选择</option>{{/if}}
                   {{if DetailMain.drivingLicensesForshow[$index].item2 == '中国'}}<option selected>中国</option>{{else}}<option>中国</option>{{/if}}
                   {{if DetailMain.drivingLicensesForshow[$index].item2 == '中国香港'}}<option selected>中国香港</option>{{else}}<option>中国香港</option>{{/if}}
                   {{if DetailMain.drivingLicensesForshow[$index].item2 == '中国台湾'}}<option selected>中国台湾</option>{{else}}<option>中国台湾</option>{{/if}}
@@ -336,6 +339,7 @@
               </div>
               <div class="form-group col-md-3">
                 <select class="form-control" id="drivingLevelChoice">
+                  {{if !DetailMain.drivingLicensesForshow[$index].item3}}<option value="">请选择</option>{{/if}}
                   {{if DetailMain.drivingLicensesForshow[$index].item3 == '小型客车'}}<option selected>小型客车</option>{{else}}<option>小型客车</option>{{/if}}
                   {{if DetailMain.drivingLicensesForshow[$index].item3 == '大型客车'}}<option selected>大型客车</option>{{else}}<option>大型客车</option>{{/if}}
                   {{if DetailMain.drivingLicensesForshow[$index].item3 == '大型货车'}}<option selected>大型货车</option>{{else}}<option>大型货车</option>{{/if}}
@@ -437,6 +441,7 @@
     function selectChoice(selectID,inputID){
       $('#'+selectID).on('change',function(){
         var temp = $(this).find('option:selected').text();
+        if(temp == "请选择"){temp ='';}
         $('#'+inputID).val(temp).trigger('keyup');     
       });
     }
