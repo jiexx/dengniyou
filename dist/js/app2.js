@@ -1811,6 +1811,10 @@
 
             $.rogerRefresh(returnvalue);
         });
+        $.rogerPost('/getAreaCodeInfo', null, function(res){
+            returnvalue.AreaCode = res.datas.areaCodeList;
+            $.rogerRefresh(returnvalue);
+        });
         return returnvalue;
     };
 

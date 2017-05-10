@@ -56,8 +56,8 @@
         <div class="row product-detail price-detail">
           <h2>基本信息</h2>
           <div class="col-md-4">
-            <p>真实姓名：<span>${DetailMain.trueName}</span> {{if DetailMain.identified == 0}}<button class="btn btn-danger btn-sm" id="goVerify" style="margin-left:10px;"> 去认证
-            </button>{{else DetailMain.identified == 1}} <span class="label label-success">已认证</span> {{else DetailMain.identified == 2}} <span class="label label-warn">认证中</span> {{else DetailMain.identified == 9}} <span class="label label-success">认证失败</span>{{/if}}</p>
+            <p>真实姓名：<span>${DetailMain.trueName}</span> {{if DetailMain.identified == 0}}<button class="btn btn-danger btn-sm goVerify" style="margin-left:10px;"> 去认证
+            </button>{{else DetailMain.identified == 1}} <button class="btn btn-success  btn-sm goVerify">已认证</button> {{else DetailMain.identified == 2}} <button class="btn btn-warning btn-sm goVerify">认证中</button> {{else DetailMain.identified == 9}} <button class="btn btn-default  btn-sm goVerify">认证失败</button>{{/if}}</p>
           </div>
           <div class="col-md-4">
             <p>等你游账号：<span>${DetailMain.userAccount}</span></p>
@@ -85,9 +85,9 @@
           </div>
         </div> <!-- 基本信息结束  -->
 
-        <div class="row product-detail price-detail">
-          <h2>代理管理 <span class="col-md-10 pull-right">{{if DetailMain.agentStatus == 0}}未设置{{else}}已设置{{/if}}</span></h2>
-        </div>
+        <!--<div class="row product-detail price-detail">-->
+          <!--<h2>代理管理 <span class="col-md-10 pull-right">{{if DetailMain.agentStatus == 0}}未设置{{else}}已设置{{/if}}</span></h2>-->
+        <!--</div>-->
 
         <div class="row product-detail price-detail">
           <h2>联系方式</h2>

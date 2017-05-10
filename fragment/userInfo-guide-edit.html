@@ -201,7 +201,13 @@
               </div>
               <div class="form-group col-md-3">
                 <div class="">
-                  <input type="text" class="form-control"   value="${$data.DetailMain.telsForshow[$index].item2}"  data-value="/DetailMain/telsForshow/${$index}/item2" placeholder="国家区号">
+                  <select class="form-control" id="AreaCodeChoice">
+                    {{if !DetailMain.telsForshow[$index].item2}}<option value="">请选择</option>{{/if}}
+                    {{each(i,p) AreaCode}}
+                    {{if DetailMain.telsForshow[$index].item2 == p.areaCode}}<option selected>${ p.areaCode }</option>{{else}}<option>${ p.areaCode }</option>{{/if}}
+                    {{/each}}
+                  </select>
+                  <input type="hidden" class="form-control" id="AreaCode" value="${$data.DetailMain.telsForshow[$index].item2}"  data-value="/DetailMain/telsForshow/${$index}/item2" placeholder="国家区号">
                 </div>
               </div>
               <div class="form-group col-md-3">
@@ -432,6 +438,7 @@
 
 <script>
   $(function(){
+    selectChoice('AreaCodeChoice','AreaCode');
     selectChoice('LanguageKindChoice','LanguageKind');
     selectChoice('LanguageLevelChoice','LanguageLevel');
     selectChoice('drivingCountryChoice','drivingCountry');

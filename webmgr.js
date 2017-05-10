@@ -446,6 +446,18 @@ app.post('/travel/guideplan/editPlanStatus', upload.array(), function(req,res){
     );
 });
 
+//get国家区号
+app.post('/getAreaCodeInfo', upload.array(), function(req,res){
+    request.get(config.JAVA_SERVER +'/travel/auth/getAreaCodeInfo',function (error, response, body) {
+            var data = JSON.parse(body);
+            if (!error && response.statusCode == 200 && data.errcode == 0) {
+                res.send(body);
+            } else {
+                res.send(JSON.stringify({url: +false, "message": "失败", "status": 1}));
+            }
+        }
+    );
+});
 
 var MODAL = {};
 var server = app.listen(8089, function() {
