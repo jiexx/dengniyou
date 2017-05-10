@@ -1,0 +1,134 @@
+<div class="container editPage">
+
+  <div class="baseInfo">
+    <ul class="breadcrumb">
+      <li><a href="#">资料管理</a> <span class="divider"></span></li>
+      <li class="active">资料认证</li>
+    </ul>
+
+    <h4>基本信息</h4>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">真实姓名</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.trueName}"  data-value="/DetailMain/trueName" placeholder="请输入">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="col-sm-2 col-md-1 control-label">性别：</label>
+        <div class="col-sm-10 col-md-11">
+          <div class="row" >
+            <div class="col-md-1 col-sm-3">
+              {{if DetailMain.sex == 1}}
+              <input type="radio" name="sex"  value="1"   checked>
+              {{else}}
+              <input type="radio" name="sex"  value="1"  >
+              {{/if}}男
+            </div>
+            <div class="col-md-1  col-sm-3">
+              {{if DetailMain.sex == 0}}
+              <input type="radio" name="sex"  value="0" checked>
+              {{else}}
+              <input type="radio" name="sex"  value="0" >
+              {{/if}}女
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">出生日期</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control flatpickr" value="${DetailMain.birthDay}"  data-value="/DetailMain/birthDay" placeholder="选择日期"  style="background-color: #fff;">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">国籍</label>
+        <div class="col-sm-10 col-md-11">
+          <div class="col-sm-4" style="padding-left: 0"><input type="text" class="form-control" value="${DetailMain.nationalityName}" data-value="/DetailMain/nationalityName" style="width: 100%;"></div>
+          <div class="col-sm-2"><button type="button" class="btn btn-default btn-sm" data-op="change"  data-pointer="/DetailMain" data-action="createCountry">选择国籍</button></div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">证件类型</label>
+        <div class="col-sm-10 col-md-11">
+          <select class="form-control" id="idtypeChoice">
+            {{if !DetailMain.idtype}}<option value="">请选择</option>{{/if}}
+            {{if DetailMain.idtype == '当地身份证'}}<option selected>当地身份证</option>{{else}}<option>当地身份证</option>{{/if}}
+            {{if DetailMain.idtype == '护照'}}<option selected>护照</option>{{else}}<option>护照</option>{{/if}}
+            {{if DetailMain.idtype == '其他'}}<option selected>其他</option>{{else}}<option>其他</option>{{/if}}
+          </select>
+          <input type="hidden" class="form-control" id="idtype" value="${DetailMain.idtype}"  data-value="/DetailMain/idtype" placeholder="请输入">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">证件号码</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control" value="${DetailMain.idno}"  data-value="/DetailMain/idno" placeholder="请输入">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">有效期至</label>
+        <div class="col-sm-10 col-md-11">
+          <input type="text" class="form-control flatpickr" value="${DetailMain.validTime}"  data-value="/DetailMain/validTime" placeholder="选择日期"  style="background-color: #fff;">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="" class="col-sm-2 col-md-1 control-label">备注信息</label>
+        <div class="col-sm-10 col-md-11">
+          <textarea name="" id="" data-value="/DetailMain/comment" placeholder="可输入300字" style="border:  1px solid #CCC; height: 100px;">${DetailMain.comment}</textarea>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!-- 方案基本信息结束 -->
+
+  <!-- 相册上传 -->
+  <div class="photoInfo">
+    <h4>证件照片</h4>
+    <p><i>提示：如果您是所在地公民，可上传当地身份证件的正反面或护照信息页进行实名认证。如果您是中国公民可上传护照进行实名认证，请上传护照信息页和签证页的照片。</i></p>
+    <div class="row">
+      <div class="col-md-1 ">照片上传:</div>
+      <div class="col-md-11 row" >
+        {{each(i,itemtem) DetailMain.verifyPhotoUrls}}
+        <div class="col-md-3">
+          <div class="imgBox">
+            <img src="${itemtem}" name="autoPrefix">
+            <a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/DetailMain/verifyPhotoUrls/${i}"></a>
+          </div>
+        </div>
+        {{/each}}
+        <div class="col-md-3" data-op="toggle" data-pointer="/DetailMain/verifyPhotoUrls" data-limit="8">
+          <div class="imgBox addImg" data-op="change" data-pointer="/DetailMain/verifyPhotoUrls/-" data-action="image">+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 相册上传结束 -->
+
+  <div class="baseInfo">
+    <h4>合作协议 <span class="fa fa-angle-down"></span> <span style="margin-left: 60%;"> <input type="checkbox" id="contractAgree"> 同意</span></h4>
+    <div class="contractText" style="display: none;"><pre>${contractContent}</pre></div>
+  </div>
+
+  <div class="optionBtn" style="border:0; box-shadow: 0 0;">
+    <button id="userVerify" type="submit" class="btn btn-warning" disabled >提交认证</button>
+    <button id="userBack" type="button" class="btn btn-default">返回</button>
+  </div>
+
+</div>
+
+<script>
+  $(function(){
+      selectChoice('idtypeChoice','idtype');
+
+      function selectChoice(selectID,inputID){
+          $('#'+selectID).on('change',function(){
+              var temp = $(this).find('option:selected').text();
+              if(temp == "请选择"){temp ='';}
+              $('#'+inputID).val(temp).trigger('keyup');
+          });
+      }
+  });
+</script>
+

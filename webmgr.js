@@ -392,6 +392,46 @@ app.post('/guideDetail/update', upload.array(), function (req, res) {
             }
         })
 });
+//个人信息认证
+app.post('/getVerifyImf', upload.array(), function (req, res) {
+    request.get(config.JAVA_SERVER+'/travel/user/getVerifyImf?userID='+ req.body.UserID, function (error, response, body) {
+            var data = JSON.parse(body);
+            if (!error && response.statusCode == 200 && data.datas) {
+                res.send(body);
+            } else {
+                res.send(JSON.stringify({url: +false, "message": "失败", "status": 1}));
+            }
+        }
+    );
+});
+app.post('/userVerify/save', upload.array(), function (req, res) {
+    request.post(
+        {
+            url: config.JAVA_SERVER+'/travel/userweb/setVerifyImfWeb',
+            method: "POST",
+            json: req.body
+        },
+        function (error, response, body) {
+            //var data = JSON.parse(body);
+            if (!error && response.statusCode == 200) {
+                res.send(body);
+            }else{
+                res.send(JSON.stringify({url: +false, "message": body.message, "status": 1}));
+            }
+        })
+});
+//获取合作协议
+app.post('/getContract', upload.array(), function (req, res) {
+    request.get(config.JAVA_SERVER+'/travel/user/getContract', function (error, response, body) {
+            var data = JSON.parse(body);
+            if (!error && response.statusCode == 200 && data.datas) {
+                res.send(body);
+            } else {
+                res.send(JSON.stringify({url: +false, "message": "失败", "status": 1}));
+            }
+        }
+    );
+});
 
 //方案发布隐藏切换
 app.post('/travel/guideplan/editPlanStatus', upload.array(), function(req,res){
