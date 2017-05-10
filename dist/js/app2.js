@@ -1990,7 +1990,7 @@
      }
 
      var ctrlUserInfoVerify = function(response, realView) {
-
+         var usr = $.rogerGetLoginUser();
          $('input[name="sex"]').on('change',function(){
              var val=$(this).val();
              response.DetailMain.sex = val;
@@ -2021,7 +2021,7 @@
          });
 
          $('#userVerify').rogerOnceClick(response,function(e){
-
+             response.DetailMain.userID = usr.UserID;
              if(response.DetailMain.verifyPhotoUrls.length > 0 ){
                  var verifyPhotoBase64 = [],verifyPhotoUrl = [];
                  for(var m =0; m < response.DetailMain.verifyPhotoUrls.length; m++ ){
