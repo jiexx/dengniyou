@@ -1733,7 +1733,7 @@
     var ctrlUserInfoDetail = function(response, realView) {
 
          //去认证
-         $('#goVerify').rogerOnceClick(response, function (e){
+         $('.goVerify').rogerOnceClick(response, function (e){
              console.log('222');
             $.rogerLocation('#/userinfoverify');
          });
@@ -1991,7 +1991,8 @@
      }
 
      var ctrlUserInfoVerify = function(response, realView) {
-
+         var usr = $.rogerGetLoginUser();
+         response.DetailMain.userID = usr.UserID;
          $('input[name="sex"]').on('change',function(){
              var val=$(this).val();
              response.DetailMain.sex = val;
@@ -2481,16 +2482,16 @@
              $.rogerRefresh(TraveLogue);
          };
 
-         TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
-             TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
+         TraveLogue.insertDay = function(TraveLogue, TravelogueDetail, indexInsert){
+             TravelogueDetail.splice(indexInsert,0,{label:' ', DAY:'0', content:null, picURL: null});
              $.rogerRefresh(TraveLogue);
          };
-         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){
-             TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail, indexInsert){
+             TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
              $.rogerRefresh(TraveLogue);
          };
-         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){
-             TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
+         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail, indexInsert){
+             TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:' ', picURL: null});
              $.rogerRefresh(TraveLogue);
          };
      }
@@ -3488,16 +3489,16 @@
             $.rogerRefresh(TraveLogue);
         };
 
-        TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
-            TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
+        TraveLogue.insertDay = function(TraveLogue, TravelogueDetail, indexInsert){
+            TravelogueDetail.splice(indexInsert,0,{label:' ', DAY:'0', content:null, picURL: null});
             $.rogerRefresh(TraveLogue);
         };
-         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){
-            TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail, indexInsert){
+            TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
             $.rogerRefresh(TraveLogue);
         };
-         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){
-            TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
+         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail, indexInsert){
+            TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:' ', picURL: null});
             $.rogerRefresh(TraveLogue);
         };
 
@@ -3507,12 +3508,14 @@
             //关联方案数据调整
             var PlanList = temp.TravelogueToPlan2;
             var PlanListNew = [];
-            for(var m=0; m< PlanList.length; m++){
-                PlanListNew.push({
-                    articleID:temp.articleID,
-                    userID:temp.userID,
-                    planID:PlanList[m]
-                })
+            if(PlanList && PlanList.length > 0){
+                for(var m=0; m< PlanList.length; m++){
+                    PlanListNew.push({
+                        articleID:temp.articleID,
+                        userID:temp.userID,
+                        planID:PlanList[m]
+                    })
+                }
             }
             temp.TravelogueToPlan = PlanListNew;
             console.log(temp);
