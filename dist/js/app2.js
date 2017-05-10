@@ -1520,7 +1520,6 @@
     };
 
     var pageclick = function() {
-
         $('[name=page]').click(function (e) {
             clickpage = $(this).data("value");
             //前一页
@@ -1547,7 +1546,9 @@
             pamaeta["pagestart"] = (page-1)*8;
             pamaeta["page"] = page;
 
-            url = $.rogerGetPath() || window.location.hash;
+            if(url == ''){
+                url = $.rogerGetPath() || window.location.hash;
+            }
 
 
             $.rogerTrigger('#app',url, pamaeta);
@@ -1732,7 +1733,7 @@
     var ctrlUserInfoDetail = function(response, realView) {
 
          //去认证
-         $('#goVerify').rogerOnceClick(response, function (e){
+         $('.goVerify').rogerOnceClick(response, function (e){
              console.log('222');
             $.rogerLocation('#/userinfoverify');
          });
@@ -1991,6 +1992,7 @@
 
      var ctrlUserInfoVerify = function(response, realView) {
          var usr = $.rogerGetLoginUser();
+         response.DetailMain.userID = usr.UserID;
          $('input[name="sex"]').on('change',function(){
              var val=$(this).val();
              response.DetailMain.sex = val;
@@ -2021,7 +2023,7 @@
          });
 
          $('#userVerify').rogerOnceClick(response,function(e){
-             response.DetailMain.userID = usr.UserID;
+
              if(response.DetailMain.verifyPhotoUrls.length > 0 ){
                  var verifyPhotoBase64 = [],verifyPhotoUrl = [];
                  for(var m =0; m < response.DetailMain.verifyPhotoUrls.length; m++ ){
@@ -2480,16 +2482,16 @@
              $.rogerRefresh(TraveLogue);
          };
 
-         TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
-             TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
+         TraveLogue.insertDay = function(TraveLogue, TravelogueDetail, indexInsert){
+             TravelogueDetail.splice(indexInsert,0,{label:' ', DAY:'0', content:null, picURL: null});
              $.rogerRefresh(TraveLogue);
          };
-         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){
-             TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail, indexInsert){
+             TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
              $.rogerRefresh(TraveLogue);
          };
-         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){
-             TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
+         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail, indexInsert){
+             TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:' ', picURL: null});
              $.rogerRefresh(TraveLogue);
          };
      }
@@ -2931,6 +2933,16 @@
                 temp["policyBean"]["ratio3"]=0.82;
                 temp["policyBean"]["ratio4"]=0.75;
             }
+
+            for(var i in temp.TravelogueDetail){
+                temp.TravelogueDetail[i]["day"] = temp.TravelogueDetail[i]["DAY"];
+            }
+
+            var serviceDescription = {articleDetailInfoList:temp.TravelogueDetail};
+            temp["serviceDescriptionBean"] = {
+                "serviceID": temp.serviceID == "" ? 0 : temp.serviceID,
+                "serviceDescription": serviceDescription
+            };
 
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');
@@ -3463,16 +3475,16 @@
             $.rogerRefresh(TraveLogue);
         };
 
-        TraveLogue.insertDay = function(TraveLogue, TravelogueDetail){
-            TravelogueDetail.splice(indexInsert + 1,0,{label:' ', DAY:'0', content:null, picURL: null});
+        TraveLogue.insertDay = function(TraveLogue, TravelogueDetail, indexInsert){
+            TravelogueDetail.splice(indexInsert,0,{label:' ', DAY:'0', content:null, picURL: null});
             $.rogerRefresh(TraveLogue);
         };
-         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail){
-            TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+         TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail, indexInsert){
+            TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
             $.rogerRefresh(TraveLogue);
         };
-         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail){
-            TravelogueDetail.splice(indexInsert + 1,0,{label:null, DAY:null, content:' ', picURL: null});
+         TraveLogue.insertContent = function(TraveLogue, TravelogueDetail, indexInsert){
+            TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:' ', picURL: null});
             $.rogerRefresh(TraveLogue);
         };
 
@@ -3482,12 +3494,14 @@
             //关联方案数据调整
             var PlanList = temp.TravelogueToPlan2;
             var PlanListNew = [];
-            for(var m=0; m< PlanList.length; m++){
-                PlanListNew.push({
-                    articleID:temp.articleID,
-                    userID:temp.userID,
-                    planID:PlanList[m]
-                })
+            if(PlanList && PlanList.length > 0){
+                for(var m=0; m< PlanList.length; m++){
+                    PlanListNew.push({
+                        articleID:temp.articleID,
+                        userID:temp.userID,
+                        planID:PlanList[m]
+                    })
+                }
             }
             temp.TravelogueToPlan = PlanListNew;
             console.log(temp);
