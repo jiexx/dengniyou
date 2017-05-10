@@ -1520,7 +1520,6 @@
     };
 
     var pageclick = function() {
-
         $('[name=page]').click(function (e) {
             clickpage = $(this).data("value");
             //前一页
@@ -1547,7 +1546,9 @@
             pamaeta["pagestart"] = (page-1)*8;
             pamaeta["page"] = page;
 
-            url = $.rogerGetPath() || window.location.hash;
+            if(url == ''){
+                url = $.rogerGetPath() || window.location.hash;
+            }
 
 
             $.rogerTrigger('#app',url, pamaeta);
@@ -2816,6 +2817,16 @@
                 temp["policyBean"]["ratio3"]=0.82;
                 temp["policyBean"]["ratio4"]=0.75;
             }
+
+            for(var i in temp.TravelogueDetail){
+                temp.TravelogueDetail[i]["day"] = temp.TravelogueDetail[i]["DAY"];
+            }
+
+            var serviceDescription = {articleDetailInfoList:temp.TravelogueDetail};
+            temp["serviceDescriptionBean"] = {
+                "serviceID": temp.serviceID == "" ? 0 : temp.serviceID,
+                "serviceDescription": serviceDescription
+            };
 
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');
