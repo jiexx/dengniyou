@@ -3,14 +3,14 @@
     <div class="list-group service-list">
 	{{if TravelogueList.length != 0}}
 	<div class="list-group-item clearfix disabled">
-	  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+	  	<div class="col-md-1">序号</div>
 	  	<div class="col-md-8 service-name">我的攻略</div>
 	  	<div class="col-md-2 ">发布状态（草稿/发布）</div>
 	  	<div class="col-md-1 ">编辑</div>
 	</div>
 	{{each TravelogueList}}
 		<div class="list-group-item clearfix btn-group">
-		  	<div class="col-md-1"></div>
+		  	<div class="col-md-1">${$index+1}</div>
 		  	<div class="col-md-8 ">
 			    <div class="media">
 				  	<div class="media-left media-top">

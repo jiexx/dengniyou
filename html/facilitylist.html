@@ -23,14 +23,14 @@
 	{{if Facilities!=0}}
 	<div class="list-group service-list">
 	  	<div class="list-group-item clearfix disabled">
-		  	<div class="col-md-1"></div>
+		  	<div class="col-md-1">序号</div>
 		  	<div class="col-md-8 service-name">我的装备</div>
 		  	<div class="col-md-2">装备类型</div>
 		  	<div class="col-md-1 ">编辑</div>
 	  	</div>
 		{{each Facilities}}
 	  	<div class="list-group-item clearfix btn-group">
-		  	<div class="col-md-1"><input type="radio" name="optradio"></div>
+		  	<div class="col-md-1">${$index+1}</div>
 		  	<div class="col-md-8 ">
 		    	<div class="media">
 				    <div class="media-left media-top">

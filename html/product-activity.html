@@ -13,7 +13,7 @@
 	{{if Service != 0}}
 	<div class="list-group service-list">
 	  	<div class="list-group-item clearfix disabled">
-		  	<div class="col-md-1"></div>
+		  	<div class="col-md-1">序号</div>
 		  	<div class="col-md-6 service-name">我的活动</div>
 		  	<div class="col-md-2"></div>
 	      	<div class="col-md-2 ">发布状态(隐藏/发布)</div>
@@ -22,7 +22,7 @@
 		{{each Service}}		
 		<div class="list-group-item clearfix btn-group">
 			<div class="col-md-1">
-				<input type="radio" name="optradio">
+				${$index+1}
 			</div>
 			<div class="col-md-8 ">
 				<div class="media">
