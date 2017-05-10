@@ -2782,9 +2782,8 @@
                      if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
                          result["DetailMain"]["houseInfo"] = respJSON["HouseInfo"][0]
                      }
-
-
-                    result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0],respJSON.IMGHOST);
+                     result["DetailMain"]["TravelogueDetail"] = respJSON["TravelogueDetail"];
+                     result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0],respJSON.IMGHOST);
                      function deepCopy(des,source,img) {
                         for (var key in source) {
                             if(key){
@@ -2896,6 +2895,18 @@
             });
         });
 
+        function getShortDes(servic){
+            for(var i in servic.TravelogueDetail){
+                servic.TravelogueDetail[i]["day"] = servic.TravelogueDetail[i]["DAY"];
+            }
+
+            var serviceDescription = {articleDetailInfoList:servic.TravelogueDetail};
+            servic["serviceDescriptionBean"] = {
+                "serviceID": servic.serviceID == "" ? 0 : servic.serviceID,
+                "serviceDescription": serviceDescription
+            };
+        }
+
         //包车
         $('#save').rogerOnceClick(tmplItem, function(e){
             var usr =$.rogerGetLoginUser();
@@ -2937,16 +2948,8 @@
                 temp["policyBean"]["ratio3"]=0.82;
                 temp["policyBean"]["ratio4"]=0.75;
             }
-
-            for(var i in temp.TravelogueDetail){
-                temp.TravelogueDetail[i]["day"] = temp.TravelogueDetail[i]["DAY"];
-            }
-
-            var serviceDescription = {articleDetailInfoList:temp.TravelogueDetail};
-            temp["serviceDescriptionBean"] = {
-                "serviceID": temp.serviceID == "" ? 0 : temp.serviceID,
-                "serviceDescription": serviceDescription
-            };
+            //图文描述
+            getShortDes(temp);
 
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');
@@ -3031,6 +3034,8 @@
             temp["policyBean"]["type"]=5;
             temp["policyBean"]["serviceTypeID"]=5;
 
+            //图文描述
+            getShortDes(temp);
 
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');
@@ -3127,6 +3132,9 @@
                 temp["policyBean"]["ratio4"]=0.75;
             }
 
+            //图文描述
+            getShortDes(temp);
+
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');
             var data = {
@@ -3217,6 +3225,9 @@
                 temp["policyBean"]["ratio4"]=0.75;
             }
 
+            //图文描述
+            getShortDes(temp);
+
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');
             var data = {
@@ -3276,6 +3287,9 @@
                 temp["policyBean"]["ratio3"]=0.82;
                 temp["policyBean"]["ratio4"]=0.75;
             }
+
+            //图文描述
+            getShortDes(temp);
 
             temp["imghost"]=e.data.IMGHOST;
             console.log('test');

@@ -71,6 +71,12 @@
       "params": [
         "ServiceID"
       ]
+    },
+    "TravelogueDetail": {
+      "sql": "SELECT label, DAY, content, picURL, IF (picURL IS NULL or picURL='', NULL, TRUE) AS PE FROM traveluserdb.tab_shortdescription des WHERE des.RelativeID = ? and des.RelativeType = 1",
+      "params": [
+        "ServiceID"
+      ]
     }
   },
   "UserFacilities": {
