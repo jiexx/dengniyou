@@ -2708,6 +2708,7 @@
                  if (null != respJSON["CarBrand"] && '' != respJSON["CarBrand"]) {
                          result["DetailMain"]["carBrand"] = respJSON["CarBrand"]
                      }
+
                  if (null != respJSON["DetailMain"] && respJSON["DetailMain"].length > 0) {
 
                      picURLs = respJSON["DetailMain"][0]["picURLs"];
@@ -2726,7 +2727,6 @@
                          }
                      }
                      respJSON["DetailMain"][0]["picURLs"] = picURLs2;
-
 
                      if (null != respJSON["DetailServiceMethod"] && '' != respJSON["DetailServiceMethod"]) {
                          result["DetailMain"]["detailServiceMethod"] = respJSON["DetailServiceMethod"]
@@ -2782,7 +2782,16 @@
                      if (null != respJSON["HouseInfo"] && '' != respJSON["HouseInfo"]) {
                          result["DetailMain"]["houseInfo"] = respJSON["HouseInfo"][0]
                      }
-                     result["DetailMain"]["TravelogueDetail"] = respJSON["TravelogueDetail"];
+                     if (respJSON["TravelogueDetail"] && respJSON["TravelogueDetail"].length > 0) {
+                         result["DetailMain"]["TravelogueDetail"] = respJSON["TravelogueDetail"];
+                     }else{
+                         result["DetailMain"]["TravelogueDetail"] = [
+                             {label:' ', DAY:'0', content:null, picURL: null},
+                             {label:null, DAY:null, content:null, picURL: null, PE:true},
+                             {label:null, DAY:null, content:' ', picURL: null}
+                         ];
+
+                     }
                      result["DetailMain"]= deepCopy(result["DetailMain"],respJSON.DetailMain[0],respJSON.IMGHOST);
                      function deepCopy(des,source,img) {
                         for (var key in source) {
@@ -3374,8 +3383,8 @@
                 evaluateCount: '',
                 TravelogueDetail: [
                 {label:' ', DAY:'0', content:null, picURL: null},
-                {label:null, DAY:null, content:null, picURL: null, PE:true},
-                {label:null, DAY:null, content:' ', picURL: null}
+                {label:null, DAY:'0', content:null, picURL: null, PE:true},
+                {label:null, DAY:'0', content:' ', picURL: null}
                 ],
                 TravelogueToPlan2:[]
             },
@@ -3485,11 +3494,11 @@
             $.rogerRefresh(TraveLogue);
         };
          TraveLogue.createPicture = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            TravelogueDetail.push({label:null, DAY:null, content:null, picURL: null, PE:true});
+            TravelogueDetail.push({label:null, DAY:'0', content:null, picURL: null, PE:true});
             $.rogerRefresh(TraveLogue);
         };
          TraveLogue.createContent = function(TraveLogue, TravelogueDetail){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
-            TravelogueDetail.push({label:null, DAY:null, content:' ', picURL: null});
+            TravelogueDetail.push({label:null, DAY:'0', content:' ', picURL: null});
             $.rogerRefresh(TraveLogue);
         };
 
@@ -3498,11 +3507,11 @@
             $.rogerRefresh(TraveLogue);
         };
          TraveLogue.insertPicture = function(TraveLogue, TravelogueDetail, indexInsert){
-            TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:null, picURL: null, PE:true});
+            TravelogueDetail.splice(indexInsert,0,{label:null, DAY:'0', content:null, picURL: null, PE:true});
             $.rogerRefresh(TraveLogue);
         };
          TraveLogue.insertContent = function(TraveLogue, TravelogueDetail, indexInsert){
-            TravelogueDetail.splice(indexInsert,0,{label:null, DAY:null, content:' ', picURL: null});
+            TravelogueDetail.splice(indexInsert,0,{label:null, DAY:'0', content:' ', picURL: null});
             $.rogerRefresh(TraveLogue);
         };
 

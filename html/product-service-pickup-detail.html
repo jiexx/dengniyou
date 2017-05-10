@@ -96,9 +96,9 @@
             <ul class="tips-description">
               {{each(i,p) TravelogueDetail}}
               <li>
-                {{if label!=null}}<h2>${label}<br><span></span></h2>{{/if}}
-                {{if picURL!=null}}<img src="${ $data.IMGHOST }${picURL}" >{{/if}}
-                {{if content!=null}}
+                {{if label}}<h4>${label}<br><span></span></h4>{{/if}}
+                {{if picURL}}<img src="${ $data.IMGHOST }${picURL}" >{{/if}}
+                {{if content}}
                 <div class="tipsdes">
                   <p>
                     ${content}
@@ -107,7 +107,7 @@
                 {{/if}}
               </li>
               {{/each}}
-            </ul>
+            </ul><!--  end tips-description -->
           </div>
         </div><!-- end 服务描述service-description -->
 

@@ -74,9 +74,21 @@
       <div class="service-description">
         <h2>服务描述</h2>
         <div class="des">
-          <p>
-            ${DetailMain[0].description}
-          </p>
+          <ul class="tips-description">
+            {{each(i,p) TravelogueDetail}}
+            <li>
+              {{if label}}<h4>${label}<br><span></span></h4>{{/if}}
+              {{if picURL}}<img src="${ $data.IMGHOST }${picURL}" >{{/if}}
+              {{if content}}
+              <div class="tipsdes">
+                <p>
+                  ${content}
+                </p>
+              </div>
+              {{/if}}
+            </li>
+            {{/each}}
+          </ul><!--  end tips-description -->
         </div>
       </div><!-- end 服务描述service-description -->
       
