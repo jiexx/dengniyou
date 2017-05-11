@@ -1,6 +1,6 @@
 {
 	"DeleteTravelogueDetail": {
-		"sql": "DELETE traveluserdb.detail, traveluserdb.plan FROM traveluserdb.tab_travelarticledetail detail LEFT JOIN traveluserdb.tab_travelarticletoplan plan ON detail.ArticleID = plan.ArticleID WHERE detail.ArticleID = ?",
+		"sql": "call traveluserdb.del_article(?,@delcount)",
 		"params": [
 			"articleID"
 		],
