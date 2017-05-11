@@ -250,7 +250,6 @@
                 $.rogerShowLogin();
                 return;
             }
-            //$.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
             $.rogerLocation('#/userinfodetail');
         });
     }
@@ -2186,7 +2185,7 @@
                 });
             }
         });
-
+        bindRidoesForSwitch();
         realView.rogerCropImages();
 
     };
