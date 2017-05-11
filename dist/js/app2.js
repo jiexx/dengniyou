@@ -33,11 +33,12 @@
                     $.rogerShowLogin();
                     return;
                 }
-
-                pamaetainit();
                 url = $(this).next('div').data('href');
-                pamaeta["UserID"]=usr.UserID;
-                $.rogerTrigger('#app',url, pamaeta);
+
+                //pamaetainit();
+                //pamaeta["UserID"]=usr.UserID;
+                //$.rogerTrigger('#app',url, pamaeta);
+                $.rogerLocation(url+'?UserID='+usr.UserID+'&pagestart=0&pagesize=8');
             });
         }
 
@@ -119,25 +120,33 @@
                 if(url == ''){
                     url = $.rogerGetPath() || window.location.hash;
                 }
-                $.rogerTrigger('#app',url, pamaeta);
+                //$.rogerTrigger('#app',url, pamaeta);
+                $.rogerLocation(url,pamaeta);
             });
         }
         function titleList(){
             var urlPath = $.rogerGetPath() || window.location.hash;
-              if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1){
-                $('#title').show();
+              if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1 || urlPath.indexOf("#/classicplan") != -1){
                 $('#menu').show();
                 $('#filter').show();
                 $('#filter2').hide();
                 $('#filter3').hide();
+              }else if(urlPath == "#/activiy" || urlPath == "#/service" || urlPath == "#/car" || urlPath == "#/attraction" || urlPath == "#/accommodation" || urlPath == "#/delicacy" ){
+                $('#menu').show();
+                $('#filter').hide();
+                $('#filter2').show();
+                $('#filter3').hide();
+              }else if( urlPath == "#/facilitylist"){
+                  $('#menu').show();
+                  $('#filter').hide();
+                  $('#filter2').hide();
+                  $('#filter3').hide();
               }else if(urlPath.indexOf("#/travelogue") != -1 ||urlPath.indexOf("#/travelogueedit") != -1){
-                $('#title').hide();
                 $('#menu').hide();
                 $('#filter').hide();
                 $('#filter2').hide();
                 $('#filter3').show();
-              }else if(urlPath.indexOf("#/orderlist") != -1 || urlPath.indexOf("#/userinfo") != -1){
-                $('#title').hide();
+              }else{
                 $('#menu').hide();
                 $('#filter').hide();
                 $('#filter2').hide();
@@ -146,23 +155,23 @@
         }
         
         titleList();
-        $('.nav-sidebar li').on('click',titleList());
+        //$('.nav-sidebar li').on('click',titleList());
 
-      $("#menu label input").on('change',function (e) {
-        if($(this).val() == '0'){
-          $('#filter').show();
-          $('#filter2').hide();
-          $('#filter3').hide();
-        }else if($(this).val() == '1'){
-          $('#filter').hide();
-          $('#filter2').show();
-          $('#filter3').hide();
-        }else if($(this).val() == '2'){
-          $('#filter').hide();
-          $('#filter2').hide();
-          $('#filter3').hide();
-        }
-      });
+      // $("#menu label input").on('change',function (e) {
+      //   if($(this).val() == '0'){
+      //     $('#filter').show();
+      //     $('#filter2').hide();
+      //     $('#filter3').hide();
+      //   }else if($(this).val() == '1'){
+      //     $('#filter').hide();
+      //     $('#filter2').show();
+      //     $('#filter3').hide();
+      //   }else if($(this).val() == '2'){
+      //     $('#filter').hide();
+      //     $('#filter2').hide();
+      //     $('#filter3').hide();
+      //   }
+      // });
 
         if($.rogerIsLogined()) {
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
@@ -975,42 +984,46 @@
                 myCustomButton: {
                     text: '全选',
                     click: function() {
-                        var title = $('#monthPriceSet .fc-center h2').text();
-                        var monthSelf = moment(title,'MMM YYYY','en').format('YYYY-MM');
-                        var daysInMonth = moment(title, 'MMM YYYY','en').daysInMonth();
-                        var eventData,i,start,istyle;
-                        selectDays = [];
-                        var now = new Date();
-                        var nowMD = moment(now).format('YYYY-MM');
-                        if(Date.parse(monthSelf) < Date.parse(nowMD)){
-                            alert('当前月份已过期，请重新选择月份！')
-                        }else{
-                            var startDay = 1;
-                            if(monthSelf == nowMD ){
-                                startDay = now.getDate();
-                            }
-                            for( i=startDay; i <= daysInMonth; i++){
-                                if(i <= 9){
-                                    istyle = "-0" + i;
-                                }else{
-                                    istyle = "-" + i;
+                        var confirmSelf = confirm('已设置价格的日期经过批量设置后，原有数据会被删除替换，请谨慎操作!!!\r\n如果您不想选中已设置日期，可以单击当日取消选中！');
+                        if(confirmSelf){
+                            var title = $('#monthPriceSet .fc-center h2').text();
+                            var monthSelf = moment(title,'MMM YYYY','en').format('YYYY-MM');
+                            var daysInMonth = moment(title, 'MMM YYYY','en').daysInMonth();
+                            var eventData,i,start,istyle;
+                            selectDays = [];
+                            var now = new Date();
+                            var nowMD = moment(now).format('YYYY-MM');
+                            if(Date.parse(monthSelf) < Date.parse(nowMD)){
+                                alert('当前月份已过期，请重新选择月份！')
+                            }else{
+                                var startDay = 1;
+                                if(monthSelf == nowMD ){
+                                    startDay = now.getDate();
                                 }
-                                start = monthSelf + istyle;
-                                eventData = {
-                                    title: '已选中',
-                                    id:i,
-                                    start: start,
-                                    //end: end,
-                                    className:'eventStyle'
-                                };
-                                selectDays.push(eventData);
+                                for( i=startDay; i <= daysInMonth; i++){
+                                    if(i <= 9){
+                                        istyle = "-0" + i;
+                                    }else{
+                                        istyle = "-" + i;
+                                    }
+                                    start = monthSelf + istyle;
+                                    eventData = {
+                                        title: '已选中',
+                                        id:i,
+                                        start: start,
+                                        //end: end,
+                                        className:'eventStyle'
+                                    };
+                                    selectDays.push(eventData);
+                                }
+                                //console.log(eventData,i,start,istyle,selectDays);
+                                var displayEv = Plan.PlanInfo.Planstockquantitys.concat(selectDays);
+                                $('#calendar2').fullCalendar( 'removeEvents' );
+                                $('#calendar2').fullCalendar('renderEvents', displayEv, true);
+                                $('#calendar2').fullCalendar('unselect');
                             }
-                            //console.log(eventData,i,start,istyle,selectDays);
-                            var displayEv = Plan.PlanInfo.Planstockquantitys.concat(selectDays);
-                            $('#calendar2').fullCalendar( 'removeEvents' );
-                            $('#calendar2').fullCalendar('renderEvents', displayEv, true);
-                            $('#calendar2').fullCalendar('unselect');
                         }
+
                     }
                 },
                 myCustomButton2: {
@@ -1551,7 +1564,8 @@
             }
 
 
-            $.rogerTrigger('#app',url, pamaeta);
+            //$.rogerTrigger('#app',url, pamaeta);
+            $.rogerLocation(url,pamaeta);
         });
     };
 

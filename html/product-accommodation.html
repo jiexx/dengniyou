@@ -13,7 +13,7 @@
 	{{if Attraction != 0}}
 	<div class="list-group service-list">
 		<div class="list-group-item clearfix disabled">
-			<div class="col-md-1"></div>
+			<div class="col-md-1">序号</div>
 			<div class="col-md-5 service-name">我的住宿方案</div>
 			<div class="col-md-1">价格</div>
 			<div class="col-md-2">行程天数</div>
@@ -22,7 +22,7 @@
 		</div>
 		{{each Attraction}}	
 		<div class="list-group-item clearfix btn-group">
-			<div class="col-md-1"><input type="radio" name="optradio"></div>
+			<div class="col-md-1">${$index+1}</div>
 			<div class="col-md-5 ">
 				<div class="media">
 					<div class="media-left media-top">
