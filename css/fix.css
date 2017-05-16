@@ -626,7 +626,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .labels li span{float: right; cursor: pointer;}
 .editPage .labels li.addCityBtn{width: 28px; border:2px solid #f60; background-color: #FFF; color:#F60; border-radius: 5px; line-height: 24px }
 
-.editPage .schedule .orangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 20px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
+.editPage .schedule .orangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 16px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
 .editPage .schedule .addDetails li .blueBtn{float: right; width:20px; height: 20px; background-color: #00b8ee; color: #FFF; text-align: center; border-radius: 10px; line-height: 20px; cursor: pointer;}
 .editPage .schedule .addDetails li .glyphicon{color: #00b8ee; float: right; margin-right: 10px; height: 20px; width: 20px; line-height: 20px; font-size: 14px; cursor: pointer;}
 .editPage .schedule .list-group-item{text-align: center;}

@@ -64,9 +64,9 @@
 					<div class="col-sm-10 col-md-11">
 						<ul class="label-base">
 							{{each $data.PlanInfo.Summary.PlanLabels}}
-							<li><input type="text" value="${$data.PlanInfo.Summary.PlanLabels[$index]}" data-value="/PlanInfo/Summary/PlanLabels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/Summary/PlanLabels/${$index}"></a></li>
+							<li><input type="text" value="${$data.PlanInfo.Summary.PlanLabels[$index]}" data-value="/PlanInfo/Summary/PlanLabels/${$index}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/Summary/PlanLabels/${$index}"></a></li>
 							{{/each}}
-							<li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/Summary/PlanLabels-" data-action="createLabel"> + </div></li>
+							<li><div class="addItemBtn" data-toggle="modal" data-target="#labelList"> + </div></li>
 						</ul>
 					</div>
 				</div>
@@ -450,6 +450,38 @@
 
 
 	</div><!--editPage结束-->
+
+	<!-- 标签列表弹出框 -->
+	<div id="labelList" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title clearfix">选择标签</h4>
+				</div>
+				<div class="modal-body">
+					<ul id="attrLabel" class="row">
+						{{each(i,p) $data.PlanInfo.ClassifyLabels}}
+						<li class="col-md-3">
+							{{if p.checked == 1}}
+							<input type="checkBox" name="labelRadios" checked>
+							{{else}}
+							<input type="checkBox" name="labelRadios" >
+							{{/if}}
+							<span>${p.text}</span>
+						</li>
+						{{/each}}
+					</ul>
+				</div> <!-- end modal-body -->
+				<div class="modal-footer">
+					<button type="button" id="labelConfirm" class="btn btn-primary" data-op="change" data-pointer="/PlanInfo/Summary/PlanLabels/-" data-action="createLabel">确定</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 标签列表弹出框结束 -->
 
 </div>
 

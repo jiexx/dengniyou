@@ -1,7 +1,7 @@
 <div class="form-group">
 	<input class="form-control" id="searchinput" type="search" placeholder="..." />
 </div>
-<div id="searchlist" class="list-group" style="max-height:302px;overflow-y: scroll;">
+<div id="searchlist" class="list-group" style="max-height:302px;overflow-y: scroll; border-top:1px solid #ddd; border-bottom:1px solid #ddd; border-radius:5px;">
 	{{if $data.Airport.length}}
 	{{each $data.Airport}}
 	<a href="javascript:void(0)" class="list-group-item" data-info="${AirPortCode}:${NameCh}:${NameEn}">
