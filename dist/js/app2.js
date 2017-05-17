@@ -177,7 +177,8 @@
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
             $('#usrlogout').click(function () {
                 $.rogerLogout();
-                $.rogerRefresh();
+                $.rogerLocation('#/');
+                //$.rogerRefresh();
             });
             $.rogerHideLogin();
         }else {
@@ -257,7 +258,7 @@
         if( !$.trim( $('#modal').html() ) ) {
             $('#modal').rogerReloadFile('./fragment/dialog-login.html');
         }
-        if(!$.rogerGetURLJsonParams()) {
+        //if(!$.rogerGetURLJsonParams()) {
             if(!$.rogerIsLogined()) {
                 $.rogerLogin('#homeLogin', '/login');
                 $.rogerShowLogin();
@@ -268,9 +269,9 @@
                     $.rogerShowLogin();
                     return;
                 }
-                $.rogerLocation('#/?UserID='+usr.UserID)
+                //$.rogerLocation('#/?UserID='+usr.UserID)
             }
-        }
+        //}
         $('#productctr').trigger('click');
 
         bindRidoesForSwitch();
