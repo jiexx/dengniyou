@@ -16,49 +16,6 @@
 						<input type="text" class="form-control"  value="${$data.PlanInfo.PlanName}"  data-value="/PlanInfo/PlanName" placeholder="不能超过24个字符">
 					</div>
 				</div>
-				<!-- <div class="form-group">
-					<label   class="col-sm-2 col-md-1 control-label">成人价格</label>
-					<div class="col-sm-10 col-md-11">
-						<input type="text" class="form-control"   value="${$data.PlanInfo.AdultPrice}"  data-value="/PlanInfo/AdultPrice" placeholder="请输入数字"> 元/人
-					</div>
-				</div>
-				<div class="form-group">
-					<label   class="col-sm-2 col-md-1 control-label">儿童价格</label>
-					<div class="col-sm-10 col-md-11">
-						<input type="text" class="form-control"  value="${$data.PlanInfo.KidPrice}" data-value="/PlanInfo/KidPrice"  placeholder="请输入数字"> 元/人
-					</div>
-				</div> -->
-				<!-- <div class="form-group">
-				    <label   class="col-sm-2 col-md-1 control-label">方案价格</label>
-				    <div class="col-sm-10 col-md-11">
-				      <ul class="morePrices">
-						  {{each $data.PlanInfo.PlanSpendInfoList}}
-						  	<li class="col-md-3">
-						  		<div class="form-group" style="margin-top: 12px;">
-						  			<label   class="col-md-5 control-label">套餐名称</label>
-								    <div class="col-md-7">
-										<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].SpendName}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/SpendName" placeholder="新套餐名称">
-								    </div>
-						  		</div>
-						  		<div class="form-group">
-						  			<label   class="col-md-5 control-label">成人价格</label>
-								    <div class="col-md-7">
-										<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].AdultPrice}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/AdultPrice" placeholder="">
-								    </div>
-						  		</div>
-						  		<div class="form-group">
-						  			<label   class="col-md-5 control-label">儿童价格</label>
-								    <div class="col-md-7">
-										<input type="text" class="form-control"   value="${$data.PlanInfo.PlanSpendInfoList[$index].KidPrice}"  data-value="/PlanInfo/PlanSpendInfoList/${$index}/KidPrice" placeholder="">
-								    </div>
-						  		</div>
-						  		<a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/PlanSpendInfoList/${$index}"></a>
-						  	</li>
-						  {{/each}}
-						  <li class="col-md-3"><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/PlanSpendInfoList/-" data-action="createPrices"> + </div></li>
-					  </ul>
-				    </div>
-				</div> -->
 				<div class="form-group">
 					<label   class="col-sm-2 col-md-1 control-label">方案标签</label>
 					<div class="col-sm-10 col-md-11">
@@ -269,15 +226,6 @@
 			</div>
 			{{/if}}
 			{{/each}}
-			<!-- <div class="row">
-				<div class="col-md-offset-3 col-md-6">
-					<div class="btn-group" style="width: 100%;">
-						<a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createDay">添加段落</a>
-						<a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createPicture">添加图片</a>
-						<a class="btn btn-warning" style="width:33%" href="javascript:void(0)" data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-action="createContent">添加描述</a>
-					</div>
-				</div>
-			</div> -->
 		</div>
 		<!-- 行程信息结束（方案） -->
 
@@ -328,7 +276,7 @@
 
 			<div class="optionBtn">
 				<button id="save" class="btn btn-warning" style="margin-top:10px;">发布</button>
-				<a href="javascript:void(0)" id="show" class="btn btn-warning invisible" style="margin-top:10px;">预览</a>
+				<!--<a href="javascript:void(0)" id="show" class="btn btn-warning invisible" style="margin-top:10px;">预览</a>-->
 				<!--{{if  $data.PlanInfo.PlanStatus == 3}}
 				<button id="publish" class="btn btn-warning">发布 </button>
 				{{/if}}

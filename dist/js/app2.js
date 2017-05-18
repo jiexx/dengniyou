@@ -25,7 +25,6 @@
 
     function bindRidoesForSwitch (){
         var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
-
         if(!ev || !ev.change) {
             $('#menu input[type=radio][name="optradio"]').unbind().change(function(e){
                 var usr = $.rogerGetLoginUser();
@@ -172,6 +171,8 @@
       //     $('#filter3').hide();
       //   }
       // });
+
+
 
         if($.rogerIsLogined()) {
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
@@ -376,7 +377,7 @@
     //calendar格式设置价格库存详情查看
     function priceCalendarDetail(response){
         for(var i = 0; i < response.Planstockquantitys.length; i++){
-            response.Planstockquantitys[i].title = '已设置';
+            response.Planstockquantitys[i].title = '已有报价';
             response.Planstockquantitys[i].start = response.Planstockquantitys[i].scheduleDate;
         }
         var trStrEdit ;
@@ -457,22 +458,6 @@
 
     var ctrlShortplanDetail = function(response, realView) {
 
-        //更多报价的切换
-        $('#morePrice').on('click',function(){
-            $('#morePriceList').css('display','block');
-        });
-        $('#morePriceList .glyphicon').on('click',function(){
-            $('#morePriceList').css('display','none');
-        });
-        $('#morePriceList').on('click','div label',function(){
-            $('#morePriceList div label').removeClass('label-success').addClass('label-warning');
-            $(this).removeClass('label-warning').addClass('label-success');
-            var AdultPrice = $(this).data('AdultPrice');
-            var KidPrice = $(this).data('KidPrice');
-            $('#AdultPrice').html(AdultPrice);
-            $('#KidPrice').html(KidPrice);
-        });
-
         if( response.PlanInfo[0].Policy ){
             $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
         }
@@ -490,6 +475,19 @@
         }
 
         priceCalendarDetail(response);
+
+        //发布隐藏切换
+        $('#release').on('click', function(){
+            var user = $.rogerGetLoginUser();
+            var toStatus =$(this).data('status');
+            //3,隐藏，4发布
+            $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: toStatus, planID: response.PlanInfo[0].PlanID, userID:user.UserID}, function (respJSON) {
+                if(respJSON.errcode == 0){
+                    $.rogerNotice({Message: '操作成功'});
+                }
+                $.rogerRefresh(response);
+            });
+        });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -529,6 +527,19 @@
         }
 
         priceCalendarDetail(response);
+
+        //发布隐藏切换
+        $('#release').on('click', function(){
+            var user = $.rogerGetLoginUser();
+            var toStatus =$(this).data('status');
+            //3,隐藏，4发布
+            $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: toStatus, planID: response.PlanInfo[0].PlanID, userID:user.UserID}, function (respJSON) {
+                if(respJSON.errcode == 0){
+                    $.rogerNotice({Message: '操作成功'});
+                }
+                $.rogerRefresh(response);
+            });
+        });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -956,7 +967,7 @@
                     dataTemp = {
                         scheduleDate: dayTime,
                         start:dayTime,
-                        title:'已设置',
+                        title:'已有报价',
                         prices:prices
                     }
                     Plan.PlanInfo.Planstockquantitys.push(dataTemp);
@@ -986,7 +997,7 @@
                 myCustomButton: {
                     text: '全选',
                     click: function() {
-                        var confirmSelf = confirm('已设置价格的日期经过批量设置后，原有数据会被删除替换，请谨慎操作!!!\r\n如果您不想选中已设置日期，可以单击当日取消选中！');
+                        var confirmSelf = confirm('已有报价的日期经过批量设置后，原有数据会被删除替换，请谨慎操作!!!\r\n如果您不想选中已有报价日期，可以单击当日取消选中！');
                         if(confirmSelf){
                             var title = $('#monthPriceSet .fc-center h2').text();
                             var monthSelf = moment(title,'MMM YYYY','en').format('YYYY-MM');
@@ -1040,7 +1051,7 @@
                 myCustomButton3:{
                     text: '清除本月',
                     click: function(){
-                        var confirmRes = confirm('确认清除本月所有已设置数据吗？确认后数据无法恢复，请谨慎操作！');
+                        var confirmRes = confirm('确认清除本月所有已有报价数据吗？确认后数据无法恢复，请谨慎操作！');
                         if(confirmRes){
                             var title = $('#monthPriceSet .fc-center h2').text();
                             var monthSelf = moment(title,'MMM YYYY','en').format('YYYY-MM');
@@ -1168,7 +1179,7 @@
                         dataTemp = {
                             scheduleDate: dayTime,
                             start:dayTime,
-                            title:'已设置',
+                            title:'已有报价',
                             prices:prices
                         }
                         Plan.PlanInfo.Planstockquantitys.push(dataTemp);
@@ -1246,7 +1257,7 @@
         if(Plan.PlanInfo.Planstockquantitys.length > 0 ){
             for(var m=0; m<Plan.PlanInfo.Planstockquantitys.length; m++ ){
                 Plan.PlanInfo.Planstockquantitys[m].start = Plan.PlanInfo.Planstockquantitys[m].scheduleDate;
-                Plan.PlanInfo.Planstockquantitys[m].title = "已设置";
+                Plan.PlanInfo.Planstockquantitys[m].title = "已有报价";
             }
 
         }
@@ -1257,16 +1268,6 @@
                 $(this).attr('src',Plan.IMGHOST+src);
             }
         })
-        // Plan.createPrices = function(Plan,Prices){
-        //     Prices.push({
-        //             PriceName:'',
-        //             AdultPrice:0,
-        //             KidPrice:0
-        //         });
-
-        //     $.rogerRefresh(Plan);
-        // };
-
 
         Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanSchedule.push({
@@ -1335,11 +1336,7 @@
 
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '模板方案做成成功'});
-                                $('#show').removeClass("btn btn-warning invisible");
-                                $('#show').addClass("btn btn-warning");
-                                $('#show').click(function (e) {
-                                    $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
-                                })
+                                $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
                             });
                         }
 
@@ -1373,11 +1370,7 @@
 
                                 $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                     $.rogerNotice({Message: '模板方案更新成功'});
-                                    $('#show').removeClass("btn btn-warning invisible");
-                                    $('#show').addClass("btn btn-warning");
-                                    $('#show').click(function (e) {
-                                        $.rogerLocation('#/templateplandetail?PlanID='+data.PlanInfo.PlanID);
-                                    })
+                                    $.rogerLocation('#/templateplandetail?PlanID='+data.PlanInfo.PlanID);
                                 });
                             }
                             //$('#show').attr('href','#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
@@ -1394,15 +1387,13 @@
                 $.rogerRefresh(Plan);
             });
         });*/
-        $('#cancel').rogerOnceClick(Plan, function(e){
-
-            orderdetail = e.data.OrderDetail;
-
-            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
-                $.rogerNotice({Message:'模板方案已取消发布..'});
-                $.rogerRefresh(Plan);
-            });
-        });
+        // $('#release').on('click', function(){
+        //     var toStatus =$(this).data('status');
+        //     $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:toStatus}, function(respJSON){
+        //         $.rogerNotice({Message:'状态修改成功！'});
+        //         $.rogerRefresh(Plan);
+        //     });
+        // });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
@@ -1471,7 +1462,7 @@
         if(Plan.PlanInfo.Planstockquantitys.length > 0 ){
             for(var m=0; m<Plan.PlanInfo.Planstockquantitys.length; m++ ){
                 Plan.PlanInfo.Planstockquantitys[m].start = Plan.PlanInfo.Planstockquantitys[m].scheduleDate;
-                Plan.PlanInfo.Planstockquantitys[m].title = "已设置";
+                Plan.PlanInfo.Planstockquantitys[m].title = "已有报价";
             }
 
         }
@@ -2264,11 +2255,11 @@
                 $.rogerPost('/delete/service', {ServiceId:temp.serviceID}, function (respJSON) {
                     $.rogerNotice({Message: '删除成功'});
                     if (temp.serviceTypeID == 6) {
-                        $.rogerLocation('#/activiy'+"?UserID="+usr.UserID);
+                        $.rogerLocation('#/activiy'+"?UserID="+usr.UserID + '&pagestart=0&pagesize=8');
                     }else if(temp.serviceTypeID == 5){
-                        $.rogerLocation('#/car'+"?UserID="+usr.UserID);
+                        $.rogerLocation('#/car'+"?UserID="+usr.UserID + '&pagestart=0&pagesize=8');
                     }else{
-                        $.rogerLocation('#/service'+"?UserID="+usr.UserID);
+                        $.rogerLocation('#/service'+"?UserID="+usr.UserID + '&pagestart=0&pagesize=8');
                     }
                 });
             }
@@ -3995,16 +3986,16 @@
         '#/attraction':                   {view:'product-attraction.html',                           rootrest:'/dashboard/product/attraction',	                        ctrl: ctrlAttraction},
         '#/delicacy':                     {view:'product-delicacy.html',                              rootrest:'/dashboard/product/delicacy',	                        ctrl: ctrlAttraction},
         '#/accommodation':                {view:'product-accommodation.html',                       rootrest:'/dashboard/product/accommodation',                        ctrl: ctrlAttraction},
-        '#/travelogue':                    {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                      ctrl: ctrlTravelogue},
+        '#/travelogue':                   {view:'travelogue-list.html',                              rootrest:'/travelogue/list',                                      ctrl: ctrlTravelogue},
         '#/facilitylist':                 {view:'facilitylist.html',                                  rootrest:'/facility/list',                                        ctrl: ctrlFacilityList},
-        '#/orderlist':                     {view: 'orderlist-guide.html',                             rootrest: '/order/list',                                          ctrl: ctrlOrderlist},
+        '#/orderlist':                    {view: 'orderlist-guide.html',                             rootrest: '/order/list',                                          ctrl: ctrlOrderlist},
 
         '#/shortplandetail':             {view: 'product-shortplan-detail.html',                    rootrest: '/dashboard/product/shortplan/detail',                  ctrl: ctrlShortplanDetail},
         '#/templateplandetail':          {view: 'product-tempplan-detail.html',                     rootrest: '/dashboard/product/tempplan/detail',                   ctrl: ctrlTemplateplanDetail},
 
-        '#/delicacydetail':               {view:'product-delicacy-detail.html',	                     rootrest:'/dashboard/product/delicacy/detail',                     ctrl: ctrlDelicacyDetail},
+        '#/delicacydetail':             {view:'product-delicacy-detail.html',	                     rootrest:'/dashboard/product/delicacy/detail',                     ctrl: ctrlDelicacyDetail},
         '#/accommodationdetail':        {view:'product-accommodation-detail.html',                 rootrest:'/dashboard/product/accommodation/detail',	           ctrl: ctrlAccommodationDetail},
-        '#/attractiondetail':            {view:'product-attraction-detail.html',                    rootrest:'/dashboard/product/attraction/detail',                  ctrl: ctrlAttractionDetail},
+        '#/attractiondetail':           {view:'product-attraction-detail.html',                    rootrest:'/dashboard/product/attraction/detail',                  ctrl: ctrlAttractionDetail},
 
         '#/serviceotherdetail':           {view:'product-service-other-detail.html',               rootrest:'/dashboard/product/service/detail',                      ctrl: ctrlServicedetail},
         '#/shortplannew':                 {fragment: 'fragment/product-shortplan-edit.html',       init: initShortplanNew,                                                   ctrl: ctrlShortplanNew},
