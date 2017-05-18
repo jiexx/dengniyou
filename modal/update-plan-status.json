@@ -1,6 +1,6 @@
 {
 	"PlanInfo": {
-		"sql": "update traveluserdb.tab_planinfo set ServiceStatus=?,UpdateDate=NOW() where PlanID=?",
+		"sql": "update traveluserdb.tab_planinfo set PlanStatus=?,UpdateDate=NOW() where PlanID=?",
 		"params": [
 			"Status",
 			"PlanID"
