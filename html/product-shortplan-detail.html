@@ -1,5 +1,4 @@
 <div class="container">
-  <br>
   <div class="plandetail-page">
     <ul class="pull-right breadcrumb">
       <li><a href="javascript:void();">产品管理</a></li>
@@ -7,6 +6,7 @@
       <li class="active"><a href="javascript:void();">图文方案预览</a></li>
       <li class="underline"><a href="JavaScript:history.back();">返回</a></li>
     </ul> <!-- end 面包屑导航breadcrumb -->
+
     <div>
       <div class="row">
         <div class="col-md-12 carousel">
@@ -36,7 +36,7 @@
         </div><!-- end banner部分carousel -->
       </div>
 
-      <div class="row project">
+      <div class="project">
         <h1>${$data.PlanInfo[0].PlanName}</h1>
         <div class="project-main clearfix">
           <div class="col-md-4">
@@ -231,7 +231,22 @@
       </div><!-- /.modal -->
       <!-- 单日价格设置弹出框结束 -->
 
-      <a href="#/shortplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}"  class="btn  btn-warning">编辑</a>
+      <!--底部按钮区-->
+      <div class="detailpage">
+        <div class="buttons">
+          <!-- <button id="copy" type="button" class="btn btn-lg">复制</button> -->
+          <a href="#/shortplanedit?version=2&PlanID=${$data.PlanInfo[0].PlanID}"  class="btn  btn-warning">编辑</a>
+          {{if $data.PlanInfo[0].PlanStatus==3}}
+          <button id="release" type="button" data-status="4" class="btn">发布</button>
+          {{/if}}
+          {{if $data.PlanInfo[0].PlanStatus==4}}
+          <button id="release" type="button" data-status="3" class="btn">隐藏</button>
+          {{/if}}
+          <!--<button id="delete" type="button" class="btn btn-default">删除</button>-->
+        </div>
+      </div>
+
+
     </div>
   </div> <!-- end plandetail-page -->
 </div> <!-- end container
