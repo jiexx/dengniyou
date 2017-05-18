@@ -5,7 +5,7 @@
 	"del4":{"sql":"delete from traveluserdb.tab_planprice where PlanID = ?;","params":["PlanID"]},
 	"del5":{"sql":"delete from traveluserdb.tab_plansummary where PlanID = ?;","params":["PlanID"]},
 	"del6":{"sql":"delete from traveluserdb.tab_plancost where PlanID = ?;","params":["PlanID"]},
-	"del7":{"sql":"delete from traveluserdb.tab_shortdescription where PlanID = ?;","params":["PlanID"]},
+	"del7":{"sql":"delete from traveluserdb.tab_shortdescription where RelativeID = ?;","params":["PlanID"]},
 	"del8":{"sql":"delete from traveluserdb.tab_planinfo where PlanID = ?;","params":["PlanID"]},
 	"del9":{"sql":"delete from traveluserdb.tab_planstockquantity where PlanID = ?;","params":["PlanID"]}
 }
