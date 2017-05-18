@@ -52,9 +52,14 @@
     };
     var ctrlHomeList = function(response, realView) {
         realView.rogerCropImages();
+        frameCtrl();
     };
 	
 	var ctrlHome = function(response, realView) {
+
+        realView.rogerCropImages();
+        frameCtrl();
+
         var usr = $.rogerGetLoginUser();
         if(usr){
             $('#kefu').attr('href','talk?uid='+usr.UserID+'&uname='+usr.UserName+'&picurl='+$.rogerImgHost()+usr.AvatarPicURL+'&tid=10000005');
@@ -125,8 +130,7 @@
             }
         } 
         // 左边栏工具条结束
-		realView.rogerCropImages();
-        frameCtrl();
+
     };
     var ctrlHomeSearchList = function(response, realView) {
         realView.rogerCropImages();

@@ -177,7 +177,8 @@
             $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
             $('#usrlogout').click(function () {
                 $.rogerLogout();
-                $.rogerRefresh();
+                $.rogerLocation('#/');
+                //$.rogerRefresh();
             });
             $.rogerHideLogin();
         }else {
@@ -250,7 +251,6 @@
                 $.rogerShowLogin();
                 return;
             }
-            //$.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
             $.rogerLocation('#/userinfodetail');
         });
     }
@@ -258,7 +258,7 @@
         if( !$.trim( $('#modal').html() ) ) {
             $('#modal').rogerReloadFile('./fragment/dialog-login.html');
         }
-        if(!$.rogerGetURLJsonParams()) {
+        //if(!$.rogerGetURLJsonParams()) {
             if(!$.rogerIsLogined()) {
                 $.rogerLogin('#homeLogin', '/login');
                 $.rogerShowLogin();
@@ -269,9 +269,9 @@
                     $.rogerShowLogin();
                     return;
                 }
-                $.rogerLocation('#/?UserID='+usr.UserID)
+                //$.rogerLocation('#/?UserID='+usr.UserID)
             }
-        }
+        //}
         $('#productctr').trigger('click');
 
         bindRidoesForSwitch();
@@ -554,7 +554,7 @@
                     PlanFeature:'',
                     PlanLabels:['观光旅游','艺术','轻探险','亲子','浪漫','游学','传统文化','自然风光','美食','商务与投资'],
                 },
-                PlanSchedule: [{
+                PlanSchedule: [{//ScheduleType = 1机场，2景点 3美食 4住宿
                     Spot:[/*{CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:0,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
                           {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
@@ -661,6 +661,7 @@
                             }
                         }    
                     });
+                    realView.rogerCropImages();
                 });
             }
         });
@@ -719,12 +720,13 @@
             $('#cityChooser').modal('hide');
             $.rogerRefresh(data.Plan);
         });
+
     };
     var ctrlAirportChooser = function (PS, realView) {
         $('#airportChooser').modal('show');
         $('#airportlist').html('').append('<li class="list-group-item">机场</li>');
         $('#airportlist').rogerDialogTrigger('fragment/dialog-airportlist.html', '/dialog/airport', {}, function (data, realView) {
-            $('#searchlist').btsListFilter('#searchinput', {itemChild: '.list-group-item-text',initial:false});
+            $('#searchlist').btsListFilter('#searchinput', {itemChild: '.list-group-item-text',initial:false,resetOnBlur: false});
             $("#airportlist .list-group-item").click(function(e) {
                 $("#airportlist .list-group-item").removeClass("active");
                 $(this).addClass("active");
@@ -1181,6 +1183,53 @@
     }
 
     var ctrlTemplateplanNew = function(Plan, realView) {
+        if(!Plan.PlanInfo.ClassifyLabels){
+            Plan.PlanInfo.ClassifyLabels = [
+                {text:'观光旅游',checked:0},
+                {text:'艺术',checked:0},
+                {text:'轻探险',checked:0},
+                {text:'亲子',checked:0},
+                {text:'浪漫',checked:0},
+                {text:'游学',checked:0},
+                {text:'传统文化',checked:0},
+                {text:'自然风光',checked:0},
+                {text:'美食',checked:0},
+                {text:'商务与投资',checked:0}];
+            labelListChecked(Plan.PlanInfo.Summary.PlanLabels,Plan.PlanInfo.ClassifyLabels);
+            $.rogerRefresh(Plan);
+        }
+
+        function labelListChecked(CheckedList,List){
+            for(var n = 0; n < List.length; n++){
+                List[n].checked = 0;
+                for(var m = 0; m < CheckedList.length; m++){
+                    if(List[n].text == CheckedList[m]){
+                        List[n].checked = 1;
+                        continue;
+                    }
+                }
+            }
+        }
+        Plan.createLabel = function(Plan, Labels){
+            var newLabel = [];
+            $('#attrLabel li input').each(function(){
+                if ($(this).prop('checked')) {
+                    var temp = $(this).next().text();
+                    newLabel.push(temp);
+                }
+            });
+
+            Plan.PlanInfo.Summary.PlanLabels = newLabel;
+            labelListChecked(Plan.PlanInfo.Summary.PlanLabels,Plan.PlanInfo.ClassifyLabels);
+
+            $.rogerRefresh(Plan);
+        };
+        $('#labelConfirm').on('click',function(){
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+
+
         if(!Plan.PlanInfo.PlanSpendInfoList){
             if(Plan.PlanSpendInfoList.length == 0){
                 Plan.PlanInfo.PlanSpendInfoList=[{
@@ -1202,7 +1251,6 @@
 
         }
 
-
         $('img[name="needPrefix"]').each(function () {
             var src = $(this).attr('src');
             if(src.indexOf('group1') > -1) {
@@ -1219,21 +1267,16 @@
         //     $.rogerRefresh(Plan);
         // };
 
+
         Plan.createDay = function(Plan, PlanSchedule){  //  PlanSchedule ==> data-pointer="/PlanInfo/PlanSchedule/-"
             PlanSchedule.push({
-                Spot:[{CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:1,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:2,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:3,SpotPicUrl:''},
-                    {CountryID:'',CountryNameCn:'',CountryNameEn:'',CityID:'',CityNameCn:'',CityNameEn:'',AirportCode:'',AirportNameCn:'',AirportNameEn:'',SpotID:'',SpotName:'',SpotLocalName:'',SpotTravelTime:'',HotelStarLevel:'',ScheduleType:4,SpotPicUrl:''},
-                ],
+                Spot:[],
                 TravelInstruction:'',
                 DayName:''
             });
             Plan.PlanInfo.PlanDays ++;
             $.rogerRefresh(Plan);
         };
-
         Plan.createCity = function (Plan, Spot) {
             $.rogerTrigger('#modal', '#/citychooser', {Plan:Plan, Spot:Spot});
         };
@@ -1366,6 +1409,51 @@
     };
 
     var ctrlShortplanNew = function(Plan, realView) {
+        if(!Plan.PlanInfo.ClassifyLabels) {
+            Plan.PlanInfo.ClassifyLabels = [
+                {text: '观光旅游', checked: 0},
+                {text: '艺术', checked: 0},
+                {text: '轻探险', checked: 0},
+                {text: '亲子', checked: 0},
+                {text: '浪漫', checked: 0},
+                {text: '游学', checked: 0},
+                {text: '传统文化', checked: 0},
+                {text: '自然风光', checked: 0},
+                {text: '美食', checked: 0},
+                {text: '商务与投资', checked: 0}];
+            labelListChecked(Plan.PlanInfo.Summary.PlanLabels, Plan.PlanInfo.ClassifyLabels);
+            $.rogerRefresh(Plan);
+        }
+        function labelListChecked(CheckedList,List){
+            for(var n = 0; n < List.length; n++){
+                List[n].checked = 0;
+                for(var m = 0; m < CheckedList.length; m++){
+                    if(List[n].text == CheckedList[m]){
+                        List[n].checked = 1;
+                        continue;
+                    }
+                }
+            }
+        }
+        Plan.createLabel = function(Plan, Labels){
+            var newLabel = [];
+            $('#attrLabel li input').each(function(){
+                if ($(this).prop('checked')) {
+                    var temp = $(this).next().text();
+                    newLabel.push(temp);
+                }
+            });
+
+            Plan.PlanInfo.Summary.PlanLabels = newLabel;
+            labelListChecked(Plan.PlanInfo.Summary.PlanLabels,Plan.PlanInfo.ClassifyLabels);
+
+            $.rogerRefresh(Plan);
+        };
+        $('#labelConfirm').on('click',function(){
+            $('body').removeClass('modal-open');
+            $('.modal-backdrop').remove();
+        });
+
 
         if(!Plan.PlanInfo.PlanSpendInfoList){
             if(Plan.PlanSpendInfoList.length == 0){
@@ -1570,7 +1658,6 @@
     };
 
     var ctrlFacilityList = function(response, realView) {
-        console.log(response);
         bindRidoesForSwitch();
         realView.rogerCropImages();
         pageclick();
@@ -2186,14 +2273,12 @@
                 });
             }
         });
-
+        bindRidoesForSwitch();
         realView.rogerCropImages();
 
     };
 
     var ctrlFacilityDetail = function(response, realView) {
-
-        console.log(JSON.stringify(response));
 
         $('#edit').rogerOnceClick(response, function (e) {
                 temp = e.data.Facility[0];

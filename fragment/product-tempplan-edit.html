@@ -2,11 +2,12 @@
 	<div class="editPage">
 	<!-- 方案基本信息 -->
 		<div class="baseInfo">
-			<ul class="breadcrumb">
-			  <li><a href="#">产品管理</a> <span class="divider"></span></li>
-			  <li><a href="#">经典方案</a> <span class="divider"></span></li>
-			  <li class="active">模板方案编辑</li>
-			</ul>
+			<ul class="pull-right breadcrumb">
+				<li><a href="javascript:void();">产品管理</a></li>
+				<li><a href="javascript:void();">我的方案</a></li>
+				<li class="active"><a href="javascript:void()">模板编辑</a></li>
+				<li class="underline"><a href="JavaScript:history.back();">返回</a></li>
+			</ul> <!-- end 面包屑导航breadcrumb -->
 
 			<h4>基本信息</h4>
 			<form class="form-horizontal">
@@ -64,9 +65,9 @@
 			    <div class="col-sm-10 col-md-11">
 			      <ul class="label-base">
 					  {{each $data.PlanInfo.Summary.PlanLabels}}
-					    <li><input type="text" value="${$data.PlanInfo.Summary.PlanLabels[$index]}" data-value="/PlanInfo/Summary/PlanLabels/${$index}" ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/Summary/PlanLabels/${$index}"></a></li>
+					    <li><input type="text" value="${$data.PlanInfo.Summary.PlanLabels[$index]}" data-value="/PlanInfo/Summary/PlanLabels/${$index}" disabled ><a class="glyphicon glyphicon-remove-circle" data-op="remove"  data-pointer="/PlanInfo/Summary/PlanLabels/${$index}"></a></li>
 					  {{/each}}
-					  <li><div class="addItemBtn" data-op="change" data-pointer="/PlanInfo/Summary/PlanLabels-" data-action="createLabel"> + </div></li>
+					  <li><div class="addItemBtn" data-toggle="modal" data-target="#labelList"> + </div></li>
 				  </ul>
 			    </div>
 			  </div>
@@ -143,16 +144,16 @@
 				<div class="col-md-1 col-sm-2">
 					<div class="list-group">
 					{{for $data.PlanInfo.PlanSchedule.length}}
-					  <a href="#day1" class="list-group-item active">第${i}天</a>
+					  <a href="#day${i}" class="list-group-item active">第${i}天</a>
 					{{/for}}
-					  <a href="#" id="newOneDay" class="list-group-item" data-op="change" data-pointer="/PlanInfo/PlanSchedule/-" data-action="createDay">+</a>
+					  <a href="javascript:void()" id="newOneDay" class="list-group-item" data-op="change" data-pointer="/PlanInfo/PlanSchedule/-" data-action="createDay">+</a>
 					</div>
 				</div>
 				<div class="col-md-11 col-sm-10">
 					<!-- 一天行程 -->
 					{{each(k, day) $data.PlanInfo.PlanSchedule}}
 					<div class="dayBox" >
-						<h3>第${k+1}天<span class="orangeBtn" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}" >-</span></h3>
+						<h3 id="#day${k+1}">第${k+1}天<span class="orangeBtn" data-op="remove" data-pointer="/PlanInfo/PlanSchedule/${k}" >-</span></h3>
 						<div class="addCity">
 							<h4>添加城市</h4>
 							<ul class="label-base">
@@ -193,7 +194,7 @@
 							<ul class="details" data-i="${$index}">
 								<li>
 									<div class="detailImg">
-										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+										<img data-src="${$data.IMGHOST}${SpotPicUrl}" alt="">
 									</div>
 									<div class="detailText">
 										<h5>${SpotName} ${SpotLocalName}</h5>
@@ -224,7 +225,7 @@
 							<ul class="details" data-i="${$index}">
 								<li>
 									<div class="detailImg">
-										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+										<img data-src="${$data.IMGHOST}${SpotPicUrl}" alt="">
 									</div>
 									<div class="detailText">
 										<h5>${SpotName} ${SpotLocalName}</h5>
@@ -255,7 +256,7 @@
 							<ul class="details" data-i="${$index}">
 								<li>
 									<div class="detailImg">
-										<img src="${$data.IMGHOST}${SpotPicUrl}" alt="">
+										<img data-src="${$data.IMGHOST}${SpotPicUrl}" alt="">
 									</div>
 									<div class="detailText">
 										<h5>${SpotName} ${SpotLocalName}</h5>
@@ -457,6 +458,39 @@
 		</div><!-- /.modal -->
 		<!-- 批量价格设置弹出框结束 -->
 
-	</div><!--editPage结束-->	
+	</div><!--editPage结束-->
+
+	<!-- 标签列表弹出框 -->
+	<div id="labelList" class="modal fade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title clearfix">选择标签</h4>
+				</div>
+				<div class="modal-body">
+					<ul id="attrLabel" class="row">
+						{{each(i,p) $data.PlanInfo.ClassifyLabels}}
+						<li class="col-md-3">
+							{{if p.checked == 1}}
+							<input type="checkBox" name="labelRadios" checked>
+							{{else}}
+							<input type="checkBox" name="labelRadios" >
+							{{/if}}
+							<span>${p.text}</span>
+						</li>
+						{{/each}}
+					</ul>
+				</div> <!-- end modal-body -->
+				<div class="modal-footer">
+					<button type="button" id="labelConfirm" class="btn btn-primary" data-op="change" data-pointer="/PlanInfo/Summary/PlanLabels/-" data-action="createLabel">确定</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+	<!-- 标签列表弹出框结束 -->
+
 </div>
 

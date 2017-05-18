@@ -521,7 +521,9 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .detailpage{max-width: 1200px; margin:0 auto;}
 /*.detailpage{position: relative;max-width: 1200px;border: 1px solid #E0E0E0;margin-top: 46px;margin-bottom: 46px;padding: 20px 0;}*/
 .detailpage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
-.detailpage .breadcrumb li a{font-size: 14px;color: #666;}
+.detailpage .breadcrumb li a{font-size: 14px;color: #666; cursor: default;}
+.detailpage .breadcrumb li.active a{color:#fa703e;}
+.detailpage .breadcrumb li.underline a{text-decoration: underline; cursor: pointer;}
 .detailpage .carousel{width: 100%;overflow: hidden;}
 .detailpage .carousel .carousel-control{width: 10%;}
 .detailpage .detailpage-mainbody{padding: 25px 0px; border-left: 1px solid #eee; -webkit-box-shadow: 5px 5px 10px #eee; -moz-box-shadow: 5px 5px 10px #eee; -ms-box-shadow: 5px 5px 10px #eee; -o-box-shadow: 5px 5px 10px #eee; box-shadow: 5px 5px 10px #eee;}
@@ -609,6 +611,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .schedule .picture-edit, .editPage .schedule .introduction{margin-bottom: 15px;}
 .editPage>div{border:1px solid #e0e0e0; box-shadow: 0 0 3px #e0e0e0; margin-bottom:30px;padding:10px 20px;}
 .editPage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
+.editPage .breadcrumb {background-color: #FFF; text-align: right; margin-bottom: 0;}
+.editPage .breadcrumb li a{font-size: 14px;color: #666; cursor: default;}
+.editPage .breadcrumb li.active a{color:#fa703e;}
+.editPage .breadcrumb li.underline a{text-decoration: underline; cursor: pointer;}
 .editPage>div>h4{font-size: 16px; color:#f60; height: 50px; line-height: 50px;}
 .editPage .baseInfo form .col-sm-10.col-md-11 input[type='text'],.editPage .baseInfo form .col-sm-10.col-md-11 textarea,.editPage .baseInfo form .col-sm-10.col-md-11 select{width:70%; display: inline-block;}
 .editPage .photoInfo .col-md-3{margin-bottom: 10px;}
@@ -620,7 +626,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .labels li span{float: right; cursor: pointer;}
 .editPage .labels li.addCityBtn{width: 28px; border:2px solid #f60; background-color: #FFF; color:#F60; border-radius: 5px; line-height: 24px }
 
-.editPage .schedule .orangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 20px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
+.editPage .schedule .orangeBtn{background-color: #F60; width:20px; height: 20px; border-radius: 10px; float: right; line-height: 16px; text-align: center; font-size: 24px; color:#FFF; margin-top: 15px; margin-right: 20px; cursor: pointer;}
 .editPage .schedule .addDetails li .blueBtn{float: right; width:20px; height: 20px; background-color: #00b8ee; color: #FFF; text-align: center; border-radius: 10px; line-height: 20px; cursor: pointer;}
 .editPage .schedule .addDetails li .glyphicon{color: #00b8ee; float: right; margin-right: 10px; height: 20px; width: 20px; line-height: 20px; font-size: 14px; cursor: pointer;}
 .editPage .schedule .list-group-item{text-align: center;}
@@ -696,7 +702,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 .editPage .spotDescription textarea{border:1px solid #CCC; height: 200px; margin-bottom: 20px; padding: 15px;}
 
 /*方案价格日历*/
-.editPage .eventStyle{height:20px; width:40px; border-radius: 10px; background-color:#008000; line-height: 20px; text-align: center; margin:0 auto; position: relative; z-index: -1;}
+.editPage .eventStyle{height:20px; width:40px; border-radius: 10px; background-color:#f60; border-color:#f60; line-height: 20px; text-align: center; margin:2px auto 0; position: relative; z-index: -1;}
 .editPage .fc-past{background-color: #ccc;opacity: 0.3;}
 .editPage .fc-day-number {font-size: 20px; display: inline-block; width: 100%; text-align: center; }
 .editPage #monthPriceSet table td input{width:100px;}
@@ -804,7 +810,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 
 
 /*导游端列表页*/
-.service-dropdown{padding-top: 15px;}
+.service-dropdown{padding-bottom: 8px;}
 .service-dropdown .service-release button{background-color: #FA703E;}
 .service-list{font-size: 14px; color: #666;}
 .service-list .service-name{padding-left: 6%;}

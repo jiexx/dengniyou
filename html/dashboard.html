@@ -83,7 +83,9 @@
           <div class="col-md-5 text-right clearfix" style="padding-top: 20px;">
             <div class="both-end">
               <div class="btn-group ">
-                <span class="btn btn-default btn-xs on"><a href="http://mall.dengniyou.com/#/">游客端</a></span>
+                <!--<span class="btn btn-default btn-xs on"><a href="http://mall.dengniyou.com/#/">游客端</a></span>-->
+                <!--<a class="btn btn-warning btn-xs " href="/dashboard.html#/" target="_blank">司导端</a>-->
+                <span class="btn btn-default btn-xs on"><a href="http://10.101.1.170:8089/#/">游客端</a></span>
                 <a class="btn btn-warning btn-xs " href="/dashboard.html#/" target="_blank">司导端</a>
               </div>
             </div>
@@ -123,12 +125,12 @@
       <div class="row">
         <div class="col-sm-2 sidebar">
           <ul class="nav nav-sidebar">
+            <li><a href="javascript:void(0)" id="datum"><i class="data-icon"></i><span>资料管理</span></a></li>
             <li class="active"><a  id="productctr" href="javascript:void(0)"><i class="product-icon"></i><span>产品管理</span> <span class="sr-only">(current)</span></a></li>
-            <li><a id="traveloguectr" href="#"><i class="travelogue-icon"></i><span>攻略管理</span></a></li>
-            <li><a href="javascript:void(0)" id="usercenter"><i class="order-icon"></i><span>订单管理</span></a></li>
+            <!--<li><a id="traveloguectr" href="#"><i class="travelogue-icon"></i><span>攻略管理</span></a></li>-->
+            <!--<li><a href="javascript:void(0)" id="usercenter"><i class="order-icon"></i><span>订单管理</span></a></li>-->
             <!-- <li><a href=""><i class="market-icon"></i><span>营销管理</span></a></li>
             <li><a href=""><i class="settle-icon"></i><span>结算管理</span></a></li> -->
-            <li><a href="javascript:void(0)" id="datum"><i class="data-icon"></i><span>资料管理</span></a></li>
           </ul>
           <!--ul class="nav nav-sidebar">
             <li><a href="">Nav item</a></li>
@@ -149,13 +151,13 @@
             <div id="menu" class="list-group">
                 <span class="text-warning">产品类型 <i>|</i></span>
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0" checked><div  data-href="#/spcialplan">我的方案</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/classicplan" >已加入的方案</div></label>
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/classicplan" >已加入的方案</div></label>-->
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/service" >服务</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/activiy" >活动</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/car" >租车</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/attraction" >景点</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/delicacy" >美食</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/accommodation" >住宿</div></label>
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/activiy" >活动</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/car" >租车</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/attraction" >景点</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/delicacy" >美食</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/accommodation" >住宿</div></label>-->
                 <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="2"><div  data-href="#/facilitylist" >装备</div></label>
             </div>
             <div id="filter" class="list-group" style="display: none;">
@@ -163,7 +165,6 @@
                 <label class="radio-inline"><input type="radio" name="filterradio" value = "all" checked>全部</label>
                 <label class="radio-inline"><input type="radio" name="filterradio" value = "released" >已发布</label>
                 <label class="radio-inline"><input type="radio" name="filterradio" value = "draft" >草稿</label>
-                <label class="radio-inline"><input type="radio" name="filterradio">定制中</label>
             </div>
             <div id="filter2" class="list-group"  style="display: none;">
                 <span class="text-warning">产品状态 <i>|</i></span>
