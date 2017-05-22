@@ -20,7 +20,8 @@ $(function () {
 	$.extend({
         rogerImgHost:function() {
             //return 'http://123.59.144.47/';已废弃
-            return 'http://pic.dengnilvyou.com.cn/';
+            //return 'http://pic.dengnilvyou.com.cn/';//外网地址
+            return "http://10.101.1.165:8097/";//测试地址
         },
 		rogerGetPath:function() {
 			var link = $._rogerGetLocation();
@@ -297,6 +298,8 @@ $(function () {
                         if(respJSON.message && respJSON.message.UserID > 0) {
                             $.removeCookie("roger");
                             $.cookie("roger", JSON.stringify(respJSON.message), {expires: 10});
+                            $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
+                            $.rogerHideLogin();
                             $.rogerRefresh();
                         }
                     }else {

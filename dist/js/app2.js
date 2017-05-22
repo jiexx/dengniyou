@@ -1,9 +1,25 @@
- $(function () { 
+ $(function () {
+     //方案
     var policy1 = '1  游客在行程开始日期前60天以上提出取消，扣除已产生的费用以外的全部费用；\r\n2  游客在行程开始日期前30天以上提出取消，退还总费用的50%；\r\n3  游客在行程开始日期前15天以上提出取消，退还总费用的20%；\r\n4  游客在行程开始日期前15天（含）以内提出取消，不退还服务费用。';
     var policy2 = '1  一辆如服务描述（或同级别）的车辆使用费（在限定时间和里程范围内）；\r\n2  服务发布者本人作为司机兼导游的服务费（限定时间内），含小费；\r\n3  燃油费\r\n4  停车费\r\n5  车载WiFi热点每天1GB流量\r\n6  高速，桥梁，隧道的过路费，进城费\r\n7  司机/导游的住宿费，空程费\r\n8  如下景点的门票费用：\r\n9  行程描述中酒店（或同等级别酒店）的双人标准间；\r\n10  酒店内自助式早餐；\r\n11  旅行医疗及意外保险；\r\n12  签证办理费用。';
     var policy3 = '1  景点游览和公务/商务活动期间的服务费用；\r\n2  超时等待的费用，资费参看服务描述；\r\n3  机场和送达目的地的停车费。';
     var policy4 = '1  公务和商务活动中的专业翻译费用（可另付费提供）\r\n2  护照费用；\r\n3  航空公司燃油涨幅；\r\n4  酒店内电话、上网，传真、洗熨、收费电视、饮料等额外费用；\r\n5  酒店门童，餐馆服务生小费；\r\n6  报价中未提及的门票；\r\n7  因不可抗拒的客观原因（如天灾、战争、罢工等）、航空公司航班延误或取消等特殊情况导致行程取消或变更，由此产生的额外费用（如延期签证费、住、食及交通费、国家航空运价调整等）；\r\n8  导游及司机加班工资，资费如服务描述；\r\n9  导游及司机行程中缺餐补助，资费如服务描述；\r\n10  服务及方案描述中未提及的景点费用。';
     var policy5 = '1  因游客擅自行动走失，发生事故等产生的费用由游客自行承担；\r\n2  如遇不可预见的事件，如堵车，交通事故等，导游与游客商定可临时合理更改行程，并继续旅程，由此产生的加班费用和超程费用由游客承担；\r\n3  旅客不可要求导游进行违反交通规则、法律、当地风俗的活动，如旅客有违规、违法行为倾向导游须劝阻，劝阻无效则报警处理；\r\n4  导游不可强制旅客参与购物活动或参加自费项目，约定行程外项目需取得旅客同意；\r\n5  原则上导游与游客共进正餐（午餐和晚餐），费用由游客支付，缺少正餐时游客应支付缺餐补助；\r\n6  如导游陪同游客游览景点，游客需为导游支付门票费用。';
+    //包车费用包含
+    var policy6 = '1  一辆如服务描述（或同级别）的车辆使用费（在限定时间和里程范围内); \r\n2  服务发布者本人作为司机兼导游的服务费（限定时间内），含小费；\r\n3  燃油费；\r\n4  停车费；\r\n5  车载WiFi热点每天1GB流量；\r\n6  高速，桥梁，隧道的过路费，进城费。';
+    //包车费用不包含
+    var policy7 = '1  公务和商务活动中的专业翻译费用（可另付费提供）; \r\n2  景点内专业讲解的费用； \r\n3  导游兼司机加班工资，资费如服务描述； \r\n4  导游兼司机行程中缺餐补助，费用标准为当地一个麦当劳巨无霸套餐的价格。';
+    //注意事项
+    var policy8 = '1  因游客擅自行动走失，发生事故等产生的费用由游客自行承担；\r\n2  如遇不可预见的事件，如堵车，交通事故等，导游与游客商定可临时合理更改行程，并继续旅程，由此产生的加班费用和超程费用由游客承担；\r\n3  旅客不可要求导游进行违反交通规则、法律、当地风俗的活动，如旅客有违规、违法行为倾向导游须劝阻，劝阻无效则报警处理；\r\n4  导游不可强制旅客参与购物活动或参加自费项目，约定行程外项目需取得旅客同意；\r\n5  原则上导游与游客共进正餐（午餐和晚餐），费用由游客支付，缺少正餐时游客应支付缺餐补助；\r\n6  如导游陪同游客游览景点，游客需为导游支付门票费用。';
+    //接送机费用包含
+    var policy9 = '1  一辆如服务描述（或同级别）的车辆使用费（在限定时间和里程范围内); \r\n2  服务发布者本人作为司机兼导游的服务费（限定时间内），含小费；\r\n3  燃油费；\r\n4  车载WiFi热点每天1GB流量；\r\n5  高速，桥梁，隧道的过路费，进城费。';
+    //接送机费用不包含
+    var policy10 = '1  景点游览和公务/商务活动期间的服务费用；\r\n2  超时等待的费用，资费参看服务描述；\r\n3  机场和送达目的地的停车费。';
+    //接送机注意事项
+    var policy11 = '1  如遇不可预见的事件，如堵车，交通事故等，司机与游客商定可临时合理更改行程，并继续旅程，由此产生的加班费用和超程费用由游客承担；\r\n2  旅客不可要求导游进行违反交通规则、法律、当地风俗的活动，如旅客有违规、违法行为倾向导游须劝阻，劝阻无效则报警处理；\r\n3  导游不可强制旅客参与购物活动或参加自费项目，约定行程外项目需取得旅客同意。';
+
+
+
     url='';
     pamaeta ={pagestart:0,pagesize:8};
     page = 1;
@@ -23,137 +39,237 @@
         return geturi
     }
 
+     //顶部类型选择
+     $('.navTop').on('click',' ul li',function(){
+         var usr = $.rogerGetLoginUser();
+         if(!usr) {
+             $.rogerShowLogin();
+             return;
+         }
+         url = $(this).data('href');
+         if(!$(this).hasClass('active')){
+             $('.navTop li').removeClass('active');
+             $(this).addClass('active');
+         }
+         $.rogerLocation(url+'?UserID='+usr.UserID+'&pagestart=0&pagesize=8');
+     });
+
+     //登录注销
+     if($.rogerIsLogined()) {
+         $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
+         $.rogerHideLogin();
+     }else {
+         $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogin" data-toggle="modal" data-target="#homeLogin">登录</span>');
+     }
+     $('#usrlogin').on('click',function () {
+         $.rogerLogin('#homeLogin', '/login'/*, '/dashboard.html'*/);
+         //$.rogerShowLogin();
+     })
+     $('#usrlogout').on('click',function () {
+         $.rogerLogout();
+         $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogin" data-toggle="modal" data-target="#homeLogin">登录</span>');
+         $.rogerLocation('#/');
+         //$.rogerRefresh();
+     });
+
+     //左侧一级导航
+     $('#personInfo').rogerOnceClick2(null, function () {
+         var user = $.rogerGetLoginUser();
+         if(!user) {
+             $.rogerLogin('#homeLogin', '/login');
+             $.rogerShowLogin();
+             return;
+         }
+         //$.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
+         $.rogerLocation('#/userinfo?UserID='+user.UserID);
+     });
+     $('#usercenter').rogerOnceClick2(null, function () {
+         var user = $.rogerGetLoginUser();
+         if(!user) {
+             $.rogerLogin('#homeLogin', '/login');
+             $.rogerShowLogin();
+             return;
+         }
+
+         page = 1;
+         pamaeta["userID"]=user.UserID;
+         pamaeta["usertype"]=2;
+         pamaeta["status"]=0;
+         pamaeta["page"]=page;
+
+         url = "#/orderlist";
+         $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
+     });
+
+     $('#productctr').rogerOnceClick2(null, function () {
+         var user = $.rogerGetLoginUser();
+         if(!user) {
+             $.rogerLogin('#homeLogin', '/login');
+             $.rogerShowLogin();
+             return;
+         }
+         pamaetainit();
+         pamaeta["UserID"]=user.UserID;
+         $.rogerLocation('#/spcialplan?'+getGetUri(pamaeta));
+
+     });
+
+     $('#traveloguectr').rogerOnceClick2(null, function () {
+         var user = $.rogerGetLoginUser();
+         if(!user) {
+             $.rogerLogin('#homeLogin', '/login');
+             $.rogerShowLogin();
+             return;
+         }
+         pamaeta["UserID"]=user.UserID;
+
+         $.rogerLocation('#/travelogue?UserID='+user.UserID+'&pagestart=0'+'&pagesize='+pamaeta.pagesize);
+     });
+     //点击资料管理
+     $('#datum').rogerOnceClick2(null, function () {
+         var user = $.rogerGetLoginUser();
+         if(!user) {
+             $.rogerLogin('#homeLogin', '/login');
+             $.rogerShowLogin();
+             return;
+         }
+         $.rogerLocation('#/userinfodetail');
+     });
+
     function bindRidoesForSwitch (){
-        var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
-        if(!ev || !ev.change) {
-            $('#menu input[type=radio][name="optradio"]').unbind().change(function(e){
-                var usr = $.rogerGetLoginUser();
-                if(!usr) {
-                    $.rogerShowLogin();
-                    return;
-                }
-                url = $(this).next('div').data('href');
 
-                //pamaetainit();
-                //pamaeta["UserID"]=usr.UserID;
-                //$.rogerTrigger('#app',url, pamaeta);
-                $.rogerLocation(url+'?UserID='+usr.UserID+'&pagestart=0&pagesize=8');
-            });
-        }
 
-        var filterev = $._data($('#filter input[type=radio][name="filterradio"]')[0], 'events');
-        if(!filter2ev || !filter2ev.change) {
 
-            $('#filterev input[type=radio][name="filterradio"]').unbind().change(function(e){
-                var usr = $.rogerGetLoginUser();
-                if(!usr) {
-                    $.rogerShowLogin();
-                    return;
-                }
-                filtertemp = $(this).val();
-                if('all' == filtertemp){
-                    delete pamaeta["filter"];
-                } else {
-                    pamaeta["filter"]=filtertemp;
-                }
-
-                pamaeta["UserID"]=usr.UserID;
-
-                if(url == ''){
-                    url = $.rogerGetPath() || window.location.hash;
-                }
-
-                $.rogerLocation(url,pamaeta);
-
-                // $.rogerTrigger('#app',url, pamaeta);
-            });
-
-        }
-
-        var filter2ev = $._data($('#filter2 input[type=radio][name="filterradio"]')[0], 'events');
-        if(!filter2ev || !filter2ev.change) {
-
-            $('#filter2 input[type=radio][name="filterradio"]').unbind().change(function(e){
-                var usr = $.rogerGetLoginUser();
-                if(!usr) {
-                    $.rogerShowLogin();
-                    return;
-                }
-                filtertemp = $(this).val();
-                if('all' == filtertemp){
-                    delete pamaeta["filter"];
-                } else {
-                    pamaeta["filter"]=filtertemp;
-                }
-
-                pamaeta["UserID"]=usr.UserID;
-
-                if(url == ''){
-                    url = $.rogerGetPath() || window.location.hash;
-                }
-
-                $.rogerLocation(url,pamaeta);
-
-                // $.rogerTrigger('#app',url, pamaeta);
-            });
-
-        }
-
-        var filter3ev = $._data($('#filter3 input[type=radio][name="filterradio"]')[0], 'events');
-        if(!filter3ev || !filter3ev.change) {
-            $('#filter3 input[type=radio][name="filterradio"]').unbind().on('change',function(e){
-                var usr = $.rogerGetLoginUser();
-                var url = $.rogerGetPath() || window.location.hash;
-                if(!usr) {
-                    $.rogerShowLogin();
-                    return;
-                }
-                filtertemp = $(this).val();
-                if('all' == filtertemp){
-                    delete pamaeta["filter"];
-                } else {
-                    pamaeta["filter"]=filtertemp;
-                }
-
-                pamaeta["UserID"]=usr.UserID;
-                if(url == ''){
-                    url = $.rogerGetPath() || window.location.hash;
-                }
-                //$.rogerTrigger('#app',url, pamaeta);
-                $.rogerLocation(url,pamaeta);
-            });
-        }
-        function titleList(){
-            var urlPath = $.rogerGetPath() || window.location.hash;
-              if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1 || urlPath.indexOf("#/classicplan") != -1){
-                $('#menu').show();
-                $('#filter').show();
-                $('#filter2').hide();
-                $('#filter3').hide();
-              }else if(urlPath == "#/activiy" || urlPath == "#/service" || urlPath == "#/car" || urlPath == "#/attraction" || urlPath == "#/accommodation" || urlPath == "#/delicacy" ){
-                $('#menu').show();
-                $('#filter').hide();
-                $('#filter2').show();
-                $('#filter3').hide();
-              }else if( urlPath == "#/facilitylist"){
-                  $('#menu').show();
-                  $('#filter').hide();
-                  $('#filter2').hide();
-                  $('#filter3').hide();
-              }else if(urlPath.indexOf("#/travelogue") != -1 ||urlPath.indexOf("#/travelogueedit") != -1){
-                $('#menu').hide();
-                $('#filter').hide();
-                $('#filter2').hide();
-                $('#filter3').show();
-              }else{
-                $('#menu').hide();
-                $('#filter').hide();
-                $('#filter2').hide();
-                $('#filter3').hide();
-              }
-        }
-        
-        titleList();
+        // var ev = $._data($('#menu input[type=radio][name="optradio"]')[0], 'events');
+        // if(!ev || !ev.change) {
+        //     $('#menu input[type=radio][name="optradio"]').unbind().change(function(e){
+        //         var usr = $.rogerGetLoginUser();
+        //         if(!usr) {
+        //             $.rogerShowLogin();
+        //             return;
+        //         }
+        //         url = $(this).next('div').data('href');
+        //
+        //         //pamaetainit();
+        //         //pamaeta["UserID"]=usr.UserID;
+        //         //$.rogerTrigger('#app',url, pamaeta);
+        //         $.rogerLocation(url+'?UserID='+usr.UserID+'&pagestart=0&pagesize=8');
+        //     });
+        // }
+        //
+        // var filterev = $._data($('#filter input[type=radio][name="filterradio"]')[0], 'events');
+        // if(!filter2ev || !filter2ev.change) {
+        //
+        //     $('#filterev input[type=radio][name="filterradio"]').unbind().change(function(e){
+        //         var usr = $.rogerGetLoginUser();
+        //         if(!usr) {
+        //             $.rogerShowLogin();
+        //             return;
+        //         }
+        //         filtertemp = $(this).val();
+        //         if('all' == filtertemp){
+        //             delete pamaeta["filter"];
+        //         } else {
+        //             pamaeta["filter"]=filtertemp;
+        //         }
+        //
+        //         pamaeta["UserID"]=usr.UserID;
+        //
+        //         if(url == ''){
+        //             url = $.rogerGetPath() || window.location.hash;
+        //         }
+        //
+        //         $.rogerLocation(url,pamaeta);
+        //
+        //         // $.rogerTrigger('#app',url, pamaeta);
+        //     });
+        //
+        // }
+        //
+        // var filter2ev = $._data($('#filter2 input[type=radio][name="filterradio"]')[0], 'events');
+        // if(!filter2ev || !filter2ev.change) {
+        //
+        //     $('#filter2 input[type=radio][name="filterradio"]').unbind().change(function(e){
+        //         var usr = $.rogerGetLoginUser();
+        //         if(!usr) {
+        //             $.rogerShowLogin();
+        //             return;
+        //         }
+        //         filtertemp = $(this).val();
+        //         if('all' == filtertemp){
+        //             delete pamaeta["filter"];
+        //         } else {
+        //             pamaeta["filter"]=filtertemp;
+        //         }
+        //
+        //         pamaeta["UserID"]=usr.UserID;
+        //
+        //         if(url == ''){
+        //             url = $.rogerGetPath() || window.location.hash;
+        //         }
+        //
+        //         $.rogerLocation(url,pamaeta);
+        //
+        //         // $.rogerTrigger('#app',url, pamaeta);
+        //     });
+        //
+        // }
+        //
+        // var filter3ev = $._data($('#filter3 input[type=radio][name="filterradio"]')[0], 'events');
+        // if(!filter3ev || !filter3ev.change) {
+        //     $('#filter3 input[type=radio][name="filterradio"]').unbind().on('change',function(e){
+        //         var usr = $.rogerGetLoginUser();
+        //         var url = $.rogerGetPath() || window.location.hash;
+        //         if(!usr) {
+        //             $.rogerShowLogin();
+        //             return;
+        //         }
+        //         filtertemp = $(this).val();
+        //         if('all' == filtertemp){
+        //             delete pamaeta["filter"];
+        //         } else {
+        //             pamaeta["filter"]=filtertemp;
+        //         }
+        //
+        //         pamaeta["UserID"]=usr.UserID;
+        //         if(url == ''){
+        //             url = $.rogerGetPath() || window.location.hash;
+        //         }
+        //         //$.rogerTrigger('#app',url, pamaeta);
+        //         $.rogerLocation(url,pamaeta);
+        //     });
+        // }
+        // function titleList(){
+        //     var urlPath = $.rogerGetPath() || window.location.hash;
+        //       if(urlPath == "#/" || urlPath.indexOf("#/spcialplan") != -1 || urlPath.indexOf("#/classicplan") != -1){
+        //         $('#menu').show();
+        //         $('#filter').show();
+        //         $('#filter2').hide();
+        //         $('#filter3').hide();
+        //       }else if(urlPath == "#/activiy" || urlPath == "#/service" || urlPath == "#/car" || urlPath == "#/attraction" || urlPath == "#/accommodation" || urlPath == "#/delicacy" ){
+        //         $('#menu').show();
+        //         $('#filter').hide();
+        //         $('#filter2').show();
+        //         $('#filter3').hide();
+        //       }else if( urlPath == "#/facilitylist"){
+        //           $('#menu').show();
+        //           $('#filter').hide();
+        //           $('#filter2').hide();
+        //           $('#filter3').hide();
+        //       }else if(urlPath.indexOf("#/travelogue") != -1 ||urlPath.indexOf("#/travelogueedit") != -1){
+        //         $('#menu').hide();
+        //         $('#filter').hide();
+        //         $('#filter2').hide();
+        //         $('#filter3').show();
+        //       }else{
+        //         $('#menu').hide();
+        //         $('#filter').hide();
+        //         $('#filter2').hide();
+        //         $('#filter3').hide();
+        //       }
+        // }
+        //
+        // titleList();
         //$('.nav-sidebar li').on('click',titleList());
 
       // $("#menu label input").on('change',function (e) {
@@ -172,88 +288,6 @@
       //   }
       // });
 
-
-
-        if($.rogerIsLogined()) {
-            $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogout">注销</span>');
-            $('#usrlogout').click(function () {
-                $.rogerLogout();
-                $.rogerLocation('#/');
-                //$.rogerRefresh();
-            });
-            $.rogerHideLogin();
-        }else {
-            $('#userlogin').html('').append('<span class="btn btn-link btn-xs register" id="usrlogin" data-toggle="modal" data-target="#homeLogin">登录</span>');
-            $('#usrlogin').click(function () {
-                $.rogerLogin('#homeLogin', '/login'/*, '/dashboard.html'*/);
-                //$.rogerShowLogin();
-            })
-        }
-
-        $('#personInfo').rogerOnceClick2(null, function () {
-            var user = $.rogerGetLoginUser();
-            if(!user) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-            //$.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
-            $.rogerLocation('#/userinfo?UserID='+user.UserID);
-        });
-
-        $('#usercenter').rogerOnceClick2(null, function () {
-            var user = $.rogerGetLoginUser();
-            if(!user) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-
-            page = 1;
-            pamaeta["userID"]=user.UserID;
-            pamaeta["usertype"]=2;
-            pamaeta["status"]=0;
-            pamaeta["page"]=page;
-
-            url = "#/orderlist";
-            $.rogerLocation('#/orderlist?userID='+user.UserID+'&usertype=2&status=0&page=1');
-        });
-
-        $('#productctr').rogerOnceClick2(null, function () {
-            var user = $.rogerGetLoginUser();
-            if(!user) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-            pamaetainit();
-            pamaeta["UserID"]=user.UserID;
-            $.rogerLocation('#/spcialplan?'+getGetUri(pamaeta));
-
-        });
-
-
-        $('#traveloguectr').rogerOnceClick2(null, function () {
-            var user = $.rogerGetLoginUser();
-            if(!user) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-            pamaeta["UserID"]=user.UserID;
-
-            $.rogerLocation('#/travelogue?UserID='+user.UserID+'&pagestart=0'+'&pagesize='+pamaeta.pagesize);
-        });
-        //点击资料管理
-        $('#datum').rogerOnceClick2(null, function () {
-            var user = $.rogerGetLoginUser();
-            if(!user) {
-                $.rogerLogin('#homeLogin', '/login');
-                $.rogerShowLogin();
-                return;
-            }
-            $.rogerLocation('#/userinfodetail');
-        });
     }
 	var ctrlDashboard = function(response, realView) {
         if( !$.trim( $('#modal').html() ) ) {
@@ -488,27 +522,22 @@
                 $.rogerRefresh(response);
             });
         });
+        //删除
+        $('#delete').on('click', function(){
+            var confirmSelf = confirm('确定要删除吗？删除后数据无法恢复，请谨慎操作！')
+            if(confirmSelf){
+                var user = $.rogerGetLoginUser();
+                $.rogerPost('/delete/plan', {PlanID: response.PlanInfo[0].PlanID}, function (respJSON) {
+                    $.rogerNotice({Message: '操作成功'});
+                    $.rogerLocation('#/spcialplan?pagestart=0&pagesize=8&UserID=' + user.UserID);
+                });
+            }
+        });
 
         bindRidoesForSwitch();
         realView.rogerCropImages();
     };
     var ctrlTemplateplanDetail = function(response, realView) {
-
-        //更多报价的切换
-        // $('#morePrice').on('click',function(){
-        //     $('#morePriceList').css('display','block');
-        // });
-        // $('#morePriceList .glyphicon').on('click',function(){
-        //     $('#morePriceList').css('display','none');
-        // });
-        // $('#morePriceList').on('click','div label',function(){
-        //     $('#morePriceList div label').removeClass('label-success').addClass('label-warning');
-        //     $(this).removeClass('label-warning').addClass('label-success');
-        //     var AdultPrice = $(this).data('AdultPrice');
-        //     var KidPrice = $(this).data('KidPrice');
-        //     $('#AdultPrice').html(AdultPrice);
-        //     $('#KidPrice').html(KidPrice);
-        // });
 
         if( response.PlanInfo[0].Policy ){
             $('#policy').html(response.PlanInfo[0].Policy.replace(/\r\n/g, '<br>'));
@@ -539,6 +568,17 @@
                 }
                 $.rogerRefresh(response);
             });
+        });
+        //删除
+        $('#delete').on('click', function(){
+            var confirmSelf = confirm('确定要删除吗？删除后数据无法恢复，请谨慎操作！')
+            if(confirmSelf){
+                var user = $.rogerGetLoginUser();
+                $.rogerPost('/delete/plan', {PlanID: response.PlanInfo[0].PlanID}, function (respJSON) {
+                    $.rogerNotice({Message: '操作成功'});
+                    $.rogerLocation('#/spcialplan?pagestart=0&pagesize=8&UserID=' + user.UserID);
+                });
+            }
         });
 
         bindRidoesForSwitch();
@@ -772,7 +812,7 @@
         });
     };
 
-     function setStockQuantity(PlanInfo,PlanID) {
+    function setStockQuantity(PlanInfo,PlanID) {
          var minAdultPrice = 0;
          var minKidPrice = 0;
 
@@ -1309,9 +1349,22 @@
         //库存价格日历
         priceCalendarEdit(Plan);
 
-        $('#save').rogerOnceClick(Plan, function(e){
+        $('#save,#publish').rogerOnceClick(Plan, function(e){
             var item = getItemWithStartCityID(Plan.PlanInfo.PlanSchedule[0].Spot);
             if(item && item.CityID > 0) {
+                if(e.currentTarget.id == 'publish'){
+                    var confirmS = confirm('发布后对所有人可见，确认发布吗？');
+                    if(confirmS){
+                        save(Plan,e);
+                    }
+                }else{
+                    save(Plan,e);
+                }
+            }else {
+                $.rogerNotice({Message: '请选择起始城市'});
+            }
+
+            function save(Plan,e){
                 if (!Plan.PlanInfo.PlanID) {
                     var data = {PlanInfo: e.data.PlanInfo};
                     data.PlanInfo.StartCityID = item.CityID;
@@ -1335,8 +1388,19 @@
                             }
 
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
-                                $.rogerNotice({Message: '模板方案做成成功'});
-                                $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                                $.rogerNotice({Message: '模板方案保存成功'});
+
+                                //临时save方式代码，待后台提供save接口
+                                if(e.currentTarget.id == 'save'){
+                                    var user = $.rogerGetLoginUser();
+                                    $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: 3, planID: respJSON.PlanInfo.insertId, userID:user.UserID}, function (respJSON2) {
+                                        if(respJSON2.errcode == 0){
+                                            $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                                        }
+                                    });
+                                }else{
+                                    $.rogerLocation('#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                                }
                             });
                         }
 
@@ -1370,15 +1434,24 @@
 
                                 $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                     $.rogerNotice({Message: '模板方案更新成功'});
-                                    $.rogerLocation('#/templateplandetail?PlanID='+data.PlanInfo.PlanID);
+                                    //临时save方式代码，待后台提供save接口
+                                    if(e.currentTarget.id == 'save'){
+                                        var user = $.rogerGetLoginUser();
+                                        $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: 3, planID: data.PlanInfo.PlanID, userID:user.UserID}, function (respJSON2) {
+                                            if(respJSON2.errcode == 0){
+                                                $.rogerLocation('#/templateplandetail?PlanID='+data.PlanInfo.PlanID);
+                                            }
+                                        });
+                                    }else{
+                                        $.rogerLocation('#/templateplandetail?PlanID='+data.PlanInfo.PlanID);
+                                    }
+
                                 });
                             }
                             //$('#show').attr('href','#/templateplandetail?PlanID='+respJSON.PlanInfo.insertId);
                         });
                     });
                 }
-            }else {
-                $.rogerNotice({Message: '请选择起始城市'});
             }
         });
       /*$('#publish').rogerOnceClick(Plan, function(e){
@@ -1529,8 +1602,21 @@
         priceCalendarEdit(Plan);
 
 
-        $('#save').rogerOnceClick(Plan, function(e){
+        $('#save,#publish').rogerOnceClick(Plan, function(e){
             if(Plan.PlanInfo.StartCityID) {
+                if(e.currentTarget.id == 'publish') {
+                    var confirmS = confirm('发布后对所有人可见，确认发布吗？');
+                    if (confirmS) {
+                        save(Plan, e);
+                    }
+                }else{
+                    save(Plan, e);
+                }
+            }else {
+                $.rogerNotice({Message: '请选择起始城市'});
+            }
+
+            function save(Plan,e){
                 if(!Plan.PlanInfo.PlanID) {
                     var data = {PlanInfo:e.data.PlanInfo};
                     data.PlanInfo.Summary._PlanLabels = data.PlanInfo.Summary.PlanLabels.join();
@@ -1548,11 +1634,18 @@
 
                             $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                 $.rogerNotice({Message: '快捷方案发布成功'});
-                                $('#show').removeClass("btn btn-warning invisible");
-                                $('#show').addClass("btn btn-warning");
-                                $('#show').click(function (e) {
+                                //临时save方式代码，待后台提供save接口
+                                if(e.currentTarget.id == 'save'){
+                                    var user = $.rogerGetLoginUser();
+                                    $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: 3, planID: respJSON.PlanInfo.insertId, userID:user.UserID}, function (respJSON2) {
+                                        if(respJSON2.errcode == 0){
+                                            $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
+                                        }
+                                    });
+                                }else{
                                     $.rogerLocation('#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
-                                })
+                                }
+
                             });
                         }
 
@@ -1578,28 +1671,32 @@
 
                                 $.rogerPost('/new/stock', {info:{infoid:1,"Planstockquantitys":data.PlanInfo.PlanstockquantitysInsert}}, function (respJSONInner) {
                                     $.rogerNotice({Message: '快捷方案发布成功'});
-                                    $('#show').removeClass("btn btn-warning invisible");
-                                    $('#show').addClass("btn btn-warning");
-                                    $('#show').click(function (e) {
+                                    //临时save方式代码，待后台提供save接口
+                                    if(e.currentTarget.id == 'save'){
+                                        var user = $.rogerGetLoginUser();
+                                        $.rogerPost('/travel/guideplan/editPlanStatus', {planStatus: 3, planID: data.PlanInfo.PlanID, userID:user.UserID}, function (respJSON2) {
+                                            if(respJSON2.errcode == 0){
+                                                $.rogerLocation('#/shortplandetail?PlanID='+data.PlanInfo.PlanID);
+                                            }
+                                        });
+                                    }else{
                                         $.rogerLocation('#/shortplandetail?PlanID='+data.PlanInfo.PlanID);
-                                    })
+                                    }
                                 });
                             }
                             //$('#show').attr('href','#/shortplandetail?PlanID='+respJSON.PlanInfo.insertId);
                         });
                     });
                 }
-            }else {
-                $.rogerNotice({Message: '请选择起始城市'});
             }
         });
 
-        $('#publish').rogerOnceClick(Plan, function(e){
-            $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
-                $.rogerNotice({Message:'模板方案待审核..'});
-                $.rogerRefresh(Plan);
-            });
-        });
+        // $('#publish').rogerOnceClick(Plan, function(e){
+        //     $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:1}, function(respJSON){
+        //         $.rogerNotice({Message:'模板方案待审核..'});
+        //         $.rogerRefresh(Plan);
+        //     });
+        // });
         $('#cancel').rogerOnceClick(Plan, function(e){
             $.rogerPost('/publish/plan', {PlanID:Plan.PlanInfo.PlanID,Status:3}, function(respJSON){
                 $.rogerNotice({Message:'模板方案已取消发布..'});
@@ -2064,7 +2161,7 @@
         realView.rogerCropImages();
     };
 
-     var initUserInfoVerify = function(PS, realView) {
+    var initUserInfoVerify = function(PS, realView) {
          var usr = $.rogerGetLoginUser();
          var returnvalue = {
              DetailMain: {
@@ -2086,7 +2183,7 @@
          return returnvalue;
      }
 
-     var ctrlUserInfoVerify = function(response, realView) {
+    var ctrlUserInfoVerify = function(response, realView) {
          var usr = $.rogerGetLoginUser();
          response.DetailMain.userID = usr.UserID;
          $('input[name="sex"]').on('change',function(){
@@ -2789,7 +2886,19 @@
              },
              IMGHOST: $.rogerImgHost()
          };
-         $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID, "userID": usr.UserID}, function (respJSON, reqJSON) {
+         var pagePath = window.location.href;
+         if(!ServiceID){
+             if(pagePath.indexOf('servicecaredit') != -1){
+                 result.DetailMain.policy[1].customRatio = policy6;
+                 result.DetailMain.policy[2].customRatio = policy7;
+                 result.DetailMain.policy[3].caution = policy8;
+             }else if(pagePath.indexOf('servicepickupedit') != -1){
+                 result.DetailMain.policy[1].customRatio = policy9;
+                 result.DetailMain.policy[2].customRatio = policy10;
+                 result.DetailMain.policy[3].caution = policy11;
+             }
+         }
+         $.rogerPost('/dashboard/product/service/detail', {"ServiceID": ServiceID}, function (respJSON, reqJSON) {
              if(respJSON){
                  //console.log(JSON.stringify(respJSON));
                  if (null != respJSON["UserFacilities"] && '' != respJSON["UserFacilities"]) {
@@ -4004,7 +4113,7 @@
         '#/shortplanedit':               {fragment: 'fragment/product-shortplan-edit.html',        rootrest:'/plan/detail/short',                                         ctrl: ctrlShortplanNew},
         '#/templateplanedit':            {fragment: 'fragment/product-tempplan-edit.html',         rootrest:'/plan/detail/tmpl',                                         ctrl: ctrlTemplateplanNew},
 
-       '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
+        '#/spotchooser':                  {fragment: 'fragment/dialog-spot-chooser.html',           init: initSpotChooser,                                                    ctrl: ctrlSpotChooser},
         '#/airportchooser':              {fragment: 'fragment/dialog-airport-chooser.html',        init: initAirportChooser,                                                 ctrl: ctrlAirportChooser},
         '#/userinfoedit':                 {fragment:'fragment/userInfo-guide-edit.html',            init: initUserInfoEdit,   /*rootrest: '/user/info', */              ctrl: ctrlUserInfoEdit},
         '#/userinfoverify':               {fragment:'fragment/userInfo-guide-verify.html',          init: initUserInfoVerify,   /*rootrest: '/user/info', */            ctrl: ctrlUserInfoVerify},

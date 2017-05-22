@@ -85,7 +85,7 @@
               <div class="btn-group ">
                 <!--<span class="btn btn-default btn-xs on"><a href="http://mall.dengniyou.com/#/">游客端</a></span>-->
                 <!--<a class="btn btn-warning btn-xs " href="/dashboard.html#/" target="_blank">司导端</a>-->
-                <span class="btn btn-default btn-xs on"><a href="http://10.101.1.170:8089/#/">游客端</a></span>
+                <span class="btn btn-default btn-xs on"><a href="http://10.101.1.170:8089/#/">游客端</a></span><!-- -->
                 <a class="btn btn-warning btn-xs " href="/dashboard.html#/" target="_blank">司导端</a>
               </div>
             </div>
@@ -127,99 +127,123 @@
           <ul class="nav nav-sidebar">
             <li><a href="javascript:void(0)" id="datum"><i class="data-icon"></i><span>注册管理</span></a></li>
             <li class="active"><a  id="productctr" href="javascript:void(0)"><i class="product-icon"></i><span>产品管理</span> <span class="sr-only">(current)</span></a></li>
-            <li><a id="traveloguectr" href="#"><i class="travelogue-icon"></i><span>攻略管理</span></a></li>
+            <!--<li><a id="traveloguectr" href="#"><i class="travelogue-icon"></i><span>攻略管理</span></a></li>-->
             <!--<li><a href="javascript:void(0)" id="usercenter"><i class="order-icon"></i><span>订单管理</span></a></li>-->
             <!-- <li><a href=""><i class="market-icon"></i><span>营销管理</span></a></li>
             <li><a href=""><i class="settle-icon"></i><span>结算管理</span></a></li> -->
           </ul>
-          <!--ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-          </ul-->
         </div>
+
         <div class="col-sm-10 mainbody">
-          <div class="mainbody-top">
+          <div class="mainbody-top navTop">
+            <div id="facType" class="list-group">
+              <span class="text-warning">装备类型 <i>|</i></span>
+              <ul>
+                <li data-href="#/facilitylist">小型客车</li>
+                <li data-href="#/facilitylist">WiFi设备</li>
+                <li data-href="#/facilitylist">转换插座</li>
+                <li data-href="#/facilitylist">摄影摄像</li>
+                <li data-href="#/facilitylist">体育运动</li>
+                <li data-href="#/facilitylist">船舶</li>
+                <li data-href="#/facilitylist">其他</li>
+              </ul>
+            </div>
+            <div id="proType" class="list-group">
+              <span class="text-warning">产品类型 <i>|</i></span>
+              <ul>
+                <li data-href="#/spcialplan">方案</li>
+                <li data-href="#/activiy">活动</li>
+                <li data-href="#/car">租车</li>
+                <li data-href="#/service">包车</li>
+                <li data-href="#/service">接送机</li>
+                <li data-href="#/service">民宿</li>
+                <li data-href="#/service">签证</li>
+                <li data-href="#/service">机票</li>
+                <li data-href="#/service">保险</li>
+                <li data-href="#/service">其他</li>
+              </ul>
+            </div>
+            <div id="accType" class="list-group">
+              <span class="text-warning">推荐类型 <i>|</i></span>
+              <ul>
+                <li data-href="#/attraction">景点</li>
+                <li data-href="#/accommodation">住宿</li>
+                <li data-href="#/delicacy">美食</li>
+              </ul>
+            </div>
+
             <!--<h5 id="title" class="list-group">产品信息</h5>-->
-            <div id="menu" class="list-group">
-                <span class="text-warning">产品类型 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0" checked><div  data-href="#/spcialplan">我的方案</div></label>
-                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/classicplan" >已加入的方案</div></label>-->
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/service" >服务</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/activiy" >活动</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/car" >租车</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/attraction" >景点</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/delicacy" >美食</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/accommodation" >住宿</div></label>
-                <label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="2"><div  data-href="#/facilitylist" >装备</div></label>
-            </div>
-            <div id="filter" class="list-group" style="display: none;">
-                <span class="text-warning">产品状态 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" name="filterradio" value = "all" checked>全部</label>
-                <label class="radio-inline"><input type="radio" name="filterradio" value = "released" >已发布</label>
-                <label class="radio-inline"><input type="radio" name="filterradio" value = "draft" >草稿</label>
-            </div>
-            <div id="filter2" class="list-group"  style="display: none;">
-                <span class="text-warning">产品状态 <i>|</i></span>
-                <label class="radio-inline"><input type="radio" value = "all" name="filterradio" checked>全部</label>
-                <label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>
-                <label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>
-            </div>
-            <div id="filter3" class="row service-dropdown">
-              <div class="col-md-10">
-                <div class="list-group">
-                    <span class="text-warning">产品状态 <i>|</i></span>
-                    <label class="radio-inline"><input type="radio" value = "all" name="filterradio">全部</label>
-                    <label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>
-                    <label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>
-                </div>
-              </div>
-              <div class="col-md-2 service-release">
-                <div class="btn-group pull-right">
-                  <button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-                    <a href="#/travelogueedit">发布攻略</a>
-                  </button>
-                </div>
-              </div>
-            </div>
+            <!--<div id="menu" class="list-group">-->
+                <!--<span class="text-warning">产品类型 <i>|</i></span>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0" checked><div  data-href="#/spcialplan">我的方案</div></label>-->
+                <!--&lt;!&ndash;<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="0"><div  data-href="#/classicplan" >已加入的方案</div></label>&ndash;&gt;-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/service" >服务</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/activiy" >活动</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/car" >租车</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/attraction" >景点</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/delicacy" >美食</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="1"><div  data-href="#/accommodation" >住宿</div></label>-->
+                <!--<label class="radio-inline"><input type="radio" name="optradio" sytle="cursor:pointer" value="2"><div  data-href="#/facilitylist" >装备</div></label>-->
+            <!--</div>-->
+            <!--<div id="filter" class="list-group" style="display: none;">-->
+                <!--<span class="text-warning">产品状态 <i>|</i></span>-->
+                <!--<label class="radio-inline"><input type="radio" name="filterradio" value = "all" checked>全部</label>-->
+                <!--<label class="radio-inline"><input type="radio" name="filterradio" value = "released" >已发布</label>-->
+                <!--<label class="radio-inline"><input type="radio" name="filterradio" value = "draft" >草稿</label>-->
+            <!--</div>-->
+            <!--<div id="filter2" class="list-group"  style="display: none;">-->
+                <!--<span class="text-warning">产品状态 <i>|</i></span>-->
+                <!--<label class="radio-inline"><input type="radio" value = "all" name="filterradio" checked>全部</label>-->
+                <!--<label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>-->
+                <!--<label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>-->
+            <!--</div>-->
+            <!--<div id="filter3" class="row service-dropdown">-->
+              <!--<div class="col-md-10">-->
+                <!--<div class="list-group">-->
+                    <!--<span class="text-warning">产品状态 <i>|</i></span>-->
+                    <!--<label class="radio-inline"><input type="radio" value = "all" name="filterradio">全部</label>-->
+                    <!--<label class="radio-inline"><input type="radio" value = "released" name="filterradio">已发布</label>-->
+                    <!--<label class="radio-inline"><input type="radio" value = "draft" name="filterradio">草稿</label>-->
+                <!--</div>-->
+              <!--</div>-->
+              <!--<div class="col-md-2 service-release">-->
+                <!--<div class="btn-group pull-right">-->
+                  <!--<button type="button" class="btn btn-warning dropdown-toggle" data-toggle="dropdown" aria-expanded="true">-->
+                    <!--<a href="#/travelogueedit">发布攻略</a>-->
+                  <!--</button>-->
+                <!--</div>-->
+              <!--</div>-->
+            <!--</div>-->
           </div> <!-- end mainbody-top -->
-          <div id="app" class="mainbody-main">
-          </div>	<!-- end mainbody-main --> 
+          <div id="app" class="mainbody-main"></div>	<!-- end mainbody-main -->
           <!-- Modal -->
-	      <div id="modal">
-	    </div>
-    </div> <!-- end container-fluid -->
+	      <div id="modal"></div>
+        </div> <!-- end container-fluid -->
+
+
       </div>
   </div> <!-- end dashboard-page -->
 
-  <div id="loadingIcon" style="position:fixed; z-index:9999; top:200px; left:45%; display: none">
-    <h3 style="color:#fa703e;"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>数据加载中...</h3>
+    <div id="loadingIcon" style="position:fixed; z-index:9999; top:200px; left:45%; display: none">
+      <h3 style="color:#fa703e;"><i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>数据加载中...</h3>
+    </div>
   </div>
 
-	<script>
-	  $(document).ready(function() {
-      $('#app').rogerGo();
-      $("#menu label a").click(function (e) {
-          href = $(this).data("href");
-          var usr =$.rogerGetLoginUser();
-          $.rogerLocation(href+"?UserID="+usr.UserID);
-      });
 
-      $('.nav-sidebar').on('click','li',function(){
-        $('.nav-sidebar li').removeClass('active');
-        $(this).addClass('active');
+  <script>
+      $(document).ready(function() {
+          $('#app').rogerGo();
+          $("#menu label a").click(function (e) {
+              href = $(this).data("href");
+              var usr =$.rogerGetLoginUser();
+              $.rogerLocation(href+"?UserID="+usr.UserID);
+          });
+
+          $('.nav-sidebar').on('click','li',function(){
+              $('.nav-sidebar li').removeClass('active');
+              $(this).addClass('active');
+          });
       });
-  
-	  });
-	</script>
-  </div>
-    
+  </script>
   </body>
 </html>
