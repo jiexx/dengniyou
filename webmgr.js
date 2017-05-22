@@ -1,4 +1,5 @@
 var express = require('express');
+var compression= require('compression');
 var bodyParser = require('body-parser');
 var multer = require('multer'); // v1.0.5
 var upload = multer({ dest: 'uploads/' }); 
@@ -15,6 +16,7 @@ var http= require("http");
 var fdfsconfig = require('./fdfsconfig');
 var config = require('./config');
 
+app.use(compression());
 app.use(bodyParser.json({limit: '50mb'})); // for parsing application/json
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true })); // for parsing application/x-www-form-urlencoded
 app.use('/lib', express.static(__dirname + '/lib'));
