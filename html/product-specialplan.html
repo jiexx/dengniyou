@@ -12,9 +12,10 @@
 		  	<div class="col-md-1">序号</div>
 		  	<div class="col-md-5 service-name">方案</div>
 		  	<div class="col-md-1">价格</div>
-		  	<div class="col-md-2">行程天数</div>
+		  	<div class="col-md-1">行程天数</div>
 		    <div class="col-md-2 ">方案状态</div>
 		    <div class="col-md-1 ">编辑</div>
+		    <div class="col-md-1 ">删除</div>
 	  	</div>
 	  	{{each PlansByUser}}
 		<div class="list-group-item clearfix btn-group">
@@ -37,21 +38,29 @@
 				</div>
 		  	</div>
 		  	<div class="col-md-1 margin-top">${AdultPrice}</div>
-		  	<div class="col-md-2 margin-top">${PlanDays}</div>
+		  	<div class="col-md-1 margin-top">${PlanDays}</div>
 		  	<div class="col-md-2 margin-top">
-				{{if PlanStatus ==3}}<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="隐藏" data-status='4' data-serviceid=${PlanID}> {{/if}}{{if PlanStatus ==4}}<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="隐藏" data-status='3'  data-serviceid=${PlanID} checked > {{/if}}
+				{{if PlanStatus ==3}}
+				<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="草稿" data-status='4' data-serviceid=${PlanID}> 
+				{{/if}}
+				{{if PlanStatus ==4}}
+				<input class="switchCheckbox release" type="checkbox" data-on-text="已发布" data-off-text="草稿" data-status='3'  data-serviceid=${PlanID} checked > 
+				{{/if}}
 
 
 
 		   		<!-- {{if PlanStatus ==1}}待审核 {{/if}}{{if PlanStatus ==2}}审核通过 {{/if}}{{if PlanStatus ==3}}导游隐藏 {{/if}}{{if PlanStatus ==4}}导游发布 {{/if}}{{if PlanStatus ==5}}导游定制 {{/if}}{{if PlanStatus ==6}}未加入 {{/if}}{{if PlanStatus ==7}}已加入 {{/if}} -->
 		   	</div>
-		   	<div class="col-md-1 service-edit">
+		   	<div class="col-md-1 service-edit margin-top">
 				{{if CreateType==1}}
 				<a href="#/templateplanedit?version=2&PlanID=${PlanID}"><div class="btn  glyphicon glyphicon-edit"></div></a>
 				{{else}}
 				<a href="#/shortplanedit?version=2&PlanID=${PlanID}"><div class="btn  glyphicon glyphicon-edit"></div></a>
 				{{/if}}
 		   	</div>
+		   	<div class="col-md-1 remove-edit margin-top">
+				<a href="#"><div class="btn  glyphicon glyphicon-trash"></div></a>
+			</div>
 		</div>
 		{{/each}}
 	{{/if}}
@@ -77,3 +86,4 @@
 		{{/if}}
 	</div>
 </div>
+

@@ -5,13 +5,13 @@
 			<ul class="breadcrumb">
 				<li><a href="#">产品管理</a> <span class="divider"></span></li>
 				<li><a href="#">经典方案</a> <span class="divider"></span></li>
-				<li class="active">模板方案编辑</li>
+				<li class="active">图文方案编辑</li>
 			</ul>
 
 			<h4>基本信息</h4>
 			<form class="form-horizontal">
 				<div class="form-group">
-					<label   class="col-sm-2 col-md-1 control-label">方案名称</label>
+					<label   class="col-sm-2 col-md-1 control-label">方案名称*</label>
 					<div class="col-sm-10 col-md-11">
 						<input type="text" class="form-control"  value="${$data.PlanInfo.PlanName}"  data-value="/PlanInfo/PlanName" placeholder="不能超过24个字符">
 					</div>
@@ -97,8 +97,8 @@
 		<div class="scheduleShort clearfix">
 			<h4>行程信息</h4>
 			<div class="row" style="margin-bottom: 20px;">
-				<label   class="col-sm-2 col-md-1 control-label">起始城市</label>
-				<div class="col-md-11 col-sm-10">
+				<label class="col-sm-2 col-md-offset-1 col-md-1 control-label text-right" style="font-size:14px;">起始城市</label>
+				<div class="col-md-3 col-sm-10">
 					<ul class="label-base">
 						{{if $data.PlanInfo.StartCityID }}
 						<li><input type="text" value="${$data.PlanInfo.StartCity}" disabled><a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/StartCityID" ></a></li>
@@ -109,123 +109,126 @@
 					</ul>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-md-offset-1 col-md-6">
-					<ul class="functionBtn">
-						<!-- <li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li> -->
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=-1 data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=-1 data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=-1 data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
-					</ul>
+
+			<div class="row insert">
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<ul class="functionBtn">
+							<!-- <li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li> -->
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=-1 data-action="insertDay"><span class="glyphicon glyphicon-bookmark">&nbsp;</span>添加标题</li>
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=-1 data-action="insertPicture"><span class="glyphicon glyphicon-picture">&nbsp;</span>添加图片</li>
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=-1 data-action="insertContent"><span class="glyphicon glyphicon-list-alt">&nbsp;</span>添加描述</li>
+						</ul>
+					</div>
 				</div>
-			</div>
-			{{each $data.PlanInfo.PlanShort}}
-			{{if Label}}
-			<div class="row" style="margin-bottom: 10px;">
-				<div class="col-md-12">
-					<div class="row">
-						<div class="col-md-offset-1 col-md-6">
-							<div class="row">
-								<label   class="col-md-2 control-label">段落标题</label>
-								<div class="col-md-10">
-									<input type="text" class="form-control"  value="${Label}"  data-value="/PlanInfo/PlanShort/${$index}/Label" placeholder="标题">
+				{{each $data.PlanInfo.PlanShort}}
+				{{if Label}}
+				<div class="row" style="margin-bottom: 10px;">
+					<div class="col-md-12">
+						<div class="row">
+							<div class="col-md-offset-1 col-md-6">
+								<div class="row">
+									<label   class="col-md-2 control-label text-right">段落标题</label>
+									<div class="col-md-10">
+										<input type="text" class="form-control" style="width:97%;"  value="${Label}"  data-value="/PlanInfo/PlanShort/${$index}/Label" placeholder="标题">
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-					<div class="row">
-						<div class="col-md-offset-1 col-md-6">
-							<ul class="functionBtn">
-								<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
-								<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
-								<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
-								<li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-			{{/if}}
-
-			{{if Label==''}}{{if Content==''}}{{if $data.PlanInfo.PlanID}}
-			<div class="row">
-				<div class="col-md-offset-2 col-md-3">
-					<div class="row">
-						{{if PicURL}}
-						<div class="col-md-12">
-							<div class="imgBox">
-								<img name="autoPrefix"  src="${PicURL}">
-								<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL"></a>
+						<div class="row">
+							<div class="col-md-offset-1 col-md-6">
+								<ul class="functionBtn">
+									<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertDay" title="添加标题"><span class="glyphicon glyphicon-bookmark"></span><!-- 添加标题 --></li>
+									<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertPicture" title="添加图片"><span class="glyphicon glyphicon-picture"></span><!-- 添加图片 --></li>
+									<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertContent" title="添加描述"><span class="glyphicon glyphicon-list-alt"></span><!-- 添加描述 --></li>
+									<li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove">&nbsp;</span>删除</li>
+								</ul>
 							</div>
 						</div>
-						{{/if}}
-						<div class="col-md-12" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
-							<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-action="image">+</div>
-						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-offset-1 col-md-6">
-					<ul class="functionBtn">
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
-						<li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
-					</ul>
-				</div>
-			</div>
-			{{/if}}{{/if}}{{/if}}
-			{{if PE}}
-			<div class="row">
-				<div class="col-md-offset-2 col-md-3">
-					<div class="row">
-						{{if PicURL}}
-						<div class="col-md-12">
-							<div class="imgBox">
-								<img name="autoPrefix"  src="${PicURL}">
-								<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL"></a>
+				{{/if}}
+
+				{{if Label==''}}{{if Content==''}}{{if $data.PlanInfo.PlanID}}
+				<div class="row">
+					<div class="col-md-offset-2 col-md-3">
+						<div class="row">
+							{{if PicURL}}
+							<div class="col-md-12">
+								<div class="imgBox">
+									<img name="autoPrefix"  src="${PicURL}">
+									<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL"></a>
+								</div>
+							</div>
+							{{/if}}
+							<div class="col-md-12" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
+								<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-action="image">+</div>
 							</div>
 						</div>
-						{{/if}}
-						<div class="col-md-12" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
-							<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-action="image">+</div>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<ul class="functionBtn">
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertDay" title="添加标题"><span class="glyphicon glyphicon-bookmark" ></span><!-- 添加标题 --></li>
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertPicture" title="添加图片"><span class="glyphicon glyphicon-picture"></span><!-- 添加图片 --></li>
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertContent"  title="添加描述"><span class="glyphicon glyphicon-list-alt"></span><!-- 添加描述 --></li>
+							<li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove">&nbsp;</span>删除</li>
+						</ul>
+					</div>
+				</div>
+				{{/if}}{{/if}}{{/if}}
+				{{if PE}}
+				<div class="row">
+					<div class="col-md-offset-2 col-md-3">
+						<div class="row">
+							{{if PicURL}}
+							<div class="col-md-12">
+								<div class="imgBox">
+									<img name="autoPrefix"  src="${PicURL}">
+									<a class="glyphicon glyphicon-remove-circle" data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL"></a>
+								</div>
+							</div>
+							{{/if}}
+							<div class="col-md-12" data-op="toggle" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-limit="1">
+								<div class="imgBox addImg" data-op="change" data-pointer="/PlanInfo/PlanShort/${$index}/PicURL" data-action="image">+</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-offset-1 col-md-6">
-					<ul class="functionBtn">
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
-						<li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
-					</ul>
-				</div>
-			</div>
-			{{/if}}
-
-			{{if Content }}
-			<div class="row">
-				<div class="col-md-offset-1 col-md-6">
-					<div class="introduction">
-						<textarea name="" rows="6" data-value="/PlanInfo/PlanShort/${$index}/Content" style="background-color: #fcf8e3;" placeholder="请输入描述">${ Content }</textarea>
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<ul class="functionBtn">
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertDay"  title="添加标题"><span class="glyphicon glyphicon-bookmark"></span><!-- 添加标题 --></li>
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertPicture"  title="添加图片"><span class="glyphicon glyphicon-picture"></span><!-- 添加图片 --></li>
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertContent"  title="添加描述"><span class="glyphicon glyphicon-list-alt"></span><!-- 添加描述 --></li>
+							<li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove">&nbsp;</span>删除</li>
+						</ul>
 					</div>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-md-offset-1 col-md-6">
-					<ul class="functionBtn">
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertDay"><span class="glyphicon glyphicon-bookmark"></span>插入段落</li>
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertPicture"><span class="glyphicon glyphicon-picture"></span>插入图片</li>
-						<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertContent"><span class="glyphicon glyphicon-list-alt"></span>插入描述</li>
-						<li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove"></span>删除</li>
-					</ul>
+				{{/if}}
+
+				{{if Content }}
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<div class="introduction">
+							<textarea name="" rows="6" data-value="/PlanInfo/PlanShort/${$index}/Content" placeholder="请输入描述">${ Content }</textarea>
+						</div>
+					</div>
 				</div>
-			</div>
-			{{/if}}
-			{{/each}}
+				<div class="row">
+					<div class="col-md-offset-1 col-md-6">
+						<ul class="functionBtn">
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertDay"  title="添加标题"><span class="glyphicon glyphicon-bookmark"></span><!-- 添加标题 --></li>
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertPicture"  title="添加图片"><span class="glyphicon glyphicon-picture"></span><!-- 添加图片 --></li>
+							<li data-op="change" data-pointer="/PlanInfo/PlanShort/-" data-index=${$index} data-action="insertContent"  title="添加描述"><span class="glyphicon glyphicon-list-alt"></span><!-- 添加描述 --></li>
+							<li data-op="remove" data-pointer="/PlanInfo/PlanShort/${$index}"><span class="glyphicon glyphicon-remove">&nbsp;</span>删除</li>
+						</ul>
+					</div>
+				</div>
+				{{/if}}
+				{{/each}}
+			</div> <!-- end insert -->
 		</div>
 		<!-- 行程信息结束（方案） -->
 
@@ -275,8 +278,7 @@
 			</div>
 
 			<div class="optionBtn">
-				<button id="save" class="btn btn-warning" style="margin-top:10px;">保存预览</button>
-				<button id="publish" class="btn btn-warning" style="margin-top:10px;">发布</button>
+				<button id="save" class="btn btn-warning" style="margin-top:10px;">发布</button>
 				<!--<a href="javascript:void(0)" id="show" class="btn btn-warning invisible" style="margin-top:10px;">预览</a>-->
 				<!--{{if  $data.PlanInfo.PlanStatus == 3}}
 				<button id="publish" class="btn btn-warning">发布 </button>
