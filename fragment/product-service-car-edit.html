@@ -317,133 +317,144 @@
 	<div class="notice">
 		<h4>须知信息</h4>
 		<form class="form-horizontal">
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
-		    <div class="col-sm-10 col-md-11">
+			<div class="form-group">
+				<label for="name" class="col-sm-2 col-md-1 control-label">退订政策：</label>
+				<div class="col-sm-10 col-md-11">
+					<button type="button" class="btn btn btn-warning" data-toggle="modal" data-target="#policydiv" style="margin-bottom: 8px; background-color: #FF6600; padding: 5px;">请选择退订政策</button>
+					<div id="policyView">
+						{{if $data.DetailMain.policy[0].type == '4'}}
+						<h3>${$data.DetailMain.policy[0].policyName}</h3>
+						<p>${$data.DetailMain.policy[0].description}</p>
+						{{else}}
+						<h3>${$data.DetailMain.policy[0].policyName}</h3>
+						<p>1、服务开始前${$data.DetailMain.policy[0].day1}天(含)以上退订，退还服务费用的99%；</p>
+						<p>2、服务开始前${$data.DetailMain.policy[0].day2}天(含)以上退订，退还服务费用的50%；</p>
+						<p>3、服务开始前${$data.DetailMain.policy[0].day3}天(含)以上退订，退还服务费用的20%；</p>
+						<p>4、服务开始前${$data.DetailMain.policy[0].day4}天以内退订，不退还服务费用；</p>
+						<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
+						{{/if}}
+					</div>
+				</div>
+				<!-- 退订政策弹出框 -->
+				<div id="policydiv" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal">
+									<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+								</button>
+								<h4 class="modal-title clearfix">退订政策</h4>
+							</div>
+							<div class="modal-body">
+								<ul>
+									<li class="row policybox">
+										<!-- <div class="title clearfix"></div> -->
+										<div class="main">
+											<div class="col-md-2">
+												<input type="radio" class="col-md-2" id="returnOption1" name="optionsRadios" value="1">
+											</div>
+											<div id="policycontent1" class="col-md-10">
+												<h3>严格的退订政策</h3>
+												<p>1、服务开始前14天(含)以上退订，退还服务费用的99%；</p>
+												<p>2、服务开始前7天(含)至14天退订，退还服务费用的50%；</p>
+												<p>3、服务开始前3天(含)至7天退订，退还服务费用的20%；</p>
+												<p>4、服务开始前3天以内退订，不退还服务费用；</p>
+												<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
+											</div>
+										</div>
+									</li>
+									<li class="row policybox">
+										<!-- <div class="title clearfix"></div> -->
+										<div class="main">
+											<div class="col-md-2">
+												<input type="radio" class="col-md-2" id="returnOption2" name="optionsRadios" value="2">
+											</div>
+											<div id="policycontent2" class="col-md-10">
+												<h3>中等的退订政策</h3>
+												<p>1、服务开始前14天(含)以上退订，退还服务费用的99%；</p>
+												<p>2、服务开始前7天(含)至14天退订，退还服务费用的50%；</p>
+												<p>3、服务开始前3天(含)至7天退订，退还服务费用的20%；</p>
+												<p>4、服务开始前3天以内退订，不退还服务费用；</p>
+												<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
+											</div>
+										</div>
+									</li>
+									<li class="row policybox">
+										<!-- <div class="title clearfix "></div> -->
+										<div class="main">
+											<div class="col-md-2">
+												<input type="radio" class="col-md-2" id="returnOption3" name="optionsRadios" value="3">
+											</div>
+											<div id="policycontent3" class="col-md-10">
+												<h3>宽松的退订政策</h3>
+												<p>1、服务开始前14天(含)以上退订，退还服务费用的99%；</p>
+												<p>2、服务开始前7天(含)至14天退订，退还服务费用的50%；</p>
+												<p>3、服务开始前3天(含)至7天退订，退还服务费用的20%；</p>
+												<p>4、服务开始前3天以内退订，不退还服务费用；</p>
+												<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
+											</div>
+										</div>
+									</li>
+									<li class="row policybox">
+										<!-- <div class="title clearfix "></div> -->
+										<div class="main">
+											<div class="col-md-2">
+												<input type="radio" class="col-md-2" id="returnOption4" name="optionsRadios" value="4">
+											</div>
+											<div id="policycontent5" class="col-md-10">
+												<h3>不可退订</h3>
+												<p>任何时候退订，不退还服务费用</p>
+											</div>
+										</div>
+									</li>
+									<li class="row policybox">
+										<!-- <div class="title clearfix"></div> -->
+										<div class="main">
+											<div class="col-md-2">
+												<input type="radio" class="col-md-2" id="option5" name="optionsRadios" value="5">
+											</div>
+											<div id="policycontent4" class="col-md-10">
+												<h3>自定义的退订政策</h3>
+												<p>1、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day1}" data-value="/DetailMain/policy/${0}/day1">天(含)以上退订，退还服务费用的99%；</p>
+												<p>2、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day2}" data-value="/DetailMain/policy/${0}/day2">天(含)以上退订，退还服务费用的50%；</p>
+												<p>3、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day3}" data-value="/DetailMain/policy/${0}/day3">天(含)以上退订，退还服务费用的20%；</p>
+												<p>4、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day4}" data-value="/DetailMain/policy/${0}/day4">天以内退订，不退还服务费用；</p>
+												<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
+											</div>
+										</div>
+									</li>
+								</ul>
+							</div> <!-- end modal-body -->
+							<div class="modal-footer">
+								<button type="button" id="policyconfirm" class="btn btn-primary" data-dismiss="modal">确定</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+				<!-- 退订政策弹出框 -->
+			</div>
+			<div class="form-group">
+				<label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
 				<div class="col-sm-10 col-md-11">
 					<textarea name="" data-value="/DetailMain/policy/1/customRatio" class="form-control">${$data.DetailMain.policy[1].customRatio}</textarea>
 				</div>
-		    </div>
-			<!-- 退订政策弹出框 -->
-			<div id="policydiv" class="modal fade">
-		    <div class="modal-dialog">
-		      <div class="modal-content">
-		        <div class="modal-header">
-		          <button type="button" class="close" data-dismiss="modal">
-		          	<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-		          </button>
-		          <h4 class="modal-title clearfix">退订政策</h4>
-		        </div>
-		        <div class="modal-body">
-		        	<ul>
-			        	<li class="row policybox">
-				        	<!-- <div class="title clearfix"></div> -->
-							<div class="main">
-								<div class="col-md-2">
-									<input type="radio" class="col-md-2" id="returnOption1" name="optionsRadios" value="1">
-								</div>
-								<div id="policycontent1" class="col-md-10">
-									<h3>严格的退订政策</h3>
-									<p>1、服务开始前14天(含)以上退订，退还服务费用的99%；</p>
-									<p>2、服务开始前7天(含)至14天退订，退还服务费用的50%；</p>
-									<p>3、服务开始前3天(含)至7天退订，退还服务费用的20%；</p>
-									<p>4、在此之后退订，不退还服务费用；</p>
-									<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
-								</div>
-							</div>
-				        </li>
-				        <li class="row policybox">
-				        	<!-- <div class="title clearfix"></div> -->
-							<div class="main">
-								<div class="col-md-2">
-									<input type="radio" class="col-md-2" id="returnOption2" name="optionsRadios" value="2">
-								</div>
-								<div id="policycontent2" class="col-md-10">
-									<h3>中等的退订政策</h3>
-									<p>1、服务开始前7天(含)以上退订，退还服务费用的99%；</p>
-									<p>2、服务开始前4天(含)至7天退订，退还服务费用的50%；</p>
-									<p>3、服务开始前2天(含)至4天退订，退还服务费用的20%；</p>
-									<p>4、在此之后退订，不退还服务费用；</p>
-									<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
-								</div>
-							</div>
-				        </li>
-				        <li class="row policybox">
-				        	<!-- <div class="title clearfix "></div> -->
-							<div class="main">
-								<div class="col-md-2">
-									<input type="radio" class="col-md-2" id="returnOption3" name="optionsRadios" value="3">
-								</div>
-								<div id="policycontent3" class="col-md-10">
-									<h3>宽松的退订政策</h3>
-									<p>1、服务开始前3天(含)以上退订，退还服务费用的99%；</p>
-									<p>2、服务开始前2天(含)至3天退订，退还服务费用的50%；</p>
-									<p>3、服务开始前1天(含)至2天退订，退还服务费用的20%；</p>
-									<p>4、在此之后退订，不退还服务费用；</p>
-									<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
-								</div>
-							</div>
-				        </li>
-						<li class="row policybox">
-							<!-- <div class="title clearfix "></div> -->
-							<div class="main">
-								<div class="col-md-2">
-									<input type="radio" class="col-md-2" id="returnOption4" name="optionsRadios" value="4">
-								</div>
-								<div id="policycontent5" class="col-md-10">
-									<h3>不可退订</h3>
-									<p>任何时候退订，不退还服务费用</p>
-								</div>
-							</div>
-						</li>
-				        <li class="row policybox">
-				        	<!-- <div class="title clearfix"></div> -->
-							<div class="main">
-								<div class="col-md-2">
-									<input type="radio" class="col-md-2" id="option5" name="optionsRadios" value="5">
-								</div>
-								<div id="policycontent4" class="col-md-10">
-									<h3>自定义的退订政策</h3>
-									<p>1、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day1}" data-value="/DetailMain/policy/${0}/day1">天(含)以上退订，退还服务费用的99%；</p>
-									<p>2、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day2}" data-value="/DetailMain/policy/${0}/day2">天(含)以上退订，退还服务费用的50%；</p>
-									<p>3、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day3}" data-value="/DetailMain/policy/${0}/day3">天(含)以上退订，退还服务费用的20%；</p>
-									<p>4、服务开始前<input type="text" value="${$data.DetailMain.policy[0].day4}" data-value="/DetailMain/policy/${0}/day4">天以内退订，不退还服务费用；</p>
-									<p>5、导游未及时接单或拒绝订单，全额退还服务费用</p>
-								</div>
-							</div>
-				        </li>
-					</ul>
-		        </div> <!-- end modal-body -->
-		        <div class="modal-footer">
-		          <button type="button" id="policyconfirm" class="btn btn-primary" data-dismiss="modal">确定</button>
-		        </div>
-		      </div><!-- /.modal-content -->
-		    </div><!-- /.modal-dialog -->
-			</div><!-- /.modal -->
-			<!-- 退订政策弹出框 -->
-		  </div>
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">费用包含：</label>
-		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/policy/1/customRatio" class="form-control">${$data.DetailMain.policy[1].customRatio}</textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
-		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/policy/2/customRatio" class="form-control">${$data.DetailMain.policy[2].customRatio}</textarea>
-		    </div>
-		  </div>
-		  <div class="form-group">
-		    <label for="name" class="col-sm-2 col-md-1 control-label">预订须知：</label>
-		    <div class="col-sm-10 col-md-11">
-		      <textarea name="" data-value="/DetailMain/policy/3/caution" class="form-control">${$data.DetailMain.policy[3].caution}</textarea>
-		    </div>
-		  </div>
+			</div>
+			<div class="form-group">
+				<label for="name" class="col-sm-2 col-md-1 control-label">费用不包含：</label>
+				<div class="col-sm-10 col-md-11">
+					<textarea name="" data-value="/DetailMain/policy/2/customRatio" class="form-control">${$data.DetailMain.policy[2].customRatio}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label for="name" class="col-sm-2 col-md-1 control-label">预订须知：</label>
+				<div class="col-sm-10 col-md-11">
+					<textarea name="" data-value="/DetailMain/policy/3/caution" class="form-control">${$data.DetailMain.policy[3].caution}</textarea>
+				</div>
+			</div>
 		</form>
 		<div class="optionBtn">
-			<button id="save" class="btn btn-warning">保存</button>
-			<!--<button id="publish" class="btn btn-warning">发布 </button>-->
+			<button id="savePickup" class="btn btn-warning">保存</button>
+			<button id="publish" class="btn btn-warning">发布 </button>
 		</div>
 	</div>
 	<input type="hidden" id="type" data-value="/DetailMain/Policy/0/type"/>

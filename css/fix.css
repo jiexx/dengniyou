@@ -25,7 +25,7 @@ div.c-wrapper{ width: 100%; margin: auto;}
 
 /*游客端页面*/
 /*网站首页*/
-/*首页共同部分*/
+/*游客端首页共同部分*/
 .indexpage { overflow: hidden }
 .indexpage #app .homesearch-list{margin-top: 50px;}
 .indexpage #app .homepage .carousel-inner > .item { height: 486px; }
@@ -510,6 +510,10 @@ div.c-wrapper{ width: 100%; margin: auto;}
 
 /*导游端公共部分*/
 .logo img{height: 60px;}
+.navTop .list-group{margin-bottom: 12px;}
+.navTop ul{display:inline-block;}
+.navTop ul li{display:inline-block; width:60px; height:20px; line-height: 20px; border:1px solid #fa703e; border-radius: 10px; text-align: center; margin-right:5px; cursor: pointer;}
+.navTop ui li.active{background-color: #fa703e; color:#FFF;}
 /*.container{margin-bottom: 20px; width:95%;}*/
 
 
